@@ -1,0 +1,3 @@
+displayName = Mod of Redemption
+author = Hallam & Tied
+version = 0.1
