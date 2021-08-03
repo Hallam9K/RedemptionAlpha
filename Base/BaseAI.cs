@@ -179,7 +179,7 @@ namespace Redemption
 			if (dist > teleportDist) { codable.Center = owner.Center; }
 			int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
 			Tile tile = Main.tile[tileX, tileY];
-			bool inTile = tile != null && tile.IsActive && Main.tileSolid[tile.type];
+			bool inTile = tile != null && tile.IsActiveUnactuated && Main.tileSolid[tile.type];
 			float prevAI = ai[0];
 			ai[0] = ((ai[0] == 1 && (dist > Math.Max(lineDist, returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox))) || dist > returnDist || inTile) ? 1 : 0;
 			if (ai[0] != prevAI) { netUpdate = true; }
@@ -263,7 +263,7 @@ namespace Redemption
 			if (dist > teleportDist) { codable.Center = owner.Center; }
 			int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
 			Tile tile = Main.tile[tileX, tileY];
-			bool inTile = tile != null && tile.IsActive && Main.tileSolid[tile.type];
+			bool inTile = tile != null && tile.IsActiveUnactuated && Main.tileSolid[tile.type];
 			float prevAI = ai[0];
 			ai[0] = ((ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f))) || dist > returnDist || inTile) ? 1 : 0;
 			if (ai[0] != prevAI) { netUpdate = true; }
@@ -371,7 +371,7 @@ namespace Redemption
 			if (dist > teleportDist) { codable.Center = owner.Center; }
 			int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
 			Tile tile = Main.tile[tileX, tileY];
-			bool inTile = tile != null && tile.IsActive && Main.tileSolid[tile.type];
+			bool inTile = tile != null && tile.IsActiveUnactuated && Main.tileSolid[tile.type];
 			float prevAI = ai[0];
 			ai[0] = ((ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f))) || dist > returnDist || inTile) ? 1 : 0;
 			if (ai[0] != prevAI) { netUpdate = true; }
@@ -2202,7 +2202,7 @@ namespace Redemption
 			{
 				for (int y = tileLeftY; y < tileRightY; y++)
 				{
-					if (Main.tile[x, y] != null && Main.tile[x, y].IsActive && (CanStick != null ? CanStick(x, y) : (Main.tileSolid[Main.tile[x, y].type] || (Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))))
+					if (Main.tile[x, y] != null && Main.tile[x, y].IsActiveUnactuated && (CanStick != null ? CanStick(x, y) : (Main.tileSolid[Main.tile[x, y].type] || (Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))))
 					{
 						Vector2 pos = new(x * 16, y * 16);
 						if (position.X + width - 4f > pos.X && position.X + 4f < pos.X + 16f && position.Y + height - 4f > pos.Y && position.Y + 4f < pos.Y + 16f)
@@ -2839,16 +2839,16 @@ namespace Redemption
 			for(int x2 = xLeft; x2 < xRight; x2++)
 			{
 				Tile tileUp = Main.tile[x2, yUp], tileDown = Main.tile[x2, yDown];
-				if(tileUp != null && tileUp.IsActive && Main.tileSolid[tileUp.type] && !Main.tileSolidTop[tileUp.type]) up = true;
-				if(tileDown != null && tileDown.IsActive && Main.tileSolid[tileDown.type]) down = true;		
+				if(tileUp != null && tileUp.IsActiveUnactuated && Main.tileSolid[tileUp.type] && !Main.tileSolidTop[tileUp.type]) up = true;
+				if(tileDown != null && tileDown.IsActiveUnactuated && Main.tileSolid[tileDown.type]) down = true;		
 				if(up && down) break;
 			}
 			//LEFT/RIGHT
 			for(int y2 = yUp; y2 < yDown; y2++)
 			{
 				Tile tileLeft = Main.tile[xLeft, y2], tileRight = Main.tile[xRight, y2];
-				if(tileLeft != null && tileLeft.IsActive && Main.tileSolid[tileLeft.type] && !Main.tileSolidTop[tileLeft.type]) left = true;
-				if(tileRight != null && tileRight.IsActive && Main.tileSolid[tileRight.type] && !Main.tileSolidTop[tileRight.type]) right = true;	
+				if(tileLeft != null && tileLeft.IsActiveUnactuated && Main.tileSolid[tileLeft.type] && !Main.tileSolidTop[tileLeft.type]) left = true;
+				if(tileRight != null && tileRight.IsActiveUnactuated && Main.tileSolid[tileRight.type] && !Main.tileSolidTop[tileRight.type]) right = true;	
 				if(left && right) break;				
 			}
 		}
@@ -3159,7 +3159,7 @@ namespace Redemption
 				if (Main.tile[tileX2 + npc.direction, tileY2 + 1] == null) Main.tile[tileX2 + npc.direction, tileY2 + 1] = new Tile();
 				#endregion
 				//Main.tile[tileX2 - npc.direction, tileY2 + 1].halfBrick();
-				if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].IsActive && Main.tile[tileX2, tileY2 - 2].type == 10 && (Main.rand.Next(10) == 0 || seekHouse))
+				if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tile[tileX2, tileY2 - 2].type == 10 && (Main.rand.Next(10) == 0 || seekHouse))
 				{
 					if (Main.netMode == NetmodeID.MultiplayerClient)
 						return;
@@ -3191,7 +3191,7 @@ namespace Redemption
 				{
 					if (npc.velocity.X < 0f && npc.spriteDirection == -1 || npc.velocity.X > 0f && npc.spriteDirection == 1)
 					{
-						if (Main.tile[tileX2, tileY2 - 2].IsActive && Main.tileSolid[Main.tile[tileX2, tileY2 - 2].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 2].type])
+						if (Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 2].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 2].type])
 						{
 							if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 5, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 5, tileY2 - 1))
 							{
@@ -3200,7 +3200,7 @@ namespace Redemption
 									npc.velocity.Y = -6f; npc.netUpdate = true;
 								}else{ npc.direction *= -1; npc.netUpdate = true; }
 							}else{ npc.direction *= -1; npc.netUpdate = true; }
-						}else if (Main.tile[tileX2, tileY2 - 1].IsActive && Main.tileSolid[Main.tile[tileX2, tileY2 - 1].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 1].type])
+						}else if (Main.tile[tileX2, tileY2 - 1].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 1].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 1].type])
 						{
 							if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 4, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 4, tileY2 - 1))
 							{
@@ -3211,7 +3211,7 @@ namespace Redemption
 							}else{ npc.direction *= -1; npc.netUpdate = true; }
 						}else if (npc.position.Y + npc.height - (tileY2 * 16f) > 20f)
 						{
-							if (Main.tile[tileX2, tileY2].IsActive && Main.tileSolid[Main.tile[tileX2, tileY2].type] && Main.tile[tileX2, tileY2].Slope == 0)
+							if (Main.tile[tileX2, tileY2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2].type] && Main.tile[tileX2, tileY2].Slope == 0)
 							{
 								if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2, tileY2 - 3, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2, tileX2 + 2, tileY2 - 3, tileY2 - 1))
 								{
@@ -3232,7 +3232,7 @@ namespace Redemption
 							if (Main.tile[tileX2, tileY2 + 4] == null) Main.tile[tileX2, tileY2 + 4] = new Tile();
 							if (Main.tile[tileX2 - npc.direction, tileY2 + 4] == null) Main.tile[tileX2 - npc.direction, tileY2 + 4] = new Tile();
 							#endregion
-							if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].IsActive || !Main.tileSolid[Main.tile[tileX2, tileY2 + 1].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 1].type]) && (!Main.tile[tileX2, tileY2 + 2].IsActive || !Main.tileSolid[Main.tile[tileX2, tileY2 + 2].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 2].type]) && (!Main.tile[tileX2, tileY2 + 3].IsActive || !Main.tileSolid[Main.tile[tileX2, tileY2 + 3].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 3].type]) && (!Main.tile[tileX2, tileY2 + 4].IsActive || !Main.tileSolid[Main.tile[tileX2, tileY2 + 4].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 4].type]))
+							if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 1].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 1].type]) && (!Main.tile[tileX2, tileY2 + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 2].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 2].type]) && (!Main.tile[tileX2, tileY2 + 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 3].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 3].type]) && (!Main.tile[tileX2, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 4].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 4].type]))
 							{
 								npc.direction *= -1;
 								npc.velocity.X *= -1f;
@@ -3622,7 +3622,7 @@ namespace Redemption
                 {
                     Main.tile[tileX, tY] = new Tile();
                 }
-                if ((Main.tile[tileX, tY].IsActive && Main.tileSolid[Main.tile[tileX, tY].type]) || Main.tile[tileX, tY].LiquidAmount > 0)
+                if ((Main.tile[tileX, tY].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX, tY].type]) || Main.tile[tileX, tY].LiquidAmount > 0)
                 {
                     tileBelowEmpty = false;
                     break;
@@ -3805,7 +3805,7 @@ namespace Redemption
                 Vector2 tilePos = isTilePos ? new Vector2(ai[0], ai[1]) : new Vector2(ai[0] / 16f, ai[1] / 16f);
                 int tx = (int)tilePos.X; int ty = (int)tilePos.Y;
                 if (Main.tile[tx, ty] == null) { Main.tile[tx, ty] = new Tile(); }
-                if (!Main.tile[tx, ty].IsActive || !Main.tileSolid[Main.tile[tx, ty].type] || (Main.tileSolid[Main.tile[tx, ty].type] && Main.tileSolidTop[Main.tile[tx, ty].type]))
+                if (!Main.tile[tx, ty].IsActiveUnactuated || !Main.tileSolid[Main.tile[tx, ty].type] || (Main.tileSolid[Main.tile[tx, ty].type] && Main.tileSolidTop[Main.tile[tx, ty].type]))
                 {
                     if(npc.DeathSound != null) SoundEngine.PlaySound(npc.DeathSound, (int)npc.Center.X, (int)npc.Center.Y);
                     npc.life = -1;
@@ -4099,7 +4099,7 @@ namespace Redemption
                     for (int tY = tileY; tY < tileCenterY; tY++)
                     {
 						Tile checkTile = BaseWorldGen.GetTileSafely(tX, tY);						
-                        if (checkTile != null && ((checkTile.IsActive && (Main.tileSolid[checkTile.type] || (Main.tileSolidTop[checkTile.type] && checkTile.frameY == 0))) || checkTile.LiquidAmount > 64))
+                        if (checkTile != null && ((checkTile.IsActiveUnactuated && (Main.tileSolid[checkTile.type] || (Main.tileSolidTop[checkTile.type] && checkTile.frameY == 0))) || checkTile.LiquidAmount > 64))
                         {
                             Vector2 tPos;
                             tPos.X = tX * 16;
@@ -4107,7 +4107,7 @@ namespace Redemption
                             if (npc.position.X + npc.width > tPos.X && npc.position.X < tPos.X + 16f && npc.position.Y + npc.height > tPos.Y && npc.position.Y < tPos.Y + 16f)
                             {
                                 canMove = true;
-                                if (spawnTileDust && Main.rand.Next(100) == 0 && checkTile.IsActive)
+                                if (spawnTileDust && Main.rand.Next(100) == 0 && checkTile.IsActiveUnactuated)
                                 {
                                     WorldGen.KillTile(tX, tY, true, true, false);
                                 }
@@ -4371,7 +4371,7 @@ namespace Redemption
                     int tpTileY = Main.rand.Next(playerTileY - distFromPlayer, playerTileY + distFromPlayer);
                     for (int tpY = tpTileY; tpY < playerTileY + distFromPlayer; tpY++)
                     {
-                        if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (!checkGround || Main.tile[tpTileX, tpY].IsActive))
+                        if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (!checkGround || Main.tile[tpTileX, tpY].IsActiveUnactuated))
                         {
                             if ((CanTeleportTo != null && CanTeleportTo(tpTileX, tpY)) || (Main.tile[tpTileX, tpY - 1].LiquidType != 2 && (!checkGround || Main.tileSolid[Main.tile[tpTileX, tpY].type]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1)))
                             {
@@ -4470,7 +4470,7 @@ namespace Redemption
                     }
                     if (Main.tile[tileX, tileY - 1].LiquidAmount > 128)
                     {
-                        if (Main.tile[tileX, tileY + 1].IsActive || Main.tile[tileX, tileY + 2].IsActive) { ai[0] = -1f; }
+                        if (Main.tile[tileX, tileY + 1].IsActiveUnactuated || Main.tile[tileX, tileY + 2].IsActiveUnactuated) { ai[0] = -1f; }
                     }
                     //if npc's y speed goes above max velocity, slow the npc down.
                     if (npc.velocity.Y > velMaxY || npc.velocity.Y < -velMaxY) { npc.velocity.Y *= 0.95f; }
@@ -4810,7 +4810,7 @@ namespace Redemption
 				if (Main.tile[tileX, tileY - 3] == null) Main.tile[tileX, tileY - 3] = new Tile();
 				if (Main.tile[tileX, tileY + 1] == null) Main.tile[tileX, tileY + 1] = new Tile();
 				if (Main.tile[tileX - offset, tileY - 3] == null) Main.tile[tileX - offset, tileY - 3] = new Tile();
-				if (tileX * 16 < pos.X + (double)codable.width && tileX * 16 + 16 > (double)pos.X && (Main.tile[tileX, tileY].IsActive && Main.tile[tileX, tileY].Slope == 0 && Main.tile[tileX, tileY - 1].Slope == 0 && Main.tileSolid[Main.tile[tileX, tileY].type] && !Main.tileSolidTop[Main.tile[tileX, tileY].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && Main.tile[tileX, tileY - 1].IsActive) && (!Main.tile[tileX, tileY - 1].IsActive || !Main.tileSolid[Main.tile[tileX, tileY - 1].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 1].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && (!Main.tile[tileX, tileY - 4].IsActive || !Main.tileSolid[Main.tile[tileX, tileY - 4].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 4].type])) && (!Main.tile[tileX, tileY - 2].IsActive || !Main.tileSolid[Main.tile[tileX, tileY - 2].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 2].type]) && (!Main.tile[tileX, tileY - 3].IsActive || !Main.tileSolid[Main.tile[tileX, tileY - 3].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 3].type]) && (!Main.tile[tileX - offset, tileY - 3].IsActive || !Main.tileSolid[Main.tile[tileX - offset, tileY - 3].type]))
+				if (tileX * 16 < pos.X + (double)codable.width && tileX * 16 + 16 > (double)pos.X && (Main.tile[tileX, tileY].IsActiveUnactuated && Main.tile[tileX, tileY].Slope == 0 && Main.tile[tileX, tileY - 1].Slope == 0 && Main.tileSolid[Main.tile[tileX, tileY].type] && !Main.tileSolidTop[Main.tile[tileX, tileY].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && Main.tile[tileX, tileY - 1].IsActiveUnactuated) && (!Main.tile[tileX, tileY - 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 1].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 1].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && (!Main.tile[tileX, tileY - 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 4].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 4].type])) && (!Main.tile[tileX, tileY - 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 2].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 2].type]) && (!Main.tile[tileX, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 3].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 3].type]) && (!Main.tile[tileX - offset, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX - offset, tileY - 3].type]))
 				{
 					float tileWorldY = tileY * 16;
 					if (Main.tile[tileX, tileY].IsHalfBlock)
@@ -4878,7 +4878,7 @@ namespace Redemption
 						Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
 						if (tile == null) { tile = Main.tile[tileX, y] = new Tile(); }
 						if (tileNear == null) { tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile(); }
-						if (tile.IsActive && (y != tileY || (!tile.IsHalfBlock && tile.Slope == 0)) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
+						if (tile.IsActiveUnactuated && (y != tileY || (!tile.IsHalfBlock && tile.Slope == 0)) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
 						{
 							if (!Main.tileSolidTop[tile.type])
 							{
@@ -4886,7 +4886,7 @@ namespace Redemption
 								tileHitbox.Y = hitbox.Y;
 								if (tileHitbox.Intersects(hitbox)) { newVelocity = velocity; break; }
 							}			
-							if (tileNear.IsActive && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]){ newVelocity = velocity; break; }
+							if (tileNear.IsActiveUnactuated && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]){ newVelocity = velocity; break; }
 							if (target != null && y * 16 < target.Center.Y){ continue; }								
 							lastY = y;
 							newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - ((tileY - y - 2) * 0.0525f) : 1f));
@@ -4901,9 +4901,9 @@ namespace Redemption
                     if (Main.tile[tileX + direction, tileY + 1] == null) { Main.tile[tileX, tileY + 1] = new Tile(); }
 					if (Main.tile[tileX + direction, tileY + 2] == null) { Main.tile[tileX, tileY + 2] = new Tile(); }
                     //...and there's a gap in front of the npc, attempt to jump across it.
-                    if (directionY < 0 && (!Main.tile[tileX, tileY + 1].IsActive || !Main.tileSolid[Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].IsActive || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].type]))
+                    if (directionY < 0 && (!Main.tile[tileX, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].type]))
                     {
-						if (!Main.tile[tileX + direction, tileY + 2].IsActive || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || target == null || ((target.Center.Y + (target.height * 0.25f)) < tileY * 16f))
+						if (!Main.tile[tileX + direction, tileY + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || target == null || ((target.Center.Y + (target.height * 0.25f)) < tileY * 16f))
 						{
 							newVelocity.Y = -8f;
 							newVelocity.X *= 1.5f * (1f / maxSpeedX);
@@ -4913,7 +4913,7 @@ namespace Redemption
 								{
 									Tile tile = Main.tile[x, tileY + 1];
 									if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-									if (x != tileX && !tile.IsActive)
+									if (x != tileX && !tile.IsActiveUnactuated)
 									{
 										newVelocity.Y -= 0.0325f;
 										newVelocity.X += direction * 0.255f;
@@ -4926,7 +4926,7 @@ namespace Redemption
 								{
 									Tile tile = Main.tile[x, tileY + 1];
 									if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-									if (x != tileItX && !tile.IsActive)
+									if (x != tileItX && !tile.IsActiveUnactuated)
 									{
 										newVelocity.Y -= 0.0325f;
 										newVelocity.X += direction * 0.255f;
@@ -4960,7 +4960,7 @@ namespace Redemption
                 Rectangle hitbox = new((int)position.X, (int)position.Y, width, height);
                 //attempt to jump over walls if possible.
 
-                if (ignoreTiles && vector != null && Math.Abs(position.X + (width * 0.5f) - vector.X) < width + 120)
+                if (ignoreTiles && Math.Abs(position.X + (width * 0.5f) - vector.X) < width + 120)
                 {
                     float dist = (int)Math.Abs(position.Y + (height * 0.5f) - vector.Y) / 16;
                     if (dist < tileDistY + 2) { newVelocity.Y = -8f + (dist * -0.5f); } // dist +=2; newVelocity.Y = -(5f + dist * (dist > 3 ? 1f - ((dist - 2f) * 0.0525f) : 1f)); }
@@ -4973,7 +4973,7 @@ namespace Redemption
                         Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
                         if (tile == null) { tile = Main.tile[tileX, y] = new Tile(); }
                         if (tileNear == null) { tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile(); }
-                        if (tile.IsActive && (y != tileY || (!tile.IsHalfBlock && tile.Slope == 0)) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
+                        if (tile.IsActiveUnactuated && (y != tileY || (!tile.IsHalfBlock && tile.Slope == 0)) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
                         {
                             if (!Main.tileSolidTop[tile.type])
                             {
@@ -4981,8 +4981,8 @@ namespace Redemption
                                 tileHitbox.Y = hitbox.Y;
                                 if (tileHitbox.Intersects(hitbox)) { newVelocity = velocity; break; }
                             }
-                            if (tileNear.IsActive && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]) { newVelocity = velocity; break; }
-                            if (vector != null && y * 16 < vector.Y) { continue; }
+                            if (tileNear.IsActiveUnactuated && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]) { newVelocity = velocity; break; }
+                            if (y * 16 < vector.Y) { continue; }
                             lastY = y;
                             newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - ((tileY - y - 2) * 0.0525f) : 1f));
                         }
@@ -4997,9 +4997,9 @@ namespace Redemption
                     if (Main.tile[tileX + direction, tileY + 1] == null) { Main.tile[tileX, tileY + 1] = new Tile(); }
                     if (Main.tile[tileX + direction, tileY + 2] == null) { Main.tile[tileX, tileY + 2] = new Tile(); }
                     //...and there's a gap in front of the npc, attempt to jump across it.
-                    if (directionY < 0 && (!Main.tile[tileX, tileY + 1].IsActive || !Main.tileSolid[Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].IsActive || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].type]))
+                    if (directionY < 0 && (!Main.tile[tileX, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].type]))
                     {
-                        if (!Main.tile[tileX + direction, tileY + 2].IsActive || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || vector == null || (vector.Y < tileY * 16f))
+                        if (!Main.tile[tileX + direction, tileY + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || ((vector.Y + (vector.Y + 12 * 0.25f)) < tileY * 16f))
                         {
                             newVelocity.Y = -8f;
                             newVelocity.X *= 1.5f * (1f / maxSpeedX);
@@ -5009,7 +5009,7 @@ namespace Redemption
                                 {
                                     Tile tile = Main.tile[x, tileY + 1];
                                     if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-                                    if (x != tileX && !tile.IsActive)
+                                    if (x != tileX && !tile.IsActiveUnactuated)
                                     {
                                         newVelocity.Y -= 0.0325f;
                                         newVelocity.X += direction * 0.255f;
@@ -5023,7 +5023,7 @@ namespace Redemption
                                 {
                                     Tile tile = Main.tile[x, tileY + 1];
                                     if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-                                    if (x != tileItX && !tile.IsActive)
+                                    if (x != tileItX && !tile.IsActiveUnactuated)
                                     {
                                         newVelocity.Y -= 0.0325f;
                                         newVelocity.X += direction * 0.255f;
@@ -5067,7 +5067,7 @@ namespace Redemption
                         if (m == -1 && Main.tile[tileX + npc.direction, tileY + m] == null) { Main.tile[tileX + npc.direction, tileY + m] = new Tile(); }
                     if (Main.tile[tileX, tileY + m] == null) { Main.tile[tileX, tileY + m] = new Tile(); }
                 }
-                if (Main.tile[tileX, tileY - 1].IsActive && Main.tile[tileX, tileY - 1].type == 10)
+                if (Main.tile[tileX, tileY - 1].IsActiveUnactuated && Main.tile[tileX, tileY - 1].type == 10)
                 {
                     doorCounter += 1f;
                     tickUpdater = 0f;
@@ -5091,7 +5091,7 @@ namespace Redemption
                                 if (interactDoorStyle == 1)
                                 {
                                     WorldGen.KillTile(tileX, tileY);
-                                    openedDoor = !Main.tile[tileX, tileY].IsActive;
+                                    openedDoor = !Main.tile[tileX, tileY].IsActiveUnactuated;
                                 }
                                 else
                                 {
@@ -5129,7 +5129,7 @@ namespace Redemption
 				for(int y = topY; x < topY + rect.Height; y++)
 				{
 					Tile tile = Main.tile[x, y];
-					if(tile != null && tile.IsActive && Main.tileSolid[tile.type])
+					if(tile != null && tile.IsActiveUnactuated && Main.tileSolid[tile.type])
 					{
 						return false;
 					}
@@ -5201,7 +5201,7 @@ namespace Redemption
                 for (int y2 = tilePosY; y2 < tilePosHeight; y2++)
                 {
                     if (Main.tile[x2, y2] == null) { return false; }
-                    if (Main.tile[x2, y2].IsActive && Main.tileSolid[Main.tile[x2, y2].type])
+                    if (Main.tile[x2, y2].IsActiveUnactuated && Main.tileSolid[Main.tile[x2, y2].type])
                     {
                         hitTilePos = new Vector2(x2, y2);
                         return true;
@@ -6098,7 +6098,7 @@ namespace Redemption
                         if ((int)vec.X != vecX && (int)vec.Y != vecY)
                         {
                             Tile tile = Main.tile[vecX, vecY];
-                            if (tile != null && tile.IsActive)
+                            if (tile != null && tile.IsActiveUnactuated)
                             {
                                 bool ignoreTile = tileTypesToIgnore == null || tileTypesToIgnore.Length <= 0 ? false : BaseUtility.InArray(tileTypesToIgnore, tile.type);
                                 if (!ignoreTile && Main.tileSolid[tile.type])

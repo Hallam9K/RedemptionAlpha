@@ -52,9 +52,10 @@ namespace Redemption.NPCs.Critters
         }
         public override void AI()
         {
-            if (NPC.wet && Main.rand.Next(20) == 0)
+            if (NPC.wet && Main.rand.NextBool(20))
             {
-                int sparkle = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height / 2, DustID.SilverCoin, NPC.velocity.X * 0f, NPC.velocity.Y * 0f, 20, default, 1f);
+                int sparkle = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height / 2, DustID.SilverCoin, 0, 0, 20, default, 1f);
+                Main.dust[sparkle].velocity *= 0;
                 Main.dust[sparkle].noGravity = true;
             }
         }
