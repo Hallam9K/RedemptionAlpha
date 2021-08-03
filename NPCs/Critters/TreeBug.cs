@@ -7,6 +7,7 @@ using Terraria.ModLoader.Utilities;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Redemption.NPCs.Critters
 {
@@ -145,8 +146,7 @@ namespace Redemption.NPCs.Critters
         {
             switch (AIState)
             {
-                case (float)ActionState.Idle:
-                    NPC.frame.Y = 0;
+                case (float)ActionState.Begin:
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
                     if (NPC.frameCounter >= 3 || NPC.frameCounter <= -3)
                     {
@@ -157,6 +157,9 @@ namespace Redemption.NPCs.Critters
                             NPC.frame.Y = 0;
                         }
                     }
+                    break;
+                case (float)ActionState.Idle:
+                    NPC.frame.Y = 0;
                     break;
                 case (float)ActionState.Wander:
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
