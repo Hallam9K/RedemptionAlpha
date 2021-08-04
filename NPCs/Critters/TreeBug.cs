@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Critters
                         NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
                         AIState = (float)ActionState.Hop;
                     }
-                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.damage > 0)
                     {
                         moveTo = NPC.FindGround(10);
                         AITimer = 0;
@@ -96,13 +96,13 @@ namespace Redemption.NPCs.Critters
                     }
                     break;
                 case (float)ActionState.Wander:
-                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 32, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 32, NPC.Center) && target.damage > 0)
                     {
                         NPC.velocity.X *= target.Center.X < NPC.Center.X ? 1.4f : -1.4f;
                         NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
                         AIState = (float)ActionState.Hop;
                     }
-                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.damage > 0)
                     {
                         RedeHelper.HorizontallyMove(NPC, new Vector2(target.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y), 0.5f, 2, 4, 4, false);
                         return;
@@ -127,13 +127,15 @@ namespace Redemption.NPCs.Critters
                     break;
                 case (float)ActionState.Eat:
                     NPC.velocity.X *= 0.5f;
+                    Point tileBelow = NPC.Bottom.ToTileCoordinates();
+                    Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
                     AITimer++;
                     if (AITimer % 30 == 0 && NPC.life < NPC.lifeMax)
                     {
                         NPC.life++;
                         NPC.HealEffect(1);
                     }
-                    if (AITimer >= TimerRand)
+                    if (AITimer >= TimerRand || tile == null || !tile.IsActiveUnactuated || !Main.tileSolid[tile.type] || !TileTags.WoodLeaf.Has(tile.type))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);

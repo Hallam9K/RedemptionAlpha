@@ -33,7 +33,7 @@ namespace Redemption.NPCs.Critters
         public override void SetDefaults()
         {
             NPC.width = 8;
-            NPC.height = 6;
+            NPC.height = 8;
             NPC.lifeMax = 1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Critters
                         TimerRand = Main.rand.Next(240, 600);
                         AIState = (float)ActionState.Flying;
                     }
-                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.active && target.type != ModContent.NPCType<Fly>())
+                    if (RedeHelper.ClosestNPCAny(ref target, 100, NPC.Center) && target.life > 5 && target.type != ModContent.NPCType<Fly>())
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));

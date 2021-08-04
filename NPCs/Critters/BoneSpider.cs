@@ -73,13 +73,13 @@ namespace Redemption.NPCs.Critters
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = (float)ActionState.Wander;
                     }
-                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 60, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 60, NPC.Center) && target.damage > 0)
                     {
                         NPC.velocity.X *= target.Center.X < NPC.Center.X ? 2f : -2f;
                         NPC.velocity.Y = Main.rand.NextFloat(-2f, -7f);
                         AIState = (float)ActionState.Hop;
                     }
-                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.damage > 0)
                     {
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
@@ -88,13 +88,13 @@ namespace Redemption.NPCs.Critters
                     }
                     break;
                 case (float)ActionState.Wander:
-                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 60, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 60, NPC.Center) && target.damage > 0)
                     {
                         NPC.velocity.X *= target.Center.X < NPC.Center.X ? 2f : -2f;
                         NPC.velocity.Y = Main.rand.NextFloat(-2f, -7f);
                         AIState = (float)ActionState.Hop;
                     }
-                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && !target.friendly && target.active && target.damage > 0)
+                    if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.damage > 0)
                     {
                         RedeHelper.HorizontallyMove(NPC, new Vector2(target.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y), 0.5f, 2.5f, 4, 4, false);
                         return;
