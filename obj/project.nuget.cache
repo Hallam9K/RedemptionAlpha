@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "QRptRHybK55aXKFj/Dc/3RmG8bUaCzjv9CL30pAIDg1/x8h2GK4IKV4rUJHBgrmsK8nJ51YOkMcSseZUO4tWwg==",
+  "dgSpecHash": "ngb/vWQCG7ruHHb9MnobT8hTDB6/s/RI1bdLvGf42DeoY8JChDrDkXdaS8hFEqvnl7XgI8rzDtRyhd8qNcdrSA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hallam the 2nd\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
+  "projectFilePath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Hallam the 2nd\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
+    "C:\\Users\\matti\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
   ],
   "logs": []
 }
