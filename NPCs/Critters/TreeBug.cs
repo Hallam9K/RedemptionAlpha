@@ -127,20 +127,21 @@ namespace Redemption.NPCs.Critters
                     break;
                 case (float)ActionState.Eat:
                     NPC.velocity.X *= 0.5f;
-                    Point tileBelow = NPC.Bottom.ToTileCoordinates();
-                    Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+                    //Point tileBelow = NPC.Bottom.ToTileCoordinates();
+                    //Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
                     AITimer++;
                     if (AITimer % 30 == 0 && NPC.life < NPC.lifeMax)
                     {
                         NPC.life++;
                         NPC.HealEffect(1);
                     }
-                    if (AITimer >= TimerRand || tile == null || !tile.IsActiveUnactuated || !Main.tileSolid[tile.type] || !TileTags.WoodLeaf.Has(tile.type))
+                    /*if (AITimer >= TimerRand || tile == null || !tile.IsActiveUnactuated || !Main.tileSolid[tile.type] || !TileTags.WoodLeaf.Has(tile.type))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = (float)ActionState.Idle;
-                    }
+                    }*/
+                    
                     break;
             }
         }
