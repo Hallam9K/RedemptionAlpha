@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj": {}
+    "C:\\Users\\Hallam the 2nd\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj": {
+    "C:\\Users\\Hallam the 2nd\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
+        "projectUniqueName": "C:\\Users\\Hallam the 2nd\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
         "projectName": "Redemption",
-        "projectPath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
-        "packagesPath": "C:\\Users\\matti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\obj\\",
+        "projectPath": "C:\\Users\\Hallam the 2nd\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
+        "packagesPath": "C:\\Users\\Hallam the 2nd\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hallam the 2nd\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\matti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hallam the 2nd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -60,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

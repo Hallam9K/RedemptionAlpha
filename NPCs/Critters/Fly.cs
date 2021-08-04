@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Critters;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,9 +36,8 @@ namespace Redemption.NPCs.Critters
             NPC.width = 8;
             NPC.height = 8;
             NPC.lifeMax = 1;
-            NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.npcSlots = 0f;
+            NPC.npcSlots = 0;
             NPC.aiStyle = -1;
             NPC.noGravity = true;
             NPC.catchItem = (short)ModContent.ItemType<FlyBait>();
@@ -60,6 +60,7 @@ namespace Redemption.NPCs.Critters
             {
                 NPC.velocity.Y = -NPC.oldVelocity.Y;
             }
+
             switch (AIState)
             {
                 case (float)ActionState.Begin:
@@ -70,6 +71,16 @@ namespace Redemption.NPCs.Critters
                 case (float)ActionState.Flying:
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
+                    float soundVolume = (NPC.velocity.Length() / 50) + 0.1f;
+                    if (soundVolume > 1f) { soundVolume = 1f; }
+                    if (NPC.soundDelay == 0)
+                    {
+                        if (!Main.dedServ)
+                        {
+                            //SoundEngine.PlaySound(Mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/FlyBuzz").WithVolume(soundVolume).WithPitchVariance(0.1f), (int)NPC.position.X, (int)NPC.position.Y);
+                        }
+                        NPC.soundDelay = 180;
+                    }
                     if (NPC.velocity.Length() < 4)
                     {
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
@@ -104,7 +115,7 @@ namespace Redemption.NPCs.Critters
                         TimerRand = Main.rand.Next(240, 600);
                         AIState = (float)ActionState.Flying;
                     }
-                    if (RedeHelper.ClosestNPCAny(ref target, 100, NPC.Center) && target.life > 5 && target.type != ModContent.NPCType<Fly>())
+                    if (NPC.ClosestNPCToNPC(ref target, 100, NPC.Center) && target.life > 5)
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
@@ -143,6 +154,19 @@ namespace Redemption.NPCs.Critters
                 }
             }
         }
+        public override bool CheckDead()
+        {
+            if (Main.rand.NextBool(3))
+            {
+                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Smoke, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                NPC.DeathSound = SoundID.NPCDeath1.WithVolume(0);
+                NPC.immuneTime = 30;
+                NPC.life = 1;
+                return false;
+            }
+            NPC.DeathSound = SoundID.NPCDeath1;
+            return true;
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -153,7 +177,10 @@ namespace Redemption.NPCs.Critters
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+            if (NPC.life < 0)
+            {
+                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+            }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
     }

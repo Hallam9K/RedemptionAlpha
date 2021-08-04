@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using GroupProj = Redemption.Tags.ProjectileTags;
 using GroupTile = Redemption.Tags.TileTags;
+using GroupNPC = Redemption.Tags.NPCTags;
 
 namespace Redemption
 {
@@ -206,70 +207,6 @@ namespace Redemption
             NPCID.BunnyXmas,
             NPCID.PartyBunny
         };
-        public static List<int> IsVanillaWeakSkeleton = new()
-        {
-            NPCID.ArmoredSkeleton,
-            NPCID.BigHeadacheSkeleton,
-            NPCID.BigMisassembledSkeleton,
-            NPCID.BigPantlessSkeleton,
-            NPCID.BigSkeleton,
-            NPCID.BoneThrowingSkeleton,
-            NPCID.BoneThrowingSkeleton2,
-            NPCID.BoneThrowingSkeleton3,
-            NPCID.BoneThrowingSkeleton4,
-            NPCID.DD2SkeletonT1,
-            NPCID.DD2SkeletonT3,
-            NPCID.GreekSkeleton,
-            NPCID.HeadacheSkeleton,
-            NPCID.HeavySkeleton,
-            NPCID.MisassembledSkeleton,
-            NPCID.PantlessSkeleton,
-            NPCID.Skeleton,
-            NPCID.SkeletonAlien,
-            NPCID.SkeletonArcher,
-            NPCID.SkeletonAstonaut,
-            NPCID.SkeletonCommando,
-            NPCID.SkeletonSniper,
-            NPCID.SkeletonTopHat,
-            NPCID.SmallHeadacheSkeleton,
-            NPCID.SmallMisassembledSkeleton,
-            NPCID.SmallPantlessSkeleton,
-            NPCID.SmallSkeleton,
-            NPCID.TacticalSkeleton,
-            NPCID.AngryBones,
-            NPCID.AngryBonesBig,
-            NPCID.AngryBonesBigHelmet,
-            NPCID.AngryBonesBigMuscle,
-            NPCID.BoneSerpentHead,
-            NPCID.BoneSerpentBody,
-            NPCID.BoneSerpentTail,
-            NPCID.DarkCaster,
-            NPCID.CursedSkull,
-            NPCID.UndeadMiner,
-            NPCID.UndeadViking,
-            NPCID.ArmoredViking,
-            NPCID.BlueArmoredBones,
-            NPCID.BlueArmoredBonesMace,
-            NPCID.BlueArmoredBonesNoPants,
-            NPCID.BlueArmoredBonesSword,
-            NPCID.BoneLee,
-            NPCID.DiabolistRed,
-            NPCID.DiabolistWhite,
-            NPCID.GiantCursedSkull,
-            NPCID.HellArmoredBones,
-            NPCID.HellArmoredBonesMace,
-            NPCID.HellArmoredBonesSpikeShield,
-            NPCID.HellArmoredBonesSword,
-            NPCID.Necromancer,
-            NPCID.NecromancerArmored,
-            NPCID.RaggedCaster,
-            NPCID.RaggedCasterOpenCoat,
-            NPCID.RuneWizard,
-            NPCID.RustyArmoredBonesAxe,
-            NPCID.RustyArmoredBonesFlail,
-            NPCID.RustyArmoredBonesSword,
-            NPCID.RustyArmoredBonesSwordNoArmor
-        };
         /*public static List<int> IsInfected = new()
         {
             ModContent.NPCType<HazmatSkeleton>(),
@@ -439,74 +376,6 @@ namespace Redemption
             ModContent.NPCType<SpineTentacle_Large>(),
             ModContent.NPCType<SpineTentacle_Small>()
         };*/
-        public static List<int> IsAnySkeleton = new()
-        {
-            NPCID.ArmoredSkeleton,
-            NPCID.BigHeadacheSkeleton,
-            NPCID.BigMisassembledSkeleton,
-            NPCID.BigPantlessSkeleton,
-            NPCID.BigSkeleton,
-            NPCID.BoneThrowingSkeleton,
-            NPCID.BoneThrowingSkeleton2,
-            NPCID.BoneThrowingSkeleton3,
-            NPCID.BoneThrowingSkeleton4,
-            NPCID.DD2SkeletonT1,
-            NPCID.DD2SkeletonT3,
-            NPCID.GreekSkeleton,
-            NPCID.HeadacheSkeleton,
-            NPCID.HeavySkeleton,
-            NPCID.MisassembledSkeleton,
-            NPCID.PantlessSkeleton,
-            NPCID.Skeleton,
-            NPCID.SkeletonAlien,
-            NPCID.SkeletonArcher,
-            NPCID.SkeletonAstonaut,
-            NPCID.SkeletonCommando,
-            NPCID.SkeletonSniper,
-            NPCID.SkeletonTopHat,
-            NPCID.SmallHeadacheSkeleton,
-            NPCID.SmallMisassembledSkeleton,
-            NPCID.SmallPantlessSkeleton,
-            NPCID.SmallSkeleton,
-            NPCID.TacticalSkeleton,
-            NPCID.AngryBones,
-            NPCID.AngryBonesBig,
-            NPCID.AngryBonesBigHelmet,
-            NPCID.AngryBonesBigMuscle,
-            NPCID.BoneSerpentHead,
-            NPCID.BoneSerpentBody,
-            NPCID.BoneSerpentTail,
-            NPCID.DarkCaster,
-            NPCID.CursedSkull,
-            NPCID.UndeadMiner,
-            NPCID.UndeadViking,
-            NPCID.ArmoredViking,
-            NPCID.BlueArmoredBones,
-            NPCID.BlueArmoredBonesMace,
-            NPCID.BlueArmoredBonesNoPants,
-            NPCID.BlueArmoredBonesSword,
-            NPCID.BoneLee,
-            NPCID.DiabolistRed,
-            NPCID.DiabolistWhite,
-            NPCID.GiantCursedSkull,
-            NPCID.HellArmoredBones,
-            NPCID.HellArmoredBonesMace,
-            NPCID.HellArmoredBonesSpikeShield,
-            NPCID.HellArmoredBonesSword,
-            NPCID.Necromancer,
-            NPCID.NecromancerArmored,
-            NPCID.RaggedCaster,
-            NPCID.RaggedCasterOpenCoat,
-            NPCID.RuneWizard,
-            NPCID.RustyArmoredBonesAxe,
-            NPCID.RustyArmoredBonesFlail,
-            NPCID.RustyArmoredBonesSword,
-            NPCID.RustyArmoredBonesSwordNoArmor,
-            NPCID.DungeonGuardian,
-            NPCID.SkeletronHead,
-            NPCID.SkeletronHand,
-            ModContent.NPCType<BoneSpider>()
-        };
         #endregion
     }
     public static class ProjectileLists
@@ -640,9 +509,9 @@ namespace Redemption
     public sealed class TileTags
     {
         public static readonly TagData WoodLeaf = ContentTags.Get<GroupTile>(nameof(WoodLeaf));
-
         public static void SetTileTags()
         {
+            #region Tile Tags
             WoodLeaf.PopulateFromSets(TileID.Sets.Leaves);
             WoodLeaf.SetMultiple(new int[] {
                 TileID.WoodBlock,
@@ -657,6 +526,89 @@ namespace Redemption
                 TileID.LivingMahogany,
                 TileID.RichMahogany,
             });
+            #endregion
+        }
+    }
+    public sealed class NPCTags
+    {
+        public static readonly TagData Skeleton = ContentTags.Get<GroupNPC>(nameof(Skeleton));
+        public static readonly TagData SkeletonHumanoid = ContentTags.Get<GroupNPC>(nameof(SkeletonHumanoid));
+        public static void SetNPCTags()
+        {
+            #region Skeleton
+            Skeleton.PopulateFromSets(NPCID.Sets.Skeletons);
+            Skeleton.SetMultiple(new int[] {
+            NPCID.DD2SkeletonT1,
+            NPCID.DD2SkeletonT3,
+            NPCID.AngryBones,
+            NPCID.AngryBonesBig,
+            NPCID.AngryBonesBigHelmet,
+            NPCID.AngryBonesBigMuscle,
+            NPCID.BoneSerpentHead,
+            NPCID.BoneSerpentBody,
+            NPCID.BoneSerpentTail,
+            NPCID.DarkCaster,
+            NPCID.CursedSkull,
+            NPCID.BlueArmoredBones,
+            NPCID.BlueArmoredBonesMace,
+            NPCID.BlueArmoredBonesNoPants,
+            NPCID.BlueArmoredBonesSword,
+            NPCID.BoneLee,
+            NPCID.DiabolistRed,
+            NPCID.DiabolistWhite,
+            NPCID.GiantCursedSkull,
+            NPCID.HellArmoredBones,
+            NPCID.HellArmoredBonesMace,
+            NPCID.HellArmoredBonesSpikeShield,
+            NPCID.HellArmoredBonesSword,
+            NPCID.Necromancer,
+            NPCID.NecromancerArmored,
+            NPCID.RaggedCaster,
+            NPCID.RaggedCasterOpenCoat,
+            NPCID.RuneWizard,
+            NPCID.RustyArmoredBonesAxe,
+            NPCID.RustyArmoredBonesFlail,
+            NPCID.RustyArmoredBonesSword,
+            NPCID.RustyArmoredBonesSwordNoArmor,
+            NPCID.DungeonGuardian,
+            NPCID.SkeletronHead,
+            NPCID.SkeletronHand,
+            NPCID.PirateGhost,
+            ModContent.NPCType<BoneSpider>()
+            });
+
+            SkeletonHumanoid.PopulateFromSets(NPCID.Sets.Skeletons);
+            SkeletonHumanoid.SetMultiple(new int[] {
+                NPCID.DD2SkeletonT1,
+                NPCID.DD2SkeletonT3,
+                NPCID.AngryBones,
+                NPCID.AngryBonesBig,
+                NPCID.AngryBonesBigHelmet,
+                NPCID.AngryBonesBigMuscle,
+                NPCID.DarkCaster,
+                NPCID.BlueArmoredBones,
+                NPCID.BlueArmoredBonesMace,
+                NPCID.BlueArmoredBonesNoPants,
+                NPCID.BlueArmoredBonesSword,
+                NPCID.BoneLee,
+                NPCID.DiabolistRed,
+                NPCID.DiabolistWhite,
+                NPCID.HellArmoredBones,
+                NPCID.HellArmoredBonesMace,
+                NPCID.HellArmoredBonesSpikeShield,
+                NPCID.HellArmoredBonesSword,
+                NPCID.Necromancer,
+                NPCID.NecromancerArmored,
+                NPCID.RaggedCaster,
+                NPCID.RaggedCasterOpenCoat,
+                NPCID.RuneWizard,
+                NPCID.RustyArmoredBonesAxe,
+                NPCID.RustyArmoredBonesFlail,
+                NPCID.RustyArmoredBonesSword,
+                NPCID.RustyArmoredBonesSwordNoArmor,
+                NPCID.PirateGhost,
+            });
+            #endregion
         }
     }
     public sealed class ProjTags
@@ -675,7 +627,6 @@ namespace Redemption
         public static readonly TagData Blood = ContentTags.Get<GroupProj>(nameof(Blood));
         public static readonly TagData Psychic = ContentTags.Get<GroupProj>(nameof(Psychic));
         public static readonly TagData Celestial = ContentTags.Get<GroupProj>(nameof(Celestial));
-
         public static void SetProjTags()
         {
             #region Projectile Elements
