@@ -36,11 +36,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
+      "projectUniqueName": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\RedemptionAlpha\\Redemption.csproj",
       "projectName": "Redemption",
-      "projectPath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\Redemption.csproj",
+      "projectPath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\RedemptionAlpha\\Redemption.csproj",
       "packagesPath": "C:\\Users\\matti\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\Redemption\\obj\\",
+      "outputPath": "C:\\Users\\matti\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\RedemptionAlpha\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\matti\\AppData\\Roaming\\NuGet\\NuGet.Config",
