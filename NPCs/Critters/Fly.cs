@@ -39,6 +39,7 @@ namespace Redemption.NPCs.Critters
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.npcSlots = 0f;
             NPC.aiStyle = -1;
+            NPC.noGravity = true;
             NPC.catchItem = (short)ModContent.ItemType<FlyBait>();
         }
         NPC target;
@@ -67,6 +68,7 @@ namespace Redemption.NPCs.Critters
                     NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                     break;
                 case (float)ActionState.Flying:
+                    NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
                     if (NPC.velocity.Length() < 4)
                     {
@@ -84,6 +86,7 @@ namespace Redemption.NPCs.Critters
                 case (float)ActionState.Landed:
                     AITimer++;
                     NPC.rotation = 0;
+                    NPC.noGravity = false;
                     if (BaseAI.HitTileOnSide(NPC, 3, false))
                     {
                         NPC.velocity *= 0;
