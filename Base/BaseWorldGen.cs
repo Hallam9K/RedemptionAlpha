@@ -233,11 +233,11 @@ namespace Redemption.Base
          *  Completely kills a chest at X, Y and removes all items within it.
          *  (note this does not remove the tile itself)
          */
-        public static bool KillChestAndItems(int X, int Y)
+        public static bool KillChestAndItems(int x, int y)
         {
             for (int i = 0; i < 1000; i++)
             {
-                if (Main.chest[i] != null && Main.chest[i].x == X && Main.chest[i].y == Y)
+                if (Main.chest[i] != null && Main.chest[i].x == x && Main.chest[i].y == y)
                 {
                     Main.chest[i] = null;
                     return true;
@@ -964,30 +964,30 @@ namespace Redemption.Base
     #region Custom GenShapes
     public class ShapeChasmSideways : GenShape
     {
-        public int _startheight = 20, _endheight = 5, _length = 60, _variance, _randomHeading;
-        public float[] _heightVariance;
-        public bool _dir = true;
+        public int startheight = 20, endheight = 5, length = 60, variance, randomHeading;
+        public float[] heightVariance;
+        public bool dir = true;
 
         public ShapeChasmSideways(int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance = null, bool dir = true)
         {
-            _startheight = startheight;
-            _endheight = endheight;
-            _length = length;
-            _variance = variance;
-            _randomHeading = randomHeading;
-            _heightVariance = heightVariance;
-            _dir = dir;
+            this.startheight = startheight;
+            this.endheight = endheight;
+            this.length = length;
+            this.variance = variance;
+            this.randomHeading = randomHeading;
+            this.heightVariance = heightVariance;
+            this.dir = dir;
         }
 
         public void ResetChasmParams(int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance = null, bool dir = true)
         {
-            _startheight = startheight;
-            _endheight = endheight;
-            _length = length;
-            _variance = variance;
-            _randomHeading = randomHeading;
-            _heightVariance = heightVariance;
-            _dir = dir;
+            this.startheight = startheight;
+            this.endheight = endheight;
+            this.length = length;
+            this.variance = variance;
+            this.randomHeading = randomHeading;
+            this.heightVariance = heightVariance;
+            this.dir = dir;
         }
 
         private bool DoChasm(Point origin, GenAction action, int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance, bool dir)
@@ -1026,36 +1026,36 @@ namespace Redemption.Base
 
         public override bool Perform(Point origin, GenAction action)
         {
-            return DoChasm(origin, action, _startheight, _endheight, _length, _variance, _randomHeading, _heightVariance, _dir);
+            return DoChasm(origin, action, startheight, endheight, length, variance, randomHeading, heightVariance, dir);
         }
     }
 
     public class ShapeChasm : GenShape
     {
-        public int _startwidth = 20, _endwidth = 5, _depth = 60, _variance, _randomHeading;
-        public float[] _widthVariance;
-        public bool _dir = true;
+        public int startwidth = 20, endwidth = 5, depth = 60, variance, randomHeading;
+        public float[] widthVariance;
+        public bool dir = true;
 
         public ShapeChasm(int startwidth, int endwidth, int depth, int variance, int randomHeading, float[] widthVariance = null, bool dir = true)
         {
-            _startwidth = startwidth;
-            _endwidth = endwidth;
-            _depth = depth;
-            _variance = variance;
-            _randomHeading = randomHeading;
-            _widthVariance = widthVariance;
-            _dir = dir;
+            this.startwidth = startwidth;
+            this.endwidth = endwidth;
+            this.depth = depth;
+            this.variance = variance;
+            this.randomHeading = randomHeading;
+            this.widthVariance = widthVariance;
+            this.dir = dir;
         }
 
         public void ResetChasmParams(int startwidth, int endwidth, int depth, int variance, int randomHeading, float[] widthVariance = null, bool dir = true)
         {
-            _startwidth = startwidth;
-            _endwidth = endwidth;
-            _depth = depth;
-            _variance = variance;
-            _randomHeading = randomHeading;
-            _widthVariance = widthVariance;
-            _dir = dir;
+            this.startwidth = startwidth;
+            this.endwidth = endwidth;
+            this.depth = depth;
+            this.variance = variance;
+            this.randomHeading = randomHeading;
+            this.widthVariance = widthVariance;
+            this.dir = dir;
         }
 
         private bool DoChasm(Point origin, GenAction action, int startwidth, int endwidth, int depth, int variance, int randomHeading, float[] widthVariance, bool dir)
@@ -1093,7 +1093,7 @@ namespace Redemption.Base
 
         public override bool Perform(Point origin, GenAction action)
         {
-            return DoChasm(origin, action, _startwidth, _endwidth, _depth, _variance, _randomHeading, _widthVariance, _dir);
+            return DoChasm(origin, action, startwidth, endwidth, depth, variance, randomHeading, widthVariance, dir);
         }
     }
 
@@ -1112,25 +1112,25 @@ namespace Redemption.Base
 
     public class SetModTile : GenAction
     {
-        public ushort _type;
-        public short _frameX = -1;
-        public short _frameY = -1;
-        public bool _doFraming;
-        public bool _doNeighborFraming;
-        public Func<int, int, Tile, bool> _canReplace;
+        public ushort type;
+        public short frameX = -1;
+        public short frameY = -1;
+        public bool doFraming;
+        public bool doNeighborFraming;
+        public Func<int, int, Tile, bool> canReplace;
 
         public SetModTile(ushort type, bool setSelfFrames = false, bool setNeighborFrames = true)
         {
-            _type = type;
-            _doFraming = setSelfFrames;
-            _doNeighborFraming = setNeighborFrames;
+            this.type = type;
+            doFraming = setSelfFrames;
+            doNeighborFraming = setNeighborFrames;
         }
 
         public SetModTile ExtraParams(Func<int, int, Tile, bool> canReplace, int frameX = -1, int frameY = -1)
         {
-            _canReplace = canReplace;
-            _frameX = (short)frameX;
-            _frameY = (short)frameY;
+            this.canReplace = canReplace;
+            this.frameX = (short)frameX;
+            this.frameY = (short)frameY;
             return this;
         }
 
@@ -1139,16 +1139,16 @@ namespace Redemption.Base
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY)
                 return false;
             if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
-            if (_canReplace == null || _canReplace != null && _canReplace(x, y, _tiles[x, y]))
+            if (canReplace == null || canReplace != null && canReplace(x, y, _tiles[x, y]))
             {
-                _tiles[x, y].ResetToType(_type);
-                if (_frameX > -1)
-                    _tiles[x, y].frameX = _frameX;
-                if (_frameY > -1)
-                    _tiles[x, y].frameY = _frameY;
-                if (_doFraming)
+                _tiles[x, y].ResetToType(type);
+                if (frameX > -1)
+                    _tiles[x, y].frameX = frameX;
+                if (frameY > -1)
+                    _tiles[x, y].frameY = frameY;
+                if (doFraming)
                 {
-                    WorldUtils.TileFrame(x, y, _doNeighborFraming);
+                    WorldUtils.TileFrame(x, y, doNeighborFraming);
                 }
             }
             return UnitApply(origin, x, y, args);
@@ -1157,18 +1157,18 @@ namespace Redemption.Base
 
     public class SetMapBrightness : GenAction
     {
-        public byte _brightness;
+        public byte brightness;
 
         public SetMapBrightness(byte brightness)
         {
-            _brightness = brightness;
+            this.brightness = brightness;
         }
 
         public override bool Apply(Point origin, int x, int y, params object[] args)
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY) return false;
             if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
-            Main.Map.UpdateLighting(x, y, Math.Max(Main.Map[x, y].Light, _brightness));
+            Main.Map.UpdateLighting(x, y, Math.Max(Main.Map[x, y].Light, brightness));
             return UnitApply(origin, x, y, args);
         }
     }
@@ -1176,19 +1176,19 @@ namespace Redemption.Base
 
     public class PlaceModWall : GenAction
     {
-        public ushort _type;
-        public bool _neighbors;
-        public Func<int, int, Tile, bool> _canReplace;
+        public ushort type;
+        public bool neighbors;
+        public Func<int, int, Tile, bool> canReplace;
 
         public PlaceModWall(int type, bool neighbors = true)
         {
-            _type = (ushort)type;
-            _neighbors = neighbors;
+            this.type = (ushort)type;
+            this.neighbors = neighbors;
         }
 
         public PlaceModWall ExtraParams(Func<int, int, Tile, bool> canReplace)
         {
-            _canReplace = canReplace;
+            this.canReplace = canReplace;
             return this;
         }
 
@@ -1196,11 +1196,11 @@ namespace Redemption.Base
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY) return false;
             if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
-            if (_canReplace == null || _canReplace != null && _canReplace(x, y, _tiles[x, y]))
+            if (canReplace == null || canReplace != null && canReplace(x, y, _tiles[x, y]))
             {
-                _tiles[x, y].wall = _type;
+                _tiles[x, y].wall = type;
                 WorldGen.SquareWallFrame(x, y);
-                if (_neighbors)
+                if (neighbors)
                 {
                     WorldGen.SquareWallFrame(x + 1, y);
                     WorldGen.SquareWallFrame(x - 1, y);

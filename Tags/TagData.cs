@@ -5,34 +5,34 @@ namespace Redemption.Tags
     /// <summary> This class stores lists of content Ids associated with the tag that it represents. </summary>
     public sealed class TagData
     {
-        private readonly bool[] idToValue; //Accessed for quick HasTag checks.
-        private readonly List<int> entryList;
-        private readonly IReadOnlyList<int> readonlyEntryList; //Accessed for GetEntriesWithTag.
+        private readonly bool[] _idToValue; //Accessed for quick HasTag checks.
+        private readonly List<int> _entryList;
+        private readonly IReadOnlyList<int> _readonlyEntryList; //Accessed for GetEntriesWithTag.
 
         internal TagData(int maxEntries)
         {
-            idToValue = new bool[maxEntries];
-            entryList = new List<int>();
-            readonlyEntryList = entryList.AsReadOnly();
+            _idToValue = new bool[maxEntries];
+            _entryList = new List<int>();
+            _readonlyEntryList = _entryList.AsReadOnly();
         }
 
         /// <summary> Returns whether or not the content piece with the Id has this tag. </summary>
         /// <param name="id"> The content id. </param>
-        public bool Has(int id) => idToValue[id];
+        public bool Has(int id) => _idToValue[id];
 
         /// <summary> Returns a list of content Ids that have this tag. </summary>
-        public IReadOnlyList<int> GetEntries() => readonlyEntryList;
+        public IReadOnlyList<int> GetEntries() => _readonlyEntryList;
 
         /// <summary> Sets whether or not the content piece with the provided Id has this tag. </summary>
         /// <param name="id"> The content id. </param>
         /// <param name="value"> Whether or not the tag should be present for the provided content id. </param>
         public void Set(int id, bool value)
         {
-            idToValue[id] = value;
+            _idToValue[id] = value;
 
             if (!value)
-                entryList.Remove(id);
-            else if (!entryList.Contains(id)) entryList.Add(id);
+                _entryList.Remove(id);
+            else if (!_entryList.Contains(id)) _entryList.Add(id);
         }
     }
 }

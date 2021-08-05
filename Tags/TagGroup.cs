@@ -25,7 +25,7 @@ namespace Redemption.Tags
         /// <param name="tagName"> The name of the tag. </param>
         public TagData GetTag(string tagName)
         {
-            if (!TagNameToData.TryGetValue(tagName, out var data))
+            if (!TagNameToData.TryGetValue(tagName, out TagData data))
                 TagNameToData[tagName] = data = new TagData(TypeCount);
 
             return data;

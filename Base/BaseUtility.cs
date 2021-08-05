@@ -150,7 +150,7 @@ namespace Redemption.Base
             if (deltaTime < 10.0) text2 = "0" + text2;
             if (intTime > 12) intTime -= 12;
             if (intTime == 0) intTime = 12;
-            var newText = string.Concat("Time: ", intTime, ":", text2, " ", text);
+            string newText = string.Concat("Time: ", intTime, ":", text2, " ", text);
             Chat(newText, overrideColor != null ? (Color)overrideColor : new Color(255, 240, 20), sync);
         }
 

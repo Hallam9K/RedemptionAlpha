@@ -41,10 +41,10 @@ namespace Redemption.Base
 			}
 		}
 
-		public static void AIMinionPlant(Projectile projectile, ref float[] ai, Entity owner, Vector2 endPoint, bool setTime = true, float vineLength = 150f, float vineLengthLong = 200f, int vineTimeExtend = 300, int vineTimeMax = 450, float moveInterval = 0.035f, float speedMax = 2f, Vector2 targetOffset = default, Func<Entity, Entity, Entity> GetTarget = null, Func<Entity, Entity, Entity, bool> ShootTarget = null)
+		public static void AIMinionPlant(Projectile projectile, ref float[] ai, Entity owner, Vector2 endPoint, bool setTime = true, float vineLength = 150f, float vineLengthLong = 200f, int vineTimeExtend = 300, int vineTimeMax = 450, float moveInterval = 0.035f, float speedMax = 2f, Vector2 targetOffset = default, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
 		{
 			if (setTime){ projectile.timeLeft = 10; }
-			Entity target = GetTarget == null ? null : GetTarget(projectile, owner);
+			Entity target = getTarget == null ? null : getTarget(projectile, owner);
 			if (target == null) { target = owner; }
 			bool targetOwner = target == owner;
 			ai[0] += 1f;
@@ -67,7 +67,7 @@ namespace Redemption.Base
 					distTargetX *= distTarget;
 					distTargetY *= distTarget;
 				}
-				bool dontMove = ShootTarget != null && ShootTarget(projectile, owner, target);
+				bool dontMove = shootTarget != null && shootTarget(projectile, owner, target);
 				if (!dontMove)
 				{
 					if (projectile.position.X < endPoint.X + distTargetX)
@@ -140,19 +140,19 @@ namespace Redemption.Base
 		}
 
 
-		public static void AIMinionFlier(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, bool movementFixed = false, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, bool autoSpriteDir = true, bool dummyTileCollide = false, Func<Entity, Entity, Entity> GetTarget = null, Func<Entity, Entity, Entity, bool> ShootTarget = null)
+		public static void AIMinionFlier(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, bool movementFixed = false, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, bool autoSpriteDir = true, bool dummyTileCollide = false, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
 		{
 			if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
 			if (maxSpeed == -1f) { maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
 			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
 			projectile.timeLeft = 10;
 			bool tileCollide = projectile.tileCollide;
-			AIMinionFlier(projectile, ref ai, owner, ref tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, movementFixed, hover, hoverHeight, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, GetTarget, ShootTarget);
+			AIMinionFlier(projectile, ref ai, owner, ref tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, movementFixed, hover, hoverHeight, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget, shootTarget);
 			if(!dummyTileCollide) projectile.tileCollide = tileCollide;
 			if (autoSpriteDir) { projectile.spriteDirection = projectile.direction; }
 			float dist = Vector2.Distance(projectile.Center, owner.Center);
 			if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
-			if ((GetTarget == null || GetTarget(projectile, owner) == null || GetTarget(projectile, owner) == owner) && Math.Abs(projectile.velocity.X + projectile.velocity.Y) <= 0.025f) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
+			if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && Math.Abs(projectile.velocity.X + projectile.velocity.Y) <= 0.025f) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
 		}
 
 		/*
@@ -172,7 +172,7 @@ namespace Redemption.Base
 		 * maxSpeedFlying : The maximum speed whist 'flying' back to the player.
 		 * GetTarget : a Func(Entity codable, Entity owner), returns a Vector2 of the a target's position. If GetTarget is null or it returns default(Vector2) the target is assumed to be the owner.
 		 */
-		public static void AIMinionFlier(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, bool movementFixed, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> GetTarget = null, Func<Entity, Entity, Entity, bool> ShootTarget = null)
+		public static void AIMinionFlier(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, bool movementFixed, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
 		{
 			float dist = Vector2.Distance(codable.Center, owner.Center);
 			if (dist > teleportDist) { codable.Center = owner.Center; }
@@ -186,11 +186,11 @@ namespace Redemption.Base
 			{
 				if (ai[0] == 1) { moveInterval *= 1.5f; maxSpeedFlying *= 1.5f; }
 				tileCollide = ai[0] == 0;
-				Entity target = GetTarget == null ? owner : GetTarget(codable, owner);
+				Entity target = getTarget == null ? owner : getTarget(codable, owner);
 				if (target == null) { target = owner; }
 				Vector2 targetCenter = target.Center;
 				bool isOwner = target == owner;
-				bool dontMove = ai[0] == 0 && ShootTarget != null && ShootTarget(codable, owner, target);
+				bool dontMove = ai[0] == 0 && shootTarget != null && shootTarget(codable, owner, target);
 				if (isOwner)
 				{
 					targetCenter.Y -= hoverHeight;
@@ -223,17 +223,17 @@ namespace Redemption.Base
 
 
 
-		public static void AIMinionFighter(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> GetTarget = null)
+		public static void AIMinionFighter(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> getTarget = null)
 		{
 			if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
 			if (maxSpeed == -1f){ maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
 			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
 			projectile.timeLeft = 10;
-			AIMinionFighter(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, ref projectile.gfxOffY, ref projectile.stepSpeed, pet ? 0 : projectile.minionPos, jumpDistX, jumpDistY, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, GetTarget);
+			AIMinionFighter(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, ref projectile.gfxOffY, ref projectile.stepSpeed, pet ? 0 : projectile.minionPos, jumpDistX, jumpDistY, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget);
 			projectile.spriteDirection = projectile.direction;
 			float dist = Vector2.Distance(projectile.Center, owner.Center);
 			if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
-			if ((GetTarget == null ||  GetTarget(projectile, owner) == null || GetTarget(projectile, owner) == owner) && (projectile.velocity.X is >= -0.025f or <= 0.025f) && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
+			if ((getTarget == null ||  getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
 		}
 
 
@@ -256,7 +256,7 @@ namespace Redemption.Base
 		 * maxSpeedFlying : The maximum speed whist 'flying' back to the player.
 		 * GetTarget : a Func(Entity codable, Entity owner), returns a Vector2 of the a target's position. If GetTarget is null or it returns default(Vector2) the target is assumed to be the owner.
 		 */
-		public static void AIMinionFighter(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, ref float gfxOffY, ref float stepSpeed, int minionPos, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> GetTarget = null)
+		public static void AIMinionFighter(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, ref float gfxOffY, ref float stepSpeed, int minionPos, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null)
 		{
 			float dist = Vector2.Distance(codable.Center, owner.Center);
 			if (dist > teleportDist) { codable.Center = owner.Center; }
@@ -269,7 +269,7 @@ namespace Redemption.Base
 			if (ai[0] == 0) //walking
 			{
 				tileCollide = true;
-				Entity target = GetTarget == null ? null : GetTarget(codable, owner);
+				Entity target = getTarget == null ? null : getTarget(codable, owner);
 				Vector2 targetCenter = target == null ? default : target.Center;
 				bool isOwner = target == null || targetCenter == owner.Center;
 				if (targetCenter == default)
@@ -335,16 +335,16 @@ namespace Redemption.Base
 			}
 		}
 
-		public static void AIMinionSlime(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = -1f, float jumpVelY = 20f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> GetTarget = null)
+		public static void AIMinionSlime(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = -1f, float jumpVelY = 20f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> getTarget = null)
 		{
 			if (jumpVelX == -1f) { jumpVelX = 2f + Main.player[projectile.owner].velocity.X; }
 			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(jumpVelX, jumpVelY); }
 			projectile.timeLeft = 10;
-			AIMinionSlime(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, lineDist, returnDist, teleportDist, jumpVelX, jumpVelY, maxSpeedFlying, GetTarget);
+			AIMinionSlime(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, lineDist, returnDist, teleportDist, jumpVelX, jumpVelY, maxSpeedFlying, getTarget);
 			projectile.spriteDirection = projectile.direction;
 			float dist = Vector2.Distance(projectile.Center, owner.Center);
 			if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
-			if ((GetTarget == null ||  GetTarget(projectile, owner) == null || GetTarget(projectile, owner) == owner) && (projectile.velocity.X is >= -0.025f or <= 0.025f) && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
+			if ((getTarget == null ||  getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
 		}		
 		
 		/*
@@ -364,7 +364,7 @@ namespace Redemption.Base
 		 * maxSpeedFlying : The maximum speed whist 'flying' back to the player.
 		 * GetTarget : a Func(Entity codable, Entity owner), returns a Vector2 of the a target's position. If GetTarget is null or it returns default(Vector2) the target is assumed to be the owner.
 		 */
-		public static void AIMinionSlime(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = 2f, float jumpVelY = 20f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> GetTarget = null)
+		public static void AIMinionSlime(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = 2f, float jumpVelY = 20f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null)
 		{
 			float dist = Vector2.Distance(codable.Center, owner.Center);
 			if (dist > teleportDist) { codable.Center = owner.Center; }
@@ -377,7 +377,7 @@ namespace Redemption.Base
 			if (ai[0] == 0) //walking
 			{
 				tileCollide = true;
-				Entity target = GetTarget == null ? null : GetTarget(codable, owner);
+				Entity target = getTarget == null ? null : getTarget(codable, owner);
 				Vector2 targetCenter = target == null ? default : target.Center;
 				bool isOwner = target == null || targetCenter == owner.Center;
 				if (targetCenter == default)
@@ -539,7 +539,7 @@ namespace Redemption.Base
          */
         public static void AIPounce(Entity codable, Vector2 pounceCenter, float pounceScalar = 3.5f, float maxSpeed = 5f, float yBoost = -5.2f, float minDistance = 50, float maxDistance = 60)
         {
-            int direction = codable is NPC nPC ? nPC.direction : codable is Projectile projectile ? projectile.direction : 0;
+            int direction = codable is NPC nPc ? nPc.direction : codable is Projectile projectile ? projectile.direction : 0;
             float dist = Vector2.Distance(codable.Center, pounceCenter);
             if (pounceCenter.Y <= codable.Center.Y && dist > minDistance && dist < maxDistance)
             {
@@ -549,7 +549,7 @@ namespace Redemption.Base
                     codable.velocity.X *= pounceScalar;
                     if (codable.velocity.X > maxSpeed) { codable.velocity.X = maxSpeed; } if (codable.velocity.X < -maxSpeed) { codable.velocity.X = -maxSpeed; }
                     codable.velocity.Y = yBoost;
-                    if(codable is NPC nPC1) { nPC1.netUpdate = true; }
+                    if(codable is NPC nPc1) { nPc1.netUpdate = true; }
                 }
             }
         }
@@ -1005,24 +1005,24 @@ namespace Redemption.Base
 					p.ai[1] = 0f;
 					p.netUpdate = true;
 				}
-				int byUUID = Projectile.GetByUUID(p.owner, (int)p.ai[0]);
-				if (isWorm && byUUID >= 0 && Main.projectile[byUUID].active && !isTail)
+				int byUuid = Projectile.GetByUUID(p.owner, (int)p.ai[0]);
+				if (isWorm && byUuid >= 0 && Main.projectile[byUuid].active && !isTail)
 				{
 					npcInFront = true;
-					projCenter = Main.projectile[byUUID].Center;
-					projRot = Main.projectile[byUUID].rotation;
-					float projScale = MathHelper.Clamp(Main.projectile[byUUID].scale, 0f, 50f);
+					projCenter = Main.projectile[byUuid].Center;
+					projRot = Main.projectile[byUuid].rotation;
+					float projScale = MathHelper.Clamp(Main.projectile[byUuid].scale, 0f, 50f);
 					projectileScale = projScale;
 					tileScalar = 16f;
-					int num1064 = Main.projectile[byUUID].alpha;
-					Main.projectile[byUUID].localAI[0] = p.localAI[0] + 1f;
-					if (Main.projectile[byUUID].type != wormTypes[0])
+					int num1064 = Main.projectile[byUuid].alpha;
+					Main.projectile[byUuid].localAI[0] = p.localAI[0] + 1f;
+					if (Main.projectile[byUuid].type != wormTypes[0])
 					{
-						Main.projectile[byUUID].localAI[1] = p.whoAmI;
+						Main.projectile[byUuid].localAI[1] = p.whoAmI;
 					}
-					if (p.owner == Main.myPlayer && Main.projectile[byUUID].type == wormTypes[0] && p.type == wormTypes[^1])
+					if (p.owner == Main.myPlayer && Main.projectile[byUuid].type == wormTypes[0] && p.type == wormTypes[^1])
 					{
-						Main.projectile[byUUID].Kill();
+						Main.projectile[byUuid].Kill();
 						p.Kill();
 						return;
 					}
@@ -1056,12 +1056,12 @@ namespace Redemption.Base
             }
 		}
 
-		public static void AIProjSpaceOctopus(Projectile p, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, Action<int, Projectile> SpawnDust = null)
+		public static void AIProjSpaceOctopus(Projectile p, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, Action<int, Projectile> spawnDust = null)
 		{
-			AIProjSpaceOctopus(p, ref ai, parentNPCType, fireProjType, shootVelocity, hoverTime, xMult, yMult, -1, true, false, SpawnDust);
+			AIProjSpaceOctopus(p, ref ai, parentNPCType, fireProjType, shootVelocity, hoverTime, xMult, yMult, -1, true, false, spawnDust);
 		}
 
-		public static void AIProjSpaceOctopus(Projectile projectile, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, int fireDmg = -1, bool useParentTarget = true, bool noParentHover = false, Action<int, Projectile> SpawnDust = null)
+		public static void AIProjSpaceOctopus(Projectile projectile, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, int fireDmg = -1, bool useParentTarget = true, bool noParentHover = false, Action<int, Projectile> spawnDust = null)
 		{
 			if(fireDmg == -1) fireDmg = projectile.damage;
 			
@@ -1089,7 +1089,7 @@ namespace Redemption.Base
 						projectile.velocity *= 6f / projectile.velocity.Length();
 					}
 				}
-				if(SpawnDust != null) SpawnDust(0, projectile);
+				if(spawnDust != null) spawnDust(0, projectile);
 				projectile.rotation = projectile.velocity.X * 0.1f;
 			}
 			if (ai[0] == hoverTime)
@@ -1140,7 +1140,7 @@ namespace Redemption.Base
 			if (ai[0] >= hoverTime)
 			{
 				projectile.rotation = projectile.rotation.AngleLerp(projectile.velocity.ToRotation() + 1.57079637f, 0.4f);
-				if(SpawnDust != null) SpawnDust(1, projectile);
+				if(spawnDust != null) spawnDust(1, projectile);
 			}
 		}
 		 
@@ -1835,7 +1835,7 @@ namespace Redemption.Base
 		 * start : The value at which the AI begins running (creates a delay).
 		 * SpawnDust: If not null, controlls the dust spawning.
          */
-        public static void AIStream(Projectile p, float scaleReduce = 0.04f, float gravity = 0.075f, bool goldenShower = false, int start = 3, Func<Projectile, Vector2, int, int, int> SpawnDust = null)
+        public static void AIStream(Projectile p, float scaleReduce = 0.04f, float gravity = 0.075f, bool goldenShower = false, int start = 3, Func<Projectile, Vector2, int, int, int> spawnDust = null)
         {
 			if (goldenShower)
 			{
@@ -1843,7 +1843,7 @@ namespace Redemption.Base
 				if (p.scale <= 0f){ p.Kill(); }
 				if (p.ai[0] <= start){ p.ai[0] += 1f; return; }
 				p.velocity.Y += gravity;
-				if (Main.netMode != NetmodeID.Server && SpawnDust != null)
+				if (Main.netMode != NetmodeID.Server && spawnDust != null)
 				{
 					for (int m = 0; m < 3; m++)
 					{
@@ -1852,7 +1852,7 @@ namespace Redemption.Base
 						int offset = 1;
 						Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
 						int width = p.width + offset * 2; int height = p.height + offset * 2;
-						int dustID = SpawnDust(p, pos, width, height);
+						int dustID = spawnDust(p, pos, width, height);
 						if (dustID != -1)
 						{
 							Main.dust[dustID].noGravity = true;
@@ -1867,7 +1867,7 @@ namespace Redemption.Base
 						int offset = 1;
 						Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
 						int width = p.width + offset * 2; int height = p.height + offset * 2;
-						int dustID = SpawnDust(p, pos, width, height);
+						int dustID = spawnDust(p, pos, width, height);
 						if (dustID != -1)
 						{
 							Main.dust[dustID].velocity *= 0.25f;
@@ -1880,7 +1880,7 @@ namespace Redemption.Base
 				p.scale -= scaleReduce;
 				if (p.scale <= 0f) { p.Kill(); }
 				p.velocity.Y += gravity;
-				if (Main.netMode != NetmodeID.Server && SpawnDust != null) SpawnDust(p, p.position, p.width, p.height);
+				if (Main.netMode != NetmodeID.Server && spawnDust != null) spawnDust(p, p.position, p.width, p.height);
 			}
         }
 
@@ -2184,7 +2184,7 @@ namespace Redemption.Base
 		 * 
 		 * 
 		 */
-		public static bool StickToTiles(Vector2 position, ref Vector2 velocity, int width, int height, Func<int, int, bool> CanStick = null)
+		public static bool StickToTiles(Vector2 position, ref Vector2 velocity, int width, int height, Func<int, int, bool> canStick = null)
 		{
 			int tileLeftX = (int)(position.X / 16f) - 1;
 			int tileRightX = (int)((position.X + width) / 16f) + 2;
@@ -2197,7 +2197,7 @@ namespace Redemption.Base
 			{
 				for (int y = tileLeftY; y < tileRightY; y++)
 				{
-					if (Main.tile[x, y] != null && Main.tile[x, y].IsActiveUnactuated && (CanStick != null ? CanStick(x, y) : Main.tileSolid[Main.tile[x, y].type] || Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))
+					if (Main.tile[x, y] != null && Main.tile[x, y].IsActiveUnactuated && (canStick != null ? canStick(x, y) : Main.tileSolid[Main.tile[x, y].type] || Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))
 					{
 						Vector2 pos = new(x * 16, y * 16);
 						if (position.X + width - 4f > pos.X && position.X + 4f < pos.X + 16f && position.Y + height - 4f > pos.Y && position.Y + 4f < pos.Y + 16f)
@@ -2352,13 +2352,13 @@ namespace Redemption.Base
 		}
 		
 		
-		public static void AISpaceOctopus(NPC npc, ref float[] ai, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> FireProj = null)
+		public static void AISpaceOctopus(NPC npc, ref float[] ai, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> fireProj = null)
 		{
 			npc.TargetClosest();		
-			AISpaceOctopus(npc, ref ai, Main.player[npc.target].Center, moveSpeed, velMax, hoverDistance, shootProjInterval, FireProj);
+			AISpaceOctopus(npc, ref ai, Main.player[npc.target].Center, moveSpeed, velMax, hoverDistance, shootProjInterval, fireProj);
 		}
 
-		public static void AISpaceOctopus(NPC npc, ref float[] ai, Vector2 targetCenter = default, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> FireProj = null)
+		public static void AISpaceOctopus(NPC npc, ref float[] ai, Vector2 targetCenter = default, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> fireProj = null)
 		{
 			Vector2 wantedVelocity = targetCenter - npc.Center + new Vector2(0f, -hoverDistance);
 			float dist = wantedVelocity.Length();
@@ -2383,7 +2383,7 @@ namespace Redemption.Base
 			}
 			npc.SimpleFlyMovement(wantedVelocity, moveSpeed);
 			npc.rotation = npc.velocity.X * 0.1f;
-			if (FireProj != null && shootProjInterval > -1 && (ai[0] += 1f) >= shootProjInterval)
+			if (fireProj != null && shootProjInterval > -1 && (ai[0] += 1f) >= shootProjInterval)
 			{
 				ai[0] = 0f;
 				if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -2393,7 +2393,7 @@ namespace Redemption.Base
 					{
 						projVelocity = Vector2.UnitY.RotatedByRandom(1.5707963705062866) * new Vector2(5f, 3f);
 					}
-					FireProj(npc, projVelocity);
+					fireProj(npc, projVelocity);
 				}
 			}	
 		}
@@ -3254,40 +3254,40 @@ namespace Redemption.Base
 			float distX = Main.player[npc.target].Center.X;
 			float distY = Main.player[npc.target].Center.Y;
             Vector2 npcCenter = npc.Center;
-			float distDX = (int)(distX / 8f) * 8f;
-			float distDY = (int)(distY / 8f) * 8f;
+			float distDx = (int)(distX / 8f) * 8f;
+			float distDy = (int)(distY / 8f) * 8f;
 			npcCenter.X = (int)(npcCenter.X / 8f) * 8f;
 			npcCenter.Y = (int)(npcCenter.Y / 8f) * 8f;
-			float distX2 = distDX - npcCenter.X;
-			float distY2 = distDY - npcCenter.Y;
+			float distX2 = distDx - npcCenter.X;
+			float distY2 = distDy - npcCenter.Y;
 			float dist = (float) Math.Sqrt(distX2 * distX2 + distY2 * distY2);
-			float SpeedX1;
-			float SpeedY1;
+			float speedX1;
+			float speedY1;
 			if (dist == 0f)
 			{
-				SpeedX1 = npc.velocity.X;
-				SpeedY1 = npc.velocity.Y;
+				speedX1 = npc.velocity.X;
+				speedY1 = npc.velocity.Y;
 			}else
 			{
 				float distScalar = distanceDivider / dist;
-				SpeedX1 = distX2 * distScalar;
-				SpeedY1 = distY2 * distScalar;
+				speedX1 = distX2 * distScalar;
+				speedY1 = distY2 * distScalar;
 			}
 			++ai[0];
             if (ai[0] > 0f){ npc.velocity.Y += 23f / 1000f; }else{ npc.velocity.Y -= 23f / 1000f; }
             if (ai[0] < -100f || (double)ai[0] > 100f){ npc.velocity.X += 23f / 1000f; }else{ npc.velocity.X -= 23f / 1000f; }
             if (ai[0] > 200f){ ai[0] = -200f; }
-			if (dist < 150f){	npc.velocity.X += SpeedX1 * 0.007f; npc.velocity.Y += SpeedY1 * 0.007f; }
+			if (dist < 150f){	npc.velocity.X += speedX1 * 0.007f; npc.velocity.Y += speedY1 * 0.007f; }
 			if (Main.player[npc.target].dead)
 			{
-				SpeedX1 = npc.direction * distanceDivider / 2f;
-				SpeedY1 = -distanceDivider / 2f;
+				speedX1 = npc.direction * distanceDivider / 2f;
+				speedY1 = -distanceDivider / 2f;
 			}
-			if (npc.velocity.X < SpeedX1){ npc.velocity.X += moveInterval; }else 
-            if (npc.velocity.X > SpeedX1){ npc.velocity.X -= moveInterval; }
-			if (npc.velocity.Y < SpeedY1){ npc.velocity.Y += moveInterval; }else 
-            if (npc.velocity.Y > SpeedY1){ npc.velocity.Y -= moveInterval; }
-			npc.rotation = (float) Math.Atan2(SpeedY1, SpeedX1) - 1.57f;
+			if (npc.velocity.X < speedX1){ npc.velocity.X += moveInterval; }else 
+            if (npc.velocity.X > speedX1){ npc.velocity.X -= moveInterval; }
+			if (npc.velocity.Y < speedY1){ npc.velocity.Y += moveInterval; }else 
+            if (npc.velocity.Y > speedY1){ npc.velocity.Y -= moveInterval; }
+			npc.rotation = (float) Math.Atan2(speedY1, speedX1) - 1.57f;
 			if (npc.collideX)
 			{
 				npc.netUpdate = true;
@@ -3379,12 +3379,12 @@ namespace Redemption.Base
             Vector2 npcCenter = npc.Center;
             float distX = Main.player[npc.target].Center.X;
             float distY = Main.player[npc.target].Center.Y;
-            float distDX = (int)(distX / 8f) * 8f;
-            float distDY = (int)(distY / 8f) * 8f;
+            float distDx = (int)(distX / 8f) * 8f;
+            float distDy = (int)(distY / 8f) * 8f;
             npcCenter.X = (int)(npcCenter.X / 8f) * 8f;
             npcCenter.Y = (int)(npcCenter.Y / 8f) * 8f;
-            float distX2 = distDX - npcCenter.X;
-            float distY2 = distDY - npcCenter.Y;
+            float distX2 = distDx - npcCenter.X;
+            float distY2 = distDy - npcCenter.Y;
             float dist = (float)Math.Sqrt(distX2 * distX2 + distY2 * distY2);
 			float velX;
 			float velY;
@@ -4315,7 +4315,7 @@ namespace Redemption.Base
 		 * CanTeleportTo<int, int> : Action that can be used to check if the npc can teleport to a specific place.
 		 * Attack : Action that can be used to have the npc periodically attack.
 		 */
-		public static void AITeleporter(NPC npc, ref float[] ai, bool checkGround = true, bool immobile = true, int distFromPlayer = 20, int teleportInterval = 650, int attackInterval = 100, int stopAttackInterval = 500, bool delayOnHit = true, Action<bool> TeleportEffects = null, Func<int, int, bool> CanTeleportTo = null, Action Attack = null)
+		public static void AITeleporter(NPC npc, ref float[] ai, bool checkGround = true, bool immobile = true, int distFromPlayer = 20, int teleportInterval = 650, int attackInterval = 100, int stopAttackInterval = 500, bool delayOnHit = true, Action<bool> teleportEffects = null, Func<int, int, bool> canTeleportTo = null, Action attack = null)
         {
             npc.TargetClosest();
             if (immobile)
@@ -4326,12 +4326,12 @@ namespace Redemption.Base
             if (ai[0] == 0f) { ai[0] = Math.Max(0, Math.Max(teleportInterval, teleportInterval - 150)); }
             if (ai[2] != 0f && ai[3] != 0f)
             {
-                if (TeleportEffects != null) { TeleportEffects(true); }
+                if (teleportEffects != null) { teleportEffects(true); }
                 npc.position.X = ai[2] * 16f - npc.width / 2 + 8f;
                 npc.position.Y = ai[3] * 16f - npc.height;
                 npc.velocity.X = 0f; npc.velocity.Y = 0f;
                 ai[2] = 0f; ai[3] = 0f;
-                if (TeleportEffects != null) { TeleportEffects(false); }
+                if (teleportEffects != null) { teleportEffects(false); }
             }
 			if (npc.justHit) { ai[0] = 0; }
 			ai[0]++;
@@ -4364,7 +4364,7 @@ namespace Redemption.Base
                     {
                         if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (!checkGround || Main.tile[tpTileX, tpY].IsActiveUnactuated))
                         {
-                            if (CanTeleportTo != null && CanTeleportTo(tpTileX, tpY) || Main.tile[tpTileX, tpY - 1].LiquidType != 2 && (!checkGround || Main.tileSolid[Main.tile[tpTileX, tpY].type]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
+                            if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) || Main.tile[tpTileX, tpY - 1].LiquidType != 2 && (!checkGround || Main.tileSolid[Main.tile[tpTileX, tpY].type]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                             {
                                 if (attackInterval != -1) { ai[1] = 20f; }
                                 ai[2] = tpTileX;
@@ -4377,10 +4377,10 @@ namespace Redemption.Base
                 }
                 npc.netUpdate = true;
             }
-            if (Attack != null && attackInterval != -1 && ai[1] > 0f)
+            if (attack != null && attackInterval != -1 && ai[1] > 0f)
             {
                 ai[1] -= 1f;
-                if (ai[1] == 25f) { Attack(); }
+                if (ai[1] == 25f) { attack(); }
             }
         }
 
@@ -5431,9 +5431,9 @@ namespace Redemption.Base
             }
         }
 
-		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, float distance = -1, Func<Projectile, bool> CanAdd = null)
+		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, float distance = -1, Func<Projectile, bool> canAdd = null)
 		{
-			return GetProjectile(center, projType, owner, default, distance, CanAdd);
+			return GetProjectile(center, projType, owner, default, distance, canAdd);
 		}
 		/*
 		 * Gets the closest Projectile with the given type within the given distance from the center. If distance is -1, it gets the closest Projectile.
@@ -5442,7 +5442,7 @@ namespace Redemption.Base
 		 * projsToExclude : An array of projectile whoAmIs to exclude from the search.
 		 * distance : The distance to check.
 		 */
-		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = -1, Func<Projectile, bool> CanAdd = null)
+		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = -1, Func<Projectile, bool> canAdd = null)
 		{
 			int currentProj = -1;
 			for (int i = 0; i < Main.projectile.Length; i++)
@@ -5458,7 +5458,7 @@ namespace Redemption.Base
 							if (m == proj.whoAmI) { add = false; break; }
 						}
 					}
-					if (add && CanAdd != null && !CanAdd(proj)) { continue; }
+					if (add && canAdd != null && !canAdd(proj)) { continue; }
 					if (add)
 					{
 						distance = proj.Distance(center);
@@ -5469,9 +5469,9 @@ namespace Redemption.Base
 			return currentProj;
 		}
 
-		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, float distance = 500f, Func<Projectile, bool> CanAdd = null)
+		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, float distance = 500f, Func<Projectile, bool> canAdd = null)
 		{
-			return GetProjectiles(center, projType, owner, default, distance, CanAdd);
+			return GetProjectiles(center, projType, owner, default, distance, canAdd);
 		}
 		/*
 		 * Gets the all Projectiles with the given type within the given distance from the center.
@@ -5480,7 +5480,7 @@ namespace Redemption.Base
          * projsToExclude : An array of projectile whoAmIs to exclude from the search.
          * distance : The distance to check.
 		 */
-		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> CanAdd = null)
+		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> canAdd = null)
 		{
 			List<int> allProjs = new();
 			for (int i = 0; i < Main.projectile.Length; i++)
@@ -5496,7 +5496,7 @@ namespace Redemption.Base
 							if (m == proj.whoAmI) { add = false; break; }
 						}
 					}
-					if (add && CanAdd != null && !CanAdd(proj)) { continue; }
+					if (add && canAdd != null && !canAdd(proj)) { continue; }
 					if (add) { allProjs.Add(i); }
 				}
 			}
@@ -5504,9 +5504,9 @@ namespace Redemption.Base
 		}
 
 
-		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, float distance = 500f, Func<Projectile, bool> CanAdd = null)
+		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, float distance = 500f, Func<Projectile, bool> canAdd = null)
 		{
-			return GetProjectiles(center, projTypes, owner, default, distance, CanAdd);
+			return GetProjectiles(center, projTypes, owner, default, distance, canAdd);
 		}
 
 		/*
@@ -5516,7 +5516,7 @@ namespace Redemption.Base
          * projsToExclude : An array of projectile whoAmIs to exclude from the search.
          * distance : The distance to check.
 		 */
-		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> CanAdd = null)
+		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> canAdd = null)
 		{
 			List<int> allProjs = new();
 			for (int i = 0; i < Main.projectile.Length; i++)
@@ -5535,7 +5535,7 @@ namespace Redemption.Base
 							if (m == proj.whoAmI) { add = false; break; }
 						}
 					}
-					if (add && CanAdd != null && !CanAdd(proj)) { continue; }
+					if (add && canAdd != null && !canAdd(proj)) { continue; }
 					if (add) { allProjs.Add(i); }
 				}
 			}
@@ -5549,7 +5549,7 @@ namespace Redemption.Base
 		 * npcType : If -1, check for ANY npcs in the area. If not, check for the npcs who match the type given.
 		 * npcsToExclude : An array of npc whoAmIs to exclude from the search.
 		 */
-		public static int[] GetNPCsInBox(Rectangle rect, int npcType = -1, int[] npcsToExclude = default, Func<NPC, bool> CanAdd = null)
+		public static int[] GetNPCsInBox(Rectangle rect, int npcType = -1, int[] npcsToExclude = default, Func<NPC, bool> canAdd = null)
 		{
 			List<int> allNPCs = new();
 			for (int i = 0; i < Main.maxNPCs; i++)
@@ -5566,16 +5566,16 @@ namespace Redemption.Base
 							if (m == npc.whoAmI) { add = false; break; }
 						}
 					}
-					if (add && CanAdd != null && !CanAdd(npc)) continue;
+					if (add && canAdd != null && !canAdd(npc)) continue;
 					if (add) { allNPCs.Add(i); }
 				}
 			}
 			return allNPCs.ToArray();
 		}
 
-        public static int GetNPC(Vector2 center, int npcType = -1, float distance = -1, Func<NPC, bool> CanAdd = null)
+        public static int GetNPC(Vector2 center, int npcType = -1, float distance = -1, Func<NPC, bool> canAdd = null)
         {
-            return GetNPC(center, npcType, default, distance, CanAdd);
+            return GetNPC(center, npcType, default, distance, canAdd);
         }
         /*
          * Gets the closest NPC with the given type within the given distance from the center. If distance is -1, it gets the closest NPC.
@@ -5584,7 +5584,7 @@ namespace Redemption.Base
          * npcsToExclude : An array of npc whoAmIs to exclude from the search.
          * distance : The distance to check.
          */
-		public static int GetNPC(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = -1, Func<NPC, bool> CanAdd = null)
+		public static int GetNPC(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = -1, Func<NPC, bool> canAdd = null)
         {
             int currentNPC = -1;
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -5600,7 +5600,7 @@ namespace Redemption.Base
                             if (m == npc.whoAmI) { add = false; break; }
                         }
                     }
-					if (add && CanAdd != null && !CanAdd(npc)) { continue; }
+					if (add && canAdd != null && !canAdd(npc)) { continue; }
                     if (add) 
                     {
                         distance = npc.Distance(center);
@@ -5611,9 +5611,9 @@ namespace Redemption.Base
             return currentNPC;
         }
 
-		public static int[] GetNPCs(Vector2 center, int npcType = -1, float distance = 500F, Func<NPC, bool> CanAdd = null)
+		public static int[] GetNPCs(Vector2 center, int npcType = -1, float distance = 500F, Func<NPC, bool> canAdd = null)
         {
-            return GetNPCs(center, npcType, Array.Empty<int>(), distance, CanAdd);
+            return GetNPCs(center, npcType, Array.Empty<int>(), distance, canAdd);
         }
         /*
          * Gets all NPCs of the given type within a given distance from the center.
@@ -5622,7 +5622,7 @@ namespace Redemption.Base
          * npcsToExclude : an array of npc whoAmIs to exclude from the search.
          * distance : the distance to check.
          */
-		public static int[] GetNPCs(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = 500F, Func<NPC, bool> CanAdd = null)
+		public static int[] GetNPCs(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = 500F, Func<NPC, bool> canAdd = null)
         {
             List<int> allNPCs = new();
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -5638,7 +5638,7 @@ namespace Redemption.Base
                             if (m == npc.whoAmI) { add = false; break; }
                         }
                     }
-					if (add && CanAdd != null && !CanAdd(npc)) { continue; }
+					if (add && canAdd != null && !canAdd(npc)) { continue; }
                     if (add) { allNPCs.Add(i); }
                 }
             }
@@ -5651,7 +5651,7 @@ namespace Redemption.Base
          * rect : The rectangle to search.
          * playersToExclude : An array of player whoAmis that will be excluded from the search.
          */
-		public static int[] GetPlayersInBox(Rectangle rect, int[] playersToExclude = default, Func<Player, bool> CanAdd = null)
+		public static int[] GetPlayersInBox(Rectangle rect, int[] playersToExclude = default, Func<Player, bool> canAdd = null)
         {
             List<int> allPlayers = new();
             for (int i = 0; i < Main.player.Length; i++)
@@ -5668,7 +5668,7 @@ namespace Redemption.Base
                             if (m == plr.whoAmI) { add = false; break; }
                         }
                     }
-					if(add && CanAdd != null && !CanAdd(plr)){ continue; }
+					if(add && canAdd != null && !canAdd(plr)){ continue; }
                     if (add) { allPlayers.Add(i); }
                 }
             }
@@ -5693,9 +5693,9 @@ namespace Redemption.Base
             return -1;
         }
 
-		public static int GetPlayer(Vector2 center, float distance = -1, Func<Player, bool> CanAdd = null)
+		public static int GetPlayer(Vector2 center, float distance = -1, Func<Player, bool> canAdd = null)
         {
-            return GetPlayer(center, default, true, distance, CanAdd);
+            return GetPlayer(center, default, true, distance, canAdd);
         }
         /*
          * Gets the closest player within the given distance from the center. If distance is -1, it gets the closest player.
@@ -5704,7 +5704,7 @@ namespace Redemption.Base
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          * distance : The distance to search.
          */
-		public static int GetPlayer(Vector2 center, int[] playersToExclude = default, bool activeOnly = true, float distance = -1, Func<Player, bool> CanAdd = null)
+		public static int GetPlayer(Vector2 center, int[] playersToExclude = default, bool activeOnly = true, float distance = -1, Func<Player, bool> canAdd = null)
         {
             int currentPlayer = -1;
             for (int i = 0; i < Main.player.Length; i++)
@@ -5720,7 +5720,7 @@ namespace Redemption.Base
                             if (m == player.whoAmI) { add = false; break; }
                         }
                     }
-					if (add && CanAdd != null && !CanAdd(player)) { continue; }
+					if (add && canAdd != null && !canAdd(player)) { continue; }
                     if (add) 
                     {
                         distance = player.Distance(center);
@@ -5731,9 +5731,9 @@ namespace Redemption.Base
             return currentPlayer;
         }
 
-		public static int[] GetPlayers(Vector2 center, float distance = 500F, Func<Player, bool> CanAdd = null)
+		public static int[] GetPlayers(Vector2 center, float distance = 500F, Func<Player, bool> canAdd = null)
         {
-            return GetPlayers(center, default, true, distance, CanAdd);
+            return GetPlayers(center, default, true, distance, canAdd);
         }
         /*
          * Gets all players within a given distance from the center.
@@ -5741,7 +5741,7 @@ namespace Redemption.Base
          * playersToExclude is an array of player ids you do not want included in the array.
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          */
-		public static int[] GetPlayers(Vector2 center, int[] playersToExclude = default, bool aliveOnly = true, float distance = 500F, Func<Player, bool> CanAdd = null)
+		public static int[] GetPlayers(Vector2 center, int[] playersToExclude = default, bool aliveOnly = true, float distance = 500F, Func<Player, bool> canAdd = null)
         {
             List<int> allPlayers = new();
             for (int i = 0; i < Main.player.Length; i++)
@@ -5757,7 +5757,7 @@ namespace Redemption.Base
                             if (m == player.whoAmI) { add = false; break; }
                         }
                     }
-					if(add && CanAdd != null && !CanAdd(player)){ continue; }
+					if(add && canAdd != null && !canAdd(player)){ continue; }
                     if (add) { allPlayers.Add(i); }
                 }
             }
@@ -5821,13 +5821,13 @@ namespace Redemption.Base
 
         public static void LookAt(Vector2 lookTarget, Entity c, int lookType = 0, float rotAddon = 0f, float rotAmount = 0.1f, bool flipSpriteDir = false)
         {
-            int spriteDirection = c is NPC nPC1 ? nPC1.spriteDirection : c is Projectile projectile1 ? projectile1.spriteDirection : 0;
-            float rotation = c is NPC nPC ? nPC.rotation : c is Projectile projectile ? projectile.rotation : 0f;
+            int spriteDirection = c is NPC nPc1 ? nPc1.spriteDirection : c is Projectile projectile1 ? projectile1.spriteDirection : 0;
+            float rotation = c is NPC nPc ? nPc.rotation : c is Projectile projectile ? projectile.rotation : 0f;
             LookAt(lookTarget, c.Center, ref rotation, ref spriteDirection, lookType, rotAddon, rotAmount, flipSpriteDir);
-            if (c is NPC nPC2)
+            if (c is NPC nPc2)
             {
-                nPC2.spriteDirection = spriteDirection;
-                nPC2.rotation = rotation;
+                nPc2.spriteDirection = spriteDirection;
+                nPc2.rotation = rotation;
             }else
             if (c is Projectile projectile2)
             {
@@ -5932,14 +5932,14 @@ namespace Redemption.Base
             return Trace(start, end, ignoreNPC, 2, npcCheck, tileCheck, playerCheck, 1F, ignorePlatforms);
         }
 
-        public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, float Jump = 1F, bool ignorePlatforms = true)
+        public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, float jump = 1F, bool ignorePlatforms = true)
         {
-            return Trace(start, end, ignore, ignoreType, null, npcCheck, tileCheck, playerCheck, false, Jump, ignorePlatforms);
+            return Trace(start, end, ignore, ignoreType, null, npcCheck, tileCheck, playerCheck, false, jump, ignorePlatforms);
         }
 
-        public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, float Jump = 1F, bool ignorePlatforms = true)
+        public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, float jump = 1F, bool ignorePlatforms = true)
         {
-            return Trace(start, end, ignore, ignoreType, dim, npcCheck, tileCheck, playerCheck, returnCenter, ignorePlatforms ? new[] { 19 } : default, Jump); //ignores wooden platforms
+            return Trace(start, end, ignore, ignoreType, dim, npcCheck, tileCheck, playerCheck, returnCenter, ignorePlatforms ? new[] { 19 } : default, jump); //ignores wooden platforms
         }
 
         /* **Code edited from Yoraiz0r's 'Holowires' Mod!**
@@ -5954,7 +5954,7 @@ namespace Redemption.Base
          * tileTypesToIgnore : An array of tile types that it will assume it can trace through.
          * Jump: The amount to iterate by.
          */
-        public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, int[] tileTypesToIgnore = default, float Jump = 1F)
+        public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, int[] tileTypesToIgnore = default, float jump = 1F)
         {
 			try
 			{
@@ -5964,16 +5964,16 @@ namespace Redemption.Base
             if (start.Y < 0) { start.Y = 0; } if (start.Y > Main.maxTilesY * 16) { start.Y = Main.maxTilesY * 16; }
             if (end.X < 0) { end.X = 0; } if (end.X > Main.maxTilesX * 16) { end.X = Main.maxTilesX * 16; }
             if (end.Y < 0) { end.Y = 0; } if (end.Y > Main.maxTilesY * 16) { end.Y = Main.maxTilesY * 16; }
-            Vector2 TC = new(1, 1);
-            Vector2 Pstart = start;
-            Vector2 Pend = end;
-            Vector2 dir = Pend - Pstart;
+            Vector2 tc = new(1, 1);
+            Vector2 pstart = start;
+            Vector2 pend = end;
+            Vector2 dir = pend - pstart;
             dir.Normalize();
-            float length = Vector2.Distance(Pstart, Pend);
-            float Way = 0f;
-            while (Way < length)
+            float length = Vector2.Distance(pstart, pend);
+            float way = 0f;
+            while (way < length)
             {
-                Vector2 v = Pstart + dir * Way + TC;			
+                Vector2 v = pstart + dir * way + tc;			
                 Rectangle dimensions = (Rectangle)dim;
                 Rectangle posRect = new((int)v.X - (dimensions.Width == 1 ? 0 : dimensions.Width / 2), (int)v.Y - (dimensions.Height == 1 ? 0 : dimensions.Height / 2), dimensions.Width, dimensions.Height);
                 if (tileCheck)
@@ -6022,7 +6022,7 @@ namespace Redemption.Base
                         if (posRect.Intersects(playerRect)) { return returnCenter ? player.Center : v; }
                     }
                 }
-                Way += Jump;
+                way += jump;
             }
 			}catch(Exception e)
 			{
