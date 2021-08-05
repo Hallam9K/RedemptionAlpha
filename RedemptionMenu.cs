@@ -19,8 +19,12 @@ namespace Redemption
         }
         public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>($"{menuAssetPath}/Logo");
 
-        public override string DisplayName => "Soulless Dimension";
+        public override string DisplayName => "Ruined Kingdom";
 
         //public override int Music => Mod.GetSoundSlot(Terraria.ModLoader.SoundType.Music, "Redemption/Sounds/Music/RuinedKingdom");
+
+        public override Asset<Texture2D> MoonTexture => ModContent.Request<Texture2D>($"{menuAssetPath}/Empty");
+        public override Asset<Texture2D> SunTexture => ModContent.Request<Texture2D>($"{menuAssetPath}/Empty");
+
     }
 }
