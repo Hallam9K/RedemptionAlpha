@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReLogic</name>
+    </assembly>
+    <members>
+        <member name="T:ReLogic.Content.AssetRepository">
+            <summary>
+            Async loading has been fully integrated into AssetRepository
+            Assets which are asynchronously loaded will:
+            	- be deserialized on the thread pool
+            	- return to the main thread if the asset can only be created there (for assets requiring GraphicsDevice)
+            	- become loaded at a defined time:
+            		- at the end of a frame or
+            		- when content sources are changing or
+            		- when requested by ImmediateLoad on the main thread
+            
+            Assets which require main thread creation, but are requested via ImmediateLoad on a worker thread will:
+            	- be deserialized immediately on the worker thread
+            	- transition to asynchronous loading for creation
+            
+            </summary>
+        </member>
+        <member name="M:ReLogic.Content.Sources.IContentSource.GetExtension(System.String)">
+            <summary>
+            Must be threadsafe! 
+            </summary>
+            <returns>null if the asset does not exist</returns>
+        </member>
+        <member name="M:ReLogic.Content.Sources.IContentSource.OpenStream(System.String)">
+            <summary>
+            Must be threadsafe! 
+            </summary>
+        </member>
+        <member name="M:ReLogic.Content.Sources.IContentSource.HasAsset(System.String)">
+            <summary>
+            Checks Rejections and GetExtension to determine if an asset exists
+            </summary>
+            <param name="assetName"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

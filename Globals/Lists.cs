@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using GroupProj = Redemption.Tags.ProjectileTags;
 using GroupTile = Redemption.Tags.TileTags;
 using GroupNPC = Redemption.Tags.NPCTags;
+using GroupItem = Redemption.Tags.ItemTags;
 
 namespace Redemption
 {
@@ -506,6 +507,23 @@ namespace Redemption
         };
         #endregion
     }
+    public sealed class ItemTags
+    {
+        public static readonly TagData BluntSwing = ContentTags.Get<GroupItem>(nameof(BluntSwing));
+        public static void SetItemTags()
+        {
+            #region Item Tags
+            BluntSwing.SetMultiple(new int[] {
+                ItemID.BreathingReed,
+                ItemID.ZombieArm,
+                ItemID.PurpleClubberfish,
+                ItemID.TaxCollectorsStickOfDoom,
+                ItemID.SlapHand,
+                ItemID.Keybrand
+            });
+            #endregion
+        }
+    }
     public sealed class TileTags
     {
         public static readonly TagData WoodLeaf = ContentTags.Get<GroupTile>(nameof(WoodLeaf));
@@ -533,6 +551,7 @@ namespace Redemption
     {
         public static readonly TagData Skeleton = ContentTags.Get<GroupNPC>(nameof(Skeleton));
         public static readonly TagData SkeletonHumanoid = ContentTags.Get<GroupNPC>(nameof(SkeletonHumanoid));
+        public static readonly TagData Undead = ContentTags.Get<GroupNPC>(nameof(Undead));
         public static void SetNPCTags()
         {
             #region Skeleton
@@ -607,6 +626,34 @@ namespace Redemption
                 NPCID.RustyArmoredBonesSword,
                 NPCID.RustyArmoredBonesSwordNoArmor,
                 NPCID.PirateGhost,
+            });
+            #endregion
+            #region Undead
+            Undead.PopulateFromSets(NPCID.Sets.Zombies);
+            Undead.SetMultiple(new int[] {
+                NPCID.TorchZombie,
+                NPCID.ArmedTorchZombie,
+                NPCID.MaggotZombie,
+                NPCID.Mummy,
+                NPCID.BloodMummy,
+                NPCID.DarkMummy,
+                NPCID.DesertGhoul,
+                NPCID.DesertGhoulCorruption,
+                NPCID.DesertGhoulCrimson,
+                NPCID.DesertGhoulHallow,
+                NPCID.BloodZombie,
+                NPCID.ZombieMerman,
+                NPCID.SandsharkCorrupt,
+                NPCID.SandsharkCrimson,
+                NPCID.Eyezor,
+                NPCID.Frankenstein,
+                NPCID.Vampire,
+                NPCID.VampireBat,
+                NPCID.HeadlessHorseman,
+                NPCID.ZombieElf,
+                NPCID.HeadlessHorseman,
+                NPCID.HeadlessHorseman,
+                NPCID.HeadlessHorseman,
             });
             #endregion
         }

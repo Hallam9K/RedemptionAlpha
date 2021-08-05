@@ -518,7 +518,7 @@ namespace Redemption
             return new Vector2(rect.Width / 2, rect.Height / frames / 2);
         }
 
-        public static void ProjectileExploson(Vector2 pos, float StartAngle, int Streams, int type, int damage, float ProjSpeed, float ai0 = 0, float ai1 = 0)
+        public static void ProjectileExploson(IProjectileSource source, Vector2 pos, float StartAngle, int Streams, int type, int damage, float ProjSpeed, float ai0 = 0, float ai1 = 0)
         {
             float currentAngle = StartAngle;
             //Main.PlaySound(SoundID.Item27, projectile.position);
@@ -526,12 +526,10 @@ namespace Redemption
             {
                 for (int i = 0; i < Streams; ++i)
                 {
-
                     Vector2 direction = Vector2.Normalize(new Vector2(1, 1)).RotatedBy(MathHelper.ToRadians(((360 / Streams) * i) + currentAngle));
                     direction.X *= ProjSpeed;
                     direction.Y *= ProjSpeed;
-
-                    int proj = Projectile.NewProjectile(null, pos.X, pos.Y, direction.X, direction.Y, type, damage, 0f, Main.myPlayer, ai0, ai1);
+                    int proj = Projectile.NewProjectile(source, pos.X, pos.Y, direction.X, direction.Y, type, damage, 0f, Main.myPlayer, ai0, ai1);
                     Main.projectile[proj].Center = pos;
                 }
             }
@@ -563,7 +561,7 @@ namespace Redemption
         /// <summary>
         /// For spawning NPCs from NPCs without any extra stuff.
         /// </summary>
-        public static void SpawnNPC(this NPC npc, int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0, float ai3 = 0)
+        public static void SpawnNPC(int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0, float ai3 = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {

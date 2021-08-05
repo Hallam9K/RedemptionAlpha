@@ -1,4 +1,5 @@
 using Redemption.Tags;
+using System;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,6 +15,7 @@ namespace Redemption
 		}
         public override void Load()
         {
+			ItemTags.SetItemTags();
 			ProjTags.SetProjTags();
 			TileTags.SetTileTags();
 			NPCTags.SetNPCTags();

@@ -7,6 +7,7 @@ using Terraria.ModLoader.Utilities;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 
 namespace Redemption.NPCs.Critters
 {
@@ -92,11 +93,12 @@ namespace Redemption.NPCs.Critters
                     for (int k = 0; k < Main.npc.Length; k++)
                     {
                         NPC possibleTarget = Main.npc[k];
-                        if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI || !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                        if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI || (!NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type)))
                             continue;
                         if (hitCooldown <= 0 && NPC.Hitbox.Intersects(possibleTarget.Hitbox))
                         {
                             BaseAI.DamageNPC(possibleTarget, NPC.damage, 2, null);
+                            possibleTarget.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
                             hitCooldown = 60;
                         }
                     }
@@ -123,7 +125,7 @@ namespace Redemption.NPCs.Critters
             for (int k = 0; k < Main.npc.Length; k++)
             {
                 NPC possibleTarget = Main.npc[k];
-                if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI || !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI || (!NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type)))
                     continue;
                 if (hopCooldown == 0 && Main.rand.NextBool(200) && NPC.Sight(possibleTarget, 60, false, true) && BaseAI.HitTileOnSide(NPC, 3, true))
                 {
@@ -198,7 +200,11 @@ namespace Redemption.NPCs.Critters
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(7, 10); i++)
-                NPC.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
+                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
         }
         public override void HitEffect(int hitDirection, double damage)
         {
