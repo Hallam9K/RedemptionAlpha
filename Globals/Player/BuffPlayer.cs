@@ -47,12 +47,12 @@ namespace Redemption
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (infested && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-            {
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " burst into larva!");
-            }
             if (infested && infestedTime >= 60)
             {
+                if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " burst into larva!");
+                }
                 SoundEngine.PlaySound(SoundID.NPCDeath19, Player.position);
                 for (int i = 0; i < 20; i++)
                 {
@@ -63,7 +63,7 @@ namespace Redemption
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
-                        Projectile.NewProjectile(Player.GetProjectileSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.Spread(6), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(Player.GetProjectileSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
             return true;

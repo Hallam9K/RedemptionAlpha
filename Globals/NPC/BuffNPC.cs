@@ -55,7 +55,7 @@ namespace Redemption
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
-                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.Spread(6), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
             return true;

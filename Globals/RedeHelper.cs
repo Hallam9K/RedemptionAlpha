@@ -466,6 +466,10 @@ namespace Redemption
         {
             return new Vector2(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, xy - 1));
         }
+        public static Vector2 SpreadUp(float xy)
+        {
+            return new Vector2(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, 0));
+        }
 
         public static void CreateDust(Player player, int dust, int count)
         {
