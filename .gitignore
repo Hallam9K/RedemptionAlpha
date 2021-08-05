@@ -1,9 +1,5 @@
 bin/
 obj/
-Properties/
 .vs/
 .idea/
-bin/Debug/net5.0/Redemption.pdb
-bin/Debug/net5.0/ref/Redemption.dll
-bin/Debug/net5.0/ReLogic.dll
-bin/Debug/net5.0/tModLoader.dll
+.vscode/
