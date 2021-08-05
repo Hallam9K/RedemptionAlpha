@@ -11,7 +11,7 @@ namespace Redemption.DamageClasses
         protected override float GetBenefitFrom(DamageClass damageClass)
         {
             
-            if (damageClass == DamageClass.Generic)
+            if (damageClass == Generic)
                 return 1f;
             return 0f;
         }

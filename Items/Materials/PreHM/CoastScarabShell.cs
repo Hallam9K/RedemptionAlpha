@@ -1,8 +1,8 @@
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PreHM
 {
@@ -25,7 +25,7 @@ namespace Redemption.Items.Materials.PreHM
         {
             if (Item.wet && !Item.lavaWet && !Item.honeyWet && Main.rand.NextBool(20))
             {
-                int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height / 2, DustID.SilverCoin, 0, 0, 20, default, 1f);
+                int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height / 2, DustID.SilverCoin, 0, 0, 20);
                 Main.dust[sparkle].velocity *= 0;
                 Main.dust[sparkle].noGravity = true;
             }

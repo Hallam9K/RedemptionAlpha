@@ -41,7 +41,7 @@ namespace Redemption.Base
 				for (int y1 = 0; y1 < tileHeight; y1++)
 				{
 					int x2 = x + x1; int y2 = y + y1;
-					Main.tile[x2, y2].frameX = (short)((frame * frameWidth) + ((tileFrameWidth + 2) * x1));
+					Main.tile[x2, y2].frameX = (short)(frame * frameWidth + (tileFrameWidth + 2) * x1);
 				}
 			}
 		}
@@ -66,10 +66,10 @@ namespace Redemption.Base
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
 					Tile tile = Main.tile[x1, y1];
-					if (tile != null && tile.IsActive && tile.type == type && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
+					if (tile is {IsActive: true} && tile.type == type && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
 					{
 						dist = Vector2.Distance(originalPos, new Vector2(x1, y1));
-                        if (type == 21 || (TileObjectData.GetTileData(tile.type, 0) != null && (TileObjectData.GetTileData(tile.type, 0).Width > 1 || TileObjectData.GetTileData(tile.type, 0).Height > 1)))
+                        if (type == 21 || TileObjectData.GetTileData(tile.type, 0) != null && (TileObjectData.GetTileData(tile.type, 0).Width > 1 || TileObjectData.GetTileData(tile.type, 0).Height > 1))
 						{
 							int x2 = x1; int y2 = y1;
 							if (type == 21)
@@ -125,7 +125,7 @@ namespace Redemption.Base
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
 					Tile tile = Main.tile[x1, y1];
-					if (tile != null && tile.IsActive && tile.type == type && (addTile == null || addTile(tile)))
+					if (tile is {IsActive: true} && tile.type == type && (addTile == null || addTile(tile)))
 					{
 						if (type == 21 || TileObjectData.GetTileData(tile).Width > 1 || TileObjectData.GetTileData(tile).Height > 1)
 						{
@@ -166,7 +166,7 @@ namespace Redemption.Base
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
 					Tile tile = Main.tile[x1, y1];
-					if (tile != null && tile.LiquidAmount > 0 && (liquidType == 0 ? tile.LiquidType == 1 : liquidType == 1 ? tile.LiquidType == 2 : tile.LiquidType == 3))
+					if (tile is {LiquidAmount: > 0} && (liquidType == 0 ? tile.LiquidType == 1 : liquidType == 1 ? tile.LiquidType == 2 : tile.LiquidType == 3))
 					{
 						liquidAmt += tile.LiquidAmount;
 					}
@@ -183,7 +183,7 @@ namespace Redemption.Base
 			return Main.tileSolid[type] && Main.tileSolidTop[type];
 		}
 
-        public static bool AlchemyFlower(int type) { return type == 82 || type == 83 || type == 84; }
+        public static bool AlchemyFlower(int type) { return type is 82 or 83 or 84; }
 
        /*
         * Plays the tile at (tileX, tileY)'s hit sound.
@@ -217,12 +217,12 @@ namespace Redemption.Base
             }
             else if (tileType == 127)
                 SoundEngine.PlaySound(SoundID.Item, (int)x, (int)y, 27);
-            else if (AlchemyFlower(tileType) || tileType == 3 || tileType == 110 || tileType == 24 || tileType == 32 || tileType == 51 || tileType == 52 || tileType == 61 || tileType == 62 || tileType == 69 || tileType == 71 || tileType == 73 || tileType == 74 || tileType == 113 || tileType == 115)
-                SoundEngine.PlaySound(SoundID.Grass, (int)x, (int)y, 1);
-            else if (tileType == 1 || tileType == 6 || tileType == 7 || tileType == 8 || tileType == 9 || tileType == 22 || tileType == 140 || tileType == 25 || tileType == 37 || tileType == 38 || tileType == 39 || tileType == 41 || tileType == 43 || tileType == 44 || tileType == 45 || tileType == 46 || tileType == 47 || tileType == 48 || tileType == 56 || tileType == 58 || tileType == 63 || tileType == 64 || tileType == 65 || tileType == 66 || tileType == 67 || tileType == 68 || tileType == 75 || tileType == 76 || tileType == 107 || tileType == 108 || tileType == 111 || tileType == 117 || tileType == 118 || tileType == 119 || tileType == 120 || tileType == 121 || tileType == 122)
-                SoundEngine.PlaySound(SoundID.Tink, (int)x, (int)y, 1);
+            else if (AlchemyFlower(tileType) || tileType is 3 or 110 or 24 or 32 or 51 or 52 or 61 or 62 or 69 or 71 or 73 or 74 or 113 or 115)
+                SoundEngine.PlaySound(SoundID.Grass, (int)x, (int)y);
+            else if (tileType is 1 or 6 or 7 or 8 or 9 or 22 or 140 or 25 or 37 or 38 or 39 or 41 or 43 or 44 or 45 or 46 or 47 or 48 or 56 or 58 or 63 or 64 or 65 or 66 or 67 or 68 or 75 or 76 or 107 or 108 or 111 or 117 or 118 or 119 or 120 or 121 or 122)
+                SoundEngine.PlaySound(SoundID.Tink, (int)x, (int)y);
             else if (tileType != 138)
-                SoundEngine.PlaySound(SoundID.Dig, (int)x, (int)y, 1);
+                SoundEngine.PlaySound(SoundID.Dig, (int)x, (int)y);
         }
 
         /*
@@ -234,7 +234,7 @@ namespace Redemption.Base
                 for (int y1 = y; y1 < y + height; y1++)
                 {
                     Tile tile = Main.tile[x1, y1];
-                    if(tile == null || !tile.IsActive || tile.type != type)
+                    if(tile is not {IsActive: true} || tile.type != type)
                     {
                         return false;
                     }
@@ -318,7 +318,7 @@ namespace Redemption.Base
                     int y2 = (int)tileCenter.Y + y;
                     if (x2 < 0 || y2 < 0 || x2 > Main.maxTilesX || y2 > Main.maxTilesY) { continue; }
                     Tile tile = Main.tile[x2, y2];
-                    if (tile == null || !tile.IsActive) { continue; }
+                    if (tile is not {IsActive: true}) { continue; }
                     foreach (int i in tileTypes)
                     {
                         if (tile.type == i) { tileCount++; break; }

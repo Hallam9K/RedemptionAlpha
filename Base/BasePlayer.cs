@@ -58,10 +58,10 @@ namespace Redemption.Base
         public static bool DowngradeMoney(Player player, int moneySlot, ref int splitSlot)
         {
             Item item = player.inventory[moneySlot];
-            if(item == null || item.type <= ItemID.CopperCoin || item.type >= ItemID.FallenStar){ return false; } //can't downgrade copper coins or non-coin items
+            if(item is not {type: > ItemID.CopperCoin and < ItemID.FallenStar}){ return false; } //can't downgrade copper coins or non-coin items
             int typeToBecome = item.type - 1;
-            splitSlot = GetEmptySlot(player, false, true, false);
-            if (splitSlot == -1){ splitSlot = GetEmptySlot(player, true, false, false); }
+            splitSlot = GetEmptySlot(player, false, true);
+            if (splitSlot == -1){ splitSlot = GetEmptySlot(player); }
             if (splitSlot == -1){ return false; } //no space
             player.inventory[splitSlot].SetDefaults(typeToBecome); player.inventory[splitSlot].stack = 100;
             player.inventory[moneySlot].stack--; if(player.inventory[moneySlot].stack <= 0){ player.inventory[moneySlot] = new Item(); }
@@ -103,11 +103,11 @@ namespace Redemption.Base
             if (vanity)
             {
                 if (armorType == 0)
-                    return (player.armor[10] != null && player.armor[10].type == itemType) || (player.armor[0] != null && player.armor[0].type == itemType);
+                    return player.armor[10] != null && player.armor[10].type == itemType || player.armor[0] != null && player.armor[0].type == itemType;
                 if (armorType == 1)
-                    return (player.armor[11] != null && player.armor[11].type == itemType) || (player.armor[1] != null && player.armor[1].type == itemType);
+                    return player.armor[11] != null && player.armor[11].type == itemType || player.armor[1] != null && player.armor[1].type == itemType;
                 if (armorType == 2)
-                    return (player.armor[12] != null && player.armor[12].type == itemType) || (player.armor[2] != null && player.armor[2].type == itemType);
+                    return player.armor[12] != null && player.armor[12].type == itemType || player.armor[2] != null && player.armor[2].type == itemType;
             }else
             {
                 if (armorType == 0)
@@ -148,7 +148,7 @@ namespace Redemption.Base
 
         public static int GetItemstackSum(Player player, int type, bool typeIsAmmo = false, bool includeAmmo = false, bool includeCoins = false)
         {
-            return GetItemstackSum(player, new int[] { type }, typeIsAmmo, includeAmmo, includeCoins);
+            return GetItemstackSum(player, new[] { type }, typeIsAmmo, includeAmmo, includeCoins);
         }
 
         /*
@@ -328,7 +328,7 @@ namespace Redemption.Base
 				for (int m = 50; m < 54; m++)
 				{
 					Item item = player.inventory[m];
-					if (item != null && item.ammo == ammoType && ((!ignoreConsumable && !item.consumable) || item.stack >= count)) { index = m; return true; }
+					if (item != null && item.ammo == ammoType && (!ignoreConsumable && !item.consumable || item.stack >= count)) { index = m; return true; }
 				}
 			}
 			if (includeAmmo)
@@ -336,13 +336,13 @@ namespace Redemption.Base
 				for (int m = 54; m < 58; m++)
 				{
 					Item item = player.inventory[m];
-					if (item != null && item.ammo == ammoType && ((!ignoreConsumable && !item.consumable) || item.stack >= count)) { index = m; return true; }
+					if (item != null && item.ammo == ammoType && (!ignoreConsumable && !item.consumable || item.stack >= count)) { index = m; return true; }
 				}
 			}
             for (int m = 0; m < 50; m++)
             {
                 Item item = player.inventory[m];
-				if (item != null && item.ammo == ammoType && ((!ignoreConsumable && !item.consumable) || item.stack >= count)) { index = m; return true; }
+				if (item != null && item.ammo == ammoType && (!ignoreConsumable && !item.consumable || item.stack >= count)) { index = m; return true; }
             }
             index = -1;
             return false;
@@ -398,7 +398,7 @@ namespace Redemption.Base
         }
 
 
-        public static bool IsVanitySlot(int slot, bool acc = true) { return acc ? slot >= 13 && slot <= 18 : slot >= 10 && slot <= 12; }
+        public static bool IsVanitySlot(int slot, bool acc = true) { return acc ? slot is >= 13 and <= 18 : slot is >= 10 and <= 12; }
 
 
         public static bool HasAccessories(Player player, int[] types, bool normal, bool vanity, bool oneOf)
@@ -420,11 +420,14 @@ namespace Redemption.Base
                 for (int m = 13; m < 18 + player.GetAmountOfExtraAccessorySlotsToShow(); m++)
 				{
 					Item item = player.armor[m];
-					if (item != null && !item.IsAir)
+					if (item is {IsAir: false})
 					{
 						foreach (int type in types)
 						{
-							if (item.type == type) { index = m; social = true; if (oneOf) { return true; } else { trueCount++; } }
+							if (item.type == type) { index = m; social = true; if (oneOf) { return true; }
+
+                                trueCount++;
+                            }
 						}
 					}
 				}
@@ -434,11 +437,14 @@ namespace Redemption.Base
                 for (int m = 3; m < 8 + player.GetAmountOfExtraAccessorySlotsToShow(); m++)
 				{
 					Item item = player.armor[m];
-					if (item != null && !item.IsAir)
+					if (item is {IsAir: false})
 					{
 						foreach (int type in types)
 						{
-							if (item.type == type) { index = m; social = false; if (oneOf) { return true; } else { trueCount++; } }
+							if (item.type == type) { index = m; social = false; if (oneOf) { return true; }
+
+                                trueCount++;
+                            }
 						}
 					}
 				}
@@ -462,7 +468,7 @@ namespace Redemption.Base
                 for (int m = 13; m < 18 + player.GetAmountOfExtraAccessorySlotsToShow(); m++)
                 {
                     Item item = player.armor[m];
-                    if (item != null && !item.IsAir && item.type == type) { index = m; social = true; return true; }
+                    if (item is {IsAir: false} && item.type == type) { index = m; social = true; return true; }
                 }
             }
             if (normal)
@@ -470,7 +476,7 @@ namespace Redemption.Base
                 for (int m = 3; m < 8 + player.GetAmountOfExtraAccessorySlotsToShow(); m++)
                 {
                     Item item = player.armor[m];
-                    if (item != null && !item.IsAir && item.type == type) { index = m; social = false; return true; }
+                    if (item is {IsAir: false} && item.type == type) { index = m; social = false; return true; }
                 }
             }
             return false;

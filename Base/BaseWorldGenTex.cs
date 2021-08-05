@@ -8,8 +8,8 @@ namespace Redemption.Base
 {
 	public class BaseWorldGenTex
 	{
-		public static Dictionary<Color, int> colorToLiquid = null;
-		public static Dictionary<Color, int> colorToSlope = null;
+		public static Dictionary<Color, int> colorToLiquid;
+		public static Dictionary<Color, int> colorToSlope;
 
 		//NOTE: all textures MUST be the same size or horrible things happen!
 		public static TexGen GetTexGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile, Texture2D wallTex = null, Dictionary<Color, int> colorToWall = null, Texture2D liquidTex = null, Texture2D slopeTex = null, Texture2D objectTex = null, Dictionary<Color, int> colorToObject = null)
@@ -102,8 +102,8 @@ namespace Redemption.Base
 
 	public class TileInfo
 	{
-		public int tileID = -1, tileStyle = 0, wallID = -1, objectID = 0;
-		public int liquidType = -1, liquidAmt = 0; //liquidType can be 0 (water), 1 (lava), 2 (honey)
+		public int tileID = -1, tileStyle, wallID = -1, objectID;
+		public int liquidType = -1, liquidAmt; //liquidType can be 0 (water), 1 (lava), 2 (honey)
 		public int slope = -2, wire = -1;
 
 		public TileInfo(int id, int style, int wid = -1, int lType = -1, int lAmt = 0, int sl = -2, int ob = 0, int w = -1)

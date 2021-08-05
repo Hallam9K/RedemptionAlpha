@@ -84,7 +84,7 @@ namespace Redemption.Base
             for (int y = startY; y < Main.maxTilesY - 10; y++)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile != null && tile.IsActive && (!solid || Main.tileSolid[tile.type])) { return y; }
+                if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return y; }
             }
             return Main.maxTilesY - 10;
         }
@@ -100,7 +100,7 @@ namespace Redemption.Base
             for (int y = startY; y > 10; y--)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile != null && tile.IsActive && (!solid || Main.tileSolid[tile.type])) { return y; }
+                if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return y; }
             }
             return 10;
         }
@@ -114,19 +114,17 @@ namespace Redemption.Base
                 for (int x = startX; x > 10; x--)
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
-                    if (tile != null && tile.IsActive && (!solid || Main.tileSolid[tile.type])) { return x; }
+                    if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return x; }
                 }
                 return 10;
             }
-            else
+
+            for (int x = startX; x < Main.maxTilesX - 10; x++)
             {
-                for (int x = startX; x < Main.maxTilesX - 10; x++)
-                {
-                    Tile tile = Framing.GetTileSafely(x, y);
-                    if (tile != null && tile.IsActive && (!solid || Main.tileSolid[tile.type])) { return x; }
-                }
-                return Main.maxTilesX - 10;
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return x; }
             }
+            return Main.maxTilesX - 10;
         }
 
         /*
@@ -145,8 +143,10 @@ namespace Redemption.Base
         public static int GetWorldSize()
         {
             if (Main.maxTilesX == 4200) { return 1; }
-            else if (Main.maxTilesX == 6400) { return 2; }
-            else if (Main.maxTilesX == 8400) { return 3; }
+
+            if (Main.maxTilesX == 6400) { return 2; }
+
+            if (Main.maxTilesX == 8400) { return 3; }
             return 1; //unknown size, assume small
         }
 
@@ -177,7 +177,7 @@ namespace Redemption.Base
                 for (int y1 = radiusUp; y1 <= radiusDown; y1++)
                 {
                     double dist = Vector2.Distance(new Vector2(x1 * 16f + 8f, y1 * 16f + 8f), position);
-                    if (!WorldGen.InWorld(x1, y1, 0)) continue;
+                    if (!WorldGen.InWorld(x1, y1)) continue;
                     if (dist < distRad && Main.tile[x1, y1] != null && Main.tile[x1, y1].IsActive)
                     {
                         int currentType = Main.tile[x1, y1].type;
@@ -191,7 +191,7 @@ namespace Redemption.Base
             }
             if (sync && Main.netMode != NetmodeID.SinglePlayer)
             {
-                NetMessage.SendTileSquare(-1, (int)(position.X / 16f), (int)(position.Y / 16f), (radius * 2) + 2);
+                NetMessage.SendTileSquare(-1, (int)(position.X / 16f), (int)(position.Y / 16f), radius * 2 + 2);
             }
         }
         public static void ReplaceWalls(Vector2 position, int radius, int[] walls, int[] replacements, bool silent = false, bool sync = true)
@@ -211,7 +211,7 @@ namespace Redemption.Base
                 for (int y1 = radiusUp; y1 <= radiusDown; y1++)
                 {
                     double dist = Vector2.Distance(new Vector2(x1 * 16f + 8f, y1 * 16f + 8f), position);
-                    if (!WorldGen.InWorld(x1, y1, 0)) continue;
+                    if (!WorldGen.InWorld(x1, y1)) continue;
                     if (dist < distRad && Main.tile[x1, y1] != null)
                     {
                         int currentType = Main.tile[x1, y1].wall;
@@ -225,7 +225,7 @@ namespace Redemption.Base
             }
             if (sync && Main.netMode != NetmodeID.SinglePlayer)
             {
-                NetMessage.SendTileSquare(-1, (int)(position.X / 16f), (int)(position.Y / 16f), (radius * 2) + 2);
+                NetMessage.SendTileSquare(-1, (int)(position.X / 16f), (int)(position.Y / 16f), radius * 2 + 2);
             }
         }
 
@@ -254,7 +254,7 @@ namespace Redemption.Base
          */
         public static void GenerateLiquid(int x, int y, int liquidType, bool updateFlow = true, int liquidHeight = 255, bool sync = true)
         {
-            if (!WorldGen.InWorld(x, y, 0)) return;
+            if (!WorldGen.InWorld(x, y)) return;
             if (Main.tile[x, y] == null) Main.tile[x, y] = new Tile();
             liquidHeight = (int)MathHelper.Clamp(liquidHeight, 0, 255);
             Main.tile[x, y].LiquidAmount = (byte)liquidHeight;
@@ -302,9 +302,9 @@ namespace Redemption.Base
         {
             try
             {
-                if (!WorldGen.InWorld(x, y, 0)) return;
+                if (!WorldGen.InWorld(x, y)) return;
                 if (Main.tile[x, y] == null) { Main.tile[x, y] = new Tile(); }
-                TileObjectData data = tile <= -1 ? null : TileObjectData.GetTileData(tile, tileStyle, 0);
+                TileObjectData data = tile <= -1 ? null : TileObjectData.GetTileData(tile, tileStyle);
                 int width = data == null ? 1 : data.Width;
                 int height = data == null ? 1 : data.Height;
                 int tileWidth = tile == -1 || data == null ? 1 : data.Width;
@@ -343,8 +343,8 @@ namespace Redemption.Base
                             {
                                 int x2 = (int)newPos.X + x1;
                                 int y2 = (int)newPos.Y + y1;
-                                WorldGen.SquareTileFrame(x2, y2, true);
-                                WorldGen.SquareWallFrame(x2, y2, true);
+                                WorldGen.SquareTileFrame(x2, y2);
+                                WorldGen.SquareWallFrame(x2, y2);
                             }
                         }
                     }
@@ -365,7 +365,7 @@ namespace Redemption.Base
                             if (slope == -1) { Main.tile[x, y].IsHalfBlock = true; }
                             else
                             { Main.tile[x, y].Slope = (SlopeType)(slope == -2 ? oldSlope : (byte)slope); }
-                            WorldGen.SquareTileFrame(x, y, true);
+                            WorldGen.SquareTileFrame(x, y);
                         }
                         else
                         {
@@ -388,7 +388,7 @@ namespace Redemption.Base
                             {
                                 for (int y1 = 0; y1 < tileHeight; y1++)
                                 {
-                                    WorldGen.SquareTileFrame(x + x1, y + y1, true);
+                                    WorldGen.SquareTileFrame(x + x1, y + y1);
                                 }
                             }
                         }
@@ -434,7 +434,7 @@ namespace Redemption.Base
             if (x == endX && y == endY) //it's just one tile...lol
             {
                 int tileID = gen.GetTile(0), wallID = gen.GetWall(0);
-                if ((tileID > -1 && gen.CanPlace != null && !gen.CanPlace(x, y, tileID, wallID)) || (wallID > -1 && gen.CanPlaceWall != null && !gen.CanPlaceWall(x, y, tileID, wallID))) return;
+                if (tileID > -1 && gen.CanPlace != null && !gen.CanPlace(x, y, tileID, wallID) || wallID > -1 && gen.CanPlaceWall != null && !gen.CanPlaceWall(x, y, tileID, wallID)) return;
                 GenerateTile(x, y, tileID, wallID, 0, tileID != -1, true, 0, false, sync);
                 if (gen.slope) SmoothTiles(x, y, x, y);
             }
@@ -448,8 +448,8 @@ namespace Redemption.Base
                 {
                     for (int n = 0; n < thickness; n++)
                     {
-                        tileIndex = gen.tiles == null ? -1 : (gen.orderTiles ? tileIndex + 1 : WorldGen.genRand.Next(gen.tiles.Length));
-                        wallIndex = gen.walls == null ? -1 : (gen.orderWalls ? wallIndex + 1 : WorldGen.genRand.Next(gen.walls.Length));
+                        tileIndex = gen.tiles == null ? -1 : gen.orderTiles ? tileIndex + 1 : WorldGen.genRand.Next(gen.tiles.Length);
+                        wallIndex = gen.walls == null ? -1 : gen.orderWalls ? wallIndex + 1 : WorldGen.genRand.Next(gen.walls.Length);
                         if (tileIndex != -1 && tileIndex >= gen.tiles.Length) tileIndex = 0;
                         if (wallIndex != -1 && wallIndex >= gen.walls.Length) wallIndex = 0;
                         int addonX = vertical ? n : m, addonY = vertical ? m : n;
@@ -469,9 +469,9 @@ namespace Redemption.Base
                 }
                 if (sync && Main.netMode != NetmodeID.SinglePlayer)
                 {
-                    int size = (endY - y) > (endX - x) ? (endY - y) : (endX - x);
+                    int size = endY - y > endX - x ? endY - y : endX - x;
                     if (thickness > size) size = thickness;
-                    NetMessage.SendData(MessageID.TileSquare, -1, -1, NetworkText.FromLiteral(""), size, x, y, 0f, 0);
+                    NetMessage.SendData(MessageID.TileSquare, -1, -1, NetworkText.FromLiteral(""), size, x, y);
                 }
             }
             else //genning a line that isn't straight
@@ -483,7 +483,7 @@ namespace Redemption.Base
 
                 float rot = BaseUtility.RotationTo(start, end); if (rot < 0f) rot = (float)(Math.PI * 2f) - Math.Abs(rot);
                 float rotPercent = MathHelper.Lerp(0f, 1f, rot / (float)(Math.PI * 2f));
-                bool horizontal = rotPercent < 0.125f || (rotPercent > 0.375f && rotPercent < 0.625f) || rotPercent > 0.825f;
+                bool horizontal = rotPercent is < 0.125f or > 0.375f and < 0.625f or > 0.825f;
                 int tileIndex = -1, wallIndex = -1;
                 int lastX = x, lastY = y;
                 while (way < length)
@@ -492,8 +492,8 @@ namespace Redemption.Base
                     Point point = new((int)v.X, (int)v.Y);
                     for (int n = 0; n < thickness; n++)
                     {
-                        tileIndex = gen.tiles == null ? -1 : (gen.orderTiles ? tileIndex + 1 : WorldGen.genRand.Next(gen.tiles.Length));
-                        wallIndex = gen.walls == null ? -1 : (gen.orderWalls ? wallIndex + 1 : WorldGen.genRand.Next(gen.walls.Length));
+                        tileIndex = gen.tiles == null ? -1 : gen.orderTiles ? tileIndex + 1 : WorldGen.genRand.Next(gen.tiles.Length);
+                        wallIndex = gen.walls == null ? -1 : gen.orderWalls ? wallIndex + 1 : WorldGen.genRand.Next(gen.walls.Length);
                         if (tileIndex != -1 && tileIndex >= gen.tiles.Length) tileIndex = 0;
                         if (wallIndex != -1 && wallIndex >= gen.walls.Length) wallIndex = 0;
 
@@ -508,10 +508,10 @@ namespace Redemption.Base
                             //if (gen.slope) SmoothTiles(x2, y2, x2 + 1, y2 + 1);
                         }
                     }
-                    if (sync && Main.netMode != NetmodeID.SinglePlayer && ((!horizontal && Math.Abs(lastY - point.Y) >= 5) || (horizontal && Math.Abs(lastY - point.Y) >= 5) || (way + 1 > length)))
+                    if (sync && Main.netMode != NetmodeID.SinglePlayer && (!horizontal && Math.Abs(lastY - point.Y) >= 5 || horizontal && Math.Abs(lastY - point.Y) >= 5 || way + 1 > length))
                     {
                         int size = Math.Max(5, thickness);
-                        NetMessage.SendData(MessageID.TileSection, -1, -1, NetworkText.FromLiteral(""), lastX, lastY, size, size, 0);
+                        NetMessage.SendData(MessageID.TileSection, -1, -1, NetworkText.FromLiteral(""), lastX, lastY, size, size);
                         lastX = point.X; lastY = point.Y;
                     }
                     way += 1;
@@ -536,14 +536,14 @@ namespace Redemption.Base
             int nx = negativeX ? -1 : 1, ny = negativeY ? -1 : 1;
             Vector2 start = new(x, y), end = new(endX, endY);
             float rotPercent = MathHelper.Lerp(0f, 1f, BaseUtility.RotationTo(start, end) / (float)(Math.PI * 2f));
-            bool horizontal = rotPercent < 0.125f || (rotPercent > 0.375f && rotPercent < 0.625f) || rotPercent > 0.825f;
+            bool horizontal = rotPercent is < 0.125f or > 0.375f and < 0.625f or > 0.825f;
             Vector2 topEnd = new(endX, endY);
-            int[] clearInt = new int[] { -2 };
-            Vector2 wallStart = new(horizontal ? x : x + (2 * nx), horizontal ? y + (2 * ny) : y), wallEnd = new(horizontal ? endX : endX + (2 * nx), horizontal ? endY + (2 * ny) : endY);
-            Vector2 bottomStart = new(horizontal ? x : x + (((thickness * 2) + height) * nx), horizontal ? y + (((thickness * 2) + height) * ny) : y), bottomEnd = new(horizontal ? endX : endX + (((thickness * 2) + height) * nx), horizontal ? endY + (((thickness * 2) + height) * ny) : endY);
+            int[] clearInt = { -2 };
+            Vector2 wallStart = new(horizontal ? x : x + 2 * nx, horizontal ? y + 2 * ny : y), wallEnd = new(horizontal ? endX : endX + 2 * nx, horizontal ? endY + 2 * ny : endY);
+            Vector2 bottomStart = new(horizontal ? x : x + (thickness * 2 + height) * nx, horizontal ? y + (thickness * 2 + height) * ny : y), bottomEnd = new(horizontal ? endX : endX + (thickness * 2 + height) * nx, horizontal ? endY + (thickness * 2 + height) * ny : endY);
             int[] tiles = gen.tiles, walls = gen.walls;
             gen.tiles = null;
-            GenerateLine(gen, (int)wallStart.X, (int)wallStart.Y, (int)wallEnd.X, (int)wallEnd.Y, (thickness * 3) + height - 2, false);
+            GenerateLine(gen, (int)wallStart.X, (int)wallStart.Y, (int)wallEnd.X, (int)wallEnd.Y, thickness * 3 + height - 2, false);
             gen.tiles = tiles;
             gen.walls = null;
             GenerateLine(gen, x, y, (int)topEnd.X, (int)topEnd.Y, thickness, false);
@@ -566,10 +566,10 @@ namespace Redemption.Base
             //if (endY < y) { int temp = y; y = endY; endY = temp; }
             Vector2 start = new(x, y), end = new(endX, endY);
             float rotPercent = MathHelper.Lerp(0f, 1f, BaseUtility.RotationTo(start, end) / (float)(Math.PI * 2f));
-            bool horizontal = rotPercent < 0.125f || (rotPercent > 0.375f && rotPercent < 0.625f) || rotPercent > 0.825f;
+            bool horizontal = rotPercent is < 0.125f or > 0.375f and < 0.625f or > 0.825f;
             Vector2 topEnd = new(endX, endY);
             Vector2 wallStart = new(x + thickness, y + thickness), wallEnd = new(horizontal ? endX : endX + thickness, horizontal ? endY + thickness : endY);
-            Vector2 bottomStart = new(horizontal ? x : x + (thickness * 2) + height, horizontal ? y + (thickness * 2) + height : y), bottomEnd = new(horizontal ? endX : endX + (thickness * 2) + height, horizontal ? endY + (thickness * 2) + height : endY);
+            Vector2 bottomStart = new(horizontal ? x : x + thickness * 2 + height, horizontal ? y + thickness * 2 + height : y), bottomEnd = new(horizontal ? endX : endX + thickness * 2 + height, horizontal ? endY + thickness * 2 + height : endY);
             int[] tiles = gen.tiles, walls = gen.walls;
             gen.tiles = null;
             GenerateLine(gen, (int)wallStart.X, (int)wallStart.Y, (int)wallEnd.X, (int)wallEnd.Y, thickness + height, false);
@@ -682,7 +682,7 @@ namespace Redemption.Base
                     if (stackPrefixes[m] != -10) { Main.chest[num2].item[m].Prefix(stackPrefixes[m]); }
                 }
             }
-            WorldGen.SquareTileFrame(x + 1, y, true);
+            WorldGen.SquareTileFrame(x + 1, y);
             if (sync && Main.netMode != NetmodeID.SinglePlayer)
             {
                 NetMessage.SendTileSquare(-1, x, y, 2);
@@ -736,15 +736,15 @@ namespace Redemption.Base
                                         {
                                             if (WorldGen.SolidTile(x - 1, y) && WorldGen.SolidTile(x + 1, y + 2) && !Main.tile[x + 1, y].IsActive && !Main.tile[x + 1, y + 1].IsActive && !Main.tile[x - 1, y - 1].IsActive)
                                             {
-                                                WorldGen.KillTile(x, y, false, false, false);
+                                                WorldGen.KillTile(x, y);
                                             }
                                             else if (WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x - 1, y + 2) && !Main.tile[x - 1, y].IsActive && !Main.tile[x - 1, y + 1].IsActive && !Main.tile[x + 1, y - 1].IsActive)
                                             {
-                                                WorldGen.KillTile(x, y, false, false, false);
+                                                WorldGen.KillTile(x, y);
                                             }
                                             else if (!Main.tile[x - 1, y + 1].IsActive && !Main.tile[x - 1, y].IsActive && WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x, y + 2))
                                             {
-                                                if (WorldGen.genRand.Next(5) == 0) WorldGen.KillTile(x, y, false, false, false);
+                                                if (WorldGen.genRand.Next(5) == 0) WorldGen.KillTile(x, y);
                                                 else if (WorldGen.genRand.Next(5) == 0) WorldGen.PoundTile(x, y);
                                                 else WorldGen.SlopeTile(x, y, 2);
                                             }
@@ -752,7 +752,7 @@ namespace Redemption.Base
                                             {
                                                 if (WorldGen.genRand.Next(5) == 0)
                                                 {
-                                                    WorldGen.KillTile(x, y, false, false, false);
+                                                    WorldGen.KillTile(x, y);
                                                 }
                                                 else if (WorldGen.genRand.Next(5) == 0)
                                                 {
@@ -767,7 +767,7 @@ namespace Redemption.Base
                                     }
                                     if (WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].IsActive && !Main.tile[x + 1, y].IsActive)
                                     {
-                                        WorldGen.KillTile(x, y, false, false, false);
+                                        WorldGen.KillTile(x, y);
                                     }
                                 }
                             }
@@ -775,7 +775,7 @@ namespace Redemption.Base
                             {
                                 if (Main.tile[x + 1, y].type != 190 && Main.tile[x + 1, y].type != 48 && Main.tile[x + 1, y].type != 232 && WorldGen.SolidTile(x - 1, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x - 1, y].IsActive && !Main.tile[x + 1, y - 1].IsActive)
                                 {
-                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].type, false, false, -1, 0);
+                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].type);
                                     if (WorldGen.genRand.Next(2) == 0)
                                     {
                                         WorldGen.SlopeTile(x, y, 2);
@@ -787,7 +787,7 @@ namespace Redemption.Base
                                 }
                                 if (Main.tile[x - 1, y].type != 190 && Main.tile[x - 1, y].type != 48 && Main.tile[x - 1, y].type != 232 && WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x + 1, y].IsActive && !Main.tile[x - 1, y - 1].IsActive)
                                 {
-                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].type, false, false, -1, 0);
+                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].type);
                                     if (WorldGen.genRand.Next(2) == 0)
                                     {
                                         WorldGen.SlopeTile(x, y, 1);
@@ -830,12 +830,12 @@ namespace Redemption.Base
                     }
                     if (Main.tile[x, y].Slope == SlopeType.SlopeDownLeft && !WorldGen.SolidTile(x - 1, y))
                     {
-                        WorldGen.SlopeTile(x, y, 0);
+                        WorldGen.SlopeTile(x, y);
                         WorldGen.PoundTile(x, y);
                     }
                     if (Main.tile[x, y].Slope == SlopeType.SlopeDownRight && !WorldGen.SolidTile(x + 1, y))
                     {
-                        WorldGen.SlopeTile(x, y, 0);
+                        WorldGen.SlopeTile(x, y);
                         WorldGen.PoundTile(x, y);
                     }
                 }
@@ -901,9 +901,9 @@ namespace Redemption.Base
                 }
                 foreach (Point point in points) //tileframes
                 {
-                    WorldGen.TileFrame(point.X, point.Y, false, false);
+                    WorldGen.TileFrame(point.X, point.Y);
                     Tile tile = Main.tile[point.X, point.Y];
-                    if (tile != null && tile.wall > 0) Framing.WallFrame(point.X, point.Y, false);
+                    if (tile is {wall: > 0}) Framing.WallFrame(point.X, point.Y);
                 }
                 points.Clear();
             }
@@ -917,7 +917,7 @@ namespace Redemption.Base
 
             public bool ValidTile(int x, int y)
             {
-                return Main.tile[x, y] == null || (!Main.tile[x, y].IsActive && Main.tile[x, y].wall == 0);
+                return Main.tile[x, y] == null || !Main.tile[x, y].IsActive && Main.tile[x, y].wall == 0;
             }
 
             public class TileData
@@ -942,8 +942,8 @@ namespace Redemption.Base
 	 */
     public class GenConditions
     {
-        public int[] tiles = null;
-        public int[] walls = null;
+        public int[] tiles;
+        public int[] walls;
         public bool orderTiles = false;
         public bool orderWalls = false;
         public bool slope = false;
@@ -964,30 +964,30 @@ namespace Redemption.Base
     #region Custom GenShapes
     public class ShapeChasmSideways : GenShape
     {
-        public int _startheight = 20, _endheight = 5, _length = 60, _variance = 0, _randomHeading = 0;
-        public float[] _heightVariance = null;
+        public int _startheight = 20, _endheight = 5, _length = 60, _variance, _randomHeading;
+        public float[] _heightVariance;
         public bool _dir = true;
 
         public ShapeChasmSideways(int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance = null, bool dir = true)
         {
-            this._startheight = startheight;
-            this._endheight = endheight;
-            this._length = length;
-            this._variance = variance;
-            this._randomHeading = randomHeading;
-            this._heightVariance = heightVariance;
-            this._dir = dir;
+            _startheight = startheight;
+            _endheight = endheight;
+            _length = length;
+            _variance = variance;
+            _randomHeading = randomHeading;
+            _heightVariance = heightVariance;
+            _dir = dir;
         }
 
         public void ResetChasmParams(int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance = null, bool dir = true)
         {
-            this._startheight = startheight;
-            this._endheight = endheight;
-            this._length = length;
-            this._variance = variance;
-            this._randomHeading = randomHeading;
-            this._heightVariance = heightVariance;
-            this._dir = dir;
+            _startheight = startheight;
+            _endheight = endheight;
+            _length = length;
+            _variance = variance;
+            _randomHeading = randomHeading;
+            _heightVariance = heightVariance;
+            _dir = dir;
         }
 
         private bool DoChasm(Point origin, GenAction action, int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance, bool dir)
@@ -1015,7 +1015,7 @@ namespace Redemption.Base
                 for (int m2 = y; m2 < yend; m2++)
                 {
                     int y2 = m2;
-                    if (!UnitApply(action, trueOrigin, x, y2, new object[0]) && this._quitOnFail)
+                    if (!UnitApply(action, trueOrigin, x, y2) && _quitOnFail)
                     {
                         return false;
                     }
@@ -1026,36 +1026,36 @@ namespace Redemption.Base
 
         public override bool Perform(Point origin, GenAction action)
         {
-            return this.DoChasm(origin, action, this._startheight, this._endheight, this._length, this._variance, this._randomHeading, this._heightVariance, this._dir);
+            return DoChasm(origin, action, _startheight, _endheight, _length, _variance, _randomHeading, _heightVariance, _dir);
         }
     }
 
     public class ShapeChasm : GenShape
     {
-        public int _startwidth = 20, _endwidth = 5, _depth = 60, _variance = 0, _randomHeading = 0;
-        public float[] _widthVariance = null;
+        public int _startwidth = 20, _endwidth = 5, _depth = 60, _variance, _randomHeading;
+        public float[] _widthVariance;
         public bool _dir = true;
 
         public ShapeChasm(int startwidth, int endwidth, int depth, int variance, int randomHeading, float[] widthVariance = null, bool dir = true)
         {
-            this._startwidth = startwidth;
-            this._endwidth = endwidth;
-            this._depth = depth;
-            this._variance = variance;
-            this._randomHeading = randomHeading;
-            this._widthVariance = widthVariance;
-            this._dir = dir;
+            _startwidth = startwidth;
+            _endwidth = endwidth;
+            _depth = depth;
+            _variance = variance;
+            _randomHeading = randomHeading;
+            _widthVariance = widthVariance;
+            _dir = dir;
         }
 
         public void ResetChasmParams(int startwidth, int endwidth, int depth, int variance, int randomHeading, float[] widthVariance = null, bool dir = true)
         {
-            this._startwidth = startwidth;
-            this._endwidth = endwidth;
-            this._depth = depth;
-            this._variance = variance;
-            this._randomHeading = randomHeading;
-            this._widthVariance = widthVariance;
-            this._dir = dir;
+            _startwidth = startwidth;
+            _endwidth = endwidth;
+            _depth = depth;
+            _variance = variance;
+            _randomHeading = randomHeading;
+            _widthVariance = widthVariance;
+            _dir = dir;
         }
 
         private bool DoChasm(Point origin, GenAction action, int startwidth, int endwidth, int depth, int variance, int randomHeading, float[] widthVariance, bool dir)
@@ -1082,7 +1082,7 @@ namespace Redemption.Base
                 for (int m2 = x; m2 < xend; m2++)
                 {
                     int x2 = m2;
-                    if (!UnitApply(action, trueOrigin, x2, y, new object[0]) && this._quitOnFail)
+                    if (!UnitApply(action, trueOrigin, x2, y) && _quitOnFail)
                     {
                         return false;
                     }
@@ -1093,7 +1093,7 @@ namespace Redemption.Base
 
         public override bool Perform(Point origin, GenAction action)
         {
-            return this.DoChasm(origin, action, this._startwidth, this._endwidth, this._depth, this._variance, this._randomHeading, this._widthVariance, this._dir);
+            return DoChasm(origin, action, _startwidth, _endwidth, _depth, _variance, _randomHeading, _widthVariance, _dir);
         }
     }
 
@@ -1102,10 +1102,6 @@ namespace Redemption.Base
     #region Custom GenActions
     public class IsInWorld : GenAction
     {
-        public IsInWorld()
-        {
-        }
-
         public override bool Apply(Point origin, int x, int y, params object[] args)
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY)
@@ -1125,9 +1121,9 @@ namespace Redemption.Base
 
         public SetModTile(ushort type, bool setSelfFrames = false, bool setNeighborFrames = true)
         {
-            this._type = type;
-            this._doFraming = setSelfFrames;
-            this._doNeighborFraming = setNeighborFrames;
+            _type = type;
+            _doFraming = setSelfFrames;
+            _doNeighborFraming = setNeighborFrames;
         }
 
         public SetModTile ExtraParams(Func<int, int, Tile, bool> canReplace, int frameX = -1, int frameY = -1)
@@ -1143,16 +1139,16 @@ namespace Redemption.Base
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY)
                 return false;
             if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
-            if (_canReplace == null || (_canReplace != null && _canReplace(x, y, _tiles[x, y])))
+            if (_canReplace == null || _canReplace != null && _canReplace(x, y, _tiles[x, y]))
             {
-                _tiles[x, y].ResetToType(this._type);
+                _tiles[x, y].ResetToType(_type);
                 if (_frameX > -1)
                     _tiles[x, y].frameX = _frameX;
                 if (_frameY > -1)
                     _tiles[x, y].frameY = _frameY;
-                if (this._doFraming)
+                if (_doFraming)
                 {
-                    WorldUtils.TileFrame(x, y, this._doNeighborFraming);
+                    WorldUtils.TileFrame(x, y, _doNeighborFraming);
                 }
             }
             return UnitApply(origin, x, y, args);
@@ -1165,7 +1161,7 @@ namespace Redemption.Base
 
         public SetMapBrightness(byte brightness)
         {
-            this._brightness = brightness;
+            _brightness = brightness;
         }
 
         public override bool Apply(Point origin, int x, int y, params object[] args)
@@ -1186,8 +1182,8 @@ namespace Redemption.Base
 
         public PlaceModWall(int type, bool neighbors = true)
         {
-            this._type = (ushort)type;
-            this._neighbors = neighbors;
+            _type = (ushort)type;
+            _neighbors = neighbors;
         }
 
         public PlaceModWall ExtraParams(Func<int, int, Tile, bool> canReplace)
@@ -1200,16 +1196,16 @@ namespace Redemption.Base
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY) return false;
             if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
-            if (_canReplace == null || (_canReplace != null && _canReplace(x, y, _tiles[x, y])))
+            if (_canReplace == null || _canReplace != null && _canReplace(x, y, _tiles[x, y]))
             {
-                _tiles[x, y].wall = this._type;
-                WorldGen.SquareWallFrame(x, y, true);
-                if (this._neighbors)
+                _tiles[x, y].wall = _type;
+                WorldGen.SquareWallFrame(x, y);
+                if (_neighbors)
                 {
-                    WorldGen.SquareWallFrame(x + 1, y, true);
-                    WorldGen.SquareWallFrame(x - 1, y, true);
-                    WorldGen.SquareWallFrame(x, y - 1, true);
-                    WorldGen.SquareWallFrame(x, y + 1, true);
+                    WorldGen.SquareWallFrame(x + 1, y);
+                    WorldGen.SquareWallFrame(x - 1, y);
+                    WorldGen.SquareWallFrame(x, y - 1);
+                    WorldGen.SquareWallFrame(x, y + 1);
                 }
             }
             return UnitApply(origin, x, y, args);
@@ -1223,18 +1219,18 @@ namespace Redemption.Base
 
         public RadialDitherTopMiddle(int width, int height, float innerRadius, float outerRadius)
         {
-            this._width = width;
-            this._height = height;
-            this._innerRadius = innerRadius;
-            this._outerRadius = outerRadius;
+            _width = width;
+            _height = height;
+            _innerRadius = innerRadius;
+            _outerRadius = outerRadius;
         }
 
         public override bool Apply(Point origin, int x, int y, params object[] args)
         {
-            Vector2 value = new((float)origin.X + (_width / 2), origin.Y);
+            Vector2 value = new((float)origin.X + _width / 2, origin.Y);
             Vector2 value2 = new(x, y);
             float num = Vector2.Distance(value2, value);
-            float num2 = Math.Max(0f, Math.Min(1f, (num - this._innerRadius) / (this._outerRadius - this._innerRadius)));
+            float num2 = Math.Max(0f, Math.Min(1f, (num - _innerRadius) / (_outerRadius - _innerRadius)));
             if (_random.NextDouble() > num2)
             {
                 return UnitApply(origin, x, y, args);
@@ -1249,7 +1245,7 @@ namespace Redemption.Base
 
         public ClearTileSafely(bool frameNeighbors = false)
         {
-            this._frameNeighbors = frameNeighbors;
+            _frameNeighbors = frameNeighbors;
         }
 
         public override bool Apply(Point origin, int x, int y, params object[] args)
@@ -1261,10 +1257,10 @@ namespace Redemption.Base
             _tiles[x, y].ClearTile();
             if (_frameNeighbors)
             {
-                WorldGen.TileFrame(x + 1, y, false, false);
-                WorldGen.TileFrame(x - 1, y, false, false);
-                WorldGen.TileFrame(x, y + 1, false, false);
-                WorldGen.TileFrame(x, y - 1, false, false);
+                WorldGen.TileFrame(x + 1, y);
+                WorldGen.TileFrame(x - 1, y);
+                WorldGen.TileFrame(x, y + 1);
+                WorldGen.TileFrame(x, y - 1);
             }
             return UnitApply(origin, x, y, args);
         }

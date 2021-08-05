@@ -11,6 +11,7 @@ namespace Redemption.NPCs.Critters
         {
             DisplayName.SetDefault("Tree Bug");
         }
+
         public override void SetDefaults()
         {
             Projectile.width = 18;
@@ -27,17 +28,19 @@ namespace Redemption.NPCs.Critters
             Projectile.rotation += Projectile.velocity.X / 40 * Projectile.direction;
             Projectile.velocity.Y += 0.3f;
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
-            if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                int index = NPC.NewNPC((int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<TreeBug>());
-                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
-            }
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return true;
+
+            int index = NPC.NewNPC((int) Projectile.Center.X, (int) Projectile.Center.Y, ModContent.NPCType<TreeBug>());
+
+            if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
+                NetMessage.SendData(MessageID.SyncNPC, number: index);
+
             return true;
         }
     }

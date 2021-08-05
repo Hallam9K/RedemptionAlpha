@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using SoundType = Terraria.ModLoader.SoundType;
 
 namespace Redemption.Globals
 {
@@ -24,7 +25,7 @@ namespace Redemption.Globals
             //very advance users can use a delegate to insert special condition into the function like only targetting enemies not currently having local iFrames, but if a special condition isn't added then just return it true
             if (specialCondition == null)
             {
-                specialCondition = delegate (Terraria.NPC possibleTarget) { return true; };
+                specialCondition = delegate { return true; };
             }
             bool foundTarget = false;
             //If you want to prioritse a certain target this is where it's processed, mostly used by minions that haave a target priority
@@ -81,10 +82,8 @@ namespace Redemption.Globals
                     {
                         break;
                     }
-                    else
-                    {
-                        identity++;
-                    }
+
+                    identity++;
                 }
             }
             return identity;
@@ -234,8 +233,8 @@ namespace Redemption.Globals
     float x0, float x1, float x2, float x3)
         {
             return (float)(
-                x0 * Math.Pow((1 - t), 3) +
-                x1 * 3 * t * Math.Pow((1 - t), 2) +
+                x0 * Math.Pow(1 - t, 3) +
+                x1 * 3 * t * Math.Pow(1 - t, 2) +
                 x2 * 3 * Math.Pow(t, 2) * (1 - t) +
                 x3 * Math.Pow(t, 3)
             );
@@ -244,8 +243,8 @@ namespace Redemption.Globals
             float y0, float y1, float y2, float y3)
         {
             return (float)(
-                 y0 * Math.Pow((1 - t), 3) +
-                 y1 * 3 * t * Math.Pow((1 - t), 2) +
+                 y0 * Math.Pow(1 - t, 3) +
+                 y1 * 3 * t * Math.Pow(1 - t, 2) +
                  y2 * 3 * Math.Pow(t, 2) * (1 - t) +
                  y3 * Math.Pow(t, 3)
              );
@@ -417,7 +416,7 @@ namespace Redemption.Globals
 
         public static Vector2 SmoothFromTo(Vector2 From, Vector2 To, float Smooth = 60f)
         {
-            return From + ((To - From) / Smooth);
+            return From + (To - From) / Smooth;
         }
 
         public static float DistortFloat(float Float, float Percent)
@@ -429,7 +428,7 @@ namespace Redemption.Globals
                 DistortNumber *= 10;
                 Counter++;
             }
-            return Float + (Main.rand.Next(0, (int)DistortNumber + 1) / (float)Math.Pow(10, Counter) * ((Main.rand.Next(2) == 0) ? -1 : 1));
+            return Float + Main.rand.Next(0, (int)DistortNumber + 1) / (float)Math.Pow(10, Counter) * (Main.rand.Next(2) == 0 ? -1 : 1);
         }
 
         public static Vector2 FoundPosition(Vector2 tilePos)
@@ -531,7 +530,7 @@ namespace Redemption.Globals
             {
                 for (int i = 0; i < Streams; ++i)
                 {
-                    Vector2 direction = Vector2.Normalize(new Vector2(1, 1)).RotatedBy(MathHelper.ToRadians(((360 / Streams) * i) + currentAngle));
+                    Vector2 direction = Vector2.Normalize(new Vector2(1, 1)).RotatedBy(MathHelper.ToRadians(360 / Streams * i + currentAngle));
                     direction.X *= ProjSpeed;
                     direction.Y *= ProjSpeed;
                     int proj = Projectile.NewProjectile(source, pos.X, pos.Y, direction.X, direction.Y, type, damage, 0f, Main.myPlayer, ai0, ai1);
@@ -554,7 +553,7 @@ namespace Redemption.Globals
             Mod mod = Redemption.Instance;
             if (customSound)
             {
-                if (!Main.dedServ) { SoundEngine.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, soundString), (int)npc.position.X, (int)npc.position.Y); }
+                if (!Main.dedServ) { SoundEngine.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, soundString), (int)npc.position.X, (int)npc.position.Y); }
             }
             else
             {
@@ -765,7 +764,7 @@ namespace Redemption.Globals
             }
             if (facingTarget)
             {
-                return (npc.Center.X > codable.Center.X && npc.spriteDirection == -1) || (npc.Center.X < codable.Center.X && npc.spriteDirection == 1);
+                return npc.Center.X > codable.Center.X && npc.spriteDirection == -1 || npc.Center.X < codable.Center.X && npc.spriteDirection == 1;
             }
             return true;
         }
@@ -783,7 +782,7 @@ namespace Redemption.Globals
             {
                 Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if ((Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type]) || (Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type]) || npc.collideX)
+                if (Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type] || Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type] || npc.collideX)
                 {
                     npc.velocity.X = 0;
                 }
@@ -796,7 +795,7 @@ namespace Redemption.Globals
             {
                 Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if ((Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type]) || (Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type]) || npc.collideX)
+                if (Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type] || Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated && Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type] || npc.collideX)
                 {
                     npc.velocity.X = 0;
                 }
@@ -845,7 +844,7 @@ namespace Redemption.Globals
             if (BaseAI.HitTileOnSide(npc, 3))
             {
                 //if the npc's velocity is going in the same direction as the npc's direction...
-                if ((npc.velocity.X < 0f && npc.direction == -1) || (npc.velocity.X > 0f && npc.direction == 1))
+                if (npc.velocity.X < 0f && npc.direction == -1 || npc.velocity.X > 0f && npc.direction == 1)
                 {
                     //...attempt to jump if needed.
                     Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height, npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
@@ -870,9 +869,9 @@ namespace Redemption.Globals
                 int tpTileY = Main.rand.Next(tileY - range, tileY + range);
                 for (int tpY = tpTileY; tpY < tileY + range; tpY++)
                 {
-                    if ((tpY < tileY - 4 || tpY > tileY + 4 || tpTileX < tileX - 4 || tpTileX > tileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (Main.tile[tpTileX, tpY].IsActiveUnactuated))
+                    if ((tpY < tileY - 4 || tpY > tileY + 4 || tpTileX < tileX - 4 || tpTileX > tileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && Main.tile[tpTileX, tpY].IsActiveUnactuated)
                     {
-                        if ((CanTeleportTo != null && CanTeleportTo(tpTileX, tpY)) || (Main.tile[tpTileX, tpY - 1].LiquidType != 2 && (Main.tileSolid[Main.tile[tpTileX, tpY].type]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1)))
+                        if (CanTeleportTo != null && CanTeleportTo(tpTileX, tpY) || Main.tile[tpTileX, tpY - 1].LiquidType != 2 && Main.tileSolid[Main.tile[tpTileX, tpY].type] && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
                             return new Vector2(tpTileX, tpY);
                         }

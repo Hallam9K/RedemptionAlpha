@@ -75,20 +75,20 @@ namespace Redemption.Base
             if (tile.frameY != 0) top--;
             if (player.sign >= 0)
             {
-                SoundEngine.PlaySound(SoundID.MenuClose, -1, -1, 1);
+                SoundEngine.PlaySound(SoundID.MenuClose);
                 player.sign = -1;
                 Main.editSign = false;
                 Main.npcChatText = "";
             }
             if (Main.editChest)
             {
-                SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                SoundEngine.PlaySound(SoundID.MenuTick);
                 Main.editChest = false;
                 Main.npcChatText = "";
             }
             if (player.editedChestName)
             {
-                NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
+                NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f);
                 player.editedChestName = false;
             }
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -97,11 +97,11 @@ namespace Redemption.Base
                 {
                     player.chest = -1;
                     Recipe.FindRecipes();
-                    SoundEngine.PlaySound(SoundID.MenuClose, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuClose);
                 }
                 else
                 {
-                    NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, NetworkText.FromLiteral(""), left, top, 0f, 0f, 0, 0, 0);
+                    NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, NetworkText.FromLiteral(""), left, top);
                     Main.stackSplit = 600;
                 }
             }
@@ -114,7 +114,7 @@ namespace Redemption.Base
                     if (chest == player.chest)
                     {
                         player.chest = -1;
-                        SoundEngine.PlaySound(SoundID.MenuClose, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.MenuClose);
                     }
                     else
                     {
@@ -123,7 +123,7 @@ namespace Redemption.Base
                         Main.recBigList = false;
                         player.chestX = left;
                         player.chestY = top;
-                        SoundEngine.PlaySound(player.chest < 0 ? 10 : 12, -1, -1, 1);
+                        SoundEngine.PlaySound(player.chest < 0 ? 10 : 12);
                     }
                     Recipe.FindRecipes();
                 }
@@ -201,7 +201,7 @@ namespace Redemption.Base
          */
         public static Color[] AddToArray(Color[] array, Color valueToAdd, int indexAt = -1)
         {
-            Array.Resize(ref array, indexAt + 1 > array.Length + 1 ? (indexAt + 1) : (array.Length + 1));
+            Array.Resize(ref array, indexAt + 1 > array.Length + 1 ? indexAt + 1 : array.Length + 1);
             if (indexAt == -1)
             {
                 array[^1] = valueToAdd;
@@ -220,7 +220,7 @@ namespace Redemption.Base
          */
         public static string[] AddToArray(string[] array, string valueToAdd, int indexAt = -1)
         {
-            Array.Resize(ref array, indexAt + 1 > array.Length + 1 ? (indexAt + 1) : (array.Length + 1));
+            Array.Resize(ref array, indexAt + 1 > array.Length + 1 ? indexAt + 1 : array.Length + 1);
             if (indexAt == -1)
             {
                 array[^1] = valueToAdd;
@@ -239,7 +239,7 @@ namespace Redemption.Base
          */
         public static int[] AddToArray(int[] array, int valueToAdd, int indexAt = -1)
         {
-            Array.Resize(ref array, indexAt + 1 > array.Length + 1 ? (indexAt + 1) : (array.Length + 1));
+            Array.Resize(ref array, indexAt + 1 > array.Length + 1 ? indexAt + 1 : array.Length + 1);
             if (indexAt == -1)
             {
                 array[^1] = valueToAdd;
@@ -329,7 +329,7 @@ namespace Redemption.Base
          */
         public static Color ColorAlpha(Color color, int alpha)
         {
-            return color * (1f - (alpha / 255f));
+            return color * (1f - alpha / 255f);
         }
 
         /*
@@ -429,20 +429,18 @@ namespace Redemption.Base
             {
                 return Color.Lerp(r, b, percent / 0.25f);
             }
-            else
+
             if (percent <= 0.5f)
             {
                 return Color.Lerp(b, g, (percent - 0.25f) / 0.25f);
             }
-            else
+
             if (percent <= 0.75f)
             {
                 return Color.Lerp(g, y, (percent - 0.5f) / 0.25f);
             }
-            else
-            {
-                return Color.Lerp(y, r, (percent - 0.75f) / 0.25f);
-            }
+
+            return Color.Lerp(y, r, (percent - 0.75f) / 0.25f);
         }
 
         /* 
@@ -483,8 +481,8 @@ namespace Redemption.Base
          */
         public static Rectangle ScaleRectangle(Rectangle rect, float scale)
         {
-            float ratioWidth = ((rect.Width * scale) - rect.Width) / 2;
-            float ratioHeight = ((rect.Height * scale) - rect.Height) / 2;
+            float ratioWidth = (rect.Width * scale - rect.Width) / 2;
+            float ratioHeight = (rect.Height * scale - rect.Height) / 2;
             int x = rect.X - (int)ratioWidth;
             int y = rect.Y - (int)ratioHeight;
             int width = rect.Width + (int)(ratioWidth * 2);
@@ -500,8 +498,8 @@ namespace Redemption.Base
             float per = 1f / ((float)floats.Length - 1);
             float total = per;
             int currentID = 0;
-            while ((percent / total) > 1f && (currentID < floats.Length - 2)) { total += per; currentID++; }
-            return MathHelper.Lerp(floats[currentID], floats[currentID + 1], (percent - (per * currentID)) / per);
+            while (percent / total > 1f && currentID < floats.Length - 2) { total += per; currentID++; }
+            return MathHelper.Lerp(floats[currentID], floats[currentID + 1], (percent - per * currentID) / per);
         }
 
         /*
@@ -512,8 +510,8 @@ namespace Redemption.Base
             float per = 1f / ((float)vectors.Length - 1);
             float total = per;
             int currentID = 0;
-            while ((percent / total) > 1f && (currentID < vectors.Length - 2)) { total += per; currentID++; }
-            return Vector2.Lerp(vectors[currentID], vectors[currentID + 1], (percent - (per * currentID)) / per);
+            while (percent / total > 1f && currentID < vectors.Length - 2) { total += per; currentID++; }
+            return Vector2.Lerp(vectors[currentID], vectors[currentID + 1], (percent - per * currentID) / per);
         }
 
         /*
@@ -524,8 +522,8 @@ namespace Redemption.Base
             float per = 1f / ((float)colors.Length - 1);
             float total = per;
             int currentID = 0;
-            while ((percent / total) > 1f && (currentID < colors.Length - 2)) { total += per; currentID++; }
-            return Color.Lerp(colors[currentID], colors[currentID + 1], (percent - (per * currentID)) / per);
+            while (percent / total > 1f && currentID < colors.Length - 2) { total += per; currentID++; }
+            return Color.Lerp(colors[currentID], colors[currentID + 1], (percent - per * currentID) / per);
         }
 
         /*
@@ -577,14 +575,12 @@ namespace Redemption.Base
             int distance = maxDistance - minDistance;
             if (!circular)
             {
-                float newPosX = pos.X + (Main.rand.Next(2) == 0 ? -(minDistance + rand.Next(distance)) : (minDistance + rand.Next(distance)));
-                float newPosY = pos.Y + (Main.rand.Next(2) == 0 ? -(minDistance + rand.Next(distance)) : (minDistance + rand.Next(distance)));
+                float newPosX = pos.X + (Main.rand.Next(2) == 0 ? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
+                float newPosY = pos.Y + (Main.rand.Next(2) == 0 ? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
                 return new Vector2(newPosX, newPosY);
             }
-            else
-            {
-                return RotateVector(pos, pos + new Vector2(minDistance + rand.Next(distance)), MathHelper.Lerp(0, (float)(Math.PI * 2f), (float)rand.NextDouble()));
-            }
+
+            return RotateVector(pos, pos + new Vector2(minDistance + rand.Next(distance)), MathHelper.Lerp(0, (float)(Math.PI * 2f), (float)rand.NextDouble()));
         }
 
         /*
@@ -604,7 +600,7 @@ namespace Redemption.Base
             else
             if (Main.netMode == NetmodeID.MultiplayerClient) { Main.NewText(s, colorR, colorG, colorB); }
             else //if(sync){ NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(s), new Color(colorR, colorG, colorB), Main.myPlayer); } }else
-            if (sync && Main.netMode == NetmodeID.Server) { ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(s), new Color(colorR, colorG, colorB), -1); }
+            if (sync && Main.netMode == NetmodeID.Server) { ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(s), new Color(colorR, colorG, colorB)); }
         }
 
         public static Vector2[] ChainVector2(Vector2 start, Vector2 end, float jump = 0f)

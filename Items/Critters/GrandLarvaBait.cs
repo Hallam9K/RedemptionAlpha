@@ -1,8 +1,8 @@
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
+using Terraria;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Critters
 {
@@ -18,7 +18,7 @@ namespace Redemption.Items.Critters
             Item.width = 36;
             Item.height = 30;
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(0, 0, 2, 0);
+            Item.value = Item.buyPrice(0, 0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.bait = 55;
             Item.useAnimation = 30;
