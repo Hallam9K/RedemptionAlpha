@@ -16,6 +16,7 @@ namespace Redemption
         {
 			ProjTags.SetProjTags();
 			TileTags.SetTileTags();
+			NPCTags.SetNPCTags();
 		}
     }
 }

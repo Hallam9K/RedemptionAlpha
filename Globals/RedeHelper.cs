@@ -50,29 +50,15 @@ namespace Redemption
             }
             return foundTarget;
         }
-        public static bool ClosestNPCAny(ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1, SpecialCondition specialCondition = null)
+        public static bool ClosestNPCToNPC(this NPC npc, ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false)
         {
-            //very advance users can use a delegate to insert special condition into the function like only targetting enemies not currently having local iFrames, but if a special condition isn't added then just return it true
-            if (specialCondition == null)
-            {
-                specialCondition = delegate (NPC possibleTarget) { return true; };
-            }
             bool foundTarget = false;
-            //If you want to prioritse a certain target this is where it's processed, mostly used by minions that haave a target priority
-            if (overrideTarget != -1)
-            {
-                if ((Main.npc[overrideTarget].Center - position).Length() < maxDistance)
-                {
-                    target = Main.npc[overrideTarget];
-                    return true;
-                }
-            }
             //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
             for (int k = 0; k < Main.npc.Length; k++)
             {
                 NPC possibleTarget = Main.npc[k];
                 float distance = (possibleTarget.Center - position).Length();
-                if (distance < maxDistance && possibleTarget.active && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles) && specialCondition(possibleTarget))
+                if (distance < maxDistance && possibleTarget.active && possibleTarget.type != npc.type && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles))
                 {
                     target = Main.npc[k];
                     foundTarget = true;
@@ -581,11 +567,10 @@ namespace Redemption
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int n = NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
-                if (n != Main.maxNPCs)
+                int index = NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
+                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 {
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
                 }
             }
         }
@@ -642,10 +627,12 @@ namespace Redemption
             if (npc.velocity.X > 0)
             {
                 npc.spriteDirection = 1;
+                npc.direction = 1;
             }
             else if (npc.velocity.X < 0)
             {
                 npc.spriteDirection = -1;
+                npc.direction = -1;
             }
         }
         /// <summary>
@@ -761,20 +748,23 @@ namespace Redemption
         /// </summary>
         /// <param name="range">Sets how close the player would need to be before the Sight is true.</param>
         /// <param name="lineOfSight">Sets if Sight can be blocked by the player standing behind tiles.</param>
-        public static bool Sight(this NPC npc, float range = -1, bool lineOfSight = false)
+        public static bool Sight(this NPC npc, Entity codable, float range = -1, bool facingTarget = true, bool lineOfSight = false)
         {
-            Player player = Main.player[npc.target];
             if (lineOfSight)
             {
-                if (!Collision.CanHit(npc.position, npc.width, npc.height, player.position, player.width, player.height))
+                if (!Collision.CanHit(npc.position, npc.width, npc.height, codable.position, codable.width, codable.height))
                     return false;
             }
             if (range >= 0)
             {
-                if (npc.Distance(Main.player[npc.target].Center) > range)
+                if (npc.Distance(codable.Center) > range)
                     return false;
             }
-            return (npc.Center.X > player.Center.X && npc.spriteDirection == -1) || (npc.Center.X < player.Center.X && npc.spriteDirection == 1);
+            if (facingTarget)
+            {
+                return (npc.Center.X > codable.Center.X && npc.spriteDirection == -1) || (npc.Center.X < codable.Center.X && npc.spriteDirection == 1);
+            }
+            return true;
         }
 
         /// <summary>

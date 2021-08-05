@@ -21,13 +21,13 @@ namespace Redemption.Items.Critters
             Item.rare = ItemRarityID.Blue;
             Item.maxStack = 999;
             Item.value = Item.buyPrice(silver: 4);
-            Item.useAnimation = 30;
-            Item.useTime = 30;
+            Item.useAnimation = 1;
+            Item.useTime = 1;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = true;
         }
         public override bool? UseItem(Player player)
-        {
+        {            
             int index = NPC.NewNPC((int)(player.position.X + Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f), ModContent.NPCType<BoneSpider>());
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
             {

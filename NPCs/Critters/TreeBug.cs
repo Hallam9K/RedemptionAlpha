@@ -64,7 +64,8 @@ namespace Redemption.NPCs.Critters
                     AIState = (float)ActionState.Idle;
                     break;
                 case (float)ActionState.Idle:
-                    NPC.velocity.X *= 0.5f;
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.5f;
                     AITimer++;
                     if (AITimer >= TimerRand)
                     {
@@ -73,12 +74,7 @@ namespace Redemption.NPCs.Critters
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = (float)ActionState.Wander;
                     }
-                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 32, NPC.Center) && !target.friendly && target.active && target.damage > 0)
-                    {
-                        NPC.velocity.X *= target.Center.X < NPC.Center.X ? 1.4f : -1.4f;
-                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
-                        AIState = (float)ActionState.Hop;
-                    }
+                    HopCheck();
                     if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.damage > 0)
                     {
                         moveTo = NPC.FindGround(10);
@@ -96,28 +92,23 @@ namespace Redemption.NPCs.Critters
                     }
                     break;
                 case (float)ActionState.Wander:
-                    if (hopCooldown == 0 && RedeHelper.ClosestNPC(ref target, 32, NPC.Center) && target.damage > 0)
-                    {
-                        NPC.velocity.X *= target.Center.X < NPC.Center.X ? 1.4f : -1.4f;
-                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
-                        AIState = (float)ActionState.Hop;
-                    }
+                    HopCheck();
                     if (RedeHelper.ClosestNPC(ref target, 100, NPC.Center) && target.damage > 0)
                     {
-                        RedeHelper.HorizontallyMove(NPC, new Vector2(target.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y), 0.5f, 2, 4, 4, false);
+                        RedeHelper.HorizontallyMove(NPC, new Vector2(target.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y), 0.5f, 2, 4, 2, false);
                         return;
                     }
                     AITimer++;
-                    if (AITimer >= TimerRand || NPC.Distance(moveTo * 16) < 20)
+                    if (AITimer >= TimerRand || (NPC.Center.X + 20 > moveTo.X * 16 && NPC.Center.X - 20 < moveTo.X * 16))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = (float)ActionState.Idle;
                     }
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.2f, 1, 4, 4, false);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.2f, 1, 4, 2, false);
                     break;
                 case (float)ActionState.Hop:
-                    if (BaseAI.HitTileOnSide(NPC, 3, false))
+                    if (BaseAI.HitTileOnSide(NPC, 3, true))
                     {
                         moveTo = NPC.FindGround(10);
                         hopCooldown = 180;
@@ -127,8 +118,8 @@ namespace Redemption.NPCs.Critters
                     break;
                 case (float)ActionState.Eat:
                     NPC.velocity.X *= 0.5f;
-                    Point tileBelow = NPC.Bottom.ToTileCoordinates();
-                    Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+                    tileBelow = NPC.Bottom.ToTileCoordinates();
+                    tile = Main.tile[tileBelow.X, tileBelow.Y];
                     AITimer++;
                     if (AITimer % 30 == 0 && NPC.life < NPC.lifeMax)
                     {
@@ -142,6 +133,15 @@ namespace Redemption.NPCs.Critters
                         AIState = (float)ActionState.Idle;
                     }
                     break;
+            }
+        }
+        public void HopCheck()
+        {
+            if (hopCooldown == 0 && BaseAI.HitTileOnSide(NPC, 3, true) && RedeHelper.ClosestNPC(ref target, 32, NPC.Center) && target.damage > 0)
+            {
+                NPC.velocity.X *= target.Center.X < NPC.Center.X ? 1.4f : -1.4f;
+                NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
+                AIState = (float)ActionState.Hop;
             }
         }
         public override void FindFrame(int frameHeight)
