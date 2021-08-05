@@ -11,8 +11,10 @@ namespace Redemption.Items.Critters
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Grand Larva");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
+
         public override void SetDefaults()
         {
             Item.width = 36;
@@ -26,13 +28,15 @@ namespace Redemption.Items.Critters
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = true;
         }
+
         public override bool? UseItem(Player player)
         {
-            int index = NPC.NewNPC((int)(player.position.X + Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f), ModContent.NPCType<GrandLarva>());
+            int index = NPC.NewNPC((int) (player.position.X + Main.rand.Next(-20, 20)), (int) (player.position.Y - 0f),
+                ModContent.NPCType<GrandLarva>());
+
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-            {
                 NetMessage.SendData(MessageID.SyncNPC, number: index);
-            }
+
             return true;
         }
     }

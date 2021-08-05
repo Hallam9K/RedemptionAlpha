@@ -11,6 +11,7 @@ namespace Redemption.Items.Critters
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bone Spider");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
@@ -26,13 +27,15 @@ namespace Redemption.Items.Critters
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = true;
         }
+
         public override bool? UseItem(Player player)
-        {            
-            int index = NPC.NewNPC((int)(player.position.X + Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f), ModContent.NPCType<BoneSpider>());
+        {
+            int index = NPC.NewNPC((int) (player.position.X + Main.rand.Next(-20, 20)), (int) (player.position.Y - 0f),
+                ModContent.NPCType<BoneSpider>());
+
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-            {
                 NetMessage.SendData(MessageID.SyncNPC, number: index);
-            }
+
             return true;
         }
     }

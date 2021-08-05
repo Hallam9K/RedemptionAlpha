@@ -11,6 +11,7 @@ namespace Redemption.Items.Critters
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tree Bug");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
@@ -27,13 +28,15 @@ namespace Redemption.Items.Critters
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = true;
         }
+
         public override bool? UseItem(Player player)
         {
-            int index = NPC.NewNPC((int)(player.position.X + Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f), ModContent.NPCType<TreeBug>());
+            int index = NPC.NewNPC((int) (player.position.X + Main.rand.Next(-20, 20)), (int) (player.position.Y - 0f),
+                ModContent.NPCType<TreeBug>());
+
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-            {
                 NetMessage.SendData(MessageID.SyncNPC, number: index);
-            }
+
             return true;
         }
     }
