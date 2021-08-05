@@ -1,9 +1,8 @@
-
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Base
 {
     public class BasePlayer
     {

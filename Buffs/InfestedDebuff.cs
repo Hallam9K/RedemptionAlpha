@@ -1,9 +1,6 @@
-using Microsoft.Xna.Framework;
-using Redemption.NPCs.Critters;
+using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs

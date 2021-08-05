@@ -7,7 +7,8 @@ using Terraria.ModLoader.Utilities;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Critters
 {

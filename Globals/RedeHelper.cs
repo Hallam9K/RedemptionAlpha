@@ -1,6 +1,7 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Redemption.Base;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -8,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
-namespace Redemption
+namespace Redemption.Globals
 {
     public static class RedeHelper
     {
@@ -16,14 +17,14 @@ namespace Redemption
         {
             return new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
         }
-        public delegate bool SpecialCondition(NPC possibleTarget);
+        public delegate bool SpecialCondition(Terraria.NPC possibleTarget);
         //used for homing projectile
-        public static bool ClosestNPC(ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1, SpecialCondition specialCondition = null)
+        public static bool ClosestNPC(ref Terraria.NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1, SpecialCondition specialCondition = null)
         {
             //very advance users can use a delegate to insert special condition into the function like only targetting enemies not currently having local iFrames, but if a special condition isn't added then just return it true
             if (specialCondition == null)
             {
-                specialCondition = delegate (NPC possibleTarget) { return true; };
+                specialCondition = delegate (Terraria.NPC possibleTarget) { return true; };
             }
             bool foundTarget = false;
             //If you want to prioritse a certain target this is where it's processed, mostly used by minions that haave a target priority
@@ -38,7 +39,7 @@ namespace Redemption
             //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
             for (int k = 0; k < Main.npc.Length; k++)
             {
-                NPC possibleTarget = Main.npc[k];
+                Terraria.NPC possibleTarget = Main.npc[k];
                 float distance = (possibleTarget.Center - position).Length();
                 if (distance < maxDistance && possibleTarget.active && possibleTarget.chaseable && !possibleTarget.dontTakeDamage && !possibleTarget.friendly && possibleTarget.lifeMax > 5 && !possibleTarget.immortal && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles) && specialCondition(possibleTarget))
                 {
@@ -50,13 +51,13 @@ namespace Redemption
             }
             return foundTarget;
         }
-        public static bool ClosestNPCToNPC(this NPC npc, ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false)
+        public static bool ClosestNPCToNPC(this Terraria.NPC npc, ref Terraria.NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false)
         {
             bool foundTarget = false;
             //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
             for (int k = 0; k < Main.npc.Length; k++)
             {
-                NPC possibleTarget = Main.npc[k];
+                Terraria.NPC possibleTarget = Main.npc[k];
                 float distance = (possibleTarget.Center - position).Length();
                 if (distance < maxDistance && possibleTarget.active && possibleTarget.type != npc.type && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles))
                 {
@@ -91,7 +92,7 @@ namespace Redemption
         //used for projectiles using ammo, the vanilla PickAmmo had a bunch of clutter we don't need
         public static bool UseAmmo(this Projectile projectile, int ammoID, ref int shoot, ref float speed, ref int Damage, ref float KnockBack, bool dontConsume = false)
         {
-            Player player = Main.player[projectile.owner];
+            Terraria.Player player = Main.player[projectile.owner];
             Item item = new();
             bool hasFoundAmmo = false;
             for (int i = 54; i < 58; i++)
@@ -282,11 +283,11 @@ namespace Redemption
             return new Vector2(rand.Next((int)pos1.X, (int)pos2.X) + 1, rand.Next((int)pos1.Y, (int)pos2.Y) + 1);
         }
 
-        public static int GetNearestAlivePlayer(this NPC npc)
+        public static int GetNearestAlivePlayer(this Terraria.NPC npc)
         {
             var NearestPlayerDist = 4815162342f;
             var NearestPlayer = -1;
-            foreach (Player player in Main.player)
+            foreach (Terraria.Player player in Main.player)
             {
                 if (player.Distance(npc.Center) < NearestPlayerDist && player.active)
                 {
@@ -300,7 +301,7 @@ namespace Redemption
         {
             var NearestPlayerDist = 4815162342f;
             var NearestPlayer = -1;
-            foreach (Player player in Main.player)
+            foreach (Terraria.Player player in Main.player)
             {
                 if (player.Distance(projectile.Center) < NearestPlayerDist && player.active)
                 {
@@ -310,11 +311,11 @@ namespace Redemption
             }
             return NearestPlayer;
         }
-        public static Vector2 GetNearestAlivePlayerVector(this NPC npc)
+        public static Vector2 GetNearestAlivePlayerVector(this Terraria.NPC npc)
         {
             var NearestPlayerDist = 4815162342f;
             Vector2 NearestPlayer = Vector2.Zero;
-            foreach (Player player in Main.player)
+            foreach (Terraria.Player player in Main.player)
             {
                 if (player.Distance(npc.Center) < NearestPlayerDist && player.active)
                 {
@@ -339,7 +340,7 @@ namespace Redemption
         {
             float NearestNPCDist = -1;
             int NearestNPC = -1;
-            foreach (NPC npc in Main.npc)
+            foreach (Terraria.NPC npc in Main.npc)
             {
                 if (!npc.active)
                     continue;
@@ -360,7 +361,7 @@ namespace Redemption
         {
             float NearestPlayerDist = -1;
             int NearestPlayer = -1;
-            foreach (Player player in Main.player)
+            foreach (Terraria.Player player in Main.player)
             {
                 if (Alive && (!player.active || player.dead))
                     continue;
@@ -381,12 +382,12 @@ namespace Redemption
 
         public static Vector2 RandomPointInArea(Vector2 A, Vector2 B)
         {
-            return new Vector2(Main.rand.Next((int)A.X, (int)B.X) + 1, Main.rand.Next((int)A.Y, (int)B.Y) + 1);
+            return new(Main.rand.Next((int)A.X, (int)B.X) + 1, Main.rand.Next((int)A.Y, (int)B.Y) + 1);
         }
 
         public static Vector2 RandomPointInArea(Rectangle Area)
         {
-            return new Vector2(Main.rand.Next(Area.X, Area.X + Area.Width), Main.rand.Next(Area.Y, Area.Y + Area.Height));
+            return new(Main.rand.Next(Area.X, Area.X + Area.Width), Main.rand.Next(Area.Y, Area.Y + Area.Height));
         }
 
         public static float RotateBetween2Points(Vector2 A, Vector2 B)
@@ -396,7 +397,7 @@ namespace Redemption
 
         public static Vector2 CenterPoint(Vector2 A, Vector2 B)
         {
-            return new Vector2((A.X + B.X) / 2.0f, (A.Y + B.Y) / 2.0f);
+            return new((A.X + B.X) / 2.0f, (A.Y + B.Y) / 2.0f);
         }
 
         public static Vector2 PolarPos(Vector2 Point, float Distance, float Angle, int XOffset = 0, int YOffset = 0)
@@ -441,7 +442,7 @@ namespace Redemption
             return Draw;
         }
 
-        public static void MoveTowards(this NPC npc, Vector2 playerTarget, float speed, float turnResistance)
+        public static void MoveTowards(this Terraria.NPC npc, Vector2 playerTarget, float speed, float turnResistance)
         {
             var Move = playerTarget - npc.Center;
             float Length = Move.Length();
@@ -464,14 +465,14 @@ namespace Redemption
 
         public static Vector2 Spread(float xy)
         {
-            return new Vector2(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, xy - 1));
+            return new(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, xy - 1));
         }
         public static Vector2 SpreadUp(float xy)
         {
-            return new Vector2(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, 0));
+            return new(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, 0));
         }
 
-        public static void CreateDust(Player player, int dust, int count)
+        public static void CreateDust(Terraria.Player player, int dust, int count)
         {
             for (var i = 0; i < count; i++)
             {
@@ -481,7 +482,7 @@ namespace Redemption
 
         public static Vector2 RotateVector(Vector2 origin, Vector2 vecToRot, float rot)
         {
-            return new Vector2((float)(Math.Cos(rot) * (vecToRot.X - (double)origin.X) - Math.Sin(rot) * (vecToRot.Y - (double)origin.Y)) + origin.X, (float)(Math.Sin(rot) * (vecToRot.X - (double)origin.X) + Math.Cos(rot) * (vecToRot.Y - (double)origin.Y)) + origin.Y);
+            return new((float)(Math.Cos(rot) * (vecToRot.X - (double)origin.X) - Math.Sin(rot) * (vecToRot.Y - (double)origin.Y)) + origin.X, (float)(Math.Sin(rot) * (vecToRot.X - (double)origin.X) + Math.Cos(rot) * (vecToRot.Y - (double)origin.Y)) + origin.Y);
         }
 
         public static bool Contains(this Rectangle rect, Vector2 pos)
@@ -515,11 +516,11 @@ namespace Redemption
         }
         public static Vector2 GetOrigin(Texture2D tex, int frames = 1)
         {
-            return new Vector2(tex.Width / 2, tex.Height / frames / 2);
+            return new(tex.Width / 2, tex.Height / frames / 2);
         }
         public static Vector2 GetOrigin(Rectangle rect, int frames = 1)
         {
-            return new Vector2(rect.Width / 2, rect.Height / frames / 2);
+            return new(rect.Width / 2, rect.Height / frames / 2);
         }
 
         public static void ProjectileExploson(IProjectileSource source, Vector2 pos, float StartAngle, int Streams, int type, int damage, float ProjSpeed, float ai0 = 0, float ai1 = 0)
@@ -548,7 +549,7 @@ namespace Redemption
         /// 'speed' and 'spread' is only needed if 'aimed' is true. 'spread' is optional.
         /// Example: npc.Shoot(npc.Center, ModContent.ProjectileType<Bullet>(), 40, new Vector2(-5, 0), false, false, SoundID.Item1);
         /// </summary>
-        public static void Shoot(this NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, bool customSound, LegacySoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, bool customSound, LegacySoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
         {
             Mod mod = Redemption.Instance;
             if (customSound)
@@ -569,7 +570,7 @@ namespace Redemption
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int index = NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
+                int index = Terraria.NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
@@ -580,9 +581,9 @@ namespace Redemption
         /// <summary>
         /// A simple Dash method for npcs charging at the player, use npc.Dash(20, false); for example.
         /// </summary>
-        public static void Dash(this NPC npc, int speed, bool directional, LegacySoundStyle sound, Vector2 target)
+        public static void Dash(this Terraria.NPC npc, int speed, bool directional, LegacySoundStyle sound, Vector2 target)
         {
-            Player player = Main.player[npc.target];
+            Terraria.Player player = Main.player[npc.target];
             SoundEngine.PlaySound(sound, (int)npc.position.X, (int)npc.position.Y);
             if (target == Vector2.Zero) { target = player.Center; }
             if (directional)
@@ -597,9 +598,9 @@ namespace Redemption
         /// <summary>
         /// Makes the npc flip to the direction of the player. npc.LookAtPlayer();
         /// </summary>
-        public static void LookAtPlayer(this NPC npc)
+        public static void LookAtPlayer(this Terraria.NPC npc)
         {
-            Player player = Main.player[npc.target];
+            Terraria.Player player = Main.player[npc.target];
             if (player.Center.X > npc.Center.X)
             {
                 npc.spriteDirection = 1;
@@ -611,7 +612,7 @@ namespace Redemption
         }
         public static void LookAtPlayer(this Projectile projectile)
         {
-            Player player = Main.player[projectile.owner];
+            Terraria.Player player = Main.player[projectile.owner];
             if (player.Center.X > projectile.Center.X)
             {
                 projectile.spriteDirection = 1;
@@ -624,7 +625,7 @@ namespace Redemption
         /// <summary>
         /// Makes the npc flip to the direction of it's X velocity. npc.LookByVelocity();
         /// </summary>
-        public static void LookByVelocity(this NPC npc)
+        public static void LookByVelocity(this Terraria.NPC npc)
         {
             if (npc.velocity.X > 0)
             {
@@ -640,7 +641,7 @@ namespace Redemption
         /// <summary>
         /// Moves the npc to a position without turn resistance. npc.MoveToVector2(new Vector2(player.Center + 100, player.Center - 30), 10);
         /// </summary>
-        public static void MoveToVector2(this NPC npc, Vector2 p, float moveSpeed)
+        public static void MoveToVector2(this Terraria.NPC npc, Vector2 p, float moveSpeed)
         {
             float velMultiplier = 1f;
             Vector2 dist = p - npc.Center;
@@ -688,9 +689,9 @@ namespace Redemption
         /// Example: npc.MoveToPlayer(new Vector2(100, 0), 10, 14);
         /// toPlayer makes the vector consider the player.Center for you.
         /// </summary>
-        public static void Move(this NPC npc, Vector2 vector, float speed, float turnResistance = 10f, bool toPlayer = false)
+        public static void Move(this Terraria.NPC npc, Vector2 vector, float speed, float turnResistance = 10f, bool toPlayer = false)
         {
-            Player player = Main.player[npc.target];
+            Terraria.Player player = Main.player[npc.target];
             Vector2 moveTo = toPlayer ? player.Center + vector : vector;
             Vector2 move = moveTo - npc.Center;
             float magnitude = Magnitude(move);
@@ -708,7 +709,7 @@ namespace Redemption
         }
         public static void Move(this Projectile projectile, Vector2 vector, float speed, float turnResistance = 10f, bool toPlayer = false)
         {
-            Player player = Main.player[projectile.owner];
+            Terraria.Player player = Main.player[projectile.owner];
             Vector2 moveTo = toPlayer ? player.Center + vector : vector;
             Vector2 move = moveTo - projectile.Center;
             float magnitude = Magnitude(move);
@@ -724,7 +725,7 @@ namespace Redemption
             }
             projectile.velocity = move;
         }
-        public static void MoveToNPC(this NPC npc, NPC target, Vector2 vector, float speed, float turnResistance = 10f)
+        public static void MoveToNPC(this Terraria.NPC npc, Terraria.NPC target, Vector2 vector, float speed, float turnResistance = 10f)
         {
             Vector2 moveTo = target.Center + vector;
             Vector2 move = moveTo - npc.Center;
@@ -750,7 +751,7 @@ namespace Redemption
         /// </summary>
         /// <param name="range">Sets how close the player would need to be before the Sight is true.</param>
         /// <param name="lineOfSight">Sets if Sight can be blocked by the player standing behind tiles.</param>
-        public static bool Sight(this NPC npc, Entity codable, float range = -1, bool facingTarget = true, bool lineOfSight = false)
+        public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true, bool lineOfSight = false)
         {
             if (lineOfSight)
             {
@@ -774,9 +775,9 @@ namespace Redemption
         /// </summary>
         /// <param name="canJump">Bool for if it can fall, set this to a bool in the npc.</param>
         /// <param name="yOffset">Offset so the npc doesnt fall when the player is on the same plaform as it.</param>
-        public static void JumpDownPlatform(this NPC npc, ref bool canJump, int yOffset = 12)
+        public static void JumpDownPlatform(this Terraria.NPC npc, ref bool canJump, int yOffset = 12)
         {
-            Player player = Main.player[npc.target];
+            Terraria.Player player = Main.player[npc.target];
             Point tile = npc.Bottom.ToTileCoordinates();
             if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].IsActive && npc.Center.Y + yOffset < player.Center.Y)
             {
@@ -788,7 +789,7 @@ namespace Redemption
                 }
             }
         }
-        public static void JumpDownPlatform(this NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
+        public static void JumpDownPlatform(this Terraria.NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
         {
             Point tile = npc.Bottom.ToTileCoordinates();
             if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].IsActive && npc.Center.Y + yOffset < vector.Y)
@@ -805,7 +806,7 @@ namespace Redemption
         /// <summary>
         /// Checks for if the npc has any buffs on it.
         /// </summary>
-        public static bool NPCHasAnyBuff(this NPC npc)
+        public static bool NPCHasAnyBuff(this Terraria.NPC npc)
         {
             for (int i = 0; i < BuffLoader.BuffCount; i++)
             {
@@ -820,7 +821,7 @@ namespace Redemption
         /// <summary>
         ///     Makes this NPC horizontally move towards the Player (Take Fighter AI, as an example)
         /// </summary>
-        public static void HorizontallyMove(NPC npc, Vector2 vector, float moveInterval, float moveSpeed, int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms)
+        public static void HorizontallyMove(Terraria.NPC npc, Vector2 vector, float moveInterval, float moveSpeed, int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms)
         {
             //if velocity is less than -1 or greater than 1...
             if (npc.velocity.X < -moveSpeed || npc.velocity.X > moveSpeed)
@@ -856,7 +857,7 @@ namespace Redemption
                 }
             }
         }
-        public static Vector2 FindGround(this NPC npc, int range, Func<int, int, bool> CanTeleportTo = null)
+        public static Vector2 FindGround(this Terraria.NPC npc, int range, Func<int, int, bool> CanTeleportTo = null)
         {
             int tileX = (int)npc.position.X / 16;
             int tileY = (int)npc.position.Y / 16;

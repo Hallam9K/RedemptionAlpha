@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using log4net;
-
+using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Localization;
-using Terraria.Utilities;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.Utilities;
 
-namespace Redemption
+namespace Redemption.Base
 {
     public class BaseUtility
     {

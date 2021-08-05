@@ -1,11 +1,10 @@
-using Microsoft.Xna.Framework;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Globals
 {
     public class RedeGlobalTile : GlobalTile
     {

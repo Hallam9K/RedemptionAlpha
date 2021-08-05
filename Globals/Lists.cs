@@ -1,6 +1,6 @@
-﻿using Redemption.NPCs.Critters;
+﻿using System.Collections.Generic;
+using Redemption.NPCs.Critters;
 using Redemption.Tags;
-using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.ModLoader;
 using GroupProj = Redemption.Tags.ProjectileTags;
@@ -8,7 +8,7 @@ using GroupTile = Redemption.Tags.TileTags;
 using GroupNPC = Redemption.Tags.NPCTags;
 using GroupItem = Redemption.Tags.ItemTags;
 
-namespace Redemption
+namespace Redemption.Globals
 {
     public static class TileLists
     {
@@ -23,6 +23,7 @@ namespace Redemption
             398,
             400
         };
+
         public static List<int> CrimsonTiles = new()
         {
             199,
@@ -33,6 +34,7 @@ namespace Redemption
             401,
             205
         };
+
         public static List<int> EvilTiles = new()
         {
             23,
@@ -49,6 +51,7 @@ namespace Redemption
             401,
             205
         };
+
         public static List<int> HallowTiles = new()
         {
             109,
@@ -59,28 +62,33 @@ namespace Redemption
             403,
             115
         };
+
         public static List<int> ForestTiles = new()
         {
             2
         };
+
         public static List<int> GloomTiles = new()
         {
             59,
             70,
             194,
         };
+
         public static List<int> GlowingMushTiles = new()
         {
             59,
             70,
             190
         };
+
         public static List<int> CloudTiles = new()
         {
             189,
             196,
             460
         };
+
         public static List<int> HellTiles = new()
         {
             57,
@@ -89,6 +97,7 @@ namespace Redemption
             76,
             75
         };
+
         public static List<int> SnowTiles = new()
         {
             161,
@@ -100,6 +109,7 @@ namespace Redemption
             147,
             148
         };
+
         public static List<int> DesertTiles = new()
         {
             53,
@@ -112,18 +122,21 @@ namespace Redemption
             400,
             398
         };
+
         public static List<int> JungleTiles = new()
         {
             59,
             120,
             60,
         };
+
         public static List<int> DirtTiles = new()
         {
             TileID.Dirt,
             59,
             40
         };
+
         public static List<int> OreTiles = new()
         {
             408,
@@ -153,6 +166,7 @@ namespace Redemption
             //ModContent.TileType<StarliteOreTile>(),
             //ModContent.TileType<XenomiteOreBlock>()
         };
+
         public static List<int> HotTiles = new()
         {
             53,
@@ -170,13 +184,16 @@ namespace Redemption
             76,
             75
         };
+
         public static List<int> NatureTiles = new()
         {
             2,
             59,
             120,
             60
-        }; public static List<int> WhitelistTiles = new()
+        };
+
+        public static List<int> WhitelistTiles = new()
         {
             TileID.BlueDungeonBrick,
             TileID.GreenDungeonBrick,
@@ -184,6 +201,7 @@ namespace Redemption
             TileID.LihzahrdBrick,
             TileID.BeeHive
         };
+
         public static List<int> ModdedChests = new()
         {
             //ModContent.TileType<AncientWoodChestTile>(),
@@ -195,11 +213,14 @@ namespace Redemption
             //ModContent.TileType<SilverwoodChestTile>(),
             //ModContent.TileType<HolochestTile>()
         };
+
         #endregion
     }
+
     public static class NPCLists
     {
         #region NPC Lists
+
         public static List<int> IsBunny = new()
         {
             NPCID.Bunny,
@@ -208,6 +229,7 @@ namespace Redemption
             NPCID.BunnyXmas,
             NPCID.PartyBunny
         };
+
         /*public static List<int> IsInfected = new()
         {
             ModContent.NPCType<HazmatSkeleton>(),
@@ -318,6 +340,7 @@ namespace Redemption
             ModContent.NPCType<LaughingMaskSmall>(),
             ModContent.NPCType<LaughingMaskSmall>()*/
         };
+
         public static List<int> IsDragonlike = new()
         {
             NPCID.DD2Betsy,
@@ -342,6 +365,7 @@ namespace Redemption
             NPCID.CultistDragonBody4,
             NPCID.CultistDragonTail
         };
+
         public static List<int> IsDemon = new()
         {
             NPCID.Demon,
@@ -349,6 +373,7 @@ namespace Redemption
             NPCID.FireImp,
             NPCID.RedDevil
         };
+
         /*public static List<int> IsSoulless = new()
         {
             ModContent.NPCType<SoullessAssassin>(),
@@ -377,11 +402,14 @@ namespace Redemption
             ModContent.NPCType<SpineTentacle_Large>(),
             ModContent.NPCType<SpineTentacle_Small>()
         };*/
+
         #endregion
     }
+
     public static class ProjectileLists
     {
         #region Projectile Lists
+
         public static List<int> IsTechnicallyMelee = new()
         {
             ProjectileID.EnchantedBoomerang,
@@ -505,15 +533,20 @@ namespace Redemption
             ProjectileID.FlamingMace,
             ProjectileID.BoneWhip,
         };
+
         #endregion
     }
+
     public sealed class ItemTags
     {
         public static readonly TagData BluntSwing = ContentTags.Get<GroupItem>(nameof(BluntSwing));
+
         public static void SetItemTags()
         {
             #region Item Tags
-            BluntSwing.SetMultiple(new int[] {
+
+            BluntSwing.SetMultiple(new int[]
+            {
                 ItemID.BreathingReed,
                 ItemID.ZombieArm,
                 ItemID.PurpleClubberfish,
@@ -521,17 +554,22 @@ namespace Redemption
                 ItemID.SlapHand,
                 ItemID.Keybrand
             });
+
             #endregion
         }
     }
+
     public sealed class TileTags
     {
         public static readonly TagData WoodLeaf = ContentTags.Get<GroupTile>(nameof(WoodLeaf));
+
         public static void SetTileTags()
         {
             #region Tile Tags
+
             WoodLeaf.PopulateFromSets(TileID.Sets.Leaves);
-            WoodLeaf.SetMultiple(new int[] {
+            WoodLeaf.SetMultiple(new int[]
+            {
                 TileID.WoodBlock,
                 TileID.BorealWood,
                 TileID.DynastyWood,
@@ -544,60 +582,66 @@ namespace Redemption
                 TileID.LivingMahogany,
                 TileID.RichMahogany,
             });
+
             #endregion
         }
     }
+
     public sealed class NPCTags
     {
         public static readonly TagData Skeleton = ContentTags.Get<GroupNPC>(nameof(Skeleton));
         public static readonly TagData SkeletonHumanoid = ContentTags.Get<GroupNPC>(nameof(SkeletonHumanoid));
         public static readonly TagData Undead = ContentTags.Get<GroupNPC>(nameof(Undead));
+
         public static void SetNPCTags()
         {
             #region Skeleton
+
             Skeleton.PopulateFromSets(NPCID.Sets.Skeletons);
-            Skeleton.SetMultiple(new int[] {
-            NPCID.DD2SkeletonT1,
-            NPCID.DD2SkeletonT3,
-            NPCID.AngryBones,
-            NPCID.AngryBonesBig,
-            NPCID.AngryBonesBigHelmet,
-            NPCID.AngryBonesBigMuscle,
-            NPCID.BoneSerpentHead,
-            NPCID.BoneSerpentBody,
-            NPCID.BoneSerpentTail,
-            NPCID.DarkCaster,
-            NPCID.CursedSkull,
-            NPCID.BlueArmoredBones,
-            NPCID.BlueArmoredBonesMace,
-            NPCID.BlueArmoredBonesNoPants,
-            NPCID.BlueArmoredBonesSword,
-            NPCID.BoneLee,
-            NPCID.DiabolistRed,
-            NPCID.DiabolistWhite,
-            NPCID.GiantCursedSkull,
-            NPCID.HellArmoredBones,
-            NPCID.HellArmoredBonesMace,
-            NPCID.HellArmoredBonesSpikeShield,
-            NPCID.HellArmoredBonesSword,
-            NPCID.Necromancer,
-            NPCID.NecromancerArmored,
-            NPCID.RaggedCaster,
-            NPCID.RaggedCasterOpenCoat,
-            NPCID.RuneWizard,
-            NPCID.RustyArmoredBonesAxe,
-            NPCID.RustyArmoredBonesFlail,
-            NPCID.RustyArmoredBonesSword,
-            NPCID.RustyArmoredBonesSwordNoArmor,
-            NPCID.DungeonGuardian,
-            NPCID.SkeletronHead,
-            NPCID.SkeletronHand,
-            NPCID.PirateGhost,
-            ModContent.NPCType<BoneSpider>()
+            Skeleton.SetMultiple(new int[]
+            {
+                NPCID.DD2SkeletonT1,
+                NPCID.DD2SkeletonT3,
+                NPCID.AngryBones,
+                NPCID.AngryBonesBig,
+                NPCID.AngryBonesBigHelmet,
+                NPCID.AngryBonesBigMuscle,
+                NPCID.BoneSerpentHead,
+                NPCID.BoneSerpentBody,
+                NPCID.BoneSerpentTail,
+                NPCID.DarkCaster,
+                NPCID.CursedSkull,
+                NPCID.BlueArmoredBones,
+                NPCID.BlueArmoredBonesMace,
+                NPCID.BlueArmoredBonesNoPants,
+                NPCID.BlueArmoredBonesSword,
+                NPCID.BoneLee,
+                NPCID.DiabolistRed,
+                NPCID.DiabolistWhite,
+                NPCID.GiantCursedSkull,
+                NPCID.HellArmoredBones,
+                NPCID.HellArmoredBonesMace,
+                NPCID.HellArmoredBonesSpikeShield,
+                NPCID.HellArmoredBonesSword,
+                NPCID.Necromancer,
+                NPCID.NecromancerArmored,
+                NPCID.RaggedCaster,
+                NPCID.RaggedCasterOpenCoat,
+                NPCID.RuneWizard,
+                NPCID.RustyArmoredBonesAxe,
+                NPCID.RustyArmoredBonesFlail,
+                NPCID.RustyArmoredBonesSword,
+                NPCID.RustyArmoredBonesSwordNoArmor,
+                NPCID.DungeonGuardian,
+                NPCID.SkeletronHead,
+                NPCID.SkeletronHand,
+                NPCID.PirateGhost,
+                ModContent.NPCType<BoneSpider>()
             });
 
             SkeletonHumanoid.PopulateFromSets(NPCID.Sets.Skeletons);
-            SkeletonHumanoid.SetMultiple(new int[] {
+            SkeletonHumanoid.SetMultiple(new int[]
+            {
                 NPCID.DD2SkeletonT1,
                 NPCID.DD2SkeletonT3,
                 NPCID.AngryBones,
@@ -627,10 +671,14 @@ namespace Redemption
                 NPCID.RustyArmoredBonesSwordNoArmor,
                 NPCID.PirateGhost,
             });
+
             #endregion
+
             #region Undead
+
             Undead.PopulateFromSets(NPCID.Sets.Zombies);
-            Undead.SetMultiple(new int[] {
+            Undead.SetMultiple(new int[]
+            {
                 NPCID.TorchZombie,
                 NPCID.ArmedTorchZombie,
                 NPCID.MaggotZombie,
@@ -655,10 +703,12 @@ namespace Redemption
                 NPCID.HeadlessHorseman,
                 NPCID.HeadlessHorseman,
             });
+
             #endregion
         }
     }
-    public sealed class ProjTags
+
+    public sealed class ProjectileTags
     {
         public static readonly TagData Arcane = ContentTags.Get<GroupProj>(nameof(Arcane));
         public static readonly TagData Fire = ContentTags.Get<GroupProj>(nameof(Fire));
@@ -674,10 +724,13 @@ namespace Redemption
         public static readonly TagData Blood = ContentTags.Get<GroupProj>(nameof(Blood));
         public static readonly TagData Psychic = ContentTags.Get<GroupProj>(nameof(Psychic));
         public static readonly TagData Celestial = ContentTags.Get<GroupProj>(nameof(Celestial));
+
         public static void SetProjTags()
         {
             #region Projectile Elements
-            Arcane.SetMultiple(new int[] {
+
+            Arcane.SetMultiple(new int[]
+            {
                 ProjectileID.EnchantedBoomerang,
                 ProjectileID.Starfury,
                 ProjectileID.MagicMissile,
@@ -749,7 +802,8 @@ namespace Redemption
                 ProjectileID.TitaniumStormShard,
                 ProjectileID.StardustPunch
             });
-            Fire.SetMultiple(new int[] {
+            Fire.SetMultiple(new int[]
+            {
                 ProjectileID.FireArrow,
                 ProjectileID.BallofFire,
                 ProjectileID.Flamarang,
@@ -827,7 +881,8 @@ namespace Redemption
                 ProjectileID.TorchGod,
                 ProjectileID.WandOfSparkingSpark
             });
-            Water.SetMultiple(new int[] {
+            Water.SetMultiple(new int[]
+            {
                 ProjectileID.WaterStream,
                 ProjectileID.WaterBolt,
                 ProjectileID.HolyWater,
@@ -856,7 +911,8 @@ namespace Redemption
                 ProjectileID.GelBalloon,
                 ProjectileID.VolatileGelatinBall,
             });
-            Ice.SetMultiple(new int[] {
+            Ice.SetMultiple(new int[]
+            {
                 ProjectileID.IceBlock,
                 ProjectileID.IceBoomerang,
                 ProjectileID.IceBolt,
@@ -884,7 +940,8 @@ namespace Redemption
                 ProjectileID.CoolWhip,
                 ProjectileID.CoolWhipProj,
             });
-            Earth.SetMultiple(new int[] {
+            Earth.SetMultiple(new int[]
+            {
                 ProjectileID.Boulder,
                 ProjectileID.BoulderStaffOfEarth,
                 ProjectileID.GolemFist,
@@ -899,7 +956,8 @@ namespace Redemption
                 ProjectileID.RollingCactus,
                 ProjectileID.RockGolemRock,
             });
-            Wind.SetMultiple(new int[] {
+            Wind.SetMultiple(new int[]
+            {
                 ProjectileID.Sharknado,
                 ProjectileID.SharknadoBolt,
                 ProjectileID.Cthulunado,
@@ -911,7 +969,8 @@ namespace Redemption
                 ProjectileID.DD2ApprenticeStorm,
                 ProjectileID.BookStaffShot,
             });
-            Thunder.SetMultiple(new int[] {
+            Thunder.SetMultiple(new int[]
+            {
                 ProjectileID.RuneBlast,
                 ProjectileID.MagnetSphereBall,
                 ProjectileID.MagnetSphereBolt,
@@ -950,7 +1009,8 @@ namespace Redemption
                 ProjectileID.ThunderSpearShot,
                 ProjectileID.ZapinatorLaser,
             });
-            Holy.SetMultiple(new int[] {
+            Holy.SetMultiple(new int[]
+            {
                 ProjectileID.TheDaoofPow,
                 ProjectileID.HolyWater,
                 ProjectileID.HolyArrow,
@@ -973,7 +1033,8 @@ namespace Redemption
                 ProjectileID.FairyQueenHymn,
                 ProjectileID.PiercingStarlight,
             });
-            Shadow.SetMultiple(new int[] {
+            Shadow.SetMultiple(new int[]
+            {
                 ProjectileID.UnholyArrow,
                 ProjectileID.VilethornBase,
                 ProjectileID.VilethornTip,
@@ -1015,7 +1076,8 @@ namespace Redemption
                 ProjectileID.ShadowJoustingLance,
                 ProjectileID.ScytheWhipProj,
             });
-            Nature.SetMultiple(new int[] {
+            Nature.SetMultiple(new int[]
+            {
                 ProjectileID.ThornChakram,
                 ProjectileID.Seed,
                 ProjectileID.Mushroom,
@@ -1054,7 +1116,8 @@ namespace Redemption
                 ProjectileID.Shroomerang,
                 ProjectileID.ThornWhip,
             });
-            Poison.SetMultiple(new int[] {
+            Poison.SetMultiple(new int[]
+            {
                 ProjectileID.ThornChakram,
                 ProjectileID.PoisonedKnife,
                 ProjectileID.Stinger,
@@ -1081,7 +1144,8 @@ namespace Redemption
                 ProjectileID.QueenBeeStinger,
                 ProjectileID.RollingCactusSpike,
             });
-            Blood.SetMultiple(new int[] {
+            Blood.SetMultiple(new int[]
+            {
                 ProjectileID.ThornChakram,
                 ProjectileID.PoisonedKnife,
                 ProjectileID.Stinger,
@@ -1110,12 +1174,14 @@ namespace Redemption
                 ProjectileID.ChumBucket,
                 ProjectileID.DripplerFlailExtraBall,
             });
-            Psychic.SetMultiple(new int[] {
+            Psychic.SetMultiple(new int[]
+            {
                 ProjectileID.BrainScramblerBolt,
                 ProjectileID.MedusaHeadRay,
                 ProjectileID.BookStaffShot,
             });
-            Celestial.SetMultiple(new int[] {
+            Celestial.SetMultiple(new int[]
+            {
                 ProjectileID.Starfury,
                 ProjectileID.FallingStar,
                 ProjectileID.RainbowRodBullet,
@@ -1161,6 +1227,7 @@ namespace Redemption
                 ProjectileID.PrincessWeapon,
                 ProjectileID.StarCannonStar,
             });
+
             #endregion
         }
     }

@@ -1,9 +1,7 @@
-using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Globals
 {
 	public static class RedeRecipes
 	{

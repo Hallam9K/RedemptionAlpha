@@ -1,6 +1,4 @@
-using Redemption.Tags;
-using System;
-using Terraria.ID;
+using Redemption.Globals;
 using Terraria.ModLoader;
 
 namespace Redemption
@@ -8,17 +6,12 @@ namespace Redemption
 	public class Redemption : Mod
 	{
 		public override void AddRecipes() => RedeRecipes.Load(this);
+
 		public static Redemption Instance { get; private set; }
+
 		public Redemption()
 		{
 			Instance = this;
-		}
-        public override void Load()
-        {
-			ItemTags.SetItemTags();
-			ProjTags.SetProjTags();
-			TileTags.SetTileTags();
-			NPCTags.SetNPCTags();
 		}
     }
 }

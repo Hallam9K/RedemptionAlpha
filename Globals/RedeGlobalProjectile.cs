@@ -1,10 +1,7 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using System;
 
-namespace Redemption
+namespace Redemption.Globals
 {
     public class ProjectileProperties : GlobalProjectile
     {

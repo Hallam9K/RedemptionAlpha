@@ -1,7 +1,7 @@
-using Terraria;
+using Redemption.Globals.NPC;
 using Terraria.GameContent.ItemDropRules;
 
-namespace Redemption
+namespace Redemption.Globals
 {
 	public class DecapitationCondition : IItemDropRuleCondition
 	{

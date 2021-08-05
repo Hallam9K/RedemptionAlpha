@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
 using Terraria;
-using Terraria.ObjectData;
-using Terraria.Localization;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 
-namespace Redemption
+namespace Redemption.Base
 {
     public class BaseWorldGen
     {

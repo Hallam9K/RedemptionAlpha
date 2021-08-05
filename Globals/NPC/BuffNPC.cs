@@ -3,11 +3,10 @@ using Redemption.Buffs;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Globals.NPC
 {
     public class BuffNPC : GlobalNPC
     {
@@ -17,7 +16,7 @@ namespace Redemption
         public bool infested;
         public int infestedTime;
 
-        public override void ResetEffects(NPC npc)
+        public override void ResetEffects(Terraria.NPC npc)
         {
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -25,7 +24,7 @@ namespace Redemption
                 infestedTime = 0;
             }
         }
-        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        public override void UpdateLifeRegen(Terraria.NPC npc, ref int damage)
         {
             if (infested)
             {
@@ -36,12 +35,12 @@ namespace Redemption
                 npc.defense -= infestedTime / 120;
             }
         }
-        public override void DrawEffects(NPC npc, ref Color drawColor)
+        public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
             if (infested)
                 drawColor = Color.GreenYellow;
         }
-        public override bool PreKill(NPC npc)
+        public override bool PreKill(Terraria.NPC npc)
         {
             if (infested && infestedTime >= 60)
             {

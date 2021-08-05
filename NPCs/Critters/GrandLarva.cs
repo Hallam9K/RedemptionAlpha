@@ -2,12 +2,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Utilities;
 using Redemption.Items.Critters;
-using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.Buffs;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Critters
 {

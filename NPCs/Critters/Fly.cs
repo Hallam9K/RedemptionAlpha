@@ -1,8 +1,9 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Critters;
 using System;
+using Redemption.Base;
+using Redemption.Globals;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;

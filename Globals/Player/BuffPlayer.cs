@@ -1,13 +1,13 @@
-using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
-using Redemption.Buffs;
-using Redemption.NPCs.Critters;
+using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Globals.Player
 {
     public class BuffPlayer : ModPlayer
     {

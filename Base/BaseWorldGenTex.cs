@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 
-namespace Redemption
+namespace Redemption.Base
 {
 	public class BaseWorldGenTex
 	{

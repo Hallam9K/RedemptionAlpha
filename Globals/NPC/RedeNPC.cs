@@ -3,14 +3,14 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Globals.NPC
 {
     public class RedeNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
         public bool decapitated;
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             // Decapitation
             if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCTags.SkeletonHumanoid.Has(npc.type))

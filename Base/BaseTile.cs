@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
 using Terraria;
-using Terraria.ObjectData;
-using Terraria.Localization;
-using Terraria.Utilities;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
 
-namespace Redemption
+namespace Redemption.Base
 {
     public class BaseTile
     {
@@ -57,7 +54,7 @@ namespace Redemption
          */
 		public static Vector2 GetClosestTile(int x, int y, int type, int distance = 25, Func<Tile, bool> addTile = null)
 		{
-			Vector2 originalPos = new Vector2(x, y);
+			Vector2 originalPos = new(x, y);
 			int leftX = Math.Max(10, x - distance);
 			int leftY = Math.Max(10, y - distance);
 			int rightX = Math.Min(Main.maxTilesX - 10, x + distance);
@@ -122,7 +119,7 @@ namespace Redemption
 			int leftY = Math.Max(10, y - distance);
 			int rightX = Math.Min(Main.maxTilesX - 10, x + distance);
 			int rightY = Math.Min(Main.maxTilesY - 10, y + distance);
-			List<Vector2> tilePos = new List<Vector2>();
+			List<Vector2> tilePos = new();
 			for (int x1 = leftX; x1 < rightX; x1++)
 			{
 				for (int y1 = leftY; y1 < rightY; y1++)
@@ -141,7 +138,7 @@ namespace Redemption
 							{
 								Point p = FindTopLeftPoint(x2, y2); x2 = p.X; y2 = p.Y;
 							}
-							Vector2 topLeft = new Vector2(x2, y2);
+							Vector2 topLeft = new(x2, y2);
 							if (tilePos.Contains(topLeft)) { continue; }
 							tilePos.Add(topLeft);
 						}else
