@@ -16,13 +16,17 @@ namespace Redemption
 
         public override void ResetEffects()
         {
-            infested = false;
-            infestedTime = 0;
+            if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
+            {
+                infested = false;
+                infestedTime = 0;
+            }
         }
         public override void UpdateBadLifeRegen()
         {
             if (infested)
             {
+                infestedTime++;
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
@@ -36,9 +40,9 @@ namespace Redemption
         {
             if (infested)
             {
-                r = Color.GreenYellow.R * 0.4f;
-                g = Color.GreenYellow.G * 0.4f;
-                b = Color.GreenYellow.B * 0.4f;
+                r = 0.5f;
+                g = 1;
+                b = 0.3f;
             }
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -55,7 +59,7 @@ namespace Redemption
                     int dustIndex4 = Dust.NewDust(new Vector2(Player.position.X, Player.position.Y), Player.width, Player.height, DustID.GreenBlood, Scale: 3f);
                     Main.dust[dustIndex4].velocity *= 5f;
                 }
-                int larvaCount = infestedTime / 120 + 1;
+                int larvaCount = infestedTime / 180 + 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)

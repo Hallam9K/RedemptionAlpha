@@ -27,7 +27,6 @@ namespace Redemption.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<BuffPlayer>().infested = true;
-            player.GetModPlayer<BuffPlayer>().infestedTime++;
         }
         public override bool ReApply(NPC npc, int time, int buffIndex)
         {
@@ -37,7 +36,6 @@ namespace Redemption.Buffs
         public override void Update(NPC npc, ref int buffIndex)
         {
             npc.GetGlobalNPC<BuffNPC>().infested = true;
-            npc.GetGlobalNPC<BuffNPC>().infestedTime++;
         }
     }
 }

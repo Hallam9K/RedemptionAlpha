@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
@@ -18,13 +19,17 @@ namespace Redemption
 
         public override void ResetEffects(NPC npc)
         {
-            infested = false;
-            infestedTime = 0;
+            if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
+            {
+                infested = false;
+                infestedTime = 0;
+            }
         }
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if (infested)
             {
+                infestedTime++;
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= infestedTime / 60;
@@ -34,7 +39,7 @@ namespace Redemption
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
             if (infested)
-                drawColor = Color.GreenYellow * 0.4f;
+                drawColor = Color.GreenYellow;
         }
         public override bool PreKill(NPC npc)
         {
@@ -46,7 +51,7 @@ namespace Redemption
                     int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.GreenBlood, Scale: 3f);
                     Main.dust[dustIndex4].velocity *= 5f;
                 }
-                int larvaCount = infestedTime / 120 + 1;
+                int larvaCount = infestedTime / 180 + 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)

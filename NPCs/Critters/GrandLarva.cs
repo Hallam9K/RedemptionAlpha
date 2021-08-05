@@ -206,6 +206,10 @@ namespace Redemption.NPCs.Critters
         {
             target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
         }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (AIState == (float)ActionState.Idle)

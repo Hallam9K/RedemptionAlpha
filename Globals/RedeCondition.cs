@@ -3,15 +3,15 @@ using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption
 {
-	public class DecapitationCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+	public class DecapitationCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
 		{
-			if (info.IsInSimulation)
+			if (!info.IsInSimulation && NPCTags.SkeletonHumanoid.Has(info.npc.type))
 			{
-				return false;
+				return info.npc.GetGlobalNPC<RedeNPC>().decapitated;
 			}
-			return info.npc.GetGlobalNPC<RedeNPC>().decapitated;
+			return false;
 		}
 		public bool CanShowItemDropInUI() => false;
 		public string GetConditionDescription() => "Drops when decapitated";
