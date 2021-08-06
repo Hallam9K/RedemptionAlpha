@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -17,12 +18,14 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(200) && !ItemTags.BluntSwing.Has(item.type))
                 {
+                    CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
                     damage = damage < npc.life ? npc.life : damage;
                     crit = true;
                 }
                 else if (Main.rand.NextBool(80) && item.axe > 0)
                 {
+                    CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
                     damage = damage < npc.life ? npc.life : damage;
                     crit = true;

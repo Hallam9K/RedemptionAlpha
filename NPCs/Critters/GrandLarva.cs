@@ -141,7 +141,7 @@ namespace Redemption.NPCs.Critters
         public void HopCheck()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            if (hopCooldown == 0 && Main.rand.NextBool(200) && NPC.Distance(player.Center) <= 60 &&
+            if (hopCooldown == 0 && Main.rand.NextBool(200) && player.active && !player.dead && NPC.Distance(player.Center) <= 60 &&
                 BaseAI.HitTileOnSide(NPC, 3))
             {
                 NPC.velocity.X += player.Center.X < NPC.Center.X ? -5f : 5f;
@@ -231,7 +231,7 @@ namespace Redemption.NPCs.Critters
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(7, 10); i++)
-                RedeHelper.SpawnNPC((int) NPC.Center.X, (int) NPC.Center.Y, ModContent.NPCType<Fly>());
+                RedeHelper.SpawnNPC((int) NPC.Center.X, (int) NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

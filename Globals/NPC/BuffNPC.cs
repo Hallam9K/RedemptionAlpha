@@ -38,11 +38,11 @@ namespace Redemption.Globals.NPC
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
             if (infested)
-                drawColor = Color.GreenYellow;
+                drawColor = new Color(197, 219, 171);
         }
         public override bool PreKill(Terraria.NPC npc)
         {
-            if (infested && infestedTime >= 60)
+            if (infested && infestedTime >= 60 && npc.lifeMax > 5)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
                 for (int i = 0; i < 20; i++)

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Terraria;
@@ -25,6 +26,8 @@ namespace Redemption.NPCs.Critters
 
         public ref float TimerRand => ref NPC.ai[2];
 
+        public ref float Aggressive => ref NPC.ai[3];
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
@@ -44,24 +47,29 @@ namespace Redemption.NPCs.Critters
             NPC.width = 8;
             NPC.height = 8;
             NPC.lifeMax = 1;
+            NPC.damage = 2;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.npcSlots = 0;
             NPC.aiStyle = -1;
             NPC.noGravity = true;
-            NPC.catchItem = (short) ModContent.ItemType<FlyBait>();
+            NPC.catchItem = (short)ModContent.ItemType<FlyBait>();
         }
 
         public NPC npcTarget;
         public Vector2 moveTo;
+        public int hitCooldown;
 
         public override void AI()
         {
+            Player player = Main.player[NPC.GetNearestAlivePlayer()];
+            Entity moveTarget = player;
             NPC.TargetClosest();
+
+            if (hitCooldown > 0)
+                hitCooldown--;
 
             if (Math.Abs(NPC.velocity.X) > 0.2)
                 NPC.spriteDirection = -NPC.direction;
-
-            NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
 
             if (NPC.collideX && NPC.velocity.X != NPC.oldVelocity.X)
                 NPC.velocity.X = -NPC.oldVelocity.X;
@@ -71,13 +79,13 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case (float) ActionState.Begin:
+                case (float)ActionState.Begin:
                     TimerRand = Main.rand.Next(240, 600);
-                    AIState = (float) ActionState.Flying;
+                    AIState = (float)ActionState.Flying;
                     NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                     break;
 
-                case (float) ActionState.Flying:
+                case (float)ActionState.Flying:
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
 
@@ -101,17 +109,41 @@ namespace Redemption.NPCs.Critters
 
                     NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-1f, 1f));
                     AITimer++;
+                    if (Aggressive == 1)
+                    {
+                        moveTarget = player;
+                        if (AITimer % 30 == 0)
+                            NPC.velocity = NPC.DirectionTo(moveTarget.Center) * 10f;
+                    }
+                    else
+                    {
+                        float nearestNPCDist = -1;
+                        foreach (NPC possibleTarget in Main.npc)
+                        {
+                            if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
+                                !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                                continue;
 
+                            if (nearestNPCDist != -1 && !(possibleTarget.Distance(NPC.Center) < nearestNPCDist))
+                                continue;
+
+                            nearestNPCDist = possibleTarget.Distance(NPC.Center);
+                            moveTarget = possibleTarget;
+                            if (AITimer % 30 == 0)
+                                NPC.velocity = NPC.DirectionTo(moveTarget.Center) * 10f;
+                        }
+                        CheckNPCHit();
+                    }
                     if (AITimer >= TimerRand)
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 320);
-                        AIState = (float) ActionState.Landed;
+                        AIState = (float)ActionState.Landed;
                     }
 
                     break;
 
-                case (float) ActionState.Landed:
+                case (float)ActionState.Landed:
                     AITimer++;
                     NPC.rotation = 0;
                     NPC.noGravity = false;
@@ -130,7 +162,7 @@ namespace Redemption.NPCs.Critters
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
-                        AIState = (float) ActionState.Flying;
+                        AIState = (float)ActionState.Flying;
                     }
 
                     if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.life > 5)
@@ -139,25 +171,42 @@ namespace Redemption.NPCs.Critters
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
-                        AIState = (float) ActionState.Flying;
+                        AIState = (float)ActionState.Flying;
                     }
 
-                    if (NPC.Distance(NPC.GetNearestAlivePlayerVector()) <= 100)
+                    if (NPC.Distance(player.Center) <= 100)
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
-                        AIState = (float) ActionState.Flying;
+                        AIState = (float)ActionState.Flying;
                     }
 
                     break;
             }
         }
 
+        public void CheckNPCHit()
+        {
+            foreach (NPC possibleTarget in Main.npc)
+            {
+                if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
+                    !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                    continue;
+
+                if (hitCooldown > 0 || !NPC.Hitbox.Intersects(possibleTarget.Hitbox))
+                    continue;
+
+                if (Main.rand.NextBool(3))
+                    possibleTarget.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(60, 180));
+                hitCooldown = 30;
+            }
+        }
+
         public override void FindFrame(int frameHeight)
         {
-            if (AIState == (float) ActionState.Landed && NPC.velocity.Y == 0)
+            if (AIState == (float)ActionState.Landed && NPC.velocity.Y == 0)
                 NPC.frame.Y = 0;
             else
             {
@@ -207,6 +256,12 @@ namespace Redemption.NPCs.Critters
                     NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => Aggressive == 1;
+        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(60, 180));
+        }
     }
 }
