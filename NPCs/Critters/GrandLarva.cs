@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Items.Critters;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -215,14 +216,21 @@ namespace Redemption.NPCs.Critters
                     break;
             }
         }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) => SpawnCondition.Cavern.Chance * 0.04f;
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        { 
+            float cave = SpawnCondition.Cavern.Chance * 0.1f;
+            float desert = SpawnCondition.OverworldDayDesert.Chance * 0.2f;
+            float desertUG = SpawnCondition.DesertCave.Chance * 0.2f;
+            return Math.Max(cave, Math.Max(desert, desertUG));
+        }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert,
 
                 new FlavorTextBestiaryInfoElement("Gross insects holding many flies within. Can be used as good bait.")
             });
@@ -230,10 +238,11 @@ namespace Redemption.NPCs.Critters
 
         public override void OnKill()
         {
-            for (int i = 0; i < Main.rand.Next(7, 10); i++)
+            for (int i = 0; i < Main.rand.Next(4, 7); i++)
                 RedeHelper.SpawnNPC((int) NPC.Center.X, (int) NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
+        public override bool? CanHitNPC(NPC target) => target.lifeMax > 5;
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));

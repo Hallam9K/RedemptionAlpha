@@ -30,8 +30,9 @@ namespace Redemption.Globals.Player
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
-                Player.lifeRegen -= infestedTime / 60;
-                Player.statDefense -= infestedTime / 120;
+                Player.lifeRegen -= infestedTime / 120;
+                if (Player.statDefense > 0)
+                    Player.statDefense -= infestedTime / 120;
                 if (infestedTime > 120)
                     Player.moveSpeed *= 0.8f;
             }

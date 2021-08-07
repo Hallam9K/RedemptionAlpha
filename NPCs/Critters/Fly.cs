@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Items.Critters;
+using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -62,7 +63,6 @@ namespace Redemption.NPCs.Critters
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            Entity moveTarget = player;
             NPC.TargetClosest();
 
             if (hitCooldown > 0)
@@ -80,6 +80,9 @@ namespace Redemption.NPCs.Critters
             switch (AIState)
             {
                 case (float)ActionState.Begin:
+                    if (Aggressive == 1)
+                        NPC.scale = 1.2f;
+
                     TimerRand = Main.rand.Next(240, 600);
                     AIState = (float)ActionState.Flying;
                     NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
@@ -109,10 +112,11 @@ namespace Redemption.NPCs.Critters
 
                     NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-1f, 1f));
                     AITimer++;
+                    Entity moveTarget;
                     if (Aggressive == 1)
                     {
                         moveTarget = player;
-                        if (AITimer % 30 == 0)
+                        if (AITimer % 20 == 0)
                             NPC.velocity = NPC.DirectionTo(moveTarget.Center) * 10f;
                     }
                     else
@@ -120,8 +124,9 @@ namespace Redemption.NPCs.Critters
                         float nearestNPCDist = -1;
                         foreach (NPC possibleTarget in Main.npc)
                         {
-                            if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
-                                !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                            if ((!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
+                                !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type)) &&
+                                possibleTarget.type != ModContent.NPCType<DevilsTongue>())
                                 continue;
 
                             if (nearestNPCDist != -1 && !(possibleTarget.Distance(NPC.Center) < nearestNPCDist))
@@ -129,7 +134,7 @@ namespace Redemption.NPCs.Critters
 
                             nearestNPCDist = possibleTarget.Distance(NPC.Center);
                             moveTarget = possibleTarget;
-                            if (AITimer % 30 == 0)
+                            if (AITimer % 20 == 0)
                                 NPC.velocity = NPC.DirectionTo(moveTarget.Center) * 10f;
                         }
                         CheckNPCHit();
@@ -245,7 +250,7 @@ namespace Redemption.NPCs.Critters
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("A pesky annoyance that only exists to ruin your day.")
+                new FlavorTextBestiaryInfoElement("A pesky annoyance that only exists to ruin your day. They're attracted to rotting undead.")
             });
         }
 
@@ -255,7 +260,7 @@ namespace Redemption.NPCs.Critters
                 Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,
                     NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-
+        public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => Aggressive == 1;
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
         public override void OnHitPlayer(Player target, int damage, bool crit)

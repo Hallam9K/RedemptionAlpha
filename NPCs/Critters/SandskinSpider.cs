@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
+using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -244,7 +245,7 @@ namespace Redemption.NPCs.Critters
             foreach (NPC target in Main.npc)
             {
                 if (!target.active || target.whoAmI == NPC.whoAmI ||
-                    target.friendly || target.lifeMax <= 5)
+                    target.friendly || target.lifeMax <= 5 || target.type == ModContent.NPCType<DevilsTongue>())
                     continue;
 
                 if (NPC.Sight(target, 300, false, true) && BaseAI.HitTileOnSide(NPC, 3))

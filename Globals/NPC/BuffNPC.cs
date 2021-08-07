@@ -31,8 +31,9 @@ namespace Redemption.Globals.NPC
                 infestedTime++;
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
-                npc.lifeRegen -= infestedTime / 60;
-                npc.defense -= infestedTime / 120;
+                npc.lifeRegen -= infestedTime / 120;
+                if (npc.defense > 0)
+                    npc.defense -= infestedTime / 120;
             }
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
