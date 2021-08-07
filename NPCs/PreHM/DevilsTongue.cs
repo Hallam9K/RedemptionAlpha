@@ -74,13 +74,18 @@ namespace Redemption.NPCs.PreHM
                     continue;
 
                 BaseAI.DamageNPC(possibleTarget, possibleTarget.lifeMax, 0, null, false);
-                SoundEngine.PlaySound(SoundID.Zombie, (int)NPC.position.X, (int)NPC.position.Y, 9, 0.3f);
-                if (NPC.life < NPC.lifeMax - 5)
+                if (possibleTarget.life <= 0)
                 {
-                    NPC.life += 5;
-                    NPC.HealEffect(5);
+                    SoundEngine.PlaySound(SoundID.Zombie, (int)NPC.position.X, (int)NPC.position.Y, 9, 0.3f);
+                    if (NPC.life < NPC.lifeMax)
+                    {
+                        NPC.life += 5;
+                        NPC.HealEffect(5);
+                    }
+                    if (NPC.life > NPC.lifeMax)
+                        NPC.life = NPC.lifeMax;
+                    CrittersConsumed++;
                 }
-                CrittersConsumed++;
             }
         }
         public override void FindFrame(int frameHeight)
