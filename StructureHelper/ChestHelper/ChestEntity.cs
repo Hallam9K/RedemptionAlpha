@@ -77,7 +77,7 @@ namespace Redemption.StructureHelper.ChestHelper
 		{
             // || TileLists.ModdedChests.Contains(tile.type)
             var tile = Framing.GetTileSafely(i, j);
-            return tile.type == TileID.Containers;
+            return tile.type == TileID.Containers || tile.type == TileID.Containers2;
 		}
 	}
 }

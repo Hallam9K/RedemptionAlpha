@@ -44,7 +44,7 @@ namespace Redemption.StructureHelper
                     {
                         var chestEntity = TileEntity.ByPosition[new Point16(Player.tileTargetX - xOff, Player.tileTargetY - yOff)] as ChestEntity;
 
-                        Redemption.Instance.ChestCustomizer.ruleElements.Clear();
+                        RedeSystem.Instance.ChestCustomizer.ruleElements.Clear();
 
                         for (int k = 0; k < chestEntity.rules.Count; k++)
                         {
@@ -57,11 +57,11 @@ namespace Redemption.StructureHelper
                             if (rule is ChestRulePool) elem = new PoolRuleElement(rule);
                             if (rule is ChestRulePoolChance) elem = new PoolChanceRuleElement(rule);
 
-                            Redemption.Instance.ChestCustomizer.ruleElements.Add(elem);
+                            RedeSystem.Instance.ChestCustomizer.ruleElements.Add(elem);
                         }
                     }
                     else
-                        Redemption.Instance.ChestCustomizer.ruleElements.Clear();
+                        RedeSystem.Instance.ChestCustomizer.ruleElements.Clear();
 
                     Main.NewText($"Copied chest rules from chest at {new Point16(Player.tileTargetX - xOff, Player.tileTargetY - yOff)}");
                 }
@@ -70,7 +70,7 @@ namespace Redemption.StructureHelper
                     bool overwrite = TileEntity.ByPosition.ContainsKey(new Point16(Player.tileTargetX - xOff, Player.tileTargetY - yOff));
 
                     TileEntity.PlaceEntityNet(Player.tileTargetX - xOff, Player.tileTargetY - yOff, ModContent.TileEntityType<ChestEntity>());
-                    bool cleared = !Redemption.Instance.ChestCustomizer.SetData(TileEntity.ByPosition[new Point16(Player.tileTargetX - xOff, Player.tileTargetY - yOff)] as ChestEntity);
+                    bool cleared = !RedeSystem.Instance.ChestCustomizer.SetData(TileEntity.ByPosition[new Point16(Player.tileTargetX - xOff, Player.tileTargetY - yOff)] as ChestEntity);
 
                     if (overwrite)
                     {

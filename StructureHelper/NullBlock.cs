@@ -6,7 +6,7 @@ namespace Redemption.StructureHelper
 {
     class NullBlock : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;

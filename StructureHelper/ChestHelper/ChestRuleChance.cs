@@ -45,11 +45,13 @@ namespace Redemption.StructureHelper.ChestHelper
             return tag;
         }
 
-        public static ChestRule Deserialize(TagCompound tag)
+        public static new ChestRule Deserialize(TagCompound tag)
         {
-            var rule = new ChestRuleChance();
-            rule.chance = tag.GetFloat("Chance");
-            rule.pool = DeserializePool(tag.GetCompound("Pool"));
+            var rule = new ChestRuleChance
+            {
+                chance = tag.GetFloat("Chance"),
+                pool = DeserializePool(tag.GetCompound("Pool"))
+            };
 
             return rule;
         }

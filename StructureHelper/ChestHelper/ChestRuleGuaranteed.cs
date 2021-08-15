@@ -37,10 +37,12 @@ namespace Redemption.StructureHelper.ChestHelper
             return tag;
         }
 
-        public static ChestRule Deserialize(TagCompound tag)
+        public static new ChestRule Deserialize(TagCompound tag)
         {
-            var rule = new ChestRuleGuaranteed();
-            rule.pool = DeserializePool(tag.GetCompound("Pool"));
+            var rule = new ChestRuleGuaranteed
+            {
+                pool = DeserializePool(tag.GetCompound("Pool"))
+            };
 
             return rule;
         }

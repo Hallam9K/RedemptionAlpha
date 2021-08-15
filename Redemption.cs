@@ -24,6 +24,11 @@ namespace Redemption
     }
     public class RedeSystem : ModSystem
     {
+        public static RedeSystem Instance { get; private set; }
+        public RedeSystem()
+        {
+            Instance = this;
+        }
         UserInterface GeneratorMenuUI;
         internal ManualGeneratorMenu GeneratorMenu;
 

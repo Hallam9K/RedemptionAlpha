@@ -192,7 +192,7 @@ namespace Redemption.StructureHelper
                             if (!int.TryParse(d.TEType, out typ))
                             {
                                 string[] parts = d.TEType.Split();
-                                if (parts.Length > 1 && ModContent.TryFind<ModTileEntity>(parts[0], parts[1], out var modTileEntity))
+                                if (ModContent.TryFind<ModTileEntity>(parts[0], parts[1], out var modTileEntity))
                                 {
                                     typ = modTileEntity.Type;
                                 }

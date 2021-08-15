@@ -20,7 +20,7 @@ namespace Redemption.StructureHelper.ChestHelper
 
         public Loot AddItem(Item item)
         {
-            var loot = new Loot(item.DeepClone(), 1);
+            var loot = new Loot(item.Clone(), 1);
             pool.Add(loot);
 
             return loot;
@@ -135,7 +135,7 @@ namespace Redemption.StructureHelper.ChestHelper
 
 		public Loot Clone()
 		{
-            return new Loot(LootItem.DeepClone(), min, max, weight);
+            return new Loot(LootItem.Clone(), min, max, weight);
 		}
 	}
 }
