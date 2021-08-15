@@ -18,6 +18,11 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
         }
 
         public override void SetDefaults()

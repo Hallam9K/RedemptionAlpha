@@ -782,6 +782,8 @@ namespace Redemption.Globals
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
             bool lineOfSight = false)
         {
+            if (codable == null)
+                return false;
             if (lineOfSight)
             {
                 if (!Collision.CanHit(npc.position, npc.width, npc.height, codable.position, codable.width,

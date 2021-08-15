@@ -14,7 +14,6 @@ namespace Redemption.Globals.Player
         public bool infested;
         public bool devilScented;
         public int infestedTime;
-
         public override void ResetEffects()
         {
             devilScented = false;

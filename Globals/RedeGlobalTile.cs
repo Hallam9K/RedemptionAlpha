@@ -1,4 +1,5 @@
 using Redemption.NPCs.Critters;
+using Redemption.Tiles.Plants;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -24,6 +25,29 @@ namespace Redemption.Globals
                 }
             }
             return base.Drop(i, j, type);
+        }
+        public override void RandomUpdate(int i, int j, int type)
+        {
+            if (type == TileID.Grass && !Main.dayTime)
+            {
+                if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
+                {
+                    if (Main.rand.NextBool(300))
+                    {
+                        WorldGen.PlaceTile(i, j - 1, ModContent.TileType<NightshadeTile>(), true);
+                    }
+                }
+            }
+            if (type == TileID.Grass && Main.dayTime)
+            {
+                if (!Framing.GetTileSafely(i, j - 1).IsActive && !Framing.GetTileSafely(i, j - 2).IsActive && !Framing.GetTileSafely(i + 1, j - 1).IsActive && !Framing.GetTileSafely(i + 1, j - 2).IsActive && Main.tile[i, j].IsActive && Main.tile[i + 1, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
+                {
+                    if (Main.rand.Next(6000) == 0)
+                    {
+                        WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
+                    }
+                }
+            }
         }
     }
 }

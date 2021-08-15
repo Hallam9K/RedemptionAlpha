@@ -7,6 +7,7 @@ using GroupProj = Redemption.Tags.ProjectileTags;
 using GroupTile = Redemption.Tags.TileTags;
 using GroupNPC = Redemption.Tags.NPCTags;
 using GroupItem = Redemption.Tags.ItemTags;
+using Redemption.NPCs.PreHM;
 
 namespace Redemption.Globals
 {
@@ -400,129 +401,7 @@ namespace Redemption.Globals
     {
         #region Projectile Lists
 
-        public static List<int> IsTechnicallyMelee = new()
-        {
-            ProjectileID.EnchantedBoomerang,
-            ProjectileID.Flamarang,
-            ProjectileID.BallOHurt,
-            ProjectileID.BlueMoon,
-            ProjectileID.ThornChakram,
-            ProjectileID.Sunfury,
-            ProjectileID.DarkLance,
-            ProjectileID.Trident,
-            ProjectileID.Spear,
-            ProjectileID.WoodenBoomerang,
-            ProjectileID.TheDaoofPow,
-            ProjectileID.CobaltChainsaw,
-            ProjectileID.CobaltDrill,
-            ProjectileID.MythrilChainsaw,
-            ProjectileID.MythrilDrill,
-            ProjectileID.AdamantiteChainsaw,
-            ProjectileID.AdamantiteDrill,
-            ProjectileID.MythrilHalberd,
-            ProjectileID.AdamantiteGlaive,
-            ProjectileID.CobaltNaginata,
-            ProjectileID.Gungnir,
-            ProjectileID.LightDisc,
-            ProjectileID.Hamdrax,
-            ProjectileID.IceBoomerang,
-            ProjectileID.MushroomSpear,
-            ProjectileID.TheRottedFork,
-            ProjectileID.TheMeatball,
-            ProjectileID.PossessedHatchet,
-            ProjectileID.PalladiumPike,
-            ProjectileID.PalladiumDrill,
-            ProjectileID.PalladiumChainsaw,
-            ProjectileID.OrichalcumHalberd,
-            ProjectileID.OrichalcumDrill,
-            ProjectileID.OrichalcumChainsaw,
-            ProjectileID.TitaniumTrident,
-            ProjectileID.TitaniumDrill,
-            ProjectileID.TitaniumChainsaw,
-            ProjectileID.ChlorophytePartisan,
-            ProjectileID.ChlorophyteDrill,
-            ProjectileID.ChlorophyteChainsaw,
-            ProjectileID.FlowerPow,
-            ProjectileID.ChlorophyteJackhammer,
-            ProjectileID.GolemFist,
-            ProjectileID.PaladinsHammerFriendly,
-            ProjectileID.BloodyMachete,
-            ProjectileID.FruitcakeChakram,
-            ProjectileID.NorthPoleWeapon,
-            ProjectileID.ObsidianSwordfish,
-            ProjectileID.Swordfish,
-            ProjectileID.SawtoothShark,
-            ProjectileID.Anchor,
-            ProjectileID.Flairon,
-            ProjectileID.ChainKnife,
-            ProjectileID.ChainGuillotine,
-            ProjectileID.ButchersChainsaw,
-            ProjectileID.Code1,
-            ProjectileID.WoodYoyo,
-            ProjectileID.CorruptYoyo,
-            ProjectileID.CrimsonYoyo,
-            ProjectileID.JungleYoyo,
-            ProjectileID.Cascade,
-            ProjectileID.Chik,
-            ProjectileID.Code2,
-            ProjectileID.Rally,
-            ProjectileID.Yelets,
-            ProjectileID.RedsYoyo,
-            ProjectileID.ValkyrieYoyo,
-            ProjectileID.Amarok,
-            ProjectileID.HelFire,
-            ProjectileID.Kraken,
-            ProjectileID.TheEyeOfCthulhu,
-            ProjectileID.BlackCounterweight,
-            ProjectileID.BlueCounterweight,
-            ProjectileID.GreenCounterweight,
-            ProjectileID.PurpleCounterweight,
-            ProjectileID.RedCounterweight,
-            ProjectileID.YellowCounterweight,
-            ProjectileID.FormatC,
-            ProjectileID.Gradient,
-            ProjectileID.Valor,
-            ProjectileID.MechanicWrench,
-            ProjectileID.Arkhalis,
-            ProjectileID.Terrarian,
-            ProjectileID.SolarWhipSword,
-            ProjectileID.MonkStaffT1,
-            ProjectileID.MonkStaffT2,
-            ProjectileID.MonkStaffT3,
-            ProjectileID.MonkStaffT3_Alt,
-            ProjectileID.ThunderSpear,
-            ProjectileID.Terragrim,
-            ProjectileID.DripplerFlail,
-            ProjectileID.GladiusStab,
-            ProjectileID.BlandWhip,
-            ProjectileID.RulerStab,
-            ProjectileID.SwordWhip,
-            ProjectileID.MaceWhip,
-            ProjectileID.ScytheWhip,
-            ProjectileID.RulerStab,
-            ProjectileID.BouncingShield,
-            ProjectileID.Shroomerang,
-            ProjectileID.JoustingLance,
-            ProjectileID.ShadowJoustingLance,
-            ProjectileID.HallowJoustingLance,
-            ProjectileID.CombatWrench,
-            ProjectileID.CoolWhip,
-            ProjectileID.FireWhip,
-            ProjectileID.ThornWhip,
-            ProjectileID.RainbowWhip,
-            ProjectileID.FinalFractal,
-            ProjectileID.CopperShortswordStab,
-            ProjectileID.TinShortswordStab,
-            ProjectileID.IronShortswordStab,
-            ProjectileID.LeadShortswordStab,
-            ProjectileID.SilverShortswordStab,
-            ProjectileID.TungstenShortswordStab,
-            ProjectileID.GoldShortswordStab,
-            ProjectileID.PlatinumShortswordStab,
-            ProjectileID.Mace,
-            ProjectileID.FlamingMace,
-            ProjectileID.BoneWhip,
-        };
+        public static List<int> IsTechnicallyMelee = new() { ProjectileID.EnchantedBoomerang, ProjectileID.Flamarang, ProjectileID.BallOHurt, ProjectileID.BlueMoon, ProjectileID.ThornChakram, ProjectileID.Sunfury, ProjectileID.DarkLance, ProjectileID.Trident, ProjectileID.Spear, ProjectileID.WoodenBoomerang, ProjectileID.TheDaoofPow, ProjectileID.CobaltChainsaw, ProjectileID.CobaltDrill, ProjectileID.MythrilChainsaw, ProjectileID.MythrilDrill, ProjectileID.AdamantiteChainsaw, ProjectileID.AdamantiteDrill, ProjectileID.MythrilHalberd, ProjectileID.AdamantiteGlaive, ProjectileID.CobaltNaginata, ProjectileID.Gungnir, ProjectileID.LightDisc, ProjectileID.Hamdrax, ProjectileID.IceBoomerang, ProjectileID.MushroomSpear, ProjectileID.TheRottedFork, ProjectileID.TheMeatball, ProjectileID.PossessedHatchet, ProjectileID.PalladiumPike, ProjectileID.PalladiumDrill, ProjectileID.PalladiumChainsaw, ProjectileID.OrichalcumHalberd, ProjectileID.OrichalcumDrill, ProjectileID.OrichalcumChainsaw, ProjectileID.TitaniumTrident, ProjectileID.TitaniumDrill, ProjectileID.TitaniumChainsaw, ProjectileID.ChlorophytePartisan, ProjectileID.ChlorophyteDrill, ProjectileID.ChlorophyteChainsaw, ProjectileID.FlowerPow, ProjectileID.ChlorophyteJackhammer, ProjectileID.GolemFist, ProjectileID.PaladinsHammerFriendly, ProjectileID.BloodyMachete, ProjectileID.FruitcakeChakram, ProjectileID.NorthPoleWeapon, ProjectileID.ObsidianSwordfish, ProjectileID.Swordfish, ProjectileID.SawtoothShark, ProjectileID.Anchor, ProjectileID.Flairon, ProjectileID.ChainKnife, ProjectileID.ChainGuillotine, ProjectileID.ButchersChainsaw, ProjectileID.Code1, ProjectileID.WoodYoyo, ProjectileID.CorruptYoyo, ProjectileID.CrimsonYoyo, ProjectileID.JungleYoyo, ProjectileID.Cascade, ProjectileID.Chik, ProjectileID.Code2, ProjectileID.Rally, ProjectileID.Yelets, ProjectileID.RedsYoyo, ProjectileID.ValkyrieYoyo, ProjectileID.Amarok, ProjectileID.HelFire, ProjectileID.Kraken, ProjectileID.TheEyeOfCthulhu, ProjectileID.BlackCounterweight, ProjectileID.BlueCounterweight, ProjectileID.GreenCounterweight, ProjectileID.PurpleCounterweight, ProjectileID.RedCounterweight, ProjectileID.YellowCounterweight, ProjectileID.FormatC, ProjectileID.Gradient, ProjectileID.Valor, ProjectileID.MechanicWrench, ProjectileID.Arkhalis, ProjectileID.Terrarian, ProjectileID.SolarWhipSword, ProjectileID.MonkStaffT1, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.ThunderSpear, ProjectileID.Terragrim, ProjectileID.DripplerFlail, ProjectileID.GladiusStab, ProjectileID.BlandWhip, ProjectileID.RulerStab, ProjectileID.SwordWhip, ProjectileID.MaceWhip, ProjectileID.ScytheWhip, ProjectileID.RulerStab, ProjectileID.BouncingShield, ProjectileID.Shroomerang, ProjectileID.JoustingLance, ProjectileID.ShadowJoustingLance, ProjectileID.HallowJoustingLance, ProjectileID.CombatWrench, ProjectileID.CoolWhip, ProjectileID.FireWhip, ProjectileID.ThornWhip, ProjectileID.RainbowWhip, ProjectileID.FinalFractal, ProjectileID.CopperShortswordStab, ProjectileID.TinShortswordStab, ProjectileID.IronShortswordStab, ProjectileID.LeadShortswordStab, ProjectileID.SilverShortswordStab, ProjectileID.TungstenShortswordStab, ProjectileID.GoldShortswordStab, ProjectileID.PlatinumShortswordStab, ProjectileID.Mace, ProjectileID.FlamingMace, ProjectileID.BoneWhip };
 
         #endregion
     }
@@ -530,12 +409,39 @@ namespace Redemption.Globals
     public sealed class ItemTags
     {
         public static readonly TagData BluntSwing = ContentTags.Get<GroupItem>(nameof(BluntSwing));
+        public static readonly TagData Arcane = ContentTags.Get<GroupItem>(nameof(Arcane));
+        public static readonly TagData Fire = ContentTags.Get<GroupItem>(nameof(Fire));
+        public static readonly TagData Water = ContentTags.Get<GroupItem>(nameof(Water));
+        public static readonly TagData Ice = ContentTags.Get<GroupItem>(nameof(Ice));
+        public static readonly TagData Earth = ContentTags.Get<GroupItem>(nameof(Earth));
+        public static readonly TagData Wind = ContentTags.Get<GroupItem>(nameof(Wind));
+        public static readonly TagData Thunder = ContentTags.Get<GroupItem>(nameof(Thunder));
+        public static readonly TagData Holy = ContentTags.Get<GroupItem>(nameof(Holy));
+        public static readonly TagData Shadow = ContentTags.Get<GroupItem>(nameof(Shadow));
+        public static readonly TagData Nature = ContentTags.Get<GroupItem>(nameof(Nature));
+        public static readonly TagData Poison = ContentTags.Get<GroupItem>(nameof(Poison));
+        public static readonly TagData Blood = ContentTags.Get<GroupItem>(nameof(Blood));
+        public static readonly TagData Psychic = ContentTags.Get<GroupItem>(nameof(Psychic));
+        public static readonly TagData Celestial = ContentTags.Get<GroupItem>(nameof(Celestial));
 
         public static void SetItemTags()
         {
             #region Item Tags
 
             BluntSwing.SetMultiple(ItemID.BreathingReed, ItemID.ZombieArm, ItemID.PurpleClubberfish, ItemID.TaxCollectorsStickOfDoom, ItemID.SlapHand, ItemID.Keybrand);
+
+            Arcane.SetMultiple(ItemID.EnchantedSword, ItemID.SpectrePickaxe, ItemID.NebulaPickaxe, ItemID.StardustPickaxe, ItemID.SpectreHamaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeStardust);
+            Fire.SetMultiple(ItemID.FieryGreatsword, ItemID.TheHorsemansBlade, ItemID.DD2SquireBetsySword, ItemID.MoltenPickaxe, ItemID.SolarFlarePickaxe, ItemID.MeteorHamaxe, ItemID.MoltenHamaxe, ItemID.LunarHamaxeSolar);
+            Water.SetMultiple(ItemID.Muramasa);
+            Ice.SetMultiple(ItemID.IceBlade, ItemID.IceSickle, ItemID.Frostbrand);
+            Earth.SetMultiple(ItemID.Seedler, ItemID.FossilPickaxe, ItemID.Picksaw);
+            Thunder.SetMultiple(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex);
+            Holy.SetMultiple(ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer);
+            Shadow.SetMultiple(ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker);
+            Nature.SetMultiple(ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer);
+            Poison.SetMultiple(ItemID.BeeKeeper);
+            Blood.SetMultiple(ItemID.BloodButcherer, ItemID.Bladetongue, ItemID.DeathbringerPickaxe, ItemID.BloodLustCluster, ItemID.BloodHamaxe, ItemID.FleshGrinder);
+            Celestial.SetMultiple(ItemID.Starfury, ItemID.PiercingStarlight, ItemID.StarWrath, ItemID.Meowmere, ItemID.SolarFlarePickaxe, ItemID.NebulaPickaxe, ItemID.VortexPickaxe, ItemID.StardustPickaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeSolar, ItemID.LunarHamaxeStardust, ItemID.LunarHamaxeVortex);
 
             #endregion
         }
@@ -561,6 +467,7 @@ namespace Redemption.Globals
         public static readonly TagData Skeleton = ContentTags.Get<GroupNPC>(nameof(Skeleton));
         public static readonly TagData SkeletonHumanoid = ContentTags.Get<GroupNPC>(nameof(SkeletonHumanoid));
         public static readonly TagData Undead = ContentTags.Get<GroupNPC>(nameof(Undead));
+        public static readonly TagData Plantlike = ContentTags.Get<GroupNPC>(nameof(Plantlike));
 
         public static void SetNPCTags()
         {
@@ -578,6 +485,12 @@ namespace Redemption.Globals
 
             Undead.PopulateFromSets(NPCID.Sets.Zombies);
             Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman);
+
+            #endregion
+
+            #region Plantlike
+
+            Plantlike.SetMultiple(NPCID.FungiBulb, NPCID.AnomuraFungus, NPCID.MushiLadybug, NPCID.ManEater, NPCID.Snatcher, NPCID.AngryTrapper, NPCID.FungoFish, NPCID.GiantFungiBulb, NPCID.HoppinJack, NPCID.Dandelion, NPCID.Plantera, NPCID.MourningWood, NPCID.Pumpking, NPCID.Everscream, NPCID.PlanterasTentacle, ModContent.NPCType<LivingBloom>(), ModContent.NPCType<DevilsTongue>());
 
             #endregion
         }
@@ -604,20 +517,20 @@ namespace Redemption.Globals
         {
             #region Projectile Elements
 
-            Arcane.SetMultiple(ProjectileID.EnchantedBoomerang, ProjectileID.Starfury, ProjectileID.MagicMissile, ProjectileID.EighthNote, ProjectileID.QuarterNote, ProjectileID.TiedEighthNote, ProjectileID.RainbowRodBullet, ProjectileID.EyeLaser, ProjectileID.PinkLaser, ProjectileID.PurpleLaser, ProjectileID.MagicDagger, ProjectileID.CrystalStorm, ProjectileID.DeathLaser, ProjectileID.SwordBeam, ProjectileID.AmethystBolt, ProjectileID.TopazBolt, ProjectileID.SapphireBolt, ProjectileID.EmeraldBolt, ProjectileID.RubyBolt, ProjectileID.DiamondBolt, ProjectileID.AmberBolt, ProjectileID.RuneBlast, ProjectileID.TerraBeam, ProjectileID.LightBeam, ProjectileID.NightBeam, ProjectileID.EnchantedBeam, ProjectileID.FrostBeam, ProjectileID.EyeBeam, ProjectileID.Skull, ProjectileID.DeathSickle, ProjectileID.LostSoulFriendly, ProjectileID.LostSoulHostile, ProjectileID.Shadowflames, ProjectileID.VampireKnife, ProjectileID.SpectreWrath, ProjectileID.PulseBolt, ProjectileID.MiniRetinaLaser, ProjectileID.InfluxWaver, ProjectileID.CrystalVileShardHead, ProjectileID.CrystalVileShardShaft, ProjectileID.CrystalPulse, ProjectileID.CrystalPulse2, ProjectileID.MedusaHeadRay, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaLaser, ProjectileID.VortexLaser, ProjectileID.ClothiersCurse, ProjectileID.MinecartMechLaser, ProjectileID.TerrarianBeam, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.StardustGuardianExplosion, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.PhantasmArrow, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.LunarFlare, ProjectileID.SkyFracture, ProjectileID.DD2DarkMageBolt, ProjectileID.BookOfSkullsSkull, ProjectileID.SparkleGuitar, ProjectileID.TitaniumStormShard, ProjectileID.StardustPunch);
-            Fire.SetMultiple(ProjectileID.FireArrow, ProjectileID.BallofFire, ProjectileID.Flamarang, ProjectileID.Flamelash, ProjectileID.Sunfury, ProjectileID.HellfireArrow, ProjectileID.FlamingArrow, ProjectileID.Flames, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.RuneBlast, ProjectileID.FrostburnArrow, ProjectileID.FlamethrowerTrap, ProjectileID.FlamesTrap, ProjectileID.Fireball, ProjectileID.HeatRay, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.FlamingWood, ProjectileID.GreekFire1, ProjectileID.GreekFire2, ProjectileID.GreekFire3, ProjectileID.FlamingScythe, ProjectileID.ImpFireball, ProjectileID.MolotovCocktail, ProjectileID.MolotovFire, ProjectileID.MolotovFire2, ProjectileID.MolotovFire3, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.CultistBossFireBall, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.Hellwing, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.Spark, ProjectileID.HelFire, ProjectileID.ClothiersCurse, ProjectileID.DesertDjinnCurse, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.GeyserTrap, ProjectileID.SpiritFlame, ProjectileID.DD2FlameBurstTowerT1Shot, ProjectileID.DD2FlameBurstTowerT2Shot, ProjectileID.DD2FlameBurstTowerT3Shot, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2BetsyFireball, ProjectileID.DD2BetsyFlameBreath, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT2Ghast, ProjectileID.DD2PhoenixBowShot, ProjectileID.DD2BetsyArrow, ProjectileID.ApprenticeStaffT3Shot, ProjectileID.FireWhipProj, ProjectileID.FlamingMace, ProjectileID.TorchGod, ProjectileID.WandOfSparkingSpark);
+            Arcane.SetMultiple(ProjectileID.EnchantedBoomerang, ProjectileID.Starfury, ProjectileID.MagicMissile, ProjectileID.EighthNote, ProjectileID.QuarterNote, ProjectileID.TiedEighthNote, ProjectileID.RainbowRodBullet, ProjectileID.EyeLaser, ProjectileID.PinkLaser, ProjectileID.PurpleLaser, ProjectileID.MagicDagger, ProjectileID.CrystalStorm, ProjectileID.DeathLaser, ProjectileID.SwordBeam, ProjectileID.AmethystBolt, ProjectileID.TopazBolt, ProjectileID.SapphireBolt, ProjectileID.EmeraldBolt, ProjectileID.RubyBolt, ProjectileID.DiamondBolt, ProjectileID.AmberBolt, ProjectileID.RuneBlast, ProjectileID.TerraBeam, ProjectileID.LightBeam, ProjectileID.NightBeam, ProjectileID.EnchantedBeam, ProjectileID.FrostBeam, ProjectileID.EyeBeam, ProjectileID.Skull, ProjectileID.DeathSickle, ProjectileID.LostSoulFriendly, ProjectileID.LostSoulHostile, ProjectileID.Shadowflames, ProjectileID.VampireKnife, ProjectileID.SpectreWrath, ProjectileID.PulseBolt, ProjectileID.MiniRetinaLaser, ProjectileID.InfluxWaver, ProjectileID.CrystalVileShardHead, ProjectileID.CrystalVileShardShaft, ProjectileID.CrystalPulse, ProjectileID.CrystalPulse2, ProjectileID.MedusaHeadRay, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaLaser, ProjectileID.VortexLaser, ProjectileID.ClothiersCurse, ProjectileID.MinecartMechLaser, ProjectileID.TerrarianBeam, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.StardustGuardianExplosion, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.PhantasmArrow, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.LunarFlare, ProjectileID.SkyFracture, ProjectileID.DD2DarkMageBolt, ProjectileID.BookOfSkullsSkull, ProjectileID.SparkleGuitar, ProjectileID.TitaniumStormShard, ProjectileID.StardustPunch, ProjectileID.NebulaDrill, ProjectileID.StardustDrill);
+            Fire.SetMultiple(ProjectileID.FireArrow, ProjectileID.BallofFire, ProjectileID.Flamarang, ProjectileID.Flamelash, ProjectileID.Sunfury, ProjectileID.HellfireArrow, ProjectileID.FlamingArrow, ProjectileID.Flames, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.RuneBlast, ProjectileID.FrostburnArrow, ProjectileID.FlamethrowerTrap, ProjectileID.FlamesTrap, ProjectileID.Fireball, ProjectileID.HeatRay, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.FlamingWood, ProjectileID.GreekFire1, ProjectileID.GreekFire2, ProjectileID.GreekFire3, ProjectileID.FlamingScythe, ProjectileID.ImpFireball, ProjectileID.MolotovCocktail, ProjectileID.MolotovFire, ProjectileID.MolotovFire2, ProjectileID.MolotovFire3, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.CultistBossFireBall, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.Hellwing, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.Spark, ProjectileID.HelFire, ProjectileID.ClothiersCurse, ProjectileID.DesertDjinnCurse, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.GeyserTrap, ProjectileID.SpiritFlame, ProjectileID.DD2FlameBurstTowerT1Shot, ProjectileID.DD2FlameBurstTowerT2Shot, ProjectileID.DD2FlameBurstTowerT3Shot, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2BetsyFireball, ProjectileID.DD2BetsyFlameBreath, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT2Ghast, ProjectileID.DD2PhoenixBowShot, ProjectileID.DD2BetsyArrow, ProjectileID.ApprenticeStaffT3Shot, ProjectileID.FireWhipProj, ProjectileID.FlamingMace, ProjectileID.TorchGod, ProjectileID.WandOfSparkingSpark, ProjectileID.SolarFlareDrill);
             Water.SetMultiple(ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.FireWhip, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall);
             Ice.SetMultiple(ProjectileID.IceBlock, ProjectileID.IceBoomerang, ProjectileID.IceBolt, ProjectileID.FrostBoltSword, ProjectileID.FrostArrow, ProjectileID.FrostBlastHostile, ProjectileID.SnowBallFriendly, ProjectileID.FrostburnArrow, ProjectileID.IceSpike, ProjectileID.IcewaterSpit, ProjectileID.BallofFrost, ProjectileID.FrostBeam, ProjectileID.IceSickle, ProjectileID.FrostBlastFriendly, ProjectileID.Blizzard, ProjectileID.NorthPoleWeapon, ProjectileID.NorthPoleSpear, ProjectileID.NorthPoleSnowflake, ProjectileID.FrostWave, ProjectileID.FrostShard, ProjectileID.FrostBoltStaff, ProjectileID.CultistBossIceMist, ProjectileID.FrostDaggerfish, ProjectileID.Amarok, ProjectileID.CoolWhip, ProjectileID.CoolWhipProj);
             Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock);
             Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot);
-            Thunder.SetMultiple(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser);
+            Thunder.SetMultiple(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill);
             Holy.SetMultiple(ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight);
             Shadow.SetMultiple(ProjectileID.UnholyArrow, ProjectileID.VilethornBase, ProjectileID.VilethornTip, ProjectileID.BallOHurt, ProjectileID.DemonSickle, ProjectileID.DemonScythe, ProjectileID.DarkLance, ProjectileID.TheDaoofPow, ProjectileID.UnholyWater, ProjectileID.CursedFlameFriendly, ProjectileID.CursedFlameHostile, ProjectileID.EyeFire, ProjectileID.CursedArrow, ProjectileID.CursedBullet, ProjectileID.UnholyTridentFriendly, ProjectileID.UnholyTridentHostile, ProjectileID.NightBeam, ProjectileID.DeathSickle, ProjectileID.ShadowBeamHostile, ProjectileID.ShadowBeamFriendly, ProjectileID.Shadowflames, ProjectileID.EatersBite, ProjectileID.TinyEater, ProjectileID.CultistBossFireBallClone, ProjectileID.CursedDart, ProjectileID.CursedDartFlame, ProjectileID.ClingerStaff, ProjectileID.ShadowFlameArrow, ProjectileID.ShadowFlame, ProjectileID.ShadowFlameKnife, ProjectileID.CorruptYoyo, ProjectileID.ClothiersCurse, ProjectileID.AncientDoomProjectile, ProjectileID.DesertDjinnCurse, ProjectileID.SpiritFlame, ProjectileID.BlackBolt, ProjectileID.DD2DrakinShot, ProjectileID.DD2DarkMageBolt, ProjectileID.ShadowJoustingLance, ProjectileID.ScytheWhipProj);
             Nature.SetMultiple(ProjectileID.ThornChakram, ProjectileID.Seed, ProjectileID.Mushroom, ProjectileID.TerraBeam, ProjectileID.NettleBurstEnd, ProjectileID.NettleBurstLeft, ProjectileID.NettleBurstRight, ProjectileID.JungleSpike, ProjectileID.Leaf, ProjectileID.FlowerPetal, ProjectileID.CrystalLeafShot, ProjectileID.SporeCloud, ProjectileID.ChlorophyteOrb, ProjectileID.FlowerPow, ProjectileID.FlowerPowPetal, ProjectileID.SeedPlantera, ProjectileID.PoisonSeedPlantera, ProjectileID.ThornBall, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.PineNeedleFriendly, ProjectileID.PineNeedleHostile, ProjectileID.SeedlerNut, ProjectileID.SeedlerThorn, ProjectileID.JungleYoyo, ProjectileID.SporeTrap, ProjectileID.SporeTrap2, ProjectileID.SporeGas, ProjectileID.SporeGas2, ProjectileID.SporeGas3, ProjectileID.TruffleSpore, ProjectileID.Terrarian, ProjectileID.TerrarianBeam, ProjectileID.Terragrim, ProjectileID.DandelionSeed, ProjectileID.Shroomerang, ProjectileID.ThornWhip);
             Poison.SetMultiple(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike);
             Blood.SetMultiple(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.TheRottedFork, ProjectileID.TheMeatball, ProjectileID.BloodRain, ProjectileID.IchorArrow, ProjectileID.IchorBullet, ProjectileID.GoldenShowerFriendly, ProjectileID.GoldenShowerHostile, ProjectileID.VampireKnife, ProjectileID.SoulDrain, ProjectileID.IchorDart, ProjectileID.IchorSplash, ProjectileID.CrimsonYoyo, ProjectileID.BloodWater, ProjectileID.BatOfLight, ProjectileID.SharpTears, ProjectileID.DripplerFlail, ProjectileID.VampireFrog, ProjectileID.BloodShot, ProjectileID.BloodNautilusTears, ProjectileID.BloodNautilusShot, ProjectileID.BloodArrow, ProjectileID.ChumBucket, ProjectileID.DripplerFlailExtraBall);
             Psychic.SetMultiple(ProjectileID.BrainScramblerBolt, ProjectileID.MedusaHeadRay, ProjectileID.BookStaffShot);
-            Celestial.SetMultiple(ProjectileID.Starfury, ProjectileID.FallingStar, ProjectileID.RainbowRodBullet, ProjectileID.HallowStar, ProjectileID.RainbowBack, ProjectileID.RainbowFront, ProjectileID.PhantasmalEye, ProjectileID.PhantasmalSphere, ProjectileID.PhantasmalDeathray, ProjectileID.Meowmere, ProjectileID.StarWrath, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaBolt, ProjectileID.NebulaEye, ProjectileID.NebulaSphere, ProjectileID.NebulaLaser, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.RainbowCrystalExplosion, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.SuperStar, ProjectileID.SuperStarSlash, ProjectileID.SparkleGuitar, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.FairyQueenMagicItemShot, ProjectileID.FairyQueenRangedItemShot, ProjectileID.FinalFractal, ProjectileID.EmpressBlade, ProjectileID.PrincessWeapon, ProjectileID.StarCannonStar);
+            Celestial.SetMultiple(ProjectileID.Starfury, ProjectileID.FallingStar, ProjectileID.RainbowRodBullet, ProjectileID.HallowStar, ProjectileID.RainbowBack, ProjectileID.RainbowFront, ProjectileID.PhantasmalEye, ProjectileID.PhantasmalSphere, ProjectileID.PhantasmalDeathray, ProjectileID.Meowmere, ProjectileID.StarWrath, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaBolt, ProjectileID.NebulaEye, ProjectileID.NebulaSphere, ProjectileID.NebulaLaser, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.RainbowCrystalExplosion, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.SuperStar, ProjectileID.SuperStarSlash, ProjectileID.SparkleGuitar, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.FairyQueenMagicItemShot, ProjectileID.FairyQueenRangedItemShot, ProjectileID.FinalFractal, ProjectileID.EmpressBlade, ProjectileID.PrincessWeapon, ProjectileID.StarCannonStar, ProjectileID.SolarFlareDrill, ProjectileID.NebulaDrill, ProjectileID.VortexDrill, ProjectileID.StardustDrill);
 
             #endregion
         }

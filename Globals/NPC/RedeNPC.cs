@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -11,8 +12,13 @@ namespace Redemption.Globals.NPC
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
         public bool decapitated;
+        public Entity attacker = Main.LocalPlayer;
+        public Terraria.NPC npcTarget;
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (ItemTags.Fire.Has(item.type) && NPCTags.Plantlike.Has(npc.type))
+                damage *= (int)1.15f;
+
             // Decapitation
             if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCTags.SkeletonHumanoid.Has(npc.type))
             {
@@ -31,6 +37,27 @@ namespace Redemption.Globals.NPC
                     crit = true;
                 }
             }
+        }
+        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ProjectileTags.Fire.Has(projectile.type) && NPCTags.Plantlike.Has(npc.type))
+                damage *= (int)1.15f;
+        }
+        public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
+        {
+            target.GetGlobalNPC<RedeNPC>().attacker = npc;
+        }
+        public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
+        {
+            attacker = player;
+        }
+        public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+        {
+            Terraria.Player player = Main.player[npc.GetNearestAlivePlayer()];
+            if (projectile.friendly)
+                attacker = player;
+            else if (npc.ClosestNPCToNPC(ref npcTarget, 1000, npc.Center))
+                attacker = npc;
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

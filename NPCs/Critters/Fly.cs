@@ -184,7 +184,7 @@ namespace Redemption.NPCs.Critters
                         AIState = (float)ActionState.Flying;
                     }
 
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.life > 5)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.lifeMax > 5)
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));

@@ -193,7 +193,7 @@ namespace Redemption.NPCs.Critters
                     break;
 
                 case (float) ActionState.Wander:
-                    if (NPC.velocity.Y == 0)
+                    if (NPC.collideY || NPC.velocity.Y == 0)
                     {
                         NPC.frameCounter += NPC.velocity.X * 0.5f;
 

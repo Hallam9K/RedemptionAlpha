@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Critters
 
                     HopCheck();
 
-                    Point tileBelow = NPC.Bottom.ToTileCoordinates();
+                    Point tileBelow = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
                     if (BuryCheck() && Main.rand.NextBool(60) && tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && TileID.Sets.Conversion.Sand[tile.type])
                     {
@@ -119,7 +119,7 @@ namespace Redemption.NPCs.Critters
                 case (float)ActionState.Wander:
                     HopCheck();
 
-                    tileBelow = NPC.Bottom.ToTileCoordinates();
+                    tileBelow = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     tile = Main.tile[tileBelow.X, tileBelow.Y];
                     if (BuryCheck() && Main.rand.NextBool(100) && tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && tile.Slope == SlopeType.Solid && TileID.Sets.Conversion.Sand[tile.type])
                     {
@@ -188,7 +188,7 @@ namespace Redemption.NPCs.Critters
                 case (float)ActionState.Buried:
                     NPC.dontTakeDamage = true;
                     NPC.catchItem = 0;
-                    Point tileIn = NPC.Bottom.ToTileCoordinates();
+                    Point tileIn = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     Tile tile2 = Main.tile[tileIn.X, tileIn.Y];
                     if (tile2 is not { IsActiveUnactuated: true } || !Main.tileSolid[tile2.type] || !TileID.Sets.Conversion.Sand[tile2.type])
                     {

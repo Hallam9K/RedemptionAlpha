@@ -214,7 +214,7 @@ namespace Redemption.NPCs.Critters
 
             if (NPC.life <= 0)
             {
-                for (int _ = 0; _ < 4; _++)
+                for (int i = 0; i < 4; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f,
                         NPC.velocity.Y * 0.5f);
             }
