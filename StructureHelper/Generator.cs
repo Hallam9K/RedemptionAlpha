@@ -150,9 +150,10 @@ namespace Redemption.StructureHelper
                         string[] parts = d.Tile.Split();
                         if (parts[0] == "Redemption" && parts[1] == "NullBlock" && !ignoreNull) isNullTile = true;
 
-                        else if (parts.Length > 1 && ModLoader.GetMod(parts[0]) != null && ModLoader.GetMod(parts[0]).TileType(parts[1]) != 0)
-                            type = ModLoader.GetMod(parts[0]).TileType(parts[1]);
-
+                        else if (parts.Length > 1 && ModContent.TryFind<ModTile>(parts[0], parts[1], out var modTile))
+                        {
+                            type = modTile.Type;
+                        }
                         else type = 0;
                     }
 
@@ -161,9 +162,10 @@ namespace Redemption.StructureHelper
                         string[] parts = d.Wall.Split();
                         if (parts[0] == "Redemption" && parts[1] == "NullWall" && !ignoreNull) isNullWall = true;
 
-                        else if (parts.Length > 1 && ModLoader.GetMod(parts[0]) != null && ModLoader.GetMod(parts[0]).WallType(parts[1]) != 0)
-                            wallType = ModLoader.GetMod(parts[0]).WallType(parts[1]);
-
+                        else if (parts.Length > 1 && ModContent.TryFind<ModWall>(parts[0], parts[1], out var modWall))
+                        {
+                            wallType = modWall.Type;
+                        }
                         else wallType = 0;
                     }
 
@@ -190,7 +192,11 @@ namespace Redemption.StructureHelper
                             if (!int.TryParse(d.TEType, out typ))
                             {
                                 string[] parts = d.TEType.Split();
-                                typ = ModLoader.GetMod(parts[0]).TileEntityType(parts[1]);
+                                if (parts.Length > 1 && ModContent.TryFind<ModTileEntity>(parts[0], parts[1], out var modTileEntity))
+                                {
+                                    typ = modTileEntity.Type;
+                                }
+                                else typ = 0;
                             }
 
                             if (d.TEType != "")
