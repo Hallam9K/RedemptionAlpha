@@ -14,10 +14,12 @@ namespace Redemption.Globals.NPC
         public override bool CloneNewInstances => true;
 
         public bool infested;
+        public bool devilScented;
         public int infestedTime;
 
         public override void ResetEffects(Terraria.NPC npc)
-        {
+        {        
+            devilScented = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;

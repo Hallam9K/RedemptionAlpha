@@ -3,9 +3,12 @@ using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +37,13 @@ namespace Redemption.NPCs.Critters
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    ModContent.BuffType<DevilScentedDebuff>(),
+                    BuffID.Confused
+                }
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f
@@ -121,11 +130,16 @@ namespace Redemption.NPCs.Critters
                     }
                     else
                     {
+                        if (player.GetModPlayer<BuffPlayer>().devilScented)
+                            Aggressive = 1;
                         float nearestNPCDist = -1;
                         foreach (NPC possibleTarget in Main.npc)
                         {
-                            if ((!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
-                                !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type)) &&
+                            if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
+                                continue;
+
+                            if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCTags.Undead.Has(possibleTarget.type) &&
+                                !NPCTags.SkeletonHumanoid.Has(possibleTarget.type) &&
                                 possibleTarget.type != ModContent.NPCType<DevilsTongue>())
                                 continue;
 
@@ -196,8 +210,11 @@ namespace Redemption.NPCs.Critters
         {
             foreach (NPC possibleTarget in Main.npc)
             {
-                if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
-                    !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
+                    continue;
+
+                if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCTags.Undead.Has(possibleTarget.type) &&
+                    !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
                     continue;
 
                 if (hitCooldown > 0 || !NPC.Hitbox.Intersects(possibleTarget.Hitbox))

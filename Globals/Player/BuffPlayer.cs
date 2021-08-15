@@ -12,10 +12,12 @@ namespace Redemption.Globals.Player
     public class BuffPlayer : ModPlayer
     {
         public bool infested;
+        public bool devilScented;
         public int infestedTime;
 
         public override void ResetEffects()
         {
+            devilScented = false;
             if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;

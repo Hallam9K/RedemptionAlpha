@@ -4,6 +4,7 @@ using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.NPCs.Critters;
+using Redemption.Projectiles.Hostile;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -32,7 +33,9 @@ namespace Redemption.NPCs.PreHM
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
-                    ModContent.BuffType<InfestedDebuff>()
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<DevilScentedDebuff>(),
+                    BuffID.Confused
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
@@ -64,6 +67,29 @@ namespace Redemption.NPCs.PreHM
         public override void AI()
         {
             NPC.TargetClosest();
+            switch (AIState)
+            {
+                case 0:
+                    AITimer++;
+                    if (AITimer > 240)
+                    {
+                        AITimer = 0;
+                        AIState = 1;
+                    }
+                    break;
+                case 1:
+                    AITimer++;
+                    if (AITimer % 8 == 0)
+                    {
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3), false, SoundID.Item1.WithVolume(0));
+                    }
+                    if (AITimer > 60)
+                    {
+                        AITimer = 0;
+                        AIState = 0;
+                    }
+                    break;
+            }
             foreach (NPC possibleTarget in Main.npc)
             {
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
