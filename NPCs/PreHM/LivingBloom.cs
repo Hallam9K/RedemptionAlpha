@@ -104,10 +104,11 @@ namespace Redemption.NPCs.PreHM
                 case (float)ActionState.Wander:
                     if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0)
                     {
-                        RedeHelper.HorizontallyMove(NPC,
-                            new Vector2(npcTarget.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50,
-                                NPC.Center.Y), 0.5f, 2, 6, 4, false);
-                        return;
+                        globalNPC.attacker = npcTarget;
+                        moveTo = NPC.FindGround(15);
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = (float)ActionState.Threatened;
                     }
 
                     AITimer++;
