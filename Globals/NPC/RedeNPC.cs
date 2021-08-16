@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;

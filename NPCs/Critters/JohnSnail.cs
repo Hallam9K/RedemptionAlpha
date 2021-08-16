@@ -1,9 +1,4 @@
-using Microsoft.Xna.Framework;
-using Redemption.Base;
-using Redemption.Globals;
-using Redemption.Items.Critters;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;

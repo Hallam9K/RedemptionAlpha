@@ -793,7 +793,7 @@ namespace Redemption.Globals
 
             if (range >= 0)
             {
-                if (npc.Distance(codable.Center) > range)
+                if (npc.DistanceSQ(codable.Center) > range * range)
                     return false;
             }
 

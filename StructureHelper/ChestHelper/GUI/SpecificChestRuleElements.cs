@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Redemption.StructureHelper.ChestHelper.GUI
 {
-	class GuaranteedRuleElement : ChestRuleElement
+    class GuaranteedRuleElement : ChestRuleElement
 	{
 		public GuaranteedRuleElement() : base(new ChestRuleGuaranteed())
 		{

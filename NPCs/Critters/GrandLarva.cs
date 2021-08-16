@@ -142,7 +142,7 @@ namespace Redemption.NPCs.Critters
         public void HopCheck()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            if (hopCooldown == 0 && Main.rand.NextBool(200) && player.active && !player.dead && NPC.Distance(player.Center) <= 60 &&
+            if (hopCooldown == 0 && Main.rand.NextBool(200) && player.active && !player.dead && NPC.DistanceSQ(player.Center) <= 60 * 60 &&
                 BaseAI.HitTileOnSide(NPC, 3))
             {
                 NPC.velocity.X += player.Center.X < NPC.Center.X ? -5f : 5f;

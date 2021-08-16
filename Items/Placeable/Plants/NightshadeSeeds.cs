@@ -1,12 +1,17 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Plants;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Plants
 {
     public class NightshadeSeeds : ModItem
-    {
-        public override void SetDefaults()
+	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+		}
+		public override void SetDefaults()
 		{
 			Item.autoReuse = true;
 			Item.useTurn = true;

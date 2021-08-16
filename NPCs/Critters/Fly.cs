@@ -193,7 +193,7 @@ namespace Redemption.NPCs.Critters
                         AIState = (float)ActionState.Flying;
                     }
 
-                    if (NPC.Distance(player.Center) <= 100)
+                    if (NPC.DistanceSQ(player.Center) <= 100 * 100)
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));

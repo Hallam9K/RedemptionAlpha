@@ -123,7 +123,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case (float)ActionState.Threatened:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.Distance(globalNPC.attacker.Center) > 800 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = (float)ActionState.Wander;
@@ -144,7 +144,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     break;
                 case (float)ActionState.RootAttack:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.Distance(globalNPC.attacker.Center) > 800 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
                         AIState = (float)ActionState.Wander;
 
                     for (int i = 0; i < 2; i++)
@@ -160,31 +160,31 @@ namespace Redemption.NPCs.PreHM
                     AITimer++;
                     if (AITimer == 5)
                     {
-                        int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)(globalNPC.attacker.Center.Y / 16) - 2);
+                        int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30)) / 16, (int)(globalNPC.attacker.Center.Y / 16) - 2);
                         NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<LivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         foreach (NPC target in Main.npc)
                         {
                             if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI)
                                 continue;
 
-                            if (target.lifeMax < 5 || target.damage == 0 || NPC.Distance(target.Center) > 600 || target.type == NPC.type)
+                            if (target.lifeMax < 5 || target.damage == 0 || NPC.DistanceSQ(target.Center) > 600 * 600 || target.type == NPC.type)
                                 continue;
 
                             if (Main.rand.NextBool(3))
                                 continue;
 
-                            int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)target.Center.X / 16, (int)(target.Center.Y / 16) - 2);
+                            int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Center.Y / 16) - 2);
                             NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         }
                         foreach (Player target in Main.player)
                         {
-                            if (!target.active || target.whoAmI == globalNPC.attacker.whoAmI || NPC.Distance(target.Center) > 600)
+                            if (!target.active || target.whoAmI == globalNPC.attacker.whoAmI || NPC.DistanceSQ(target.Center) > 600 * 600)
                                 continue;
 
                             if (Main.rand.NextBool(3))
                                 continue;
 
-                            int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)target.Center.X / 16, (int)(target.Center.Y / 16) - 2);
+                            int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Center.Y / 16) - 2);
                             NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         }
                     }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +11,7 @@ using System.IO;
 
 namespace Redemption.StructureHelper
 {
-	class ManualGeneratorMenu : UIState
+    class ManualGeneratorMenu : UIState
 	{
 		public static bool Visible => TestWand.UIVisible;
         public static StructureEntry selected;

@@ -2,6 +2,7 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.Tiles.Plants;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Plants
 {
@@ -10,6 +11,8 @@ namespace Redemption.Items.Placeable.Plants
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("'An exceptionally rare flower with an eternal lifetime.'");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

@@ -1,241 +1,314 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Dusts.Tiles;
+using Redemption.Base;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Items.Weapons.PreHM.Druid.Staves;
-using Redemption.Items.Weapons.PreHM.Magic;
-using System.Collections.Generic;
-using System.IO;
+using Redemption.Projectiles.Hostile;
+using Redemption.Tiles.Tiles;
+using System.Linq;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
     public class AncientGladestoneGolem : ModNPC
     {
+        private enum ActionState
+        {
+            Begin,
+            Idle,
+            Wander,
+            Threatened,
+            PillarAttack,
+            PillarJump
+        }
+
+        public ref float AIState => ref NPC.ai[0];
+
+        public ref float AITimer => ref NPC.ai[1];
+
+        public ref float TimerRand => ref NPC.ai[2];
+
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[npc.type] = 12;
+            Main.npcFrameCount[NPC.type] = 12;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Velocity = 1f
+            };
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
-            npc.width = 54;
-            npc.height = 80;
-            npc.damage = 35;
-            npc.friendly = false;
-            npc.defense = 20;
-            npc.lifeMax = 125;
-            npc.HitSound = SoundID.DD2_WitherBeastCrystalImpact;
-            npc.DeathSound = SoundID.NPCDeath3;
-            npc.value = 5000;
-            npc.knockBackResist = 0.2f;
-            npc.aiStyle = -1;
-            npc.lavaImmune = true;
-            banner = npc.type;
-            bannerItem = ModContent.ItemType<AncientGladestoneGolemBanner>();
+            NPC.width = 54;
+            NPC.height = 80;
+            NPC.damage = 35;
+            NPC.friendly = false;
+            NPC.defense = 20;
+            NPC.lifeMax = 125;
+            NPC.HitSound = SoundID.DD2_WitherBeastCrystalImpact;
+            NPC.DeathSound = SoundID.NPCDeath3;
+            NPC.value = 5000;
+            NPC.knockBackResist = 0.2f;
+            NPC.aiStyle = -1;
+            NPC.lavaImmune = true;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<AncientGladestoneGolemBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life <= 0)
+            if (NPC.life <= 0)
             {
-                Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.Stone, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f);
-                Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.Stone, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f);
-                Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.Stone, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f);
-                Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.Stone, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f);
-                Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.Stone, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore1"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore2"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore3"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore4"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore5"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore6"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore7"), 1);
-                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Hostile/AncientGolemGore8"), 1);
+                for (int i = 0; i < 10; i++)
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                for (int i = 0; i < 8; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AncientGladestoneGolemGore" + (i + 1)).Type, 1);
             }
-            Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.Stone, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f);
-            if (npc.ai[0] == 0)
+            Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+            if (AIState is (float)ActionState.Idle or (float)ActionState.Wander)
             {
-                Main.PlaySound(SoundID.Zombie, npc.position, 63);
-                npc.ai[0] = 1;
+                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
+                AITimer = 0;
+                AIState = (float)ActionState.Threatened;
             }
         }
-        public override void NPCLoot()
-        {
-            RedePlayer redePlayer = Main.LocalPlayer.GetModPlayer<RedePlayer>();
-            Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AncientStone>(), Main.rand.Next(4, 13));
-            Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AncientDirt>(), Main.rand.Next(2, 7));
-            Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AncientWorldStave>());
-            if (Main.rand.NextBool(30))
-            {
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.NightVisionHelmet);
-            }
-            if (Main.rand.NextBool(redePlayer.bloomingLuck ? 150 : 200))
-            {
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<VictorBattletome>());
-            }
-            if (Main.hardMode)
-            {
-                if (Main.rand.NextBool(redePlayer.bloomingLuck ? 150 : 200))
-                {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BlindJustice>());
-                }
-            }
-        }
-        public int aniType;
-        public int aniFrame;
-        public int frameCounter;
-        public float[] customAI = new float[4];
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(customAI[0]);
-            writer.Write(customAI[1]);
-            writer.Write(customAI[2]);
-            writer.Write(customAI[3]);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            customAI[0] = reader.ReadFloat();
-            customAI[1] = reader.ReadFloat();
-            customAI[2] = reader.ReadFloat();
-            customAI[3] = reader.ReadFloat();
-        }
+
+        public NPC npcTarget;
+        public Vector2 moveTo;
+        public int runCooldown;
         public override void AI()
         {
-            Player player = Main.player[npc.target];
-            if (npc.collideY || npc.velocity.Y == 0)
+            Player player = Main.player[NPC.target];
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            NPC.TargetClosest();
+            NPC.LookByVelocity();
+
+            switch (AIState)
             {
-                npc.frameCounter += npc.velocity.X * 0.5f;
-                if (npc.frameCounter >= 3 || npc.frameCounter <= -3)
-                {
-                    npc.frameCounter = 0;
-                    npc.frame.Y += 88;
-                    if (npc.frame.Y >= 1056)
+                case (float)ActionState.Begin:
+                    TimerRand = Main.rand.Next(120, 280);
+                    AIState = (float)ActionState.Idle;
+                    break;
+
+                case (float)ActionState.Idle:
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.5f;
+                    AITimer++;
+                    if (AITimer >= TimerRand)
                     {
-                        npc.frameCounter = 0;
-                        npc.frame.Y = 0;
+                        moveTo = NPC.FindGround(15);
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = (float)ActionState.Wander;
+                    }
+
+                    if (NPC.Sight(player, 800, true, true))
+                    {
+                        globalNPC.attacker = player;
+                        moveTo = NPC.FindGround(15);
+                        AITimer = 0;
+                        AIState = (float)ActionState.Threatened;
+                    }
+                    if (NPC.lavaWet && Main.rand.NextBool(250) && NPC.velocity.Y == 0)
+                    {
+                        AITimer = 0;
+                        NPC.frame.Y = 0;
+                        AIState = (float)ActionState.PillarJump;
+                    }
+                    break;
+
+                case (float)ActionState.Wander:
+                    if (NPC.Sight(player, 800, true, true))
+                    {
+                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
+                        globalNPC.attacker = player;
+                        moveTo = NPC.FindGround(15);
+                        AITimer = 0;
+                        AIState = (float)ActionState.Threatened;
+                    }
+
+                    AITimer++;
+                    if (AITimer >= TimerRand || NPC.Center.X + 20 > moveTo.X * 16 && NPC.Center.X - 20 < moveTo.X * 16)
+                    {
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(120, 280);
+                        AIState = (float)ActionState.Idle;
+                    }
+
+                    bool jumpDownPlatforms = false;
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
+                    else { NPC.noTileCollide = false; }
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > player.Center.Y);
+                    break;
+
+                case (float)ActionState.Threatened:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    {
+                        runCooldown = 0;
+                        AIState = (float)ActionState.Wander;
+                    }
+
+                    if (!NPC.Sight(globalNPC.attacker, 800, false, true))
+                        runCooldown++;
+                    else if (runCooldown > 0)
+                        runCooldown--;
+
+                    jumpDownPlatforms = false;
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
+                    else { NPC.noTileCollide = false; }
+                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 3, 10, 1, NPC.Center.Y > globalNPC.attacker.Center.Y);
+
+                    if (Main.rand.NextBool(100) && NPC.velocity.Y == 0)
+                    {
+                        int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
+                        int dist = (tilePosY * 16) - (int)globalNPC.attacker.Center.Y;
+
+                        NPC.frame.Y = 0;
+
+                        if (NPC.DistanceSQ(globalNPC.attacker.Center) < 300 * 300 && dist < 140 && globalNPC.attacker.active)
+                            AIState = (float)ActionState.PillarAttack;
+                        else
+                            AIState = (float)ActionState.PillarJump;
+                    }
+                    break;
+
+                case (float)ActionState.PillarAttack:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                        AIState = (float)ActionState.Wander;
+
+                    NPC.velocity.X = 0;
+                    break;
+
+                case (float)ActionState.PillarJump:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                        AIState = (float)ActionState.Wander;
+                    break;
+            }
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+            switch (AIState)
+            {
+                case (float)ActionState.PillarAttack:
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.X = NPC.frame.Width;
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 5)
+                    {
+                        NPC.frame.Y += frameHeight;
+                        NPC.frameCounter = 0;
+                        if (NPC.frame.Y == frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 64);
+                            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
+                            NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                        }
+                        if (NPC.frame.Y > 9 * frameHeight)
+                        {
+                            AIState = (float)ActionState.Threatened;
+                        }
+                    }
+                    return;
+                case (float)ActionState.PillarJump:
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.X = NPC.frame.Width;
+                    if (NPC.frame.Y < 6 * frameHeight) { NPC.velocity.X = 0; }
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 5)
+                    {
+                        NPC.frame.Y += frameHeight;
+                        NPC.frameCounter = 0;
+                        if (NPC.frame.Y == frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 64);
+                            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16);
+                            NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                        }
+                        if (NPC.frame.Y == 6 * frameHeight)
+                        {
+                            NPC.velocity.Y -= Main.rand.Next(10, 20);
+                            NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
+                        }
+                        if (NPC.frame.Y > 9 * frameHeight)
+                        {
+                            AIState = (float)ActionState.Threatened;
+                        }
+                    }
+                    return;
+            }
+            NPC.frame.X = 0;
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
+                else
+                {
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 11 * frameHeight)
+                            NPC.frame.Y = 0;
                     }
                 }
             }
             else
             {
-                npc.frame.Y = 88 * 3;
-            }
-            switch (npc.ai[0])
-            {
-                case 0:
-                    if (npc.velocity.X > 0) { npc.spriteDirection = 1; }
-                    else { npc.spriteDirection = -1; }
-                    bool sight = (npc.Center.X > player.Center.X && npc.spriteDirection == -1) || (npc.Center.X < player.Center.X && npc.spriteDirection == 1);
-                    if (Collision.CanHit(npc.position, npc.width, npc.height, player.position, player.width, player.height) && sight && player.active && !player.dead)
-                    {
-                        Main.PlaySound(SoundID.Zombie, npc.position, 63);
-                        npc.ai[0] = 1;
-                    }
-                    if (npc.lavaWet && Main.rand.NextBool(250) && npc.velocity.Y == 0)
-                    {
-                        npc.ai[0] = 3;
-                    }
-                    break;
-                case 1:
-                    if (npc.velocity.X > 0) { npc.spriteDirection = 1; }
-                    else { npc.spriteDirection = -1; }
-                    npc.ai[1]++;
-                    if (Main.rand.NextBool(200) && npc.velocity.Y == 0)
-                    {
-                        int tilePosY = BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16);
-                        int dist = (tilePosY * 16) - (int)player.Center.Y;
-                        if (npc.Distance(player.Center) < 300 && dist < 140 && player.active && !player.dead) { npc.ai[0] = 2; }
-                        else { npc.ai[0] = 3; }
-                    }
-                    if (npc.ai[1] > 300)
-                    {
-                        npc.ai[1] = 0;
-                        npc.ai[0] = 0;
-                    }
-                    break;
-                case 2:
-                    npc.velocity.X = 0;
-                    aniType = 1;
-                    npc.ai[1]++;
-                    frameCounter++;
-                    if (frameCounter > 5)
-                    {
-                        aniFrame++;
-                        frameCounter = 0;
-                        if (aniFrame == 1)
-                        {
-                            Main.PlaySound(SoundID.Zombie, npc.position, 64);
-                            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16);
-                            npc.Shoot(new Vector2(player.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientStonePillar_Pro>(), npc.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
-                        }
-                    }
-                    if (aniFrame >= 10)
-                    {
-                        aniType = 0;
-                        aniFrame = 0;
-                        npc.ai[0] = 1;
-                    }
-                    break;
-                case 3:
-                    aniType = 1;
-                    npc.ai[1]++;
-                    frameCounter++;
-                    if (aniFrame < 6) { npc.velocity.X = 0; }
-                    if (frameCounter > 5)
-                    {
-                        aniFrame++;
-                        frameCounter = 0;
-                        if (aniFrame == 1)
-                        {
-                            Main.PlaySound(SoundID.Zombie, npc.position, 64);
-                            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)npc.Center.X / 16, (int)npc.Center.Y / 16);
-                            npc.Shoot(new Vector2(npc.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientStonePillar_Pro>(), npc.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
-                        }
-                        if (aniFrame == 6)
-                        {
-                            npc.velocity.Y -= Main.rand.Next(10, 20);
-                            npc.velocity.X += npc.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
-                        }
-                    }
-                    if (aniFrame >= 10)
-                    {
-                        aniType = 0;
-                        aniFrame = 0;
-                        npc.ai[2] = 0;
-                        npc.ai[0] = 1;
-                    }
-                    break;
-            }
-            if (npc.ai[0] < 2)
-            {
-                bool jumpDownPlatforms = false;
-                npc.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                if (jumpDownPlatforms) { npc.noTileCollide = true; }
-                else { npc.noTileCollide = false; }
-                BaseAI.AIZombie(npc, ref customAI, false, true, -1, 0.1f, npc.ai[0] == 1 ? 3 : 1, 10, 1, jumpUpPlatforms: npc.Center.Y > player.Center.Y ? true : false);
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                if (NPC.velocity.Y < 0)
+                    NPC.frame.Y = 3 * frameHeight;
+                else
+                    NPC.frame.Y = 10 * frameHeight;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = Main.npcTexture[npc.type];
-            Texture2D attackAni = mod.GetTexture("NPCs/PreHM/AncientStoneGolem_Attack");
-            var effects = npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            switch (aniType)
-            {
-                case 0:
-                    spriteBatch.Draw(texture, npc.Center - Main.screenPosition, npc.frame, drawColor, npc.rotation, npc.frame.Size() / 2, npc.scale, npc.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-                    break;
-                case 1:
-                    Vector2 drawCenter = new Vector2(npc.Center.X, npc.Center.Y);
-                    int num214 = attackAni.Height / 10;
-                    int y6 = num214 * aniFrame;
-                    Main.spriteBatch.Draw(attackAni, drawCenter - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), drawColor, npc.rotation, new Vector2(attackAni.Width / 2f, num214 / 2f), npc.scale, effects, 0);
-                    break;
-            }
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicGladestone>(), 1, 4, 14));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientDirt>(), 1, 2, 7));
+            npcLoot.Add(ItemDropRule.Common(ItemID.NightVisionHelmet, 30));
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            int[] AncientTileArray = { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>() };
+
+            float baseChance = SpawnCondition.Cavern.Chance;
+            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type) ? .03f : 0.006f;
+
+            return baseChance * multiplier;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
+
+                new FlavorTextBestiaryInfoElement(
+                    "An ancient relic of the far past. These golems were once infused with a human's soul to come to life, now they roam aimlessly within ruined structures.")
+            });
         }
     }
 }

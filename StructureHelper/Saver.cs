@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +10,7 @@ using Terraria.ModLoader.IO;
 
 namespace Redemption.StructureHelper
 {
-	internal static class Saver
+    internal static class Saver
 	{
         public static void SaveToFile(Rectangle target, string targetPath = null)
 		{

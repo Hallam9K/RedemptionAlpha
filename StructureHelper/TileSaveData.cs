@@ -1,6 +1,5 @@
 ﻿using System;
 using Terraria.ModLoader.IO;
-using Terraria.ModLoader;
 
 namespace Redemption.StructureHelper
 {

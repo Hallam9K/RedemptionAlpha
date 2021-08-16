@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -11,7 +6,7 @@ using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
 namespace Redemption.StructureHelper.ChestHelper.GUI
-{ 
+{
     class ChestCustomizerState : UIState
     {
         public static bool Visible;

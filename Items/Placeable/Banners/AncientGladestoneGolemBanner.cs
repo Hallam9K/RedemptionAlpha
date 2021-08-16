@@ -2,25 +2,30 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Banners;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Banners
 {
     public class AncientGladestoneGolemBanner : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults()
         {
-            item.width = 12;
-            item.height = 28;
-            item.maxStack = 99;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.Swing;
-            item.consumable = true;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.buyPrice(0, 0, 10, 0);
-            item.createTile = ModContent.TileType<AncientGladestoneGolemBannerTile>();
+            Item.width = 12;
+            Item.height = 28;
+            Item.maxStack = 99;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.buyPrice(0, 0, 10, 0);
+            Item.createTile = ModContent.TileType<AncientGladestoneGolemBannerTile>();
         }
     }
 }

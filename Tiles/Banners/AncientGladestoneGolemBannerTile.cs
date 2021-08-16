@@ -9,7 +9,7 @@ namespace Redemption.Tiles.Banners
 {
     public class AncientGladestoneGolemBannerTile : ModTile
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -20,8 +20,7 @@ namespace Redemption.Tiles.Banners
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 111;
             TileObjectData.addTile(Type);
-            disableSmartCursor = true;
-            AddMapEntry(new Color(123, 44, 122));
+            AddMapEntry(Color.SandyBrown);
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
