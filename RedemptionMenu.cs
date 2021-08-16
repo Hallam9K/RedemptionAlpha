@@ -7,7 +7,7 @@ namespace Redemption
 {
     public class RedemptionMenu : ModMenu
     {
-        private const string MenuAssetPath = "Redemption/ExtraTextures/Menu";
+        private const string MenuAssetPath = "Redemption/Textures/Menu";
 
         public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation, ref float logoScale, ref Color drawColor)
         {

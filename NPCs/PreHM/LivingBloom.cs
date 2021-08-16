@@ -195,15 +195,14 @@ namespace Redemption.NPCs.PreHM
                     break;
             }
         }
-        public bool GrassCheck()
+        public void GrassCheck()
         {
             Point grass = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
             Tile tile = Main.tile[grass.X, grass.Y];
-            if (tile is not { IsActiveUnactuated: true } || !Main.tileSolid[tile.type] || !TileID.Sets.Conversion.Grass[tile.type])
+            if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && TileID.Sets.Conversion.Grass[tile.type])
             {
-                return true;
+                TileLoader.RandomUpdate(grass.X, grass.Y, tile.type);
             }
-            return false;
         }
 
         int regenTimer;

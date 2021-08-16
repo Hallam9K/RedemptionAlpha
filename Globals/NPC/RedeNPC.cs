@@ -55,7 +55,7 @@ namespace Redemption.Globals.NPC
             Terraria.Player player = Main.player[npc.GetNearestAlivePlayer()];
             if (projectile.friendly)
                 attacker = player;
-            else if (npc.ClosestNPCToNPC(ref npcTarget, 1000, npc.Center))
+            else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)

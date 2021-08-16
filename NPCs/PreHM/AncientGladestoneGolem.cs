@@ -43,7 +43,7 @@ namespace Redemption.NPCs.PreHM
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Velocity = 1f
+                CustomTexturePath = "Redemption/Textures/Bestiary/AncientGladestoneGolem_Preview",
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -286,7 +286,7 @@ namespace Redemption.NPCs.PreHM
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicGladestone>(), 1, 4, 14));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientDirt>(), 1, 2, 7));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientDirt>(), 1, 2, 8));
             npcLoot.Add(ItemDropRule.Common(ItemID.NightVisionHelmet, 30));
         }
 
