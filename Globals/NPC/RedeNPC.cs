@@ -53,7 +53,7 @@ namespace Redemption.Globals.NPC
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
             Terraria.Player player = Main.player[npc.GetNearestAlivePlayer()];
-            if (projectile.friendly)
+            if (projectile.friendly && !projectile.hostile)
                 attacker = player;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
