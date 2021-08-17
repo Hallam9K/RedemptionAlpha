@@ -43,7 +43,8 @@ namespace Redemption.NPCs.PreHM
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                CustomTexturePath = "Redemption/Textures/Bestiary/AncientGladestoneGolem_Preview",
+                //CustomTexturePath = "Redemption/Textures/Bestiary/AncientGladestoneGolem_Preview",
+		Velocity = 1f
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -280,7 +281,7 @@ namespace Redemption.NPCs.PreHM
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
