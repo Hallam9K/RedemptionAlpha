@@ -121,7 +121,7 @@ namespace Redemption.NPCs.Critters
                         if (hitCooldown > 0 || !NPC.Hitbox.Intersects(possibleTarget.Hitbox))
                             continue;
 
-                        BaseAI.DamageNPC(possibleTarget, NPC.damage, 2, null);
+                        BaseAI.DamageNPC(possibleTarget, NPC.damage, 2, NPC);
                         possibleTarget.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
                         hitCooldown = 60;
                     }

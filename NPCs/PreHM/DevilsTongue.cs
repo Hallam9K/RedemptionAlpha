@@ -97,7 +97,7 @@ namespace Redemption.NPCs.PreHM
                 if (!NPC.Hitbox.Intersects(possibleTarget.Hitbox))
                     continue;
 
-                BaseAI.DamageNPC(possibleTarget, possibleTarget.lifeMax, 0, null, false);
+                BaseAI.DamageNPC(possibleTarget, possibleTarget.lifeMax, 0, NPC, false);
                 if (possibleTarget.life <= 0)
                 {
                     SoundEngine.PlaySound(SoundID.Zombie, (int)NPC.position.X, (int)NPC.position.Y, 9, 0.3f);

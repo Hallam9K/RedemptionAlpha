@@ -16,4 +16,10 @@ namespace Redemption.Globals
 		public bool CanShowItemDropInUI() => false;
 		public string GetConditionDescription() => "Drops when decapitated";
 	}
+	public class LostSoulCondition : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => true;
+		public string GetConditionDescription() => "Appears as an NPC";
+	}
 }

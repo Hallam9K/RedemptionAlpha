@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -951,8 +953,28 @@ namespace Redemption.Globals
                     }
                 }
             }
-
             return new Vector2(npc.Center.X, npc.Center.Y);
+        }
+
+        public static void DamageHostileAttackers(this Terraria.NPC npc, float dmgModify = 0, int knockback = 0, List<int> AlwaysDmgNPC = default)
+        {
+            if (AlwaysDmgNPC == default)
+                AlwaysDmgNPC = new() { 0 };
+            foreach (Terraria.NPC target in Main.npc)
+            {
+                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
+                    continue;
+
+                if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                    continue;
+
+                if (target.immune[npc.whoAmI] > 0 || !npc.Hitbox.Intersects(target.Hitbox))
+                    continue;
+
+                target.immune[npc.whoAmI] = 30;
+                int hitDirection = npc.Center.X > target.Center.X ? -1 : 1;
+                BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
+            }
         }
 
         #endregion

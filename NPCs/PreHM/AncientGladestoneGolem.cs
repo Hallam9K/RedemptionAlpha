@@ -171,6 +171,8 @@ namespace Redemption.NPCs.PreHM
                     else { NPC.noTileCollide = false; }
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 3, 10, 1, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
+                    NPC.DamageHostileAttackers(0, 7);
+
                     if (Main.rand.NextBool(100) && NPC.velocity.Y == 0)
                     {
                         int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
@@ -241,7 +243,6 @@ namespace Redemption.NPCs.PreHM
                         }
                         if (NPC.frame.Y == 6 * frameHeight)
                         {
-                            NPC.velocity.Y -= Main.rand.Next(10, 20);
                             NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
                         }
                         if (NPC.frame.Y > 9 * frameHeight)

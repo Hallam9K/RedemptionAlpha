@@ -201,7 +201,7 @@ namespace Redemption.NPCs.PreHM
                     break;
             }
         }
-        public bool GrassCheck(int X, int Y) // Directly from Flower Boots code, cleaned a bit
+        public static bool GrassCheck(int X, int Y) // Directly from Flower Boots code, cleaned a bit
         {
             Tile tile = Main.tile[X, Y];
             if (tile == null)

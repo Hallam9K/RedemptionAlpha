@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -5312,11 +5313,15 @@ namespace Redemption.Base
         {
             //TODO: FIX THIS
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
-            if (damager == null)
-            {
-                int parsedDamage = dmgAmt; if (dmgVariation){ parsedDamage = Main.DamageVar(dmgAmt); }
-                npc.StrikeNPC(parsedDamage, knockback, hitDirection);
-                if (Main.netMode != NetmodeID.SinglePlayer)
+			if (damager == null || damager is NPC)
+			{
+				int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+				npc.StrikeNPC(parsedDamage, knockback, hitDirection);
+
+				if (damager is NPC)
+					npc.GetGlobalNPC<RedeNPC>().attacker = damager;
+
+				if (Main.netMode != NetmodeID.SinglePlayer)
                 {
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
                 }
