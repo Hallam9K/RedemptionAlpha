@@ -43,8 +43,7 @@ namespace Redemption.NPCs.PreHM
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                //CustomTexturePath = "Redemption/Textures/Bestiary/AncientGladestoneGolem_Preview",
-		Velocity = 1f
+		        Velocity = 1f
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -115,6 +114,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.Sight(player, 800, true, true))
                     {
+                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
                         globalNPC.attacker = player;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;

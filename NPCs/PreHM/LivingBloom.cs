@@ -72,6 +72,12 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
             RegenCheck();
 
+            if (AITimer % 10 == 0)
+            {
+                Point grass = new Vector2(NPC.Center.X, NPC.Bottom.Y - 4).ToTileCoordinates();
+                GrassCheck(grass.X, grass.Y);
+            }
+
             switch (AIState)
             {
                 case (float)ActionState.Begin:
@@ -195,14 +201,88 @@ namespace Redemption.NPCs.PreHM
                     break;
             }
         }
-        public void GrassCheck()
+        public bool GrassCheck(int X, int Y) // Directly from Flower Boots code, cleaned a bit
         {
-            Point grass = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
-            Tile tile = Main.tile[grass.X, grass.Y];
-            if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && TileID.Sets.Conversion.Grass[tile.type])
+            Tile tile = Main.tile[X, Y];
+            if (tile == null)
             {
-                TileLoader.RandomUpdate(grass.X, grass.Y, tile.type);
+                return false;
             }
+            if (!tile.IsActive && tile.LiquidAmount == 0 && Main.tile[X, Y + 1] != null && WorldGen.SolidTile(X, Y + 1))
+            {
+                tile.frameY = 0;
+                tile.Slope = 0;
+                tile.IsHalfBlock = false;
+                if (Main.tile[X, Y + 1].type == TileID.Grass || Main.tile[X, Y + 1].type == TileID.GolfGrass)
+                {
+                    int num = Main.rand.NextFromList(6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 27, 30, 33, 36, 39, 42);
+                    switch (num)
+                    {
+                        case 21:
+                        case 24:
+                        case 27:
+                        case 30:
+                        case 33:
+                        case 36:
+                        case 39:
+                        case 42:
+                            num += Main.rand.Next(3);
+                            break;
+                    }
+                    tile.IsActive = true;
+                    tile.type = TileID.Plants;
+                    tile.frameX = (short)(num * 18);
+                    tile.Color = Main.tile[X, Y + 1].Color;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        NetMessage.SendTileSquare(-1, X, Y);
+                    }
+                    return true;
+                }
+                if (Main.tile[X, Y + 1].type == TileID.HallowedGrass || Main.tile[X, Y + 1].type == TileID.GolfGrassHallowed)
+                {
+                    if (Main.rand.Next(2) == 0)
+                    {
+                        tile.IsActive = true;
+                        tile.type = TileID.HallowedPlants;
+                        tile.frameX = (short)(18 * Main.rand.Next(4, 7));
+                        tile.Color = Main.tile[X, Y + 1].Color;
+                        while (tile.frameX == 90)
+                        {
+                            tile.frameX = (short)(18 * Main.rand.Next(4, 7));
+                        }
+                    }
+                    else
+                    {
+                        tile.IsActive = true;
+                        tile.type = TileID.HallowedPlants2;
+                        tile.frameX = (short)(18 * Main.rand.Next(2, 8));
+                        tile.Color = Main.tile[X, Y + 1].Color;
+                        while (tile.frameX == 90)
+                        {
+                            tile.frameX = (short)(18 * Main.rand.Next(2, 8));
+                        }
+                    }
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        NetMessage.SendTileSquare(-1, X, Y);
+                    }
+                    return true;
+                }
+                if (Main.tile[X, Y + 1].type == 60)
+                {
+                    tile.IsActive = true;
+                    tile.type = 74;
+                    tile.frameX = (short)(18 * Main.rand.Next(9, 17));
+                    tile.Color = Main.tile[X, Y + 1].Color;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        NetMessage.SendTileSquare(-1, X, Y);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
 
         int regenTimer;
