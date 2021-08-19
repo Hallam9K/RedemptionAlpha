@@ -15,8 +15,27 @@ namespace Redemption.Globals.NPC
         public Terraria.NPC npcTarget;
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (ItemTags.Fire.Has(item.type) && NPCTags.Plantlike.Has(npc.type))
-                damage = (int)(damage * 1.15f);
+            #region Elemental Attributes
+            if (NPCTags.Plantlike.Has(npc.type))
+            {
+                if (ItemTags.Fire.Has(item.type))
+                    damage *= (int)(damage * 1.15f);
+
+                if (ItemTags.Nature.Has(item.type))
+                    damage *= (int)(damage * 0.75f);
+
+                if (ItemTags.Poison.Has(item.type))
+                    damage *= (int)(damage * 0.5f);
+            }
+            else if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
+            {
+                if (ItemTags.Holy.Has(item.type))
+                    damage *= (int)(damage * 1.25f);
+
+                if (ItemTags.Shadow.Has(item.type))
+                    damage *= (int)(damage * 0.8f);
+            }
+            #endregion
 
             // Decapitation
             if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCTags.SkeletonHumanoid.Has(npc.type))
@@ -39,8 +58,27 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (ProjectileTags.Fire.Has(projectile.type) && NPCTags.Plantlike.Has(npc.type))
-                damage *= (int)(damage * 1.15f);
+            #region Elemental Attributes
+            if (NPCTags.Plantlike.Has(npc.type))
+            {
+                if (ProjectileTags.Fire.Has(projectile.type))
+                    damage *= (int)(damage * 1.15f);
+
+                if (ProjectileTags.Nature.Has(projectile.type))
+                    damage *= (int)(damage * 0.75f);
+
+                if (ProjectileTags.Poison.Has(projectile.type))
+                    damage *= (int)(damage * 0.5f);
+            }
+            else if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
+            {
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage *= (int)(damage * 1.25f);
+
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                    damage *= (int)(damage * 0.8f);
+            }
+            #endregion
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
         {

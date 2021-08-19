@@ -184,7 +184,10 @@ namespace Redemption.NPCs.PreHM
                         }
                         foreach (Player target in Main.player)
                         {
-                            if (!target.active || target.whoAmI == globalNPC.attacker.whoAmI || NPC.DistanceSQ(target.Center) > 600 * 600)
+                            if (globalNPC.attacker is NPC)
+                                continue;
+
+                            if (!target.active || NPC.DistanceSQ(target.Center) > 600 * 600)
                                 continue;
 
                             if (Main.rand.NextBool(3))
