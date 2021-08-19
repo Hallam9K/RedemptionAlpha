@@ -129,7 +129,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case (float)ActionState.Threatened:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = (float)ActionState.Wander;
@@ -173,7 +173,7 @@ namespace Redemption.NPCs.PreHM
                             if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI)
                                 continue;
 
-                            if (target.lifeMax < 5 || target.damage == 0 || NPC.DistanceSQ(target.Center) > 600 * 600 || target.type == NPC.type)
+                            if (target.lifeMax < 5 || target.damage == 0 || NPC.DistanceSQ(target.Center) > 400 * 400 || target.type == NPC.type)
                                 continue;
 
                             if (Main.rand.NextBool(3))
@@ -187,7 +187,7 @@ namespace Redemption.NPCs.PreHM
                             if (globalNPC.attacker is NPC)
                                 continue;
 
-                            if (!target.active || NPC.DistanceSQ(target.Center) > 600 * 600)
+                            if (!target.active || NPC.DistanceSQ(target.Center) > 400 * 400)
                                 continue;
 
                             if (Main.rand.NextBool(3))

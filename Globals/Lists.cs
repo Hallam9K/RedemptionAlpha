@@ -9,6 +9,7 @@ using GroupNPC = Redemption.Tags.NPCTags;
 using GroupItem = Redemption.Tags.ItemTags;
 using Redemption.NPCs.PreHM;
 using Redemption.Projectiles.Hostile;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.Globals
 {
@@ -212,6 +213,12 @@ namespace Redemption.Globals
     public static class NPCLists
     {
         #region NPC Lists
+
+        public static List<int> HasLostSoul = new()
+        {
+            ModContent.NPCType<LostSoulNPC>(),
+            ModContent.NPCType<EpidotrianSkeleton>()
+        };
 
         public static List<int> IsBunny = new()
         {

@@ -19,21 +19,21 @@ namespace Redemption.Globals.NPC
             if (NPCTags.Plantlike.Has(npc.type))
             {
                 if (ItemTags.Fire.Has(item.type))
-                    damage *= (int)(damage * 1.15f);
+                    damage = (int)(damage * 1.15f);
 
                 if (ItemTags.Nature.Has(item.type))
-                    damage *= (int)(damage * 0.75f);
+                    damage = (int)(damage * 0.75f);
 
                 if (ItemTags.Poison.Has(item.type))
-                    damage *= (int)(damage * 0.5f);
+                    damage = (int)(damage * 0.5f);
             }
             else if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
             {
                 if (ItemTags.Holy.Has(item.type))
-                    damage *= (int)(damage * 1.25f);
+                    damage = (int)(damage * 1.25f);
 
                 if (ItemTags.Shadow.Has(item.type))
-                    damage *= (int)(damage * 0.8f);
+                    damage = (int)(damage * 0.8f);
             }
             #endregion
 
@@ -62,21 +62,21 @@ namespace Redemption.Globals.NPC
             if (NPCTags.Plantlike.Has(npc.type))
             {
                 if (ProjectileTags.Fire.Has(projectile.type))
-                    damage *= (int)(damage * 1.15f);
+                    damage = (int)(damage * 1.15f);
 
                 if (ProjectileTags.Nature.Has(projectile.type))
-                    damage *= (int)(damage * 0.75f);
+                    damage = (int)(damage * 0.75f);
 
                 if (ProjectileTags.Poison.Has(projectile.type))
-                    damage *= (int)(damage * 0.5f);
+                    damage = (int)(damage * 0.5f);
             }
             else if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
             {
                 if (ProjectileTags.Holy.Has(projectile.type))
-                    damage *= (int)(damage * 1.25f);
+                    damage = (int)(damage * 1.25f);
 
                 if (ProjectileTags.Shadow.Has(projectile.type))
-                    damage *= (int)(damage * 0.8f);
+                    damage = (int)(damage * 0.8f);
             }
             #endregion
         }

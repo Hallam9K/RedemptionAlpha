@@ -10,6 +10,8 @@ using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Hostile;
 using Redemption.Tiles.Tiles;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -169,49 +171,11 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    GetNearestNPC();
-                    if (Personality != PersonalityState.Calm)
-                    {
-                        if (NPC.Sight(player, VisionRange, HasEyes, HasEyes))
-                        {
-                            SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
-                            globalNPC.attacker = player;
-                            moveTo = NPC.FindGround(20);
-                            AITimer = 0;
-                            AIState = ActionState.Alert;
-                        }
-                        if (NPC.Sight(Main.npc[GetNearestNPC()], VisionRange, HasEyes, HasEyes))
-                        {
-                            SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
-                            globalNPC.attacker = Main.npc[GetNearestNPC()];
-                            moveTo = NPC.FindGround(20);
-                            AITimer = 0;
-                            AIState = ActionState.Alert;
-                        }
-                    }
+                    SightCheck();
                     break;
 
                 case ActionState.Wander:
-                    GetNearestNPC();
-                    if (Personality != PersonalityState.Calm)
-                    {
-                        if (NPC.Sight(player, VisionRange, HasEyes, HasEyes))
-                        {
-                            SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
-                            globalNPC.attacker = player;
-                            moveTo = NPC.FindGround(20);
-                            AITimer = 0;
-                            AIState = ActionState.Alert;
-                        }
-                        if (NPC.Sight(Main.npc[GetNearestNPC()], VisionRange, HasEyes, HasEyes))
-                        {
-                            SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
-                            globalNPC.attacker = Main.npc[GetNearestNPC()];
-                            moveTo = NPC.FindGround(20);
-                            AITimer = 0;
-                            AIState = ActionState.Alert;
-                        }
-                    }
+                    SightCheck();
 
                     AITimer++;
                     if (AITimer >= TimerRand || NPC.Center.X + 20 > moveTo.X * 16 && NPC.Center.X - 20 < moveTo.X * 16)
@@ -241,7 +205,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown--;
 
                     if (Personality != PersonalityState.Greedy)
-                        NPC.DamageHostileAttackers(0, 4, HasEyes ? default : new() { ModContent.NPCType<LostSoulNPC>() });
+                        NPC.DamageHostileAttackers(0, 4, HasEyes ? default : NPCLists.HasLostSoul);
 
                     if (Personality == PersonalityState.Greedy && Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                     {
@@ -309,17 +273,20 @@ namespace Redemption.NPCs.PreHM
                 NPC.frame.Y = 4 * frameHeight;
             }
         }
-        public int GetNearestNPC()
+        public int GetNearestNPC(int[] WhitelistNPC = default)
         {
+            if (WhitelistNPC == null)
+                WhitelistNPC = new int[] { NPCID.TargetDummy };
+
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
             foreach (NPC target in Main.npc)
             {
-                if (!target.active)
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
-                if (target.whoAmI == NPC.whoAmI || ((HasEyes || target.type != ModContent.NPCType<LostSoulNPC>()) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))))
+                if (!WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))
                     continue;
 
                 if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
@@ -331,6 +298,44 @@ namespace Redemption.NPCs.PreHM
 
             return nearestNPC;
         }
+        public void SightCheck()
+        {
+            Player player = Main.player[NPC.target];
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            GetNearestNPC(!HasEyes ? (Personality == PersonalityState.Aggressive ? NPCLists.HasLostSoul.ToArray() :
+                new int[] { ModContent.NPCType<LostSoulNPC>() }) : default);
+            if (Personality != PersonalityState.Calm)
+            {
+                if (NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+                {
+                    SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                    globalNPC.attacker = player;
+                    moveTo = NPC.FindGround(20);
+                    AITimer = 0;
+                    AIState = ActionState.Alert;
+                }
+                if (!HasEyes && Personality == PersonalityState.Aggressive && Main.rand.NextBool(500))
+                {
+                    if (NPC.Sight(Main.npc[GetNearestNPC(NPCLists.HasLostSoul.ToArray())], VisionRange, false, false))
+                    {
+                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                        globalNPC.attacker = Main.npc[GetNearestNPC(NPCLists.HasLostSoul.ToArray())];
+                        moveTo = NPC.FindGround(20);
+                        AITimer = 0;
+                        AIState = ActionState.Alert;
+                    }
+                    return;
+                }
+                if (NPC.Sight(Main.npc[GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default)], VisionRange, HasEyes, HasEyes))
+                {
+                    SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                    globalNPC.attacker = Main.npc[GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default)];
+                    moveTo = NPC.FindGround(20);
+                    AITimer = 0;
+                    AIState = ActionState.Alert;
+                }
+            }
+        }
         public void ChoosePersonality()
         {
             WeightedRandom<PersonalityState> choice = new();
@@ -339,7 +344,7 @@ namespace Redemption.NPCs.PreHM
             choice.Add(PersonalityState.Aggressive, 8);
             choice.Add(PersonalityState.Soulful, 2);
             choice.Add(PersonalityState.Greedy, 1);
-            
+
             Personality = choice;
             if (Main.rand.NextBool(3) || Personality == PersonalityState.Soulful)
                 HasEyes = true;
