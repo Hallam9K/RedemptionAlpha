@@ -241,7 +241,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown--;
 
                     if (Personality != PersonalityState.Greedy)
-                        NPC.DamageHostileAttackers(0, 4, new() { ModContent.NPCType<LostSoulNPC>() });
+                        NPC.DamageHostileAttackers(0, 4, HasEyes ? default : new() { ModContent.NPCType<LostSoulNPC>() });
 
                     if (Personality == PersonalityState.Greedy && Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                     {
@@ -319,7 +319,7 @@ namespace Redemption.NPCs.PreHM
                 if (!target.active)
                     continue;
 
-                if (target.whoAmI == NPC.whoAmI || (target.type != ModContent.NPCType<LostSoulNPC>() && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))))
+                if (target.whoAmI == NPC.whoAmI || ((HasEyes || target.type != ModContent.NPCType<LostSoulNPC>()) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))))
                     continue;
 
                 if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
