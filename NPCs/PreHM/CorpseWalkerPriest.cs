@@ -92,6 +92,8 @@ namespace Redemption.NPCs.PreHM
             NPC.value = 150;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CorpseWalkerPriestBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {

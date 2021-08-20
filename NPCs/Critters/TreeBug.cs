@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -56,6 +57,8 @@ namespace Redemption.NPCs.Critters
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
             NPC.catchItem = (short)ModContent.ItemType<TreeBugItem>();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<TreeBugBanner>();
         }
 
         public NPC npcTarget;
