@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Projectiles.Hostile;
+using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -35,6 +38,15 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[Type] = 11;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    ModContent.BuffType<InfestedDebuff>(),
+                    BuffID.Bleeding,
+                    BuffID.Poisoned
+                }
+            });
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
@@ -72,7 +84,7 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
             RegenCheck();
 
-            if (AITimer % 10 == 0)
+            if (AITimer % 30 == 0)
             {
                 Point grass = new Vector2(NPC.Center.X, NPC.Bottom.Y - 4).ToTileCoordinates();
                 GrassCheck(grass.X, grass.Y);
@@ -168,7 +180,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30)) / 16, (int)(globalNPC.attacker.Center.Y / 16) - 2);
                         NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<LivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
-                        foreach (NPC target in Main.npc)
+                        foreach (NPC target in Main.npc.Take(Main.maxNPCs))
                         {
                             if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI)
                                 continue;
@@ -360,7 +372,7 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? (Main.raining ? 1.8f : 1f) : 0f;
+            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? (Main.raining ? 0.8f : 0.5f) : 0f;
 
             return baseChance * multiplier;
         }

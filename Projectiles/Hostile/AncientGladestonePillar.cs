@@ -1,6 +1,7 @@
 using Redemption.Dusts.Tiles;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -69,7 +70,7 @@ namespace Redemption.Projectiles.Hostile
 
                 target.velocity.Y = Projectile.velocity.Y * 1.5f;
             }
-            foreach (NPC target in Main.npc)
+            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
             {
                 if (target.knockBackResist <= 0 || Projectile.velocity.Length() == 0 ||
                     !Projectile.Hitbox.Intersects(target.Hitbox))

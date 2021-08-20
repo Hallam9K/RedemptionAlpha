@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -240,7 +241,7 @@ namespace Redemption.NPCs.Critters
         public bool BuryCheck()
         {
             bool spooked = false;
-            foreach (NPC target in Main.npc)
+            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
             {
                 if (!target.active || target.whoAmI == NPC.whoAmI ||
                     target.friendly || target.lifeMax <= 5 || target.type == ModContent.NPCType<DevilsTongue>())

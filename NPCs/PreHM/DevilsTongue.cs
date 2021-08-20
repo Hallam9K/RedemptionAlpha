@@ -4,6 +4,7 @@ using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -88,7 +89,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     break;
             }
-            foreach (NPC possibleTarget in Main.npc)
+            foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
             {
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
                     possibleTarget.lifeMax > 5 || !NPCID.Sets.CountsAsCritter[possibleTarget.type])

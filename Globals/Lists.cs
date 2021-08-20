@@ -217,7 +217,8 @@ namespace Redemption.Globals
         public static List<int> HasLostSoul = new()
         {
             ModContent.NPCType<LostSoulNPC>(),
-            ModContent.NPCType<EpidotrianSkeleton>()
+            ModContent.NPCType<EpidotrianSkeleton>(),
+            ModContent.NPCType<CorpseWalkerPriest>()
         };
 
         public static List<int> IsBunny = new()
@@ -482,10 +483,10 @@ namespace Redemption.Globals
             #region Skeleton
 
             Skeleton.PopulateFromSets(NPCID.Sets.Skeletons);
-            Skeleton.SetMultiple(NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.BoneSerpentHead, NPCID.BoneSerpentBody, NPCID.BoneSerpentTail, NPCID.DarkCaster, NPCID.CursedSkull, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.GiantCursedSkull, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.DungeonGuardian, NPCID.SkeletronHead, NPCID.SkeletronHand, NPCID.PirateGhost, ModContent.NPCType<BoneSpider>(), ModContent.NPCType<EpidotrianSkeleton>());
+            Skeleton.SetMultiple(NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.BoneSerpentHead, NPCID.BoneSerpentBody, NPCID.BoneSerpentTail, NPCID.DarkCaster, NPCID.CursedSkull, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.GiantCursedSkull, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.DungeonGuardian, NPCID.SkeletronHead, NPCID.SkeletronHand, NPCID.PirateGhost, ModContent.NPCType<BoneSpider>(), ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>());
 
             SkeletonHumanoid.PopulateFromSets(NPCID.Sets.Skeletons);
-            SkeletonHumanoid.SetMultiple(NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.DarkCaster, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.PirateGhost, ModContent.NPCType<EpidotrianSkeleton>());
+            SkeletonHumanoid.SetMultiple(NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.DarkCaster, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.PirateGhost, ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>());
 
             #endregion
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
@@ -38,7 +39,7 @@ namespace Redemption.Globals
             }
 
             //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
-            foreach (Terraria.NPC npc in Main.npc)
+            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
             {
                 float distance = (npc.Center - position).Length();
                 if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
@@ -60,7 +61,7 @@ namespace Redemption.Globals
         {
             bool foundTarget = false;
             //this is the meat of the targeting logic, it loops through every NPC to check if it is valid the minimum distance and target selected are updated so that the closest valid NPC is selected
-            foreach (Terraria.NPC candidate in Main.npc)
+            foreach (Terraria.NPC candidate in Main.npc.Take(Main.maxNPCs))
             {
                 float distance = (candidate.Center - position).Length();
                 if (!(distance < maxDistance) || !candidate.active || candidate.type == npc.type ||
@@ -344,7 +345,7 @@ namespace Redemption.Globals
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (Terraria.NPC npc in Main.npc)
+            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
             {
                 if (!npc.active)
                     continue;
@@ -604,23 +605,23 @@ namespace Redemption.Globals
         /// <summary>
         /// Makes the npc flip to the direction of the player. npc.LookAtPlayer();
         /// </summary>
-        public static void LookAtPlayer(this Terraria.NPC npc)
+        public static void LookAtEntity(this Terraria.NPC npc, Entity target)
         {
-            Terraria.Player player = Main.player[npc.target];
-            if (player.Center.X > npc.Center.X)
+            if (target.Center.X > npc.Center.X)
             {
                 npc.spriteDirection = 1;
+                npc.direction = 1;
             }
             else
             {
                 npc.spriteDirection = -1;
+                npc.direction = -1;
             }
         }
 
-        public static void LookAtPlayer(this Projectile projectile)
+        public static void LookAtEntity(this Projectile projectile, Entity target)
         {
-            Terraria.Player player = Main.player[projectile.owner];
-            if (player.Center.X > projectile.Center.X)
+            if (target.Center.X > target.Center.X)
             {
                 projectile.spriteDirection = 1;
             }
@@ -885,20 +886,42 @@ namespace Redemption.Globals
                 npc.velocity.X < moveSpeed &&
                 vector.X > npc.Center.X) //handles movement to the right. Clamps at velMaxX.
             {
-                npc.velocity.X += moveInterval;
-                if (npc.velocity.X > moveSpeed)
+                if (npc.HasBuff(BuffID.Confused))
                 {
-                    npc.velocity.X = moveSpeed;
+                    npc.velocity.X -= moveInterval;
+                    if (npc.velocity.X < -moveSpeed)
+                    {
+                        npc.velocity.X = -moveSpeed;
+                    }
+                }
+                else
+                {
+                    npc.velocity.X += moveInterval;
+                    if (npc.velocity.X > moveSpeed)
+                    {
+                        npc.velocity.X = moveSpeed;
+                    }
                 }
             }
             else if (
                 npc.velocity.X > -moveSpeed &&
                 vector.X < npc.Center.X) //handles movement to the left. Clamps at -velMaxX.
             {
-                npc.velocity.X -= moveInterval;
-                if (npc.velocity.X < -moveSpeed)
+                if (npc.HasBuff(BuffID.Confused))
                 {
-                    npc.velocity.X = -moveSpeed;
+                    npc.velocity.X += moveInterval;
+                    if (npc.velocity.X < moveSpeed)
+                    {
+                        npc.velocity.X = moveSpeed;
+                    }
+                }
+                else
+                {
+                    npc.velocity.X -= moveInterval;
+                    if (npc.velocity.X < -moveSpeed)
+                    {
+                        npc.velocity.X = -moveSpeed;
+                    }
                 }
             }
 
@@ -960,7 +983,7 @@ namespace Redemption.Globals
         {
             if (AlwaysDmgNPC == default)
                 AlwaysDmgNPC = new() { 0 };
-            foreach (Terraria.NPC target in Main.npc)
+            foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
             {
                 if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
                     continue;

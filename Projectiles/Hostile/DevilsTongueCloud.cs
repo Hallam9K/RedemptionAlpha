@@ -1,4 +1,5 @@
 using Redemption.Buffs;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.Hostile
                 target.AddBuff(ModContent.BuffType<DevilScentedDebuff>(), 360);
                 target.AddBuff(BuffID.Confused, 40);
             }
-            foreach (NPC target in Main.npc)
+            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
             {
                 if (!target.active)
                     continue;

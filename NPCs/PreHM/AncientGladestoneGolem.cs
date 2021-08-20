@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
@@ -10,6 +11,7 @@ using Redemption.Tiles.Tiles;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -40,6 +42,15 @@ namespace Redemption.NPCs.PreHM
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 12;
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    ModContent.BuffType<InfestedDebuff>(),
+                    BuffID.Bleeding,
+                    BuffID.Poisoned
+                }
+            });
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {

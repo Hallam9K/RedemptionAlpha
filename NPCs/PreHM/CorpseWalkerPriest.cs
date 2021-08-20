@@ -26,23 +26,23 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class EpidotrianSkeleton : ModNPC
+    public class CorpseWalkerPriest : ModNPC
     {
         public enum PersonalityState
         {
-            Normal, Aggressive, Calm, Greedy, Soulful
+            Normal, Aggressive, Calm
         }
         public enum ActionState
         {
             Begin,
             Idle,
             Wander,
-            Alert
+            Alert,
+            Cast
         }
 
         private bool HasEyes;
-        private int CoinsDropped;
-
+        private bool Healing;
         public ActionState AIState
         {
             get => (ActionState)NPC.ai[0];
@@ -61,7 +61,8 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 13;
+            DisplayName.SetDefault("Corpse-Walker Priest");
+            Main.npcFrameCount[NPC.type] = 15;
             NPCID.Sets.Skeletons[NPC.type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -80,15 +81,15 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetDefaults()
         {
-            NPC.width = 24;
-            NPC.height = 48;
-            NPC.damage = 18;
+            NPC.width = 26;
+            NPC.height = 54;
+            NPC.damage = 22;
             NPC.friendly = false;
-            NPC.defense = 7;
-            NPC.lifeMax = 54;
+            NPC.defense = 8;
+            NPC.lifeMax = 60;
             NPC.HitSound = SoundID.DD2_SkeletonHurt;
             NPC.DeathSound = SoundID.DD2_SkeletonDeath;
-            NPC.value = 95;
+            NPC.value = 150;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
         }
@@ -96,39 +97,13 @@ namespace Redemption.NPCs.PreHM
         {
             if (NPC.life <= 0)
             {
-                string SkeleType = Personality == PersonalityState.Greedy ? "Greedy" : "Epidotrian";
-
-                if (Personality == PersonalityState.Soulful)
-                {
-                    for (int i = 0; i < 20; i++)
-                    {
-                        int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
-                            NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
-                        Main.dust[dust].velocity *= 5f;
-                        Main.dust[dust].noGravity = true;
-                    }
-                }
-
                 for (int i = 0; i < 10; i++)
-                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, Personality == PersonalityState.Greedy ? DustID.GoldCoin : DustID.Bone,
-                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, Color.SandyBrown);
 
-                for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore" + (i + 1)).Type, 1);
-
-                if (Personality == PersonalityState.Greedy)
-                {
-                    for (int i = 0; i < 8; i++)
-                        Gore.NewGore(NPC.position, RedeHelper.Spread(2), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
-                }
+                for (int i = 0; i < 6; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore" + (i + 1)).Type, 1);
             }
-            if (Personality == PersonalityState.Greedy && CoinsDropped < 10 && Main.rand.NextBool(3))
-            {
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
-                CoinsDropped++;
-            }
-            Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, Personality == PersonalityState.Greedy ? DustID.GoldCoin : DustID.Bone,
-                NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+            Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, Color.SandyBrown);
 
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
@@ -148,7 +123,6 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             NPC.TargetClosest();
-            NPC.LookByVelocity();
 
             switch (AIState)
             {
@@ -161,6 +135,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Idle:
+                    NPC.LookByVelocity();
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
                     AITimer++;
@@ -176,6 +151,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Wander:
+                    NPC.LookByVelocity();
                     SightCheck();
 
                     AITimer++;
@@ -194,10 +170,12 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Alert:
+                    NPC.LookByVelocity();
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                        Healing = false;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
@@ -205,41 +183,90 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    if (Personality != PersonalityState.Greedy)
-                        NPC.DamageHostileAttackers(0, 4, HasEyes ? default : NPCLists.HasLostSoul);
-
-                    if (Personality == PersonalityState.Greedy && Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
+                    if (NPC.velocity.Y == 0 && (NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100 || Main.rand.NextBool(300)))
                     {
-                        SoundEngine.PlaySound(SoundID.CoinPickup, (int)NPC.position.X, (int)NPC.position.Y, 1, 0.3f);
-                        Gore.NewGore(NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
+                        if (AttackerIsUndead() && (globalNPC.attacker as NPC).life < (globalNPC.attacker as NPC).lifeMax)
+                            Healing = true;
+
+                        AITimer = 0;
+                        AIState = ActionState.Cast;
                     }
+
                     jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, Personality == PersonalityState.Greedy ? new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
-                        : NPC.Center.X - 100, NPC.Center.Y) : globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, NPC.life < NPC.lifeMax / 3 && !AttackerIsUndead() ?
+                        new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y) : globalNPC.attacker.Center,
+                        0.2f, 2.2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
-            }
-            if (Personality != PersonalityState.Greedy)
-                return;
 
-            int sparkle = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height,
-                DustID.GoldCoin, 0, 0, 20);
-            Main.dust[sparkle].velocity *= 0;
-            Main.dust[sparkle].noGravity = true;
+                case ActionState.Cast:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    {
+                        runCooldown = 0;
+                        AIState = ActionState.Wander;
+                        Healing = false;
+                    }
+                    if (Healing && globalNPC.attacker is NPC && (globalNPC.attacker as NPC).life >= (globalNPC.attacker as NPC).lifeMax)
+                    {
+                        runCooldown = 0;
+                        AIState = ActionState.Wander;
+                        Healing = false;
+                    }
+
+                    NPC.LookAtEntity(globalNPC.attacker);
+                    NPC.velocity *= 0;
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int dustIndex = Dust.NewDust(NPC.BottomLeft, NPC.width, 1, DustID.GoldFlame, 0f, 0f, 100, default, 1);
+                        Main.dust[dustIndex].velocity.Y -= 3f;
+                        Main.dust[dustIndex].velocity.X *= 0f;
+                        Main.dust[dustIndex].noGravity = true;
+                    }
+
+                    AITimer++;
+
+                    if (AITimer >= 60 && AITimer % (HasEyes ? 5 : 6) == 0)
+                    {
+                        Flare = true;
+                        FlareTimer = 0;
+                        NPC.Shoot(new Vector2(NPC.Center.X + (22 * NPC.spriteDirection), NPC.Center.Y), ModContent.ProjectileType<CorpseWalkerBolt>(), NPC.damage,
+                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), false, SoundID.Item125, "", NPC.whoAmI, globalNPC.attacker is NPC ? globalNPC.attacker.whoAmI : -1);
+                    }
+                    if (AITimer >= 76)
+                    {
+                        AIState = ActionState.Alert;
+                    }
+                    break;
+            }
         }
+        private bool Flare;
+        private float FlareTimer;
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = Personality switch
+            if (Flare)
             {
-                PersonalityState.Soulful => NPC.frame.Width,
-                PersonalityState.Greedy => NPC.frame.Width * 2,
-                _ => 0,
-            };
-
+                FlareTimer += 2;
+                if (FlareTimer > 60)
+                {
+                    Flare = false;
+                    FlareTimer = 0;
+                }
+            }
+            if (AIState is ActionState.Cast)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter < 10)
+                    NPC.frame.Y = 13 * frameHeight;
+                else if (NPC.frameCounter < 20)
+                    NPC.frame.Y = 14 * frameHeight;
+                else
+                    NPC.frameCounter = 0;
+                return;
+            }
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
@@ -274,7 +301,7 @@ namespace Redemption.NPCs.PreHM
                 NPC.frame.Y = 4 * frameHeight;
             }
         }
-        public int GetNearestNPC(int[] WhitelistNPC = default)
+        public int GetNearestNPC(int[] WhitelistNPC = default, bool nearestUndead = false)
         {
             if (WhitelistNPC == null)
                 WhitelistNPC = new int[] { NPCID.TargetDummy };
@@ -287,7 +314,10 @@ namespace Redemption.NPCs.PreHM
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
-                if (!WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))
+                if (nearestUndead && ((!NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type)) || target.life >= target.lifeMax))
+                    continue;
+
+                if (!nearestUndead && !WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))
                     continue;
 
                 if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
@@ -303,10 +333,16 @@ namespace Redemption.NPCs.PreHM
         {
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            int gotNPC = GetNearestNPC(!HasEyes ? (Personality == PersonalityState.Aggressive ? NPCLists.HasLostSoul.ToArray() :
-                new int[] { ModContent.NPCType<LostSoulNPC>() }) : default);
+            int gotNPC = GetNearestNPC(nearestUndead: true);
+            if (gotNPC != -1 && Main.rand.NextBool(300) && NPC.velocity.Y == 0 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+            {
+                globalNPC.attacker = Main.npc[gotNPC];
+                AITimer = 0;
+                AIState = ActionState.Alert;
+            }
             if (Personality != PersonalityState.Calm)
             {
+                gotNPC = GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default);
                 if (NPC.Sight(player, VisionRange, HasEyes, HasEyes))
                 {
                     SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
@@ -315,19 +351,6 @@ namespace Redemption.NPCs.PreHM
                     AITimer = 0;
                     AIState = ActionState.Alert;
                 }
-                if (!HasEyes && Personality == PersonalityState.Aggressive && Main.rand.NextBool(1800))
-                {
-                    if (NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
-                    {
-                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
-                        globalNPC.attacker = Main.npc[gotNPC];
-                        moveTo = NPC.FindGround(20);
-                        AITimer = 0;
-                        AIState = ActionState.Alert;
-                    }
-                    return;
-                }
-                gotNPC = GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default);
                 if (NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
                 {
                     SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
@@ -338,17 +361,23 @@ namespace Redemption.NPCs.PreHM
                 }
             }
         }
+        public bool AttackerIsUndead()
+        {
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            if (globalNPC.attacker is NPC && (NPCTags.Undead.Has((globalNPC.attacker as NPC).type) || NPCTags.Skeleton.Has((globalNPC.attacker as NPC).type)))
+                return true;
+
+            return false;
+        }
         public void ChoosePersonality()
         {
             WeightedRandom<PersonalityState> choice = new();
             choice.Add(PersonalityState.Normal, 10);
-            choice.Add(PersonalityState.Calm, 8);
-            choice.Add(PersonalityState.Aggressive, 8);
-            choice.Add(PersonalityState.Soulful, 2);
-            choice.Add(PersonalityState.Greedy, 1);
+            choice.Add(PersonalityState.Calm, 9);
+            choice.Add(PersonalityState.Aggressive, 6);
 
             Personality = choice;
-            if (Main.rand.NextBool(3) || Personality == PersonalityState.Soulful)
+            if (Main.rand.NextBool(3))
                 HasEyes = true;
         }
         public void SetStats()
@@ -368,23 +397,6 @@ namespace Redemption.NPCs.PreHM
                     NPC.value = (int)(NPC.value * 1.25f);
                     VisionIncrease = 100;
                     SpeedMultiplier = 1.1f;
-                    break;
-                case PersonalityState.Soulful:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.4f);
-                    NPC.life = (int)(NPC.life * 1.4f);
-                    NPC.defense = (int)(NPC.defense * 1.15f);
-                    NPC.damage = (int)(NPC.damage * 1.25f);
-                    NPC.value *= 2;
-                    VisionIncrease = 300;
-                    SpeedMultiplier = 1.3f;
-                    break;
-                case PersonalityState.Greedy:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.2f);
-                    NPC.life = (int)(NPC.life * 1.2f);
-                    NPC.defense = (int)(NPC.defense * 1.25f);
-                    NPC.damage = (int)(NPC.damage * 0.6f);
-                    NPC.value = 4;
-                    SpeedMultiplier = 1.8f;
                     break;
             }
             if (HasEyes)
@@ -411,40 +423,51 @@ namespace Redemption.NPCs.PreHM
 
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert && Personality != PersonalityState.Greedy;
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert && Personality != PersonalityState.Greedy;
+        private float Opacity { get => FlareTimer; set => FlareTimer = value; }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Rectangle rect = new(0, 0, flare.Width, flare.Height);
+            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
+            Vector2 position = NPC.Center - screenPos + new Vector2(22 * NPC.spriteDirection, 0);
+            Color colour = Color.Lerp(Color.White, Color.Yellow, 1f / Opacity * 10f) * (1f / Opacity * 10f);
+            if (Flare)
+            {
+                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+            }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+        }
+        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {
             if (HasEyes)
-            {
-                if (Personality == PersonalityState.Soulful)
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.2f));
-                else
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
-            }
-            else if (Main.rand.NextBool(3))
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
-            if (Personality == PersonalityState.Greedy)
-            {
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
-            }
+                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
+            else if (Main.rand.NextBool(2))
+                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 1, 4));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ItemID.BoneSword, 204));
-            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert,
 
                 new FlavorTextBestiaryInfoElement(
-                    "These skeletons are from Epidotra's mainland, they are slightly taller and smarter than the Terrarian ones. Their strength is dependent on their soul, which is also known as Willpower.")
+                    "Dried up skeletons that take the role of a cleric, they shoot golden sparks that can heal other undead... And damage humans.")
             });
         }
     }

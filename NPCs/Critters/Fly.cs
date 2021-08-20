@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs;
@@ -133,7 +134,7 @@ namespace Redemption.NPCs.Critters
                         if (player.GetModPlayer<BuffPlayer>().devilScented)
                             Aggressive = 1;
                         float nearestNPCDist = -1;
-                        foreach (NPC possibleTarget in Main.npc)
+                        foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
                         {
                             if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                                 continue;
@@ -208,7 +209,7 @@ namespace Redemption.NPCs.Critters
 
         public void CheckNPCHit()
         {
-            foreach (NPC possibleTarget in Main.npc)
+            foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
             {
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                     continue;

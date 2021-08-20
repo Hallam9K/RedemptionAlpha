@@ -4,6 +4,7 @@ using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -111,7 +112,7 @@ namespace Redemption.NPCs.Critters
 
                 case (float) ActionState.Hop:
                     hitCooldown--;
-                    foreach (NPC possibleTarget in Main.npc)
+                    foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
                     {
                         if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
                             !NPCTags.Undead.Has(possibleTarget.type) &&
@@ -150,7 +151,7 @@ namespace Redemption.NPCs.Critters
                 AIState = (float) ActionState.Hop;
             }
 
-            foreach (NPC possibleTarget in Main.npc)
+            foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
             {
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
                     !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
