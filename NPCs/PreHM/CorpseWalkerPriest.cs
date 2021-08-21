@@ -72,10 +72,7 @@ namespace Redemption.NPCs.PreHM
                 }
             });
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                Velocity = 1f
-            };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

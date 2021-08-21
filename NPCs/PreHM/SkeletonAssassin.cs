@@ -74,10 +74,7 @@ namespace Redemption.NPCs.PreHM
                 }
             });
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                Velocity = 1f
-            };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -85,7 +82,7 @@ namespace Redemption.NPCs.PreHM
         {
             NPC.width = 24;
             NPC.height = 50;
-            NPC.damage = 25;
+            NPC.damage = 23;
             NPC.friendly = false;
             NPC.defense = 8;
             NPC.lifeMax = 58;
@@ -154,7 +151,7 @@ namespace Redemption.NPCs.PreHM
             if (AIState != ActionState.Stab)
                 NPC.LookByVelocity();
             Rectangle KnifeHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 46 : NPC.Center.X + 10), (int)(NPC.Center.Y - 12), 36, 18);
-
+            
             if (AIState is ActionState.Hiding or ActionState.Stalk)
             {
                 if (NPC.alpha < 240)
@@ -244,7 +241,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Hiding;
                     }
 
-                    if (globalNPC.attacker.direction == NPC.direction * -1 && NPC.Sight(globalNPC.attacker, 200, true, true))
+                    if (HasEyes && globalNPC.attacker.direction == NPC.direction * -1 && NPC.Sight(globalNPC.attacker, 200, true, true))
                     {
                         SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 2);
                         runCooldown = 0;
@@ -331,7 +328,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
                         {
-                            (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 30;
+                            (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 20;
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
                             BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
                         }
