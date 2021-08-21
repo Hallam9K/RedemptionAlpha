@@ -11,8 +11,14 @@ namespace Redemption.Globals.NPC
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
         public bool decapitated;
+        public bool invisible;
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
+
+        public override void ResetEffects(Terraria.NPC npc)
+        {
+            invisible = false;
+        }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             #region Elemental Attributes

@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Critters
 {
     public class GrandLarva : ModNPC
     {
-        private enum ActionState
+        public enum ActionState
         {
             Begin,
             Idle,
@@ -23,7 +23,11 @@ namespace Redemption.NPCs.Critters
             Hop
         }
 
-        public ref float AIState => ref NPC.ai[0];
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
 
         public ref float AITimer => ref NPC.ai[1];
 
@@ -54,10 +58,10 @@ namespace Redemption.NPCs.Critters
             NPC.value = 0;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
-            NPC.catchItem = (short) ModContent.ItemType<GrandLarvaBait>();
+            NPC.catchItem = (short)ModContent.ItemType<GrandLarvaBait>();
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == (float) ActionState.Hop;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Hop;
 
         public Vector2 moveTo;
         public int hopCooldown;
@@ -74,12 +78,12 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case (float) ActionState.Begin:
+                case ActionState.Begin:
                     TimerRand = Main.rand.Next(80, 180);
-                    AIState = (float) ActionState.Idle;
+                    AIState = ActionState.Idle;
                     break;
 
-                case (float) ActionState.Idle:
+                case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
 
@@ -90,13 +94,13 @@ namespace Redemption.NPCs.Critters
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float) ActionState.Wander;
+                        AIState = ActionState.Wander;
                     }
 
                     HopCheck();
                     break;
 
-                case (float) ActionState.Wander:
+                case ActionState.Wander:
                     HopCheck();
                     AITimer++;
 
@@ -104,13 +108,13 @@ namespace Redemption.NPCs.Critters
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 180);
-                        AIState = (float) ActionState.Idle;
+                        AIState = ActionState.Idle;
                     }
 
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 2, 2, false);
                     break;
 
-                case (float) ActionState.Hop:
+                case ActionState.Hop:
                     hitCooldown--;
                     foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
                     {
@@ -133,7 +137,7 @@ namespace Redemption.NPCs.Critters
                         moveTo = NPC.FindGround(15);
                         hopCooldown = 60;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float) ActionState.Wander;
+                        AIState = ActionState.Wander;
                     }
 
                     break;
@@ -148,7 +152,7 @@ namespace Redemption.NPCs.Critters
             {
                 NPC.velocity.X += player.Center.X < NPC.Center.X ? -5f : 5f;
                 NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
-                AIState = (float) ActionState.Hop;
+                AIState = ActionState.Hop;
             }
 
             foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
@@ -162,7 +166,7 @@ namespace Redemption.NPCs.Critters
                 {
                     NPC.velocity.X += possibleTarget.Center.X < NPC.Center.X ? -5f : 5f;
                     NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
-                    AIState = (float) ActionState.Hop;
+                    AIState = ActionState.Hop;
                 }
             }
         }
@@ -171,7 +175,7 @@ namespace Redemption.NPCs.Critters
         {
             switch (AIState)
             {
-                case (float) ActionState.Begin:
+                case ActionState.Begin:
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
 
                     if (NPC.frameCounter is >= 3 or <= -3)
@@ -186,14 +190,14 @@ namespace Redemption.NPCs.Critters
 
                     break;
 
-                case (float) ActionState.Idle:
+                case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.frame.Y = 0;
                     else
                         NPC.frame.Y = 4 * frameHeight;
                     break;
 
-                case (float) ActionState.Wander:
+                case ActionState.Wander:
                     if (NPC.collideY || NPC.velocity.Y == 0)
                     {
                         NPC.frameCounter += NPC.velocity.X * 0.5f;
@@ -212,13 +216,13 @@ namespace Redemption.NPCs.Critters
 
                     break;
 
-                case (float) ActionState.Hop:
+                case ActionState.Hop:
                     NPC.frame.Y = 5 * frameHeight;
                     break;
             }
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        { 
+        {
             float cave = SpawnCondition.Cavern.Chance * 0.1f;
             float desert = SpawnCondition.OverworldDayDesert.Chance * 0.2f;
             float desertUG = SpawnCondition.DesertCave.Chance * 0.2f;
@@ -240,7 +244,7 @@ namespace Redemption.NPCs.Critters
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                RedeHelper.SpawnNPC((int) NPC.Center.X, (int) NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
+                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
         public override bool? CanHitNPC(NPC target) => target.lifeMax > 5;
@@ -256,12 +260,12 @@ namespace Redemption.NPCs.Critters
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (AIState == (float) ActionState.Idle)
+            if (AIState == ActionState.Idle)
             {
                 moveTo = NPC.FindGround(10);
                 AITimer = 0;
                 TimerRand = Main.rand.Next(120, 260);
-                AIState = (float) ActionState.Wander;
+                AIState = ActionState.Wander;
             }
 
             if (NPC.life <= 0)

@@ -20,7 +20,7 @@ namespace Redemption.Tiles.Banners
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 111;
             TileObjectData.addTile(Type);
-            AddMapEntry(Color.ForestGreen);
+            AddMapEntry(Color.SandyBrown);
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

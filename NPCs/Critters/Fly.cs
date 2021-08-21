@@ -18,14 +18,18 @@ namespace Redemption.NPCs.Critters
 {
     public class Fly : ModNPC
     {
-        private enum ActionState
+        public enum ActionState
         {
             Begin,
             Flying,
             Landed
         }
 
-        public ref float AIState => ref NPC.ai[0];
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
 
         public ref float AITimer => ref NPC.ai[1];
 
@@ -89,16 +93,16 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case (float)ActionState.Begin:
+                case ActionState.Begin:
                     if (Aggressive == 1)
                         NPC.scale = 1.2f;
 
                     TimerRand = Main.rand.Next(240, 600);
-                    AIState = (float)ActionState.Flying;
+                    AIState = ActionState.Flying;
                     NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                     break;
 
-                case (float)ActionState.Flying:
+                case ActionState.Flying:
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
 
@@ -158,12 +162,12 @@ namespace Redemption.NPCs.Critters
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 320);
-                        AIState = (float)ActionState.Landed;
+                        AIState = ActionState.Landed;
                     }
 
                     break;
 
-                case (float)ActionState.Landed:
+                case ActionState.Landed:
                     AITimer++;
                     NPC.rotation = 0;
                     NPC.noGravity = false;
@@ -182,16 +186,16 @@ namespace Redemption.NPCs.Critters
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
-                        AIState = (float)ActionState.Flying;
+                        AIState = ActionState.Flying;
                     }
 
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.lifeMax > 5)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.lifeMax > 5 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
-                        AIState = (float)ActionState.Flying;
+                        AIState = ActionState.Flying;
                     }
 
                     if (NPC.DistanceSQ(player.Center) <= 100 * 100)
@@ -200,7 +204,7 @@ namespace Redemption.NPCs.Critters
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
-                        AIState = (float)ActionState.Flying;
+                        AIState = ActionState.Flying;
                     }
 
                     break;
@@ -229,7 +233,7 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
-            if (AIState == (float)ActionState.Landed && NPC.velocity.Y == 0)
+            if (AIState == ActionState.Landed && NPC.velocity.Y == 0)
                 NPC.frame.Y = 0;
             else
             {

@@ -783,10 +783,14 @@ namespace Redemption.Globals
         /// <param name="range">Sets how close the player would need to be before the Sight is true.</param>
         /// <param name="lineOfSight">Sets if Sight can be blocked by the player standing behind tiles.</param>
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
-            bool lineOfSight = false)
+            bool lineOfSight = false, bool canSeeHiding = false)
         {
             if (codable == null)
                 return false;
+
+            if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)
+                return false;
+
             if (lineOfSight)
             {
                 if (!Collision.CanHit(npc.position, npc.width, npc.height, codable.position, codable.width,

@@ -23,7 +23,7 @@ namespace Redemption.NPCs.PreHM
 {
     public class AncientGladestoneGolem : ModNPC
     {
-        private enum ActionState
+        public enum ActionState
         {
             Begin,
             Idle,
@@ -33,7 +33,11 @@ namespace Redemption.NPCs.PreHM
             PillarJump
         }
 
-        public ref float AIState => ref NPC.ai[0];
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
 
         public ref float AITimer => ref NPC.ai[1];
 
@@ -86,11 +90,11 @@ namespace Redemption.NPCs.PreHM
                     Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AncientGladestoneGolemGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
-            if (AIState is (float)ActionState.Idle or (float)ActionState.Wander)
+            if (AIState is ActionState.Idle or ActionState.Wander)
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
                 AITimer = 0;
-                AIState = (float)ActionState.Threatened;
+                AIState = ActionState.Threatened;
             }
         }
 
@@ -108,10 +112,10 @@ namespace Redemption.NPCs.PreHM
             {
                 case (float)ActionState.Begin:
                     TimerRand = Main.rand.Next(120, 280);
-                    AIState = (float)ActionState.Idle;
+                    AIState = ActionState.Idle;
                     break;
 
-                case (float)ActionState.Idle:
+                case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
                     AITimer++;
@@ -120,7 +124,7 @@ namespace Redemption.NPCs.PreHM
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
                     }
 
                     if (NPC.Sight(player, 800, true, true))
@@ -129,24 +133,24 @@ namespace Redemption.NPCs.PreHM
                         globalNPC.attacker = player;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
-                        AIState = (float)ActionState.Threatened;
+                        AIState = ActionState.Threatened;
                     }
                     if (NPC.lavaWet && Main.rand.NextBool(250) && NPC.velocity.Y == 0)
                     {
                         AITimer = 0;
                         NPC.frame.Y = 0;
-                        AIState = (float)ActionState.PillarJump;
+                        AIState = ActionState.PillarJump;
                     }
                     break;
 
-                case (float)ActionState.Wander:
+                case ActionState.Wander:
                     if (NPC.Sight(player, 800, true, true))
                     {
                         SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
                         globalNPC.attacker = player;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
-                        AIState = (float)ActionState.Threatened;
+                        AIState = ActionState.Threatened;
                     }
 
                     AITimer++;
@@ -154,7 +158,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 280);
-                        AIState = (float)ActionState.Idle;
+                        AIState = ActionState.Idle;
                     }
 
                     bool jumpDownPlatforms = false;
@@ -164,11 +168,11 @@ namespace Redemption.NPCs.PreHM
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > player.Center.Y);
                     break;
 
-                case (float)ActionState.Threatened:
+                case ActionState.Threatened:
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, 800, false, true))
@@ -192,22 +196,22 @@ namespace Redemption.NPCs.PreHM
                         NPC.frame.Y = 0;
 
                         if (NPC.DistanceSQ(globalNPC.attacker.Center) < 300 * 300 && dist < 140 && globalNPC.attacker.active)
-                            AIState = (float)ActionState.PillarAttack;
+                            AIState = ActionState.PillarAttack;
                         else
-                            AIState = (float)ActionState.PillarJump;
+                            AIState = ActionState.PillarJump;
                     }
                     break;
 
-                case (float)ActionState.PillarAttack:
+                case ActionState.PillarAttack:
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
 
                     NPC.velocity.X = 0;
                     break;
 
-                case (float)ActionState.PillarJump:
+                case ActionState.PillarJump:
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
                     break;
             }
         }
@@ -217,7 +221,7 @@ namespace Redemption.NPCs.PreHM
             NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
             switch (AIState)
             {
-                case (float)ActionState.PillarAttack:
+                case ActionState.PillarAttack:
                     NPC.rotation = NPC.velocity.X * 0.05f;
                     NPC.frame.X = NPC.frame.Width;
                     NPC.frameCounter++;
@@ -233,11 +237,11 @@ namespace Redemption.NPCs.PreHM
                         }
                         if (NPC.frame.Y > 9 * frameHeight)
                         {
-                            AIState = (float)ActionState.Threatened;
+                            AIState = ActionState.Threatened;
                         }
                     }
                     return;
-                case (float)ActionState.PillarJump:
+                case ActionState.PillarJump:
                     NPC.rotation = NPC.velocity.X * 0.05f;
                     NPC.frame.X = NPC.frame.Width;
                     if (NPC.frame.Y < 6 * frameHeight) { NPC.velocity.X = 0; }
@@ -258,7 +262,7 @@ namespace Redemption.NPCs.PreHM
                         }
                         if (NPC.frame.Y > 9 * frameHeight)
                         {
-                            AIState = (float)ActionState.Threatened;
+                            AIState = ActionState.Threatened;
                         }
                     }
                     return;

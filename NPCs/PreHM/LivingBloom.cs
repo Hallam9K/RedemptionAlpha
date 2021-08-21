@@ -19,7 +19,7 @@ namespace Redemption.NPCs.PreHM
 {
     public class LivingBloom : ModNPC
     {
-        private enum ActionState
+        public enum ActionState
         {
             Begin,
             Idle,
@@ -28,7 +28,11 @@ namespace Redemption.NPCs.PreHM
             RootAttack
         }
 
-        public ref float AIState => ref NPC.ai[0];
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
 
         public ref float AITimer => ref NPC.ai[1];
 
@@ -92,12 +96,12 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case (float)ActionState.Begin:
+                case ActionState.Begin:
                     TimerRand = Main.rand.Next(80, 180);
-                    AIState = (float)ActionState.Idle;
+                    AIState = ActionState.Idle;
                     break;
 
-                case (float)ActionState.Idle:
+                case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
                     AITimer++;
@@ -106,27 +110,27 @@ namespace Redemption.NPCs.PreHM
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
                     }
 
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
                     {
                         globalNPC.attacker = npcTarget;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float)ActionState.Threatened;
+                        AIState = ActionState.Threatened;
                     }
                     break;
 
-                case (float)ActionState.Wander:
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0)
+                case ActionState.Wander:
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
                     {
                         globalNPC.attacker = npcTarget;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float)ActionState.Threatened;
+                        AIState = ActionState.Threatened;
                     }
 
                     AITimer++;
@@ -134,17 +138,17 @@ namespace Redemption.NPCs.PreHM
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = (float)ActionState.Idle;
+                        AIState = ActionState.Idle;
                     }
 
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 6, 4, false);
                     break;
 
-                case (float)ActionState.Threatened:
+                case ActionState.Threatened:
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, -1, false, true))
@@ -158,12 +162,12 @@ namespace Redemption.NPCs.PreHM
                     if (Main.rand.NextBool(200) && NPC.velocity.Y == 0)
                     {
                         AITimer = 0;
-                        AIState = (float)ActionState.RootAttack;
+                        AIState = ActionState.RootAttack;
                     }
                     break;
-                case (float)ActionState.RootAttack:
+                case ActionState.RootAttack:
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
-                        AIState = (float)ActionState.Wander;
+                        AIState = ActionState.Wander;
 
                     for (int i = 0; i < 2; i++)
                     {
@@ -182,7 +186,7 @@ namespace Redemption.NPCs.PreHM
                         NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<LivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         foreach (NPC target in Main.npc.Take(Main.maxNPCs))
                         {
-                            if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI)
+                            if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI || target.GetGlobalNPC<RedeNPC>().invisible)
                                 continue;
 
                             if (target.lifeMax < 5 || target.damage == 0 || NPC.DistanceSQ(target.Center) > 400 * 400 || target.type == NPC.type)
@@ -211,7 +215,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     else if (AITimer >= 80)
                     {
-                        AIState = (float)ActionState.Threatened;
+                        AIState = ActionState.Threatened;
                     }
                     break;
             }
@@ -319,7 +323,7 @@ namespace Redemption.NPCs.PreHM
         {
             switch (AIState)
             {
-                case (float)ActionState.RootAttack:
+                case ActionState.RootAttack:
                     NPC.frame.Y = 7 * frameHeight;
                     return;
             }
@@ -391,11 +395,11 @@ namespace Redemption.NPCs.PreHM
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (AIState is (float)ActionState.Idle or (float)ActionState.Wander)
+            if (AIState is ActionState.Idle or ActionState.Wander)
             {
                 AITimer = 0;
                 TimerRand = Main.rand.Next(120, 260);
-                AIState = (float)ActionState.Threatened;
+                AIState = ActionState.Threatened;
             }
 
             if (NPC.life <= 0)
