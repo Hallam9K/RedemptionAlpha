@@ -457,6 +457,15 @@ namespace Redemption.NPCs.PreHM
             npcLoot.Add(ItemDropRule.Common(ItemID.BoneSword, 204));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            float desert = SpawnCondition.OverworldNightMonster.Chance;
+            float desertCave = SpawnCondition.DesertCave.Chance * 0.04f;
+            float multiplier = spawnInfo.player.ZoneDesert && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Sand ? 0.04f : 0f;
+
+            return Math.Max(desert * multiplier, desertCave);
+        }
+
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
