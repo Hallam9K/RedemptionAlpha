@@ -492,7 +492,8 @@ namespace Redemption.NPCs.PreHM
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
                 new FlavorTextBestiaryInfoElement(
                     "A strong skeleton wearing the equipment of Anglon's Common Guard. These are tough brutes that won't be taken down easily.")

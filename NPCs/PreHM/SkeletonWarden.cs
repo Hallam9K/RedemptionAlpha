@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
 using Redemption.Buffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -19,16 +20,16 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class SkeletonFlagbearer : SkeletonBase
+    public class SkeletonWarden : SkeletonBase
     {
         public enum ActionState
         {
             Begin,
             Idle,
             Wander,
-            Retreat,
-            Follow,
-            Dance
+            Block,
+            Slam,
+            Defend
         }
 
         public ActionState AIState
@@ -40,7 +41,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Main.npcFrameCount[NPC.type] = 13;
+            Main.npcFrameCount[NPC.type] = 17;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
@@ -48,16 +49,16 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetDefaults()
         {
-            NPC.width = 30;
-            NPC.height = 46;
-            NPC.damage = 10;
+            NPC.width = 20;
+            NPC.height = 54;
+            NPC.damage = 18;
             NPC.friendly = false;
-            NPC.defense = 9;
-            NPC.lifeMax = 46;
+            NPC.defense = 11;
+            NPC.lifeMax = 60;
             NPC.HitSound = SoundID.DD2_SkeletonHurt;
             NPC.DeathSound = SoundID.DD2_SkeletonDeath;
-            NPC.value = 140;
-            NPC.knockBackResist = 0.5f;
+            NPC.value = 170;
+            NPC.knockBackResist = 0.2f;
             NPC.aiStyle = -1;
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -101,18 +102,43 @@ namespace Redemption.NPCs.PreHM
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
                 AITimer = 0;
-                AIState = ActionState.Retreat;
+                AIState = ActionState.Block;
             }
         }
 
         private Vector2 moveTo;
         private int runCooldown;
+        private NPC defending;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             NPC.TargetClosest();
             NPC.LookByVelocity();
+            Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
+            Rectangle ShieldRaisedHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
+            foreach (Projectile projectile in Main.projectile)
+            {
+                if (!projectile.active || !projectile.friendly || projectile.penetrate == -1 || projectile.damage > 60 || ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
+                    continue;
+
+                if (NPC.frame.Y >= 13 * 64)
+                {
+                    if (projectile.Hitbox.Intersects(ShieldRaisedHitbox))
+                    {
+                        projectile.friendly = false;
+                        projectile.Kill();
+                    }
+                }
+                else
+                {
+                    if (projectile.Hitbox.Intersects(ShieldHitbox))
+                    {
+                        projectile.friendly = false;
+                        projectile.Kill();
+                    }
+                }
+            }
 
             switch (AIState)
             {
@@ -154,51 +180,53 @@ namespace Redemption.NPCs.PreHM
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1 * SpeedMultiplier, 12, 8, NPC.Center.Y > player.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.9f * SpeedMultiplier, 6, 6, NPC.Center.Y > player.Center.Y);
                     break;
 
-                case ActionState.Retreat:
-                    SightCheck();
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                case ActionState.Defend:
+                    if (defending == null || !defending.active || globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
+                        AITimer = 0;
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes) && !NPC.Sight(defending, VisionRange, HasEyes, HasEyes))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.4f, 2.4f * SpeedMultiplier * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
-                    break;
-
-                case ActionState.Follow:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
-                    {
-                        runCooldown = 0;
-                        TimerRand = Main.rand.Next(120, 240);
-                        AIState = ActionState.Wander;
-                    }
-
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
-                        runCooldown++;
-                    else if (runCooldown > 0)
-                        runCooldown--;
-
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 140 * 140)
+                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
                         NPC.LookAtEntity(globalNPC.attacker);
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y = 0;
-                        NPC.velocity *= 0;
-                        AIState = ActionState.Dance;
+                        NPC.velocity.Y = -2;
+                        NPC.velocity.X = 5 * NPC.spriteDirection;
+                        AITimer = 20;
                     }
+                    if (AITimer > 0)
+                    {
+                        AITimer--;
+                        if ((NPC.frame.Y >= 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldRaisedHitbox)) ||
+                            (NPC.frame.Y < 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldHitbox)))
+                        {
+                            if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                            {
+                                (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 25;
+                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 11, hitDirection, NPC);
+                            }
+                            else if (globalNPC.attacker is Player)
+                            {
+                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 11, hitDirection, NPC);
+                            }
+                        }
+                    }
+
+                    moveTo = defending.Center + new Vector2((defending.width + 40) * defending.spriteDirection, 0);
+                    if (NPC.Center.X + 20 > moveTo.X && NPC.Center.X - 20 < moveTo.X)
+                        AIState = ActionState.Block;
 
                     if (Personality == PersonalityState.Greedy && Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                     {
@@ -209,12 +237,13 @@ namespace Redemption.NPCs.PreHM
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.4f * SpeedMultiplier * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, moveTo, 0.2f,
+                        2.4f * SpeedMultiplier * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
 
-                case ActionState.Dance:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || !AttackerIsUndead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                case ActionState.Block:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
@@ -222,33 +251,57 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    NPC.LookAtEntity(globalNPC.attacker);
+                    SightCheck();
 
-                    NPC.velocity *= 0;
+                    if (NPC.velocity.Y < 0 && AITimer == 0)
+                        NPC.velocity.Y = 0;
+                    if (NPC.velocity.Y == 0 && AITimer == 0)
+                        NPC.velocity.X = 0;
 
-                    AITimer++;
-                    if (AITimer % 60 == 0)
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes) && !NPC.Sight(defending, VisionRange, false, HasEyes))
+                        runCooldown++;
+                    else if (runCooldown > 0)
+                        runCooldown--;
+
+                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        DustHelper.DrawCircle(NPC.Center, DustID.ViciousPowder, 16, 2, 2, nogravity: true);
-                        foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        NPC.velocity.Y = -2;
+                        NPC.velocity.X = 5 * NPC.spriteDirection;
+                        AITimer = 20;
+                    }
+                    if (AITimer > 0)
+                    {
+                        AITimer--;
+                        if ((NPC.frame.Y >= 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldRaisedHitbox)) ||
+                            (NPC.frame.Y < 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldHitbox)))
                         {
-                            if (!target.active || target.whoAmI == NPC.whoAmI)
-                                continue;
-
-                            if (!NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type))
-                                continue;
-
-                            if (NPC.DistanceSQ(target.Center) > 300 * 300)
-                                continue;
-
-                            target.AddBuff(ModContent.BuffType<FlagbearerBuff>(), 600);
+                            if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                            {
+                                (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 25;
+                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 11, hitDirection, NPC);
+                            }
+                            else if (globalNPC.attacker is Player)
+                            {
+                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 11, hitDirection, NPC);
+                            }
                         }
                     }
 
-                    if (NPC.DistanceSQ(globalNPC.attacker.Center) >= 300 * 300)
+                    if (defending == null)
                     {
-                        NPC.frameCounter = 0;
-                        AIState = ActionState.Follow;
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        break;
+                    }
+
+                    if (defending.active)
+                        NPC.LookAtEntity(defending, true);
+
+                    if (defending.active && (defending.velocity.X != 0 || NPC.DistanceSQ(defending.Center) >= (defending.width + 40) * (defending.width + 40)))
+                    {
+                        AIState = ActionState.Defend;
                     }
                     break;
             }
@@ -262,21 +315,28 @@ namespace Redemption.NPCs.PreHM
         }
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 6;
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+
+            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
             NPC.frame.X = Personality switch
             {
-                PersonalityState.Soulful => NPC.frame.Width * (AIState is ActionState.Dance ? 3 : 2),
-                PersonalityState.Greedy => NPC.frame.Width * (AIState is ActionState.Dance ? 5 : 4),
-                _ => AIState is ActionState.Dance ? NPC.frame.Width : 0,
+                PersonalityState.Soulful => NPC.frame.Width * 1,
+                PersonalityState.Greedy => NPC.frame.Width * 2,
+                _ => 0,
             };
-            if (AIState is ActionState.Dance)
+            if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 &&
+                globalNPC.attacker.Center.X < NPC.Center.X + 100)
             {
-                if (++NPC.frameCounter >= 6)
+                NPC.rotation = 0;
+
+                if (NPC.frame.Y < 13 * frameHeight)
+                    NPC.frame.Y = 13 * frameHeight;
+                if (++NPC.frameCounter >= 10)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 7 * frameHeight)
-                        NPC.frame.Y = 0 * frameHeight;
+                    if (NPC.frame.Y > 16 * frameHeight)
+                        NPC.frame.Y = 13 * frameHeight;
                 }
                 return;
             }
@@ -325,7 +385,7 @@ namespace Redemption.NPCs.PreHM
 
             foreach (NPC target in Main.npc.Take(Main.maxNPCs))
             {
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<SkeletonFlagbearer>() || target.dontTakeDamage || target.type == NPCID.OldMan)
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<SkeletonWarden>() || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
                 if (nearestUndead && !NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type))
@@ -348,32 +408,32 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Retreat && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+            if (AIState != ActionState.Block && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
-                AIState = ActionState.Retreat;
+                AIState = ActionState.Block;
             }
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+            if (defending == null && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
             {
-                globalNPC.attacker = Main.npc[gotNPC];
+                defending = Main.npc[gotNPC];
                 AITimer = 0;
-                AIState = ActionState.Follow;
+                AIState = ActionState.Defend;
             }
         }
         public void ChoosePersonality()
         {
             WeightedRandom<PersonalityState> choice = new();
             choice.Add(PersonalityState.Normal, 10);
-            choice.Add(PersonalityState.Calm, 6);
-            choice.Add(PersonalityState.Aggressive, 7);
+            choice.Add(PersonalityState.Calm, 8);
+            choice.Add(PersonalityState.Aggressive, 4);
             choice.Add(PersonalityState.Soulful, 2);
             choice.Add(PersonalityState.Greedy, 1);
 
             Personality = choice;
-            if (Main.rand.NextBool(3) || Personality == PersonalityState.Soulful)
+            if (Personality == PersonalityState.Soulful)
                 HasEyes = true;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -381,10 +441,10 @@ namespace Redemption.NPCs.PreHM
             Texture2D Glow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/" + GetType().Name + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos - new Vector2(0, 33), NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (HasEyes)
-                spriteBatch.Draw(Glow, NPC.Center - screenPos - new Vector2(0, 33), NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             return false;
         }
@@ -395,12 +455,12 @@ namespace Redemption.NPCs.PreHM
             if (HasEyes)
             {
                 if (Personality == PersonalityState.Soulful)
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.4f, 1.2f));
+                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.4f));
                 else
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
             }
-            else if (Main.rand.NextBool(3))
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.2f));
+            else if (Main.rand.NextBool(2))
+                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
             if (Personality == PersonalityState.Greedy)
             {
                 Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
@@ -408,11 +468,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 1, 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 1, 6));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ItemID.BoneSword, 204));
-            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -422,7 +482,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "Every squad needs a guy holding a big flag. This stubby skeleton's dance can rally any undead who lay witness! Non-undead just look at the silly dance with embarrassment...")
+                    "A blindfolded skeleton from Anglon. It defends other undead with its tower shield and slams any attackers that get too close.")
             });
         }
     }

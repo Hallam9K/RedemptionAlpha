@@ -605,17 +605,20 @@ namespace Redemption.Globals
         /// <summary>
         /// Makes the npc flip to the direction of the player. npc.LookAtPlayer();
         /// </summary>
-        public static void LookAtEntity(this Terraria.NPC npc, Entity target)
+        public static void LookAtEntity(this Terraria.NPC npc, Entity target, bool opposite = false)
         {
+            int dir = 1;
+            if (opposite)
+                dir = -1;
             if (target.Center.X > npc.Center.X)
             {
-                npc.spriteDirection = 1;
-                npc.direction = 1;
+                npc.spriteDirection = dir;
+                npc.direction = dir;
             }
             else
             {
-                npc.spriteDirection = -1;
-                npc.direction = -1;
+                npc.spriteDirection = -dir;
+                npc.direction = -dir;
             }
         }
 
