@@ -19,7 +19,7 @@ namespace Redemption.Globals
     public static class RedeHelper
     {
         public static Vector2 PolarVector(float radius, float theta) =>
-            new Vector2((float) Math.Cos(theta), (float) Math.Sin(theta)) * radius;
+            new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
 
         public delegate bool SpecialCondition(Terraria.NPC possibleTarget);
 
@@ -132,7 +132,7 @@ namespace Redemption.Globals
 
                 if (player.magicQuiver && (ammoID == AmmoID.Arrow || ammoID == AmmoID.Stake))
                 {
-                    knockBack = (int) (knockBack * 1.1);
+                    knockBack = (int)(knockBack * 1.1);
                     speed *= 1.1f;
                 }
 
@@ -141,7 +141,7 @@ namespace Redemption.Globals
                 if (item.CountsAsClass(DamageClass.Ranged))
                 {
                     if (item.damage > 0)
-                        damage += (int) (item.damage * player.GetDamage(DamageClass.Ranged));
+                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged));
                 }
                 else
                     damage += item.damage;
@@ -156,7 +156,7 @@ namespace Redemption.Globals
                             speed = 20f;
                     }
 
-                    damage = (int) ((float) damage * 1.2);
+                    damage = (int)((float)damage * 1.2);
                 }
 
                 knockBack += item.knockBack;
@@ -187,9 +187,9 @@ namespace Redemption.Globals
         public static void SlowRotation(this ref float currentRotation, float targetAngle, float speed)
         {
             int f = 1; //this is used to switch rotation direction
-            float actDirection = new Vector2((float) Math.Cos(currentRotation), (float) Math.Sin(currentRotation))
+            float actDirection = new Vector2((float)Math.Cos(currentRotation), (float)Math.Sin(currentRotation))
                 .ToRotation();
-            targetAngle = new Vector2((float) Math.Cos(targetAngle), (float) Math.Sin(targetAngle)).ToRotation();
+            targetAngle = new Vector2((float)Math.Cos(targetAngle), (float)Math.Sin(targetAngle)).ToRotation();
 
             //this makes f 1 or -1 to rotate the shorter distance
             if (Math.Abs(actDirection - targetAngle) > Math.PI)
@@ -214,7 +214,7 @@ namespace Redemption.Globals
                 actDirection -= speed * f;
             }
 
-            actDirection = new Vector2((float) Math.Cos(actDirection), (float) Math.Sin(actDirection)).ToRotation();
+            actDirection = new Vector2((float)Math.Cos(actDirection), (float)Math.Sin(actDirection)).ToRotation();
             currentRotation = actDirection;
         }
 
@@ -224,7 +224,7 @@ namespace Redemption.Globals
             angle2 = PolarVector(1f, angle2).ToRotation();
             if (Math.Abs(angle1 - angle2) > Math.PI)
             {
-                return (float) Math.PI * 2 - Math.Abs(angle1 - angle2);
+                return (float)Math.PI * 2 - Math.Abs(angle1 - angle2);
             }
 
             return Math.Abs(angle1 - angle2);
@@ -233,7 +233,7 @@ namespace Redemption.Globals
         private static float X(float t,
             float x0, float x1, float x2, float x3)
         {
-            return (float) (
+            return (float)(
                 x0 * Math.Pow(1 - t, 3) +
                 x1 * 3 * t * Math.Pow(1 - t, 2) +
                 x2 * 3 * Math.Pow(t, 2) * (1 - t) +
@@ -244,7 +244,7 @@ namespace Redemption.Globals
         private static float Y(float t,
             float y0, float y1, float y2, float y3)
         {
-            return (float) (
+            return (float)(
                 y0 * Math.Pow(1 - t, 3) +
                 y1 * 3 * t * Math.Pow(1 - t, 2) +
                 y2 * 3 * Math.Pow(t, 2) * (1 - t) +
@@ -265,7 +265,7 @@ namespace Redemption.Globals
                                           X(i - chainsPerUse, startingPos.X, c1.X, c2.X, endPoints.X),
                     Y(i, startingPos.Y, c1.Y, c2.Y, endPoints.Y) -
                     Y(i - chainsPerUse, startingPos.Y, c1.Y, c2.Y, endPoints.Y));
-                float projTrueRotation = distBetween.ToRotation() - (float) Math.PI / 2 + rotDis;
+                float projTrueRotation = distBetween.ToRotation() - (float)Math.PI / 2 + rotDis;
                 spriteBatch.Draw(texture,
                     new Vector2(X(i, startingPos.X, c1.X, c2.X, endPoints.X) - Main.screenPosition.X,
                         Y(i, startingPos.Y, c1.Y, c2.Y, endPoints.Y) - Main.screenPosition.Y),
@@ -277,10 +277,10 @@ namespace Redemption.Globals
             //spriteBatch.Draw(mod.GetTexture(glowMaskTexture), new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, Color.White, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
         }
 
-        public static float GradToRad(float grad) => grad * (float) Math.PI / 180.0f;
+        public static float GradToRad(float grad) => grad * (float)Math.PI / 180.0f;
 
         public static Vector2 RandomPosition(Vector2 pos1, Vector2 pos2) =>
-            new(Main.rand.Next((int) pos1.X, (int) pos2.X) + 1, Main.rand.Next((int) pos1.Y, (int) pos2.Y) + 1);
+            new(Main.rand.Next((int)pos1.X, (int)pos2.X) + 1, Main.rand.Next((int)pos1.Y, (int)pos2.Y) + 1);
 
         public static int GetNearestAlivePlayer(this Terraria.NPC npc)
         {
@@ -335,10 +335,10 @@ namespace Redemption.Globals
         public static Vector2 VelocityFptp(Vector2 pos1, Vector2 pos2, float speed)
         {
             Vector2 move = pos2 - pos1;
-            return move * (speed / (float) Math.Sqrt(move.X * move.X + move.Y * move.Y));
+            return move * (speed / (float)Math.Sqrt(move.X * move.X + move.Y * move.Y));
         }
 
-        public static float RadToGrad(float rad) => rad * 180.0f / (float) Math.PI;
+        public static float RadToGrad(float rad) => rad * 180.0f / (float)Math.PI;
 
         public static int GetNearestNPC(Vector2 point, bool friendly = false, bool noBoss = false)
         {
@@ -389,16 +389,16 @@ namespace Redemption.Globals
         public static Vector2 VelocityToPoint(Vector2 a, Vector2 b, float speed)
         {
             Vector2 move = b - a;
-            return move * (speed / (float) Math.Sqrt(move.X * move.X + move.Y * move.Y));
+            return move * (speed / (float)Math.Sqrt(move.X * move.X + move.Y * move.Y));
         }
 
         public static Vector2 RandomPointInArea(Vector2 a, Vector2 b) =>
-            new(Main.rand.Next((int) a.X, (int) b.X) + 1, Main.rand.Next((int) a.Y, (int) b.Y) + 1);
+            new(Main.rand.Next((int)a.X, (int)b.X) + 1, Main.rand.Next((int)a.Y, (int)b.Y) + 1);
 
         public static Vector2 RandomPointInArea(Rectangle area) =>
             new(Main.rand.Next(area.X, area.X + area.Width), Main.rand.Next(area.Y, area.Y + area.Height));
 
-        public static float RotateBetween2Points(Vector2 a, Vector2 b) => (float) Math.Atan2(a.Y - b.Y, a.X - b.X);
+        public static float RotateBetween2Points(Vector2 a, Vector2 b) => (float)Math.Atan2(a.Y - b.Y, a.X - b.X);
 
         public static Vector2 CenterPoint(Vector2 a, Vector2 b) => new((a.X + b.X) / 2.0f, (a.Y + b.Y) / 2.0f);
 
@@ -406,8 +406,8 @@ namespace Redemption.Globals
         {
             Vector2 returnedValue = new()
             {
-                X = distance * (float) Math.Sin(RadToGrad(angle)) + point.X + xOffset,
-                Y = distance * (float) Math.Cos(RadToGrad(angle)) + point.Y + yOffset
+                X = distance * (float)Math.Sin(RadToGrad(angle)) + point.X + xOffset,
+                Y = distance * (float)Math.Cos(RadToGrad(angle)) + point.Y + yOffset
             };
 
             return returnedValue;
@@ -428,7 +428,7 @@ namespace Redemption.Globals
                 counter++;
             }
 
-            return @float + Main.rand.Next(0, (int) distortNumber + 1) / (float) Math.Pow(10, counter) *
+            return @float + Main.rand.Next(0, (int)distortNumber + 1) / (float)Math.Pow(10, counter) *
                 (Main.rand.Next(2) == 0 ? -1 : 1);
         }
 
@@ -438,7 +438,7 @@ namespace Redemption.Globals
             Vector2 fullScreen = tilePos - Main.mapFullscreenPos;
             fullScreen *= Main.mapFullscreenScale / 16;
             fullScreen = fullScreen * 16 + screen;
-            Vector2 draw = new((int) fullScreen.X, (int) fullScreen.Y);
+            Vector2 draw = new((int)fullScreen.X, (int)fullScreen.Y);
             return draw;
         }
 
@@ -473,12 +473,12 @@ namespace Redemption.Globals
         }
 
         public static Vector2 RotateVector(Vector2 origin, Vector2 vecToRot, float rot) =>
-            new((float) (Math.Cos(rot) * (vecToRot.X - (double) origin.X) -
-                         Math.Sin(rot) * (vecToRot.Y - (double) origin.Y)) +
-                origin.X, (float) (Math.Sin(rot) * (vecToRot.X - (double) origin.X) +
-                                   Math.Cos(rot) * (vecToRot.Y - (double) origin.Y)) + origin.Y);
+            new((float)(Math.Cos(rot) * (vecToRot.X - (double)origin.X) -
+                         Math.Sin(rot) * (vecToRot.Y - (double)origin.Y)) +
+                origin.X, (float)(Math.Sin(rot) * (vecToRot.X - (double)origin.X) +
+                                   Math.Cos(rot) * (vecToRot.Y - (double)origin.Y)) + origin.Y);
 
-        public static bool Contains(this Rectangle rect, Vector2 pos) => rect.Contains((int) pos.X, (int) pos.Y);
+        public static bool Contains(this Rectangle rect, Vector2 pos) => rect.Contains((int)pos.X, (int)pos.Y);
 
         public static bool AnyProjectiles(int type)
         {
@@ -547,13 +547,13 @@ namespace Redemption.Globals
             {
                 if (!Main.dedServ)
                 {
-                    SoundEngine.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, soundString), (int) npc.position.X,
-                        (int) npc.position.Y);
+                    SoundEngine.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, soundString), (int)npc.position.X,
+                        (int)npc.position.Y);
                 }
             }
             else
             {
-                SoundEngine.PlaySound(sound, (int) npc.position.X, (int) npc.position.Y);
+                SoundEngine.PlaySound(sound, (int)npc.position.X, (int)npc.position.Y);
             }
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -586,7 +586,7 @@ namespace Redemption.Globals
             Vector2 target)
         {
             Terraria.Player player = Main.player[npc.target];
-            SoundEngine.PlaySound(sound, (int) npc.position.X, (int) npc.position.Y);
+            SoundEngine.PlaySound(sound, (int)npc.position.X, (int)npc.position.Y);
             if (target == Vector2.Zero)
             {
                 target = player.Center;
@@ -774,7 +774,7 @@ namespace Redemption.Globals
 
         public static float Magnitude(Vector2 mag) // For the Move code above
         {
-            return (float) Math.Sqrt(mag.X * mag.X + mag.Y * mag.Y);
+            return (float)Math.Sqrt(mag.X * mag.X + mag.Y * mag.Y);
         }
 
         /// <summary>
@@ -790,11 +790,12 @@ namespace Redemption.Globals
 
             if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)
                 return false;
+            if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
+                return false;
 
             if (lineOfSight)
             {
-                if (!Collision.CanHit(npc.position, npc.width, npc.height, codable.position, codable.width,
-                    codable.height))
+                if (!Collision.CanHit(npc.position, npc.width, npc.height, codable.position, codable.width, codable.height))
                     return false;
             }
 
@@ -806,6 +807,9 @@ namespace Redemption.Globals
 
             if (facingTarget)
             {
+                if (npc.DistanceSQ(codable.Center) <= (codable.width + 32) * (codable.width + 32))
+                    return true;
+
                 return npc.Center.X > codable.Center.X && npc.spriteDirection == -1 ||
                        npc.Center.X < codable.Center.X && npc.spriteDirection == 1;
             }
@@ -955,8 +959,8 @@ namespace Redemption.Globals
 
         public static Vector2 FindGround(this Terraria.NPC npc, int range, Func<int, int, bool> canTeleportTo = null)
         {
-            int tileX = (int) npc.position.X / 16;
-            int tileY = (int) npc.position.Y / 16;
+            int tileX = (int)npc.position.X / 16;
+            int tileY = (int)npc.position.Y / 16;
             int teleportCheckCount = 0;
             bool hasTeleportPoint = false;
             while (!hasTeleportPoint && teleportCheckCount < 100)

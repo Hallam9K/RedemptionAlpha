@@ -16,10 +16,12 @@ namespace Redemption.Globals.NPC
         public bool infested;
         public bool devilScented;
         public int infestedTime;
+        public bool rallied;
 
         public override void ResetEffects(Terraria.NPC npc)
         {        
             devilScented = false;
+            rallied = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -34,14 +36,35 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= infestedTime / 120;
+            }
+        }
+        public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (infested)
+            {
                 if (npc.defense > 0)
                     npc.defense -= infestedTime / 120;
             }
+            if (rallied)
+                damage *= 0.85;
+            return true;
+        }
+        public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int damage, ref bool crit)
+        {
+            if (rallied)
+                damage = (int)(damage * 1.15f);
+        }
+        public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (rallied)
+                damage = (int)(damage * 1.15f);
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
             if (infested)
                 drawColor = new Color(197, 219, 171);
+            if (rallied)
+                drawColor = new Color(200, 150, 150);
         }
         public override bool PreKill(Terraria.NPC npc)
         {
