@@ -333,7 +333,7 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (gotNPC != -1 && Main.rand.NextBool(300) && NPC.velocity.Y == 0 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+            if (gotNPC != -1 && Main.rand.NextBool(100) && NPC.velocity.Y == 0 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
             {
                 globalNPC.attacker = Main.npc[gotNPC];
                 AITimer = 0;

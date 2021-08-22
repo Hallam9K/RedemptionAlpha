@@ -17,6 +17,8 @@ namespace Redemption
 
         public static Redemption Instance { get; private set; }
 
+        public Vector2 cameraOffset;
+
         public Redemption()
         {
             Instance = this;

@@ -58,7 +58,7 @@ namespace Redemption.NPCs.PreHM
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-		        Velocity = 1f
+                Velocity = 1f
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -235,10 +235,14 @@ namespace Redemption.NPCs.PreHM
                             int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
                             NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         }
-                        if (NPC.frame.Y > 9 * frameHeight)
+                        if (NPC.frame.Y == 7 * frameHeight)
                         {
-                            AIState = ActionState.Threatened;
+                            Player player = Main.player[NPC.target];
+                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
                         }
+                        if (NPC.frame.Y > 9 * frameHeight)
+                            AIState = ActionState.Threatened;
                     }
                     return;
                 case ActionState.PillarJump:
@@ -257,13 +261,15 @@ namespace Redemption.NPCs.PreHM
                             NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         }
                         if (NPC.frame.Y == 6 * frameHeight)
-                        {
                             NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
+                        if (NPC.frame.Y == 7 * frameHeight)
+                        {
+                            Player player = Main.player[NPC.target];
+                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
                         }
                         if (NPC.frame.Y > 9 * frameHeight)
-                        {
                             AIState = ActionState.Threatened;
-                        }
                     }
                     return;
             }
