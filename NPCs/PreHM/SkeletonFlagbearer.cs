@@ -507,7 +507,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
                 new FlavorTextBestiaryInfoElement(
-                    "Every squad needs a guy holding a big flag. This stubby skeleton's dance can rally any undead who lay witness! Non-undead just look at the silly dance with embarresment...")
+                    "Every squad needs a guy holding a big flag. This stubby skeleton's dance can rally any undead who lay witness! Non-undead just look at the silly dance with embarrassment...")
             });
         }
     }
