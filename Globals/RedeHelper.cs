@@ -785,7 +785,7 @@ namespace Redemption.Globals
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
             bool lineOfSight = false, bool canSeeHiding = false)
         {
-            if (codable == null)
+            if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
                 return false;
 
             if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)

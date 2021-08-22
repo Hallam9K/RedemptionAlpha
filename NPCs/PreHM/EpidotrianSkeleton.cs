@@ -1,37 +1,25 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Placeable.Banners;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
-using Redemption.Projectiles.Hostile;
-using Redemption.Tiles.Tiles;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class EpidotrianSkeleton : ModNPC
+    public class EpidotrianSkeleton : SkeletonBase
     {
-        public enum PersonalityState
-        {
-            Normal, Aggressive, Calm, Greedy, Soulful
-        }
         public enum ActionState
         {
             Begin,
@@ -39,37 +27,16 @@ namespace Redemption.NPCs.PreHM
             Wander,
             Alert
         }
-
-        private bool HasEyes;
-        private int CoinsDropped;
-
         public ActionState AIState
         {
             get => (ActionState)NPC.ai[0];
             set => NPC.ai[0] = (int)value;
         }
 
-        public ref float AITimer => ref NPC.ai[1];
-
-        public ref float TimerRand => ref NPC.ai[2];
-
-        public PersonalityState Personality
-        {
-            get => (PersonalityState)NPC.ai[3];
-            set => NPC.ai[3] = (int)value;
-        }
-
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             Main.npcFrameCount[NPC.type] = 13;
-            NPCID.Sets.Skeletons[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    BuffID.Poisoned
-                }
-            });
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
@@ -137,9 +104,6 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
-        private int VisionRange;
-        private int VisionIncrease;
-        private float SpeedMultiplier = 1f;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -191,7 +155,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -314,7 +278,7 @@ namespace Redemption.NPCs.PreHM
                 }
                 if (!HasEyes && Personality == PersonalityState.Aggressive && Main.rand.NextBool(1800))
                 {
-                    if (NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
+                    if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
                     {
                         SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                         globalNPC.attacker = Main.npc[gotNPC];
@@ -325,7 +289,7 @@ namespace Redemption.NPCs.PreHM
                     return;
                 }
                 gotNPC = GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default);
-                if (NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
                 {
                     SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                     globalNPC.attacker = Main.npc[gotNPC];
@@ -347,54 +311,6 @@ namespace Redemption.NPCs.PreHM
             Personality = choice;
             if (Main.rand.NextBool(3) || Personality == PersonalityState.Soulful)
                 HasEyes = true;
-        }
-        public void SetStats()
-        {
-            switch (Personality)
-            {
-                case PersonalityState.Calm:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 0.9f);
-                    NPC.life = (int)(NPC.life * 0.9f);
-                    NPC.damage = (int)(NPC.damage * 0.8f);
-                    SpeedMultiplier = 0.8f;
-                    break;
-                case PersonalityState.Aggressive:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.05f);
-                    NPC.life = (int)(NPC.life * 1.05f);
-                    NPC.damage = (int)(NPC.damage * 1.05f);
-                    NPC.value = (int)(NPC.value * 1.25f);
-                    VisionIncrease = 100;
-                    SpeedMultiplier = 1.1f;
-                    break;
-                case PersonalityState.Soulful:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.4f);
-                    NPC.life = (int)(NPC.life * 1.4f);
-                    NPC.defense = (int)(NPC.defense * 1.15f);
-                    NPC.damage = (int)(NPC.damage * 1.25f);
-                    NPC.value *= 2;
-                    VisionIncrease = 300;
-                    SpeedMultiplier = 1.3f;
-                    break;
-                case PersonalityState.Greedy:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.2f);
-                    NPC.life = (int)(NPC.life * 1.2f);
-                    NPC.defense = (int)(NPC.defense * 1.25f);
-                    NPC.damage = (int)(NPC.damage * 0.6f);
-                    NPC.value = 4;
-                    SpeedMultiplier = 1.8f;
-                    break;
-            }
-            if (HasEyes)
-            {
-                NPC.lifeMax = (int)(NPC.lifeMax * 1.1f);
-                NPC.life = (int)(NPC.life * 1.1f);
-                NPC.defense = (int)(NPC.defense * 1.05f);
-                NPC.damage = (int)(NPC.damage * 1.05f);
-                NPC.value = (int)(NPC.value * 1.1f);
-                VisionRange = 600 + VisionIncrease;
-            }
-            else
-                VisionRange = 200 + VisionIncrease;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

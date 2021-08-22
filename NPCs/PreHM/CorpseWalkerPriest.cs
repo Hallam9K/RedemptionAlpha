@@ -1,21 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Hostile;
-using Redemption.Tiles.Tiles;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -26,12 +20,8 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class CorpseWalkerPriest : ModNPC
+    public class CorpseWalkerPriest : SkeletonBase
     {
-        public enum PersonalityState
-        {
-            Normal, Aggressive, Calm
-        }
         public enum ActionState
         {
             Begin,
@@ -41,7 +31,6 @@ namespace Redemption.NPCs.PreHM
             Cast
         }
 
-        private bool HasEyes;
         private bool Healing;
         public ActionState AIState
         {
@@ -49,28 +38,11 @@ namespace Redemption.NPCs.PreHM
             set => NPC.ai[0] = (int)value;
         }
 
-        public ref float AITimer => ref NPC.ai[1];
-
-        public ref float TimerRand => ref NPC.ai[2];
-
-        public PersonalityState Personality
-        {
-            get => (PersonalityState)NPC.ai[3];
-            set => NPC.ai[3] = (int)value;
-        }
-
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             DisplayName.SetDefault("Corpse-Walker Priest");
             Main.npcFrameCount[NPC.type] = 15;
-            NPCID.Sets.Skeletons[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    BuffID.Poisoned
-                }
-            });
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
@@ -114,9 +86,6 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
-        private int VisionRange;
-        private int VisionIncrease;
-        private float SpeedMultiplier = 1f;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -170,7 +139,7 @@ namespace Redemption.NPCs.PreHM
 
                 case ActionState.Alert:
                     NPC.LookByVelocity();
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -202,7 +171,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Cast:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -360,14 +329,7 @@ namespace Redemption.NPCs.PreHM
                 }
             }
         }
-        public bool AttackerIsUndead()
-        {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is NPC && (NPCTags.Undead.Has((globalNPC.attacker as NPC).type) || NPCTags.Skeleton.Has((globalNPC.attacker as NPC).type)))
-                return true;
 
-            return false;
-        }
         public void ChoosePersonality()
         {
             WeightedRandom<PersonalityState> choice = new();
@@ -379,7 +341,7 @@ namespace Redemption.NPCs.PreHM
             if (Main.rand.NextBool(3))
                 HasEyes = true;
         }
-        public void SetStats()
+        public override void SetStats()
         {
             switch (Personality)
             {

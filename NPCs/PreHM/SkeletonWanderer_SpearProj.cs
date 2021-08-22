@@ -7,21 +7,21 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class SkeletonNoble_HalberdProj : ModProjectile
+    public class SkeletonWanderer_SpearProj : ModProjectile
     {
         protected virtual float HoldoutRangeMin => 20f;
-        protected virtual float HoldoutRangeMax => 54f;
+        protected virtual float HoldoutRangeMax => 48f;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Halberd");
+            DisplayName.SetDefault("Spear");
             Main.projFrames[Projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 32;
-            Projectile.height = 32;
+            Projectile.width = 18;
+            Projectile.height = 18;
             Projectile.friendly = true;
             Projectile.hostile = true;
             Projectile.tileCollide = false;

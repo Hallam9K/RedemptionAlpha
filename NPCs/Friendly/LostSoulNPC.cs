@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
 
 namespace Redemption.NPCs.Friendly
