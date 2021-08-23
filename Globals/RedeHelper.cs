@@ -558,7 +558,7 @@ namespace Redemption.Globals
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetProjectileSpawnSource(), position, velocity, projType, damage / 3, 0,
+                Projectile.NewProjectile(npc.GetProjectileSpawnSource(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
             }
         }
