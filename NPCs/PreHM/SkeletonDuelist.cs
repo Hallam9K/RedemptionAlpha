@@ -371,7 +371,7 @@ namespace Redemption.NPCs.PreHM
                 }
                 if (!HasEyes && Personality == PersonalityState.Aggressive && Main.rand.NextBool(1800))
                 {
-                    if (NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
+                    if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
                     {
                         SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                         globalNPC.attacker = Main.npc[gotNPC];
@@ -382,7 +382,7 @@ namespace Redemption.NPCs.PreHM
                     return;
                 }
                 gotNPC = GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default);
-                if (NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
                 {
                     SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                     globalNPC.attacker = Main.npc[gotNPC];
