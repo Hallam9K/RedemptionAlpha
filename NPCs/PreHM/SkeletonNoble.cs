@@ -483,7 +483,7 @@ namespace Redemption.NPCs.PreHM
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 3, 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientBrassShards>(), 2, 3, 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrassboneShards>(), 2, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ItemID.BoneSword, 204));
