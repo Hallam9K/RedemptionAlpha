@@ -1,4 +1,5 @@
 using Redemption.Buffs;
+using Redemption.Buffs.Debuffs;
 using System.Linq;
 using Terraria;
 using Terraria.ID;

@@ -4,6 +4,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Hostile;
 using System;
@@ -414,6 +415,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorpseWalkerStaff>(), 12));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ItemID.BoneSword, 204));
@@ -423,7 +425,7 @@ namespace Redemption.NPCs.PreHM
         {
             float desert = SpawnCondition.OverworldNightMonster.Chance;
             float desertCave = SpawnCondition.DesertCave.Chance * 0.04f;
-            float multiplier = spawnInfo.player.ZoneDesert && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Sand ? 0.04f : 0f;
+            float multiplier = spawnInfo.player.ZoneDesert && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Sand ? 0.2f : 0f;
 
             return Math.Max(desert * multiplier, desertCave);
         }

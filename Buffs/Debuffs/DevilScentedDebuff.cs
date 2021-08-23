@@ -3,7 +3,7 @@ using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Redemption.Buffs
+namespace Redemption.Buffs.Debuffs
 {
     public class DevilScentedDebuff : ModBuff
     {

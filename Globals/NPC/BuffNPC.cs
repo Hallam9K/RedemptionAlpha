@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
+using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;

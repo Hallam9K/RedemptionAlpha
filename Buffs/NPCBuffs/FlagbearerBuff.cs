@@ -2,7 +2,7 @@ using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Redemption.Buffs
+namespace Redemption.Buffs.NPCBuffs
 {
     public class FlagbearerBuff : ModBuff
     {

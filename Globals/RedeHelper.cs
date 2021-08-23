@@ -43,7 +43,7 @@ namespace Redemption.Globals
             {
                 float distance = (npc.Center - position).Length();
                 if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
-                    npc.lifeMax <= 5 || npc.immortal ||
+                    npc.lifeMax <= 5 || npc.GetGlobalNPC<RedeNPC>().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
                     !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles ||
                     !specialCondition(npc))
                     continue;
@@ -622,15 +622,20 @@ namespace Redemption.Globals
             }
         }
 
-        public static void LookAtEntity(this Projectile projectile, Entity target)
+        public static void LookAtEntity(this Projectile projectile, Entity target, bool opposite = false)
         {
-            if (target.Center.X > target.Center.X)
+            int dir = 1;
+            if (opposite)
+                dir = -1;
+            if (target.Center.X > projectile.Center.X)
             {
-                projectile.spriteDirection = 1;
+                projectile.spriteDirection = dir;
+                projectile.direction = dir;
             }
             else
             {
-                projectile.spriteDirection = -1;
+                projectile.spriteDirection = -dir;
+                projectile.direction = -dir;
             }
         }
 
@@ -648,6 +653,19 @@ namespace Redemption.Globals
             {
                 npc.spriteDirection = -1;
                 npc.direction = -1;
+            }
+        }
+        public static void LookByVelocity(this Projectile projectile)
+        {
+            if (projectile.velocity.X > 0)
+            {
+                projectile.spriteDirection = 1;
+                projectile.direction = 1;
+            }
+            else if (projectile.velocity.X < 0)
+            {
+                projectile.spriteDirection = -1;
+                projectile.direction = -1;
             }
         }
 
