@@ -41,6 +41,11 @@ namespace Redemption.NPCs.PreHM
                     BuffID.Poisoned
                 }
             });
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
         }
         public bool PlayerDead()
         {
