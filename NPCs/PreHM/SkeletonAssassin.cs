@@ -416,7 +416,7 @@ namespace Redemption.NPCs.PreHM
                 }
                 if (!HasEyes && Personality == PersonalityState.Aggressive && Main.rand.NextBool(1800))
                 {
-                    if (NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
+                    if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, false, false))
                     {
                         globalNPC.attacker = Main.npc[gotNPC];
                         moveTo = NPC.FindGround(20);
@@ -426,7 +426,7 @@ namespace Redemption.NPCs.PreHM
                     return;
                 }
                 gotNPC = GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default);
-                if (NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
                 {
                     globalNPC.attacker = Main.npc[gotNPC];
                     moveTo = NPC.FindGround(20);
