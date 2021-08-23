@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PreHM
 {
-    public class BrassboneShards : ModItem
+    public class GraveSteelShards : ModItem
     {
         public override void SetStaticDefaults()
         {            

@@ -7,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Bars
 {
-    public class BrassboneAlloyTile : ModTile
+    public class GraveSteelAlloyTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Bars
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            ItemDrop = ModContent.ItemType<BrassboneAlloy>();   
+            ItemDrop = ModContent.ItemType<GraveSteelAlloy>();   
             DustType = DustID.Iron;
             AddMapEntry(new Color(115, 98, 87));
 			MinPick = 0;

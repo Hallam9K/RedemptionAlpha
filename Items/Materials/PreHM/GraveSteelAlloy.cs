@@ -7,7 +7,7 @@ using Redemption.Tiles.Bars;
 
 namespace Redemption.Items.Materials.PreHM
 {
-    public class BrassboneAlloy : ModItem
+    public class GraveSteelAlloy : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,13 +26,13 @@ namespace Redemption.Items.Materials.PreHM
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.SwingThrow;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<BrassboneAlloyTile>();
+            Item.createTile = ModContent.TileType<GraveSteelAlloyTile>();
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<BrassboneShards>(), 3)
+                .AddIngredient(ModContent.ItemType<GraveSteelShards>(), 3)
                 .AddTile(TileID.Furnaces)
                 .Register();
         }
