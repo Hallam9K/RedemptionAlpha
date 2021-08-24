@@ -1,5 +1,7 @@
 ﻿using Redemption.Buffs;
+using Redemption.Items.Placeable.Plants;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,26 +32,21 @@ namespace Redemption.Items.Usable.Potions
             Item.buffType = ModContent.BuffType<VendettaPotionBuff>();
             Item.buffTime = 10800;
         }
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod)
-            {
-                alchemy = true
-            };
-            recipe.AddIngredient(null, "Nightshade", 2);
-            recipe.AddIngredient(ItemID.Stinger);
-            recipe.AddIngredient(ItemID.WormTooth);
-            recipe.AddIngredient(ItemID.Cactus);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddTile(TileID.Bottles);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-            recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "Nightshade", 2);
-            recipe.AddIngredient(ItemID.ThornsPotion);
-            recipe.AddTile(TileID.AlchemyTable);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-        }*/
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Nightshade>(), 2)
+                .AddIngredient(ItemID.Stinger)
+                .AddIngredient(ItemID.WormTooth)
+                .AddIngredient(ItemID.Cactus)
+                .AddIngredient(ItemID.BottledWater)
+                .AddTile(TileID.Bottles)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<Nightshade>(), 2)
+                .AddIngredient(ItemID.ThornsPotion)
+                .AddTile(TileID.Bottles)
+                .Register();
+        }
 	}
 }

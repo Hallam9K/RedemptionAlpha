@@ -29,17 +29,17 @@ namespace Redemption.Globals.Player
                 infestedTime = 0;
             }
         }
-        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        public override void OnHitByNPC(Terraria.NPC npc, int damage, bool crit)
         {
             if (vendetta)
                 npc.AddBuff(BuffID.Poisoned, 300);
         }
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
         }
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);

@@ -1,5 +1,7 @@
 ﻿using Redemption.Buffs;
+using Redemption.Items.Placeable.Plants;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,27 +32,15 @@ namespace Redemption.Items.Usable.Potions
             Item.buffType = ModContent.BuffType<CharismaPotionBuff>();
             Item.buffTime = 36000;
         }
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod)
-            {
-                alchemy = true
-            };
-            recipe.AddIngredient(ItemID.GoldenCarp);
-            recipe.AddIngredient(null, "Nightshade");
-            recipe.AddIngredient(ItemID.Blinkroot);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddTile(TileID.Bottles);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-            recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.GoldenCarp);
-            recipe.AddIngredient(null, "Nightshade");
-            recipe.AddIngredient(ItemID.Blinkroot);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddTile(TileID.Bottles);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-        }*/
+            CreateRecipe()
+                .AddIngredient(ItemID.GoldenCarp)
+                .AddIngredient(ModContent.ItemType<Nightshade>())
+                .AddIngredient(ItemID.Blinkroot)
+                .AddIngredient(ItemID.BottledWater)
+                .AddTile(TileID.Bottles)
+                .Register();
+        }
     }
 }
