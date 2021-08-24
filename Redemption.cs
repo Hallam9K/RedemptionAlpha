@@ -17,6 +17,7 @@ namespace Redemption
 
         public static Redemption Instance { get; private set; }
 
+        public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
 
         public Redemption()

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -33,6 +34,29 @@ namespace Redemption.Items.Materials.PreHM
         {
             if (!Main.dayTime && Main.moonPhase != 4)
                 Lighting.AddLight(Item.Center, Color.AntiqueWhite.ToVector3() * 0.55f * Main.essScale);
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string text = "There is no moonlight to reflect...";
+            if (Main.dayTime || Main.moonPhase == 4)
+            {
+                TooltipLine line = new(Mod, "text", text)
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Insert(2, line);
+            }
+        }
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Texture2D textureFaded = ModContent.Request<Texture2D>("Redemption/Items/Materials/PreHM/MoonflareFragment_Faded").Value;
+
+            if (Main.dayTime || Main.moonPhase == 4)
+            {
+                spriteBatch.Draw(textureFaded, position, new Rectangle(0, 0, textureFaded.Width, textureFaded.Height), drawColor, 0, origin, scale, SpriteEffects.None, 0f);
+                return false;
+            }
+            return true;
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -53,7 +54,7 @@ namespace Redemption.Globals.NPC
                     damage = damage < npc.life ? npc.life : damage;
                     crit = true;
                 }
-                else if (Main.rand.NextBool(80) && item.axe > 0)
+                else if (Main.rand.NextBool(80) && item.axe > 0 && item.type != ModContent.ItemType<BeardedHatchet>())
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
