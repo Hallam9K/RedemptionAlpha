@@ -15,15 +15,34 @@ namespace Redemption.Globals.Player
         public bool infested;
         public bool devilScented;
         public int infestedTime;
+        public bool charisma;
+        public bool vendetta;
 
         public override void ResetEffects()
         {
             devilScented = false;
+            charisma = false;
+            vendetta = false;
             if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
                 infestedTime = 0;
             }
+        }
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            if (vendetta)
+                npc.AddBuff(BuffID.Poisoned, 300);
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (charisma)
+                target.AddBuff(BuffID.Midas, 300);
+        }
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            if (charisma)
+                target.AddBuff(BuffID.Midas, 300);
         }
         public override void UpdateBadLifeRegen()
         {
