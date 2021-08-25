@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using System;
 using System.Linq;
@@ -482,6 +483,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NoblesHalberd>(), 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 2, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));

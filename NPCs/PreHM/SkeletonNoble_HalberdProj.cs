@@ -14,7 +14,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Halberd");
+            DisplayName.SetDefault("Noble's Halberd");
             Main.projFrames[Projectile.type] = 2;
         }
 

@@ -1,0 +1,144 @@
+using Terraria.ModLoader;
+using Terraria.ID;
+using Terraria;
+using Redemption.Items.Materials.PreHM;
+using Terraria.GameContent.Creative;
+using Microsoft.Xna.Framework;
+using Terraria.Audio;
+using System;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
+
+namespace Redemption.Items.Weapons.PreHM.Melee
+{
+    public class NoblesHalberd_SlashProj : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Noble's Halberd");
+            Main.projFrames[Projectile.type] = 6;
+        }
+        public override bool ShouldUpdatePosition() => false;
+        public override void SetDefaults()
+        {
+            Projectile.width = 78;
+            Projectile.height = 94;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+            Projectile.ownerHitCheck = true;
+        }
+
+        int directionLock = 0;
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            player.heldProj = Projectile.whoAmI;
+            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
+            Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
+            Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+
+            if (player.noItems || player.CCed || player.dead || !player.active)
+                Projectile.Kill();
+            if (Main.myPlayer == Projectile.owner)
+            {
+                if (Projectile.ai[0] == 0)
+                {
+                    player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
+                    player.bodyFrame.Y = 5 * player.bodyFrame.Height;
+                    if (!player.channel)
+                    {
+                        Projectile.ai[0] = 1;
+                        directionLock = player.direction;
+                    }
+                    if (++Projectile.frameCounter >= 7)
+                    {
+                        Projectile.frameCounter = 0;
+                        Projectile.frame++;
+                        if (Projectile.frame > 2)
+                        {
+                            Projectile.frame = 2;
+                        }
+                    }
+                }
+                if (Projectile.ai[0] >= 1)
+                {
+                    player.direction = directionLock;
+                    Projectile.ai[0]++;
+                    if (Projectile.frame > 2)
+                        player.itemRotation -= MathHelper.ToRadians(-8f * player.direction);
+                    else 
+                        player.bodyFrame.Y = 5 * player.bodyFrame.Height;
+                    if (++Projectile.frameCounter >= 7)
+                    {
+                        Projectile.frameCounter = 0;
+                        Projectile.frame++;
+                        if (Projectile.frame is 4)
+                        {
+                            if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
+                            {
+                                SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                            }
+                            else
+                            {
+                                SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
+                            }
+                            player.velocity.X += 2 * player.direction;
+                        }
+                        if (Projectile.frame > 5)
+                        {
+                            Projectile.Kill();
+                        }
+                    }
+                }
+            }
+
+            Projectile.spriteDirection = player.direction;
+
+            Projectile.Center = player.Center;
+            player.itemTime = 2;
+            player.itemAnimation = 2;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (crit)
+                damage += damage / 2;
+
+            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            {
+                if (Main.rand.NextBool(80))
+                {
+                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
+                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
+                    damage = damage < target.life ? target.life : damage;
+                    crit = true;
+                }
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int height = texture.Height / 6;
+            int y = height * Projectile.frame;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(0, 24), new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            return false;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
+            return Projectile.frame is 4 && projHitbox.Intersects(targetHitbox);
+        }
+    }
+}
