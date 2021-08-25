@@ -50,7 +50,8 @@ namespace Redemption.NPCs.Critters
             NPC.value = 0;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
-            //NPC.catchItem = (short) ModContent.ItemType<CoastScarabItem>();
+            NPC.chaseable = false;
+            NPC.catchItem = (short) ModContent.ItemType<MoonflareBatItem>();
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<MoonflareBatBanner>();
         }

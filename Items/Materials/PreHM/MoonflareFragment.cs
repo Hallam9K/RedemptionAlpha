@@ -60,28 +60,28 @@ namespace Redemption.Items.Materials.PreHM
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D textureFaded = ModContent.Request<Texture2D>("Redemption/Items/Materials/PreHM/MoonflareFragment_Faded").Value;
-            Vector2 origin = new(textureFaded.Width / 2, textureFaded.Height / 2);
+            Texture2D texture = TextureAssets.Item[Item.type].Value;
+            Texture2D textureFaded = ModContent.Request<Texture2D>("Redemption/Items/Materials/PreHM/" + GetType().Name + "_Faded").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>("Redemption/Items/Materials/PreHM/" + GetType().Name + "_Glow").Value;
+            Vector2 originFaded = new(textureFaded.Width / 2, textureFaded.Height / 2);
+            Rectangle frame;
+            if (Main.itemAnimations[Item.type] != null)
+                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+            else
+                frame = texture.Frame();
+
+            Vector2 origin = frame.Size() / 2f;
 
             if (Main.dayTime || Main.moonPhase == 4)
             {
-                spriteBatch.Draw(textureFaded, Item.Center - Main.screenPosition, new Rectangle(0, 0, textureFaded.Width, textureFaded.Height), lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(textureFaded, Item.Center - Main.screenPosition, new Rectangle(0, 0, textureFaded.Width, textureFaded.Height), lightColor, rotation, originFaded, scale, SpriteEffects.None, 0f);
                 return false;
             }
-            return true;
+
+            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(textureGlow, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+
+            return false;
         }
-        /*Rectangle frame;
-        if (Main.itemAnimations[Item.type] != null)
-        {
-            //In case this item is animated, this picks the correct frame
-            frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
-	        }
-        else
-        {
-            frame = texture.Frame();
-        }
-        and then use frame instead of new Rectangle(0, 0, textureFaded.Width, textureFaded.Height)
-        and after that, define and assign origin like that
-        Vector2 origin = frame.Size() / 2f;*/
     }
 }

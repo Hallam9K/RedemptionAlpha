@@ -18,6 +18,9 @@ namespace Redemption.Globals
 {
     public static class RedeHelper
     {
+        public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
+        public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
+
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
 

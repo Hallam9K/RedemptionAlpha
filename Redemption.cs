@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -17,6 +19,7 @@ namespace Redemption
 
         public static Redemption Instance { get; private set; }
 
+        public const string Abbreviation = "MoR";
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
 
@@ -38,10 +41,16 @@ namespace Redemption
         UserInterface ChestMenuUI;
         internal ChestCustomizerState ChestCustomizer;
 
+        public static TrailManager TrailManager;
+        public bool Initialized;
+
         public override void Load()
         {
+            RedeDetours.Initialize();
             if (!Main.dedServ)
             {
+                On.Terraria.Main.Update += LoadTrailManager;
+
                 GeneratorMenuUI = new UserInterface();
                 GeneratorMenu = new ManualGeneratorMenu();
                 GeneratorMenuUI.SetState(GeneratorMenu);
@@ -49,6 +58,27 @@ namespace Redemption
                 ChestMenuUI = new UserInterface();
                 ChestCustomizer = new ChestCustomizerState();
                 ChestMenuUI.SetState(ChestCustomizer);
+            }
+        }
+        private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
+        {
+            if (!Initialized)
+            {
+                TrailManager = new TrailManager(Redemption.Instance);
+                Initialized = true;
+            }
+
+            orig(self, gameTime);
+        }
+        public override void Unload()
+        {
+            On.Terraria.Main.Update -= LoadTrailManager;
+        }
+        public override void PreUpdateProjectiles()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailManager.UpdateTrails();
             }
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

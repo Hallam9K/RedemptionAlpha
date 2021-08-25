@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Critters
 {
-    public class BoneSpiderItem : ModItem
+    public class MoonflareBatItem : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bone Spider");
+            DisplayName.SetDefault("Moonflare Bat");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
@@ -18,10 +18,10 @@ namespace Redemption.Items.Critters
         public override void SetDefaults()
         {
             Item.width = 22;
-            Item.height = 14;
+            Item.height = 16;
             Item.rare = ItemRarityID.Blue;
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(silver: 4);
+            Item.value = Item.buyPrice(silver: 6);
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.HoldUp;
@@ -31,7 +31,7 @@ namespace Redemption.Items.Critters
         public override bool? UseItem(Player player)
         {
             int index = NPC.NewNPC((int) (player.position.X + Main.rand.Next(-20, 20)), (int) (player.position.Y - 0f),
-                ModContent.NPCType<BoneSpider>());
+                ModContent.NPCType<MoonflareBat>());
 
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 NetMessage.SendData(MessageID.SyncNPC, number: index);

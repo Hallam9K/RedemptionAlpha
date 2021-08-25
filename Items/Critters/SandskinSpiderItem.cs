@@ -23,8 +23,8 @@ namespace Redemption.Items.Critters
             Item.maxStack = 999;
             Item.bait = 15;
             Item.value = Item.buyPrice(silver: 4);
-            Item.useAnimation = 1;
-            Item.useTime = 1;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = true;
         }
