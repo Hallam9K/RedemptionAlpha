@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -14,7 +15,8 @@ namespace Redemption.Items.Weapons.Ammo
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Moonflare Arrow");
-            Tooltip.SetDefault("Ignores gravity");
+            Tooltip.SetDefault("Burns targets while the moon is out" +
+				"\nFlame intensity is based on moon phase");
 		}
 
 		public override void SetDefaults()
@@ -31,6 +33,18 @@ namespace Redemption.Items.Weapons.Ammo
 			Item.shoot = ModContent.ProjectileType<MoonflareArrow_Proj>();
 			Item.shootSpeed = 7f;
 			Item.ammo = AmmoID.Arrow;
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			string text = "There is no moonlight to reflect...";
+			if (Main.dayTime || Main.moonPhase == 4)
+			{
+				TooltipLine line = new(Mod, "text", text)
+				{
+					overrideColor = Color.LightGray
+				};
+				tooltips.Insert(2, line);
+			}
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{

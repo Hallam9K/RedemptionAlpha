@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Dusts;
 using Redemption.NPCs.Critters;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -18,11 +21,13 @@ namespace Redemption.Globals.NPC
         public bool devilScented;
         public int infestedTime;
         public bool rallied;
+        public bool moonflare;
 
         public override void ResetEffects(Terraria.NPC npc)
         {        
             devilScented = false;
             rallied = false;
+            moonflare = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -37,6 +42,24 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= infestedTime / 120;
+            }
+            if (moonflare)
+            {
+                int dot = 2;
+                if (!Main.dayTime)
+                {
+                    if (Main.moonPhase == 0)
+                        dot = 12;
+                    else if (Main.moonPhase == 1 || Main.moonPhase == 7)
+                        dot = 8;
+                    else if (Main.moonPhase == 2 || Main.moonPhase == 6)
+                        dot = 6;
+                    else if (Main.moonPhase == 3 || Main.moonPhase == 5)
+                        dot = 4;
+                }
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+                npc.lifeRegen -= dot;
             }
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -66,6 +89,41 @@ namespace Redemption.Globals.NPC
                 drawColor = new Color(197, 219, 171);
             if (rallied)
                 drawColor = new Color(200, 150, 150);
+            if (moonflare)
+            {
+                drawColor = new Color(255, 255, 218);
+                int intensity = 30;
+                if (Main.moonPhase == 0)
+                    intensity = 5;
+                else if (Main.moonPhase == 1 || Main.moonPhase == 7)
+                    intensity = 10;
+                else if (Main.moonPhase == 2 || Main.moonPhase == 6)
+                    intensity = 15;
+                else if (Main.moonPhase == 3 || Main.moonPhase == 5)
+                    intensity = 20;
+                if (Main.rand.NextBool(intensity))
+                {
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<MoonflareDust>());
+                    Main.dust[sparkle].velocity *= 0;
+                    Main.dust[sparkle].noGravity = true;
+                }
+            }
+        }
+        public override void PostAI(Terraria.NPC npc)
+        {
+            if (moonflare)
+            {
+                foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+                {
+                    if (!target.active || target.whoAmI == npc.whoAmI || target.GetGlobalNPC<BuffNPC>().moonflare)
+                        continue;
+
+                    if (!target.Hitbox.Intersects(npc.Hitbox))
+                        continue;
+
+                    target.AddBuff(ModContent.BuffType<MoonflareDebuff>(), 360);
+                }
+            }
         }
         public override bool PreKill(Terraria.NPC npc)
         {

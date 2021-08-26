@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using System;
 using Terraria;
@@ -39,6 +40,13 @@ namespace Redemption.Items.Weapons.Ammo
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
             Projectile.velocity.Y += 0.01f;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (!Main.rand.NextBool(3) || Main.dayTime || Main.moonPhase == 4)
+                return;
+
+            target.AddBuff(ModContent.BuffType<MoonflareDebuff>(), 360);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
