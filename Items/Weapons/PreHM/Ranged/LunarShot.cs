@@ -8,6 +8,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -41,6 +42,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Arrow;
+            if (!Main.dedServ)
+            {
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Ranged/" + GetType().Name + "_Glow").Value;
+            }
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
@@ -60,18 +65,6 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 };
                 tooltips.Insert(2, line);
             }
-        }
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Ranged/" + GetType().Name + "_Glow").Value;
-            Rectangle frame = texture.Frame();
-            Vector2 origin = frame.Size() / 2f;
-
-            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(textureGlow, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
-
-            return false;
         }
         public override void AddRecipes()
         {
