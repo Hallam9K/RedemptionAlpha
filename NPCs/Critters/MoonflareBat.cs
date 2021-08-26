@@ -56,6 +56,17 @@ namespace Redemption.NPCs.Critters
             BannerItem = ModContent.ItemType<MoonflareBatBanner>();
         }
 
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (ItemTags.Shadow.Has(item.type))
+                damage = (int)(damage * 1.25f);
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ProjectileTags.Shadow.Has(projectile.type))
+                damage = (int)(damage * 1.25f);
+        }
+
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

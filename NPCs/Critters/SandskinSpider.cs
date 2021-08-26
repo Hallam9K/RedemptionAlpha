@@ -257,15 +257,14 @@ namespace Redemption.NPCs.Critters
                     spooked = true;
                 }
             }
-            foreach (Player target in Main.player)
+            for (int p = 0; p < Main.maxPlayers; p++)
             {
+                Player target = Main.player[p];
                 if (!target.active || target.dead)
                     continue;
 
                 if (NPC.Sight(target, 300, false, true) && BaseAI.HitTileOnSide(NPC, 3))
-                {
                     spooked = true;
-                }
             }
             return spooked;
         }

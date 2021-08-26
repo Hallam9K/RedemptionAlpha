@@ -63,8 +63,9 @@ namespace Redemption.Projectiles.Hostile
                     Projectile.Kill();
                 }
             }
-            foreach (Player target in Main.player)
+            for (int p = 0; p < Main.maxPlayers; p++)
             {
+                Player target = Main.player[p];
                 if (target.noKnockback || Projectile.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox))
                     continue;
 

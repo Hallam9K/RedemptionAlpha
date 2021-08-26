@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
     public class LunarShot : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lunar Shot");
@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Arrow;
-		}
+        }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)

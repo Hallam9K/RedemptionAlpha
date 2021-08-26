@@ -41,8 +41,9 @@ namespace Redemption.Projectiles.Hostile
             { 
                 Projectile.ai[0] = 1;
             }
-            foreach (Player target in Main.player)
+            for (int p = 0; p < Main.maxPlayers; p++)
             {
+                Player target = Main.player[p];
                 if (!target.active || target.dead)
                     continue;
 

@@ -199,8 +199,9 @@ namespace Redemption.NPCs.PreHM
                             int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Center.Y / 16) - 2);
                             NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         }
-                        foreach (Player target in Main.player)
+                        for (int p = 0; p < Main.maxPlayers; p++)
                         {
+                            Player target = Main.player[p];
                             if (globalNPC.attacker is NPC)
                                 continue;
 

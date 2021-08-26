@@ -66,8 +66,9 @@ namespace Redemption.Projectiles.Hostile
                 Vector2 move = Vector2.Zero;
                 float distance = 800;
                 bool targetted = false;
-                foreach (Player target in Main.player)
+                for (int p = 0; p < Main.maxPlayers; p++)
                 {
+                    Player target = Main.player[p];
                     if (!target.active || target.dead || target.invis || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
                         continue;
 

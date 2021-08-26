@@ -31,7 +31,7 @@ namespace Redemption.Effects
 		{
 			Mod mod = Redemption.Instance;
 			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>())
-				CreateTrail(projectile, new StandardColorTrail(new Color(250, 205, 160)), new RoundCap(), new DefaultTrailPosition(), 20f, 150f);
+				CreateTrail(projectile, new GradientTrail(new Color(250, 205, 160), new Color(255, 255, 218)), new RoundCap(), new DefaultTrailPosition(), 20f, 150f);
 		}
 
         public void TryTrailKill(Projectile projectile)
