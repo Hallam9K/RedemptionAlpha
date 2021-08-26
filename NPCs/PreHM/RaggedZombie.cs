@@ -75,7 +75,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "A common creature native to Anglon, living in lush forests. They are made out of plant fibre and roots.")
+                    "Was once a druid in their past life. To them they still are, just don't let them know they're undead.")
             });
         }
     }

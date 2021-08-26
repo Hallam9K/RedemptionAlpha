@@ -49,13 +49,13 @@ namespace Redemption.Globals.NPC
                 if (!Main.dayTime)
                 {
                     if (Main.moonPhase == 0)
-                        dot = 12;
+                        dot = 18;
                     else if (Main.moonPhase == 1 || Main.moonPhase == 7)
-                        dot = 8;
+                        dot = 14;
                     else if (Main.moonPhase == 2 || Main.moonPhase == 6)
-                        dot = 6;
+                        dot = 10;
                     else if (Main.moonPhase == 3 || Main.moonPhase == 5)
-                        dot = 4;
+                        dot = 6;
                 }
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
@@ -103,7 +103,7 @@ namespace Redemption.Globals.NPC
                     intensity = 20;
                 if (Main.rand.NextBool(intensity))
                 {
-                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<MoonflareDust>());
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<MoonflareDust>(), Scale: 2);
                     Main.dust[sparkle].velocity *= 0;
                     Main.dust[sparkle].noGravity = true;
                 }

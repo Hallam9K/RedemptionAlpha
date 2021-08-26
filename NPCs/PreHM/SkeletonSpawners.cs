@@ -35,21 +35,21 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
-            WeightedRandom<SpawnType> choice = new();
-            choice.Add(SpawnType.Noble, 8);
-            choice.Add(SpawnType.Warden, 10);
-            choice.Add(SpawnType.Flagbearer, 10);
-            choice.Add(SpawnType.SmallGroup, 6);
-            choice.Add(SpawnType.Group, 3);
-            choice.Add(SpawnType.LargeGroup, 1);
+            WeightedRandom<SpawnType> SpawnChoice = new();
+            SpawnChoice.Add(SpawnType.Noble, 8);
+            SpawnChoice.Add(SpawnType.Warden, 10);
+            SpawnChoice.Add(SpawnType.Flagbearer, 10);
+            SpawnChoice.Add(SpawnType.SmallGroup, 6);
+            SpawnChoice.Add(SpawnType.Group, 3);
+            SpawnChoice.Add(SpawnType.LargeGroup, 1);
 
             WeightedRandom<int> NPCType = new();
             NPCType.Add(ModContent.NPCType<SkeletonNoble>());
-            NPCType.Add(ModContent.NPCType<SkeletonFlagbearer>());
             NPCType.Add(ModContent.NPCType<SkeletonWarden>());
             NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
 
-            switch ((SpawnType)choice)
+            Vector2 pos = Vector2.Zero;
+            switch ((SpawnType)SpawnChoice)
             {
                 case SpawnType.Noble:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonNoble>());
@@ -61,26 +61,38 @@ namespace Redemption.NPCs.PreHM
                     NPC.SetDefaults(ModContent.NPCType<SkeletonFlagbearer>());
                     break;
                 case SpawnType.SmallGroup:
-                    for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                    if (Main.rand.NextBool(2))
                     {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 5);
-                        RedeHelper.SpawnNPC((int)pos.X, (int)pos.Y, NPCType);
+                        pos = RedeHelper.FindGround(NPC, 10);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                    }
+                    for (int i = 0; i < 2; i++)
+                    {
+                        pos = RedeHelper.FindGround(NPC, 5);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.Group:
-                    for (int i = 0; i < Main.rand.Next(4, 6); i++)
+                    if (!Main.rand.NextBool(3))
                     {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC((int)pos.X, (int)pos.Y, NPCType);
+                        pos = RedeHelper.FindGround(NPC, 10);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                    }
+                    for (int i = 0; i < 3; i++)
+                    {
+                        pos = RedeHelper.FindGround(NPC, 8);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.LargeGroup:
-                    for (int i = 0; i < Main.rand.Next(6, 8); i++)
+                    pos = RedeHelper.FindGround(NPC, 10);
+                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                    for (int i = 0; i < 5; i++)
                     {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC((int)pos.X, (int)pos.Y, NPCType);
+                        pos = RedeHelper.FindGround(NPC, 10);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -89,7 +101,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float baseChance = SpawnCondition.OverworldNightMonster.Chance * 0.05f;
+            float baseChance = SpawnCondition.OverworldNightMonster.Chance * 0.07f;
 
             return baseChance;
         }
@@ -152,7 +164,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 5);
-                        RedeHelper.SpawnNPC((int)pos.X, (int)pos.Y, NPCType);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -160,7 +172,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(4, 6); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC((int)pos.X, (int)pos.Y, NPCType);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -168,7 +180,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(6, 8); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC((int)pos.X, (int)pos.Y, NPCType);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;

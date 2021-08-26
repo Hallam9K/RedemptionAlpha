@@ -33,13 +33,12 @@ namespace Redemption.Items.Weapons.Ammo
 			Projectile.light = 0.1f;
 			Projectile.ignoreWater = false;
 			Projectile.tileCollide = true;
-			Projectile.extraUpdates = 1;
 			AIType = ProjectileID.WoodenArrowFriendly;
 		}
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
-            Projectile.velocity.Y += 0.01f;
+            Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+            Projectile.velocity.Y += 0.03f;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

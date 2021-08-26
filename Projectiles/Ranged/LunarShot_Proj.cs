@@ -14,19 +14,16 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lunar Bolt");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 4;
-            Projectile.height = 10;
+            Projectile.width = 18;
+            Projectile.height = 18;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 0;
-            Projectile.extraUpdates = 1;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -45,6 +42,11 @@ namespace Redemption.Projectiles.Ranged
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            if (Projectile.localAI[0] == 0)
+            {
+                Projectile.velocity *= 2;
+                Projectile.localAI[0] = 1;
+            }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

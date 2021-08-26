@@ -301,7 +301,7 @@ namespace Redemption.NPCs.PreHM
         }
         public void ChoosePersonality()
         {
-            WeightedRandom<PersonalityState> choice = new();
+            WeightedRandom<PersonalityState> choice = new(Main.rand);
             choice.Add(PersonalityState.Normal, 10);
             choice.Add(PersonalityState.Calm, 8);
             choice.Add(PersonalityState.Aggressive, 8);
