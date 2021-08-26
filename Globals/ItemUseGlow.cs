@@ -1,10 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -14,32 +10,32 @@ using Terraria.UI;
 
 namespace Redemption.Globals
 {
-	class ItemGlowLayer : PlayerDrawLayer // Code by qwerty3.14
-	{
-		public override void SetStaticDefaults()
-		{
-			base.SetStaticDefaults();
-		}
-		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
-		{
-			return true;
-		}
-		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.HeldItem);
+    class ItemGlowLayer : PlayerDrawLayer // Code by qwerty3.14
+    {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
+        {
+            return true;
+        }
+        public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.HeldItem);
 
-		protected override void Draw(ref PlayerDrawSet drawInfo)
-		{
-			if (drawInfo.drawPlayer.JustDroppedAnItem)
-			{
-				return;
-			}
-			if (drawInfo.drawPlayer.heldProj >= 0 && drawInfo.shadow == 0f && !drawInfo.heldProjOverHand)
-			{
-				drawInfo.projectileDrawPosition = drawInfo.DrawDataCache.Count;
-			}
-			Item heldItem = drawInfo.heldItem;
-			int itemID = heldItem.type;
-			float adjustedItemScale = drawInfo.drawPlayer.GetAdjustedItemScale(heldItem);
-			Main.instance.LoadItem(itemID);
+        protected override void Draw(ref PlayerDrawSet drawInfo)
+        {
+            if (drawInfo.drawPlayer.JustDroppedAnItem)
+            {
+                return;
+            }
+            if (drawInfo.drawPlayer.heldProj >= 0 && drawInfo.shadow == 0f && !drawInfo.heldProjOverHand)
+            {
+                drawInfo.projectileDrawPosition = drawInfo.DrawDataCache.Count;
+            }
+            Item heldItem = drawInfo.heldItem;
+            int itemID = heldItem.type;
+            float adjustedItemScale = drawInfo.drawPlayer.GetAdjustedItemScale(heldItem);
+            Main.instance.LoadItem(itemID);
 
             if (heldItem.TryGetGlobalItem(out ItemUseGlow result))
             {
@@ -199,40 +195,40 @@ namespace Redemption.Globals
             }
         }
 
-	}
-	public class ItemUseGlow : GlobalItem
-	{
-		public Texture2D glowTexture = null;
-		public int glowOffsetY = 0;
-		public int glowOffsetX = 0;
-		public override bool InstancePerEntity => true;
-		public override GlobalItem Clone(Item item, Item itemClone)
-		{
-			return base.Clone(item, itemClone);
-		}
-		public override void PostDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-		{
-			if (glowTexture != null)
-			{
-				Texture2D texture = glowTexture;
-				spriteBatch.Draw
-				(
-					texture,
-					new Vector2
-					(
-						item.position.X - Main.screenPosition.X + item.width * 0.5f,
-						item.position.Y - Main.screenPosition.Y + item.height - texture.Height * 0.5f + 2f
-					),
-					new Rectangle(0, 0, texture.Width, texture.Height),
-					Color.White,
-					rotation,
-					texture.Size() * 0.5f,
-					scale,
-					SpriteEffects.None,
-					0f
-				);
-			}
-			base.PostDrawInWorld(item, spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
-		}
-	}
+    }
+    public class ItemUseGlow : GlobalItem
+    {
+        public Texture2D glowTexture = null;
+        public int glowOffsetY = 0;
+        public int glowOffsetX = 0;
+        public override bool InstancePerEntity => true;
+        public override GlobalItem Clone(Item item, Item itemClone)
+        {
+            return base.Clone(item, itemClone);
+        }
+        public override void PostDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            if (glowTexture != null)
+            {
+                Texture2D texture = glowTexture;
+                spriteBatch.Draw
+                (
+                    texture,
+                    new Vector2
+                    (
+                        item.position.X - Main.screenPosition.X + item.width * 0.5f,
+                        item.position.Y - Main.screenPosition.Y + item.height - texture.Height * 0.5f + 2f
+                    ),
+                    new Rectangle(0, 0, texture.Width, texture.Height),
+                    Color.White,
+                    rotation,
+                    texture.Size() * 0.5f,
+                    scale,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+            base.PostDrawInWorld(item, spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
+        }
+    }
 }
