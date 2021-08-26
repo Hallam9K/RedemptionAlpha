@@ -7,6 +7,7 @@ using Terraria.GameContent;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
 using Terraria.GameContent.Creative;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -46,6 +47,18 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             if (type == ProjectileID.WoodenArrowFriendly)
             {
                 type = ModContent.ProjectileType<LunarShot_Proj>();
+            }
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string text = "There is no moonlight to reflect...";
+            if (Main.dayTime || Main.moonPhase == 4)
+            {
+                TooltipLine line = new(Mod, "text", text)
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Insert(2, line);
             }
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
