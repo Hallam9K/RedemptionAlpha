@@ -1,10 +1,8 @@
 # RedemptionAlpha
 
 TODO
-- Code Moonflare Bats and their items
 - Code Wandering Souls (Rename too)
 - Create the Skeleton Invasion
-- Code Grave Steel weapons
 - Code Ancient Novice's Staff (Maybe rename too)
 - Code Jolly Madman
 - Rebuild the ancient decal (When Structure Helper works)
