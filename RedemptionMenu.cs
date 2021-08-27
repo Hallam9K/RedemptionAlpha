@@ -19,7 +19,7 @@ namespace Redemption
 
         public override string DisplayName => "Ruined Kingdom";
 
-        // public override int Music => Mod.GetSoundSlot(Terraria.ModLoader.SoundType.Music, "Redemption/Sounds/Music/RuinedKingdom");
+        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/RuinedKingdom");
 
         public override Asset<Texture2D> MoonTexture => ModContent.Request<Texture2D>($"{MenuAssetPath}/Empty");
 
