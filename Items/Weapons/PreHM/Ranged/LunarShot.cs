@@ -9,6 +9,7 @@ using Redemption.Projectiles.Ranged;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -71,6 +72,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<MoonflareFragment>(), 8)
                 .AddTile(TileID.Anvils)
+                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("In Moonlight"), _ => !Main.dayTime && Main.moonPhase != 4))
                 .Register();
         }
     }

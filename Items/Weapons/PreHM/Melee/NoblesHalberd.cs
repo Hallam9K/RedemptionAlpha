@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;	
 
             // Weapon Properties
-            Item.damage = 42;
+            Item.damage = 34;
             Item.knockBack = 10.5f;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (player.altFunctionUse == 2)
             {
-                damage = (int)(damage * 0.28f);
+                damage = (int)(damage * 0.34f);
                 knockback -= 4;
                 type = ModContent.ProjectileType<NoblesHalberd_Proj>();
             }

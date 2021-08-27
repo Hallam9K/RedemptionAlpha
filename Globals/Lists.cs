@@ -227,7 +227,29 @@ namespace Redemption.Globals
             ModContent.NPCType<SkeletonFlagbearer>(),
             ModContent.NPCType<SkeletonNoble>(),
             ModContent.NPCType<SkeletonWanderer>(),
-            ModContent.NPCType<SkeletonWarden>()
+            ModContent.NPCType<SkeletonWarden>(),
+            ModContent.NPCType<VagrantSpirit>(),
+            77,
+            449,
+            450,
+            451,
+            452,
+            481,
+            201,
+            202,
+            203,
+            21,
+            324,
+            110,
+            323,
+            293,
+            291,
+            322,
+            292,
+            197,
+            167,
+            44,
+            635
         };
 
         public static List<int> IsBunny = new()

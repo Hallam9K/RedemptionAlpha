@@ -378,7 +378,7 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? (Main.raining ? 0.8f : 0.5f) : 0f;
+            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? (Main.raining ? 0.4f : 0.2f) : 0f;
 
             return baseChance * multiplier;
         }

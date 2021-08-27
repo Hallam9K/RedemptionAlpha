@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -102,6 +103,11 @@ namespace Redemption.Globals.NPC
                 attacker = player;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
+        }
+        public override void OnKill(Terraria.NPC npc)
+        {           
+            if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
+                RedeHelper.SpawnNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

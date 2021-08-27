@@ -33,7 +33,6 @@ namespace Redemption.NPCs.PreHM
         public float SpeedMultiplier = 1f;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.Skeletons[NPC.type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {

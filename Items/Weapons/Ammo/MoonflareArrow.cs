@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.Ammo
@@ -57,6 +58,7 @@ namespace Redemption.Items.Weapons.Ammo
 				.AddIngredient(ItemID.WoodenArrow, 20)
 				.AddIngredient(ModContent.ItemType<MoonflareFragment>())
 				.AddTile(TileID.WorkBenches)
+				.AddCondition(new Recipe.Condition(NetworkText.FromLiteral("In Moonlight"), _ => !Main.dayTime && Main.moonPhase != 4))
 				.Register();
 		}
 	}
