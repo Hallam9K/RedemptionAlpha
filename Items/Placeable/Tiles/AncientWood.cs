@@ -1,3 +1,4 @@
+using Redemption.Items.Placeable.Furniture.AncientWood;
 using Redemption.Tiles.Tiles;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -35,6 +36,10 @@ namespace Redemption.Items.Placeable.Tiles
                 .Register();
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<AncientWoodWall>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<AncientWoodPlatform>(), 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

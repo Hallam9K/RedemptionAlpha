@@ -24,6 +24,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.Origin = new Point16(1, 2);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
@@ -40,10 +41,6 @@ namespace Redemption.Tiles.Furniture.Misc
                 SoundEngine.PlaySound(SoundID.Item16, i * 16, j * 16);
                 Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>());
             }
-        }
-        public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
-        {
-            offsetY = 2;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
