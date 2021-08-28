@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
-using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;

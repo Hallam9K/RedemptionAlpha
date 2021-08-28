@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Redemption.NPCs.Friendly;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Banners;
-using Redemption.NPCs.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.ModLoader;

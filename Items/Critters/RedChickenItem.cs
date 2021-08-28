@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
 using static Redemption.NPCs.Critters.Chicken;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Critters
 {
@@ -11,12 +12,14 @@ namespace Redemption.Items.Critters
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Red Chicken");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 36;
-            Item.height = 30;
+            Item.width = 30;
+            Item.height = 26;
             Item.maxStack = 999;
             Item.value = Item.buyPrice(silver: 5);
             Item.rare = ItemRarityID.Blue;

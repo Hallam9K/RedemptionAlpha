@@ -15,7 +15,7 @@ namespace Redemption
 {
     public class Redemption : Mod
     {
-        public override void AddRecipes() => RecipeSystem.Load(this);
+        public override void AddRecipes() => RedeRecipe.Load(this);
 
         public static Redemption Instance { get; private set; }
 
@@ -26,6 +26,11 @@ namespace Redemption
         public Redemption()
         {
             Instance = this;
+        }
+
+        public override void Unload()
+        {
+            RedeRecipe.Unload();
         }
     }
     public class RedeSystem : ModSystem

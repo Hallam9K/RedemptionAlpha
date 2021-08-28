@@ -1,11 +1,8 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
-using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
-using System;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;

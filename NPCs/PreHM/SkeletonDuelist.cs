@@ -5,7 +5,6 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using System;
 using System.Linq;

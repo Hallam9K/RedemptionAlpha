@@ -1,18 +1,34 @@
+using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
+using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Globals
 {
-    public static class RecipeSystem
+    public static class RedeRecipe
     {
+        public static RecipeGroup ChickenRecipeGroup;
+
+        public static void AddRecipeGroups()
+        {
+            ChickenRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<ChickenItem>())}", ModContent.ItemType<ChickenItem>(), ModContent.ItemType<RedChickenItem>(), ModContent.ItemType<LeghornChickenItem>(), ModContent.ItemType<BlackChickenItem>());
+
+            RecipeGroup.RegisterGroup("Redemption:Chickens", ChickenRecipeGroup);
+        }
+
         public static void Load(Mod mod)
         {
             Redemption_AddRecipes(mod);
         }
 
+        public static void Unload() => ChickenRecipeGroup = null;
+
         private static void Redemption_AddRecipes(Mod mod)
         {
+            AddRecipeGroups();
+
             mod.CreateRecipe(ItemID.GreenDye)
                 .AddIngredient<TreeBugShell>()
                 .AddTile(TileID.DyeVat)

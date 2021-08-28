@@ -6,7 +6,6 @@ using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;

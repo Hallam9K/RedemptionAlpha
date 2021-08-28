@@ -1,13 +1,11 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
-using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
-	public class NoblesHalberd_Proj : ModProjectile
+    public class NoblesHalberd_Proj : ModProjectile
 	{
 		protected virtual float HoldoutRangeMin => 50f;
 		protected virtual float HoldoutRangeMax => 86f;

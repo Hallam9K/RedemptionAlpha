@@ -44,4 +44,11 @@ namespace Redemption.Dusts
             dust.frame = new Rectangle(0, Main.rand.Next(3) * 14, 12, 14);
         }
     }
+    public class ChickenFeatherDust5 : ChickenFeatherDust1
+    {
+        public override void OnSpawn(Dust dust)
+        {
+            dust.frame = new Rectangle(0, Main.rand.Next(3) * 14, 12, 14);
+        }
+    }
 }

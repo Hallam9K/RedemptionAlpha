@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -11,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.Ammo
 {
-	public class MoonflareArrow_Proj : ModProjectile
+    public class MoonflareArrow_Proj : ModProjectile
 	{
         public override string Texture => "Redemption/Items/Weapons/Ammo/MoonflareArrow";
         public override void SetStaticDefaults()

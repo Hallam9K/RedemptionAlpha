@@ -1,0 +1,57 @@
+using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+
+namespace Redemption.Tiles.Furniture.Misc
+{
+    public class ChickenCoopTile : ModTile
+	{
+        public override void SetStaticDefaults()
+		{
+			Main.tileFrameImportant[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            TileObjectData.newTile.Width = 4;
+            TileObjectData.newTile.Height = 3;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.Origin = new Point16(1, 2);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.addTile(Type);
+            DustType = DustID.WoodFurniture;
+            MinPick = 0;
+            MineResist = 1.2f;
+			ModTranslation name = CreateMapEntryName();
+			AddMapEntry(new Color(151, 107, 75), name);
+		}
+        public override void RandomUpdate(int i, int j)
+        {
+            if (Main.rand.NextBool(8))
+            {
+                SoundEngine.PlaySound(SoundID.Item16, i * 16, j * 16);
+                Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>());
+            }
+        }
+        public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
+        {
+            offsetY = 2;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenCoop>());
+        }
+    }
+}
