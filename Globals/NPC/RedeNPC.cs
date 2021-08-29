@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.PreHM;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -35,13 +37,24 @@ namespace Redemption.Globals.NPC
                 if (ItemTags.Poison.Has(item.type))
                     damage = (int)(damage * 0.5f);
             }
-            else if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
+            if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
             {
                 if (ItemTags.Holy.Has(item.type))
                     damage = (int)(damage * 1.25f);
 
                 if (ItemTags.Shadow.Has(item.type))
                     damage = (int)(damage * 0.8f);
+            }
+            if (NPCLists.IsSlime.Contains(npc.type))
+            {
+                if (ItemTags.Fire.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemTags.Ice.Has(item.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ItemTags.Water.Has(item.type))
+                    damage = (int)(damage * 0.5f);
             }
             #endregion
 
@@ -78,13 +91,24 @@ namespace Redemption.Globals.NPC
                 if (ProjectileTags.Poison.Has(projectile.type))
                     damage = (int)(damage * 0.5f);
             }
-            else if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
+            if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
             {
                 if (ProjectileTags.Holy.Has(projectile.type))
                     damage = (int)(damage * 1.25f);
 
                 if (ProjectileTags.Shadow.Has(projectile.type))
                     damage = (int)(damage * 0.8f);
+            }
+            if (NPCLists.IsSlime.Contains(npc.type))
+            {
+                if (ProjectileTags.Fire.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileTags.Ice.Has(projectile.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ProjectileTags.Water.Has(projectile.type))
+                    damage = (int)(damage * 0.5f);
             }
             #endregion
         }
@@ -105,7 +129,7 @@ namespace Redemption.Globals.NPC
                 attacker = npc;
         }
         public override void OnKill(Terraria.NPC npc)
-        {           
+        {
             if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
                 RedeHelper.SpawnNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
@@ -116,6 +140,24 @@ namespace Redemption.Globals.NPC
             IItemDropRule rule = ItemDropRule.Common(ItemID.Skull);
             conditionalRule.OnSuccess(rule);
             globalLoot.Add(conditionalRule);
+        }
+
+        public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
+        {
+            if (RedeWorld.blobbleSwarm)
+            {
+                spawnRate = 10;
+                maxSpawns = 20;
+            }
+        }
+
+        public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+        {
+            if (RedeWorld.blobbleSwarm)
+            {
+                pool.Clear();
+                pool.Add(ModContent.NPCType<Blobble>(), 10f);
+            }
         }
     }
 }
