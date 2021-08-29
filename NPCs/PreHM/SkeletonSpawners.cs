@@ -33,7 +33,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
-            WeightedRandom<SpawnType> SpawnChoice = new();
+            WeightedRandom<SpawnType> SpawnChoice = new(Main.rand);
             SpawnChoice.Add(SpawnType.Noble, 8);
             SpawnChoice.Add(SpawnType.Warden, 10);
             SpawnChoice.Add(SpawnType.Flagbearer, 10);
@@ -41,7 +41,7 @@ namespace Redemption.NPCs.PreHM
             SpawnChoice.Add(SpawnType.Group, 3);
             SpawnChoice.Add(SpawnType.LargeGroup, 1);
 
-            WeightedRandom<int> NPCType = new();
+            WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonNoble>());
             NPCType.Add(ModContent.NPCType<SkeletonWarden>());
             NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
@@ -129,7 +129,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
-            WeightedRandom<SpawnType> choice = new();
+            WeightedRandom<SpawnType> choice = new(Main.rand);
             choice.Add(SpawnType.Normal, 10);
             choice.Add(SpawnType.Wanderer, 10);
             choice.Add(SpawnType.Assassin, 9);
@@ -138,7 +138,7 @@ namespace Redemption.NPCs.PreHM
             choice.Add(SpawnType.Group, 3);
             choice.Add(SpawnType.LargeGroup, 1);
 
-            WeightedRandom<int> NPCType = new();
+            WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
             NPCType.Add(ModContent.NPCType<SkeletonAssassin>());
             NPCType.Add(ModContent.NPCType<SkeletonDuelist>());
