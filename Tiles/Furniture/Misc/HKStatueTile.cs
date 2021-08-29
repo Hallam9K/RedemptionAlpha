@@ -34,6 +34,7 @@ namespace Redemption.Tiles.Furniture.Misc
             MineResist = 15f;
             AddMapEntry(new Color(104, 91, 83));
         }
+
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
@@ -44,10 +45,12 @@ namespace Redemption.Tiles.Furniture.Misc
                 player.GetModPlayer<RedePlayer>().foundHall = true;
             }
         }
+
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<HKStatue>());
         }
+
         public override bool CanExplode(int i, int j) => false;
     }
 }
