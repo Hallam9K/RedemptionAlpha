@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.Ammo
 			Item.consumable = true;
 			Item.knockBack = 2.5f;
 			Item.value = 2;
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.shoot = ModContent.ProjectileType<MoonflareArrow_Proj>();
 			Item.shootSpeed = 7f;
 			Item.ammo = AmmoID.Arrow;

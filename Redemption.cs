@@ -2,11 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -23,9 +25,16 @@ namespace Redemption
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
 
+        public static int AntiqueDorulCurrencyId;
+
         public Redemption()
         {
             Instance = this;
+        }
+
+        public override void Load()
+        {
+            AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
 
         public override void Unload()

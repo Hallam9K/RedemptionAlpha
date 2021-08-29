@@ -11,10 +11,10 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Statue of the Protector");
-            Tooltip.SetDefault("[c/ffea9b:We're burdened with purpose,]" +
+            Tooltip.SetDefault("[c/ffea9b:'We're burdened with purpose,]" +
                 "\n[c/ffea9b:So here we remain,]" +
                 "\n[c/ffea9b:We're incandescent,]" +
-                "\n[c/ffea9b:A glorious flame...]" +
+                "\n[c/ffea9b:A glorious flame...']" +
                 "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
 

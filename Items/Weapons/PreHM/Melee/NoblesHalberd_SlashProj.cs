@@ -30,6 +30,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.ownerHitCheck = true;
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         int directionLock = 0;
         public override void AI()
         {

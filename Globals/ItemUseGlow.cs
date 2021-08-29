@@ -79,7 +79,7 @@ namespace Redemption.Globals
                     {
                         flag2 = false;
                     }
-                    if (drawInfo.shadow != 0f || drawInfo.drawPlayer.frozen || !(flag || flag2) || itemID <= 0 || drawInfo.drawPlayer.dead || heldItem.noUseGraphic || (drawInfo.drawPlayer.wet && heldItem.noWet) || (drawInfo.drawPlayer.happyFunTorchTime && drawInfo.drawPlayer.inventory[drawInfo.drawPlayer.selectedItem].createTile == 4 && drawInfo.drawPlayer.itemAnimation == 0))
+                    if (drawInfo.shadow != 0f || drawInfo.drawPlayer.frozen || !(flag || flag2) || itemID <= 0 || drawInfo.drawPlayer.dead || heldItem.noUseGraphic || (drawInfo.drawPlayer.wet && heldItem.noWet) || (drawInfo.drawPlayer.happyFunTorchTime && drawInfo.drawPlayer.inventory[drawInfo.drawPlayer.selectedItem].createTile == TileID.Torches && drawInfo.drawPlayer.itemAnimation == 0))
                     {
                         return;
                     }
@@ -112,7 +112,7 @@ namespace Redemption.Globals
                     ItemSlot.GetItemLight(ref drawInfo.itemColor, heldItem);
                     DrawData drawData;
 
-                    if (heldItem.useStyle == 5)
+                    if (heldItem.useStyle == ItemUseStyleID.Shoot)
                     {
                         if (Item.staff[itemID])
                         {
