@@ -18,7 +18,6 @@ namespace Redemption.Items.Usable
         }
 
         private float glowRot = 0;
-
         public override void SetDefaults()
         {
             Item.width = 48;
@@ -44,12 +43,52 @@ namespace Redemption.Items.Usable
 
         public override bool? UseItem(Player player)
         {
-
-
+            CombatText.NewText(player.Hitbox, Color.DarkGoldenrod, RedeWorld.alignment, true, false);
 
             if (RedeWorld.alignment == 0)
             {
                 Main.NewText("<Chalice of Alignment> You are truely neutral...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= -1 && RedeWorld.alignment <= 1)
+            {
+                Main.NewText("<Chalice of Alignment> You are safe for now...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
+            {
+                Main.NewText("<Chalice of Alignment> You are choosing the right path. Please, continue.", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
+            {
+                Main.NewText("<Chalice of Alignment> You are really pushing it aren't you... If you continue this road, he will come...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
+            {
+                Main.NewText("<Chalice of Alignment> I am proud of you for keeping the light within you bright...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)
+            {
+                Main.NewText("<Chalice of Alignment> ... Listen, you are following the wrong path here... Please, go back.", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= 6 && RedeWorld.alignment <= 7)
+            {
+                Main.NewText("<Chalice of Alignment> Vanquishing the evil of the world... You really are something.", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= -9 && RedeWorld.alignment <= -8)
+            {
+                Main.NewText("<Chalice of Alignment> I am sorry, you can't go back now...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= 8 && RedeWorld.alignment <= 9)
+            {
+                Main.NewText("<Chalice of Alignment> Light shines within you, but I am sure more dangerous foes lie ahead...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment <= -10)
+            {
+                Main.NewText("<Chalice of Alignment> You are past redemption...", Color.DarkGoldenrod);
+            }
+            else if (RedeWorld.alignment >= 10)
+            {
+                Main.NewText("<Chalice of Alignment> You are the redemption this world needed...", Color.DarkGoldenrod);
+
             }
             return true;
         }
@@ -62,7 +101,7 @@ namespace Redemption.Items.Usable
                 return;
         }
 
-        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(211, 232, 169), new Color(247, 247, 169), new Color(211, 232, 169));
@@ -71,11 +110,12 @@ namespace Redemption.Items.Usable
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            spriteBatch.Draw(glow, Item.Center - Main.screenPosition - new Vector2(0f, 18f), new Rectangle(0, 0, glow.Width, glow.Height ), color, glowRot, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(glow, Item.Center - Main.screenPosition - new Vector2(0f, 18f), new Rectangle(0, 0, glow.Width, glow.Height), color, glowRot, origin, scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(glow, Item.Center - Main.screenPosition - new Vector2(0f, 18f), new Rectangle(0, 0, glow.Width, glow.Height), color, -glowRot, origin, scale, SpriteEffects.None, 0f);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            return true;
         }
     }
 }
