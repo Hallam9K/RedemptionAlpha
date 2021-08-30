@@ -7,6 +7,8 @@ namespace Redemption
         public static bool blobbleSwarm;
         public static int blobbleSwarmTimer;
         public static int blobbleSwarmCooldown;
+        public static int alignment = 0;
+
 
         public override void PostUpdateWorld()
         {
