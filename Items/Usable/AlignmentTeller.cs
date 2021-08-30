@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,6 +16,8 @@ namespace Redemption.Items.Usable
             DisplayName.SetDefault("Chalice of Alignment");
             Tooltip.SetDefault("Tells you your current alignment"
                 + "\n[c/ffea9b:A sentient treasure, cursed with visions of what is yet to come]");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         private float glowRot = 0;
@@ -35,10 +38,10 @@ namespace Redemption.Items.Usable
         public override void AddRecipes()
         {
             CreateRecipe()
-                    .AddIngredient(ModContent.ItemType<CursedGem>())
-                    .AddIngredient(ItemID.SteampunkCup)
-                    .AddTile(TileID.DemonAltar)
-                    .Register();
+                .AddIngredient(ModContent.ItemType<CursedGem>())
+                .AddIngredient(ItemID.SteampunkCup)
+                .AddTile(TileID.DemonAltar)
+                .Register();
         }
 
         public override bool? UseItem(Player player)
@@ -46,59 +49,33 @@ namespace Redemption.Items.Usable
             CombatText.NewText(player.Hitbox, Color.DarkGoldenrod, RedeWorld.alignment, true, false);
 
             if (RedeWorld.alignment == 0)
-            {
-                Main.NewText("<Chalice of Alignment> You are truely neutral...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truely neutral...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= -1 && RedeWorld.alignment <= 1)
-            {
-                Main.NewText("<Chalice of Alignment> You are safe for now...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are safe for now...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
-            {
-                Main.NewText("<Chalice of Alignment> You are choosing the right path. Please, continue.", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are choosing the right path. Please, continue.", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
-            {
-                Main.NewText("<Chalice of Alignment> You are really pushing it aren't you... If you continue this road, he will come...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue this road, he will come...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
-            {
-                Main.NewText("<Chalice of Alignment> I am proud of you for keeping the light within you bright...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am proud of you for keeping the light within you bright...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)
-            {
-                Main.NewText("<Chalice of Alignment> ... Listen, you are following the wrong path here... Please, go back.", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("... Listen, you are following the wrong path here... Please, go back.", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= 6 && RedeWorld.alignment <= 7)
-            {
-                Main.NewText("<Chalice of Alignment> Vanquishing the evil of the world... You really are something.", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Vanquishing the evil of the world... You really are something.", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= -9 && RedeWorld.alignment <= -8)
-            {
-                Main.NewText("<Chalice of Alignment> I am sorry, you can't go back now...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am sorry, you can't go back now...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= 8 && RedeWorld.alignment <= 9)
-            {
-                Main.NewText("<Chalice of Alignment> Light shines within you, but I am sure more dangerous foes lie ahead...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Light shines within you, but I am sure more dangerous foes lie ahead...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment <= -10)
-            {
-                Main.NewText("<Chalice of Alignment> You are past redemption...", Color.DarkGoldenrod);
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are past redemption...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             else if (RedeWorld.alignment >= 10)
-            {
-                Main.NewText("<Chalice of Alignment> You are the redemption this world needed...", Color.DarkGoldenrod);
-
-            }
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are the redemption this world needed...", 120, 30, 0, Color.DarkGoldenrod, null, null, player.Center);
             return true;
         }
 
         public override void PostUpdate()
         {
             glowRot += 0.03f;
-
-            if (!Main.rand.NextBool(30))
-                return;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

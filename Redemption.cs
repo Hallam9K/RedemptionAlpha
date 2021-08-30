@@ -55,6 +55,11 @@ namespace Redemption
         UserInterface ChestMenuUI;
         internal ChestCustomizerState ChestCustomizer;
 
+        public UserInterface DialogueUILayer;
+        public MoRDialogueUI DialogueUIElement;
+        public UserInterface ChaliceUILayer;
+        public ChaliceAlignmentUI ChaliceUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -64,6 +69,14 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 On.Terraria.Main.Update += LoadTrailManager;
+
+                DialogueUILayer = new UserInterface();
+                DialogueUIElement = new MoRDialogueUI();
+                DialogueUILayer.SetState(DialogueUIElement);
+
+                ChaliceUILayer = new UserInterface();
+                ChaliceUIElement = new ChaliceAlignmentUI();
+                ChaliceUILayer.SetState(ChaliceUIElement);
 
                 GeneratorMenuUI = new UserInterface();
                 GeneratorMenu = new ManualGeneratorMenu();
@@ -114,7 +127,37 @@ namespace Redemption
 
                     return true;
                 }, InterfaceScaleType.UI));
+            int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (MouseTextIndex != -1)
+            {
+                AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex, ChaliceAlignmentUI.Visible, "Chalice");
+                AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 1, MoRDialogueUI.Visible, "Dialogue");
+            }
         }
+
+        public static void AddInterfaceLayer(List<GameInterfaceLayer> layers, UserInterface userInterface, UIState state, int index, bool visible, string customName = null) //Code created by Scalie
+        {
+            string name;
+            if (customName == null)
+            {
+                name = state.ToString();
+            }
+            else
+            {
+                name = customName;
+            }
+            layers.Insert(index, new LegacyGameInterfaceLayer("Redemption: " + name,
+                delegate
+                {
+                    if (visible)
+                    {
+                        userInterface.Update(Main._drawInterfaceGameTime);
+                        state.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                }, InterfaceScaleType.UI));
+        }
+
         #region StructureHelper Draw
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
