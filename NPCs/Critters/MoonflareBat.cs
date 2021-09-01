@@ -172,7 +172,7 @@ namespace Redemption.NPCs.Critters
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    Main.spriteBatch.Draw(Trail, oldPos + NPC.Size / 2f - Main.screenPosition + new Vector2(0, NPC.gfxOffY), NPC.frame, Color.White * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    Main.spriteBatch.Draw(Trail, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, Color.White * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
 
                 spriteBatch.End();

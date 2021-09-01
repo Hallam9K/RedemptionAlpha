@@ -5,6 +5,8 @@ using Redemption.Globals;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
+using Redemption.Tiles.Tiles;
+using System.Linq;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -187,9 +189,12 @@ namespace Redemption.NPCs.PreHM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float baseChance = SpawnCondition.Cavern.Chance * 0.1f;
+            int[] AncientTileArray = { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>() };
 
-            return baseChance;
+            float baseChance = SpawnCondition.Cavern.Chance;
+            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type) ? 0.3f : 0.1f;
+
+            return baseChance * multiplier;
         }
     }
 }
