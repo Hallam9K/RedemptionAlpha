@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Ranged;
 using ReLogic.Content;
 using System;
@@ -32,12 +33,16 @@ namespace Redemption.Effects
 			Mod mod = Redemption.Instance;
 			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>())
 				CreateTrail(projectile, new GradientTrail(new Color(250, 205, 160), new Color(255, 255, 218)), new RoundCap(), new ArrowGlowPosition(), 20f, 150f);
+			if (projectile.type == ModContent.ProjectileType<CantripEmber>())
+				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new ArrowGlowPosition(), 50f, 150f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
+			if (projectile.type == ModContent.ProjectileType<CantripEmberS>())
+				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new DefaultTrailPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
 		}
 
-        public void TryTrailKill(Projectile projectile)
+		public void TryTrailKill(Projectile projectile)
 		{
 			Mod mod = Redemption.Instance;
-			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>())
+			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>())
 				RedeSystem.TrailManager.TryEndTrail(projectile, Math.Max(15f, projectile.velocity.Length() * 3f));
 		}
 
