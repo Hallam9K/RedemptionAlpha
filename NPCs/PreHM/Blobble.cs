@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.Globals.NPC;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -80,6 +81,8 @@ namespace Redemption.NPCs.PreHM
             NPC.aiStyle = -1;
             NPC.alpha = 60;
             NPC.rarity = 1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BlobbleBanner>();
         }
 
         public override void HitEffect(int hitDirection, double damage)
