@@ -34,9 +34,40 @@ namespace Redemption.Projectiles.Magic
             int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1f);
             Main.dust[dustIndex].noGravity = true;
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = height = 16;
+            return true;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            SoundEngine.PlaySound(SoundID.Item20, Projectile.position);
+            for (int i = 0; i < 24; i++)
+            {
+                int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);
+                Main.dust[dust].velocity *= 10f;
+                Main.dust[dust].noGravity = true;
+            }
+            Projectile.penetrate--;
+            if (Projectile.penetrate <= 0)
+                Projectile.Kill();
+            else
+            {
+                if (Projectile.velocity.X != oldVelocity.X)
+                {
+                    Projectile.velocity.X = -oldVelocity.X;
+                }
+                if (Projectile.velocity.Y != oldVelocity.Y)
+                {
+                    Projectile.velocity.Y = -oldVelocity.Y;
+                }
+            }
+            return false;
+        }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
+            if (!Projectile.wet)
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
             for (int i = 0; i < 24; i++)
             {
                 int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);

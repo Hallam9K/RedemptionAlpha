@@ -66,9 +66,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             SoundEngine.PlaySound(SoundID.Tink, (int)Projectile.position.X, (int)Projectile.position.Y, 1);
             Projectile.penetrate--;
             if (Projectile.penetrate <= 0)
-            {
                 Projectile.Kill();
-            }
             else
             {
                 if (Projectile.velocity.X != oldVelocity.X)

@@ -10,18 +10,18 @@ using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
-    public class NoblesHalberd_SlashProj : ModProjectile
+    public class Zweihander_SlashProj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Noble's Halberd");
-            Main.projFrames[Projectile.type] = 6;
+            DisplayName.SetDefault("Zweihander");
+            Main.projFrames[Projectile.type] = 8;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetDefaults()
         {
-            Projectile.width = 78;
-            Projectile.height = 94;
+            Projectile.width = 222;
+            Projectile.height = 156;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.friendly = true;
             Projectile.hostile = false;
@@ -30,19 +30,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.ownerHitCheck = true;
         }
 
-        public override bool? CanCutTiles()
-        {
-            return false;
-        }
+        public override bool? CanCutTiles() => false;
 
         int directionLock = 0;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
-            Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
-            Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+
+            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 111 : Projectile.Center.X), (int)(Projectile.Center.Y - 78), 111, 156);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -57,42 +53,42 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.ai[0] = 1;
                         directionLock = player.direction;
                     }
-                    if (++Projectile.frameCounter >= 7)
-                    {
-                        Projectile.frameCounter = 0;
-                        Projectile.frame++;
-                        if (Projectile.frame > 2)
-                        {
-                            Projectile.frame = 2;
-                        }
-                    }
                 }
                 if (Projectile.ai[0] >= 1)
                 {
                     player.direction = directionLock;
                     Projectile.ai[0]++;
                     if (Projectile.frame > 2)
-                        player.itemRotation -= MathHelper.ToRadians(-8f * player.direction);
+                        player.itemRotation -= MathHelper.ToRadians(-20f * player.direction);
                     else 
                         player.bodyFrame.Y = 5 * player.bodyFrame.Height;
                     if (++Projectile.frameCounter >= 7)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
-                        if (Projectile.frame is 4)
+                        if (Projectile.frame is 3)
                         {
-                            if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
-                            {
-                                SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
-                            }
-                            else
-                            {
-                                SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                            }
+                            SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
                             player.velocity.X += 2 * player.direction;
+                            foreach (Projectile target in Main.projectile)
+                            {
+                                if (!target.active || target.whoAmI == Projectile.whoAmI || target.damage > 100 || !projHitbox.Intersects(target.Hitbox))
+                                    continue;
+
+                                if (ProjectileLists.IsTechnicallyMelee.Contains(target.type) || ProjectileID.Sets.CountsAsHoming[target.type] || ProjectileTags.Arcane.Has(target.type) || ProjectileTags.Psychic.Has(target.type) || ProjectileTags.Water.Has(target.type))
+                                    continue;
+
+                                SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
+                                DustHelper.DrawCircle(target.Center, DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                                if (target.hostile || target.friendly)
+                                {
+                                    target.hostile = false;
+                                    target.friendly = true;
+                                }
+                                target.velocity.X = -target.velocity.X * 0.8f;
+                            }
                         }
-                        if (Projectile.frame > 5)
+                        if (Projectile.frame > 7)
                         {
                             Projectile.Kill();
                         }
@@ -109,12 +105,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (crit)
-                damage += damage / 2;
-
             if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
             {
-                if (Main.rand.NextBool(80))
+                if (Main.rand.NextBool(200))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
                     target.GetGlobalNPC<RedeNPC>().decapitated = true;
@@ -126,21 +119,32 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Player player = Main.player[Projectile.owner];
+
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int height = texture.Height / 6;
+            int height = texture.Height / 8;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(0, 24 + Projectile.gfxOffY), new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(-8 * player.direction, 24 + Projectile.gfxOffY), new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+
+            Texture2D slash = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/Zweihander_SlashProj2").Value;
+            int height2 = slash.Height / 3;
+            int y2 = height2 * (Projectile.frame - 3);
+            Rectangle rect2 = new(0, y2, slash.Width, height2);
+            Vector2 drawOrigin2 = new(slash.Width / 2, slash.Height / 2);
+
+            if (Projectile.frame >= 3 && Projectile.frame <= 5)
+                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(-9 * player.direction, -139 + Projectile.gfxOffY), new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
-            return Projectile.frame is 4 && projHitbox.Intersects(targetHitbox);
+            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 111 : Projectile.Center.X), (int)(Projectile.Center.Y - 78), 111, 156);
+            return Projectile.frame is 3 && projHitbox.Intersects(targetHitbox);
         }
     }
 }

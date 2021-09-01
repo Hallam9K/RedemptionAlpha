@@ -460,6 +460,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<JollyHelm>(), 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 4, 12));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 1, 8, 16));
