@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
@@ -43,6 +44,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<Zweihander_SlashProj>();
+        }
+
+        public override void PostUpdate()
+        {
+            if (!Main.rand.NextBool(30))
+                return;
+
+            int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height,
+                DustID.SilverCoin, 0, 0, 20);
+            Main.dust[sparkle].velocity *= 0;
+            Main.dust[sparkle].noGravity = true;
         }
 
         public override void AddRecipes()
