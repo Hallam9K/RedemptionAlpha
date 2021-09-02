@@ -105,6 +105,17 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
+        private bool ignoreArmor;
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (!ignoreArmor && NPC.life >= NPC.lifeMax - 25)
+            {
+                damage = (int)(damage * 0.25f);
+                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
+            }
+            ignoreArmor = false;
+            return true;
+        }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (ItemTags.Holy.Has(item.type))
@@ -124,11 +135,8 @@ namespace Redemption.NPCs.PreHM
                 damage = 1;
             }
 
-            if (item.hammer == 0 && !ItemTags.Psychic.Has(item.type) && !crit && NPC.life >= NPC.lifeMax - 25)
-            {
-                damage = (int)(damage * 0.25f);
-                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
-            }
+            if (item.hammer > 0 || ItemTags.Psychic.Has(item.type) || crit)
+                ignoreArmor = true;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -149,11 +157,8 @@ namespace Redemption.NPCs.PreHM
                 damage = 1;
             }
 
-            if (!crit && !ProjectileTags.Psychic.Has(projectile.type) && NPC.life >= NPC.lifeMax - 25)
-            {
-                damage = (int)(damage * 0.25f);
-                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
-            }
+            if (crit || ProjectileTags.Psychic.Has(projectile.type))
+                ignoreArmor = true;
         }
 
         private Vector2 moveTo;
