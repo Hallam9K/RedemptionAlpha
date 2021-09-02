@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Critters;
+using Redemption.Projectiles.Melee;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -16,17 +17,35 @@ namespace Redemption.Globals.Player
         public int infestedTime;
         public bool charisma;
         public bool vendetta;
+        public bool thornCirclet = false;
+        public int thornCircletCounter = 0;
 
         public override void ResetEffects()
         {
             devilScented = false;
             charisma = false;
             vendetta = false;
+            thornCirclet = false;
             if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
                 infestedTime = 0;
             }
+        }
+        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
+        {
+            if (thornCirclet && !item.CountsAsClass(DamageClass.Summon))
+            {
+                if (++thornCircletCounter >= 5)
+                {
+                    for (int i = 0; i < Main.rand.Next(2, 6); i++)
+                    {
+                        Projectile.NewProjectile(source, position, RedeHelper.PolarVector(Main.rand.NextFloat(7, 13), (Main.MouseWorld - Player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<StingerFriendly>(), damage, knockback, Main.myPlayer);
+                    }
+                    thornCircletCounter = 0;
+                }
+            }
+            return base.Shoot(item, source, position, velocity, type, damage, knockback);
         }
         public override void OnHitByNPC(Terraria.NPC npc, int damage, bool crit)
         {

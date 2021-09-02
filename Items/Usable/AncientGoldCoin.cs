@@ -25,7 +25,7 @@ namespace Redemption.Items.Usable
             Item.height = 16;
             Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 0, 1, 0);
-            Item.rare = -1;
+            Item.rare = ItemRarityID.Gray;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;

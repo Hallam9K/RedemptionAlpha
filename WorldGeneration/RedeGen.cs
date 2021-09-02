@@ -11,11 +11,115 @@ using Redemption.Globals;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Containers;
 using Redemption.Tiles.Tiles;
+using Redemption.Tiles.Plants;
 
 namespace Redemption.WorldGeneration
 {
     public class RedeGen : ModSystem
     {
+        /// <summary>
+        /// Checks if the given area is more or less flattish.
+        /// Returns false if the average tile height variation is greater than the threshold.
+        /// Expects that the first tile is solid, and traverses from there.
+        /// Use the weight parameters to change the importance of up/down checks. - Spirit Mod
+        /// </summary>
+        public static bool CheckFlat(int startX, int startY, int width, float threshold, int goingDownWeight = 0, int goingUpWeight = 0)
+        {
+            // Fail if the tile at the other end of the check plane isn't also solid
+            if (!WorldGen.SolidTile(startX + width, startY)) return false;
+
+            float totalVariance = 0;
+            for (int i = 0; i < width; i++)
+            {
+                if (startX + i >= Main.maxTilesX) return false;
+
+                // Fail if there is a tile very closely above the check area
+                for (int k = startY - 1; k > startY - 100; k--)
+                {
+                    if (WorldGen.SolidTile(startX + i, k)) return false;
+                }
+
+                // If the tile is solid, go up until we find air
+                // If the tile is not, go down until we find a floor
+                int offset = 0;
+                bool goingUp = WorldGen.SolidTile(startX + i, startY);
+                offset += goingUp ? goingUpWeight : goingDownWeight;
+                while ((goingUp && WorldGen.SolidTile(startX + i, startY - offset))
+                    || (!goingUp && !WorldGen.SolidTile(startX + i, startY + offset)))
+                {
+                    offset++;
+                }
+                if (goingUp) offset--; // account for going up counting the first tile
+                totalVariance += offset;
+            }
+            return totalVariance / width <= threshold;
+        }
+
+        private static void SpawnThornSummon()
+        {
+            bool placed1 = false;
+            int attempts = 0;
+            int placed2 = 0;
+            int placeX2 = 0;
+            while (!placed1 && attempts++ < 100000)
+            {
+                int placeX = Main.spawnTileX + WorldGen.genRand.Next(-600, 600);
+
+                int placeY = (int)Main.worldSurface - 200;
+
+                if (placeX > Main.spawnTileX - 100 && placeX < Main.spawnTileX + 100)
+                    continue;
+                // We go down until we hit a solid tile or go under the world's surface
+                while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
+                {
+                    placeY++;
+                }
+                // If we went under the world's surface, try again
+                if (placeY > Main.worldSurface)
+                    continue;
+                Tile tile = Main.tile[placeX, placeY];
+                if (tile.type != TileID.Grass)
+                    continue;
+                if (!CheckFlat(placeX, placeY, 2, 0))
+                    continue;
+
+                WorldGen.PlaceObject(placeX, placeY - 1, ModContent.TileType<HeartOfThornsTile>(), true);
+                NetMessage.SendObjectPlacment(-1, placeX, placeY - 1, (ushort)ModContent.TileType<HeartOfThornsTile>(), 0, 0, -1, -1);
+                if (Main.tile[placeX, placeY - 1].type != ModContent.TileType<HeartOfThornsTile>())
+                    continue;
+                placeX2 = placeX;
+                attempts = 0;
+                placed1 = true;
+            }
+            while (placed1 && placed2 < 30 && attempts++ < 100000)
+            {
+                int placeX3 = placeX2 + WorldGen.genRand.Next(-20, 20);
+
+                int placeY = (int)Main.worldSurface - 200;
+                // We go down until we hit a solid tile or go under the world's surface
+                while (!WorldGen.SolidTile(placeX3, placeY) && placeY <= Main.worldSurface)
+                    placeY++;
+                // If we went under the world's surface, try again
+                if (placeY > Main.worldSurface)
+                    continue;
+                Tile tile = Main.tile[placeX3, placeY];
+                if (tile.type != TileID.Grass)
+                    continue;
+                switch (WorldGen.genRand.Next(2))
+                {
+                    case 0:
+                        WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<ThornsTile>(), true, WorldGen.genRand.Next(2));
+                        NetMessage.SendObjectPlacment(-1, placeX3, placeY - 1, (ushort)ModContent.TileType<ThornsTile>(), WorldGen.genRand.Next(2), 0, -1, -1);
+                        break;
+                    case 1:
+                        WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<ThornsTile2>(), true, WorldGen.genRand.Next(2));
+                        NetMessage.SendObjectPlacment(-1, placeX3, placeY - 1, (ushort)ModContent.TileType<ThornsTile>(), WorldGen.genRand.Next(2), 0, -1, -1);
+                        break;
+                }
+                placed2++;
+            }
+        }
+
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
             int ShiniesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
@@ -23,7 +127,11 @@ namespace Redemption.WorldGeneration
             int GuideIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
             if (GuideIndex == -1)
                 return;
-
+            tasks.Insert(GuideIndex, new PassLegacy("Heart of Thorns", delegate (GenerationProgress progress, GameConfiguration configuration)
+            {
+                progress.Message = "Cursing the forest";
+                SpawnThornSummon();
+            }));
             if (ShiniesIndex != -1)
             {
                 tasks.Insert(ShiniesIndex + 2, new PassLegacy("Generating P L A N T", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -238,7 +346,7 @@ namespace Redemption.WorldGeneration
 
             //int[] ChestLoot2 = new int[]
             //{
-                //ModContent.ItemType<AncientWoodStave>(), ModContent.ItemType<AncientWoodSword>(), ModContent.ItemType<AncientWoodBow>()
+            //ModContent.ItemType<AncientWoodStave>(), ModContent.ItemType<AncientWoodSword>(), ModContent.ItemType<AncientWoodBow>()
             //};
             int[] ChestLoot3 = new int[]
             {

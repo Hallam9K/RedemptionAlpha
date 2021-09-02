@@ -1,4 +1,5 @@
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PreHM
@@ -19,7 +20,7 @@ namespace Redemption.Items.Materials.PreHM
             Item.height = 42;
             Item.maxStack = 30;
             Item.value = 0;
-            Item.rare = -1;
+            Item.rare = ItemRarityID.Gray;
         }
     }
 }

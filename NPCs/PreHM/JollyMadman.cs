@@ -108,7 +108,7 @@ namespace Redemption.NPCs.PreHM
         private bool ignoreArmor;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!ignoreArmor && NPC.life >= NPC.lifeMax - 25)
+            if (!ignoreArmor && !NPC.HasBuff(BuffID.BrokenArmor) && NPC.life >= NPC.lifeMax - 25)
             {
                 damage = (int)(damage * 0.25f);
                 SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);

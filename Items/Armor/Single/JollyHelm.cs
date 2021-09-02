@@ -1,4 +1,5 @@
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Armor.Single
@@ -19,7 +20,7 @@ namespace Redemption.Items.Armor.Single
             Item.width = 20;
             Item.height = 30;
             Item.value = 7500;
-            Item.rare = -1;
+            Item.rare = ItemRarityID.Gray;
             Item.defense = 4;
         }
         public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

@@ -1,0 +1,110 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.Items.Accessories.PreHM
+{
+    class RopeHook : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Affected by gravity");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.AmethystHook);
+            Item.shootSpeed = 16f;
+            Item.shoot = ModContent.ProjectileType<RopeHook_Proj>();
+            Item.value = Item.buyPrice(0, 1, 25, 0);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Hook)
+                .AddIngredient(ItemID.RopeCoil, 2)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
+    class RopeHook_Proj : ModProjectile
+    {
+        private static Asset<Texture2D> chainTexture;
+        public override void Load()
+        {
+            chainTexture = ModContent.Request<Texture2D>("ExampleMod/Content/Items/Tools/ExampleHookChain");
+        }
+
+        public override void Unload()
+        {
+            chainTexture = null;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Rope Hook");
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
+        }
+
+        public override bool? SingleGrappleHook(Player player) => true;
+
+        public override void AI()
+        {
+            Projectile.velocity.Y += 0.6f;
+        }
+        public override float GrappleRange() => 500f;
+
+        public override void NumGrappleHooks(Player player, ref int numHooks) => numHooks = 1;
+
+        public override void GrappleRetreatSpeed(Player player, ref float speed) => speed = 16f;
+
+        public override void GrapplePullSpeed(Player player, ref float speed) => speed = 8;
+
+        // Adjusts the position that the player will be pulled towards. This will make them hang 50 pixels away from the tile being grappled.
+        public override void GrappleTargetPoint(Player player, ref float grappleX, ref float grappleY)
+        {
+            Vector2 dirToPlayer = Projectile.DirectionTo(player.Center);
+            float hangDist = 50f;
+            grappleX += dirToPlayer.X * hangDist;
+            grappleY += dirToPlayer.Y * hangDist;
+        }
+
+        // Draws the grappling hook's chain.
+        public override bool PreDrawExtras()
+        {
+            Vector2 playerCenter = Main.player[Projectile.owner].MountedCenter;
+            Vector2 center = Projectile.Center;
+            Vector2 directionToPlayer = playerCenter - Projectile.Center;
+            float chainRotation = directionToPlayer.ToRotation() - MathHelper.PiOver2;
+            float distanceToPlayer = directionToPlayer.Length();
+
+            while (distanceToPlayer > 20f && !float.IsNaN(distanceToPlayer))
+            {
+                directionToPlayer /= distanceToPlayer; //get unit vector
+                directionToPlayer *= chainTexture.Height(); //multiply by chain link length
+
+                center += directionToPlayer; //update draw position
+                directionToPlayer = playerCenter - center; //update distance
+                distanceToPlayer = directionToPlayer.Length();
+
+                Color drawColor = Lighting.GetColor((int)center.X / 16, (int)(center.Y / 16));
+
+                //Draw chain
+                Main.EntitySpriteDraw(chainTexture.Value, center - Main.screenPosition,
+                    chainTexture.Value.Bounds, drawColor, chainRotation,
+                    chainTexture.Size() * 0.5f, 1f, SpriteEffects.None, 0);
+            }
+            return false;
+        }
+    }
+}
