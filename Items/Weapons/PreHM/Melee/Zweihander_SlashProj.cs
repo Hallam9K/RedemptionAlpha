@@ -72,10 +72,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             player.velocity.X += 2 * player.direction;
                             foreach (Projectile target in Main.projectile)
                             {
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || target.damage > 100 || !projHitbox.Intersects(target.Hitbox))
+                                if (!target.active || target.whoAmI == Projectile.whoAmI || target.friendly || target.damage > 100)
                                     continue;
 
-                                if (ProjectileLists.IsTechnicallyMelee.Contains(target.type) || ProjectileID.Sets.CountsAsHoming[target.type] || ProjectileTags.Arcane.Has(target.type) || ProjectileTags.Psychic.Has(target.type) || ProjectileTags.Water.Has(target.type))
+                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || ProjectileTags.Unparryable.Has(target.type))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -85,6 +85,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.hostile = false;
                                     target.friendly = true;
                                 }
+                                target.damage *= 4;
                                 target.velocity.X = -target.velocity.X * 0.8f;
                             }
                         }

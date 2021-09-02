@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Zweihander");
             Tooltip.SetDefault("'Parry this you filthy casual!'" +
-                "\nParries non-arcane projectiles");
+                "\nParries physical projectiles");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
@@ -33,7 +33,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 40;
+            Item.damage = 50;
             Item.knockBack = 7;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
