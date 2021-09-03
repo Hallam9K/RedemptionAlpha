@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPC.noTileCollide = false;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
-            //BossBag = ModContent.ItemType<ThornBag>();
+            BossBag = ModContent.ItemType<ThornBag>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
         }
@@ -109,15 +109,15 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            //int itemType = ModContent.ItemType<ExampleItem>();
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
 
-            //notExpertRule.OnSuccess((itemType));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>()));
 
-            //Finally add the leading rule
-            //npcLoot.Add(notExpertRule);
+            npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()
@@ -574,12 +574,14 @@ namespace Redemption.NPCs.Bosses.Thorn
                 player = Main.player[NPC.target];
                 if (!player.active || player.dead)
                 {
-                    NPC.noTileCollide = true;
-                    NPC.velocity = new Vector2(0f, 10f);
+                    AITimer = 0;
+                    TimerRand = 0;
+                    AIState = ActionState.Death;
+                    NPC.alpha += 5;
+                    if (NPC.alpha >= 255)
+                        NPC.active = false;
                     if (NPC.timeLeft > 10)
-                    {
                         NPC.timeLeft = 10;
-                    }
                     return;
                 }
             }
