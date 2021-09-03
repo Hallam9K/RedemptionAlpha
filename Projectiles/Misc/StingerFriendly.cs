@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Projectiles.Melee
+namespace Redemption.Projectiles.Misc
 {
     public class StingerFriendly : ModProjectile
     {

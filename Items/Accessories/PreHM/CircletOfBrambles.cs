@@ -28,7 +28,7 @@ namespace Redemption.Items.Accessories.PreHM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-            player.GetModPlayer<RedePlayer>().thornCirclet = true;
+            player.GetModPlayer<BuffPlayer>().thornCirclet = true;
             if (player.ZoneJungle)
             {
                 player.lifeRegen += 2;

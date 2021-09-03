@@ -30,13 +30,9 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             Player player = Main.player[Projectile.owner];
             if (Projectile.Center.Y < player.Center.Y)
-            {
                 fallThrough = true;
-            }
             else
-            {
                 fallThrough = false;
-            }
             return true;
         }
         public override void AI()
@@ -45,12 +41,10 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.velocity.X = 0;
             if (!spawnDust)
             {
-                int dustType = DustID.Grass;
-                int pieCut = 8;
-                for (int m = 0; m < pieCut; m++)
+                for (int m = 0; m < 8; m++)
                 {
-                    int dustID = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
-                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(6f, 0f), m / (float)pieCut * 6.28f);
+                    int dustID = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1), 2, 2, DustID.Grass, 0f, 0f, 100, Color.White, 1.6f);
+                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(6f, 0f), m / (float)8 * 6.28f);
                     Main.dust[dustID].noLight = false;
                     Main.dust[dustID].noGravity = true;
                 }

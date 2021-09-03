@@ -7,7 +7,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace Redemption
+namespace Redemption.UI
 {
     public class MoRDialogueUI : UIState
     {

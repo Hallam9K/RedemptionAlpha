@@ -53,10 +53,10 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (host.life < host.lifeMax - 10)
+            if (host.life < host.lifeMax - 20)
             {
-                host.life += 10;
-                host.HealEffect(10);
+                host.life += 20;
+                host.HealEffect(20);
             }
         }
     }

@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
+using Redemption.UI;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -60,6 +61,9 @@ namespace Redemption
         public UserInterface ChaliceUILayer;
         public ChaliceAlignmentUI ChaliceUIElement;
 
+        public UserInterface TitleUILayer;
+        public TitleCard TitleCardUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -69,6 +73,10 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 On.Terraria.Main.Update += LoadTrailManager;
+
+                TitleUILayer = new UserInterface();
+                TitleCardUIElement = new TitleCard();
+                TitleUILayer.SetState(TitleCardUIElement);
 
                 DialogueUILayer = new UserInterface();
                 DialogueUIElement = new MoRDialogueUI();
@@ -132,6 +140,7 @@ namespace Redemption
             {
                 AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex, ChaliceAlignmentUI.Visible, "Chalice");
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 1, MoRDialogueUI.Visible, "Dialogue");
+                AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 2, TitleCard.Showing, "Title Card");
             }
         }
 

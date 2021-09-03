@@ -7,7 +7,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace Redemption
+namespace Redemption.UI
 {
     public class ChaliceAlignmentUI : UIState
     {
@@ -25,12 +25,11 @@ namespace Redemption
         public int ID = 0;
         private readonly int TextFont = 0;
         public Vector2? TextPos = null;
-        public Vector2? PointPos = null;
         public Color? TextColor = null;
         public Color? ShadowColor = null;
         public static bool Visible = false;
 
-        public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, Vector2? speakerPosition = null, int font = 0, int id = 0)
+        public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, int font = 0, int id = 0)
         {
             if (!RedeConfigClient.Instance.NoLoreElements && !Main.dedServ)
             {
@@ -41,7 +40,6 @@ namespace Redemption
                 MaxDisplayTime = displayTime;
                 MaxFadeTime = fadeTime;
                 FontScale = 0.6f;
-                PointPos = speakerPosition;
                 TextColor = textColor;
                 ShadowColor = shadowColor;
                 Shake = shakestrength;
@@ -170,26 +168,6 @@ namespace Redemption
                 Rectangle rect = new((int)actualdrawposition.X, (int)actualdrawposition.Y, totalLength, totalHeight);
 
                 spriteBatch.Draw(darkTexture, rect, darkTexture.Bounds, new Color(0, 0, 0) * (opacity * 0.02f));
-            }
-            if (PointPos != null)
-            {
-                Vector2 arrowOffset = new Vector2(1.41421356f, 0).RotatedBy(((Vector2)(PointPos - Main.screenPosition) - CenterPosition).ToRotation());
-                if (Math.Abs(arrowOffset.X) > 1)
-                {
-                    bool a = arrowOffset.X >= 0;
-                    arrowOffset.X = a.ToDirectionInt();
-                }
-                if (Math.Abs(arrowOffset.Y) > 1)
-                {
-                    bool a = arrowOffset.Y >= 0;
-                    arrowOffset.Y = a.ToDirectionInt();
-                }
-                arrowOffset.X *= (totalLength / 2) + 30;
-                arrowOffset.Y *= (totalHeight / 2) + 30;
-
-                float rot = ((Vector2)(PointPos - Main.screenPosition) - (CenterPosition + arrowOffset)).ToRotation();
-
-                spriteBatch.Draw(arrowTexture, CenterPosition + arrowOffset, arrowTexture.Bounds, Color.White * opacity * 0.5f, rot, new Vector2(arrowTexture.Width / 2, arrowTexture.Height / 2), 1, SpriteEffects.None, 0);
             }
             Vector2 textpos = new Vector2(centerX - (textLength / 2f), centerY - (textHeight / 2f)) + (new Vector2(Main.rand.NextFloat(0, Shake)).RotatedByRandom(MathHelper.TwoPi));
             spriteBatch.DrawString(font, Text, textpos + new Vector2(2, 2), textShadowColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);

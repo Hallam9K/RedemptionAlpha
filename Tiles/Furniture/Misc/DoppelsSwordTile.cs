@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			Main.tileNoAttach[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
 			TileObjectData.newTile.CoordinateHeights = new int[]{ 16, 16, 16 };
+			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
@@ -28,7 +29,6 @@ namespace Redemption.Tiles.Furniture.Misc
 			AddMapEntry(new Color(81, 72, 65), name);
             DustType = ModContent.DustType<SlateDust>();
 		}
-        public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height) => offsetY = 2;
 
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{

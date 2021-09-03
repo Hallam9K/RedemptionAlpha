@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,13 +19,13 @@ namespace Redemption
             }
             if (lockScreen)
             {
-                if (interpolantTimer < 100) interpolantTimer++;
+                if (interpolantTimer < 100) interpolantTimer += 2;
             }
             else
             {
-                if (interpolantTimer > 0) interpolantTimer--;
+                if (interpolantTimer > 0) interpolantTimer -= 2;
             }
-            //ScreenFocusInterpolant = Utils.InverseLerp(15f, 80f, interpolantTimer, true);
+            ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
         }
         public override void UpdateDead()
@@ -49,11 +50,11 @@ namespace Redemption
 
         public override void ModifyScreenPosition()
         {
-            /*if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
+            if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Vector2 idealScreenPosition = ScreenFocusPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
                 Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, ScreenFocusInterpolant);
-            }*/
+            }
             Redemption.Instance.cameraOffset *= 0.9f;
             Main.screenPosition += Redemption.Instance.cameraOffset;
             if (rumbleDuration > 0)

@@ -986,8 +986,7 @@ namespace Redemption.Globals
             int tileX = (int)npc.position.X / 16;
             int tileY = (int)npc.position.Y / 16;
             int teleportCheckCount = 0;
-            bool hasTeleportPoint = false;
-            while (!hasTeleportPoint && teleportCheckCount < 100)
+            while (teleportCheckCount < 100)
             {
                 teleportCheckCount++;
                 int tpTileX = Main.rand.Next(tileX - range, tileX + range);
@@ -1004,6 +1003,38 @@ namespace Redemption.Globals
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
                             return new Vector2(tpTileX, tpY);
+                        }
+                    }
+                }
+            }
+            return new Vector2(npc.Center.X, npc.Center.Y);
+        }
+
+        public static Vector2 FindGroundPlayer(this Terraria.NPC npc, int distFromPlayer, Func<int, int, bool> canTeleportTo = null)
+        {
+            int playerTileX = (int)Main.player[npc.target].position.X / 16;
+            int playerTileY = (int)Main.player[npc.target].position.Y / 16;
+            int tileX = (int)npc.position.X / 16;
+            int tileY = (int)npc.position.Y / 16;
+            int teleportCheckCount = 0;
+
+            while (teleportCheckCount < 1000)
+            {
+                teleportCheckCount++;
+                int tpTileX = Main.rand.Next(playerTileX - distFromPlayer, playerTileX + distFromPlayer);
+                int tpTileY = Main.rand.Next(playerTileY - distFromPlayer, playerTileY + distFromPlayer);
+                for (int tpY = tpTileY; tpY < playerTileY + distFromPlayer; tpY++)
+                {
+                    if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) &&
+                        (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
+                        Main.tile[tpTileX, tpY].IsActiveUnactuated)
+                    {
+                        if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
+                            Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].type] &&
+                            !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
+                        {
+                            return new Vector2(tpTileX, tpY) * 16;
                         }
                     }
                 }

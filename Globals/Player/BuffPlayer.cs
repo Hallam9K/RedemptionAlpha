@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Critters;
-using Redemption.Projectiles.Melee;
+using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -17,7 +17,7 @@ namespace Redemption.Globals.Player
         public int infestedTime;
         public bool charisma;
         public bool vendetta;
-        public bool thornCirclet = false;
+        public bool thornCirclet;
         public int thornCircletCounter = 0;
 
         public override void ResetEffects()

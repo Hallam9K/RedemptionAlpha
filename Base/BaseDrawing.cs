@@ -38,4 +38,5 @@ namespace Redemption
         {
             Lighting.AddLight((int)(position.X / 16f), (int)(position.Y / 16f), colorR / brightnessDivider, colorG / brightnessDivider, colorB / brightnessDivider);
         }
+    }
 }

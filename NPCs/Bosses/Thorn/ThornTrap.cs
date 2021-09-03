@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.width = 76;
             Projectile.height = 68;
             Projectile.penetrate = -1;
-            Projectile.hostile = false;
+            Projectile.hostile = true;
             Projectile.friendly = false;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
@@ -32,10 +32,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                     Projectile.frame = 7;
                 }
             }
-            if (Projectile.frame >= 7 && Projectile.ai[0] != 1)
-            {
-                Projectile.hostile = true;
-            }
             Projectile.localAI[0] += 1f;
             Projectile.velocity.X *= 0.00f;
             Projectile.velocity.Y += 1.00f;
@@ -48,6 +44,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                 Projectile.Kill();
             }
         }
+        public override bool CanHitPlayer(Player target) => Projectile.frame >= 7 && Projectile.ai[0] != 1;
+
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             fallThrough = false;

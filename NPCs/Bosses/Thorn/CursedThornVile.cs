@@ -11,17 +11,14 @@ namespace Redemption.NPCs.Bosses.Thorn
 {
     public class CursedThornVile : ModProjectile
     {
-        private static Asset<Texture2D> mainTex;
         private static Asset<Texture2D> endTex;
         public override void Load()
         {
-            mainTex = TextureAssets.Projectile[Projectile.type];
             endTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Thorn/CursedThornVile_End");
         }
 
         public override void Unload()
         {
-            mainTex = null;
             endTex = null;
         }
 
@@ -54,10 +51,11 @@ namespace Redemption.NPCs.Bosses.Thorn
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Rectangle rect = spineEnd ? endTex.Value.Bounds : mainTex.Value.Bounds;
+            Texture2D mainTex = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = spineEnd ? endTex.Value.Bounds : mainTex.Bounds;
             Vector2 drawOrigin = spineEnd ? endTex.Size() * 0.5f : mainTex.Size() * 0.5f;
 
-            Main.EntitySpriteDraw(spineEnd ? endTex.Value : mainTex.Value, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(spineEnd ? endTex.Value : mainTex, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

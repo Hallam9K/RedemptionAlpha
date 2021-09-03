@@ -33,6 +33,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                     Projectile.Kill();
             }
         }
+        public override bool CanHitPlayer(Player target) => Projectile.frame < 3;
+
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             target.AddBuff(BuffID.Bleeding, 300);

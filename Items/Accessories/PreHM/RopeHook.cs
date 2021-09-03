@@ -38,7 +38,7 @@ namespace Redemption.Items.Accessories.PreHM
         private static Asset<Texture2D> chainTexture;
         public override void Load()
         {
-            chainTexture = ModContent.Request<Texture2D>("ExampleMod/Content/Items/Tools/ExampleHookChain");
+            chainTexture = ModContent.Request<Texture2D>("Redemption/Items/Accessories/PreHM/RopeHookChain");
         }
 
         public override void Unload()
@@ -69,15 +69,6 @@ namespace Redemption.Items.Accessories.PreHM
         public override void GrappleRetreatSpeed(Player player, ref float speed) => speed = 16f;
 
         public override void GrapplePullSpeed(Player player, ref float speed) => speed = 8;
-
-        // Adjusts the position that the player will be pulled towards. This will make them hang 50 pixels away from the tile being grappled.
-        public override void GrappleTargetPoint(Player player, ref float grappleX, ref float grappleY)
-        {
-            Vector2 dirToPlayer = Projectile.DirectionTo(player.Center);
-            float hangDist = 50f;
-            grappleX += dirToPlayer.X * hangDist;
-            grappleY += dirToPlayer.Y * hangDist;
-        }
 
         // Draws the grappling hook's chain.
         public override bool PreDrawExtras()
