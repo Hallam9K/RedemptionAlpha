@@ -15,12 +15,12 @@ namespace Redemption.Globals
             {
                 if (type == TileID.Trees && Main.tile[i, j + 1].type == TileID.Grass)
                 {
-                    if (Main.rand.Next(6) == 0)
+                    if (Main.rand.NextBool(6))
                         Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<TreeBugFall>(), 0, 0);
                 }
                 if (type == TileID.PalmTree && Main.tile[i, j + 1].type == TileID.Sand)
                 {
-                    if (Main.rand.Next(6) == 0)
+                    if (Main.rand.NextBool(6))
                         Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<CoastScarabFall>(), 0, 0);
                 }
             }
@@ -28,7 +28,7 @@ namespace Redemption.Globals
         }
         public override void RandomUpdate(int i, int j, int type)
         {
-            if (type == TileID.Grass && !Main.dayTime)
+            if (type == TileID.Grass && !Main.dayTime && RedeBossDowned.downedThorn)
             {
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
                 {
@@ -38,11 +38,11 @@ namespace Redemption.Globals
                     }
                 }
             }
-            if (type == TileID.Grass && Main.dayTime)
+            if (type == TileID.Grass && Main.dayTime && RedeBossDowned.downedThorn)
             {
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && !Framing.GetTileSafely(i, j - 2).IsActive && !Framing.GetTileSafely(i + 1, j - 1).IsActive && !Framing.GetTileSafely(i + 1, j - 2).IsActive && Main.tile[i, j].IsActive && Main.tile[i + 1, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
                 {
-                    if (Main.rand.Next(6000) == 0)
+                    if (Main.rand.NextBool(6000))
                     {
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
                     }

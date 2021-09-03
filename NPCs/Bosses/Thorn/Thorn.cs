@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Globals;
 using Terraria.Audio;
+using Terraria.Localization;
+using Terraria.Chat;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -122,6 +124,31 @@ namespace Redemption.NPCs.Bosses.Thorn
 
         public override void OnKill()
         {
+            if (!RedeBossDowned.downedThorn)
+            {
+                string status = "The forest's flora blooms...";
+                if (Main.netMode == NetmodeID.Server)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LawnGreen);
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue(status), Color.LawnGreen);
+
+                RedeWorld.alignment++;
+                for (int p = 0; p < Main.maxPlayers; p++)
+                {
+                    Player player = Main.player[p];
+                    if (!player.active)
+                        continue;
+
+                    CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
+
+                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                        continue;
+
+                    if (!Main.dedServ)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Nice work, the forest is safe now.", 120, 30, 0, Color.DarkGoldenrod);
+
+                }
+            }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedThorn, -1);
         }
 
@@ -191,7 +218,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Thorn", 60, 90, 0.8f, 0, Color.ForestGreen, "Bane of the Forest");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Thorn", 60, 90, 0.8f, 0, Color.LawnGreen, "Bane of the Forest");
 
                     AIState = ActionState.TeleportStart;
                     NPC.netUpdate = true;

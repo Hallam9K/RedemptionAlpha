@@ -48,28 +48,31 @@ namespace Redemption.Items.Usable
         {
             CombatText.NewText(player.Hitbox, Color.DarkGoldenrod, RedeWorld.alignment, true, false);
 
-            if (RedeWorld.alignment == 0)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truely neutral...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= -1 && RedeWorld.alignment <= 1)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are safe for now...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are choosing the right path. Please, continue.", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue this road, he will come...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am proud of you for keeping the light within you bright...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("... Listen, you are following the wrong path here... Please, go back.", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= 6 && RedeWorld.alignment <= 7)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Vanquishing the evil of the world... You really are something.", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= -9 && RedeWorld.alignment <= -8)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am sorry, you can't go back now...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= 8 && RedeWorld.alignment <= 9)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Light shines within you, but I am sure more dangerous foes lie ahead...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment <= -10)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are past redemption...", 120, 30, 0, Color.DarkGoldenrod);
-            else if (RedeWorld.alignment >= 10)
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are the redemption this world needed...", 120, 30, 0, Color.DarkGoldenrod);
+            if (!Main.dedServ)
+            {
+                if (RedeWorld.alignment == 0)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truely neutral...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= -1 && RedeWorld.alignment <= 1)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are safe for now...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are choosing the right path. Please, continue.", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue this road, he will come...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am proud of you for keeping the light within you bright...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("... Listen, you are following the wrong path here... Please, go back.", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= 6 && RedeWorld.alignment <= 7)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Vanquishing the evil of the world... You really are something.", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= -9 && RedeWorld.alignment <= -8)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am sorry, you can't go back now...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= 8 && RedeWorld.alignment <= 9)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Light shines within you, but I am sure more dangerous foes lie ahead...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment <= -10)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are past redemption...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= 10)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are the redemption this world needed...", 120, 30, 0, Color.DarkGoldenrod);
+            }
             return true;
         }
 
