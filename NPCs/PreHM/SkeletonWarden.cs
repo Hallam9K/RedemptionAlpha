@@ -65,6 +65,9 @@ namespace Redemption.NPCs.PreHM
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 string SkeleType = Personality == PersonalityState.Greedy ? "Greedy" : "Epidotrian";
 
                 if (Personality == PersonalityState.Soulful)
@@ -231,7 +234,8 @@ namespace Redemption.NPCs.PreHM
                     if (Personality == PersonalityState.Greedy && Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                     {
                         SoundEngine.PlaySound(SoundID.CoinPickup, (int)NPC.position.X, (int)NPC.position.Y, 1, 0.3f);
-                        Gore.NewGore(NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
+                        if (Main.netMode != NetmodeID.Server)
+                            Gore.NewGore(NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                     }
                     jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);

@@ -40,8 +40,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (NPC.life <= 0)          //this make so when the npc has 0 life(dead) he will spawn this
+            if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 12; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 

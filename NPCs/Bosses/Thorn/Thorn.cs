@@ -169,6 +169,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         }
 
         private bool barrierSpawn;
+        private Vector2 origin;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -181,7 +182,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             DespawnHandler();
 
-            if (AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd)
+            if (AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death)
                 NPC.LookAtEntity(player);
 
             Vector2 HeartOrigin = new(NPC.Center.X, NPC.Center.Y - 18);
@@ -243,10 +244,14 @@ namespace Redemption.NPCs.Bosses.Thorn
                             if (NPC.life < NPC.lifeMax / 2 ? NPC.DistanceSQ(player.Center) < 400 * 400 : NPC.DistanceSQ(player.Center) < 300 * 300)
                             {
                                 AITimer++;
-                                if (++AITimer >= 60 && AITimer % 15 == 0 && AITimer <= 180)
+
+                                if (AITimer == 60)
+                                    origin = player.Center;
+
+                                if (AITimer >= 60 && AITimer % 15 == 0 && AITimer <= 180)
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<CursedThornVile>(), NPC.damage,
-                                        RedeHelper.PolarVector(NPC.life < NPC.lifeMax / 2 ? 18 : 12, (player.Center - NPC.Center).ToRotation()
+                                        RedeHelper.PolarVector(NPC.life < NPC.lifeMax / 2 ? 18 : 12, (origin - NPC.Center).ToRotation()
                                         + TimerRand - MathHelper.ToRadians(45)), false, SoundID.Item17);
 
                                     TimerRand += MathHelper.ToRadians(15);
@@ -448,7 +453,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                     break;
                 case ActionState.Death:
                     NPC.dontTakeDamage = true;
-                    if (++AITimer >= 40)
+                    if (++AITimer >= 24)
                         NPC.alpha += 5;
                     if (NPC.alpha >= 255)
                     {
@@ -462,9 +467,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override bool CheckDead()
         {
             if (AIState is ActionState.Death)
-            {
                 return true;
-            }
             else
             {
                 for (int i = 0; i < 40; i++)
@@ -488,7 +491,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.frame.Y = 5 * frameHeight;
 
                     NPC.frameCounter++;
-                    if (NPC.frameCounter >= 10)
+                    if (NPC.frameCounter >= 6)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
@@ -511,7 +514,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.frame.Y = 5 * frameHeight;
 
                     NPC.frameCounter++;
-                    if (NPC.frameCounter >= 10)
+                    if (NPC.frameCounter >= 6)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y -= frameHeight;
@@ -531,7 +534,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.frame.Y = 5 * frameHeight;
 
                     NPC.frameCounter++;
-                    if (NPC.frameCounter >= 10)
+                    if (NPC.frameCounter >= 6)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;

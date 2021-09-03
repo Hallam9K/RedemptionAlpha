@@ -146,6 +146,9 @@ namespace Redemption.NPCs.PreHM
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 int goreType = ModContent.Find<ModGore>("Redemption/DevilsTongueGore").Type;
                 Gore.NewGore(new Vector2(NPC.Center.X, NPC.position.Y), RedeHelper.SpreadUp(6), goreType);
 

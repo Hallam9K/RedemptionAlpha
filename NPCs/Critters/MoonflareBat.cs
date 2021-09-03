@@ -190,6 +190,9 @@ namespace Redemption.NPCs.Critters
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 int gore1 = ModContent.Find<ModGore>("Redemption/MoonflareBatGore1").Type;
                 int gore2 = ModContent.Find<ModGore>("Redemption/MoonflareBatGore2").Type;
 

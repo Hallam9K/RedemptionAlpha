@@ -405,6 +405,9 @@ namespace Redemption.NPCs.PreHM
 
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 int goreType1 = ModContent.Find<ModGore>("Redemption/LivingBloomGore1").Type;
                 int goreType2 = ModContent.Find<ModGore>("Redemption/LivingBloomGore2").Type;
 

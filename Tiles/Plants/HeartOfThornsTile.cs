@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Usable.Summons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Tiles.Plants
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            //Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<HeartOfTheThorns>());
+            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<HeartOfThorns>());
         }
     }
 }

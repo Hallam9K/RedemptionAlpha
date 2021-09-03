@@ -238,6 +238,9 @@ namespace Redemption.NPCs.Critters
                 AIState = ActionState.Wander;
             }
 
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             if (NPC.life <= 0)
             {
                 int gore1 = ModContent.Find<ModGore>("Redemption/CoastScarabGore1").Type;
@@ -245,7 +248,7 @@ namespace Redemption.NPCs.Critters
                 Gore.NewGore(NPC.position, NPC.velocity, gore1);
                 Gore.NewGore(NPC.position, NPC.velocity, gore2);
 
-                for (int _ = 0; _ < 4; _++)
+                for (int i = 0; i < 4; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
             }
