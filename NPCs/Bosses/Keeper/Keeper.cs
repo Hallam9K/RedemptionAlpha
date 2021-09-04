@@ -19,6 +19,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using Redemption.Base;
 using Terraria.Graphics.Shaders;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -81,8 +83,6 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Position = new Vector2(0, 44),
-                PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -144,14 +144,13 @@ namespace Redemption.NPCs.Bosses.Keeper
         {
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
 
-            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
 
-            //int itemType = ModContent.ItemType<ExampleItem>();
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            //notExpertRule.OnSuccess((itemType));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 2, 4));
 
-            //Finally add the leading rule
-            //npcLoot.Add(notExpertRule);
+            npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()
@@ -217,7 +216,6 @@ namespace Redemption.NPCs.Bosses.Keeper
         public List<int> CopyList = null;
 
         private bool Unveiled;
-        private Vector2 origin;
         private float move;
         private float speed = 6;
 
