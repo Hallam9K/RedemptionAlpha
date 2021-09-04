@@ -40,6 +40,22 @@ namespace Redemption.NPCs.Bosses.Thorn
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            NPC host = Main.npc[(int)Projectile.ai[0]];
+            if (host.life < host.lifeMax - 20)
+            {
+                int steps = (int)host.Distance(target.Center) / 8;
+                for (int i = 0; i < steps; i++)
+                {
+                    if (Main.rand.NextBool(3))
+                    {
+                        Dust dust = Dust.NewDustDirect(Vector2.Lerp(host.Center, target.Center, (float)i / steps), 2, 2, DustID.LifeDrain);
+                        dust.velocity = target.DirectionTo(dust.position) * 2;
+                        dust.noGravity = true;
+                    }
+                }
+                host.life += 20;
+                host.HealEffect(20);
+            }
             Projectile.Kill();
         }
         public override void Kill(int timeLeft)
@@ -48,15 +64,6 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.LifeDrain, 0f, 0f, 100, default, 1.2f);
                 Main.dust[dustIndex].velocity *= 1.9f;
-            }
-        }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
-        {
-            NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (host.life < host.lifeMax - 20)
-            {
-                host.life += 20;
-                host.HealEffect(20);
             }
         }
     }

@@ -231,6 +231,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         {
                             TimerRand = 0;
                             AIState = ActionState.BarrierSpawn;
+                            NPC.netUpdate = true;
                             break;
                         }
                         AttackChoice();
