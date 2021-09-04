@@ -27,6 +27,7 @@ namespace Redemption.Items
         public override bool? UseItem(Player player)
         {
             RedeBossDowned.downedThorn = false;
+            RedeBossDowned.downedKeeper = false;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
