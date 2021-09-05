@@ -1,4 +1,5 @@
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
             Projectile.hide = true;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

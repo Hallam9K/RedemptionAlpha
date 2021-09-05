@@ -72,10 +72,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             player.velocity.X += 2 * player.direction;
                             foreach (Projectile target in Main.projectile)
                             {
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || target.friendly || target.damage > 100)
+                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || ProjectileTags.Unparryable.Has(target.type))
+                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) ||
+                                    target.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);

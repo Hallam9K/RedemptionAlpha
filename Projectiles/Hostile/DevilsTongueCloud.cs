@@ -1,4 +1,5 @@
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -23,6 +24,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 120;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
         public override void AI()
         {

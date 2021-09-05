@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -21,6 +22,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
         public override void AI()
         {

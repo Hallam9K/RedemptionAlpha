@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("Moonflare Bat");
             Main.projFrames[Projectile.type] = 5;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

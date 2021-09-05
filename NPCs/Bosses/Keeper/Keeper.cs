@@ -212,12 +212,14 @@ namespace Redemption.NPCs.Bosses.Keeper
             }
         }
 
-        public List<int> AttackList = new() { 0, 1 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4 };
         public List<int> CopyList = null;
 
         private bool Unveiled;
         private float move;
         private float speed = 6;
+        private bool SoulCharging;
+        private Vector2 origin;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -229,6 +231,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Player player = Main.player[NPC.target];
 
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 64 : NPC.Center.X + 26), (int)(NPC.Center.Y - 38), 38, 86);
+            SoulCharging = false;
 
             DespawnHandler();
 
@@ -316,7 +319,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 if (NPC.alpha >= 255)
                                 {
                                     NPC.velocity *= 0f;
-                                    NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 70);
+                                    NPC.position = new Vector2(player.Center.X + (player.velocity.X > 0 ? 200 : -200) + (player.velocity.X * 20), player.Center.Y - 70);
                                     AITimer = 100;
                                 }
                             }
@@ -401,17 +404,145 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                         #region Shadow Bolts
                         case 2:
+                            NPC.LookAtEntity(player);
 
+                            if (AITimer++ == 0)
+                                speed = 6;
+                            NPC.Move(new Vector2(move, player.Center.Y - 50), speed, 20, false);
+                            MoveClamp();
+                            if (NPC.DistanceSQ(player.Center) > 400 * 400)
+                                speed *= 1.03f;
+                            else if (NPC.velocity.Length() > 6 && NPC.DistanceSQ(player.Center) <= 400 * 400)
+                                speed *= 0.96f;
+
+                            if (AITimer >= 60 && AITimer % (Unveiled ? 20 : 25) == 0)
+                            {
+                                Vector2 pos = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(TimerRand)) * 60;
+                                NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage,
+                                       RedeHelper.PolarVector(Main.expertMode ? 4 : 3, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item20);
+
+                                TimerRand += 45;
+                            }
+                            if (TimerRand >= 360)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
                             break;
                         #endregion
 
                         #region Soul Charge
                         case 3:
+                            AITimer++;
+                            if (AITimer < 100)
+                            {
+                                if (AITimer == 5)
+                                {
+                                    NPC.LookAtEntity(player);
+                                    SoundEngine.PlaySound(SoundID.Zombie, (int)NPC.position.X, (int)NPC.position.Y, 83, 1, 0.3f);
+                                    NPC.velocity.Y = 0;
+                                    NPC.velocity.X = -6f * NPC.spriteDirection;
+                                }
+                                if (AITimer >= 5)
+                                {
+                                    NPC.alpha += 20;
+                                    NPC.velocity *= 0.9f;
+                                }
+                                if (NPC.alpha >= 255)
+                                {
+                                    NPC.velocity *= 0f;
+                                    NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y - 70);
+                                    AITimer = 100;
+                                }
+                            }
+                            else
+                            {
+                                if (AITimer == 100)
+                                    NPC.velocity.X = 6f * NPC.spriteDirection;
+
+                                if (AITimer >= 100 && AITimer < 200)
+                                {
+                                    NPC.LookAtEntity(player);
+                                    NPC.alpha -= 20;
+                                    NPC.velocity *= 0.9f;
+                                }
+                                if (NPC.alpha <= 0 && AITimer < 200)
+                                    AITimer = 200;
+
+                                if (AITimer < (Unveiled ? 260 : 280))
+                                {
+                                    NPC.LookAtEntity(player);
+                                    NPC.MoveToVector2(new Vector2(player.Center.X - 160 * NPC.spriteDirection, player.Center.Y - 70), 4);
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        Dust dust2 = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.DungeonSpirit, 1);
+                                        dust2.velocity = -NPC.DirectionTo(dust2.position);
+                                        dust2.noGravity = true;
+                                    }
+                                    origin = player.Center;
+                                }
+                                if (AITimer >= (Unveiled ? 260 : 280) && AITimer < 320)
+                                {
+                                    SoulCharging = true;
+                                    NPC.velocity.Y = 0;
+                                    NPC.velocity.X = -0.1f * NPC.spriteDirection;
+                                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+
+                                    if (AITimer % 2 == 0)
+                                    {
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), false, SoundID.NPCDeath52.WithVolume(0.5f));
+                                    }
+                                }
+                                if (AITimer >= 320)
+                                    NPC.velocity *= 0.98f;
+                            }
+                            if (AITimer >= 360)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
                             break;
                         #endregion
 
                         #region Dread Coil
                         case 4:
+                            if (Unveiled)
+                            {
+                                NPC.LookAtEntity(player);
+
+                                if (AITimer++ == 0)
+                                    speed = 6;
+                                NPC.Move(new Vector2(move, player.Center.Y - 50), speed, 20, false);
+                                MoveClamp();
+                                if (NPC.DistanceSQ(player.Center) > 400 * 400)
+                                    speed *= 1.03f;
+                                else if (NPC.velocity.Length() > 6 && NPC.DistanceSQ(player.Center) <= 400 * 400)
+                                    speed *= 0.96f;
+                                if (AITimer >= 30 && AITimer % 30 == 0)
+                                {
+                                    NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil>(),
+                                        NPC.damage, RedeHelper.PolarVector(7, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)),
+                                        false, SoundID.Item20);
+                                }
+                                if (AITimer >= 130)
+                                {
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    AIState = ActionState.Idle;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            else
+                            {
+                                TimerRand = 0;
+                                AITimer = 60;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
                             break;
                         #endregion
 
@@ -431,7 +562,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     Unveiled = true;
 
                     if (AITimer++ == 0)
-                        NPC.Shoot(new Vector2(NPC.Center.X - 1, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                        NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
 
                     if (AITimer >= 220)
                     {
@@ -490,6 +621,8 @@ namespace Redemption.NPCs.Bosses.Keeper
         private int VeilCounter;
         public override void FindFrame(int frameHeight)
         {
+            Player player = Main.player[NPC.target];
+
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
             {
                 oldrot[k] = oldrot[k - 1];
@@ -516,7 +649,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     if (NPC.frame.Y == 4 * frameHeight)
                     {
                         SoundEngine.PlaySound(SoundID.Item71, NPC.position);
-                        NPC.velocity.X = 25 * NPC.spriteDirection;
+                        NPC.velocity.X = MathHelper.Clamp(Math.Abs((player.Center.X - NPC.Center.X) / 30), 30, 50) * NPC.spriteDirection;
                     }
                     if (NPC.frame.Y > 7 * frameHeight)
                         NPC.frame.Y = 0 * frameHeight;
@@ -526,7 +659,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             else
                 NPC.frame.X = 0;
 
-            if (AIState is ActionState.Unveiled)
+            if (AIState is ActionState.Unveiled || SoulCharging)
             {
                 if (NPC.frame.Y < 6 * frameHeight)
                     NPC.frame.Y = 6 * frameHeight;
@@ -558,17 +691,17 @@ namespace Redemption.NPCs.Bosses.Keeper
             Color angryColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.DarkSlateBlue, Color.DarkRed * 0.7f, Color.DarkSlateBlue);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
-                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Unveiled ? angryColor : Color.DarkSlateBlue) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(SoulCharging ? Color.GhostWhite : (Unveiled ? angryColor : Color.DarkSlateBlue)) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
             }
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
@@ -578,11 +711,20 @@ namespace Redemption.NPCs.Bosses.Keeper
             int y = height * VeilFrameY;
             Rectangle rect = new(0, y, veilTex.Width, height);
             Vector2 origin = new(veilTex.Width / 2f, height / 2f);
-            Vector2 VeilPos = new(NPC.Center.X - 1, NPC.Center.Y - 37);
+            Vector2 VeilPos = new(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37);
             if (!Unveiled && NPC.life > NPC.lifeMax / 2)
                 Main.spriteBatch.Draw(veilTex, VeilPos - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
 
             return false;
+        }
+
+        public override Color? GetAlpha(Color drawColor)
+        {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                return NPC.GetBestiaryEntryColor();
+            }
+            return null;
         }
 
         private void DespawnHandler()

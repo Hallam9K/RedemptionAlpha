@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,6 +20,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Melee;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
 
         public override void AI() // Old code, probably from AA :ech: // Planned to be turned into a whip weapon

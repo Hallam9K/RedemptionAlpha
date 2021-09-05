@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
@@ -43,6 +44,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
         public override void AI()
         {
