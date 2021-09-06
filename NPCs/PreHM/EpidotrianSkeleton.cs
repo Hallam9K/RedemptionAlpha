@@ -165,7 +165,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                     }
-                    if (globalNPC.attacker is Player && (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly)
+                    if (globalNPC.attacker is Player && (PlayerDead() || (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;

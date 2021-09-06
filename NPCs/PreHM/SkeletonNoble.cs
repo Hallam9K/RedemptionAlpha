@@ -179,7 +179,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                     }
-                    if (globalNPC.attacker is Player && (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly)
+                    if (globalNPC.attacker is Player && (PlayerDead() || (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AITimer = 0;
