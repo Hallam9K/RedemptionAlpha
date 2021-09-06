@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Single;
@@ -280,6 +281,7 @@ namespace Redemption.NPCs.PreHM
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
                             BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 5, hitDirection, NPC);
                             (globalNPC.attacker as NPC).AddBuff(BuffID.Bleeding, 1000);
+                            (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                         }
                         else if (globalNPC.attacker is Player)
                         {
@@ -288,6 +290,7 @@ namespace Redemption.NPCs.PreHM
                             if (Main.rand.NextBool(2) || Main.expertMode)
                             {
                                 (globalNPC.attacker as Player).AddBuff(BuffID.Bleeding, 1000);
+                                (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                             }
                         }
                     }

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
@@ -315,11 +316,15 @@ namespace Redemption.NPCs.PreHM
                             (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 20;
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
                             BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                            if (Main.rand.NextBool(3))
+                                (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
                         else if (globalNPC.attacker is Player)
                         {
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                            BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC); 
+                            if (Main.rand.NextBool(3))
+                                (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
                     }
                     break;

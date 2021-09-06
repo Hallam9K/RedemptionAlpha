@@ -13,7 +13,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Zweihander");
             Tooltip.SetDefault("'Parry this you filthy casual!'" +
-                "\nParries physical projectiles");
+                "\nParries physical projectiles" +
+                "\nDeals more damage at the tip of the blade");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }

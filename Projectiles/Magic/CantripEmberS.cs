@@ -81,5 +81,9 @@ namespace Redemption.Projectiles.Magic
         {
             target.AddBuff(BuffID.OnFire, 280);
         }
+        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        {
+            target.AddBuff(BuffID.OnFire, 280);
+        }
     }
 }

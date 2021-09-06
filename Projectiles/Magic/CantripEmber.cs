@@ -49,5 +49,10 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.OnFire, 160);
         }
+        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(BuffID.OnFire, 160);
+        }
     }
 }

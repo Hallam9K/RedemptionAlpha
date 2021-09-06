@@ -21,6 +21,8 @@ namespace Redemption.Globals.NPC
         public int infestedTime;
         public bool rallied;
         public bool moonflare;
+        public bool dirtyWound;
+        public int dirtyWoundTime;
 
         public override void ResetEffects(Terraria.NPC npc)
         {        
@@ -32,6 +34,11 @@ namespace Redemption.Globals.NPC
                 infested = false;
                 infestedTime = 0;
             }
+            if (!npc.HasBuff(ModContent.BuffType<DirtyWoundDebuff>()))
+            {
+                dirtyWound = false;
+                dirtyWoundTime = 0;
+            }
         }
         public override void UpdateLifeRegen(Terraria.NPC npc, ref int damage)
         {
@@ -41,6 +48,16 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= infestedTime / 120;
+            }
+            if (dirtyWound)
+            {
+                dirtyWoundTime++;
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+                npc.lifeRegen -= dirtyWoundTime / 240;
+
+                if (npc.wet && !npc.lavaWet)
+                    npc.DelBuff(ModContent.BuffType<DirtyWoundDebuff>());
             }
             if (moonflare)
             {

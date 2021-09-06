@@ -20,6 +20,8 @@ namespace Redemption.Globals.Player
         public bool thornCirclet;
         public int thornCircletCounter;
         public bool skeletonFriendly;
+        public bool dirtyWound;
+        public int dirtyWoundTime;
 
         public override void ResetEffects()
         {
@@ -32,6 +34,11 @@ namespace Redemption.Globals.Player
             {
                 infested = false;
                 infestedTime = 0;
+            }
+            if (!Player.HasBuff(ModContent.BuffType<DirtyWoundDebuff>()))
+            {
+                dirtyWound = false;
+                dirtyWoundTime = 0;
             }
         }
         public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
@@ -77,6 +84,17 @@ namespace Redemption.Globals.Player
                     Player.statDefense -= infestedTime / 120;
                 if (infestedTime > 120)
                     Player.moveSpeed *= 0.8f;
+            }
+            if (dirtyWound)
+            {
+                dirtyWoundTime++;
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= dirtyWoundTime / 240;
+
+                if (Player.wet && !Player.lavaWet)
+                    Player.ClearBuff(ModContent.BuffType<DirtyWoundDebuff>());
             }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

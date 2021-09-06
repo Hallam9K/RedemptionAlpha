@@ -37,6 +37,11 @@ namespace Redemption.Projectiles.Misc
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Poisoned, 300);
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(BuffID.Poisoned, 300);
+        }
         public override void Kill(int timeLeft)
         {
             int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Grass, Scale: 1.2f);

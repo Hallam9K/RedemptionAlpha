@@ -110,6 +110,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            Player player = Main.player[Projectile.owner];
+            float tipBonus;
+            tipBonus = player.Distance(target.Center) / 3;
+            tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
+
+            damage += (int)tipBonus;
+
             if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
             {
                 if (Main.rand.NextBool(200))
