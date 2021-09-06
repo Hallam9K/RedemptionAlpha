@@ -150,7 +150,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Vector2 drawOrigin2 = new(slash.Width / 2, slash.Height / 2);
 
             if (Projectile.frame >= 3 && Projectile.frame <= 6)
-                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(23 * player.direction, -196 - offset + Projectile.gfxOffY), new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(11 * player.direction, -192 - offset + Projectile.gfxOffY), new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
         }
 

@@ -5311,6 +5311,8 @@ namespace Redemption.Base
          */
         public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
         {
+			if (npc.dontTakeDamage || npc.immortal)
+				return;
             //TODO: FIX THIS
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
 			if (damager == null || damager is NPC)

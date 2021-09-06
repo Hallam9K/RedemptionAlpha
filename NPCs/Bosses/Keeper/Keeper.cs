@@ -126,6 +126,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool? CanHitNPC(NPC target) => false;
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
