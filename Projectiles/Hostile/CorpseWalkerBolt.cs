@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using System;
 using System.Linq;
 using Terraria;
@@ -40,7 +41,13 @@ namespace Redemption.Projectiles.Hostile
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.GetGlobalNPC<RedeNPC>().attacker && !NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type);
         }
+        public override bool CanHitPlayer(Player target)
+        {
+            return !target.GetModPlayer<BuffPlayer>().skeletonFriendly;
+        }
+
         public override Color? GetAlpha(Color lightColor) => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightYellow, Color.White, Color.LightYellow);
+
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)

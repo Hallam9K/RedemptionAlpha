@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -33,6 +34,10 @@ namespace Redemption.NPCs.PreHM
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.GetGlobalNPC<RedeNPC>().attacker;
+        }
+        public override bool CanHitPlayer(Player target)
+        {
+            return !target.GetModPlayer<BuffPlayer>().skeletonFriendly;
         }
         public override void AI()
         {
