@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
             Projectile.alpha = 255;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
