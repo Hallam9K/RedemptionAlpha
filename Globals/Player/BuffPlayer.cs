@@ -18,7 +18,8 @@ namespace Redemption.Globals.Player
         public bool charisma;
         public bool vendetta;
         public bool thornCirclet;
-        public int thornCircletCounter = 0;
+        public int thornCircletCounter;
+        public bool skeletonFriendly;
 
         public override void ResetEffects()
         {
@@ -26,6 +27,7 @@ namespace Redemption.Globals.Player
             charisma = false;
             vendetta = false;
             thornCirclet = false;
+            skeletonFriendly = false;
             if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
