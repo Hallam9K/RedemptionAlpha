@@ -83,6 +83,8 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
+                Position = new Vector2(0, 36),
+                PortraitPositionYOverride = 8
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -572,6 +574,41 @@ namespace Redemption.NPCs.Bosses.Keeper
                         NPC.netUpdate = true;
                     }
                     break;
+                case ActionState.Death:
+                    NPC.dontTakeDamage = true;
+                    player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                    NPC.velocity *= 0;
+
+                    if (AITimer++ == 0)
+                        NPC.alpha = 0;
+
+                    NPC.alpha++;
+
+                    if (NPC.alpha > 150)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, Scale: 3);
+                            Main.dust[dustIndex].velocity *= 5f;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, Scale: 3);
+                            Main.dust[dustIndex].velocity *= 2f;
+                        }
+                    }
+
+                    if (NPC.alpha >= 255)
+                    {
+                        NPC.dontTakeDamage = false;
+                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                    }
+                    break;
             }
         }
 
@@ -609,7 +646,9 @@ namespace Redemption.NPCs.Bosses.Keeper
             else
             {
 
-                SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.position);
+                SoundEngine.PlaySound(SoundID.NPCDeath19, NPC.position);
+                NPC.velocity *= 0;
+                NPC.alpha = 0;
                 NPC.life = 1;
                 AITimer = 0;
                 AIState = ActionState.Death;
@@ -659,7 +698,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             else
                 NPC.frame.X = 0;
 
-            if (AIState is ActionState.Unveiled || SoulCharging)
+            if (AIState is ActionState.Unveiled or ActionState.Death || SoulCharging)
             {
                 if (NPC.frame.Y < 6 * frameHeight)
                     NPC.frame.Y = 6 * frameHeight;
@@ -690,18 +729,21 @@ namespace Redemption.NPCs.Bosses.Keeper
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color angryColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.DarkSlateBlue, Color.DarkRed * 0.7f, Color.DarkSlateBlue);
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-
-            for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                Vector2 oldPos = NPC.oldPos[i];
-                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(SoulCharging ? Color.GhostWhite : (Unveiled ? angryColor : Color.DarkSlateBlue)) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
-            }
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(SoulCharging ? Color.GhostWhite : (Unveiled ? angryColor : Color.DarkSlateBlue)) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+                }
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
