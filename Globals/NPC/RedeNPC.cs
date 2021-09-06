@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals.Player;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.PreHM;
@@ -23,6 +24,17 @@ namespace Redemption.Globals.NPC
         {
             invisible = false;
         }
+
+        public override bool CanHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int cooldownSlot)
+        {
+            if (target.GetModPlayer<BuffPlayer>().skeletonFriendly)
+            {
+                if (NPCTags.SkeletonHumanoid.Has(npc.type))
+                    return false;
+            }
+            return true;
+        }
+
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             #region Elemental Attributes

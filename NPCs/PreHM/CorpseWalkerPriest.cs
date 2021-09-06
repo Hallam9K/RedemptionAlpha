@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Weapons.PreHM.Summon;
@@ -149,6 +150,12 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                         Healing = false;
                     }
+                    if (globalNPC.attacker is Player && (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly)
+                    {
+                        runCooldown = 0;
+                        AIState = ActionState.Wander;
+                        Healing = false;
+                    }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
                         runCooldown++;
@@ -273,7 +280,7 @@ namespace Redemption.NPCs.PreHM
                 NPC.frame.Y = 4 * frameHeight;
             }
         }
-        public int GetNearestNPC(int[] WhitelistNPC = default, bool nearestUndead = false)
+        public int GetNearestNPC(int[] WhitelistNPC = default, bool nearestUndead = false, bool friendly = false)
         {
             if (WhitelistNPC == null)
                 WhitelistNPC = new int[] { NPCID.TargetDummy };
@@ -286,11 +293,19 @@ namespace Redemption.NPCs.PreHM
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
-                if (nearestUndead && ((!NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type)) || target.life >= target.lifeMax))
-                    continue;
+                if (friendly)
+                {
+                    if (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])
+                        continue;
+                }
+                else
+                {
+                    if (nearestUndead && ((!NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type)) || target.life >= target.lifeMax))
+                        continue;
 
-                if (!nearestUndead && !WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))
-                    continue;
+                    if (!nearestUndead && !WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))
+                        continue;
+                }
 
                 if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
                     continue;
@@ -315,7 +330,11 @@ namespace Redemption.NPCs.PreHM
             if (Personality != PersonalityState.Calm)
             {
                 gotNPC = GetNearestNPC(!HasEyes ? new[] { ModContent.NPCType<LostSoulNPC>() } : default);
-                if (NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+
+                if (player.GetModPlayer<BuffPlayer>().skeletonFriendly)
+                    gotNPC = GetNearestNPC(friendly: true);
+
+                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
                 {
                     SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                     globalNPC.attacker = player;

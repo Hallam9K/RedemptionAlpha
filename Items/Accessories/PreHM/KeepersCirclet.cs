@@ -12,7 +12,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Keeper's Circlet");
-            Tooltip.SetDefault("Most skeletons become friendly");
+            Tooltip.SetDefault("Humanoid skeletons become friendly");
         }
 
         public override void SetDefaults()

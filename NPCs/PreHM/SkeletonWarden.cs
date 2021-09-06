@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
@@ -202,10 +203,17 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        NPC.LookAtEntity(globalNPC.attacker);
-                        NPC.velocity.Y = -2;
-                        NPC.velocity.X = 5 * NPC.spriteDirection;
-                        AITimer = 20;
+                        if (globalNPC.attacker is Player && (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly)
+                        {
+                        }
+                        else
+                        {
+
+                            NPC.LookAtEntity(globalNPC.attacker);
+                            NPC.velocity.Y = -2;
+                            NPC.velocity.X = 5 * NPC.spriteDirection;
+                            AITimer = 20;
+                        }
                     }
                     if (AITimer > 0)
                     {
@@ -269,10 +277,16 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        NPC.LookAtEntity(globalNPC.attacker);
-                        NPC.velocity.Y = -2;
-                        NPC.velocity.X = 5 * NPC.spriteDirection;
-                        AITimer = 20;
+                        if (globalNPC.attacker is Player && (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly)
+                        {
+                        }
+                        else
+                        {
+                            NPC.LookAtEntity(globalNPC.attacker);
+                            NPC.velocity.Y = -2;
+                            NPC.velocity.X = 5 * NPC.spriteDirection;
+                            AITimer = 20;
+                        }
                     }
                     if (AITimer > 0)
                     {
@@ -412,7 +426,7 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Block && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+            if (AIState != ActionState.Block && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                 globalNPC.attacker = player;

@@ -31,7 +31,6 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.DamageType = DamageClass.Ranged;
             Item.shootSpeed = 18f;
             Item.shoot = ModContent.ProjectileType<ChickenEgg_Proj>();
-            Item.ammo = Item.type;
         }
     }
 }

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Redemption.Globals.NPC;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -61,6 +62,16 @@ namespace Redemption.NPCs.PreHM
                 return true;
 
             return false;
+        }
+        public override bool PreAI()
+        {
+            Player player = Main.player[NPC.target];
+            if (player.GetModPlayer<BuffPlayer>().skeletonFriendly)
+                NPC.friendly = true;
+            else
+                NPC.friendly = false;
+
+            return true;
         }
         public virtual void SetStats()
         {

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
@@ -164,6 +165,12 @@ namespace Redemption.NPCs.PreHM
                 case ActionState.Retreat:
                     SightCheck();
                     if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    {
+                        runCooldown = 0;
+                        TimerRand = Main.rand.Next(120, 240);
+                        AIState = ActionState.Wander;
+                    }
+                    if (globalNPC.attacker is Player && (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly)
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
@@ -353,7 +360,7 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Retreat && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+            if (AIState != ActionState.Retreat && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                 globalNPC.attacker = player;

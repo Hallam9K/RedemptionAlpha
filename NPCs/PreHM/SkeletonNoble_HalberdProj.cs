@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.GameContent;
@@ -26,6 +27,7 @@ namespace Redemption.NPCs.PreHM
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

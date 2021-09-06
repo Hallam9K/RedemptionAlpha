@@ -176,7 +176,7 @@ namespace Redemption.NPCs.PreHM
             choice.Add(HatState.Flatcap, 2);
             choice.Add(HatState.GodsTophat, 1);
             choice.Add(HatState.OldTophat, 1);
-            choice.Add(HatState.Serb, 0.5);
+            choice.Add(HatState.Serb, 0.3);
 
             HatType = choice;
         }
