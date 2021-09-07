@@ -32,11 +32,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override bool? CanCutTiles() => false;
 
+        public ref float SwingSpeed => ref Projectile.ai[1];
         int directionLock = 0;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
+
+            SwingSpeed = 50 * player.meleeSpeed;
 
             Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
 
@@ -62,7 +65,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         player.itemRotation -= MathHelper.ToRadians(-20f * player.direction);
                     else 
                         player.bodyFrame.Y = 5 * player.bodyFrame.Height;
-                    if (++Projectile.frameCounter >= 5)
+                    if (++Projectile.frameCounter >= SwingSpeed / 10)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;

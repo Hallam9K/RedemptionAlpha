@@ -35,6 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             return false;
         }
 
+        public ref float SwingSpeed => ref Projectile.ai[1];
         int directionLock = 0;
         public override void AI()
         {
@@ -43,6 +44,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
             Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
             Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+
+            SwingSpeed = 42 * player.meleeSpeed;
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -57,7 +60,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.ai[0] = 1;
                         directionLock = player.direction;
                     }
-                    if (++Projectile.frameCounter >= 7)
+                    if (++Projectile.frameCounter >= SwingSpeed / 6)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
@@ -75,7 +78,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         player.itemRotation -= MathHelper.ToRadians(-8f * player.direction);
                     else 
                         player.bodyFrame.Y = 5 * player.bodyFrame.Height;
-                    if (++Projectile.frameCounter >= 7)
+                    if (++Projectile.frameCounter >= SwingSpeed / 6)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
