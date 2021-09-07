@@ -21,6 +21,7 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
+using System.Linq;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -110,7 +111,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             NPC.DeathSound = SoundID.NPCDeath19;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper");
-            //BossBag = ModContent.ItemType<KeeperBag>();
+            BossBag = ModContent.ItemType<KeeperBag>();
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -344,11 +345,35 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     NPC.frameCounter = 0;
                                     NPC.frame.Y = 0;
                                 }
-                                if (AITimer >= 200 && NPC.frame.Y >= 4 * 142 && NPC.frame.Y <= 6 * 142 && player.Hitbox.Intersects(SlashHitbox))
+                                if (AITimer >= 200 && NPC.frame.Y >= 4 * 142 && NPC.frame.Y <= 6 * 142)
                                 {
-                                    int hitDirection = NPC.Center.X > player.Center.X ? -1 : 1;
-                                    BaseAI.DamagePlayer(player, NPC.damage, 3, hitDirection, NPC);
-                                    player.AddBuff(BuffID.Bleeding, 600);
+                                    foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                                    {
+                                        if (!target.active || target.whoAmI == NPC.whoAmI || (!target.friendly &&
+                                            !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                                            continue;
+
+                                        if (target.immune[NPC.whoAmI] > 0 || !target.Hitbox.Intersects(SlashHitbox))
+                                            continue;
+
+                                        target.immune[NPC.whoAmI] = 30;
+                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        BaseAI.DamageNPC(target, NPC.damage, 3, hitDirection, NPC);
+                                        target.AddBuff(BuffID.Bleeding, 600);
+                                    }
+                                    for (int p = 0; p < Main.maxPlayers; p++)
+                                    {
+                                        Player target = Main.player[p];
+                                        if (!target.active || target.dead)
+                                            continue;
+
+                                        if (!target.Hitbox.Intersects(SlashHitbox))
+                                            continue;
+
+                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
+                                        target.AddBuff(BuffID.Bleeding, 600);
+                                    }
                                 }
                                 if (AITimer >= 235)
                                 {

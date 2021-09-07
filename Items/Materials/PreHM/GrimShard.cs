@@ -30,7 +30,7 @@ namespace Redemption.Items.Materials.PreHM
             if (!Main.rand.NextBool(60))
                 return;
 
-            int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height / 2,
+            int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height,
                 DustID.PurpleCrystalShard, 0, 0, 20);
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
