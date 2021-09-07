@@ -32,16 +32,9 @@ namespace Redemption.Globals
 			var downed = new List<string>();
 
 			if (downedThorn)
-			{
 				downed.Add("downedThorn");
-			}
 			if (downedKeeper)
-            {
 				downed.Add("downedKeeper");
-            }
-			//if (downedOtherBoss) {
-			//	downed.Add("downedOtherBoss");
-			//}
 
 			return new TagCompound
 			{

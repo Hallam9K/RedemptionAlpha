@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.IO;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Redemption
 {
@@ -25,5 +28,38 @@ namespace Redemption
             if (blobbleSwarmCooldown > 0)
                 blobbleSwarmCooldown--;
         }
-    }
+
+		public override void OnWorldLoad()
+		{
+			alignment = 0;
+		}
+
+		public override void OnWorldUnload()
+		{
+			alignment = 0;
+		}
+
+		public override TagCompound SaveWorldData()
+		{
+			return new TagCompound
+			{
+				["alignment"] = alignment,
+			};
+		}
+
+		public override void LoadWorldData(TagCompound tag)
+		{
+			alignment = tag.GetInt("alignment");
+		}
+
+		public override void NetSend(BinaryWriter writer)
+		{
+			writer.Write(alignment);
+		}
+
+		public override void NetReceive(BinaryReader reader)
+		{
+			alignment = reader.ReadInt32();
+		}
+	}
 }
