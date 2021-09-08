@@ -10,7 +10,7 @@ using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
-    public class Zweihander_SlashProj : ModProjectile
+    public class Zweihander_SlashProj : TrueMeleeProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -18,28 +18,25 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.projFrames[Projectile.type] = 10;
         }
         public override bool ShouldUpdatePosition() => false;
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 222;
             Projectile.height = 156;
-            Projectile.DamageType = DamageClass.Melee;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.ownerHitCheck = true;
         }
 
         public override bool? CanCutTiles() => false;
 
-        public ref float SwingSpeed => ref Projectile.ai[1];
+        public float SwingSpeed;
         int directionLock = 0;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
 
-            SwingSpeed = 50 * player.meleeSpeed;
+            SwingSpeed = SetSwingSpeed(50);
 
             Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
 
@@ -63,7 +60,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Projectile.ai[0]++;
                     if (Projectile.frame > 3)
                         player.itemRotation -= MathHelper.ToRadians(-20f * player.direction);
-                    else 
+                    else
                         player.bodyFrame.Y = 5 * player.bodyFrame.Height;
                     if (++Projectile.frameCounter >= SwingSpeed / 10)
                     {

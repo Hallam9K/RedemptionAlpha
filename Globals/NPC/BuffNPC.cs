@@ -54,7 +54,7 @@ namespace Redemption.Globals.NPC
                 dirtyWoundTime++;
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
-                npc.lifeRegen -= dirtyWoundTime / 240;
+                npc.lifeRegen -= dirtyWoundTime / 360;
 
                 if (npc.wet && !npc.lavaWet)
                     npc.DelBuff(ModContent.BuffType<DirtyWoundDebuff>());

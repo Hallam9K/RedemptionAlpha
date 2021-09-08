@@ -203,7 +203,7 @@ namespace Redemption.Globals.Player
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
-                Player.lifeRegen -= dirtyWoundTime / 240;
+                Player.lifeRegen -= dirtyWoundTime / 360;
 
                 if (Player.wet && !Player.lavaWet)
                     Player.ClearBuff(ModContent.BuffType<DirtyWoundDebuff>());
@@ -237,6 +237,13 @@ namespace Redemption.Globals.Player
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
                         Projectile.NewProjectile(Player.GetProjectileSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                }
+            }
+            if (dirtyWound)
+            {
+                if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " had an infection");
                 }
             }
             return true;

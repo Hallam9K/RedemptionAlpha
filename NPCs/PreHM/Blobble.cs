@@ -58,7 +58,8 @@ namespace Redemption.NPCs.PreHM
                 SpecificallyImmuneTo = new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     BuffID.Bleeding,
-                    BuffID.Poisoned
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 

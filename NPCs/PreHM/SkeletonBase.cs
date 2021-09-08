@@ -5,12 +5,12 @@ using Terraria.DataStructures;
 using Redemption.Globals.NPC;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class SkeletonBase : ModNPC
+    public abstract class SkeletonBase : ModNPC
     {
-        public override bool CloneNewInstances => true;
         public enum PersonalityState
         {
             Normal, Aggressive, Calm, Greedy, Soulful
@@ -32,20 +32,19 @@ namespace Redemption.NPCs.PreHM
         public int VisionRange;
         public int VisionIncrease;
         public float SpeedMultiplier = 1f;
+
+        public virtual void SetSafeStaticDefaults() { }
         public override void SetStaticDefaults()
         {
+            SetSafeStaticDefaults();
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Bleeding,
-                    BuffID.Poisoned
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                Hide = true
-            };
         }
         public bool PlayerDead()
         {

@@ -36,9 +36,8 @@ namespace Redemption.NPCs.PreHM
             set => NPC.ai[0] = (int)value;
         }
 
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            base.SetStaticDefaults();
             Main.npcFrameCount[NPC.type] = 16;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);

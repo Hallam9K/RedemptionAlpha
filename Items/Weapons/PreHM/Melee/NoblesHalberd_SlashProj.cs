@@ -10,7 +10,7 @@ using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
-    public class NoblesHalberd_SlashProj : ModProjectile
+    public class NoblesHalberd_SlashProj : TrueMeleeProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -18,16 +18,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.projFrames[Projectile.type] = 6;
         }
         public override bool ShouldUpdatePosition() => false;
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 78;
             Projectile.height = 94;
-            Projectile.DamageType = DamageClass.Melee;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.ownerHitCheck = true;
         }
 
         public override bool? CanCutTiles()
@@ -35,7 +32,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             return false;
         }
 
-        public ref float SwingSpeed => ref Projectile.ai[1];
+        public float SwingSpeed;
         int directionLock = 0;
         public override void AI()
         {
@@ -45,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
             Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
 
-            SwingSpeed = 42 * player.meleeSpeed;
+            SwingSpeed = SetSwingSpeed(42);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();

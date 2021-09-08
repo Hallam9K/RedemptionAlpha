@@ -40,9 +40,8 @@ namespace Redemption.NPCs.PreHM
             set => NPC.ai[0] = (int)value;
         }
 
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            base.SetStaticDefaults();
             DisplayName.SetDefault("Corpse-Walker Priest");
             Main.npcFrameCount[NPC.type] = 15;
 
