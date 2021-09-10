@@ -1062,6 +1062,26 @@ namespace Redemption.Globals
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }
+        public static void DamageAnyAttackers(this Terraria.NPC npc, float dmgModify = 0, int knockback = 0, List<int> DontDmgNPC = default)
+        {
+            if (DontDmgNPC == default)
+                DontDmgNPC = new() { 0 };
+            foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+            {
+                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
+                    continue;
+
+                if (DontDmgNPC.Contains(target.type))
+                    continue;
+
+                if (target.immune[npc.whoAmI] > 0 || !npc.Hitbox.Intersects(target.Hitbox))
+                    continue;
+
+                target.immune[npc.whoAmI] = 30;
+                int hitDirection = npc.Center.X > target.Center.X ? -1 : 1;
+                BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
+            }
+        }
 
         #endregion
     }

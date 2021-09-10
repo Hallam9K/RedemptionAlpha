@@ -160,6 +160,16 @@ namespace Redemption.WorldGeneration
                         }
                     }
                 }));
+                tasks.Insert(ShiniesIndex + 3, new PassLegacy("Generating Infested Stone", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    progress.Message = "Hiding Spiders";
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 5E-05); k++)
+                    {
+                        int i2 = WorldGen.genRand.Next(0, Main.maxTilesX);
+                        int j2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8f));
+                        WorldGen.OreRunner(i2, j2, WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(3, 8), (ushort)ModContent.TileType<InfestedStoneTile>());
+                    }
+                }));
             }
 
             #region Ancient Decal + Hall of Heroes
