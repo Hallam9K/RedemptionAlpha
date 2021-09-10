@@ -24,8 +24,16 @@ namespace Redemption.Globals.Player
         public int dirtyWoundTime;
         public bool heartInsignia;
 
+        public int MeleeDamageFlat;
+
         public float[] ElementalResistance = new float[14];
         public float[] ElementalDamage = new float[14];
+
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
+        {
+            if (item.CountsAsClass(DamageClass.Melee))
+                flat += MeleeDamageFlat;
+        }
 
         public override void ResetEffects()
         {
@@ -35,6 +43,7 @@ namespace Redemption.Globals.Player
             thornCirclet = false;
             skeletonFriendly = false;
             heartInsignia = false;
+            MeleeDamageFlat = 0;
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
                 ElementalResistance[k] = 0;

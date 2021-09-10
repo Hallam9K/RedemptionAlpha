@@ -5,6 +5,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
+using Redemption.Items.Armor.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
@@ -513,6 +514,8 @@ namespace Redemption.NPCs.PreHM
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NoblesHalberd>(), 16));
+            npcLoot.Add(ItemDropRule.OneFromOptions(16, ModContent.ItemType<CommonGuardHelm1>(), ModContent.ItemType<CommonGuardHelm2>(),
+                ModContent.ItemType<CommonGuardPlateMail>(), ModContent.ItemType<CommonGuardGreaves>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 2, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
