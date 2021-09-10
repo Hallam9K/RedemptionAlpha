@@ -23,6 +23,7 @@ namespace Redemption.Globals.Player
         public bool dirtyWound;
         public int dirtyWoundTime;
         public bool heartInsignia;
+        public bool wellFed4;
 
         public int MeleeDamageFlat;
 
