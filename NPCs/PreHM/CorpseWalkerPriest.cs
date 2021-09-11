@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Weapons.PreHM.Summon;
@@ -438,6 +439,7 @@ namespace Redemption.NPCs.PreHM
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorpseWalkerStaff>(), 12));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorpseWalkerSkullVanity>(), 50));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

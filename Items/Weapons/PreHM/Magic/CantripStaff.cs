@@ -45,6 +45,13 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
+            Vector2 Offset = Vector2.Normalize(velocity) * 25f;
+
+            if (Collision.CanHit(position, 0, 0, position + Offset, 0, 0))
+            {
+                position += Offset;
+            }
+
             CastCount++;
             if (CastCount >= 4)
             {

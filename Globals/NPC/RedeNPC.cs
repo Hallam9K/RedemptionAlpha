@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.PreHM;
@@ -145,13 +146,22 @@ namespace Redemption.Globals.NPC
             if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
                 RedeHelper.SpawnNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
-        public override void ModifyGlobalLoot(GlobalLoot globalLoot)
+        public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {
             DecapitationCondition decapitationDropCondition = new();
             IItemDropRule conditionalRule = new LeadingConditionRule(decapitationDropCondition);
-            IItemDropRule rule = ItemDropRule.Common(ItemID.Skull);
+            int itemType = ItemID.Skull;
+            if (npc.type == ModContent.NPCType<CorpseWalkerPriest>())
+                itemType = ModContent.ItemType<CorpseWalkerSkullVanity>();
+            else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
+                npc.type == ModContent.NPCType<SkeletonDuelist>() || npc.type == ModContent.NPCType<SkeletonFlagbearer>() ||
+                npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
+                npc.type == ModContent.NPCType<SkeletonWarden>())
+                itemType = ModContent.ItemType<EpidotrianSkull>();
+
+            IItemDropRule rule = ItemDropRule.Common(itemType);
             conditionalRule.OnSuccess(rule);
-            globalLoot.Add(conditionalRule);
+            npcLoot.Add(conditionalRule);
         }
 
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
