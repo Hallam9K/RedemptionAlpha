@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +14,8 @@ namespace Redemption.Items.Accessories.PreHM
         {
             DisplayName.SetDefault("Keeper's Circlet");
             Tooltip.SetDefault("Humanoid skeletons become friendly");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

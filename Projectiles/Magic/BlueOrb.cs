@@ -28,9 +28,20 @@ namespace Redemption.Projectiles.Magic
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
 
+        float rot = 0.02f;
         public override void AI()
         {
-            
+            Projectile.ai[1] += rot;
+            if (Projectile.ai[1] > (Projectile.localAI[0] == 0 ? 0.106f : 0.16f))
+            {
+                Projectile.localAI[0] = 1;
+                rot = -0.02f;
+            }
+            else if (Projectile.ai[1] < -0.16f)
+            {
+                rot = 0.02f;
+            }
+            Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0] == 0 ? Projectile.ai[1] : -Projectile.ai[1]);
         }
 
         public override void Kill(int timeLeft)

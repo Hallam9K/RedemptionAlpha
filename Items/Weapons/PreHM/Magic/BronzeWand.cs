@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
 {
-    public class BronzeStaff : ModItem
+    public class BronzeWand : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -36,6 +36,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<BlueOrb>();
             Item.shootSpeed = 8f;
+        }
+        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
+            return true;
         }
     }
 }

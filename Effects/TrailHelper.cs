@@ -43,7 +43,7 @@ namespace Redemption.Effects
 			if (projectile.type == ModContent.ProjectileType<KeeperDreadCoil>())
 				CreateTrail(projectile, new GradientTrail(new Color(136, 123, 255), new Color(79, 15, 255)), new NoCap(), new DefaultTrailPosition(), 200f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.01f, 1f, 1f));
 			if (projectile.type == ModContent.ProjectileType<BlueOrb>())
-				CreateTrail(projectile, new GradientTrail(new Color(16, 14, 55), new Color(22, 35, 102)), new RoundCap(), new DefaultTrailPosition(), 40f, 260f);
+				CreateTrail(projectile, new GradientTrail(new Color(95, 220, 214), new Color(22, 35, 102)), new RoundCap(), new DefaultTrailPosition(), 120f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_6").Value, 0.01f, 1f, 1f));
 		}
 
 		public void TryTrailKill(Projectile projectile)
