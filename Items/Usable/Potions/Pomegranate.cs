@@ -1,3 +1,4 @@
+using Redemption.Buffs;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,7 +9,7 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Minor improvements to all stats" +
+            Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'No more pomegranates!'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
@@ -26,9 +27,9 @@ namespace Redemption.Items.Usable.Potions
             Item.width = 28;
             Item.height = 26;
             Item.value = 80;
-            Item.rare = ItemRarityID.Green;
-            Item.buffType = BuffID.WellFed;
-            Item.buffTime = 12000;
+            Item.rare = ItemRarityID.Cyan;
+            Item.buffType = ModContent.BuffType<WellFed4>();
+            Item.buffTime = 20000;
         }
     }
 }
