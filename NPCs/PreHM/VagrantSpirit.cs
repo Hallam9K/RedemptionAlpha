@@ -13,6 +13,7 @@ using Redemption.Base;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -208,6 +209,8 @@ namespace Redemption.NPCs.PreHM
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>()));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 20));
+
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

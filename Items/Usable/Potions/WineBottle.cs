@@ -1,3 +1,4 @@
+using Redemption.Buffs;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace Redemption.Items.Usable.Potions
         {
             DisplayName.SetDefault("Bottle of Wine");
 
-            Tooltip.SetDefault("Minor improvements to all stats" +
+            Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'A reward for a long days work'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
@@ -28,9 +29,9 @@ namespace Redemption.Items.Usable.Potions
             Item.width = 18;
             Item.height = 42;
             Item.value = 80;
-            Item.rare = ItemRarityID.Blue;
-            Item.buffType = BuffID.WellFed;
-            Item.buffTime = 6000;
+            Item.rare = ItemRarityID.Cyan;
+            Item.buffType = ModContent.BuffType<WellFed4>();
+            Item.buffTime = 20000;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Redemption.Items.Armor.PreHM
 			Item.height = 18;
 			Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Green;
-			Item.defense = 2;
+			Item.defense = 3;
 		}
 
 		public override void UpdateEquip(Player player)
