@@ -23,12 +23,14 @@ namespace Redemption.Globals.NPC
         public bool moonflare;
         public bool dirtyWound;
         public int dirtyWoundTime;
+        public bool spiderSwarmed;
 
         public override void ResetEffects(Terraria.NPC npc)
         {        
             devilScented = false;
             rallied = false;
             moonflare = false;
+            spiderSwarmed = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -77,6 +79,10 @@ namespace Redemption.Globals.NPC
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= dot;
             }
+            if (spiderSwarmed)
+            {
+                npc.lifeRegen -= 4;
+            }
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -122,6 +128,14 @@ namespace Redemption.Globals.NPC
                     int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<MoonflareDust>(), Scale: 2);
                     Main.dust[sparkle].velocity *= 0;
                     Main.dust[sparkle].noGravity = true;
+                }
+            }
+            if (spiderSwarmed)
+            {
+                if (Main.rand.Next(10) == 0 && npc.alpha < 200)
+                {
+                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<SpiderSwarmerDust>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
+                    Main.dust[dust].noGravity = true;
                 }
             }
         }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
+using Redemption.Dusts;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Misc;
 using Terraria;
@@ -24,6 +25,9 @@ namespace Redemption.Globals.Player
         public int dirtyWoundTime;
         public bool heartInsignia;
         public bool wellFed4;
+        public bool spiderSwarmed;
+
+        public bool MetalSet;
 
         public int MeleeDamageFlat;
 
@@ -45,6 +49,8 @@ namespace Redemption.Globals.Player
             skeletonFriendly = false;
             heartInsignia = false;
             MeleeDamageFlat = 0;
+            MetalSet = false;
+            spiderSwarmed = false;
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
                 ElementalResistance[k] = 0;
@@ -64,7 +70,7 @@ namespace Redemption.Globals.Player
                 dirtyWoundTime = 0;
             }
         }
-        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
+        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (thornCirclet && !item.CountsAsClass(DamageClass.Summon))
             {
@@ -218,6 +224,8 @@ namespace Redemption.Globals.Player
                 if (Player.wet && !Player.lavaWet)
                     Player.ClearBuff(ModContent.BuffType<DirtyWoundDebuff>());
             }
+            if (spiderSwarmed)
+                Player.lifeRegen -= 4;
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -227,7 +235,24 @@ namespace Redemption.Globals.Player
                 g = 1;
                 b = 0.3f;
             }
+            if (spiderSwarmed)
+            {
+                if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, ModContent.DustType<SpiderSwarmerDust>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f);
+                    Main.dust[dust].noGravity = true;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
         }
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (MetalSet)
+                SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
+            return true;
+        }
+
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (infested && infestedTime >= 60)
@@ -254,6 +279,13 @@ namespace Redemption.Globals.Player
                 if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 {
                     damageSource = PlayerDeathReason.ByCustomReason(Player.name + " had an infection");
+                }
+            }  
+            if (spiderSwarmed)
+            {
+                if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got nibbled to death");
                 }
             }
             return true;

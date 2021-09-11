@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using System;
 
 namespace Redemption.Items.Armor.PreHM
 {
@@ -43,9 +44,19 @@ namespace Redemption.Items.Armor.PreHM
 		{
 			player.setBonus = "12% increased melee speed";
 			player.meleeSpeed += .12f;
-		}
+            player.GetModPlayer<BuffPlayer>().MetalSet = true;
 
-		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
+            if (Main.rand.NextBool(10) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
+            {
+                int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height,
+                    DustID.Web);
+                Main.dust[index].noGravity = true;
+                Dust dust = Main.dust[index];
+                dust.velocity -= player.velocity * 0.5f;
+            }
+        }
+
+        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
 			drawHair = drawAltHair = false;
 		}
@@ -65,7 +76,7 @@ namespace Redemption.Items.Armor.PreHM
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'Visored plate mail helm of the Common Guard unit of Anglon that was scavenged by skeletons.\n" +
-                    "Originally shining steel, the metal has since dulled with time.\n\n" +
+                    "Originally shining steel, the metal has since dulled with time and coated with layers of dust.\n\n" +
                     "The Common Guard was founded when an Overlord's city was completely obliterated\n" +
                     "by a stray demon that sneaked through an unguarded portal to Demonhollow.\n\n" +
                     "They now guard cities and landmarks of great importance. Despite being stronger than the average\n" +

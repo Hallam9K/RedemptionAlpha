@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Critters;
@@ -35,7 +36,7 @@ namespace Redemption.NPCs.Critters
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 4;
+            Main.npcFrameCount[Type] = 3;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -67,6 +68,10 @@ namespace Redemption.NPCs.Critters
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive;
         public override bool? CanHitNPC(NPC target) => false;
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
+        }
 
         public NPC npcTarget;
         public Vector2 moveTo;
@@ -164,7 +169,19 @@ namespace Redemption.NPCs.Critters
                         hopCooldown = 80;
                     }
 
-                    NPC.DamageAnyAttackers(0, 0);
+                    foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                    {
+                        if (!target.active || target.whoAmI == NPC.whoAmI || target != NPC.GetGlobalNPC<RedeNPC>().attacker)
+                            continue;
+
+                        if (target.immune[NPC.whoAmI] > 0 || !NPC.Hitbox.Intersects(target.Hitbox))
+                            continue;
+
+                        target.immune[NPC.whoAmI] = 30;
+                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                        BaseAI.DamageNPC(target, NPC.damage, 0, hitDirection, NPC);
+                        target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
+                    }
 
                     if (!NPC.Sight(globalNPC.attacker, 150, false, true))
                         runCooldown++;
@@ -290,7 +307,7 @@ namespace Redemption.NPCs.Critters
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
+                        if (NPC.frame.Y > 2 * frameHeight)
                             NPC.frame.Y = 0;
                     }
 

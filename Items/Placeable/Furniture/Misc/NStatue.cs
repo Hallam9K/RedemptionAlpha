@@ -1,4 +1,4 @@
-using Redemption.Globals;
+using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
 using Terraria.ID;

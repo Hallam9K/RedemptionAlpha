@@ -47,7 +47,7 @@ namespace Redemption.Items.Armor.PreHM
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'Plate mail greaves of the Common Guard unit of Anglon that was scavenged by skeletons.\n" +
-                    "Originally shining steel, the metal has since dulled with time.\n\n" +
+                    "Originally shining steel, the metal has since dulled with time and coated with layers of dust.\n\n" +
                     "The Common Guard was founded when an Overlord's city was completely obliterated\n" +
                     "by a stray demon that sneaked through an unguarded portal to Demonhollow.\n\n" +
                     "They now guard cities and landmarks of great importance. Despite being stronger than the average\n" +

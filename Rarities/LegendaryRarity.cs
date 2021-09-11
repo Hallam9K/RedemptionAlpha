@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals
+namespace Redemption.Rarities
 {
 	public class LegendaryRarity : ModRarity
 	{
