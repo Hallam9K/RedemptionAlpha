@@ -23,6 +23,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
