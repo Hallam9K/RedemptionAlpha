@@ -91,9 +91,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             CreateRecipe()
                 .AddIngredient(ItemID.CrystalVileShard)
                 .AddIngredient(ItemID.SkyFracture)
-                .AddIngredient(ItemID.SoulBottleMight, 10)
-                .AddIngredient(ItemID.SoulBottleMight, 10)
-                .AddIngredient(ItemID.SoulBottleMight, 10)
+                .AddIngredient(ItemID.SoulofMight, 10)
+                .AddIngredient(ItemID.SoulofSight, 10)
+                .AddIngredient(ItemID.SoulofFright, 10)
                 .Register();
         }
     }
