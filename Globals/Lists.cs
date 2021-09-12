@@ -19,7 +19,6 @@ using Redemption.NPCs.Bosses.Thorn;
 using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Melee;
 using Redemption.NPCs.Bosses.Keeper;
-using Redemption.Items.Weapons.HM.Magic;
 
 namespace Redemption.Globals
 {
@@ -489,7 +488,7 @@ namespace Redemption.Globals
             Ice.SetMultiple(ItemID.IceBlade, ItemID.IceSickle, ItemID.Frostbrand);
             Earth.SetMultiple(ItemID.Seedler, ItemID.FossilPickaxe, ItemID.Picksaw);
             Thunder.SetMultiple(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex);
-            Holy.SetMultiple(ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer, ModContent.ItemType<SunshardStave>());
+            Holy.SetMultiple(ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer);
             Shadow.SetMultiple(ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker);
             Nature.SetMultiple(ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer, ModContent.ItemType<CursedGrassBlade>());
             Poison.SetMultiple(ItemID.BeeKeeper, ModContent.ItemType<CursedGrassBlade>());
@@ -614,7 +613,7 @@ namespace Redemption.Globals
 
             #region Holy
 
-            Holy.SetMultiple(ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ModContent.ProjectileType<CorpseWalkerBolt>());
+            Holy.SetMultiple(ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ModContent.ProjectileType<CorpseWalkerBolt>(), ModContent.ProjectileType<Sunshard>());
 
             #endregion
 
