@@ -1,36 +1,37 @@
-using Redemption.Rarities;
-using Redemption.Tiles.Tiles;
-using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
+using Redemption.Walls;
+using Terraria.GameContent.Creative;
+using Redemption.Rarities;
 
 namespace Redemption.Items.Placeable.Tiles
 {
-    public class ShinkiteBrick : ModItem
+    public class ShinkiteBrickWall : ModItem
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 16;
-            Item.height = 16;
+            Item.width = 24;
+            Item.height = 24;
             Item.maxStack = 999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;
-            Item.useTime = 10;
+            Item.useTime = 7;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<ShinkiteBrickTile>();
+            Item.createWall = ModContent.WallType<ShinkiteBrickWallTile>();
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
         }
+
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ShinkiteBrickWall>(), 4)
+            CreateRecipe(4)
+                .AddIngredient(ModContent.ItemType<ShinkiteBrick>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
