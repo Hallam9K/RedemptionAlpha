@@ -23,18 +23,18 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.damage = 45;
             Item.height = 62;
             Item.width = 62;
-            Item.useTime = 28;
+            Item.useTime = 36;
             Item.DamageType = DamageClass.Magic;
             Item.crit = 20;
             Item.mana = 20;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 8;
-            Item.useAnimation = 28;
+            Item.useAnimation = 36;
             Item.rare = ItemRarityID.Yellow;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.UseSound = SoundID.Item125;
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 26f;
             Item.shoot = ModContent.ProjectileType<Sunshard>();
 
         }
