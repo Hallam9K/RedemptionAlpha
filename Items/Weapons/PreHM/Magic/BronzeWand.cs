@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Magic;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,10 +14,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bronze Wand");
-            Tooltip.SetDefault("'A bronze wand with a blue orb'"
-                + "\nCasts two unstable zig-zagging water orbs" +
+            Tooltip.SetDefault("Casts two unstable zig-zagging water orbs" +
                 "\nWater orbs home in on enemies after 6 consecutive shots");
             Item.staff[Item.type] = true;
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -63,6 +66,29 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             CastCount++;
             if (CastCount >= 6)
                 type = ModContent.ProjectileType<WaterOrbS>();
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A bronze wand with an aquamarine orb, once used by a trickster sorcerer of Kohldur.\n" +
+                    "The sorcerer used the element of water to play harmless pranks on the barons of the capital,\n" +
+                    "until they grew weary of her antics and ordered the duke to exile her.'")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
     }
 }

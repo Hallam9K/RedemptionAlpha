@@ -54,6 +54,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 type = ModContent.ProjectileType<LunarShot_Proj>();
             }
         }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-2, 0);
+        }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             string text = "There is no moonlight to reflect...";

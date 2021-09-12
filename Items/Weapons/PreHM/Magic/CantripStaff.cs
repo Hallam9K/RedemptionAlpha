@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Magic;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,10 +13,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cantrip Staff");
-            Tooltip.SetDefault("'A simple wooden staff with a white crystal at the top'"
-                + "\nCasts a ball of ember" +
+            Tooltip.SetDefault("Casts a ball of ember" +
                 "\nCasts a larger fireball every 4 consecutive shots");
             Item.staff[Item.type] = true;
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -59,6 +62,29 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 damage *= 2;
                 knockback += 5;
                 CastCount = 0;
+            }
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A simple wooden staff with a white crystal on top, commonly given to appentices\n" +
+                    "of sorcerers to practice storing and releasing their mana.\n" +
+                    "An overload of mana from a stronger mage can easily break this.'")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
             }
         }
     }

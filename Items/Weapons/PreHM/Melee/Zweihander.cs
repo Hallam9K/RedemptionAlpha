@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,6 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "\nDeals more damage at the tip of the blade");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -35,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 50;
+            Item.damage = 44;
             Item.knockBack = 7;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
