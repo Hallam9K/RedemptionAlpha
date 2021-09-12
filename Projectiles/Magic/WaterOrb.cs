@@ -44,11 +44,7 @@ namespace Redemption.Projectiles.Magic
                 Projectile.timeLeft -= 4;
         }
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            lightColor.A = 0;
-            return Color.White;
-        }
+        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);
 
         public override void Kill(int timeLeft)
         {

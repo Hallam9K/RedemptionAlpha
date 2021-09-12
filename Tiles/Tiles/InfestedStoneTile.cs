@@ -36,9 +36,9 @@ namespace Redemption.Tiles.Tiles
                 if (breakCheck)
                     return;
                 breakCheck = true;
-                for (int k = i - 4; k <= i + 4; k++)
+                for (int k = i - 3; k <= i + 3; k++)
                 {
-                    for (int l = j - 4; l <= j + 4; l++)
+                    for (int l = j - 3; l <= j + 3; l++)
                     {
                         if ((k != i || l != j) && Main.tile[k, l].IsActive && Main.tile[k, l].type == ModContent.TileType<InfestedStoneTile>() && !Main.rand.NextBool(3))
                         {

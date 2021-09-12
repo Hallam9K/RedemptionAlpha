@@ -51,10 +51,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Main.dust[dustIndex].velocity *= 4.4f;
             }
         }
-        public override Color? GetAlpha(Color lightColor)
-        {
-            lightColor.A = 0;
-            return lightColor;
-        }
+        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);
     }
 }

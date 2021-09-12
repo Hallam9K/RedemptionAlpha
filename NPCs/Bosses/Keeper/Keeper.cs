@@ -22,6 +22,7 @@ using Terraria.Graphics.Shaders;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using System.Linq;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -152,6 +153,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 2, 4));
 
             npcLoot.Add(notExpertRule);
