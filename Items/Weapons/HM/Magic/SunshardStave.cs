@@ -76,6 +76,16 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
         }
 
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            Vector2 Offset = Vector2.Normalize(velocity) * 55f;
+
+            if (Collision.CanHit(position, 0, 0, position + Offset, 0, 0))
+            {
+                position += Offset;
+            }
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe()
