@@ -94,6 +94,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 .AddIngredient(ItemID.SoulofMight, 10)
                 .AddIngredient(ItemID.SoulofSight, 10)
                 .AddIngredient(ItemID.SoulofFright, 10)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
     }
