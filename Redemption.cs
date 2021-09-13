@@ -109,6 +109,7 @@ namespace Redemption
         {
             On.Terraria.Main.Update -= LoadTrailManager;
         }
+
         public override void PreUpdateProjectiles()
         {
             if (Main.netMode != NetmodeID.Server)

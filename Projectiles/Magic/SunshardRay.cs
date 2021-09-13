@@ -23,7 +23,7 @@ namespace Redemption.Projectiles.Magic
         public float LaserLength = 0;
         public float LaserScale = 0;
         public int LaserSegmentLength = 14;
-        public int LaserWidth = 22;
+        public int LaserWidth = 20;
         public int LaserEndSegmentLength = 14;
 
         //should be set to about half of the end length
@@ -164,7 +164,13 @@ namespace Redemption.Projectiles.Magic
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, new Color(255, 255, 255, 0), (int)FirstSegmentDrawDist);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Color.White, (int)FirstSegmentDrawDist);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
         #endregion

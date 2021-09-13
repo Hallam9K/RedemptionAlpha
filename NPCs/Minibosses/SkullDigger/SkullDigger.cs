@@ -212,17 +212,18 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             if (AITimer++ == 0)
                             {
                                 if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Skull Digger", 60, 90, 0.8f, 0, Color.MediumPurple, "The Keeper's First Creation");
+                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Skull Digger", 60, 90, 0.8f, 0, Color.LightCyan, "The Keeper's First Creation");
                                 if (!NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
                                 {
                                     NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y);
-                                    NPC.alpha = 255;
                                 }
                                 else if (!Main.dedServ)
                                     Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper");
 
                                 NPC.velocity.Y = -6;
                             }
+                            if (AITimer > 2)
+                                NPC.alpha -= 2;
 
                             int dustIndex = Dust.NewDust(NPC.BottomLeft + new Vector2(0, 20), NPC.width, 1, DustID.DungeonSpirit);
                             Main.dust[dustIndex].velocity.Y -= 10f;
@@ -230,7 +231,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             Main.dust[dustIndex].noGravity = true;
 
                             NPC.velocity *= 0.96f;
-                            NPC.alpha -= 2;
                             if (NPC.alpha <= 0)
                             {
                                 TimerRand = 1;
@@ -245,11 +245,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer == 40)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Mistress Octavia, are you harmed?", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Mistress Octavia, are you harmed?", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, null, NPC.Center, 0);
                                     if (AITimer == 220)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You need not worry, I shall crush this vermin.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My lady, you need not worry, I shall crush this vermin.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, null, NPC.Center, 0);
                                     if (AITimer == 400)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, null, NPC.Center, 0);
                                 }
                                 if (AITimer >= 580)
                                 {
@@ -265,9 +265,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer == 40)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I have finally found you, vermin...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I have finally found you, vermin...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, null, NPC.Center, 0);
                                     if (AITimer == 220)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, null, NPC.Center, 0);
                                 }
                                 if (AITimer >= 400)
                                 {
@@ -350,9 +350,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         if (!Main.dedServ)
                         {
                             if (AITimer == 40)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My dear mistress, I have failed you.", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My dear mistress, I have failed you.", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, null, NPC.Center, 0);
                             if (AITimer == 220)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It seems our torment stays eternal.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.MediumPurple, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It seems our torment stays eternal.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, null, NPC.Center, 0);
                         }
 
                         if (AITimer >= 220)
