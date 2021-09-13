@@ -23,6 +23,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using System.Linq;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.NPCs.Minibosses.SkullDigger;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -51,7 +52,8 @@ namespace Redemption.NPCs.Bosses.Keeper
             Idle,
             Attacks,
             Unveiled,
-            Death
+            Death,
+            SkullDiggerSummon
         }
 
         public ActionState AIState
@@ -133,6 +135,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -163,6 +166,8 @@ namespace Redemption.NPCs.Bosses.Keeper
         {
             if (!RedeBossDowned.downedKeeper)
             {
+                Item.NewItem(NPC.getRect(), ModContent.ItemType<SorrowfulEssence>());
+
                 RedeWorld.alignment++;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
@@ -239,6 +244,17 @@ namespace Redemption.NPCs.Bosses.Keeper
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 64 : NPC.Center.X + 26), (int)(NPC.Center.Y - 38), 38, 86);
             SoulCharging = false;
 
+            bool sorrowfulEssence = false;
+            for (int k = 0; k < Main.maxPlayers; k++)
+            {
+                Player player2 = Main.player[k];
+                if (!player2.active || player2.dead)
+                    continue;
+                if (!player2.HasItem(ModContent.ItemType<SorrowfulEssence>()))
+                    continue;
+
+                sorrowfulEssence = true;
+            }
             DespawnHandler();
 
             if (AIState != ActionState.Death && AIState != ActionState.Unveiled && AIState != ActionState.Attacks)
@@ -596,16 +612,40 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                     if (AITimer >= 220)
                     {
-                        NPC.dontTakeDamage = false;
                         AITimer = 0;
+                        if (sorrowfulEssence)
+                            AIState = ActionState.SkullDiggerSummon;
+                        else
+                        {
+                            NPC.dontTakeDamage = false;
+                            AIState = ActionState.Idle;
+                        }
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.SkullDiggerSummon:
+                    player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.dontTakeDamage = true;
+
+                    if (AITimer++ == 0)
+                        RedeHelper.SpawnNPC((int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>());
+
+                    if (AITimer >= 660)
+                    {
+                        AITimer = 0;
+                        NPC.dontTakeDamage = false;
                         AIState = ActionState.Idle;
                         NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.Death:
                     NPC.dontTakeDamage = true;
-                    player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    if (!NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()))
+                    {
+                        player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    }
                     player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
                     NPC.velocity *= 0;
 
