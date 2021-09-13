@@ -40,6 +40,8 @@ namespace Redemption.Projectiles.Magic
 
         public override void AI()
         {
+            Player player = Main.player[Projectile.owner];
+
             if (++Projectile.frameCounter >= 5)
             {
                 Projectile.frameCounter = 0;
@@ -85,6 +87,47 @@ namespace Redemption.Projectiles.Magic
                     Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
                     AdjustMagnitude(ref Projectile.velocity);
                 }
+            }
+
+            for (int k = 0; k < Main.maxPlayers; k++)
+            {
+                Player player2 = Main.player[k];
+                if (!player2.active || player2.dead || player2.whoAmI == player.whoAmI)
+                    continue;
+
+                if (!Projectile.Hitbox.Intersects(player2.Hitbox))
+                    continue;
+
+                if (player2.statLife < player2.statLifeMax2)
+                {
+                    player2.statLife += 3;
+                    player2.HealEffect(3);
+                }
+                if (player2.statLife > player2.statLifeMax2)
+                    player2.statLife = player2.statLifeMax2;
+
+                Projectile.Kill();
+            }
+            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            {
+                if (!target.active)
+                    continue;
+
+                if (!target.friendly || target.dontTakeDamage || target.immortal)
+                    continue;
+
+                if (!Projectile.Hitbox.Intersects(target.Hitbox))
+                    continue;
+
+                if (target.life < target.lifeMax)
+                {
+                    target.life += 3;
+                    target.HealEffect(3);
+                }
+                if (target.life > target.lifeMax)
+                    target.life = target.lifeMax;
+
+                Projectile.Kill();
             }
         }
 

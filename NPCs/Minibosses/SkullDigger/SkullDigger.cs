@@ -108,14 +108,14 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         {
             if (!RedeBossDowned.downedSkullDigger)
             {
-                RedeWorld.alignment--;
+                RedeWorld.alignment -=2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, "-1", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, "-2", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
@@ -385,9 +385,14 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             }
         }
 
+        public override bool CheckActive()
+        {
+            return AIState != ActionState.Death && AIState != ActionState.Begin;
+        }
+
         public override bool CheckDead()
         {
-            if (AIState is ActionState.Death)
+            if (AIState is ActionState.Death && AITimer >= 220)
                 return true;
             else
             {

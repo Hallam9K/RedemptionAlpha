@@ -707,6 +707,11 @@ namespace Redemption.NPCs.Bosses.Keeper
             }
         }
 
+        public override bool CheckActive()
+        {
+            return AIState != ActionState.Death && AIState != ActionState.SkullDiggerSummon;
+        }
+
         public override bool CheckDead()
         {
             if (AIState is ActionState.Death)
