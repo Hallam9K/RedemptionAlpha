@@ -13,8 +13,6 @@ namespace Redemption.Projectiles.Magic
 {
     public class Sunshard : ModProjectile
     {
-        public override string Texture => "Redemption/Projectiles/Hostile/CorpseWalkerBolt";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Redemptive Spark");
