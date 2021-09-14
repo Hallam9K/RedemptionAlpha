@@ -58,6 +58,31 @@ namespace Redemption.Globals.NPC
                 if (ItemTags.Shadow.Has(item.type))
                     damage = (int)(damage * 0.8f);
             }
+            if (NPCTags.Demon.Has(npc.type))
+            {
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * 1.5f);
+
+                if (ItemTags.Celestial.Has(item.type))
+                    damage = (int)(damage * 1.5f);
+
+                if (ItemTags.Fire.Has(item.type))
+                    damage = (int)(damage * 0.5f);
+
+                if (ItemTags.Water.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+            }
+            if (NPCTags.Spirit.Has(npc.type))
+            {
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemTags.Celestial.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemTags.Arcane.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+            }
             if (NPCLists.IsSlime.Contains(npc.type))
             {
                 if (ItemTags.Fire.Has(item.type))
@@ -111,6 +136,31 @@ namespace Redemption.Globals.NPC
 
                 if (ProjectileTags.Shadow.Has(projectile.type))
                     damage = (int)(damage * 0.8f);
+            }
+            if (NPCTags.Demon.Has(npc.type))
+            {
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage = (int)(damage * 1.5f);
+
+                if (ProjectileTags.Celestial.Has(projectile.type))
+                    damage = (int)(damage * 1.5f);
+
+                if (ProjectileTags.Fire.Has(projectile.type))
+                    damage = (int)(damage * 0.5f);
+
+                if (ProjectileTags.Water.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+            }
+            if (NPCTags.Spirit.Has(npc.type))
+            {
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileTags.Celestial.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileTags.Arcane.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
             }
             if (NPCLists.IsSlime.Contains(npc.type))
             {

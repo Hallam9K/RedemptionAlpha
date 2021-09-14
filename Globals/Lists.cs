@@ -262,7 +262,46 @@ namespace Redemption.Globals
 
         public static List<int> IsSlime = new()
         {
-            NPCID.GreenSlime, NPCID.BlueSlime, NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.JungleSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.BabySlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.Pinky, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Slimer, NPCID.Slimer2, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(),
+            NPCID.GreenSlime,
+            NPCID.BlueSlime,
+            NPCID.RedSlime,
+            NPCID.PurpleSlime,
+            NPCID.YellowSlime,
+            NPCID.BlackSlime,
+            NPCID.IceSlime,
+            NPCID.SandSlime,
+            NPCID.JungleSlime,
+            NPCID.SpikedIceSlime,
+            NPCID.SpikedJungleSlime,
+            NPCID.MotherSlime,
+            NPCID.BabySlime,
+            NPCID.LavaSlime,
+            NPCID.DungeonSlime,
+            NPCID.Pinky,
+            NPCID.GoldenSlime,
+            NPCID.KingSlime,
+            NPCID.SlimeSpiked,
+            NPCID.UmbrellaSlime,
+            NPCID.SlimeMasked,
+            NPCID.SlimeRibbonGreen,
+            NPCID.SlimeRibbonRed,
+            NPCID.SlimeRibbonWhite,
+            NPCID.SlimeRibbonYellow,
+            NPCID.ToxicSludge,
+            NPCID.CorruptSlime,
+            NPCID.Slimeling,
+            NPCID.Slimer,
+            NPCID.Slimer2,
+            NPCID.Crimslime,
+            NPCID.Gastropod,
+            NPCID.IlluminantSlime,
+            NPCID.RainbowSlime,
+            NPCID.QueenSlimeBoss,
+            NPCID.QueenSlimeMinionBlue,
+            NPCID.QueenSlimeMinionPink,
+            NPCID.QueenSlimeMinionPurple,
+            NPCID.HoppinJack,
+            ModContent.NPCType<Blobble>(),
         };
 
         public static List<int> IsBunny = new()
@@ -521,6 +560,8 @@ namespace Redemption.Globals
         public static readonly TagData SkeletonHumanoid = ContentTags.Get<GroupNPC>(nameof(SkeletonHumanoid));
         public static readonly TagData Undead = ContentTags.Get<GroupNPC>(nameof(Undead));
         public static readonly TagData Plantlike = ContentTags.Get<GroupNPC>(nameof(Plantlike));
+        public static readonly TagData Spirit = ContentTags.Get<GroupNPC>(nameof(Spirit));
+        public static readonly TagData Demon = ContentTags.Get<GroupNPC>(nameof(Demon));
 
         public static void SetNPCTags()
         {
@@ -541,12 +582,19 @@ namespace Redemption.Globals
 
             #endregion
 
+            #region Spirit
+            Spirit.SetMultiple(NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>());
+            #endregion
+
             #region Plantlike
 
             Plantlike.SetMultiple(NPCID.FungiBulb, NPCID.AnomuraFungus, NPCID.MushiLadybug, NPCID.ManEater, NPCID.Snatcher, NPCID.AngryTrapper, NPCID.FungoFish, NPCID.GiantFungiBulb, NPCID.HoppinJack, NPCID.Dandelion, NPCID.Plantera, NPCID.MourningWood, NPCID.Pumpking, NPCID.Everscream, NPCID.PlanterasTentacle, ModContent.NPCType<LivingBloom>(), ModContent.NPCType<DevilsTongue>(), ModContent.NPCType<Thorn>());
 
             #endregion
 
+            #region Demon
+            Demon.SetMultiple(NPCID.Demon, NPCID.VoodooDemon, NPCID.FireImp, NPCID.RedDevil);
+            #endregion
         }
     }
 

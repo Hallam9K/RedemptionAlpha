@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             NPC.width = 60;
             NPC.height = 92;
             NPC.friendly = false;
-            NPC.damage = 35;
+            NPC.damage = 28;
             NPC.defense = 0;
             NPC.lifeMax = 2400;
             NPC.HitSound = SoundID.NPCHit3;
@@ -108,7 +108,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         {
             if (!RedeBossDowned.downedSkullDigger)
             {
-                RedeWorld.alignment -=2;
+                RedeWorld.alignment -= 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
@@ -162,8 +162,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         }
 
         private bool floatTimer;
+        private Vector2 origin;
 
-        public List<int> AttackList = new() { 0 };
+        public List<int> AttackList = new() { 0, 1 };
         public List<int> CopyList = null;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
@@ -324,6 +325,44 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 NPC.netUpdate = true;
                             }
                             break;
+                        #endregion
+
+                        #region Soul Charge
+                        case 1:
+                            AITimer++;
+                            if (AITimer < 100)
+                            {
+                                NPC.LookAtEntity(player);
+                                NPC.MoveToVector2(new Vector2(player.Center.X - 160 * NPC.spriteDirection, player.Center.Y - 70), 3);
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    Dust dust2 = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.DungeonSpirit, 1);
+                                    dust2.velocity = -NPC.DirectionTo(dust2.position);
+                                    dust2.noGravity = true;
+                                }
+                                origin = player.Center;
+                            }
+                            if (AITimer >= 100 && AITimer < 120)
+                            {
+                                NPC.velocity.Y = 0;
+                                NPC.velocity.X = -0.1f * NPC.spriteDirection;
+                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+
+                                if (AITimer % 2 == 0)
+                                {
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(10, 12), (origin - NPC.Center).ToRotation()), false, SoundID.NPCDeath52.WithVolume(0.5f));
+                                }
+                            }
+                            if (AITimer >= 120)
+                                NPC.velocity *= 0.98f;
+                            if (AITimer >= 160)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
                             #endregion
                     }
                     break;
@@ -453,7 +492,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float baseChance = SpawnCondition.Cavern.Chance * (RedeBossDowned.downedKeeper ? (RedeBossDowned.downedSkullDigger ?  0 : 1) : 0);
+            float baseChance = SpawnCondition.Cavern.Chance * (RedeBossDowned.downedKeeper ? (RedeBossDowned.downedSkullDigger ? 0 : 1) : 0);
             float multiplier = spawnInfo.player.HasItem(ModContent.ItemType<SorrowfulEssence>()) ? 0.1f : 0.002f;
 
             return baseChance * multiplier;
