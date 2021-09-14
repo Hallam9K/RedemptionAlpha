@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -67,6 +68,28 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .AddIngredient(ModContent.ItemType<ZweihanderFragment2>())
                 .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("Repaired by the Fallen"), _ => false))
                 .Register();
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A famous greatsword of Madmount. A lot of strength is needed to use such a grand weapon,\n" +
+                    "but for most Warriors of the Iron Realm this was a trivial issue.'")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
     }
 }

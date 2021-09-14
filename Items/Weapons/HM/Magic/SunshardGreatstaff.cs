@@ -99,7 +99,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'A golden wand, used by ancient clerics in Thamor.\n" +
-                    "Imbued with holy magic, it was used to heal townsfolk, as well as defence for small settlements.'")
+                    "Imbued with holy magic, it was used to heal townsfolk, as well as defending small settlements.'")
                 {
                     overrideColor = Color.LightGray
                 };

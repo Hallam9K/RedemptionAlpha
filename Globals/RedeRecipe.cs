@@ -10,12 +10,17 @@ namespace Redemption.Globals
     public static class RedeRecipe
     {
         public static RecipeGroup ChickenRecipeGroup;
+        public static RecipeGroup GoldRecipeGroup;
 
         public static void AddRecipeGroups()
         {
             ChickenRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<ChickenItem>())}", ModContent.ItemType<ChickenItem>(), ModContent.ItemType<RedChickenItem>(), ModContent.ItemType<LeghornChickenItem>(), ModContent.ItemType<BlackChickenItem>());
 
             RecipeGroup.RegisterGroup("Redemption:Chickens", ChickenRecipeGroup);
+
+            GoldRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.GoldBar)}", ItemID.GoldBar, ItemID.PlatinumBar);
+
+            RecipeGroup.RegisterGroup("Redemption:GoldBar", GoldRecipeGroup);
         }
 
         public static void Load(Mod mod)
