@@ -287,7 +287,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
                     NPC.Move(new Vector2(move, player.Center.Y - 50), speed, 20, false);
                     MoveClamp();
-                    if (NPC.DistanceSQ(player.Center) > 400 * 400)
+                    if (NPC.DistanceSQ(player.Center) > (NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) ? (800 * 800) : (400 * 400)))
                         speed *= 1.03f;
                     if (!Unveiled && NPC.life < NPC.lifeMax / 2)
                     {
@@ -296,7 +296,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                         NPC.netUpdate = true;
                         break;
                     }
-                    if (AITimer > 60)
+                    if (NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) ? AITimer > 180 : AITimer > 60)
                     {
                         AttackChoice();
                         AITimer = 0;

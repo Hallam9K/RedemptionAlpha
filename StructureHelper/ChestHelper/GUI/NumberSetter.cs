@@ -50,7 +50,7 @@ namespace Redemption.StructureHelper.ChestHelper.GUI
             Vector2 pos = GetDimensions().ToRectangle().TopLeft();
             var target = new Rectangle((int)pos.X + 14, (int)pos.Y + 8, 20, 16);
 
-            spriteBatch.Draw((Texture2D)TextureAssets.MagicPixel, target, Color.Black * 0.5f);
+            spriteBatch.Draw(TextureAssets.MagicPixel.Value, target, Color.Black * 0.5f);
             Utils.DrawBorderString(spriteBatch, Value.ToString() + Suffix, target.Center(), Color.White, 0.7f, 0.5f, 0.4f);
 
             if (Value < 1)
