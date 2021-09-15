@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using System;
 using System.Linq;
 using Terraria;
@@ -69,7 +70,7 @@ namespace Redemption.Projectiles.Magic
                 bool targetted = false;
                 foreach (NPC target in Main.npc.Take(Main.maxNPCs))
                 {
-                    if (!target.CanBeChasedBy() || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
+                    if (!target.CanBeChasedBy() || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0) || target.GetGlobalNPC<RedeNPC>().invisible)
                         continue;
 
                     Vector2 newMove = target.Center - Projectile.Center;
