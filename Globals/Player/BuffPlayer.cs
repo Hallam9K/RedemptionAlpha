@@ -219,7 +219,7 @@ namespace Redemption.Globals.Player
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
-                Player.lifeRegen -= dirtyWoundTime / 360;
+                Player.lifeRegen -= dirtyWoundTime / 500;
 
                 if (Player.wet && !Player.lavaWet)
                     Player.ClearBuff(ModContent.BuffType<DirtyWoundDebuff>());
@@ -248,7 +248,7 @@ namespace Redemption.Globals.Player
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (MetalSet)
+            if (MetalSet && !Player.immune)
                 SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
             return true;
         }

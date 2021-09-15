@@ -93,6 +93,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override void HitEffect(int hitDirection, double damage)
         {
+            Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -164,7 +165,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         private bool floatTimer;
         private Vector2 origin;
 
-        public List<int> AttackList = new() { 0, 1 };
+        public List<int> AttackList = new() { 0, 1, 2 };
         public List<int> CopyList = null;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
@@ -363,6 +364,20 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 NPC.netUpdate = true;
                             }
                             break;
+                        #endregion
+
+                        #region Flail Speen
+                        case 2:
+                            NPC.LookAtEntity(player);
+                            NPC.Move(Vector2.Zero, 2, 20, true);
+                            if (AITimer >= 1)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
                             #endregion
                     }
                     break;
@@ -378,13 +393,16 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             Main.dust[dustIndex].velocity.X *= 0f;
                             Main.dust[dustIndex].noGravity = true;
                         }
+                        if (NPC.alpha < 100)
+                            NPC.alpha++;
+                        if (NPC.alpha > 100)
+                            NPC.alpha--;
                     }
                     else
                     {
                         player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                         player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                        if (AITimer++ == 0)
-                            NPC.alpha = 0;
+                        AITimer++;
 
                         if (!Main.dedServ)
                         {
@@ -411,6 +429,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         }
                         else
                         {
+                            if (NPC.alpha < 100)
+                                NPC.alpha++;
+                            if (NPC.alpha > 100)
+                                NPC.alpha--;
+
                             if (Main.rand.NextBool(3))
                             {
                                 int dustIndex = Dust.NewDust(NPC.BottomLeft + new Vector2(0, 20), NPC.width, 1, DustID.DungeonSpirit);
@@ -437,7 +460,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             {
 
                 SoundEngine.PlaySound(SoundID.NPCDeath51, NPC.position);
-                NPC.alpha = 0;
                 NPC.life = 1;
                 AITimer = 0;
                 AIState = ActionState.Death;

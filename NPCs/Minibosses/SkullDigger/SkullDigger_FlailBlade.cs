@@ -107,6 +107,41 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         Projectile.localAI[1] = 0;
                         Projectile.Move(defaultPosition, 9, 20);
                         break;
+                    case 2:
+                        switch (Projectile.localAI[1])
+                        {
+                            case 0:
+                                rot = originPos.ToRotation();
+                                length = Projectile.Distance(originPos);
+                                speed = 1;
+                                Projectile.localAI[1] = 1;
+                                Projectile.netUpdate = true;
+                                break;
+                            case 1:
+                                Projectile.localAI[0]++;
+                                length++;
+                                length = MathHelper.Clamp(length, 10, 100);
+                                rot += speed;
+                                speed *= 1.02f;
+                                speed = MathHelper.Clamp(speed, 2, 8);
+                                Projectile.Center = originPos + Vector2.One.RotatedBy(MathHelper.ToRadians(rot)) * length;
+                                if (Projectile.localAI[0] >= 260)
+                                {
+                                    Projectile.localAI[0] = 0;
+                                    Projectile.localAI[1] = 2;
+                                    Projectile.netUpdate = true;
+                                }
+                                break;
+                            case 2:
+                                Projectile.Move(defaultPosition, 20, 20);
+                                if (Projectile.DistanceSQ(defaultPosition) < 50 * 50)
+                                {
+                                    host.ai[1] = 1;
+                                    Projectile.netUpdate = true;
+                                }
+                                break;
+                        }
+                        break;
                 }
             }
             else
@@ -120,7 +155,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override bool CanHitPlayer(Player target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return host.ai[0] == 2 && host.ai[3] == 0;
+            return host.ai[0] == 2 && host.ai[3] != 1;
         }
 
         public override bool PreDraw(ref Color lightColor)
