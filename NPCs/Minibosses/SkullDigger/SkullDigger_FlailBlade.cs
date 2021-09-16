@@ -125,6 +125,10 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 speed *= 1.02f;
                                 speed = MathHelper.Clamp(speed, 2, 8);
                                 Projectile.Center = originPos + Vector2.One.RotatedBy(MathHelper.ToRadians(rot)) * length;
+                                if (Projectile.localAI[0] >= 60 && Projectile.localAI[0] % 15 == 0 && Main.myPlayer == player.whoAmI)
+                                {
+                                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SkullDigger_FlailBlade_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, host.whoAmI);
+                                }
                                 if (Projectile.localAI[0] >= 260)
                                 {
                                     Projectile.localAI[0] = 0;

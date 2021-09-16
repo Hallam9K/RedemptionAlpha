@@ -192,6 +192,9 @@ namespace Redemption.NPCs.PreHM
             return false;
         }
 
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(BuffID.Slimed, 120);
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(BuffID.Slimed, 120);
+
         public override void OnKill()
         {
             if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0)

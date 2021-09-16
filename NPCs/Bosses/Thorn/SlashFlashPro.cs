@@ -47,7 +47,11 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
-            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SlashPro1>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Player player = Main.player[Projectile.owner];
+            if (Main.myPlayer == player.whoAmI)
+            {
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SlashPro1>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            }
         }
     }
 }
