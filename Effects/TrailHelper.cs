@@ -47,6 +47,8 @@ namespace Redemption.Effects
 				CreateTrail(projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.03f, 1f, 1f));
 			if (projectile.type == ModContent.ProjectileType<Lightmass>())
 				CreateTrail(projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
+			if (projectile.type == ModContent.ProjectileType<IceBolt>())
+				CreateTrail(projectile, new GradientTrail(new Color(192, 225, 235), new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/CrystalTrail").Value, 0.01f, 1f, 1f));
 		}
 
 		public void TryTrailKill(Projectile projectile)
