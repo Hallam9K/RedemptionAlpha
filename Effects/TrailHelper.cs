@@ -35,26 +35,26 @@ namespace Redemption.Effects
 			Mod mod = Redemption.Instance;
 			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>())
 				CreateTrail(projectile, new GradientTrail(new Color(250, 205, 160), new Color(255, 255, 218)), new RoundCap(), new ArrowGlowPosition(), 20f, 150f);
-			if (projectile.type == ModContent.ProjectileType<CantripEmber>())
+			else if (projectile.type == ModContent.ProjectileType<CantripEmber>())
 				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new ArrowGlowPosition(), 50f, 150f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
-			if (projectile.type == ModContent.ProjectileType<CantripEmberS>())
+			else if (projectile.type == ModContent.ProjectileType<CantripEmberS>())
 				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new DefaultTrailPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
-			if (projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>())
+			else if (projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>())
 				CreateTrail(projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
-			if (projectile.type == ModContent.ProjectileType<KeeperDreadCoil>())
+			else if (projectile.type == ModContent.ProjectileType<KeeperDreadCoil>())
 				CreateTrail(projectile, new GradientTrail(new Color(136, 123, 255), new Color(79, 15, 255)), new NoCap(), new DefaultTrailPosition(), 200f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.01f, 1f, 1f));
-			if (projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>())
+			else if (projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>())
 				CreateTrail(projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.03f, 1f, 1f));
-			if (projectile.type == ModContent.ProjectileType<Lightmass>())
+			else if (projectile.type == ModContent.ProjectileType<Lightmass>())
 				CreateTrail(projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
-			if (projectile.type == ModContent.ProjectileType<IceBolt>())
-				CreateTrail(projectile, new GradientTrail(new Color(192, 225, 235), new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/CrystalTrail").Value, 0.01f, 1f, 1f));
+			else if (projectile.type == ModContent.ProjectileType<IceBolt>())
+				CreateTrail(projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3").Value, 0.1f, 1f, 1f));
 		}
 
 		public void TryTrailKill(Projectile projectile)
 		{
 			Mod mod = Redemption.Instance;
-			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>() || projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>() || projectile.type == ModContent.ProjectileType<Lightmass>())
+			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>() || projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>() || projectile.type == ModContent.ProjectileType<Lightmass>() || projectile.type == ModContent.ProjectileType<IceBolt>())
 				RedeSystem.TrailManager.TryEndTrail(projectile, Math.Max(15f, projectile.velocity.Length() * 3f));
 		}
 

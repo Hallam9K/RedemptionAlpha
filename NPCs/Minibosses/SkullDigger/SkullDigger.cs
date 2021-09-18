@@ -18,6 +18,8 @@ using Terraria.GameContent;
 using System.IO;
 using Redemption.NPCs.Bosses.Keeper;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -129,6 +131,14 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSkullDigger, -1);
         }
 
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.ByCondition(new TeddyCondition(), ModContent.ItemType<AbandonedTeddy>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerMask>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 1, 20, 40));
+            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>()));
+        }
+
         public override void SendExtraAI(BinaryWriter writer)
         {
             base.SendExtraAI(writer);
@@ -164,11 +174,12 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         private bool floatTimer;
         private Vector2 origin;
+        public bool KeeperSpawn;
 
         public List<int> AttackList = new() { 0, 1, 2 };
         public List<int> CopyList = null;
 
-        public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+        public int ID;
 
         public override void AI()
         {
@@ -244,6 +255,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             AITimer++;
                             if (NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
                             {
+                                KeeperSpawn = true;
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer == 40)
@@ -458,6 +470,12 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 return true;
             else
             {
+                NPC host = Main.npc[(int)NPC.ai[3]];
+                if (NPC.ai[3] >= 0 && host.type == ModContent.NPCType<Keeper>())
+                {
+                    host.dontTakeDamage = false;
+                    host.netUpdate = true;
+                }
 
                 SoundEngine.PlaySound(SoundID.NPCDeath51, NPC.position);
                 NPC.life = 1;

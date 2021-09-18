@@ -46,6 +46,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 Projectile.velocity = RedeHelper.PolarVector(0.08f, (Main.player[boss.target].Center - Projectile.Center).ToRotation());
             if (Projectile.localAI[0] >= 5)
             {
+                Projectile.LookByVelocity();
                 Projectile.velocity *= 1.06f;
                 Projectile.rotation += Projectile.velocity.Length() / 30 * Projectile.spriteDirection;
             }

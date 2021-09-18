@@ -9,6 +9,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Pure-Iron Pickaxe");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -24,7 +26,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 3;
             Item.value = 1200;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
         }

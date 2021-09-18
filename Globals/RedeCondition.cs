@@ -1,6 +1,8 @@
 using Redemption.Globals.NPC;
+using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Globals
 {
@@ -28,12 +30,23 @@ namespace Redemption.Globals
 		public bool CanDrop(DropAttemptInfo info)
 		{
 			if (!info.IsInSimulation && info.npc.FindBuffIndex(BuffID.OnFire) != -1)
-			{
 				return true;
-			}
+
 			return false;
 		}
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() => "Dropped while on fire";
+	}
+	public class TeddyCondition : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation && info.npc.type == ModContent.NPCType<SkullDigger>() && !(info.npc.ModNPC as SkullDigger).KeeperSpawn)
+				return true;
+
+			return false;
+		}
+		public bool CanShowItemDropInUI() => true;
+		public string GetConditionDescription() => "Dropped when spawned naturally in the caverns";
 	}
 }

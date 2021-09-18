@@ -287,8 +287,11 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
                     NPC.Move(new Vector2(move, player.Center.Y - 50), speed, 20, false);
                     MoveClamp();
-                    if (NPC.DistanceSQ(player.Center) > (NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) ? (800 * 800) : (400 * 400)))
+                    if (NPC.DistanceSQ(player.Center) > (NPC.dontTakeDamage ? (800 * 800) : (400 * 400)))
                         speed *= 1.03f;
+                    else if (NPC.dontTakeDamage && NPC.velocity.Length() > 6 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                        speed *= 0.96f;
+
                     if (!Unveiled && NPC.life < NPC.lifeMax / 2)
                     {
                         NPC.velocity *= 0;
@@ -296,8 +299,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                         NPC.netUpdate = true;
                         break;
                     }
-                    if (NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) ? AITimer > 180 : AITimer > 60)
+                    if (NPC.dontTakeDamage ? AITimer == -1 : AITimer > 60)
                     {
+                        NPC.dontTakeDamage = false;
                         AttackChoice();
                         AITimer = 0;
                         AIState = ActionState.Attacks;
@@ -629,12 +633,11 @@ namespace Redemption.NPCs.Bosses.Keeper
                     NPC.dontTakeDamage = true;
 
                     if (AITimer++ == 0)
-                        RedeHelper.SpawnNPC((int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>());
+                        RedeHelper.SpawnNPC((int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>(), ai3: NPC.whoAmI);
 
                     if (AITimer >= 660)
                     {
                         AITimer = 0;
-                        NPC.dontTakeDamage = false;
                         AIState = ActionState.Idle;
                         NPC.netUpdate = true;
                     }
@@ -683,11 +686,14 @@ namespace Redemption.NPCs.Bosses.Keeper
         public void MoveClamp()
         {
             Player player = Main.player[NPC.target];
+            int xFar = 240;
+            if (NPC.dontTakeDamage)
+                xFar = 600;
             if (NPC.Center.X < player.Center.X)
             {
-                if (move < player.Center.X - 240)
+                if (move < player.Center.X - xFar)
                 {
-                    move = player.Center.X - 240;
+                    move = player.Center.X - xFar;
                 }
                 else if (move > player.Center.X - 120)
                 {
@@ -696,9 +702,9 @@ namespace Redemption.NPCs.Bosses.Keeper
             }
             else
             {
-                if (move > player.Center.X + 240)
+                if (move > player.Center.X + xFar)
                 {
-                    move = player.Center.X + 240;
+                    move = player.Center.X + xFar;
                 }
                 else if (move < player.Center.X + 120)
                 {
@@ -718,7 +724,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 return true;
             else
             {
-
+                NPC.dontTakeDamage = true;
                 SoundEngine.PlaySound(SoundID.NPCDeath19, NPC.position);
                 NPC.velocity *= 0;
                 NPC.alpha = 0;

@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             if (host.ai[0] == 2)
             {
-                switch (host.ai[3])
+                switch ((host.ModNPC as SkullDigger).ID)
                 {
                     case 0:
                         switch (Projectile.localAI[1])
@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             case 0:
                                 rot = originPos.ToRotation();
                                 length = Projectile.Distance(originPos);
-                                speed = 2;
+                                speed = MathHelper.ToRadians(2);
                                 Projectile.localAI[1] = 1;
                                 Projectile.netUpdate = true;
                                 break;
@@ -72,8 +72,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 Projectile.localAI[0]++;
                                 rot += speed * host.spriteDirection;
                                 speed *= 1.04f;
-                                speed = MathHelper.Clamp(speed, 2, 25);
-                                Projectile.Center = originPos + Vector2.One.RotatedBy(MathHelper.ToRadians(rot)) * length;
+                                speed = MathHelper.Clamp(speed, MathHelper.ToRadians(2), MathHelper.ToRadians(25));
+                                Projectile.Center = originPos + new Vector2(0, 1).RotatedBy(rot) * length;
                                 if (Projectile.localAI[0] >= 120)
                                 {
                                     Projectile.velocity = RedeHelper.PolarVector(14 + (Projectile.Distance(player.Center) / 30), (player.Center - Projectile.Center).ToRotation());
@@ -113,7 +113,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             case 0:
                                 rot = originPos.ToRotation();
                                 length = Projectile.Distance(originPos);
-                                speed = 1;
+                                speed = MathHelper.ToRadians(1);
                                 Projectile.localAI[1] = 1;
                                 Projectile.netUpdate = true;
                                 break;
@@ -123,8 +123,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 length = MathHelper.Clamp(length, 10, 100);
                                 rot += speed;
                                 speed *= 1.02f;
-                                speed = MathHelper.Clamp(speed, 2, 8);
-                                Projectile.Center = originPos + Vector2.One.RotatedBy(MathHelper.ToRadians(rot)) * length;
+                                speed = MathHelper.Clamp(speed, MathHelper.ToRadians(2), MathHelper.ToRadians(8));
+                                Projectile.Center = originPos + new Vector2(0, 1).RotatedBy(rot) * length;
                                 if (Projectile.localAI[0] >= 60 && Projectile.localAI[0] % 15 == 0 && Main.myPlayer == player.whoAmI)
                                 {
                                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SkullDigger_FlailBlade_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, host.whoAmI);

@@ -210,7 +210,6 @@ namespace Redemption.NPCs.PreHM
         {
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>()));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 20));
-
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

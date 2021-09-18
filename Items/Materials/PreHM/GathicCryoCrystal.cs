@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -20,8 +21,19 @@ namespace Redemption.Items.Materials.PreHM
             Item.height = 24;
             Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 0, 5, 0);
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Orange;
             Item.consumable = true;
+        }
+
+        public override void PostUpdate()
+        {
+            if (!Main.rand.NextBool(10))
+                return;
+
+            int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height,
+                DustID.SilverCoin, 0, 0, 20);
+            Main.dust[sparkle].velocity *= 0;
+            Main.dust[sparkle].noGravity = true;
         }
 
         public override void HoldItem(Player player)

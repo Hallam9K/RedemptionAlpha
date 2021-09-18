@@ -13,10 +13,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure Iron Staff");
-            Tooltip.SetDefault("Casts a large ice bolt" +
-                "\nHold down left click to increase the size of the ice bolt");
+            DisplayName.SetDefault("Pure-Iron Staff");
+            Tooltip.SetDefault("Casts an icy snowflake" +
+                "\nHold down left click to increase the size of the snowflake");
             Item.staff[Item.type] = true;
+            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -28,29 +29,24 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.mana = 15;
             Item.width = 38;
             Item.height = 44;
-            Item.crit = 4;
             Item.useTime = 26;
             Item.useAnimation = 26;
+            Item.reuseDelay = 26;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
+            Item.noUseGraphic = true;
             Item.knockBack = 5;
             Item.value = Item.sellPrice(0, 3, 50, 0);
             Item.channel = true;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item43;
-            Item.autoReuse = true;
-            Item.shootSpeed = 8f;
+            Item.shootSpeed = 8;
             Item.shoot = ModContent.ProjectileType<IceBolt>();
-        }     
-        
+        }
+
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Vector2 Offset = Vector2.Normalize(velocity) * 35f;
-
-            if (Collision.CanHit(position, 0, 0, position + Offset, 0, 0))
-            {
-                position += Offset;
-            }          
+            type = ModContent.ProjectileType<PureIronStaff_Proj>();
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -58,7 +54,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'A staff made of Pure Iron with a diamond gemstone.\n" +                    
+                    "'A staff made of Pure-Iron with a diamond gemstone.\n" +                    
                     "It is cold to the touch, and can channel ice magic abnormally well.'")
                 {
                     overrideColor = Color.LightGray
