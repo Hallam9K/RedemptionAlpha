@@ -33,7 +33,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         private float rot;
         private float length;
         private float speed;
-        private Vector2 playerVector;
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];

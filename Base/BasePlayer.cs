@@ -23,8 +23,8 @@ namespace Redemption.Base
 			if (player.ammoPotion && Main.rand.Next(5) == 0) consume = false;	
 			if (player.ammoCost80 && Main.rand.Next(5) == 0) consume = false;
 			if (player.ammoCost75 && Main.rand.Next(4) == 0) consume = false;	
-			if (!PlayerLoader.ConsumeAmmo(player, item, ammo)) consume = false;
-			if (!ItemLoader.ConsumeAmmo(item, ammo, player)) consume = false;
+			if (!PlayerLoader.CanConsumeAmmo(player, item, ammo)) consume = false;
+			if (!ItemLoader.CanConsumeAmmo(item, ammo, player)) consume = false;
 			return consume;
 		}
 

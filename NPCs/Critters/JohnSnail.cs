@@ -16,8 +16,10 @@ namespace Redemption.NPCs.Critters
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Hide = true
+                Hide = true,
             };
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
         public override void SetDefaults()
