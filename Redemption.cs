@@ -50,6 +50,9 @@ namespace Redemption
         {
             Instance = this;
         }
+
+        public static bool Silence;
+
         UserInterface GeneratorMenuUI;
         internal ManualGeneratorMenu GeneratorMenu;
 

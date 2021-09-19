@@ -12,7 +12,6 @@ namespace Redemption
         public static int blobbleSwarmCooldown;
         public static int alignment = 0;
 
-
         public override void PostUpdateWorld()
         {
             if (blobbleSwarm)

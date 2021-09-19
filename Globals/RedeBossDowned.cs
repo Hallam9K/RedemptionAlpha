@@ -13,6 +13,7 @@ namespace Redemption.Globals
 		public static bool downedKeeper = false;
 		public static bool downedSkullDigger = false;
 		public static bool downedSeed = false;
+		public static bool keeperSaved = false;
 		//public static bool downedOtherBoss = false;
 
 		public override void OnWorldLoad()
@@ -21,6 +22,7 @@ namespace Redemption.Globals
 			downedKeeper = false;
 			downedSkullDigger = false;
 			downedSeed = false;
+			keeperSaved = false;
 			//downedOtherBoss = false;
 		}
 
@@ -30,6 +32,7 @@ namespace Redemption.Globals
 			downedKeeper = false;
 			downedSkullDigger = false;
 			downedSeed = false;
+			keeperSaved = false;
 			//downedOtherBoss = false;
 		}
 
@@ -45,6 +48,8 @@ namespace Redemption.Globals
 				downed.Add("downedSkullDigger");
 			if (downedSeed)
 				downed.Add("downedSeed");
+			if (keeperSaved)
+				downed.Add("keeperSaved");
 			return new TagCompound
 			{
 				["downed"] = downed,
@@ -59,6 +64,7 @@ namespace Redemption.Globals
 			downedKeeper = downed.Contains("downedKeeper");
 			downedSkullDigger = downed.Contains("downedSkullDigger");
 			downedSeed = downed.Contains("downedSeed");
+			keeperSaved = downed.Contains("keeperSaved");
 			//downedOtherBoss = downed.Contains("downedOtherBoss");
 		}
 
@@ -70,6 +76,7 @@ namespace Redemption.Globals
 			flags[1] = downedKeeper;
 			flags[2] = downedSkullDigger;
 			flags[3] = downedSeed;
+			flags[4] = keeperSaved;
 			//flags[2] = downedOtherBoss;
 			writer.Write(flags);
 		}
@@ -82,6 +89,7 @@ namespace Redemption.Globals
 			downedKeeper = flags[1];
 			downedSkullDigger = flags[2];
 			downedSeed = flags[3];
+			keeperSaved = flags[4];
 			//downedOtherBoss = flags[2];
 		}
 	}
