@@ -12,6 +12,7 @@ namespace Redemption.NPCs.Friendly
 {
     public class SkullDiggerFriendly_FlailBlade : ModProjectile
     {
+        public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skull Digger");
