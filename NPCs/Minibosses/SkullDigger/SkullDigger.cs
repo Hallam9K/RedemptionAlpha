@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         {
             if (!RedeBossDowned.downedSkullDigger)
             {
-                RedeWorld.alignment -= 1;
+                RedeWorld.alignment++;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
