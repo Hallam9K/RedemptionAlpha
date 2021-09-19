@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+so prusing Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using System;
@@ -67,7 +67,7 @@ namespace Redemption.Projectiles.Magic
                 Projectile.spriteDirection = Projectile.direction;
 
                 Projectile.timeLeft = 180;
-                Projectile.scale += 0.01f;
+                Projectile.scale += 0.015f;
                 Projectile.scale = MathHelper.Clamp(Projectile.scale, 1, 2.5f);
             }
             else if (Projectile.ai[0] == 0)

@@ -13,6 +13,8 @@ namespace Redemption.Globals.Player
 {
     public class RedePlayer : ModPlayer
     {
+        public int spiritLevel = 0;
+        public int maxSpiritLevel = 3;
         public bool foundHall;
 
         public override void ResetEffects()
