@@ -111,14 +111,14 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         {
             if (!RedeBossDowned.downedSkullDigger)
             {
-                RedeWorld.alignment -= 2;
+                RedeWorld.alignment -= 1;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, "-2", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, "-1", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
