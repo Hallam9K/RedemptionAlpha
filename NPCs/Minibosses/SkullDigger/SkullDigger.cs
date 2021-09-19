@@ -532,10 +532,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float baseChance = SpawnCondition.Cavern.Chance * (RedeBossDowned.downedKeeper ? (RedeBossDowned.downedSkullDigger ? 0 : 1) : 0);
-            float multiplier = spawnInfo.player.HasItem(ModContent.ItemType<SorrowfulEssence>()) ? 0.1f : 0.002f;
+            float baseChance = SpawnCondition.Cavern.Chance * (!NPC.AnyNPCs(NPC.type) && RedeBossDowned.downedKeeper ? 1 : 0);
+            float multiplier = spawnInfo.player.HasItem(ModContent.ItemType<SorrowfulEssence>()) ? 0.1f : (RedeBossDowned.downedSkullDigger ? 0 : 0.002f);
+            float teddy = spawnInfo.player.HasItem(ModContent.ItemType<AbandonedTeddy>()) ? 0 : 1;
 
-            return baseChance * multiplier;
+            return baseChance * multiplier * teddy;
         }
 
         public override Color? GetAlpha(Color drawColor)

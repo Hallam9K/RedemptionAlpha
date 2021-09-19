@@ -4,6 +4,10 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Redemption.NPCs.Bosses.Keeper;
+using Redemption.NPCs.Minibosses.SkullDigger;
+using Redemption.Globals;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -35,7 +39,7 @@ namespace Redemption.Items.Usable.Summons
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Keeper>());
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Keeper>()) && !NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) && !NPC.AnyNPCs(ModContent.NPCType<KeeperSpirit>());
 		}
 
 		public override bool? UseItem(Player player)
@@ -45,6 +49,8 @@ namespace Redemption.Items.Usable.Summons
 				SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
 
 				int type = ModContent.NPCType<Keeper>();
+				if (RedeBossDowned.keeperSaved)
+					type = ModContent.NPCType<KeeperSpirit>();
 
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
@@ -56,6 +62,19 @@ namespace Redemption.Items.Usable.Summons
 				}
 			}
 			return true;
+		}
+
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			if (RedeBossDowned.keeperSaved)
+			{
+				TooltipLine line = new(Mod, "SpiritLine",
+					"The ring still glows a faint blue...")
+				{
+					overrideColor = Color.LightSkyBlue
+				};
+				tooltips.Insert(tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip2")), line);
+			}
 		}
 	}
 }

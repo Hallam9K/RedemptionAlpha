@@ -53,6 +53,11 @@ namespace Redemption
 
         public static bool Silence;
 
+        public override void PostUpdatePlayers()
+        {
+            Silence = false;
+        }
+
         UserInterface GeneratorMenuUI;
         internal ManualGeneratorMenu GeneratorMenu;
 

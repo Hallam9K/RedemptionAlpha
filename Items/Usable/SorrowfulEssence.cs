@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Having this in your inventory may attract a strong undead");
+            Tooltip.SetDefault("Having this in your inventory may attract the Keeper's first creation underground");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 11));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;

@@ -33,7 +33,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         public Vector2 vector;
         public override void AI()
         {
-            //Redemption.Silence = true;
+            RedeSystem.Silence = true;
             Player player = Main.player[Projectile.owner];
             if (Projectile.timeLeft < 180)
             {
@@ -75,8 +75,6 @@ namespace Redemption.NPCs.Bosses.Keeper
             }
             if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendData(MessageID.WorldData);
-
-            //Redemption.Silence = false;
         }
     }
 }
