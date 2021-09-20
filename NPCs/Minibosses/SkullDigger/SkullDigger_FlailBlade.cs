@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override bool CanHitPlayer(Player target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return host.ai[0] == 2 && host.ai[3] != 1;
+            return host.ai[0] == 2 && (host.ModNPC as SkullDigger).ID != 1;
         }
 
         public override bool PreDraw(ref Color lightColor)

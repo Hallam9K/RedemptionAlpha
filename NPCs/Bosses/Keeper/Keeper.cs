@@ -725,14 +725,14 @@ namespace Redemption.NPCs.Bosses.Keeper
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         if (!RedeBossDowned.keeperSaved)
                         {
-                            RedeWorld.alignment += 3;
+                            RedeWorld.alignment += 2;
                             for (int p = 0; p < Main.maxPlayers; p++)
                             {
                                 Player player2 = Main.player[p];
                                 if (!player2.active)
                                     continue;
 
-                                CombatText.NewText(player2.getRect(), Color.Gold, "+3", true, false);
+                                CombatText.NewText(player2.getRect(), Color.Gold, "+2", true, false);
 
                                 if (!player2.HasItem(ModContent.ItemType<AlignmentTeller>()))
                                     continue;
