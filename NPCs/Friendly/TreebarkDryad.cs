@@ -13,6 +13,9 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Buffs.Debuffs;
 using Redemption.Base;
 using Terraria.Localization;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -39,7 +42,6 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treebark");
             Main.npcFrameCount[NPC.type] = 9;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -51,9 +53,13 @@ namespace Redemption.NPCs.Friendly
                 }
             });
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Position = new Vector2(0, 20),
+                PortraitPositionYOverride = 0
+            };
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
@@ -64,6 +70,7 @@ namespace Redemption.NPCs.Friendly
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.dontTakeDamage = true;
+            NPC.rarity = 1;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -108,11 +115,11 @@ namespace Redemption.NPCs.Friendly
                 name.Add("Bitterthorn");
                 name.Add("Irontwig");
                 if (WoodType == 1)
-                    name.Add("Willowbark", 2);
+                    name.Add("Willowbark", 3);
                 if (WoodType == 2)
                 {
-                    name.Add("Cherrysplinter", 2);
-                    name.Add("Blossomwood", 2);
+                    name.Add("Cherrysplinter", 3);
+                    name.Add("Blossomwood", 3);
                 }
 
                 NPC.GivenName = name + " the Treebark Dryad";
@@ -148,16 +155,24 @@ namespace Redemption.NPCs.Friendly
             }
 
             if (score == 0)
-                chat.Add("Hmmmm... Where did all my tree friends go..? Perhaps they grew weary of me...", 2);
+                chat.Add("Where did all my tree friends go..? Perhaps they grew weary of me...", 2);
 
             if (score < 60)
-                chat.Add("Hmmmm... You aren't using that axe of yours on my tree friends, are you..?");
+                chat.Add("You aren't using that axe of yours on my tree friends, are you..?");
 
             if (RedeWorld.alignment < 0)
-                chat.Add("Hmmmm... You don't look like a very pleasant fellow. I hope you don't try to chop me down... Haha.. Ha.");
+                chat.Add("You don't look like a very pleasant fellow. I hope you don't try to chop me down... Haha.. Ha.");
 
-            chat.Add("Hmmmm... Are you friend, or foe. As long as you don't use your axe on me, I don't care...");
-            return chat;
+            if (RedeBossDowned.downedThorn)
+                chat.Add("The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what lead us here.");
+            else
+                chat.Add("You wouldn't happen to see a brambly old man..? Poor thing with gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...");
+
+            if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
+                chat.Add("You remind me of that old warden, did the forest's curse get you too..?");
+
+            chat.Add("Are you friend, or foe. As long as you don't use your axe on me, I don't care...");
+            return "Hmmmm... " + chat;
         }
 
         public override bool CheckActive()
@@ -171,8 +186,21 @@ namespace Redemption.NPCs.Friendly
             NPC.frame.X = NPC.frame.Width * WoodType;
             EyeFrameX = WoodType;
 
-            if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].type == NPC.type)
+            if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
             {
+                int goreType = GoreID.TreeLeaf_Normal;
+                switch (WoodType)
+                {
+                    case 1:
+                        goreType = GoreID.TreeLeaf_VanityTreeYellowWillow;
+                        break;
+                    case 2:
+                        goreType = GoreID.TreeLeaf_VanityTreeSakura;
+                        break;
+                }
+                if (Main.rand.NextBool(60))
+                    Gore.NewGore(new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
+
                 if (NPC.frame.Y < 4 * frameHeight)
                     NPC.frame.Y = 4 * frameHeight;
 
@@ -241,6 +269,17 @@ namespace Redemption.NPCs.Friendly
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.UIInfoProvider = new TownNPCUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
+
+                new FlavorTextBestiaryInfoElement("These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent while hibernating.")
+            });
         }
     }
 }

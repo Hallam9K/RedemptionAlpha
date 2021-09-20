@@ -103,12 +103,15 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("The first successful reanimation from the Keeper. Skull Digger swore to protect and care for her, while she would use forbidden necromancy to keep his fading body alive. At this point, his lower half is nothing more than a spirit.")
             });
         }
 
         public override void OnKill()
         {
+            for (int i = 0; i < 6; i++)
+                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0f, 0.4f));
+
             if (!RedeBossDowned.downedSkullDigger)
             {
                 RedeWorld.alignment--;

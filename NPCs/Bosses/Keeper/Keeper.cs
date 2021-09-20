@@ -25,6 +25,7 @@ using System.Linq;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Dusts;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -166,6 +167,8 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void OnKill()
         {
+            RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), -0.6f);
+
             if (!RedeBossDowned.downedKeeper)
             {
                 Item.NewItem(NPC.getRect(), ModContent.ItemType<SorrowfulEssence>());
