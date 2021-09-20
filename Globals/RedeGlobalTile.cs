@@ -1,3 +1,4 @@
+using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Critters;
 using Redemption.Tiles.Plants;
 using Terraria;
@@ -24,6 +25,9 @@ namespace Redemption.Globals
                         Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<CoastScarabFall>(), 0, 0);
                 }
             }
+            if (type == TileID.LeafBlock && Main.rand.NextBool(4))
+                Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<LivingTwig>());
+
             return base.Drop(i, j, type);
         }
         public override void RandomUpdate(int i, int j, int type)
