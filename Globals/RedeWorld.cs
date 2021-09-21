@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.Keeper;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -18,6 +19,7 @@ namespace Redemption.Globals
         public static int alignment;
         public static int DayNightCount;
         public static bool SkeletonInvasion;
+        public static bool spawnKeeper;
 
         public override void PostUpdateWorld()
         {
@@ -66,6 +68,57 @@ namespace Redemption.Globals
             }
             #endregion
 
+            #region Keeper Summoning
+            if (!Main.dayTime && Terraria.NPC.downedBoss1 && !Main.hardMode && !Main.fastForwardTime)
+            {
+                if (Main.time == 1 && !WorldGen.spawnEye)
+                {
+                    if (!RedeBossDowned.downedKeeper && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        bool check = false;
+                        for (int n = 0; n < Main.maxPlayers; n++)
+                        {
+                            Terraria.Player player = Main.player[n];
+                            if (!player.active || player.statLifeMax < 200 || player.statDefense <= 10)
+                                continue;
+
+                            check = true;
+                            break;
+                        }
+                        if (check && Main.rand.NextBool(3))
+                        {
+                            spawnKeeper = true;
+
+                            string status = "Shrieks echo through the night...";
+                            if (Main.netMode == NetmodeID.Server)
+                                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.MediumPurple);
+                            else if (Main.netMode == NetmodeID.SinglePlayer)
+                                Main.NewText(Language.GetTextValue(status), Color.MediumPurple);
+                        }
+                    }
+                }
+                if (spawnKeeper && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 4860)
+                {
+                    for (int k = 0; k < Main.maxPlayers; k++)
+                    {
+                        Terraria.Player player = Main.player[k];
+                        if (!player.active || player.dead || player.position.Y >= Main.worldSurface * 16.0)
+                            continue;
+
+                        int type = ModContent.NPCType<Keeper>();
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Terraria.NPC.SpawnOnPlayer(player.whoAmI, type);
+                        else
+                            NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+
+                        spawnKeeper = false;
+                        break;
+                    }
+                }
+            }
+            #endregion
+
             if (blobbleSwarm)
             {
                 blobbleSwarmTimer++;
@@ -85,6 +138,7 @@ namespace Redemption.Globals
             alignment = 0;
             DayNightCount = 0;
             SkeletonInvasion = false;
+            spawnKeeper = false;
         }
 
         public override void OnWorldUnload()
@@ -92,6 +146,7 @@ namespace Redemption.Globals
             alignment = 0;
             DayNightCount = 0;
             SkeletonInvasion = false;
+            spawnKeeper = false;
         }
 
         public override TagCompound SaveWorldData()
