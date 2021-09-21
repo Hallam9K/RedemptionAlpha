@@ -29,7 +29,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             if (Projectile.localAI[0]++ == 0)
             {
                 if (!Main.dedServ)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("A portal to another world has opened!", 120, 30, 0.8f, null, 1f, Color.DarkGreen);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("A portal to another world has opened!", 120, 30, 0.8f, null, 1f, Color.Green);
 
                 modPlayer.Rumble(180, 3);
             }

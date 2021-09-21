@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 75;
+            NPC.lifeMax = 30;
             NPC.damage = 26;
             NPC.defense = 0;
             NPC.knockBackResist = 0.1f;
@@ -49,6 +49,12 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 return NPC.GetBestiaryEntryColor();
             }
             return null;
+        }
+
+        public override void OnKill()
+        {
+            if (Main.rand.NextBool(2))
+                Item.NewItem(NPC.getRect(), ItemID.Heart);
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -75,7 +81,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             DespawnHandler();
 
-            NPC.Move(Vector2.Zero, 9, 40, true);
+            NPC.Move(Vector2.Zero, 8, 60, true);
 
             if (NPC.alpha > 0)
                 NPC.alpha -= 20;

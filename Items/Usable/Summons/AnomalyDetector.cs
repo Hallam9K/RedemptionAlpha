@@ -32,6 +32,7 @@ namespace Redemption.Items.Usable.Summons
             Item.useAnimation = 45;
             Item.useTime = 45;
             Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.noUseGraphic = true;
             Item.consumable = false;
         }
 
@@ -49,13 +50,9 @@ namespace Redemption.Items.Usable.Summons
                 int type = ModContent.NPCType<SoI>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
                     NPC.SpawnOnPlayer(player.whoAmI, type);
-                }
                 else
-                {
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-                }
             }
             return true;
         }

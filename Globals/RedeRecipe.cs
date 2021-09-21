@@ -1,5 +1,6 @@
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -12,6 +13,7 @@ namespace Redemption.Globals
         public static RecipeGroup ChickenRecipeGroup;
         public static RecipeGroup GoldRecipeGroup;
         public static RecipeGroup SilverRecipeGroup;
+        public static RecipeGroup GathicStoneRecipeGroup;
 
         public static void AddRecipeGroups()
         {
@@ -26,6 +28,10 @@ namespace Redemption.Globals
             SilverRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.IronBar)}", ItemID.TungstenBar, ItemID.SilverBar);
 
             RecipeGroup.RegisterGroup("Redemption:SilverBar", SilverRecipeGroup);
+
+            GathicStoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<GathicStone>())}", ModContent.ItemType<GathicStone>(), ModContent.ItemType<GathicGladestone>(), ModContent.ItemType<GathicStoneBrick>(), ModContent.ItemType<GathicGladestoneBrick>());
+
+            RecipeGroup.RegisterGroup("Redemption:GathicStone", GathicStoneRecipeGroup);
         }
 
         public static void Load(Mod mod)

@@ -13,6 +13,10 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using Redemption.Base;
 using System;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -37,10 +41,13 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public ref float TimerRand => ref NPC.ai[2];
 
+        public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Seed of Infection");
             Main.npcFrameCount[NPC.type] = 6;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 4;
+            NPCID.Sets.TrailingMode[NPC.type] = 1;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -75,7 +82,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.dontTakeDamage = true;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
-            //BossBag = ModContent.ItemType<ThornBag>();
+            BossBag = ModContent.ItemType<SoIBag>();
             NPC.netAlways = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossXeno1");
@@ -103,6 +110,25 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
                 new FlavorTextBestiaryInfoElement("A blistering pocket of the Xenomite infection.")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoITrophy>(), 10));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
+
+            npcLoot.Add(notExpertRule);
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.HealingPotion;
         }
 
         public override void OnKill()
@@ -139,7 +165,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 CopyList.Remove(ID);
                 NPC.netUpdate = true;
 
-                if (ID == 5 && NPC.CountNPCS(ModContent.NPCType<SeedGrowth>()) > 1)
+                if (ID == 5 && NPC.CountNPCS(ModContent.NPCType<SeedGrowth>()) > 0)
                     continue;
 
                 attempts++;
@@ -163,8 +189,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Player player = Main.player[NPC.target];
             DespawnHandler();
 
-            if (AIState != ActionState.Death && AIState != ActionState.Attacks)
-                NPC.LookAtEntity(player);
+            if (AIState != ActionState.Death)
+                NPC.LookAtEntity(player, true);
 
             if (AIState != ActionState.Death && ID != 6)
                 NPC.rotation += 0.09f;
@@ -281,7 +307,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         #region Shard Shot
                         case 1:
                             NPC.Move(HighPos, 5, 40);
-                            if (++AITimer == 80)
+                            if (++AITimer >= 80 && AITimer % (NPC.life <= (int)(NPC.lifeMax * 0.75f) ? (NPC.life <= (int)(NPC.lifeMax * 0.25f) ? 20 : 40) : 80) == 0)
                             {
                                 for (int i = 0; i < 3; i++)
                                 {
@@ -319,7 +345,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
                             if (AITimer == 90)
                             {
-                                for (int i = 0; i < (NPC.life < NPC.lifeMax / 2 ? 12 : 8); i++)
+                                for (int i = 0; i < (NPC.life < NPC.lifeMax / 2 ? 14 : 8); i++)
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage,
                                         new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(-14, -4)), false, SoundID.Item42, "", 1);
@@ -377,7 +403,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 }
 
                                 if (AITimer >= 80 && AITimer % 40 == 0 && AITimer <= 200)
-                                    Dash(25);
+                                    Dash(NPC.life <= (int)(NPC.lifeMax * 0.25f) ? 30 : 25);
 
                                 if ((AITimer > 90 && AITimer < 120) || (AITimer > 130 && AITimer < 160) || (AITimer > 170 && AITimer < 200))
                                 {
@@ -389,14 +415,14 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 if (AITimer >= 210)
                                     NPC.velocity *= 0.7f;
 
-                                if (AITimer >= 20 && AITimer <= 240)
+                                if (AITimer >= 20 && AITimer <= 210)
                                 {
                                     if (Main.rand.NextBool(10))
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_XenomiteShot>(), NPC.damage,
                                             new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-14, -4)), false, SoundID.Item17);
                                 }
 
-                                if (AITimer >= 300)
+                                if (AITimer >= 250)
                                 {
                                     FreakOut = false;
                                     AITimer = 20;
@@ -419,7 +445,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         case 5:
                             NPC.rotation += 0.03f;
                             NPC.velocity *= 0.9f;
-                            if (++AITimer >= 30 && AITimer % 30 == 0 && AITimer <= 90)
+                            if (++AITimer >= 30 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 40 : 60) == 0 && AITimer <= 90)
                             {
                                 SoundEngine.PlaySound(SoundID.NPCDeath13, NPC.position);
                                 RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
@@ -475,12 +501,12 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
                         #region Xenomite Beam
                         case 7:
-                            if (NPC.life < NPC.lifeMax / 2)
+                            if (NPC.life <= (int)(NPC.lifeMax * 0.75f))
                             {
-                                if (AITimer < 70)
-                                    NPC.MoveToVector2(TopPos, 9);
+                                if (AITimer < (NPC.life < NPC.lifeMax / 2 ? 100 : 70))
+                                    NPC.Move(TopPos, 9, 20);
                                 else
-                                    NPC.velocity *= 0.7f;
+                                    NPC.velocity *= 0.8f;
 
                                 if (++AITimer == 70)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<SeedLaser>(), (int)(NPC.damage * 1.4f), new Vector2(0, 10), false, SoundID.Item103, ai0: NPC.whoAmI);
@@ -576,6 +602,12 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void FindFrame(int frameHeight)
         {
+            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+            {
+                oldrot[k] = oldrot[k - 1];
+            }
+            oldrot[0] = NPC.rotation;
+
             NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
             NPC.frame.X = 0;
             if (FreakOut)
@@ -643,10 +675,20 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             Texture2D EyeTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/SeedOfInfection/SoI_Eye").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            if (NPC.velocity.Length() > 10)
+            {
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.Green) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                }
+            }
+
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (!FreakOut)
-                spriteBatch.Draw(EyeTex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), 0, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(EyeTex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), 0, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
 
             return false;
         }

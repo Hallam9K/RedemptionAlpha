@@ -5,11 +5,11 @@ using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Trophies
 {
-    public class KeeperTrophy : ModItem
+    public class SoITrophy : ModItem
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Keeper Trophy");
+            DisplayName.SetDefault("Seed of Infection Trophy");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Trophies
 			Item.consumable = true;
 			Item.value = 100;
 			Item.rare = ItemRarityID.Blue;
-			Item.createTile = ModContent.TileType<KeeperTrophyTile>();
+			Item.createTile = ModContent.TileType<SoITrophyTile>();
 		}
 	}
 }
