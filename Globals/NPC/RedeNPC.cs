@@ -246,6 +246,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<CavernSkeletonSpawner>(), 5);
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 1);
+                pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
             }
         }
     }
