@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.GameContent.Creative;

@@ -4,15 +4,24 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Redemption
+namespace Redemption.Globals
 {
     public class SilenceEffect : ModSceneEffect
     {
         public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/silence");
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
-        public override bool IsSceneEffectActive(Player player)
+        public override bool IsSceneEffectActive(Terraria.Player player)
         {
             return RedeSystem.Silence;
+        }
+    }
+    public class SkeletonInvasionMusic : ModSceneEffect
+    {
+        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Spooky");
+        public override SceneEffectPriority Priority => SceneEffectPriority.Event;
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return RedeWorld.SkeletonInvasion && player.ZoneOverworldHeight;
         }
     }
 }

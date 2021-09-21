@@ -9,12 +9,13 @@ namespace Redemption.Globals
 {
 	public class RedeBossDowned : ModSystem
 	{
-		public static bool downedThorn = false;
-		public static bool downedKeeper = false;
-		public static bool downedSkullDigger = false;
-		public static bool downedSeed = false;
-		public static bool keeperSaved = false;
-		public static bool skullDiggerSaved = false;
+		public static bool downedThorn;
+		public static bool downedKeeper;
+		public static bool downedSkullDigger;
+		public static bool downedSeed;
+		public static bool keeperSaved;
+		public static bool skullDiggerSaved;
+		public static bool downedSkeletonInvasion;
 		//public static bool downedOtherBoss = false;
 
 		public override void OnWorldLoad()
@@ -25,6 +26,7 @@ namespace Redemption.Globals
 			downedSeed = false;
 			keeperSaved = false;
 			skullDiggerSaved = false;
+			downedSkeletonInvasion = false;
 			//downedOtherBoss = false;
 		}
 
@@ -36,6 +38,7 @@ namespace Redemption.Globals
 			downedSeed = false;
 			keeperSaved = false;
 			skullDiggerSaved = false;
+			downedSkeletonInvasion = false;
 			//downedOtherBoss = false;
 		}
 
@@ -55,6 +58,8 @@ namespace Redemption.Globals
 				downed.Add("keeperSaved");
 			if (skullDiggerSaved)
 				downed.Add("skullDiggerSaved");
+			if (downedSkeletonInvasion)
+				downed.Add("downedSkeletonInvasion");
 			return new TagCompound
 			{
 				["downed"] = downed,
@@ -71,12 +76,12 @@ namespace Redemption.Globals
 			downedSeed = downed.Contains("downedSeed");
 			keeperSaved = downed.Contains("keeperSaved");
 			skullDiggerSaved = downed.Contains("skullDiggerSaved");
+			downedSkeletonInvasion = downed.Contains("downedSkeletonInvasion");
 			//downedOtherBoss = downed.Contains("downedOtherBoss");
 		}
 
 		public override void NetSend(BinaryWriter writer)
 		{
-			//Order of operations is important and has to match that of NetReceive
 			var flags = new BitsByte();
 			flags[0] = downedThorn;
 			flags[1] = downedKeeper;
@@ -84,13 +89,13 @@ namespace Redemption.Globals
 			flags[3] = downedSeed;
 			flags[4] = keeperSaved;
 			flags[5] = skullDiggerSaved;
+			flags[6] = downedSkeletonInvasion;
 			//flags[2] = downedOtherBoss;
 			writer.Write(flags);
 		}
 
 		public override void NetReceive(BinaryReader reader)
 		{
-			//Order of operations is important and has to match that of NetSend
 			BitsByte flags = reader.ReadByte();
 			downedThorn = flags[0];
 			downedKeeper = flags[1];
@@ -98,6 +103,7 @@ namespace Redemption.Globals
 			downedSeed = flags[3];
 			keeperSaved = flags[4];
 			skullDiggerSaved = flags[5];
+			downedSkeletonInvasion = flags[6];
 			//downedOtherBoss = flags[2];
 		}
 	}

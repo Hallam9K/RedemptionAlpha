@@ -259,7 +259,19 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     {
                         #region Default
                         case 0:
-                            AITimer++;
+                            if (AITimer++ == 0 || AITimer == 60)
+                            {
+                                for (int k = 0; k < 20; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 100);
+                                    vector.Y = (float)(Math.Cos(angle) * 100);
+                                    Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.GreenFairy, 0f, 0f, 100, default, 2f)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = -NPC.DirectionTo(dust2.position) * 10 + NPC.velocity;
+                                }
+                            }
                             if (AITimer < 40)
                             {
                                 TimerRand += 0.1f;

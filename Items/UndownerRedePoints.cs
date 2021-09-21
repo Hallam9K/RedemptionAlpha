@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Globals;
 
 namespace Redemption.Items
 {
