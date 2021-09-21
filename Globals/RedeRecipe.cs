@@ -11,7 +11,7 @@ namespace Redemption.Globals
     {
         public static RecipeGroup ChickenRecipeGroup;
         public static RecipeGroup GoldRecipeGroup;
-        public static RecipeGroup IronRecipeGroup;
+        public static RecipeGroup SilverRecipeGroup;
 
         public static void AddRecipeGroups()
         {
@@ -23,9 +23,9 @@ namespace Redemption.Globals
 
             RecipeGroup.RegisterGroup("Redemption:GoldBar", GoldRecipeGroup);
 
-            IronRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.IronBar)}", ItemID.IronBar, ItemID.LeadBar);
+            SilverRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.IronBar)}", ItemID.TungstenBar, ItemID.SilverBar);
 
-            RecipeGroup.RegisterGroup("Redemption:IronBar", IronRecipeGroup);
+            RecipeGroup.RegisterGroup("Redemption:SilverBar", SilverRecipeGroup);
         }
 
         public static void Load(Mod mod)
