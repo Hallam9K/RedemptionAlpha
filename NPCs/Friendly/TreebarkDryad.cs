@@ -16,6 +16,8 @@ using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PreHM;
+using Terraria.ModLoader.IO;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -39,6 +41,8 @@ namespace Redemption.NPCs.Friendly
         private int WoodType;
         private int EyeFrameY;
         private int EyeFrameX;
+
+        public static List<Item> shopItems = new();
 
         public override void SetStaticDefaults()
         {
@@ -85,6 +89,8 @@ namespace Redemption.NPCs.Friendly
 
             if (TimerRand == 0)
             {
+                shopItems = CreateNewShop();
+
                 int SakuraScore = 0;
                 int WillowScore = 0;
                 for (int x = -40; x <= 40; x++)
@@ -138,6 +144,90 @@ namespace Redemption.NPCs.Friendly
             if (firstButton)
                 shop = true;
         }
+
+        public static List<Item> CreateNewShop()
+        {
+            var itemIds = new List<int>
+            {
+                ModContent.ItemType<LivingTwig>(),
+                ItemID.GrassSeeds,
+                ItemID.Acorn,
+                ItemID.Mushroom
+            };
+            if (Main.rand.NextBool(2))
+            {
+                switch (Main.rand.Next(5))
+                {
+                    case 0:
+                        itemIds.Add(ItemID.BlueMoss);
+                        break;
+                    case 1:
+                        itemIds.Add(ItemID.BrownMoss);
+                        break;
+                    case 2:
+                        itemIds.Add(ItemID.GreenMoss);
+                        break;
+                    case 3:
+                        itemIds.Add(ItemID.PurpleMoss);
+                        break;
+                    case 4:
+                        itemIds.Add(ItemID.RedMoss);
+                        break;
+                }
+            }
+            switch (Main.rand.Next(5))
+            {
+                case 0:
+                    itemIds.Add(ItemID.Apple);
+                    break;
+                case 1:
+                    itemIds.Add(ItemID.Apricot);
+                    break;
+                case 2:
+                    itemIds.Add(ItemID.Grapefruit);
+                    break;
+                case 3:
+                    itemIds.Add(ItemID.Lemon);
+                    break;
+                case 4:
+                    itemIds.Add(ItemID.Peach);
+                    break;
+            }
+            itemIds.Add(ItemID.WandofSparking);
+            itemIds.Add(ItemID.BabyBirdStaff);
+            if (Main.rand.NextBool(2))
+                itemIds.Add(ItemID.Aglet);
+            if (Main.rand.NextBool(4))
+                itemIds.Add(ItemID.AnkletoftheWind);
+            if (Main.rand.NextBool(8))
+                itemIds.Add(ItemID.FlowerBoots);
+            if (Main.rand.NextBool(8))
+                itemIds.Add(ItemID.NaturesGift);
+            else if (Main.rand.NextBool(4))
+                itemIds.Add(ItemID.JungleRose);
+
+            var items = new List<Item>();
+            foreach (int itemId in itemIds)
+            {
+                Item item = new();
+                item.SetDefaults(itemId);
+                items.Add(item);
+            }
+            return items;
+        }
+
+        public override void SetupShop(Chest shop, ref int nextSlot)
+        {
+            foreach (Item item in shopItems)
+            {
+                if (item == null || item.type == ItemID.None)
+                    continue;
+
+                shop.item[nextSlot].SetDefaults(item.type);
+                nextSlot++;
+            }
+        }
+
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
