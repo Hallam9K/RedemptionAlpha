@@ -139,7 +139,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 CopyList.Remove(ID);
                 NPC.netUpdate = true;
 
-                if (ID == 5 && NPC.CountNPCS(ModContent.NPCType<SeedGrowth>()) <= 1)
+                if (ID == 5 && NPC.CountNPCS(ModContent.NPCType<SeedGrowth>()) > 1)
                     continue;
 
                 attempts++;
