@@ -29,7 +29,7 @@ namespace Redemption.Globals
 	{
 		public bool CanDrop(DropAttemptInfo info)
 		{
-			if (!info.IsInSimulation && info.npc.FindBuffIndex(BuffID.OnFire) != -1)
+			if (!info.IsInSimulation && info.npc.FindBuffIndex(BuffID.OnFire) != -1 && info.npc.FindBuffIndex(BuffID.OnFire3) != -1)
 				return true;
 
 			return false;

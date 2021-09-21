@@ -562,6 +562,7 @@ namespace Redemption.Globals
         public static readonly TagData Plantlike = ContentTags.Get<GroupNPC>(nameof(Plantlike));
         public static readonly TagData Spirit = ContentTags.Get<GroupNPC>(nameof(Spirit));
         public static readonly TagData Demon = ContentTags.Get<GroupNPC>(nameof(Demon));
+        public static readonly TagData Cold = ContentTags.Get<GroupNPC>(nameof(Cold));
 
         public static void SetNPCTags()
         {
@@ -594,6 +595,10 @@ namespace Redemption.Globals
 
             #region Demon
             Demon.SetMultiple(NPCID.Demon, NPCID.VoodooDemon, NPCID.FireImp, NPCID.RedDevil);
+            #endregion
+
+            #region Cold
+            Cold.SetMultiple(NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.SnowFlinx, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.MisterStabby, NPCID.Wolf, NPCID.IceGolem, NPCID.SnowBalla, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.Yeti, NPCID.IceQueen);
             #endregion
         }
     }

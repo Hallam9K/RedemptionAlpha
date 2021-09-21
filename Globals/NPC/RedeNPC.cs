@@ -60,10 +60,7 @@ namespace Redemption.Globals.NPC
             }
             if (NPCTags.Demon.Has(npc.type))
             {
-                if (ItemTags.Holy.Has(item.type))
-                    damage = (int)(damage * 1.5f);
-
-                if (ItemTags.Celestial.Has(item.type))
+                if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type))
                     damage = (int)(damage * 1.5f);
 
                 if (ItemTags.Fire.Has(item.type))
@@ -74,13 +71,7 @@ namespace Redemption.Globals.NPC
             }
             if (NPCTags.Spirit.Has(npc.type))
             {
-                if (ItemTags.Holy.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ItemTags.Celestial.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ItemTags.Arcane.Has(item.type))
+                if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Arcane.Has(item.type))
                     damage = (int)(damage * 1.25f);
             }
             if (NPCLists.IsSlime.Contains(npc.type))
@@ -93,6 +84,17 @@ namespace Redemption.Globals.NPC
 
                 if (ItemTags.Water.Has(item.type))
                     damage = (int)(damage * 0.5f);
+            }
+            if (NPCTags.Cold.Has(npc.type))
+            {
+                if (ItemTags.Fire.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemTags.Ice.Has(item.type))
+                    damage = (int)(damage * 0.5f);
+
+                if (ItemTags.Thunder.Has(item.type))
+                    damage = (int)(damage * 1.1f);
             }
             #endregion
 
@@ -139,10 +141,7 @@ namespace Redemption.Globals.NPC
             }
             if (NPCTags.Demon.Has(npc.type))
             {
-                if (ProjectileTags.Holy.Has(projectile.type))
-                    damage = (int)(damage * 1.5f);
-
-                if (ProjectileTags.Celestial.Has(projectile.type))
+                if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type))
                     damage = (int)(damage * 1.5f);
 
                 if (ProjectileTags.Fire.Has(projectile.type))
@@ -153,13 +152,7 @@ namespace Redemption.Globals.NPC
             }
             if (NPCTags.Spirit.Has(npc.type))
             {
-                if (ProjectileTags.Holy.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ProjectileTags.Celestial.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ProjectileTags.Arcane.Has(projectile.type))
+                if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Arcane.Has(projectile.type))
                     damage = (int)(damage * 1.25f);
             }
             if (NPCLists.IsSlime.Contains(npc.type))
@@ -172,6 +165,17 @@ namespace Redemption.Globals.NPC
 
                 if (ProjectileTags.Water.Has(projectile.type))
                     damage = (int)(damage * 0.5f);
+            }
+            if (NPCTags.Cold.Has(npc.type))
+            {
+                if (ProjectileTags.Fire.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileTags.Ice.Has(projectile.type))
+                    damage = (int)(damage * 0.5f);
+
+                if (ProjectileTags.Thunder.Has(projectile.type))
+                    damage = (int)(damage * 1.1f);
             }
             #endregion
         }
