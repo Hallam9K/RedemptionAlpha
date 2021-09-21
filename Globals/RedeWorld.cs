@@ -35,7 +35,6 @@ namespace Redemption.Globals
             }
             if (DayNightCount == 11 && Main.time == 1)
             {
-                WorldGen.spawnEye = false;
                 SkeletonInvasion = true;
                 string status = "The skeletons are invading!";
                 if (Main.netMode == NetmodeID.Server)
@@ -45,6 +44,11 @@ namespace Redemption.Globals
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);
+            }
+            if (SkeletonInvasion)
+            {
+                Main.bloodMoon = false;
+                WorldGen.spawnEye = false;
             }
             if (!RedeBossDowned.downedSkeletonInvasion && DayNightCount >= 11 && Main.time >= 16200)
             {
