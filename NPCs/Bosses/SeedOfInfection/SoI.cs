@@ -269,7 +269,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                     vector.Y = (float)(Math.Cos(angle) * 100);
                                     Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.GreenFairy, 0f, 0f, 100, default, 2f)];
                                     dust2.noGravity = true;
-                                    dust2.velocity = -NPC.DirectionTo(dust2.position) * 10 + NPC.velocity;
+                                    dust2.velocity = -NPC.DirectionTo(dust2.position) * 10;
                                 }
                             }
                             if (AITimer < 40)

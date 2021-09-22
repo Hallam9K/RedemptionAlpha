@@ -19,6 +19,7 @@ namespace Redemption.Globals
         public static int alignment;
         public static int DayNightCount;
         public static bool SkeletonInvasion;
+        public static bool spawnSkeletonInvasion;
         public static bool spawnKeeper;
 
         public override void PostUpdateWorld()
@@ -27,32 +28,44 @@ namespace Redemption.Globals
                 DayNightCount++;
 
             #region Skeleton Invasion
-            if (DayNightCount == 10 && Main.time == 1)
+            if (DayNightCount >= 10 && !Main.hardMode && !Main.fastForwardTime)
             {
-                string status = "The skeletons are plotting an invasion at dusk...";
-                if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
-                else if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue(status), Color.LightGray);
-            }
-            if (DayNightCount == 11 && Main.time == 1)
-            {
-                SkeletonInvasion = true;
-                string status = "The skeletons are invading!";
-                if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
-                else if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue(status), Color.LightGray);
+                if (Main.dayTime && Main.time == 1 && !WorldGen.spawnEye)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        if (!RedeBossDowned.downedSkeletonInvasion || (DayNightCount > 12 && DayNightCount % 3 == 0 && Main.rand.NextBool(8)))
+                        {
+                            spawnSkeletonInvasion = true;
 
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                            string status = "The skeletons are plotting an invasion at dusk..." + (RedeBossDowned.downedSkeletonInvasion ? " Again." : "");
+                            if (Main.netMode == NetmodeID.Server)
+                                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
+                            else if (Main.netMode == NetmodeID.SinglePlayer)
+                                Main.NewText(Language.GetTextValue(status), Color.LightGray);
+                        }
+                    }
+                }
+                if (!Main.dayTime && spawnSkeletonInvasion && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 1)
+                {
+                    string status = "The skeletons are invading!";
+                    if (WorldGen.spawnEye || Main.bloodMoon)
+                        status = "The skeletons reconsidered invading tonight...";
+                    else
+                        SkeletonInvasion = true;
+
+                    spawnSkeletonInvasion = false;
+
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), Color.LightGray);
+
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
             }
-            if (SkeletonInvasion)
-            {
-                Main.bloodMoon = false;
-                WorldGen.spawnEye = false;
-            }
-            if (!RedeBossDowned.downedSkeletonInvasion && DayNightCount >= 11 && Main.time >= 16200)
+            if (SkeletonInvasion && (Main.time >= 16200 || Main.dayTime))
             {
                 SkeletonInvasion = false;
                 RedeBossDowned.downedSkeletonInvasion = true;
@@ -71,7 +84,7 @@ namespace Redemption.Globals
             #region Keeper Summoning
             if (!Main.dayTime && Terraria.NPC.downedBoss1 && !Main.hardMode && !Main.fastForwardTime)
             {
-                if (Main.time == 1 && !WorldGen.spawnEye)
+                if (Main.time == 1 && !WorldGen.spawnEye && !spawnSkeletonInvasion)
                 {
                     if (!RedeBossDowned.downedKeeper && Main.netMode != NetmodeID.MultiplayerClient)
                     {
@@ -139,6 +152,7 @@ namespace Redemption.Globals
             DayNightCount = 0;
             SkeletonInvasion = false;
             spawnKeeper = false;
+            spawnSkeletonInvasion = false;
         }
 
         public override void OnWorldUnload()
@@ -147,6 +161,7 @@ namespace Redemption.Globals
             DayNightCount = 0;
             SkeletonInvasion = false;
             spawnKeeper = false;
+            spawnSkeletonInvasion = false;
         }
 
         public override TagCompound SaveWorldData()
