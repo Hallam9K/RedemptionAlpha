@@ -513,10 +513,10 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NoblesHalberd>(), 16));
-            npcLoot.Add(ItemDropRule.OneFromOptions(16, ModContent.ItemType<CommonGuardHelm1>(), ModContent.ItemType<CommonGuardHelm2>(),
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NoblesHalberd>(), 25));
+            npcLoot.Add(ItemDropRule.OneFromOptions(25, ModContent.ItemType<CommonGuardHelm1>(), ModContent.ItemType<CommonGuardHelm2>(),
                 ModContent.ItemType<CommonGuardPlateMail>(), ModContent.ItemType<CommonGuardGreaves>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 1, 3, 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 3, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 2, 3, 10));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
