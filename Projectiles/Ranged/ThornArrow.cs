@@ -23,7 +23,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
-            Projectile.extraUpdates = 1;
         }
         public override void Kill(int timeLeft)
         {
