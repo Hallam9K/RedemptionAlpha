@@ -164,19 +164,12 @@ namespace Redemption.Globals
             spawnSkeletonInvasion = false;
         }
 
-        public override TagCompound SaveWorldData()
+        public override void SaveWorldData(TagCompound tag)
         {
             var lists = new List<string>();
 
             if (SkeletonInvasion)
                 lists.Add("SkeletonInvasion");
-
-            return new TagCompound
-            {
-                ["lists"] = lists,
-                ["alignment"] = alignment,
-                ["DayNightCount"] = DayNightCount
-            };
         }
 
         public override void LoadWorldData(TagCompound tag)

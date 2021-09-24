@@ -42,7 +42,7 @@ namespace Redemption.Globals
 			//downedOtherBoss = false;
 		}
 
-		public override TagCompound SaveWorldData()
+        public override void SaveWorldData(TagCompound tag)
 		{
 			var downed = new List<string>();
 
@@ -60,10 +60,6 @@ namespace Redemption.Globals
 				downed.Add("skullDiggerSaved");
 			if (downedSkeletonInvasion)
 				downed.Add("downedSkeletonInvasion");
-			return new TagCompound
-			{
-				["downed"] = downed,
-			};
 		}
 
 		public override void LoadWorldData(TagCompound tag)

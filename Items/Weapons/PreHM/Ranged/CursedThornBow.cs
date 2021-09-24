@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent.Creative;
 using Terraria.DataStructures;
 using Redemption.NPCs.Bosses.Thorn;
+using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -12,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Fires a short-ranged cursed thorn along with the arrow");
+            Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -40,10 +41,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             return new Vector2(-2, 0);
         }
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CursedThornVileFriendly>(), damage / 2, knockback, player.whoAmI);
-            return true;
+            if (type == ProjectileID.WoodenArrowFriendly)
+                type = ModContent.ProjectileType<ThornArrow>();
         }
     }
 }

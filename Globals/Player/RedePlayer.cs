@@ -24,18 +24,13 @@ namespace Redemption.Globals.Player
         {
             foundHall = false;
         }
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
             var saveS = new List<string>();
             if (foundHall) saveS.Add("foundHall");
-
-            return new TagCompound
-            {
-                { "saveS", saveS }
-            };
         }
 
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             var saveS = tag.GetList<string>("saveS");
             foundHall = saveS.Contains("foundHall");
