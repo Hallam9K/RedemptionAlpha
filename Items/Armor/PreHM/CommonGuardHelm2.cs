@@ -18,7 +18,7 @@ namespace Redemption.Items.Armor.PreHM
             DisplayName.SetDefault("Common Guard Bucket Helm");
             Tooltip.SetDefault("+2 increased melee damage");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

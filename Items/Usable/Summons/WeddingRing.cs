@@ -20,7 +20,7 @@ namespace Redemption.Items.Usable.Summons
 				+ "\nOnly usable at night"
 				+ "\nNot consumable");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 		}
 

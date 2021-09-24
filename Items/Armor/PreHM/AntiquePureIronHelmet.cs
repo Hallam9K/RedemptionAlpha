@@ -18,7 +18,7 @@ namespace Redemption.Items.Armor.PreHM
 			DisplayName.SetDefault("Antique Pure-Iron Helmet");
 			Tooltip.SetDefault("");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
@@ -30,7 +30,7 @@ namespace Redemption.Items.Armor.PreHM
 			//Item.defense = 5;
 		}
 
-        /*public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())
             {
@@ -49,6 +49,6 @@ namespace Redemption.Items.Armor.PreHM
                 };
                 tooltips.Add(line);
             }
-        }*/
+        }
     }
 }

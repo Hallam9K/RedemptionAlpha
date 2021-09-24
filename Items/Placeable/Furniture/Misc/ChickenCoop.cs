@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,9 +11,11 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
             Tooltip.SetDefault("Occasionally spawns chicken eggs");
-        }
 
-        public override void SetDefaults()
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults()
 		{
 			Item.width = 44;
 			Item.height = 42;

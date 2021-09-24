@@ -4,6 +4,7 @@ using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,6 +18,8 @@ namespace Redemption.Items.Weapons.Ammo
             DisplayName.SetDefault("Moonflare Arrow");
             Tooltip.SetDefault("Burns targets while the moon is out" +
 				"\nFlame intensity is based on moon phase");
+
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
 		}
 
 		public override void SetDefaults()
