@@ -17,8 +17,9 @@ namespace Redemption.Items.Armor.PreHM
 		{
 			DisplayName.SetDefault("Antique Pure-Iron Helmet");
 			Tooltip.SetDefault("");
+            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
@@ -35,7 +36,9 @@ namespace Redemption.Items.Armor.PreHM
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "''")
+                    "'An outdated design of the Iron Realm's warrior's helmet.\n" +
+                    "Discovered in the Catacombs of Gathuram by Happins, a fallen.\n\n" +
+                    "This model has fur to keep the neck and shoulders warm in the harsh environment'")
                 {
                     overrideColor = Color.LightGray
                 };

@@ -11,6 +11,7 @@ namespace Redemption.Items.Armor.Single
         {
             DisplayName.SetDefault("Sunset Helm");
             Tooltip.SetDefault("'Comes from an ashen world...'");
+            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -22,10 +23,6 @@ namespace Redemption.Items.Armor.Single
             Item.value = 7500;
             Item.rare = ItemRarityID.Gray;
             Item.defense = 4;
-        }
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawHair = drawAltHair = false;
         }
     }
 }

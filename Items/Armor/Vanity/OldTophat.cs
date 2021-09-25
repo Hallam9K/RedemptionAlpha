@@ -10,6 +10,7 @@ namespace Redemption.Items.Armor.Vanity
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawHatHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
         }
 
         public override void SetDefaults()
@@ -19,8 +20,5 @@ namespace Redemption.Items.Armor.Vanity
             Item.rare = ItemRarityID.Green;
             Item.vanity = true;
         }
-
-        public override bool DrawHead() => true;
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair) => drawAltHair = true;
     }
 }

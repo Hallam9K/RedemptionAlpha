@@ -10,6 +10,7 @@ namespace Redemption.Items.Armor.Vanity
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("'Looks painful...'");
+            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -21,8 +22,5 @@ namespace Redemption.Items.Armor.Vanity
             Item.vanity = true;
             Item.rare = ItemRarityID.Green;
         }
-
-        public override bool DrawHead() => false;
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair) => drawHair = drawAltHair = false;
     }
 }

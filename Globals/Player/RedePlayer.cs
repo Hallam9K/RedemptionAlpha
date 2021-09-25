@@ -1,11 +1,4 @@
-using Microsoft.Xna.Framework;
-using Redemption.Buffs.Debuffs;
-using Redemption.NPCs.Critters;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -28,6 +21,8 @@ namespace Redemption.Globals.Player
         {
             var saveS = new List<string>();
             if (foundHall) saveS.Add("foundHall");
+
+            tag["saveS"] = saveS;
         }
 
         public override void LoadData(TagCompound tag)

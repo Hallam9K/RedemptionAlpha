@@ -204,7 +204,7 @@ namespace Redemption.StructureHelper
                                     TileEntity.PlaceEntityNet(pos.X + x, pos.Y + y, typ);
 
                                     if (d.TEData != null && typ > 2)
-                                        (TileEntity.ByPosition[new Point16(pos.X + x, pos.Y + y)] as ModTileEntity).Load(d.TEData);
+                                        (TileEntity.ByPosition[new Point16(pos.X + x, pos.Y + y)] as ModTileEntity).LoadData(d.TEData);
                                 }
                             }
                         }

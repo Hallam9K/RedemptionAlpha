@@ -17,6 +17,7 @@ namespace Redemption.Items.Armor.PreHM
         {
             DisplayName.SetDefault("Common Guard Bucket Helm");
             Tooltip.SetDefault("+2 increased melee damage");
+            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -54,11 +55,6 @@ namespace Redemption.Items.Armor.PreHM
                 Dust dust = Main.dust[index];
                 dust.velocity -= player.velocity * 0.5f;
             }
-        }
-
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawHair = drawAltHair = false;
         }
 
         public override void AddRecipes()

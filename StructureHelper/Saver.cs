@@ -89,7 +89,7 @@ namespace Redemption.StructureHelper
                             if (entityTarget != null)
                             {
                                 teName = entityTarget.Mod.Name + " " + entityTarget.Name;
-                                entityTag = (teTarget as ModTileEntity).Save();
+                                (teTarget as ModTileEntity).SaveData(entityTag);
                             }
                             else teName = "";
                         }

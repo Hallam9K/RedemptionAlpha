@@ -60,6 +60,8 @@ namespace Redemption.Globals
 				downed.Add("skullDiggerSaved");
 			if (downedSkeletonInvasion)
 				downed.Add("downedSkeletonInvasion");
+
+			tag["downed"] = downed;
 		}
 
 		public override void LoadWorldData(TagCompound tag)

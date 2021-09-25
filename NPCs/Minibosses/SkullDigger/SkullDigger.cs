@@ -537,7 +537,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         {
             float baseChance = SpawnCondition.Cavern.Chance * (!NPC.AnyNPCs(NPC.type) && RedeBossDowned.downedKeeper ? 1 : 0);
             float multiplier = spawnInfo.player.HasItem(ModContent.ItemType<SorrowfulEssence>()) ? 0.1f : (RedeBossDowned.downedSkullDigger ? 0 : 0.002f);
-            float teddy = spawnInfo.player.HasItem(ModContent.ItemType<AbandonedTeddy>()) ? 0 : 1;
+            float teddy = spawnInfo.player.HasItem(ModContent.ItemType<AbandonedTeddy>()) || RedeBossDowned.keeperSaved ? 0 : 1;
 
             return baseChance * multiplier * teddy;
         }

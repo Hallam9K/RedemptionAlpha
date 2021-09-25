@@ -11,6 +11,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             DisplayName.SetDefault("Corpse-Walker Skull");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()
@@ -19,9 +20,6 @@ namespace Redemption.Items.Armor.Vanity
             Item.height = 20;
             Item.vanity = true;
             Item.rare = ItemRarityID.Blue;
-        }
-
-        public override bool DrawHead() => false;
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair) => drawHair = drawAltHair = false;
+        }   
     }
 }

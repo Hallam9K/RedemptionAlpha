@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Keeper;
+using Redemption.NPCs.Friendly;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -21,6 +22,13 @@ namespace Redemption.Globals
         public static bool SkeletonInvasion;
         public static bool spawnSkeletonInvasion;
         public static bool spawnKeeper;
+        public static int tbotDownedTimer;
+
+        public override void PostUpdateNPCs()
+        {
+            if (Terraria.NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()))
+                tbotDownedTimer++;
+        }
 
         public override void PostUpdateWorld()
         {
@@ -153,6 +161,7 @@ namespace Redemption.Globals
             SkeletonInvasion = false;
             spawnKeeper = false;
             spawnSkeletonInvasion = false;
+            tbotDownedTimer = 0;
         }
 
         public override void OnWorldUnload()
@@ -162,6 +171,7 @@ namespace Redemption.Globals
             SkeletonInvasion = false;
             spawnKeeper = false;
             spawnSkeletonInvasion = false;
+            tbotDownedTimer = 0;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -170,6 +180,11 @@ namespace Redemption.Globals
 
             if (SkeletonInvasion)
                 lists.Add("SkeletonInvasion");
+
+            tag["lists"] = lists;
+            tag["alignment"] = alignment;
+            tag["DayNightCount"] = DayNightCount;
+            tag["tbotDownedTimer"] = tbotDownedTimer;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -179,6 +194,7 @@ namespace Redemption.Globals
             SkeletonInvasion = lists.Contains("SkeletonInvasion");
             alignment = tag.GetInt("alignment");
             DayNightCount = tag.GetInt("DayNightCount");
+            tbotDownedTimer = tag.GetInt("tbotDownedTimer");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -189,6 +205,7 @@ namespace Redemption.Globals
 
             writer.Write(alignment);
             writer.Write(DayNightCount);
+            writer.Write(tbotDownedTimer);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -198,6 +215,7 @@ namespace Redemption.Globals
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();
+            tbotDownedTimer = reader.ReadInt32();
         }
     }
 }

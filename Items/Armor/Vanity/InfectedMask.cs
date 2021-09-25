@@ -11,6 +11,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             Tooltip.SetDefault("'Become infected... Cosmetically'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()
@@ -20,8 +21,5 @@ namespace Redemption.Items.Armor.Vanity
             Item.rare = ItemRarityID.Green;
             Item.vanity = true;
         }
-
-        public override bool DrawHead() => true;
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair) => drawHair = false;
     }
 }

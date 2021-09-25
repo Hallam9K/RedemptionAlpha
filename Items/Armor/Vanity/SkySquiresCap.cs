@@ -14,6 +14,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             DisplayName.SetDefault("Sky Squire's Cap");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()
@@ -24,10 +25,7 @@ namespace Redemption.Items.Armor.Vanity
             Item.rare = ItemRarityID.Blue;
             Item.vanity = true;
         }
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
-        {
-            drawAltHair = true;
-        }
+
         public override void AddRecipes()
         {
             CreateRecipe()
