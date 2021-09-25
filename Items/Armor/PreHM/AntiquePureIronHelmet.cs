@@ -37,8 +37,8 @@ namespace Redemption.Items.Armor.PreHM
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'An outdated design of the Iron Realm's warrior's helmet.\n" +
-                    "Discovered in the Catacombs of Gathuram by Happins, a fallen.\n\n" +
-                    "This model has fur to keep the neck and shoulders warm in the harsh environment'")
+                    "Discovered in the Catacombs of Gathuram by Happins, a fallen.\n" +
+                    "This design has fur to keep the neck and shoulders warm in the harsh environment'")
                 {
                     overrideColor = Color.LightGray
                 };
