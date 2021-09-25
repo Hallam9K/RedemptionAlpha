@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Friendly
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(""),
+                new FlavorTextBestiaryInfoElement("Fallen are a catergory of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons."),
             });
         }
 
@@ -136,10 +136,6 @@ namespace Redemption.NPCs.Friendly
                 1 => "Tenvon",
                 _ => "Okvot",
             };
-        }
-
-        public override void AI()
-        {
         }
 
         public override string GetChat()

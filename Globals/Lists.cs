@@ -579,7 +579,7 @@ namespace Redemption.Globals
             #region Undead
 
             Undead.PopulateFromSets(NPCID.Sets.Zombies);
-            Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<RaggedZombie>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>());
+            Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<RaggedZombie>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>());
 
             #endregion
 
@@ -589,7 +589,7 @@ namespace Redemption.Globals
 
             #region Plantlike
 
-            Plantlike.SetMultiple(NPCID.FungiBulb, NPCID.AnomuraFungus, NPCID.MushiLadybug, NPCID.ManEater, NPCID.Snatcher, NPCID.AngryTrapper, NPCID.FungoFish, NPCID.GiantFungiBulb, NPCID.HoppinJack, NPCID.Dandelion, NPCID.Plantera, NPCID.MourningWood, NPCID.Pumpking, NPCID.Everscream, NPCID.PlanterasTentacle, ModContent.NPCType<LivingBloom>(), ModContent.NPCType<DevilsTongue>(), ModContent.NPCType<Thorn>());
+            Plantlike.SetMultiple(NPCID.FungiBulb, NPCID.AnomuraFungus, NPCID.MushiLadybug, NPCID.ManEater, NPCID.Snatcher, NPCID.AngryTrapper, NPCID.FungoFish, NPCID.GiantFungiBulb, NPCID.HoppinJack, NPCID.Dandelion, NPCID.Plantera, NPCID.MourningWood, NPCID.Pumpking, NPCID.Everscream, NPCID.PlanterasTentacle, ModContent.NPCType<LivingBloom>(), ModContent.NPCType<DevilsTongue>(), ModContent.NPCType<Thorn>(), ModContent.NPCType<TreebarkDryad>());
 
             #endregion
 
@@ -679,7 +679,7 @@ namespace Redemption.Globals
 
             #region Nature
 
-            Nature.SetMultiple(ProjectileID.ThornChakram, ProjectileID.Seed, ProjectileID.Mushroom, ProjectileID.TerraBeam, ProjectileID.NettleBurstEnd, ProjectileID.NettleBurstLeft, ProjectileID.NettleBurstRight, ProjectileID.JungleSpike, ProjectileID.Leaf, ProjectileID.FlowerPetal, ProjectileID.CrystalLeafShot, ProjectileID.SporeCloud, ProjectileID.ChlorophyteOrb, ProjectileID.FlowerPow, ProjectileID.FlowerPowPetal, ProjectileID.SeedPlantera, ProjectileID.PoisonSeedPlantera, ProjectileID.ThornBall, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.PineNeedleFriendly, ProjectileID.PineNeedleHostile, ProjectileID.SeedlerNut, ProjectileID.SeedlerThorn, ProjectileID.JungleYoyo, ProjectileID.SporeTrap, ProjectileID.SporeTrap2, ProjectileID.SporeGas, ProjectileID.SporeGas2, ProjectileID.SporeGas3, ProjectileID.TruffleSpore, ProjectileID.Terrarian, ProjectileID.TerrarianBeam, ProjectileID.Terragrim, ProjectileID.DandelionSeed, ProjectileID.Shroomerang, ProjectileID.ThornWhip, ModContent.ProjectileType<LivingBloomRoot>(), ModContent.ProjectileType<LunarShot_Proj>(), ModContent.ProjectileType<MoonflareBatIllusion>(), ModContent.ProjectileType<MoonflareArrow_Proj>(), ModContent.ProjectileType<CursedThornVile>(), ModContent.ProjectileType<LeechingThornSeed>(), ModContent.ProjectileType<ThornTrap>());
+            Nature.SetMultiple(ProjectileID.ThornChakram, ProjectileID.Seed, ProjectileID.Mushroom, ProjectileID.TerraBeam, ProjectileID.NettleBurstEnd, ProjectileID.NettleBurstLeft, ProjectileID.NettleBurstRight, ProjectileID.JungleSpike, ProjectileID.Leaf, ProjectileID.FlowerPetal, ProjectileID.CrystalLeafShot, ProjectileID.SporeCloud, ProjectileID.ChlorophyteOrb, ProjectileID.FlowerPow, ProjectileID.FlowerPowPetal, ProjectileID.SeedPlantera, ProjectileID.PoisonSeedPlantera, ProjectileID.ThornBall, ProjectileID.JackOLantern, ProjectileID.FlamingJack, ProjectileID.PineNeedleFriendly, ProjectileID.PineNeedleHostile, ProjectileID.SeedlerNut, ProjectileID.SeedlerThorn, ProjectileID.JungleYoyo, ProjectileID.SporeTrap, ProjectileID.SporeTrap2, ProjectileID.SporeGas, ProjectileID.SporeGas2, ProjectileID.SporeGas3, ProjectileID.TruffleSpore, ProjectileID.Terrarian, ProjectileID.TerrarianBeam, ProjectileID.Terragrim, ProjectileID.DandelionSeed, ProjectileID.Shroomerang, ProjectileID.ThornWhip, ModContent.ProjectileType<LivingBloomRoot>(), ModContent.ProjectileType<LunarShot_Proj>(), ModContent.ProjectileType<MoonflareBatIllusion>(), ModContent.ProjectileType<MoonflareArrow_Proj>(), ModContent.ProjectileType<CursedThornVile>(), ModContent.ProjectileType<LeechingThornSeed>(), ModContent.ProjectileType<ThornTrap>(), ModContent.ProjectileType<ThornArrow>(), ModContent.ProjectileType<ThornTrapSmall_Proj>());
 
             #endregion
 
