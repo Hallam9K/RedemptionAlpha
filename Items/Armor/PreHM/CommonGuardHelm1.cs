@@ -10,31 +10,31 @@ using System;
 
 namespace Redemption.Items.Armor.PreHM
 {
-	[AutoloadEquip(EquipType.Head)]
-	public class CommonGuardHelm1 : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Common Guard Helm");
-			Tooltip.SetDefault("+2 increased melee damage");
+    [AutoloadEquip(EquipType.Head)]
+    public class CommonGuardHelm1 : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Common Guard Helm");
+            Tooltip.SetDefault("+2 increased melee damage");
             ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
-		{
-			Item.width = 24;
-			Item.height = 26;
-			Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.Green;
-			Item.defense = 3;
-		}
+        {
+            Item.width = 24;
+            Item.height = 26;
+            Item.sellPrice(silver: 30);
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 3;
+        }
 
-		public override bool IsArmorSet(Item head, Item body, Item legs)
-		{
-			return body.type == ModContent.ItemType<CommonGuardPlateMail>() && legs.type == ModContent.ItemType<CommonGuardGreaves>();
-		}
+        public override bool IsArmorSet(Item head, Item body, Item legs)
+        {
+            return body.type == ModContent.ItemType<CommonGuardPlateMail>() && legs.type == ModContent.ItemType<CommonGuardGreaves>();
+        }
 
         public override void UpdateEquip(Player player)
         {
@@ -42,9 +42,9 @@ namespace Redemption.Items.Armor.PreHM
         }
 
         public override void UpdateArmorSet(Player player)
-		{
-			player.setBonus = "12% increased melee speed";
-			player.meleeSpeed += .12f;
+        {
+            player.setBonus = "12% increased melee speed";
+            player.meleeSpeed += .12f;
             player.GetModPlayer<BuffPlayer>().MetalSet = true;
 
             if (Main.rand.NextBool(10) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
