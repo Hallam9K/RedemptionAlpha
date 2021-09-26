@@ -32,7 +32,7 @@ namespace Redemption.Globals.Player
         public bool hemorrhageDebuff;
         public bool necrosisDebuff;
         public bool shockDebuff;
-        public bool antibodiesDebuff;
+        public bool antibodiesBuff;
         public int infectionTimer;
 
         public bool MetalSet;
@@ -65,7 +65,7 @@ namespace Redemption.Globals.Player
             hemorrhageDebuff = false;
             necrosisDebuff = false;
             shockDebuff = false;
-            antibodiesDebuff = false;
+            antibodiesBuff = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -91,16 +91,16 @@ namespace Redemption.Globals.Player
         {
             #region Infection
 
-            if (greenRashes == true)
+            if (greenRashes)
             {
                 infectionTimer++;                
-                if (antibodiesDebuff == true)
+                if (antibodiesBuff)
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
                     infectionTimer = 0;
                 }
                 
-                if (infectionTimer == 3600)
+                if (infectionTimer >= 3600)
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
                     Player.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 10000);
@@ -108,10 +108,10 @@ namespace Redemption.Globals.Player
                 }
             }
 
-            if (glowingPustules == true)
+            if (glowingPustules)
             {
                 infectionTimer++;
-                if (infectionTimer == 3600)
+                if (infectionTimer >= 3600)
                 {
                     Player.ClearBuff(ModContent.BuffType<GlowingPustulesDebuff>());
                     Player.AddBuff(ModContent.BuffType<FleshCrystalsDebuff>(), 10000);
@@ -119,10 +119,10 @@ namespace Redemption.Globals.Player
                 }
             }
 
-            if (fleshCrystals == true)
+            if (fleshCrystals)
             {
                 infectionTimer++;
-                if (infectionTimer == 3600)
+                if (infectionTimer >= 3600)
                 {
                     Player.AddBuff(ModContent.BuffType<ShockDebuff>(), 10000);
                     infectionTimer = 0;

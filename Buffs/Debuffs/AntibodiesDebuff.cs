@@ -16,7 +16,7 @@ namespace Redemption.Buffs.Debuffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().antibodiesDebuff = true;
+            player.GetModPlayer<BuffPlayer>().antibodiesBuff = true;
         }
     }
 }
