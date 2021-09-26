@@ -9,7 +9,7 @@ namespace Redemption.Items.Materials.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Creation Fragment");
+            DisplayName.SetDefault("Terrestrial Fragment");
             Tooltip.SetDefault("'The blessing of life resides within this fragment'");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;

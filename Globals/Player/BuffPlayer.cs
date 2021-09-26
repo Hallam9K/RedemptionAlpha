@@ -26,6 +26,14 @@ namespace Redemption.Globals.Player
         public bool heartInsignia;
         public bool wellFed4;
         public bool spiderSwarmed;
+        public bool greenRashes;
+        public bool glowingPustules;
+        public bool fleshCrystals;
+        public bool hemorrhageDebuff;
+        public bool necrosisDebuff;
+        public bool shockDebuff;
+        public bool antibodiesDebuff;
+        public int infectionTimer;
 
         public bool MetalSet;
 
@@ -51,6 +59,14 @@ namespace Redemption.Globals.Player
             MeleeDamageFlat = 0;
             MetalSet = false;
             spiderSwarmed = false;
+            greenRashes = false;
+            glowingPustules = false;
+            fleshCrystals = false;
+            hemorrhageDebuff = false;
+            necrosisDebuff = false;
+            shockDebuff = false;
+            antibodiesDebuff = false;
+
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
                 ElementalResistance[k] = 0;
@@ -70,6 +86,51 @@ namespace Redemption.Globals.Player
                 dirtyWoundTime = 0;
             }
         }
+
+        public override void PostUpdateMiscEffects()
+        {
+            #region Infection
+
+            if (greenRashes == true)
+            {
+                infectionTimer++;                
+                if (antibodiesDebuff == true)
+                {
+                    Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
+                    infectionTimer = 0;
+                }
+                
+                if (infectionTimer == 3600)
+                {
+                    Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
+                    Player.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 10000);
+                    infectionTimer = 0;
+                }
+            }
+
+            if (glowingPustules == true)
+            {
+                infectionTimer++;
+                if (infectionTimer == 3600)
+                {
+                    Player.ClearBuff(ModContent.BuffType<GlowingPustulesDebuff>());
+                    Player.AddBuff(ModContent.BuffType<FleshCrystalsDebuff>(), 10000);
+                    infectionTimer = 0;
+                }
+            }
+
+            if (fleshCrystals == true)
+            {
+                infectionTimer++;
+                if (infectionTimer == 3600)
+                {
+                    Player.AddBuff(ModContent.BuffType<ShockDebuff>(), 10000);
+                    infectionTimer = 0;
+                }
+            }
+            #endregion
+        }
+
         public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (thornCirclet && !item.CountsAsClass(DamageClass.Summon))
