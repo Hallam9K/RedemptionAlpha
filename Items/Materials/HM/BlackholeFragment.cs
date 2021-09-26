@@ -26,7 +26,7 @@ namespace Redemption.Items.Materials.HM
 
         public override void PostUpdate()
         {
-            Lighting.AddLight(Item.Center, Color.LightGreen.ToVector3() * 0.55f * Main.essScale);
+            Lighting.AddLight(Item.Center, Color.Red.ToVector3() * 0.55f * Main.essScale);
         }
 
         public override void AddRecipes()
