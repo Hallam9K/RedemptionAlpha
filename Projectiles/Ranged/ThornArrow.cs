@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Ranged
                     Projectile.frame = 0;
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-            Projectile.velocity.Y += 0.05f;
+            Projectile.velocity.Y += 0.1f;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

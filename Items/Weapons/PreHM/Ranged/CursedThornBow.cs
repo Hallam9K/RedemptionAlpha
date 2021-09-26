@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 14;
+            Item.damage = 12;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 24;
             Item.height = 54;

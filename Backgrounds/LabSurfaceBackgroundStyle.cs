@@ -30,17 +30,17 @@ namespace Redemption.Backgrounds
 
 		public override int ChooseFarTexture()
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/LabBiomeSurfaceFar");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeSurfaceFar");
 		}
 
 		public override int ChooseMiddleTexture()
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/LabBiomeSurfaceMid");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeSurfaceMid");
 		}
 
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/LabBiomeSurfaceClose");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeSurfaceClose");
 		}
 	}
 }

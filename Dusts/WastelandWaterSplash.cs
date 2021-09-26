@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Dusts
 {
-	public class LabWaterSplash : ModDust
+	public class WastelandWaterSplash : ModDust
 	{	
 		public override void OnSpawn(Dust dust)
 		{
