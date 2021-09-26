@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Backgrounds;
 using ReLogic.Content;
 using Terraria.ModLoader;
 
@@ -14,7 +15,7 @@ namespace Redemption
             logoScale = 0.75f;
             return true;
         }
-
+        public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<LabSurfaceBackgroundStyle>();
         public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>($"{MenuAssetPath}/Logo");
 
         public override string DisplayName => "Ruined Kingdom";

@@ -8,5 +8,10 @@ namespace Redemption.Rarities
 	public class SoullessRarity : ModRarity
 	{
 		public override Color RarityColor => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.DarkGray, Color.Black, Color.DarkGray);
+
+		public override int GetPrefixedRarity(int offset, float valueMult)
+		{
+			return Type;
+		}
 	}
 }
