@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
@@ -36,11 +37,10 @@ namespace Redemption.Buffs.Debuffs
             player.controlThrow = false;
             player.gravDir = 1f;
 
-            player.velocity.Y = player.velocity.Y + player.gravity;
+            player.velocity.Y += player.gravity;
             if (player.velocity.Y > player.maxFallSpeed)
-            {
                 player.velocity.Y = player.maxFallSpeed;
-            }
+
             player.sandStorm = false;
             player.canJumpAgain_Cloud = false;
             player.canJumpAgain_Sandstorm = false;
@@ -49,9 +49,9 @@ namespace Redemption.Buffs.Debuffs
             player.canJumpAgain_Sail = false;
             player.canJumpAgain_Unicorn = false;
             if (player.mount.Active)
-            {
                 player.mount.Dismount(player);
-            }
+
+            Lighting.AddLight(player.Center, Color.LimeGreen.ToVector3() * 0.9f);
         }
     }
 }

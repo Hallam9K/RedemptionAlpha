@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Misc;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -94,19 +96,17 @@ namespace Redemption.Globals.Player
             #region Infection
 
             if (antiXenomiteBuff)
-            {
                 infectionTimer = 0;
-            }
 
             if (greenRashes)
             {
-                infectionTimer++;                
+                infectionTimer++;
                 if (antibodiesBuff)
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
                     infectionTimer = 0;
-                }               
-                
+                }
+
                 if (infectionTimer >= 3600)
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
@@ -114,8 +114,7 @@ namespace Redemption.Globals.Player
                     infectionTimer = 0;
                 }
             }
-
-            if (glowingPustules)
+            else if (glowingPustules)
             {
                 infectionTimer++;
                 if (infectionTimer >= 3600)
@@ -125,8 +124,7 @@ namespace Redemption.Globals.Player
                     infectionTimer = 0;
                 }
             }
-
-            if (fleshCrystals)
+            else if (fleshCrystals)
             {
                 infectionTimer++;
                 if (infectionTimer >= 3600)
@@ -134,6 +132,15 @@ namespace Redemption.Globals.Player
                     Player.AddBuff(ModContent.BuffType<ShockDebuff>(), 10000);
                     infectionTimer = 0;
                 }
+            }
+            else
+                infectionTimer = 0;
+
+            if (shockDebuff)
+            {
+                //Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(1f)
+                //    .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
+                //Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
             }
             #endregion
         }
@@ -303,6 +310,12 @@ namespace Redemption.Globals.Player
                 g = 1;
                 b = 0.3f;
             }
+            if (glowingPustules || fleshCrystals || shockDebuff)
+            {
+                r = 0.3f;
+                g = 0.8f;
+                b = 0.3f;
+            }
             if (spiderSwarmed)
             {
                 if (Main.rand.NextBool(10) && drawInfo.shadow == 0f)
@@ -342,19 +355,17 @@ namespace Redemption.Globals.Player
                         Projectile.NewProjectile(Player.GetProjectileSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
-            if (dirtyWound)
+            if (dirtyWound && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
-                if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                {
-                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " had an infection");
-                }
-            }  
-            if (spiderSwarmed)
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " had an infection");
+            }
+            if (spiderSwarmed && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
-                if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                {
-                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got nibbled to death");
-                }
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got nibbled to death");
+            }
+            if ((fleshCrystals || shockDebuff) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+            {
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was turned into a crystal");
             }
             return true;
         }
