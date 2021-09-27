@@ -12,7 +12,7 @@ namespace Redemption.Buffs.Debuffs
             DisplayName.SetDefault("Green Rashes");
             Description.SetDefault("...Really itchy");
             Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
+            Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

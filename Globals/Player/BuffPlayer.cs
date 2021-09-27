@@ -33,6 +33,7 @@ namespace Redemption.Globals.Player
         public bool necrosisDebuff;
         public bool shockDebuff;
         public bool antibodiesBuff;
+        public bool antiXenomiteBuff;
         public int infectionTimer;
 
         public bool MetalSet;
@@ -66,6 +67,7 @@ namespace Redemption.Globals.Player
             necrosisDebuff = false;
             shockDebuff = false;
             antibodiesBuff = false;
+            antiXenomiteBuff = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -91,6 +93,11 @@ namespace Redemption.Globals.Player
         {
             #region Infection
 
+            if (antiXenomiteBuff)
+            {
+                infectionTimer = 0;
+            }
+
             if (greenRashes)
             {
                 infectionTimer++;                
@@ -98,7 +105,7 @@ namespace Redemption.Globals.Player
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
                     infectionTimer = 0;
-                }
+                }               
                 
                 if (infectionTimer >= 3600)
                 {
