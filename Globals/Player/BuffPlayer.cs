@@ -339,9 +339,8 @@ namespace Redemption.Globals.Player
             if (infested && infestedTime >= 60)
             {
                 if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                {
                     damageSource = PlayerDeathReason.ByCustomReason(Player.name + " burst into larva!");
-                }
+
                 SoundEngine.PlaySound(SoundID.NPCDeath19, Player.position);
                 for (int i = 0; i < 20; i++)
                 {
@@ -356,17 +355,14 @@ namespace Redemption.Globals.Player
                 }
             }
             if (dirtyWound && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-            {
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " had an infection");
-            }
+
             if (spiderSwarmed && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-            {
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got nibbled to death");
-            }
+
             if ((fleshCrystals || shockDebuff) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-            {
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was turned into a crystal");
-            }
+
             return true;
         }
     }

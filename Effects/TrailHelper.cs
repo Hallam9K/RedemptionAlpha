@@ -32,35 +32,33 @@ namespace Redemption.Effects
         }
 		public void DoTrailCreation(Projectile projectile)
 		{
-			Mod mod = Redemption.Instance;
 			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>())
 				CreateTrail(projectile, new GradientTrail(new Color(250, 205, 160), new Color(255, 255, 218)), new RoundCap(), new ArrowGlowPosition(), 20f, 150f);
 			else if (projectile.type == ModContent.ProjectileType<CantripEmber>())
-				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new ArrowGlowPosition(), 50f, 150f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
+				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new ArrowGlowPosition(), 50f, 150f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
 			else if (projectile.type == ModContent.ProjectileType<CantripEmberS>())
-				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new DefaultTrailPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
+				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new DefaultTrailPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
 			else if (projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>())
 				CreateTrail(projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
 			else if (projectile.type == ModContent.ProjectileType<KeeperDreadCoil>())
-				CreateTrail(projectile, new GradientTrail(new Color(136, 123, 255), new Color(79, 15, 255)), new NoCap(), new DefaultTrailPosition(), 200f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.01f, 1f, 1f));
+				CreateTrail(projectile, new GradientTrail(new Color(136, 123, 255), new Color(79, 15, 255)), new NoCap(), new DefaultTrailPosition(), 200f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
 			else if (projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>())
-				CreateTrail(projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1").Value, 0.03f, 1f, 1f));
+				CreateTrail(projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.03f, 1f, 1f));
 			else if (projectile.type == ModContent.ProjectileType<Lightmass>())
-				CreateTrail(projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value, 0.01f, 1f, 1f));
+				CreateTrail(projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
 			else if (projectile.type == ModContent.ProjectileType<IceBolt>())
-				CreateTrail(projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3").Value, 0.1f, 1f, 1f));
+				CreateTrail(projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
 		}
 
-		public void TryTrailKill(Projectile projectile)
+		public static void TryTrailKill(Projectile projectile)
 		{
-			Mod mod = Redemption.Instance;
 			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>() || projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>() || projectile.type == ModContent.ProjectileType<Lightmass>() || projectile.type == ModContent.ProjectileType<IceBolt>())
 				RedeSystem.TrailManager.TryEndTrail(projectile, Math.Max(15f, projectile.velocity.Length() * 3f));
 		}
 
 		public void CreateTrail(Projectile projectile, ITrailColor trailType, ITrailCap trailCap, ITrailPosition trailPosition, float widthAtFront, float maxLength, ITrailShader shader = null)
 		{
-			Trail newTrail = new Trail(projectile, trailType, trailCap, trailPosition, shader ?? new DefaultShader(), widthAtFront, maxLength);
+			Trail newTrail = new(projectile, trailType, trailCap, trailPosition, shader ?? new DefaultShader(), widthAtFront, maxLength);
 			newTrail.Update();
 			_trails.Add(newTrail);
 		}

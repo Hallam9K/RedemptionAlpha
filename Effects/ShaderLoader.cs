@@ -11,6 +11,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.Graphics.Effects;
 
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 #endregion
 
 namespace Redemption
@@ -42,7 +43,7 @@ namespace Redemption
 
 		internal static void LoadShader(string shaderName, string shaderPath)
 		{
-			var shaderRef = new Ref<Effect>(Redemption.Instance.Assets.Request<Effect>(shaderPath).Value);
+			var shaderRef = new Ref<Effect>(Redemption.Instance.Assets.Request<Effect>(shaderPath, AssetRequestMode.ImmediateLoad).Value);
 
 			(Filters.Scene[Redemption.Abbreviation + ":" + shaderName] = new Filter(new ScreenShaderData(shaderRef, shaderName), EffectPriority.High))
 				.Load();

@@ -10,7 +10,7 @@ namespace Redemption.Buffs.Debuffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Green Rashes");
-            Description.SetDefault("...Really itchy");
+            Description.SetDefault("... Really itchy");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;

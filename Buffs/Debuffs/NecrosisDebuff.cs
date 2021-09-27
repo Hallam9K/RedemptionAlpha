@@ -9,7 +9,7 @@ namespace Redemption.Buffs.Debuffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Necrosis");
-            Description.SetDefault("My extremities... Numb... Black and dead...");
+            Description.SetDefault("My extremities... numb... black and dead...");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

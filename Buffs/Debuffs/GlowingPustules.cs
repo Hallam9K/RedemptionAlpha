@@ -10,7 +10,7 @@ namespace Redemption.Buffs.Debuffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Glowing Pustules");
-            Description.SetDefault("...I have to carry on my work.");
+            Description.SetDefault("... I have to carry on my work.");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

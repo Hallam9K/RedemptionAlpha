@@ -10,7 +10,7 @@ namespace Redemption.Buffs.Debuffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hemhorraging");
-            Description.SetDefault("The crystals... They're sharp... It hurts to move...");
+            Description.SetDefault("The crystals... they're sharp... it hurts to move...");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
