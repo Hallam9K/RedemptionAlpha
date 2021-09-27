@@ -91,13 +91,9 @@ namespace Redemption.Globals.Player
             }
         }
 
-        public override void PostUpdateMiscEffects()
+        public override void PostUpdateBuffs()
         {
             #region Infection
-
-            if (antiXenomiteBuff)
-                infectionTimer = 0;
-
             if (greenRashes)
             {
                 infectionTimer++;
@@ -138,16 +134,16 @@ namespace Redemption.Globals.Player
 
             if (shockDebuff)
             {
-                //Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(1f)
-                //    .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
-                //Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
+                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(1f)
+                    .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
+                Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
             }
             #endregion
         }
 
         public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (thornCirclet && !item.CountsAsClass(DamageClass.Summon))
+            if (thornCirclet && item.CountsAsClass(DamageClass.Magic))
             {
                 if (++thornCircletCounter >= 5)
                 {

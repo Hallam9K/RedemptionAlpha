@@ -11,7 +11,7 @@ namespace Redemption.Items.Accessories.PreHM
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Circlet of Brambles");
-            Tooltip.SetDefault("Every 5th use of a weapon shoots a spread of stingers" +
+            Tooltip.SetDefault("Every 5th use of a magic weapon shoots a spread of stingers" +
                 "\nIncreased life regeneration while in the Jungle");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

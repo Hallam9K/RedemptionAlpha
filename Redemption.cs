@@ -8,6 +8,7 @@ using Redemption.StructureHelper.ChestHelper.GUI;
 using Redemption.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -28,6 +29,8 @@ namespace Redemption
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
 
+                private List<ILoadable> _loadCache;
+
         public static int AntiqueDorulCurrencyId;
 
         public Redemption()
@@ -37,7 +40,34 @@ namespace Redemption
 
         public override void Load()
         {
+            LoadCache();
+
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
+        }
+
+        private void LoadCache()
+        {
+            _loadCache = new List<ILoadable>();
+
+            foreach (Type type in Code.GetTypes())
+            {
+                if (!type.IsAbstract && type.GetInterfaces().Contains(typeof(ILoadable)))
+                {
+                    _loadCache.Add(Activator.CreateInstance(type) as ILoadable);
+                }
+            }
+
+            _loadCache.Sort((x, y) => x.Priority > y.Priority ? 1 : -1);
+
+            for (int i = 0; i < _loadCache.Count; ++i)
+            {
+                if (Main.dedServ && !_loadCache[i].LoadOnDedServer)
+                {
+                    continue;
+                }
+
+                _loadCache[i].Load();
+            }
         }
 
         public override void Unload()
@@ -115,6 +145,7 @@ namespace Redemption
 
             orig(self, gameTime);
         }
+
         public override void Unload()
         {
             On.Terraria.Main.Update -= LoadTrailManager;
