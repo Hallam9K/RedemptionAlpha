@@ -34,11 +34,11 @@ namespace Redemption.Items.Accessories.PreHM
         {
             BuffPlayer modPlayer = player.GetModPlayer<BuffPlayer>();
 
-            modPlayer.ElementalDamage[8] = 0.15f;
-            modPlayer.ElementalDamage[11] = 0.15f;
+            modPlayer.ElementalDamage[8] += 0.15f;
+            modPlayer.ElementalDamage[11] += 0.15f;
 
-            modPlayer.ElementalResistance[8] = 0.15f;
-            modPlayer.ElementalResistance[11] = 0.15f;
+            modPlayer.ElementalResistance[8] += 0.15f;
+            modPlayer.ElementalResistance[11] += 0.15f;
 
             modPlayer.heartInsignia = true;
         }

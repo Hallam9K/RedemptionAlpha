@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
@@ -47,6 +48,15 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ModContent.ProjectileType<PureIronStaff_Proj>();
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<PureIronBar>(), 10)
+            .AddIngredient(ItemID.Diamond, 3)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
