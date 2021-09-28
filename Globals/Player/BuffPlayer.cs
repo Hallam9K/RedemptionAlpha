@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Misc;
@@ -38,6 +39,8 @@ namespace Redemption.Globals.Player
         public bool antiXenomiteBuff;
         public int infectionTimer;
 
+        public bool pureIronBonus;
+
         public bool MetalSet;
 
         public int MeleeDamageFlat;
@@ -70,6 +73,7 @@ namespace Redemption.Globals.Player
             shockDebuff = false;
             antibodiesBuff = false;
             antiXenomiteBuff = false;
+            pureIronBonus = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -264,11 +268,15 @@ namespace Redemption.Globals.Player
         {
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
+            if (pureIronBonus && Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
+            if (pureIronBonus && Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
         public override void UpdateBadLifeRegen()
         {

@@ -24,6 +24,7 @@ namespace Redemption.Globals.NPC
         public bool dirtyWound;
         public int dirtyWoundTime;
         public bool spiderSwarmed;
+        public bool pureChill;
 
         public override void ResetEffects(Terraria.NPC npc)
         {        
@@ -31,6 +32,7 @@ namespace Redemption.Globals.NPC
             rallied = false;
             moonflare = false;
             spiderSwarmed = false;
+            pureChill = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -83,6 +85,16 @@ namespace Redemption.Globals.NPC
             {
                 npc.lifeRegen -= 4;
             }
+            if (pureChill)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 8;
+
+                if (damage < 2)
+                    damage = 2;
+            }
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -111,6 +123,8 @@ namespace Redemption.Globals.NPC
                 drawColor = new Color(197, 219, 171);
             if (rallied)
                 drawColor = new Color(200, 150, 150);
+            if (pureChill)
+                drawColor = new Color(180, 220, 220);
             if (moonflare)
             {
                 drawColor = new Color(255, 255, 218);
@@ -153,6 +167,12 @@ namespace Redemption.Globals.NPC
 
                     target.AddBuff(ModContent.BuffType<MoonflareDebuff>(), 360);
                 }
+            }
+            if (pureChill && npc.knockBackResist > 0 && !npc.boss)
+            {
+                if (npc.noGravity)
+                    npc.velocity.Y *= 0.94f;
+                npc.velocity.X *= 0.94f;
             }
         }
         public override bool PreKill(Terraria.NPC npc)

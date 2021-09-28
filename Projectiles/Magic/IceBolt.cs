@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -120,8 +122,13 @@ namespace Redemption.Projectiles.Magic
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            Player player = Main.player[Projectile.owner];
+
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 240);
+
+            if (player.GetModPlayer<BuffPlayer>().pureIronBonus)
+                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

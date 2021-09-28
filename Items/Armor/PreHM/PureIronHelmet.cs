@@ -47,6 +47,7 @@ namespace Redemption.Items.Armor.PreHM
                 "33% chance for weapons to inflict Pure Chill\n" +
                 "100% chance for all Pure-Iron weapons to inflict Pure Chill";
             player.GetModPlayer<BuffPlayer>().ElementalResistance[1] += 0.2f;
+            player.GetModPlayer<BuffPlayer>().pureIronBonus = true;
             player.GetModPlayer<BuffPlayer>().MetalSet = true;
         }
 

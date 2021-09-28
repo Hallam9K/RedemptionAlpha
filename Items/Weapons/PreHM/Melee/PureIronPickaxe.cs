@@ -2,6 +2,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
+using Terraria;
+using Redemption.Globals.Player;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -29,6 +32,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
+        }
+
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        {
+            if (player.GetModPlayer<BuffPlayer>().pureIronBonus)
+                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
 
         public override void AddRecipes()
