@@ -40,6 +40,7 @@ namespace Redemption.Globals.Player
         public int infectionTimer;
 
         public bool pureIronBonus;
+        public bool dragonLeadBonus;
 
         public bool MetalSet;
 
@@ -74,6 +75,7 @@ namespace Redemption.Globals.Player
             antibodiesBuff = false;
             antiXenomiteBuff = false;
             pureIronBonus = false;
+            dragonLeadBonus = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -270,6 +272,8 @@ namespace Redemption.Globals.Player
                 target.AddBuff(BuffID.Midas, 300);
             if (pureIronBonus && Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+            if (dragonLeadBonus && Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -277,6 +281,8 @@ namespace Redemption.Globals.Player
                 target.AddBuff(BuffID.Midas, 300);
             if (pureIronBonus && Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+            if (dragonLeadBonus && Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
         public override void UpdateBadLifeRegen()
         {

@@ -25,6 +25,7 @@ namespace Redemption.Globals.NPC
         public int dirtyWoundTime;
         public bool spiderSwarmed;
         public bool pureChill;
+        public bool dragonblaze;
 
         public override void ResetEffects(Terraria.NPC npc)
         {        
@@ -33,6 +34,7 @@ namespace Redemption.Globals.NPC
             moonflare = false;
             spiderSwarmed = false;
             pureChill = false;
+            dragonblaze = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -95,6 +97,13 @@ namespace Redemption.Globals.NPC
                 if (damage < 2)
                     damage = 2;
             }
+            if (dragonblaze)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 12;
+            }
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -111,6 +120,8 @@ namespace Redemption.Globals.NPC
         {
             if (rallied)
                 damage = (int)(damage * 1.15f);
+            if (dragonblaze)
+                damage = (int)(damage * 0.85f);
         }
         public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
@@ -124,7 +135,15 @@ namespace Redemption.Globals.NPC
             if (rallied)
                 drawColor = new Color(200, 150, 150);
             if (pureChill)
+            {
                 drawColor = new Color(180, 220, 220);
+                if (Main.rand.NextBool(20))
+                {
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<SnowflakeDust>());
+                    Main.dust[sparkle].velocity *= 0.5f;
+                    Main.dust[sparkle].noGravity = true;
+                }
+            }
             if (moonflare)
             {
                 drawColor = new Color(255, 255, 218);
@@ -150,6 +169,16 @@ namespace Redemption.Globals.NPC
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<SpiderSwarmerDust>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
+                }
+            }
+            if (dragonblaze)
+            {
+                drawColor = new Color(220, 150, 150);
+                if (Main.rand.NextBool(10))
+                {
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.FlameBurst, Scale: 2);
+                    Main.dust[sparkle].velocity *= 0;
+                    Main.dust[sparkle].noGravity = true;
                 }
             }
         }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Items.Armor.PreHM;
 using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
@@ -41,6 +42,11 @@ namespace Redemption
         public override void Load()
         {
             LoadCache();
+
+            if (!Main.dedServ)
+            {
+                AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
+            }
 
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
@@ -133,6 +139,8 @@ namespace Redemption
                 ChestMenuUI = new UserInterface();
                 ChestCustomizer = new ChestCustomizerState();
                 ChestMenuUI.SetState(ChestCustomizer);
+
+
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
