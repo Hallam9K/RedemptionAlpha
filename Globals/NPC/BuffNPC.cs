@@ -28,7 +28,7 @@ namespace Redemption.Globals.NPC
         public bool dragonblaze;
 
         public override void ResetEffects(Terraria.NPC npc)
-        {        
+        {
             devilScented = false;
             rallied = false;
             moonflare = false;
@@ -102,7 +102,14 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                npc.lifeRegen -= 12;
+                if (NPCTags.Plantlike.Has(npc.type) || NPCTags.Cold.Has(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+                {
+                    npc.lifeRegen -= 24;
+                    if (damage < 2)
+                        damage = 2;
+                }
+                else
+                    npc.lifeRegen -= 12;
             }
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
