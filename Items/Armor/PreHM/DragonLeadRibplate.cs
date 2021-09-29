@@ -16,6 +16,8 @@ namespace Redemption.Items.Armor.PreHM
             DisplayName.SetDefault("Dragon-Lead Ribplate");
             Tooltip.SetDefault("7% increased damage\n" +
                 "Immunity to most ice-related debuffs");
+            ArmorIDs.Body.Sets.IncludedCapeBack[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBackFemale[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -37,11 +39,6 @@ namespace Redemption.Items.Armor.PreHM
             player.buffImmune[BuffID.Frostburn] = true;
             player.buffImmune[BuffID.Frostburn2] = true;
             player.buffImmune[BuffID.Wet] = true;
-        }
-
-        public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
-        {
-            equipSlot = Mod.GetEquipSlot("DragonLeadRibplate_Back", EquipType.Back);
         }
 
         public override void AddRecipes()

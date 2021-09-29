@@ -30,9 +30,10 @@ namespace Redemption
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
 
-                private List<ILoadable> _loadCache;
+        private List<ILoadable> _loadCache;
 
         public static int AntiqueDorulCurrencyId;
+        public static int dragonLeadCapeID;
 
         public Redemption()
         {
@@ -45,7 +46,7 @@ namespace Redemption
 
             if (!Main.dedServ)
             {
-                AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
+                dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
             }
 
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));

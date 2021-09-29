@@ -137,9 +137,9 @@ namespace Redemption.Globals.NPC
             if (pureChill)
             {
                 drawColor = new Color(180, 220, 220);
-                if (Main.rand.NextBool(20))
+                if (Main.rand.NextBool(14))
                 {
-                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<SnowflakeDust>());
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<SnowflakeDust>(), newColor: Color.White);
                     Main.dust[sparkle].velocity *= 0.5f;
                     Main.dust[sparkle].noGravity = true;
                 }
@@ -174,10 +174,10 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
             {
                 drawColor = new Color(220, 150, 150);
-                if (Main.rand.NextBool(10))
+                if (Main.rand.NextBool(5))
                 {
                     int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.FlameBurst, Scale: 2);
-                    Main.dust[sparkle].velocity *= 0;
+                    Main.dust[sparkle].velocity *= 0.3f;
                     Main.dust[sparkle].noGravity = true;
                 }
             }
