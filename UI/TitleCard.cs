@@ -25,7 +25,7 @@ namespace Redemption.UI
 
         public void DisplayTitle(string text, int displayTime = 1, int fadeTime = 120, float fontScale = 1, int font = 0, Color? altColor = null, string subtitle = null)
         {
-            if (RedeConfigClient.Instance.BossIntroText && !Main.dedServ)
+            if (!RedeConfigClient.Instance.NoBossIntroText && !Main.dedServ)
             {
                 Text = text;
                 SubtitleText = subtitle;
