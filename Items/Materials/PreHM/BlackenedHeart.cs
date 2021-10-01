@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Rarities;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Materials.PreHM
 {
@@ -14,6 +16,8 @@ namespace Redemption.Items.Materials.PreHM
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -22,7 +26,7 @@ namespace Redemption.Items.Materials.PreHM
             Item.height = 18;
             Item.maxStack = 99;
             Item.value = 3000;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.UseSound = SoundID.Item3;
             Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
