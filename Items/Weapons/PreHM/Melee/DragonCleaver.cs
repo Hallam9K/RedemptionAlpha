@@ -13,8 +13,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Swings can block fire projectiles" +
-                "\nDeals more damage to dragon-like enemies");
+            Tooltip.SetDefault("Swings can block fire projectiles\n" +
+                "Hold left-click to charge a Heat Wave\n" +
+                "Deals more damage to dragon-like enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

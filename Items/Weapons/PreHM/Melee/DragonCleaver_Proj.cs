@@ -10,6 +10,8 @@ using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
+using Terraria.Graphics.Shaders;
+using Redemption.Projectiles.Melee;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -19,6 +21,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon Cleaver");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -36,6 +40,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         float oldRotation = 0f;
         int directionLock = 0;
         private float SwingSpeed;
+        private float glow;
 
         public override void AI()
         {
@@ -54,12 +59,27 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (Projectile.ai[0] == 0)
                 {
                     swordRotation = MathHelper.ToRadians(-45f * player.direction - 90f);
+
+                    glow += 0.01f;
+                    glow = MathHelper.Clamp(glow, 0, 0.4f);
+                    if (glow >= 0.4 && Projectile.localAI[0] == 0)
+                    {
+                        DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 2, 2, 1, 2, nogravity: true);
+                        SoundEngine.PlaySound(SoundID.Item88, Projectile.position);
+                        Projectile.localAI[0] = 1;
+                    }
                     if (!player.channel)
                     {
                         Projectile.ai[0] = 1;
                         oldRotation = swordRotation;
                         directionLock = player.direction;
                         SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                        if (Projectile.localAI[0] == 1)
+                        {
+                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center,
+                                RedeHelper.PolarVector(15, (Main.MouseWorld - player.Center).ToRotation()),
+                                ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                        }
                     }
                 }
                 if (Projectile.ai[0] >= 1)
@@ -109,7 +129,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 player.bodyFrame.Y = 5 * player.bodyFrame.Height;
             }
             else
-                player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                player.itemRotation = (player.Center - Projectile.Center).ToRotation() + (player.direction == 1 ? MathHelper.Pi : 0);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -128,7 +148,25 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), Projectile.GetAlpha(lightColor), Projectile.rotation, new Vector2(texture.Width / 2f, texture.Height / 2f), Projectile.scale, spriteEffects, 0);
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Color.OrangeRed * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * glow, Projectile.rotation, origin, Projectile.scale + 0.1f, spriteEffects, 0);
+            }
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }
