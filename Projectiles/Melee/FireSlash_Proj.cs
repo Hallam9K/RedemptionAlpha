@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.Melee
                 Projectile.Kill();
         }
 
-        public override bool? CanHitNPC(NPC target) => Projectile.alpha <= 200;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha <= 200;
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -58,6 +58,8 @@ namespace Redemption.Projectiles.Melee
         {
             target.AddBuff(BuffID.OnFire, 120);
         }
+
+        public override bool? CanCutTiles() => false;
 
         public override bool PreDraw(ref Color lightColor)
         {

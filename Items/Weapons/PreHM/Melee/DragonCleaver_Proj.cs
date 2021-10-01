@@ -12,6 +12,7 @@ using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
+using Redemption.Base;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -35,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.penetrate = -1;
         }
 
-        public override bool? CanHitNPC(NPC target) => Projectile.ai[0] >= 1;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1;
 
         float oldRotation = 0f;
         int directionLock = 0;
@@ -76,6 +77,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
                         if (Projectile.localAI[0] == 1)
                         {
+                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
+
                             Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center,
                                 RedeHelper.PolarVector(15, (Main.MouseWorld - player.Center).ToRotation()),
                                 ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
@@ -90,9 +93,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
                     float timer = Projectile.ai[0] - 1;
 
-                    swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 90f), timer / 20f / SwingSpeed);
+                    swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 90f), timer / (Projectile.localAI[0] == 1 ? 10f : 20f) / SwingSpeed);
 
-                    if (Projectile.ai[0] >= 21 * SwingSpeed)
+                    if (Projectile.ai[0] >= (Projectile.localAI[0] == 1 ? 11 : 21) * SwingSpeed)
                         Projectile.Kill();
 
                     foreach (Projectile target in Main.projectile)
@@ -151,6 +154,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
+            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 1.1f, 1.2f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -160,7 +164,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Color.OrangeRed * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * glow, Projectile.rotation, origin, Projectile.scale + 0.1f, spriteEffects, 0);
+                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * glow, Projectile.rotation, origin, Projectile.scale * scale, spriteEffects, 0);
             }
 
             Main.spriteBatch.End();

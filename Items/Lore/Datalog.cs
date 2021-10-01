@@ -936,13 +936,33 @@ namespace Redemption.Items.Lore
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Data Log #164550614");
-            Tooltip.SetDefault("It reads - [c/aee6f3:'I haven't felt like this in forever.]"
-                + "\n[c/aee6f3:I upgraded my robotic self again, this time with more attack power. Xehito let me test it on him,]"
-                + "\n[c/aee6f3:so we had a fight. The intensity of it was almost exhilarating, lasers firing everywhere,]"
-                + "\n[c/aee6f3:explosions all around, it was generally a fun time. But something tells me he only let me]"
-                + "\n[c/aee6f3:fight him to cheer me up, and I'm sorry Xehito, but that moment didn't last, I still feel empty.']");
         }
         public override void SetDefaults() => base.SetDefaults();
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'I haven't felt like this in forever."
+                + "\nI upgraded my robotic self again, this time with more attack power. Xehito let me test it on him,"
+                + "\nso we had a fight. The intensity of it was almost exhilarating, lasers firing everywhere,"
+                + "\nexplosions all around, it was generally a fun time. But something tells me he only let me"
+                + "\nfight him to cheer me up, and I'm sorry Xehito, but that moment didn't last, I still feel empty.'")
+                {
+                    overrideColor = Color.LightCyan
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
+        }
     }
 
     public class Datalog26 : Datalog
@@ -953,14 +973,34 @@ namespace Redemption.Items.Lore
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Data Log #364635000");
-            Tooltip.SetDefault("It reads - [c/aee6f3:'Only 1000 years until a million, and I can return home.]"
-                + "\n[c/aee6f3:I've already set my course, but the problem is, because of that wormhole,]"
-                + "\n[c/aee6f3:I don't know which way is home... All I can do now is go to a random direction]"
-                + "\n[c/aee6f3:and hope for the best. But the galaxy is vast, I fear by the time I reach home again,]"
-                + "\n[c/aee6f3:The next reset would've already started, and I'd have to wait another million years...]"
-                + "\n[c/aee6f3:If that happens, I won't try anymore, I'll just give up.']");
         }
         public override void SetDefaults() => base.SetDefaults();
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'Only 1000 years until a million, and I can return home."
+                + "\nI've already set my course, but the problem is, because of that wormhole,"
+                + "\nI don't know which way is home... All I can do now is go to a random direction"
+                + "\nand hope for the best. But the galaxy is vast, I fear by the time I reach home again,"
+                + "\nThe next reset would've already started, and I'd have to wait another million years..."
+                + "\nIf that happens, I won't try anymore, I'll just give up.'")
+                {
+                    overrideColor = Color.LightCyan
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
+        }
     }
 
     public class Datalog27 : Datalog
@@ -971,11 +1011,31 @@ namespace Redemption.Items.Lore
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Data Log #365000000");
-            Tooltip.SetDefault("It reads - [c/aee6f3:'Today is the millionth year in space!]"
-                + "\n[c/aee6f3:Unfortunately, I won't be able to see the new Great Era for some time.]"
-                + "\n[c/aee6f3:I'm still lost in space.']");
         }
         public override void SetDefaults() => base.SetDefaults();
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'Today is the millionth year in space!"
+                + "\nUnfortunately, I won't be able to see the new Great Era for some time."
+                + "\nI'm still lost in space.'")
+                {
+                    overrideColor = Color.LightCyan
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
+        }
     }
 
     public class Datalog28 : Datalog
@@ -986,8 +1046,28 @@ namespace Redemption.Items.Lore
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Data Log #389035250");
-            Tooltip.SetDefault("It reads - [c/aee6f3:'I've made it back, I'm home again.']");
         }
         public override void SetDefaults() => base.SetDefaults();
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'I've made it back, I'm home again.'")
+                {
+                    overrideColor = Color.LightCyan
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
+        }
     }
 }
