@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Materials.PreHM
 {
-    public class PureIronBar : ModItem
+    public class DragonLeadAlloy : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Bar");
+            DisplayName.SetDefault("Dragon-Lead Alloy");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
@@ -28,16 +28,16 @@ namespace Redemption.Items.Materials.PreHM
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<PureIronBarTile>();
+            Item.createTile = ModContent.TileType<DragonLeadAlloyTile>();
         }
 
         public override void PostUpdate()
         {
-            if (!Main.rand.NextBool(10))
+            if (!Main.rand.NextBool(20))
                 return;
 
             int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height,
-                DustID.SilverCoin, 0, 0, 20);
+                DustID.Torch, 0, 0, 20);
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
@@ -45,8 +45,7 @@ namespace Redemption.Items.Materials.PreHM
         public override void AddRecipes()
         {
             CreateRecipe(2)
-                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
-                .AddIngredient(ModContent.ItemType<GathicCryoCrystal>())
+                .AddIngredient(ModContent.ItemType<DragonLeadOre>(), 5)
                 .AddTile(TileID.Furnaces)
                 .Register();
         }

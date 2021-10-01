@@ -49,6 +49,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.shoot = ModContent.ProjectileType<DragonCleaver_Proj>();
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<DragonLeadAlloy>(), 10)
+                .AddIngredient(ItemID.Bone, 3)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())

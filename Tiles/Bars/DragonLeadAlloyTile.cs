@@ -7,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Bars
 {
-    public class PureIronBarTile : ModTile
+    public class DragonLeadAlloyTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -23,9 +23,9 @@ namespace Redemption.Tiles.Bars
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            ItemDrop = ModContent.ItemType<PureIronBar>();
-            DustType = DustID.SilverCoin;
-            AddMapEntry(new Color(125, 131, 150));
+            ItemDrop = ModContent.ItemType<DragonLeadAlloy>();   
+            DustType = DustID.Torch;
+            AddMapEntry(new Color(160, 50, 40));
 			MinPick = 0;
         }
     }

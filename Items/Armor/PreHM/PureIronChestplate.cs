@@ -43,7 +43,7 @@ namespace Redemption.Items.Armor.PreHM
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<PureIronBar>(), 20)
+                .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 20)
                 .AddIngredient(ItemID.Leather, 4)
                 .AddTile(TileID.Anvils)
                 .Register();

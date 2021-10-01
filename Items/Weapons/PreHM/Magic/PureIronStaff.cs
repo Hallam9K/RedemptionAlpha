@@ -53,7 +53,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(ModContent.ItemType<PureIronBar>(), 10)
+            .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 10)
             .AddIngredient(ItemID.Diamond, 3)
             .AddTile(TileID.Anvils)
             .Register();

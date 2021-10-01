@@ -52,7 +52,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<PureIronBar>(), 10)
+                .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 10)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
