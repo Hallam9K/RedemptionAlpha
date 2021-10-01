@@ -65,7 +65,7 @@ namespace Redemption.Projectiles.Melee
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => Projectile.timeLeft <= 150;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 150;
 
         public override bool PreDraw(ref Color lightColor)
         {

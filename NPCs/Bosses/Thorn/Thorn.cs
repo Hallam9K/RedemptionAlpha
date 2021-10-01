@@ -595,7 +595,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death;
+            return target.friendly && AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death;
         }
 
         private void DespawnHandler()
