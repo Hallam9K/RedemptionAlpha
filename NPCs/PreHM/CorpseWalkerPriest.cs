@@ -77,7 +77,9 @@ namespace Redemption.NPCs.PreHM
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, Color.SandyBrown);
 
                 for (int i = 0; i < 6; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore").Type, 1);
+
+                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore2").Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, Color.SandyBrown);
 

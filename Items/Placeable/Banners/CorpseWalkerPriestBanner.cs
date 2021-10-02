@@ -10,6 +10,7 @@ namespace Redemption.Items.Placeable.Banners
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Corpse-Walker Priest Banner");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()

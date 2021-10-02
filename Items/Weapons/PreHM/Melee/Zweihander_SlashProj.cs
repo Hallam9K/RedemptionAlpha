@@ -141,7 +141,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int offset = Projectile.frame > 3 ? 14 : 0;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(38 * player.direction, 18 - offset + Projectile.gfxOffY), new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(38 * player.direction, 18 - offset) + Vector2.UnitY * Projectile.gfxOffY,
+                new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             Texture2D slash = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/Zweihander_SlashProj2").Value;
             int height2 = slash.Height / 4;
@@ -150,7 +151,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Vector2 drawOrigin2 = new(slash.Width / 2, slash.Height / 2);
 
             if (Projectile.frame >= 3 && Projectile.frame <= 6)
-                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(11 * player.direction, -192 - offset + Projectile.gfxOffY), new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(11 * player.direction, -192 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
         }
 

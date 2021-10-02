@@ -3,6 +3,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.NPCs.Critters;
+using Redemption.Projectiles.Hostile;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -26,6 +27,7 @@ namespace Redemption.Globals.NPC
         public bool spiderSwarmed;
         public bool pureChill;
         public bool dragonblaze;
+        public bool necroticGouge;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -35,6 +37,7 @@ namespace Redemption.Globals.NPC
             spiderSwarmed = false;
             pureChill = false;
             dragonblaze = false;
+            necroticGouge = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -226,6 +229,20 @@ namespace Redemption.Globals.NPC
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
                         Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                }
+            }
+            if (necroticGouge)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
+                for (int i = 0; i < 20; i++)
+                {
+                    int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, Scale: 3f);
+                    Main.dust[dustIndex4].velocity *= 5f;
+                }
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < 6; i++)
+                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
             return true;

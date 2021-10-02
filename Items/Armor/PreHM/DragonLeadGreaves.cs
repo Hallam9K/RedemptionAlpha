@@ -38,7 +38,7 @@ namespace Redemption.Items.Armor.PreHM
         public override void AddRecipes()
         {
             CreateRecipe()
-                //.AddIngredient(ModContent.ItemType<PureIronBar>(), 15)
+                .AddIngredient(ModContent.ItemType<DragonLeadAlloy>(), 15)
                 .AddIngredient(ItemID.Bone, 2)
                 .AddTile(TileID.Anvils)
                 .Register();
@@ -49,7 +49,9 @@ namespace Redemption.Items.Armor.PreHM
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "''")
+                    "'Leg armour forged from melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.\n" +
+                    "The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,\n" +
+                    "nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'")
                 {
                     overrideColor = Color.LightGray
                 };

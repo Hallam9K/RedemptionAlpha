@@ -10,6 +10,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.Items.Usable
 {
@@ -47,7 +48,15 @@ namespace Redemption.Items.Usable
                 player.QuickSpawnItem(ModContent.ItemType<KeepersVeil>());
             }
 
-            player.QuickSpawnItem(ModContent.ItemType<SoulScepter>());
+            switch (Main.rand.Next(2))
+            {
+                case 0:
+                    player.QuickSpawnItem(ModContent.ItemType<SoulScepter>());
+                    break;
+                case 1:
+                    player.QuickSpawnItem(ModContent.ItemType<KeepersClaw>());
+                    break;
+            }
             player.QuickSpawnItem(ModContent.ItemType<GrimShard>(), Main.rand.Next(3, 5));
             player.QuickSpawnItem(ModContent.ItemType<HeartInsignia>());
         }

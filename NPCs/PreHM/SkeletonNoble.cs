@@ -8,6 +8,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Armor.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
@@ -63,6 +64,8 @@ namespace Redemption.NPCs.PreHM
             NPC.value = 350;
             NPC.knockBackResist = 0.4f;
             NPC.aiStyle = -1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<SkeletonNobleBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -89,7 +92,12 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore2").Type, 1);
+
+                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore").Type, 1);
+
+                for (int i = 0; i < 10; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SkeletonNobleGore" + (i + 1)).Type, 1);
 
                 if (Personality == PersonalityState.Greedy)
                 {
