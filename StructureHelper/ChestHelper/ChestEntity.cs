@@ -70,10 +70,10 @@ namespace Redemption.StructureHelper.ChestHelper
             rules = LoadChestRules(tag);
 		}
 
-		public override bool ValidTile(int i, int j)
+        public override bool IsTileValidForEntity(int x, int y)
 		{
             // || TileLists.ModdedChests.Contains(tile.type)
-            var tile = Framing.GetTileSafely(i, j);
+            var tile = Framing.GetTileSafely(x, y);
             return tile.type == TileID.Containers || tile.type == TileID.Containers2;
 		}
 	}

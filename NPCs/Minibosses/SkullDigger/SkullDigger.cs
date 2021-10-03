@@ -20,6 +20,7 @@ using Redemption.NPCs.Bosses.Keeper;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -137,6 +138,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new TeddyCondition(), ModContent.ItemType<AbandonedTeddy>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerFlail>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerMask>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 1, 20, 40));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>()));

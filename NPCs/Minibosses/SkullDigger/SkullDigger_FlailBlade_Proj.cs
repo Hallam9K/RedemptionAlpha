@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger");
+            DisplayName.SetDefault("Skull Digger's Skull Digger");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -84,6 +84,44 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             }
 
             Main.EntitySpriteDraw(ballTexture, position, new Rectangle?(rect), Projectile.GetAlpha(new Color(255, 255, 255, 0)), Projectile.rotation, origin2, Projectile.scale, effects, 0);
+            return false;
+        }
+    }
+    public class SkullDigger_FlailBlade_ProjF : SkullDigger_FlailBlade_Proj
+    {
+        public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade_Proj";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            DisplayName.SetDefault("Skull Digger's Skull Digger");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+        }
+        public override bool PreAI()
+        {
+            Projectile host = Main.projectile[(int)Projectile.ai[0]];
+            Player player = Main.player[Projectile.owner];
+
+            if (Projectile.localAI[0]++ == 0)
+                Projectile.rotation = host.rotation;
+
+            if (Projectile.localAI[0] == 5 && player.whoAmI == Main.myPlayer)
+                Projectile.velocity = RedeHelper.PolarVector(0.08f, (Main.MouseWorld - Projectile.Center).ToRotation());
+            if (Projectile.localAI[0] >= 5)
+            {
+                Projectile.LookByVelocity();
+                Projectile.velocity *= 1.06f;
+                Projectile.rotation += Projectile.velocity.Length() / 30 * Projectile.spriteDirection;
+            }
+
+            Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
+            Tile tile2 = Main.tile[tile.X, tile.Y];
+            if (tile2 is { IsActiveUnactuated: true } && Main.tileSolid[tile2.type])
+                Projectile.timeLeft -= 4;
             return false;
         }
     }
