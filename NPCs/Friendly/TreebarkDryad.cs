@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Terraria.ModLoader.IO;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -53,7 +54,8 @@ namespace Redemption.NPCs.Friendly
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Bleeding,
                     BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
 

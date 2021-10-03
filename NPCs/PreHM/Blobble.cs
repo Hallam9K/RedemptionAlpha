@@ -15,6 +15,7 @@ using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -59,7 +60,8 @@ namespace Redemption.NPCs.PreHM
                     ModContent.BuffType<InfestedDebuff>(),
                     BuffID.Bleeding,
                     BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
 

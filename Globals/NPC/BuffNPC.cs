@@ -214,6 +214,23 @@ namespace Redemption.Globals.NPC
                 npc.velocity.X *= 0.94f;
             }
         }
+        public override void OnKill(Terraria.NPC npc)
+        {
+            if (necroticGouge && npc.lifeMax > 5)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
+                for (int i = 0; i < 20; i++)
+                {
+                    int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, Scale: 3f);
+                    Main.dust[dustIndex4].velocity *= 5f;
+                }
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < 6; i++)
+                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
+                }
+            }
+        }
         public override bool PreKill(Terraria.NPC npc)
         {
             if (infested && infestedTime >= 60 && npc.lifeMax > 5)
@@ -229,20 +246,6 @@ namespace Redemption.Globals.NPC
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
                         Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
-                }
-            }
-            if (necroticGouge)
-            {
-                SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
-                for (int i = 0; i < 20; i++)
-                {
-                    int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, Scale: 3f);
-                    Main.dust[dustIndex4].velocity *= 5f;
-                }
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    for (int i = 0; i < 6; i++)
-                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
             return true;

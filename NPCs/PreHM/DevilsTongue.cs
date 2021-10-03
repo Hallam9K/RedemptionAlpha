@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
@@ -34,7 +35,8 @@ namespace Redemption.NPCs.PreHM
                 SpecificallyImmuneTo = new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<DevilScentedDebuff>(),
-                    BuffID.Confused
+                    BuffID.Confused,
+                    ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
@@ -49,7 +50,8 @@ namespace Redemption.NPCs.PreHM
                     ModContent.BuffType<InfestedDebuff>(),
                     BuffID.Bleeding,
                     BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
 

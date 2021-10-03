@@ -46,7 +46,7 @@ namespace Redemption.Items.Materials.PreHM
         {
             CreateRecipe(2)
                 .AddIngredient(ModContent.ItemType<DragonLeadOre>(), 5)
-                .AddTile(TileID.Furnaces)
+                .AddTile(TileID.Hellforge)
                 .Register();
         }
     }

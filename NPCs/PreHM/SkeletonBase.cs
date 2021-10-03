@@ -6,6 +6,7 @@ using Redemption.Globals.NPC;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -42,7 +43,8 @@ namespace Redemption.NPCs.PreHM
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Bleeding,
                     BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
         }

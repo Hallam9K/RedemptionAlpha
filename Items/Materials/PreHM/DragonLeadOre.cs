@@ -3,6 +3,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Redemption.Tiles.Ores;
 
 namespace Redemption.Items.Materials.PreHM
 {
@@ -21,6 +22,13 @@ namespace Redemption.Items.Materials.PreHM
             Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 0, 11, 0);
             Item.rare = ItemRarityID.Orange;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.createTile = ModContent.TileType<DragonLeadOreTile>();
         }
 
         public override void PostUpdate()

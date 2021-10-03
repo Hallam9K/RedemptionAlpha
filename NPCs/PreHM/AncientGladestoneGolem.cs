@@ -60,7 +60,8 @@ namespace Redemption.NPCs.PreHM
                     BuffID.Frostburn,
                     BuffID.Frostburn2,
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<DragonblazeDebuff>()
+                    ModContent.BuffType<DragonblazeDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
 
