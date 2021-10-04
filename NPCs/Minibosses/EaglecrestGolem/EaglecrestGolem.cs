@@ -62,7 +62,9 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Velocity = 1
+                Velocity = 1,
+                Position = new Vector2(0, 30),
+                PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -103,7 +105,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
         public override void OnKill()
         {
-            if (!RedeBossDowned.downedSkullDigger)
+            if (!RedeBossDowned.downedEaglecrestGolem)
             {
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
@@ -130,7 +132,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientPebble>()));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientSlingShot>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));

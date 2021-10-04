@@ -14,6 +14,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sleeping Stones");
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
