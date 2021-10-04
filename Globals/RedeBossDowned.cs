@@ -16,6 +16,7 @@ namespace Redemption.Globals
 		public static bool keeperSaved;
 		public static bool skullDiggerSaved;
 		public static bool downedSkeletonInvasion;
+		public static bool downedEaglecrestGolem;
 		//public static bool downedOtherBoss = false;
 
 		public override void OnWorldLoad()
@@ -27,6 +28,7 @@ namespace Redemption.Globals
 			keeperSaved = false;
 			skullDiggerSaved = false;
 			downedSkeletonInvasion = false;
+			downedEaglecrestGolem = false;
 			//downedOtherBoss = false;
 		}
 
@@ -60,6 +62,8 @@ namespace Redemption.Globals
 				downed.Add("skullDiggerSaved");
 			if (downedSkeletonInvasion)
 				downed.Add("downedSkeletonInvasion");
+			if (downedEaglecrestGolem)
+				downed.Add("downedEaglecrestGolem");
 
 			tag["downed"] = downed;
 		}
@@ -75,6 +79,7 @@ namespace Redemption.Globals
 			keeperSaved = downed.Contains("keeperSaved");
 			skullDiggerSaved = downed.Contains("skullDiggerSaved");
 			downedSkeletonInvasion = downed.Contains("downedSkeletonInvasion");
+			downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
 			//downedOtherBoss = downed.Contains("downedOtherBoss");
 		}
 
@@ -88,7 +93,7 @@ namespace Redemption.Globals
 			flags[4] = keeperSaved;
 			flags[5] = skullDiggerSaved;
 			flags[6] = downedSkeletonInvasion;
-			//flags[2] = downedOtherBoss;
+			flags[7] = downedEaglecrestGolem;
 			writer.Write(flags);
 		}
 
@@ -102,7 +107,7 @@ namespace Redemption.Globals
 			keeperSaved = flags[4];
 			skullDiggerSaved = flags[5];
 			downedSkeletonInvasion = flags[6];
-			//downedOtherBoss = flags[2];
+			downedEaglecrestGolem = flags[7];
 		}
 	}
 }

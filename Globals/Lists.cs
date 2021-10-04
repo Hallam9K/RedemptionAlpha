@@ -20,6 +20,7 @@ using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Melee;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Minibosses.SkullDigger;
+using Redemption.NPCs.Minibosses.EaglecrestGolem;
 
 namespace Redemption.Globals
 {
@@ -627,7 +628,7 @@ namespace Redemption.Globals
 
             #region Wind
 
-            Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot);
+            Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ModContent.ProjectileType<FireSlash_Proj>(), ModContent.ProjectileType<RockSlash_Proj>());
 
             #endregion
 

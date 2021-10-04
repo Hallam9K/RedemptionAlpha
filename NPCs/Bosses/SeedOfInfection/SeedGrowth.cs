@@ -71,20 +71,23 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void AI()
         {
-            if (++NPC.frameCounter >= 10)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += 28;
-                if (NPC.frame.Y > 84)
-                    NPC.frame.Y = 0;
-            }
-
             DespawnHandler();
 
             NPC.Move(Vector2.Zero, 8, 60, true);
 
             if (NPC.alpha > 0)
                 NPC.alpha -= 20;
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (++NPC.frameCounter >= 10)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 3 * frameHeight)
+                    NPC.frame.Y = 0;
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

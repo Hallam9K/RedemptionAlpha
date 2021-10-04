@@ -214,9 +214,9 @@ namespace Redemption.Globals.NPC
                 npc.velocity.X *= 0.94f;
             }
         }
-        public override void OnKill(Terraria.NPC npc)
+        public override void HitEffect(Terraria.NPC npc, int hitDirection, double damage)
         {
-            if (necroticGouge && npc.lifeMax > 5)
+            if (npc.life <= 0 && necroticGouge && npc.lifeMax > 5)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
                 for (int i = 0; i < 20; i++)
