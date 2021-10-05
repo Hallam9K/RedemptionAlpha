@@ -23,7 +23,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public float LaserLength = 0;
         public float LaserScale = 0;
         public int LaserSegmentLength = 14;
-        public int LaserWidth = 18;
+        public int LaserWidth = 12;
         public int LaserEndSegmentLength = 14;
 
         //should be set to about half of the end length
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Vector2 origin = host.Center - new Vector2(2 * host.spriteDirection, 16);
+            Vector2 origin = host.Center - new Vector2(-2 * host.spriteDirection, 18);
             #region Beginning And End Effects
             if (AITimer == 0)
             {
@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 //}
             }
             else
-                Projectile.Center = origin - Vector2.Normalize(Projectile.velocity) * 20f;
+                Projectile.Center = origin - Vector2.Normalize(Projectile.velocity) * 16f;
 
             Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * host.spriteDirection);
 

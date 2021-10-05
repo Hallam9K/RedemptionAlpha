@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Friendly
             NPC.townNPC = true;
             NPC.friendly = true;
             NPC.width = 24;
-            NPC.height = 46;
+            NPC.height = 48;
             NPC.aiStyle = 7;
             NPC.damage = 15;
             NPC.defense = 5;

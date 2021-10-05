@@ -32,6 +32,7 @@ namespace Redemption.Globals
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
         }
     }

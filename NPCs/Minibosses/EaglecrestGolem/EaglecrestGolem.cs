@@ -260,7 +260,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     break;
                 case ActionState.Laser:
                     NPC.velocity.X = 0;
-                    Vector2 origin = NPC.Center - new Vector2(2 * NPC.spriteDirection, 16);
+                    Vector2 origin = NPC.Center - new Vector2(-2 * NPC.spriteDirection, 18);
                     if (++TimerRand2 < 60)
                     {
                         for (int k = 0; k < 3; k++)
@@ -276,10 +276,15 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
                     if (TimerRand2 == 60)
                     {
-                        Flare = true;
                         NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation()
                             + MathHelper.ToRadians(20 * NPC.spriteDirection)), false, SoundID.Item109, "", NPC.whoAmI);
                     }
+                    if (TimerRand2 >= 60)
+                    {
+                        FlareTimer = 0;
+                        Flare = true;
+                    }
+
                     if (TimerRand2 > 120)
                     {
                         TimerRand2 = 0;
@@ -406,7 +411,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - screenPos - new Vector2(2 * NPC.spriteDirection, 16);
+            Vector2 position = NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 18);
             Color colour = Color.Lerp(Color.White, Color.Orange, 1f / Opacity * 10f) * (1f / Opacity * 10f);
             if (Flare)
             {
