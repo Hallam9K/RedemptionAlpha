@@ -182,18 +182,6 @@ namespace Redemption.StructureHelper
 
                         if (d.TEType != "") //place and load a tile entity
                         {
-                            int typ;
-
-                            if (!int.TryParse(d.TEType, out typ))
-                            {
-                                string[] parts = d.TEType.Split();
-                                if (ModContent.TryFind<ModTileEntity>(parts[0], parts[1], out var modTileEntity))
-                                {
-                                    typ = modTileEntity.Type;
-                                }
-                                else typ = 0;
-                            }
-
                             if (d.TEType != "")
                             {
                                 if (d.TEType == "Redemption ChestEntity" && !ignoreNull)
@@ -201,6 +189,16 @@ namespace Redemption.StructureHelper
 
                                 else
                                 {
+
+                                    if (!int.TryParse(d.TEType, out int typ))
+                                    {
+                                        string[] parts = d.TEType.Split();
+                                        if (ModContent.TryFind<ModTileEntity>(parts[0], parts[1], out var modTileEntity))
+                                        {
+                                            typ = modTileEntity.Type;
+                                        }
+                                        else typ = 0;
+                                    }
                                     TileEntity.PlaceEntityNet(pos.X + x, pos.Y + y, typ);
 
                                     if (d.TEData != null && typ > 2)
