@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Items.Armor.PreHM;

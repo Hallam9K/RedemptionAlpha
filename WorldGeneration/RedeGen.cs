@@ -12,11 +12,81 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Containers;
 using Redemption.Tiles.Tiles;
 using Redemption.Tiles.Plants;
+using Microsoft.Xna.Framework;
+using Redemption.Tiles.Ores;
+using Redemption.Base;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria.Chat;
+using Terraria.Localization;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Natural;
 
 namespace Redemption.WorldGeneration
 {
     public class RedeGen : ModSystem
     {
+        public static bool dragonLeadSpawn;
+
+        public override void OnWorldLoad()
+        {
+            if (NPC.downedBoss3)
+                dragonLeadSpawn = true;
+            else
+                dragonLeadSpawn = false;
+        }
+
+        public override void OnWorldUnload()
+        {
+            dragonLeadSpawn = false;
+        }
+
+        public override void PostUpdateWorld()
+        {
+            if (NPC.downedBoss3 && !dragonLeadSpawn)
+            {
+                dragonLeadSpawn = true;
+                if (RedeWorld.alignment >= 0)
+                {
+                    string status = "Crystals form in the icy caverns...";
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), Color.LightBlue);
+
+                    for (int i = 0; i < Main.maxTilesX; i++)
+                    {
+                        for (int j = 0; j < Main.maxTilesY; j++)
+                        {
+                            Tile tile = Main.tile[i, j];
+                            if (tile.type == ModContent.TileType<DragonLeadOre2Tile>())
+                                tile.type = TileID.Stone;
+                        }
+                    }
+                }
+                else
+                {
+                    string status = "The caverns are heated with dragon bone...";
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Orange);
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), Color.Orange);
+
+                    for (int i = 0; i < Main.maxTilesX; i++)
+                    {
+                        for (int j = 0; j < Main.maxTilesY; j++)
+                        {
+                            Tile tile = Main.tile[i, j];
+                            if (tile.type == ModContent.TileType<DragonLeadOre2Tile>())
+                                tile.type = (ushort)ModContent.TileType<DragonLeadOreTile>();
+                        }
+                    }
+                }
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
+        }
+
         /// <summary>
         /// Checks if the given area is more or less flattish.
         /// Returns false if the average tile height variation is greater than the threshold.
@@ -169,6 +239,129 @@ namespace Redemption.WorldGeneration
                         int j2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8f));
                         WorldGen.OreRunner(i2, j2, WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(3, 8), (ushort)ModContent.TileType<InfestedStoneTile>());
                     }
+                }));
+                tasks.Insert(ShiniesIndex + 4, new PassLegacy("Generating Dragon Fossils", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    #region Dragon-Lead
+                    progress.Message = "Generating dragon fossils";
+                    Mod mod = Redemption.Instance;
+                    Dictionary<Color, int> colorToTile = new()
+                    {
+                        [new Color(255, 0, 0)] = ModContent.TileType<DragonLeadOre2Tile>(),
+                        [new Color(150, 150, 150)] = -2, //turn into air
+                        [Color.Black] = -1 //don't touch when genning
+                    };
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 2E-05); k++)
+                    {
+                        bool placed = false;
+                        int attempts = 0;
+                        while (!placed && attempts++ < 10000)
+                        {
+                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
+                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .65f), (int)(Main.maxTilesY * .8));
+                            if (!WorldGen.InWorld(tilesX, tilesY))
+                                continue;
+
+                            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/DL" + (WorldGen.genRand.Next(11) + 1),
+                                AssetRequestMode.ImmediateLoad).Value;
+
+                            bool whitelist = false;
+                            int stoneScore = 0;
+                            int emptyScore = 0;
+                            for (int x = 0; x < tex.Width; x++)
+                            {
+                                for (int y = 0; y < tex.Height; y++)
+                                {
+                                    if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.WhitelistTiles.Contains(Main.tile[tilesX + x, tilesY + y].type))
+                                    {
+                                        whitelist = true;
+                                        break;
+                                    }
+                                    int type = Main.tile[tilesX + x, tilesY + y].type;
+                                    if (type == TileID.Stone || type == TileID.Dirt)
+                                        stoneScore++;
+                                    else
+                                        emptyScore++;
+                                }
+                            }
+                            if (whitelist)
+                                continue;
+                            if (stoneScore < (int)(emptyScore * 1.5))
+                                continue;
+
+                            Point16 origin = new(tilesX, tilesY);
+                            Main.QueueMainThreadAction(() =>
+                            {
+                                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
+                                gen.Generate(origin.X, origin.Y, true, true);
+                            });
+                            placed = true;
+                        }
+                    }
+                    #endregion
+                }));
+                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    #region Surface Portal
+                    progress.Message = "Thinking with portals";
+                    Mod mod = Redemption.Instance;
+                    Dictionary<Color, int> colorToTile = new()
+                    {
+                        [new Color(255, 0, 0)] = TileID.Dirt,
+                        [new Color(0, 255, 0)] = TileID.Grass,
+                        [new Color(0, 0, 255)] = TileID.Emerald,
+                        [new Color(150, 150, 150)] = -2,
+                        [Color.Black] = -1
+                    };
+
+                    Dictionary<Color, int> colorToWall = new()
+                    {
+                        [new Color(0, 255, 0)] = WallID.DirtUnsafe3,
+                        [new Color(0, 0, 255)] = WallID.DirtUnsafe1,
+                        [Color.Black] = -1
+                    };
+
+                    bool placed = false;
+                    int attempts = 0;
+                    while (!placed && attempts++ < 50000)
+                    {
+                        int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
+
+                        int placeY = (int)Main.worldSurface - 200;
+
+                        if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
+                            continue;
+                        // We go down until we hit a solid tile or go under the world's surface
+                        while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
+                        {
+                            placeY++;
+                        }
+                        // If we went under the world's surface, try again
+                        if (placeY > Main.worldSurface)
+                            continue;
+                        Tile tile = Main.tile[placeX, placeY];
+                        if (tile.type != TileID.Grass)
+                            continue;
+
+                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCave", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveWalls", AssetRequestMode.ImmediateLoad).Value;
+
+                        Point16 origin = new(placeX - 30, placeY - 11);
+                        Main.QueueMainThreadAction(() =>
+                        {
+                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
+                            gen.Generate(origin.X, origin.Y, true, true);
+                        });
+
+                        // no work yet >:(
+                        WorldGen.PlaceObject(origin.X + 34, origin.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), true);
+                        NetMessage.SendObjectPlacment(-1, origin.X + 34, origin.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), 0, 0, -1, -1);
+                        WorldGen.PlaceObject(origin.X + 33, origin.Y + 64, (ushort)ModContent.TileType<NewbMound>(), true);
+                        NetMessage.SendObjectPlacment(-1, origin.X + 33, origin.Y + 64, (ushort)ModContent.TileType<NewbMound>(), 0, 0, -1, -1);
+
+                        placed = true;
+                    }
+                    #endregion
                 }));
             }
 

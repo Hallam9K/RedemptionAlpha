@@ -16,7 +16,8 @@ namespace Redemption.Globals
 		public static bool keeperSaved;
 		public static bool skullDiggerSaved;
 		public static bool downedSkeletonInvasion;
-		public static bool downedEaglecrestGolem;
+		public static bool downedEaglecrestGolem; 
+		public static bool foundNewb;
 		//public static bool downedOtherBoss = false;
 
 		public override void OnWorldLoad()
@@ -29,6 +30,7 @@ namespace Redemption.Globals
 			skullDiggerSaved = false;
 			downedSkeletonInvasion = false;
 			downedEaglecrestGolem = false;
+			foundNewb = false;
 			//downedOtherBoss = false;
 		}
 
@@ -41,6 +43,8 @@ namespace Redemption.Globals
 			keeperSaved = false;
 			skullDiggerSaved = false;
 			downedSkeletonInvasion = false;
+			downedEaglecrestGolem = false;
+			foundNewb = false;
 			//downedOtherBoss = false;
 		}
 
@@ -64,6 +68,8 @@ namespace Redemption.Globals
 				downed.Add("downedSkeletonInvasion");
 			if (downedEaglecrestGolem)
 				downed.Add("downedEaglecrestGolem");
+			if (foundNewb)
+				downed.Add("foundNewb");
 
 			tag["downed"] = downed;
 		}
@@ -80,6 +86,7 @@ namespace Redemption.Globals
 			skullDiggerSaved = downed.Contains("skullDiggerSaved");
 			downedSkeletonInvasion = downed.Contains("downedSkeletonInvasion");
 			downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
+			foundNewb = downed.Contains("foundNewb");
 			//downedOtherBoss = downed.Contains("downedOtherBoss");
 		}
 
@@ -95,6 +102,9 @@ namespace Redemption.Globals
 			flags[6] = downedSkeletonInvasion;
 			flags[7] = downedEaglecrestGolem;
 			writer.Write(flags);
+			var flags2 = new BitsByte();
+			flags[0] = foundNewb;
+			writer.Write(flags2);
 		}
 
 		public override void NetReceive(BinaryReader reader)
@@ -108,6 +118,8 @@ namespace Redemption.Globals
 			skullDiggerSaved = flags[5];
 			downedSkeletonInvasion = flags[6];
 			downedEaglecrestGolem = flags[7];
+			BitsByte flags2 = reader.ReadByte();
+			foundNewb = flags2[0];
 		}
 	}
 }

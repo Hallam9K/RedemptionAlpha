@@ -27,22 +27,30 @@ namespace Redemption.Base
                 {
                     [new Color(255, 0, 0)] = 1,   // |\    Red
                     [new Color(0, 255, 0)] = 2,   // /|    Green
-                    [new Color(0, 0, 255)] = 3,   // |/    Blue	
+                    [new Color(0, 0, 255)] = 3,   // |/    Blue
                     [new Color(255, 255, 0)] = 4, // \|    Yellow
                     [new Color(255, 255, 255)] = -1, // HALFBRICK // White
-                    [new Color(0, 0, 0)] = -2 // FULLBLOCK //			
+                    [new Color(0, 0, 0)] = -2 // FULLBLOCK //
                 };
             }
 			Color[] tileData = new Color[tileTex.Width * tileTex.Height];
 			tileTex.GetData(0, tileTex.Bounds, tileData, 0, tileTex.Width * tileTex.Height);
+
 			Color[] wallData = wallTex != null ? new Color[wallTex.Width * wallTex.Height] : null;
-			if (wallData != null) wallTex.GetData(0, wallTex.Bounds, wallData, 0, wallTex.Width * wallTex.Height);
+			if (wallData != null)
+		    wallTex.GetData(0, wallTex.Bounds, wallData, 0, wallTex.Width * wallTex.Height);
+
 			Color[] liquidData = liquidTex != null ? new Color[liquidTex.Width * liquidTex.Height] : null;
-			if (liquidData != null) liquidTex.GetData(0, liquidTex.Bounds, liquidData, 0, liquidTex.Width * liquidTex.Height);
+			if (liquidData != null)
+			liquidTex.GetData(0, liquidTex.Bounds, liquidData, 0, liquidTex.Width * liquidTex.Height);
+
 			Color[] slopeData = slopeTex != null ? new Color[slopeTex.Width * slopeTex.Height] : null;
-			if (slopeData != null) slopeTex.GetData(0, slopeTex.Bounds, slopeData, 0, slopeTex.Width * slopeTex.Height);
+			if (slopeData != null)
+			slopeTex.GetData(0, slopeTex.Bounds, slopeData, 0, slopeTex.Width * slopeTex.Height);
+
 			Color[] objectData = objectTex != null ? new Color[objectTex.Width * objectTex.Height] : null;
-			if (objectData != null) objectTex.GetData(0, objectTex.Bounds, objectData, 0, objectTex.Width * objectTex.Height);
+			if (objectData != null)
+			objectTex.GetData(0, objectTex.Bounds, objectData, 0, objectTex.Width * objectTex.Height);
 
 			int x = 0, y = 0;
 			TexGen gen = new(tileTex.Width, tileTex.Height);

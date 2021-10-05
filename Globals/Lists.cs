@@ -213,7 +213,9 @@ namespace Redemption.Globals
             TileID.GreenDungeonBrick,
             TileID.PinkDungeonBrick,
             TileID.LihzahrdBrick,
-            TileID.BeeHive
+            TileID.BeeHive,
+            TileID.Granite,
+            TileID.Marble
         };
 
         public static List<int> ModdedChests = new();
