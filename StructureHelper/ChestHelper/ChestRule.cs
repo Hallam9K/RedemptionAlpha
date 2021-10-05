@@ -110,7 +110,7 @@ namespace Redemption.StructureHelper.ChestHelper
 
         public TagCompound Serialize()
         {
-            TagCompound tag = new TagCompound
+            TagCompound tag = new()
             {
                 { "Item", LootItem },
                 { "Min", min },
