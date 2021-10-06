@@ -32,8 +32,8 @@ namespace Redemption.Tiles.Banners
         {
             if (closer)
             {
-                Player player = Main.LocalPlayer;
-                player.HasNPCBannerBuff(ModContent.NPCType<SkeletonAssassin>());
+                Main.SceneMetrics.hasBanner = true;
+                Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<SkeletonAssassin>()] = true;
             }
         }
     }

@@ -323,7 +323,7 @@ namespace Redemption.WorldGeneration
 
                     bool placed = false;
                     int attempts = 0;
-                    while (!placed && attempts++ < 50000)
+                    while (!placed && attempts++ < 100000)
                     {
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
@@ -342,13 +342,19 @@ namespace Redemption.WorldGeneration
                         Tile tile = Main.tile[placeX, placeY];
                         if (tile.type != TileID.Grass)
                             continue;
+                        if (!CheckFlat(placeX, placeY, 11, 3))
+                            continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCave", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveWalls", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveClear", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point16 origin = new(placeX - 30, placeY - 11);
+                        Point origin = new(placeX - 30, placeY - 11);
                         Main.QueueMainThreadAction(() =>
                         {
+                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
+                            genC.Generate(origin.X, origin.Y, true, true);
+
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
                             gen.Generate(origin.X, origin.Y, true, true);
                         });
