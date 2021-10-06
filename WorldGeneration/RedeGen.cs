@@ -416,7 +416,8 @@ namespace Redemption.WorldGeneration
                                     NetMessage.SendObjectPlacment(-1, i, j - 1, TileID.LargePiles2, WorldGen.genRand.Next(47, 50), 0, -1, -1);
                                 }
                             }
-                            WorldGen.PlacePot(i, j - 1);
+                            if (WorldGen.genRand.NextBool(2))
+                                WorldGen.PlacePot(i, j - 1);
                         }
                     }
                     #endregion
