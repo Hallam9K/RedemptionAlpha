@@ -330,7 +330,7 @@ namespace Redemption.WorldGeneration
                     {
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
-                        int placeY = (int)Main.worldSurface - 200;
+                        int placeY = (int)Main.worldSurface - 180;
 
                         if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
                             continue;
