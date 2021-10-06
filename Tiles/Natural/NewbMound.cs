@@ -32,18 +32,15 @@ namespace Redemption.Tiles.Natural
             name.SetDefault("Newb Mound");
             AddMapEntry(new Color(81, 72, 65));
         }
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            if (!fail && !WorldGen.gen)
-            {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.NewNPC(i * 16 + 32, j * 16, ModContent.NPCType<Newb>());
+            if (!WorldGen.gen && Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPC(i * 16 + 32, j * 16, ModContent.NPCType<Newb>());
 
-                RedeBossDowned.foundNewb = true;
+            RedeBossDowned.foundNewb = true;
 
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
-            }
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

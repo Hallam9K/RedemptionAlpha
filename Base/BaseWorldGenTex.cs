@@ -18,10 +18,10 @@ namespace Redemption.Base
 			{
                 colorToLiquid = new Dictionary<Color, int>
                 {
-                    [new Color(0, 0, 255)] = 0,
-                    [new Color(255, 0, 0)] = 1,
-                    [new Color(255, 255, 0)] = 2
-                };
+                    [new Color(0, 0, 255)] = LiquidID.Water,
+                    [new Color(255, 0, 0)] = LiquidID.Lava,
+                    [new Color(255, 255, 0)] = LiquidID.Honey
+				};
 
                 colorToSlope = new Dictionary<Color, int>
                 {
