@@ -27,6 +27,7 @@ namespace Redemption.WorldGeneration
     public class RedeGen : ModSystem
     {
         public static bool dragonLeadSpawn;
+        public static Point newbCavePoint;
 
         public override void OnWorldLoad()
         {
@@ -300,7 +301,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 1, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Surface Portal
                     progress.Message = "Thinking with portals";
@@ -318,12 +319,14 @@ namespace Redemption.WorldGeneration
                     {
                         [new Color(0, 255, 0)] = WallID.DirtUnsafe3,
                         [new Color(0, 0, 255)] = WallID.DirtUnsafe1,
+                        [new Color(0, 255, 255)] = WallID.GrassUnsafe,
                         [Color.Black] = -1
                     };
 
                     bool placed = false;
                     int attempts = 0;
-                    while (!placed && attempts++ < 100000)
+
+                    while (!placed && attempts++ < 200000)
                     {
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
@@ -342,14 +345,23 @@ namespace Redemption.WorldGeneration
                         Tile tile = Main.tile[placeX, placeY];
                         if (tile.type != TileID.Grass)
                             continue;
-                        if (!CheckFlat(placeX, placeY, 11, 3))
+                        for (int i = -40; i <= 40; i++)
+                        {
+                            for (int j = -40; j <= 40; j++)
+                            {
+                                int type = Main.tile[placeX + i, placeY + j].type;
+                                if (type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>())
+                                    continue;
+                            }
+                        }
+                        if (!CheckFlat(placeX, placeY, 14, 2))
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCave", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveWalls", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveClear", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = new(placeX - 30, placeY - 11);
+                        Point origin = new(placeX - 34, placeY - 11);
                         Main.QueueMainThreadAction(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
@@ -359,13 +371,54 @@ namespace Redemption.WorldGeneration
                             gen.Generate(origin.X, origin.Y, true, true);
                         });
 
-                        // no work yet >:(
-                        WorldGen.PlaceObject(origin.X + 34, origin.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), true);
-                        NetMessage.SendObjectPlacment(-1, origin.X + 34, origin.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), 0, 0, -1, -1);
-                        WorldGen.PlaceObject(origin.X + 33, origin.Y + 64, (ushort)ModContent.TileType<NewbMound>(), true);
-                        NetMessage.SendObjectPlacment(-1, origin.X + 33, origin.Y + 64, (ushort)ModContent.TileType<NewbMound>(), 0, 0, -1, -1);
-
+                        newbCavePoint = origin;
                         placed = true;
+                    }
+                }));
+                tasks.Insert(ShiniesIndex2 + 3, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    progress.Message = "Thinking with portals";
+
+                    WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), true);
+                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), 0, 0, -1, -1);
+                    WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), true);
+                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), 0, 0, -1, -1);
+
+                    BaseWorldGen.SmoothTiles(newbCavePoint.X, newbCavePoint.Y, newbCavePoint.X + 60, newbCavePoint.Y + 82);
+
+                    for (int i = newbCavePoint.X; i < newbCavePoint.X + 60; i++)
+                    {
+                        for (int j = newbCavePoint.Y; j < newbCavePoint.Y + 30; j++)
+                        {
+                            WorldGen.SpreadGrass(i, j);
+                        }
+                    }
+                    for (int i = newbCavePoint.X + 13; i < newbCavePoint.X + 53; i++)
+                    {
+                        for (int j = newbCavePoint.Y + 66; j < newbCavePoint.Y + 74; j++)
+                        {
+                            if (!Framing.GetTileSafely(i, j).IsActive)
+                                WorldGen.PlaceLiquid(i, j, LiquidID.Water, 255);
+                        }
+                    }
+
+                    for (int i = newbCavePoint.X; i < newbCavePoint.X + 60; i++)
+                    {
+                        for (int j = newbCavePoint.Y; j < newbCavePoint.Y + 82; j++)
+                        {
+                            WorldGen.GrowTree(i, j - 1);
+                            if (Main.tile[i, j].type == TileID.Dirt && !Framing.GetTileSafely(i, j - 1).IsActive &&
+                            Framing.GetTileSafely(i, j).IsActive)
+                            {
+                                if (WorldGen.genRand.NextBool(3))
+                                {
+                                    WorldGen.PlaceObject(i, j - 1, TileID.LargePiles2, true, WorldGen.genRand.Next(47, 50));
+                                    NetMessage.SendObjectPlacment(-1, i, j - 1, TileID.LargePiles2, WorldGen.genRand.Next(47, 50), 0, -1, -1);
+                                }
+                            }
+                            if (WorldGen.genRand.NextBool(2))
+                                WorldGen.PlacePot(i, j - 1);
+                        }
                     }
                     #endregion
                 }));
