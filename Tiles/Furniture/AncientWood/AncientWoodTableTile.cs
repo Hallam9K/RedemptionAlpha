@@ -20,6 +20,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			Main.tileLavaDeath[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.IgnoredByNpcStepUp[Type] = true;
 
 			DustType = DustID.t_BorealWood;
 			AdjTiles = new int[] { TileID.Tables };

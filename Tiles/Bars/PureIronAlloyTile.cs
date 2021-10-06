@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Bars
             Main.tileSolid[Type] = true;
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
+            TileID.Sets.IgnoredByNpcStepUp[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.StyleHorizontal = true;
