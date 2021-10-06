@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
@@ -28,6 +30,8 @@ namespace Redemption.Globals.NPC
         public bool pureChill;
         public bool dragonblaze;
         public bool necroticGouge;
+        public bool iceFrozen;
+        public bool frozenFallen;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -38,6 +42,7 @@ namespace Redemption.Globals.NPC
             pureChill = false;
             dragonblaze = false;
             necroticGouge = false;
+            iceFrozen = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -191,7 +196,52 @@ namespace Redemption.Globals.NPC
                     Main.dust[sparkle].noGravity = true;
                 }
             }
+            if (iceFrozen)
+            {
+                drawColor = new Color(0.4f, 1f, 1f, 0.8f);
+                if (Main.rand.NextBool(30))
+                {
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Ice, Scale: 1);
+                    Main.dust[sparkle].velocity *= 0;
+                    Main.dust[sparkle].noGravity = true;
+                }
+            }
         }
+
+        public override bool PreAI(Terraria.NPC npc)
+        {
+            if (iceFrozen)
+            {
+                if (npc.noGravity && !npc.noTileCollide)
+                    npc.velocity.Y += 0.5f;
+                npc.position.X = npc.oldPosition.X;
+                if (npc.noTileCollide)
+                {
+                    npc.position.Y = npc.oldPosition.Y;
+                    npc.velocity.Y = 0;
+                }
+                npc.velocity.X = 0;
+
+                npc.frameCounter = 0;
+
+                if ((npc.velocity.Y == 0 || npc.collideY) && !frozenFallen)
+                {
+                    if (npc.oldVelocity.Y > 7)
+                        BaseAI.DamageNPC(npc, (int)(npc.oldVelocity.Y * 20), 0, Main.LocalPlayer, true, true);
+                    frozenFallen = true;
+                }
+                return false;
+            }
+            return true;
+        }
+
+        public override bool CanHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int cooldownSlot)
+        {
+            if (iceFrozen)
+                return false;
+            return true;
+        }
+
         public override void PostAI(Terraria.NPC npc)
         {
             if (moonflare)
@@ -230,6 +280,11 @@ namespace Redemption.Globals.NPC
                         Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
+            if (iceFrozen)
+            {
+                SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, npc.position);
+                Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Ice, Scale: 1);
+            }
         }
         public override bool PreKill(Terraria.NPC npc)
         {
@@ -246,6 +301,15 @@ namespace Redemption.Globals.NPC
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
                         Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                }
+            }
+            if (iceFrozen)
+            {
+                SoundEngine.PlaySound(SoundID.Item27, npc.position);
+                for (int i = 0; i < 30; i++)
+                {
+                    int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Ice, Scale: 1);
+                    Main.dust[dustIndex4].velocity *= 3f;
                 }
             }
             return true;

@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -37,9 +38,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
 
-            SwingSpeed = SetSwingSpeed(50);
+            SwingSpeed = SetSwingSpeed(45);
 
-            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
+            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -80,7 +81,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     continue;
 
                                 if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) ||
-                                    (!ProjectileTags.Ice.Has(target.type) && target.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type)))
+                                    (!ProjectileTags.Ice.Has(target.type) && (target.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type))))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -126,8 +127,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
-            if (target.DistanceSQ(player.Center) > 110 * 110)
-                target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 3600 - ((int)MathHelper.Clamp(target.lifeMax, 60, 10000) / 2));
+            if (target.DistanceSQ(player.Center) > 100 * 100 && !target.boss && !target.GetGlobalNPC<BuffNPC>().iceFrozen)
+            {
+                SoundEngine.PlaySound(SoundID.Item30, target.position);
+                target.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(target.lifeMax, 60, 1780)));
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -140,9 +144,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int offset = Projectile.frame > 4 ? 14 : 0;
+            int offset = Projectile.frame > 4 ? 16 : 0;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(38 * player.direction, 18 - offset) + Vector2.UnitY * Projectile.gfxOffY,
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(40 * player.direction, 50 - offset) + Vector2.UnitY * Projectile.gfxOffY,
                 new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             Texture2D slash = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/BladeOfTheMountain_SlashProj").Value;
@@ -152,13 +156,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Vector2 drawOrigin2 = new(slash.Width / 2, slash.Height / 2);
 
             if (Projectile.frame >= 5 && Projectile.frame <= 9)
-                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(11 * player.direction, -192 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(0 * player.direction, -331 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
+            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
             return Projectile.frame is 5 && projHitbox.Intersects(targetHitbox);
         }
     }

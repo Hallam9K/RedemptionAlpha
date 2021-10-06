@@ -14,7 +14,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blade of the Mountain");
-            Tooltip.SetDefault("\nParries physical or ice projectiles" +
+            Tooltip.SetDefault("'Send them to their snowy grave'\n" +
+                "Parries physical or ice projectiles" +
                 "\nHitting on the tip of the blade can freeze enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
@@ -37,7 +38,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 48;
+            Item.damage = 60;
             Item.knockBack = 7;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
