@@ -1,9 +1,7 @@
 # RedemptionAlpha
 
 TODO
-- Code Blade of the Mountain
 - Gathic Cryo-Crystal generation in ice cavern post-skeletron
-- Dragon-Lead ore generation with the dragon shapes
 - Code Pure-Iron Bow
 - Code Silverwood Bow
 - Code Dragon-Lead staff and minion and bow
