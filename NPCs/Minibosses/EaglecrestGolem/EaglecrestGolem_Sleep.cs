@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using System.Linq;
 using Terraria;
@@ -18,7 +20,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
-                ImmuneToAllBuffsThatAreNotWhips = true
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
+                }
             });
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)

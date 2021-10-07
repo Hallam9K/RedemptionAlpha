@@ -51,17 +51,11 @@ namespace Redemption.NPCs.PreHM
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
-                    ModContent.BuffType<InfestedDebuff>(),
-                    BuffID.Bleeding,
                     BuffID.Poisoned,
-                    BuffID.OnFire,
-                    BuffID.OnFire3,
-                    BuffID.CursedInferno,
-                    BuffID.Frostburn,
-                    BuffID.Frostburn2,
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<DragonblazeDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 

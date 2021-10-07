@@ -9,6 +9,7 @@ using Redemption.Projectiles.Hostile;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -54,6 +55,68 @@ namespace Redemption.Globals.NPC
                 dirtyWoundTime = 0;
             }
         }
+
+        #region Debuff Immunities
+        public static void AddDebuffImmunity(int npcType, int[] array)
+        {
+            if (!NPCID.Sets.DebuffImmunitySets.TryGetValue(npcType, out var entry) || entry?.SpecificallyImmuneTo is null)
+                return;
+
+            int[] array2 = NPCID.Sets.DebuffImmunitySets[npcType].SpecificallyImmuneTo;
+            NPCID.Sets.DebuffImmunitySets[npcType] = new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = array2.Concat(array).ToArray()
+            };
+        }
+
+        public override void SetStaticDefaults()
+        {
+            for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++)
+            {
+                if (NPCTags.Demon.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<DragonblazeDebuff>(),
+                    ModContent.BuffType<MoonflareDebuff>() });
+                }
+                if (NPCTags.Cold.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<PureChillDebuff>(),
+                    ModContent.BuffType<IceFrozen>() });
+                }
+                if (NPCTags.Plantlike.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>() });
+                }
+                if (NPCTags.Dragonlike.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<DragonblazeDebuff>() });
+                }
+                if (NPCTags.Inorganic.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>() });
+                }
+                if (NPCLists.IsSlime.Contains(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>() });
+                }
+
+            }
+        }
+        #endregion
+
         public override void UpdateLifeRegen(Terraria.NPC npc, ref int damage)
         {
             if (infested)

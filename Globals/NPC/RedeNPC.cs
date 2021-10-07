@@ -66,7 +66,7 @@ namespace Redemption.Globals.NPC
                 if (ItemTags.Fire.Has(item.type))
                     damage = (int)(damage * 0.5f);
 
-                if (ItemTags.Water.Has(item.type))
+                if (ItemTags.Water.Has(item.type) || ItemTags.Ice.Has(item.type))
                     damage = (int)(damage * 1.25f);
             }
             if (NPCTags.Spirit.Has(npc.type))
