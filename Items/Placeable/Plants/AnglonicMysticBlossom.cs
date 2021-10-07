@@ -17,8 +17,8 @@ namespace Redemption.Items.Placeable.Plants
 
         public override void SetDefaults()
         {
-            Item.width = 44;
-            Item.height = 38;
+            Item.width = 34;
+            Item.height = 30;
             Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 7, 5, 0);
             Item.rare = ItemRarityID.Pink;
