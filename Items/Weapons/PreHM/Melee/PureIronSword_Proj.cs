@@ -141,6 +141,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 player.itemRotation = (player.Center - Projectile.Center).ToRotation() + (player.direction == 1 ? MathHelper.Pi : 0);
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (Projectile.localAI[0] == 1)
+                damage *= 2;
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
