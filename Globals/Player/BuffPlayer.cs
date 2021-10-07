@@ -11,6 +11,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.DamageClasses;
 
 namespace Redemption.Globals.Player
 {
@@ -45,6 +46,7 @@ namespace Redemption.Globals.Player
         public bool MetalSet;
 
         public int MeleeDamageFlat;
+        public int DruidDamageFlat;
 
         public float[] ElementalResistance = new float[14];
         public float[] ElementalDamage = new float[14];
@@ -53,6 +55,8 @@ namespace Redemption.Globals.Player
         {
             if (item.CountsAsClass(DamageClass.Melee))
                 flat += MeleeDamageFlat;
+            if (item.CountsAsClass<DruidClass>())
+                flat += DruidDamageFlat;
         }
 
         public override void ResetEffects()
