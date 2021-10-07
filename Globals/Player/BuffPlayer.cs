@@ -68,6 +68,7 @@ namespace Redemption.Globals.Player
             skeletonFriendly = false;
             heartInsignia = false;
             MeleeDamageFlat = 0;
+            DruidDamageFlat = 0;
             MetalSet = false;
             spiderSwarmed = false;
             greenRashes = false;
