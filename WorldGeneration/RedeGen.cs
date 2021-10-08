@@ -21,13 +21,16 @@ using Terraria.Chat;
 using Terraria.Localization;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Natural;
+using Terraria.ModLoader.IO;
+using System.IO;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.WorldGeneration
 {
     public class RedeGen : ModSystem
     {
         public static bool dragonLeadSpawn;
-        public static Point newbCavePoint;
+        public static Vector2 newbCaveVector = new Vector2(-1, -1);
 
         public override void OnWorldLoad()
         {
@@ -35,11 +38,14 @@ namespace Redemption.WorldGeneration
                 dragonLeadSpawn = true;
             else
                 dragonLeadSpawn = false;
+
+            newbCaveVector = new Vector2(-1, -1);
         }
 
         public override void OnWorldUnload()
         {
             dragonLeadSpawn = false;
+            newbCaveVector = new Vector2(-1, -1);
         }
 
         public override void PostUpdateWorld()
@@ -387,7 +393,7 @@ namespace Redemption.WorldGeneration
                             gen.Generate(origin.X, origin.Y, true, true);
                         });
 
-                        newbCavePoint = origin;
+                        newbCaveVector = origin.ToVector2();
                         placed = true;
                     }
                 }));
@@ -395,6 +401,7 @@ namespace Redemption.WorldGeneration
                 {
                     progress.Message = "Thinking with portals";
 
+                    Point newbCavePoint = newbCaveVector.ToPoint();
                     WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), true);
                     NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), 0, 0, -1, -1);
                     WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), true);
@@ -651,6 +658,37 @@ namespace Redemption.WorldGeneration
             Mod mod = Redemption.Instance;
             Point16 origin = new((int)(Main.maxTilesX * 0.4f), (int)(Main.maxTilesY * 0.45f));
             Generator.GenerateStructure("WorldGeneration/HallOfHeroes", origin, mod, false);
+        }
+
+        public override void PreUpdateWorld()
+        {
+            Vector2 anglonPortalPos2 = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
+            if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 && Main.LocalPlayer.DistanceSQ(anglonPortalPos2) < 2000 * 2000 &&
+                !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
+            {
+                NPC.NewNPC((int)anglonPortalPos2.X, (int)anglonPortalPos2.Y, ModContent.NPCType<AnglonPortal>());
+            }
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag["newbCavePointX"] = newbCaveVector.X;
+            tag["newbCavePointY"] = newbCaveVector.Y;
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            newbCaveVector.X = tag.GetFloat("newbCavePointX");
+            newbCaveVector.Y = tag.GetFloat("newbCavePointY");
+        }
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.WritePackedVector2(newbCaveVector);
+        }
+        public override void NetReceive(BinaryReader reader)
+        {
+            newbCaveVector = reader.ReadPackedVector2();
         }
     }
 }

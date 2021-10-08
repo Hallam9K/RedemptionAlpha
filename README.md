@@ -1,7 +1,6 @@
 # RedemptionAlpha
 
 TODO
-- Gathic Cryo-Crystal generation in ice cavern post-skeletron
 - Code Pure-Iron Bow
 - Code Silverwood Bow
 - Code Dragon-Lead staff and minion and bow
