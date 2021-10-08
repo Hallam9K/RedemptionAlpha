@@ -1,6 +1,7 @@
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Critters;
 using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using Terraria;
 using Terraria.DataStructures;
@@ -50,6 +51,36 @@ namespace Redemption.Globals
                     if (Main.rand.NextBool(6000))
                     {
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
+                    }
+                }
+            }
+            if (Terraria.NPC.downedBoss3 && (type == TileID.SnowBlock || TileID.Sets.Conversion.Ice[type]))
+            {
+                bool tileUp = !Framing.GetTileSafely(i, j - 1).IsActive;
+                bool tileDown = !Framing.GetTileSafely(i, j + 1).IsActive;
+                bool tileLeft = !Framing.GetTileSafely(i - 1, j).IsActive;
+                bool tileRight = !Framing.GetTileSafely(i + 1, j).IsActive;
+                if (Main.rand.NextBool(400))
+                {
+                    if (tileUp)
+                    {
+                        WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CryoCrystalTile>(), true);
+                        NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    }
+                    else if (tileDown)
+                    {
+                        WorldGen.PlaceObject(i, j + 1, ModContent.TileType<CryoCrystalTile>(), true);
+                        NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    }
+                    else if (tileLeft)
+                    {
+                        WorldGen.PlaceObject(i - 1, j, ModContent.TileType<CryoCrystalTile>(), true);
+                        NetMessage.SendObjectPlacment(-1, i - 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    }
+                    else if (tileRight)
+                    {
+                        WorldGen.PlaceObject(i + 1, j, ModContent.TileType<CryoCrystalTile>(), true);
+                        NetMessage.SendObjectPlacment(-1, i + 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                     }
                 }
             }
