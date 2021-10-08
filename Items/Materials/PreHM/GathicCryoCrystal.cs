@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Tiles.Natural;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -10,9 +11,11 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            DisplayName.SetDefault("Gathic Cryo-Crystal");
             Tooltip.SetDefault("'A freezing cold crystal'"
-                + "\nMakes the player Chilled when held");
+                + "\nMakes the player chilled when held");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()
@@ -23,6 +26,13 @@ namespace Redemption.Items.Materials.PreHM
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.Orange;
             Item.consumable = true;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.createTile = ModContent.TileType<CryoCrystalTile>();
         }
 
         public override void PostUpdate()

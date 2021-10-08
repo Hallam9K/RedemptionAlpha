@@ -55,6 +55,22 @@ namespace Redemption.WorldGeneration
                     else if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue(status), Color.LightBlue);
 
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.006f); k++)
+                    {
+                        int i2 = WorldGen.genRand.Next(200, Main.maxTilesX - 200);
+                        int j2 = WorldGen.genRand.Next((int)WorldGen.rockLayerHigh, (int)(Main.maxTilesY * .7f));
+                        int tileUp = Framing.GetTileSafely(i2, j2 - 1).type;
+                        int tileDown = Framing.GetTileSafely(i2, j2 + 1).type;
+                        int tileLeft = Framing.GetTileSafely(i2 - 1, j2).type;
+                        int tileRight = Framing.GetTileSafely(i2 + 1, j2).type;
+                        if (!Framing.GetTileSafely(i2, j2).IsActive && 
+                            (tileUp == TileID.SnowBlock || tileDown == TileID.SnowBlock || tileLeft == TileID.SnowBlock || tileRight == TileID.SnowBlock || TileID.Sets.Conversion.Ice[tileUp] || TileID.Sets.Conversion.Ice[tileDown] || TileID.Sets.Conversion.Ice[tileLeft] || TileID.Sets.Conversion.Ice[tileRight]))
+                        {
+                            WorldGen.PlaceObject(i2, j2, ModContent.TileType<CryoCrystalTile>(), true);
+                            NetMessage.SendObjectPlacment(-1, i2, j2, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                        }
+                    }
+
                     for (int i = 0; i < Main.maxTilesX; i++)
                     {
                         for (int j = 0; j < Main.maxTilesY; j++)
