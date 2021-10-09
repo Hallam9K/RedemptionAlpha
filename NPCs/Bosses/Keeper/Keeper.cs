@@ -160,7 +160,8 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
+                ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 2, 4));
 
             npcLoot.Add(notExpertRule);

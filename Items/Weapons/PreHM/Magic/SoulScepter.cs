@@ -18,7 +18,8 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Casts controllable soul-charges that orbit the cursor" +
-                "\nMore soul-charges are cast the longer you hold");
+                "\nMore soul-charges are cast the longer you hold" +
+                "\n'Her soul was not my target...'");
             Item.staff[Item.type] = true;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

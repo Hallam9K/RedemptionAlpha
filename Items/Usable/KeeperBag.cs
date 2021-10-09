@@ -11,6 +11,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.Items.Usable
 {
@@ -48,13 +49,16 @@ namespace Redemption.Items.Usable
                 player.QuickSpawnItem(ModContent.ItemType<KeepersVeil>());
             }
 
-            switch (Main.rand.Next(2))
+            switch (Main.rand.Next(3))
             {
                 case 0:
                     player.QuickSpawnItem(ModContent.ItemType<SoulScepter>());
                     break;
                 case 1:
                     player.QuickSpawnItem(ModContent.ItemType<KeepersClaw>());
+                    break;
+                case 2:
+                    player.QuickSpawnItem(ModContent.ItemType<FanOShivs>());
                     break;
             }
             player.QuickSpawnItem(ModContent.ItemType<GrimShard>(), Main.rand.Next(3, 5));
