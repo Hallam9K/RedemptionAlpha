@@ -14,7 +14,8 @@ namespace Redemption.Items.Usable.Summons
 			DisplayName.SetDefault("Heart of Thorns");
 			Tooltip.SetDefault("Summons Thorn, Bane of the Forest" 
 				+ "\nOnly usable at day"
-				+ "\nNot consumable");
+				+ "\nNot consumable" +
+				"\n[i:" + ModContent.ItemType<GoodRoute>() + "]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;

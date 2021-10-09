@@ -32,6 +32,7 @@ namespace Redemption.Items
             RedeBossDowned.downedSeed = false;
             RedeBossDowned.keeperSaved = false;
             RedeBossDowned.skullDiggerSaved = false;
+            RedeBossDowned.downedEaglecrestGolem = false;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);

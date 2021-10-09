@@ -18,7 +18,8 @@ namespace Redemption.Items.Usable.Summons
 			DisplayName.SetDefault("Wedding Ring");
 			Tooltip.SetDefault("Summons The Keeper"
 				+ "\nOnly usable at night"
-				+ "\nNot consumable");
+				+ "\nNot consumable" +
+				"\n[i:" + ModContent.ItemType<GoodRoute>() + "]");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
