@@ -8,7 +8,7 @@ namespace Redemption.Buffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sharpened II");
-            Description.SetDefault("\"Melee weapons have high armor penetration\"");
+            Description.SetDefault("Melee weapons have high armor penetration");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

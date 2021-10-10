@@ -12,8 +12,8 @@ namespace Redemption.Items.Materials.PreHM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gathic Cryo-Crystal");
-            Tooltip.SetDefault("'A freezing cold crystal'"
-                + "\nMakes the player chilled when held");
+            Tooltip.SetDefault("Makes the player chilled when held\n" +
+                "'A freezing cold crystal'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }

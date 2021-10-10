@@ -13,24 +13,24 @@ namespace Redemption.Globals
         public static RecipeGroup ChickenRecipeGroup;
         public static RecipeGroup GoldRecipeGroup;
         public static RecipeGroup SilverRecipeGroup;
+        public static RecipeGroup CopperRecipeGroup;
         public static RecipeGroup GathicStoneRecipeGroup;
 
         public static void AddRecipeGroups()
         {
             ChickenRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<ChickenItem>())}", ModContent.ItemType<ChickenItem>(), ModContent.ItemType<RedChickenItem>(), ModContent.ItemType<LeghornChickenItem>(), ModContent.ItemType<BlackChickenItem>());
-
             RecipeGroup.RegisterGroup("Redemption:Chickens", ChickenRecipeGroup);
 
             GoldRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.GoldBar)}", ItemID.GoldBar, ItemID.PlatinumBar);
-
             RecipeGroup.RegisterGroup("Redemption:GoldBar", GoldRecipeGroup);
 
             SilverRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.IronBar)}", ItemID.TungstenBar, ItemID.SilverBar);
-
             RecipeGroup.RegisterGroup("Redemption:SilverBar", SilverRecipeGroup);
 
-            GathicStoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<GathicStone>())}", ModContent.ItemType<GathicStone>(), ModContent.ItemType<GathicGladestone>(), ModContent.ItemType<GathicStoneBrick>(), ModContent.ItemType<GathicGladestoneBrick>());
+            CopperRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.CopperBar)}", ItemID.CopperBar, ItemID.TinBar);
+            RecipeGroup.RegisterGroup("Redemption:CopperBar", CopperRecipeGroup);
 
+            GathicStoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<GathicStone>())}", ModContent.ItemType<GathicStone>(), ModContent.ItemType<GathicGladestone>(), ModContent.ItemType<GathicStoneBrick>(), ModContent.ItemType<GathicGladestoneBrick>());
             RecipeGroup.RegisterGroup("Redemption:GathicStone", GathicStoneRecipeGroup);
         }
 
@@ -39,7 +39,14 @@ namespace Redemption.Globals
             Redemption_AddRecipes(mod);
         }
 
-        public static void Unload() => ChickenRecipeGroup = null;
+        public static void Unload()
+        {
+            ChickenRecipeGroup = null;
+            GoldRecipeGroup = null;
+            SilverRecipeGroup = null;
+            CopperRecipeGroup = null;
+            GathicStoneRecipeGroup = null;
+        }
 
         private static void Redemption_AddRecipes(Mod mod)
         {

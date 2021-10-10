@@ -14,9 +14,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zweihander");
-            Tooltip.SetDefault("'Parry this you filthy casual!'" +
-                "\nParries physical projectiles" +
-                "\nDeals more damage at the tip of the blade");
+            Tooltip.SetDefault("Parries physical projectiles" +
+                "\nDeals more damage at the tip of the blade\n" +
+                "'Parry this you filthy casual!'");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

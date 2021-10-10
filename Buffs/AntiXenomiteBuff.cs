@@ -10,7 +10,7 @@ namespace Redemption.Buffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenomite Immunity");
-            Description.SetDefault("\"You have temporary immunity to Xenomite...\"");
+            Description.SetDefault("You have temporary immunity to Xenomite");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

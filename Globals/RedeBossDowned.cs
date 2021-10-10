@@ -18,6 +18,10 @@ namespace Redemption.Globals
 		public static bool downedSkeletonInvasion;
 		public static bool downedEaglecrestGolem; 
 		public static bool foundNewb;
+		public static bool downedSlayer;
+		public static bool downedVlitch1;
+		public static bool downedVlitch2;
+		public static bool downedVlitch3;
 		//public static bool downedOtherBoss = false;
 
 		public override void OnWorldLoad()
@@ -31,6 +35,10 @@ namespace Redemption.Globals
 			downedSkeletonInvasion = false;
 			downedEaglecrestGolem = false;
 			foundNewb = false;
+			downedSlayer = false;
+			downedVlitch1 = false;
+			downedVlitch2 = false;
+			downedVlitch3 = false;
 			//downedOtherBoss = false;
 		}
 
@@ -45,6 +53,10 @@ namespace Redemption.Globals
 			downedSkeletonInvasion = false;
 			downedEaglecrestGolem = false;
 			foundNewb = false;
+			downedSlayer = false;
+			downedVlitch1 = false;
+			downedVlitch2 = false;
+			downedVlitch3 = false;
 			//downedOtherBoss = false;
 		}
 
@@ -70,6 +82,14 @@ namespace Redemption.Globals
 				downed.Add("downedEaglecrestGolem");
 			if (foundNewb)
 				downed.Add("foundNewb");
+			if (downedSlayer)
+				downed.Add("downedSlayer");
+			if (downedVlitch1)
+				downed.Add("downedVlitch1");
+			if (downedVlitch2)
+				downed.Add("downedVlitch2");
+			if (downedVlitch3)
+				downed.Add("downedVlitch3");
 
 			tag["downed"] = downed;
 		}
@@ -87,6 +107,10 @@ namespace Redemption.Globals
 			downedSkeletonInvasion = downed.Contains("downedSkeletonInvasion");
 			downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
 			foundNewb = downed.Contains("foundNewb");
+			downedSlayer = downed.Contains("downedSlayer");
+			downedVlitch3 = downed.Contains("downedVlitch1");
+			downedVlitch3 = downed.Contains("downedVlitch2");
+			downedVlitch3 = downed.Contains("downedVlitch3");
 			//downedOtherBoss = downed.Contains("downedOtherBoss");
 		}
 
@@ -104,6 +128,10 @@ namespace Redemption.Globals
 			writer.Write(flags);
 			var flags2 = new BitsByte();
 			flags[0] = foundNewb;
+			flags[1] = downedSlayer;
+			flags[2] = downedVlitch1;
+			flags[3] = downedVlitch2;
+			flags[4] = downedVlitch3;
 			writer.Write(flags2);
 		}
 
@@ -120,6 +148,10 @@ namespace Redemption.Globals
 			downedEaglecrestGolem = flags[7];
 			BitsByte flags2 = reader.ReadByte();
 			foundNewb = flags2[0];
+			downedSlayer = flags2[1];
+			downedVlitch1 = flags2[2];
+			downedVlitch2 = flags2[3];
+			downedVlitch3 = flags2[4];
 		}
 	}
 }

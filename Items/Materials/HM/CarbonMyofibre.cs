@@ -8,7 +8,7 @@ namespace Redemption.Items.Materials.HM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Carbon Myofibre");
-            Tooltip.SetDefault("'Elastic and strong...'");
+            Tooltip.SetDefault("'Elastic and strong'");
         }
 
         public override void SetDefaults()

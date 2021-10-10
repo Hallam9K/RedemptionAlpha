@@ -12,8 +12,8 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Antique Dorul");
-            Tooltip.SetDefault("'Ancient gold coins used in the olden days of Gathuram'" +
-                "\nCan be given to a certain Undead as currency");
+            Tooltip.SetDefault("Can be given to a certain Undead as currency\n" +
+                "'Ancient gold coins used in the olden days of Gathuram'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;

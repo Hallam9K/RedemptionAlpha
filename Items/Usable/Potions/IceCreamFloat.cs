@@ -8,8 +8,6 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ice Cream Float");
-
             Tooltip.SetDefault("Minor improvements to all stats" +
                 "\n'Sluuuuuurp'");
 

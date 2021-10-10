@@ -15,7 +15,7 @@ namespace Redemption.Tiles.Ores
 			Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][TileID.Stone] = true;
-            //Main.tileValue[Type] = 320;
+            Main.tileOreFinderPriority[Type] = 320;
             DustType = DustID.Stone;
 			ItemDrop = ItemID.StoneBlock;
             MinPick = 10;

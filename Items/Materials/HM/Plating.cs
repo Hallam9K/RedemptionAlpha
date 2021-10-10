@@ -8,7 +8,7 @@ namespace Redemption.Items.Materials.HM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plating");
-            Tooltip.SetDefault("Resistant to extreme impacts...");
+            Tooltip.SetDefault("Resistant to extreme impacts");
         }
 
         public override void SetDefaults()

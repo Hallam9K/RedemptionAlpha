@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
@@ -216,8 +217,10 @@ namespace Redemption.Globals.NPC
             IItemDropRule rule = ItemDropRule.Common(itemType);
             conditionalRule.OnSuccess(rule);
             npcLoot.Add(conditionalRule);
-        }
 
+            if (npc.type == NPCID.EaterofSouls || npc.type == NPCID.LittleEater || npc.type == NPCID.BigEater || npc.type == NPCID.CorruptGoldfish || npc.type == NPCID.DevourerHead || npc.type == NPCID.Corruptor || npc.type == NPCID.CorruptSlime || npc.type == NPCID.Slimeling || npc.type == NPCID.Slimer2 || npc.type == NPCID.BloodCrawler || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.BigCrimera || npc.type == NPCID.LittleCrimera || npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BigCrimslime || npc.type == NPCID.LittleCrimslime || npc.type == NPCID.BloodFeeder || npc.type == NPCID.BloodJelly)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EldritchRoot>(), 500));
+        }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
             if (RedeWorld.blobbleSwarm)

@@ -8,7 +8,7 @@ namespace Redemption.Buffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heart Rush");
-            Description.SetDefault("\"Life regen greatly increased\"");
+            Description.SetDefault("Life regen greatly increased");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

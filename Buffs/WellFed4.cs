@@ -9,7 +9,7 @@ namespace Redemption.Buffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Delightfully Indulged");
-            Description.SetDefault("\"Massive improvements to all stats\"");
+            Description.SetDefault("Massive improvements to all stats");
             Main.buffNoTimeDisplay[Type] = false;
         }
 

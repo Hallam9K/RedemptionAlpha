@@ -8,8 +8,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'How did it get here?'"
-                + "\nLet the Keeper's spirit rest" +
+            Tooltip.SetDefault("Let the Keeper's spirit rest" +
                 "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "]");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

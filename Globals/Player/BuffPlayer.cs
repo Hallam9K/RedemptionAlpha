@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
+using Redemption.Buffs;
 
 namespace Redemption.Globals.Player
 {
@@ -39,6 +40,7 @@ namespace Redemption.Globals.Player
         public bool antibodiesBuff;
         public bool antiXenomiteBuff;
         public int infectionTimer;
+        public bool eldritchRoot;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -81,6 +83,7 @@ namespace Redemption.Globals.Player
             antiXenomiteBuff = false;
             pureIronBonus = false;
             dragonLeadBonus = false;
+            eldritchRoot = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -279,6 +282,8 @@ namespace Redemption.Globals.Player
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
             if (dragonLeadBonus && Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
+            if (eldritchRoot && target.life <= 0)
+                Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -288,6 +293,8 @@ namespace Redemption.Globals.Player
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
             if (dragonLeadBonus && Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
+            if (eldritchRoot && target.life <= 0)
+                Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
         }
         public override void UpdateBadLifeRegen()
         {

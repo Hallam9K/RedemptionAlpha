@@ -8,7 +8,7 @@ namespace Redemption.Items.Materials.HM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Capacitator");
-            Tooltip.SetDefault("'Holds an extreme amount of energy...'");
+            Tooltip.SetDefault("'Holds an extreme amount of energy'");
         }
 
         public override void SetDefaults()

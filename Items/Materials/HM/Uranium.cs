@@ -26,7 +26,7 @@ namespace Redemption.Items.Materials.HM
             Item.rare = ItemRarityID.Lime;
             Item.value = 2000;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<UraniumTile>(); //put your CustomBlock Tile name
+            Item.createTile = ModContent.TileType<UraniumTile>();
         }
     }
 }

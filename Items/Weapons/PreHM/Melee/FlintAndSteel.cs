@@ -10,8 +10,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flint and Steel");
-            Tooltip.SetDefault("'Doesn't work on obsidian'"
-                + "\nReleases a tiny spark which lights enemies on fire");
+            Tooltip.SetDefault("Releases a tiny spark which lights enemies on fire\n" +
+                "'Doesn't work on obsidian'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

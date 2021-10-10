@@ -14,10 +14,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blade of the Mountain");
-            Tooltip.SetDefault("'Send them to their snowy grave'\n" +
-                "Parries physical or ice projectiles" +
+            Tooltip.SetDefault("Parries physical or ice projectiles" +
                 "\nHitting on the very tip of the blade can freeze enemies" +
-                "\nEnemies with knockback immunity cannot be frozen");
+                "\nEnemies with knockback immunity cannot be frozen\n" +
+                "'Send them to their snowy grave'");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

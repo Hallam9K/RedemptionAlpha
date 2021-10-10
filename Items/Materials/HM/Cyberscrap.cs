@@ -1,3 +1,4 @@
+using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +10,7 @@ namespace Redemption.Items.Materials.HM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cyberscrap");
-            Tooltip.SetDefault("'Versatile, and can be used to make anything.'");
+            Tooltip.SetDefault("'Versatile, and can be used to make anything'");
         }
 
         public override void SetDefaults()
@@ -25,7 +26,7 @@ namespace Redemption.Items.Materials.HM
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            //Item.createTile = ModContent.TileType<JunkMetalTile>(); 
+            Item.createTile = ModContent.TileType<JunkMetalTile>(); 
         }
     }
 }
