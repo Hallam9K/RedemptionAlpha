@@ -243,18 +243,19 @@ namespace Redemption.NPCs.PreHM
 
                     if (AniFrameY is 4 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
                     {
+                        int damage = NPC.GetGlobalNPC<BuffNPC>().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
                         if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
                         {
                             (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 10;
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 9, hitDirection, NPC);
+                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage, 9, hitDirection, NPC);
                             if (Main.rand.NextBool(3))
                                 (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
                         else if (globalNPC.attacker is Player)
                         {
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 9, hitDirection, NPC);
+                            BaseAI.DamagePlayer(globalNPC.attacker as Player, damage, 9, hitDirection, NPC);
                             if (Main.rand.NextBool(3))
                                 (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
@@ -277,7 +278,8 @@ namespace Redemption.NPCs.PreHM
 
                     if (AITimer == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkeletonNoble_HalberdProj>(), NPC.damage,
+                        int damage = NPC.GetGlobalNPC<BuffNPC>().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkeletonNoble_HalberdProj>(), damage,
                             RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), false, SoundID.Item1, "", NPC.whoAmI,
                             Personality == PersonalityState.Greedy ? 1 : 0);
                         AITimer = 1;

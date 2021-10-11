@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -153,6 +154,13 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 Projectile.localAI[1] = 0;
                 Projectile.Move(defaultPosition, 9, 20);
             }
+        }
+
+        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        {
+            NPC host = Main.npc[(int)Projectile.ai[0]];
+            if (host.GetGlobalNPC<BuffNPC>().disarmed)
+                damage = (int)(damage * 0.2f);
         }
 
         public override bool CanHitPlayer(Player target)

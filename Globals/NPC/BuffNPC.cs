@@ -33,6 +33,7 @@ namespace Redemption.Globals.NPC
         public bool necroticGouge;
         public bool iceFrozen;
         public bool frozenFallen;
+        public bool disarmed;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -44,6 +45,7 @@ namespace Redemption.Globals.NPC
             dragonblaze = false;
             necroticGouge = false;
             iceFrozen = false;
+            disarmed = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -200,11 +202,18 @@ namespace Redemption.Globals.NPC
                 damage = (int)(damage * 1.15f);
             if (dragonblaze)
                 damage = (int)(damage * 0.85f);
+            if (disarmed)
+                damage = (int)(damage * 0.2f);
         }
         public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
             if (rallied)
                 damage = (int)(damage * 1.15f);
+            if (dragonblaze)
+                damage = (int)(damage * 0.85f);
+            if (disarmed)
+                damage = (int)(damage * 0.2f);
+
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {

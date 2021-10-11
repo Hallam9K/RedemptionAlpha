@@ -268,7 +268,10 @@ namespace Redemption.NPCs.Friendly
             //    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ForestGolemPainting>());
 
             if (NPC.downedBoss2)
+            {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestSpelltome>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SwordSlicer>());
+            }
 
             if (RedeBossDowned.downedEaglecrestGolem)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GolemEye>());

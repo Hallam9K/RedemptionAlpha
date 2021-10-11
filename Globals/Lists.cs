@@ -535,6 +535,7 @@ namespace Redemption.Globals
         public static readonly TagData Cold = ContentTags.Get<GroupNPC>(nameof(Cold));
         public static readonly TagData Dragonlike = ContentTags.Get<GroupNPC>(nameof(Dragonlike));
         public static readonly TagData Inorganic = ContentTags.Get<GroupNPC>(nameof(Inorganic));
+        public static readonly TagData Armed = ContentTags.Get<GroupNPC>(nameof(Armed));
         public static readonly TagData CannotManipulate = ContentTags.Get<GroupNPC>(nameof(CannotManipulate));
 
         public static void SetNPCTags()
@@ -580,6 +581,10 @@ namespace Redemption.Globals
 
             #region Inorganic
             Inorganic.SetMultiple(NPCID.GraniteFlyer, NPCID.GraniteGolem, NPCID.MeteorHead, NPCID.Mimic, NPCID.BigMimicCorruption, NPCID.BigMimicCrimson, NPCID.BigMimicHallow, NPCID.BigMimicJungle, NPCID.IceMimic, NPCID.PresentMimic, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.EnchantedSword, NPCID.IceElemental, NPCID.MartianProbe, NPCID.PossessedArmor, NPCID.Pixie, NPCID.Paladin, NPCID.RockGolem, NPCID.ChatteringTeethBomb, NPCID.AngryNimbus, NPCID.IceGolem, NPCID.Tumbleweed, NPCID.MisterStabby, NPCID.SnowmanGangsta, NPCID.SnowBalla, NPCID.DeadlySphere, NPCID.MartianDrone, NPCID.MartianWalker, NPCID.MartianTurret, NPCID.Flocko, NPCID.GingerbreadMan, NPCID.Nutcracker, NPCID.NutcrackerSpinning, NPCID.SolarCorite, NPCID.Golem, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead, NPCID.GolemHeadFree, NPCID.SkeletronPrime, NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.TheDestroyer, NPCID.TheDestroyerBody, NPCID.TheDestroyerTail, NPCID.Spazmatism, NPCID.Retinazer, NPCID.PirateShipCannon, NPCID.IceQueen, NPCID.SantaNK1, NPCID.MartianSaucer, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore, NPCID.MartianSaucerTurret, NPCID.Probe, ModContent.NPCType<AncientGladestoneGolem>(), ModContent.NPCType<EaglecrestGolem>(), ModContent.NPCType<EaglecrestGolem_Sleep>(), ModContent.NPCType<EaglecrestRockPile>());
+            #endregion
+
+            #region Armed
+            Armed.SetMultiple(NPCID.RedDevil, NPCID.Paladin, NPCID.GoblinThief, NPCID.DD2GoblinT1, NPCID.DD2GoblinT2, NPCID.DD2GoblinT3, NPCID.MisterStabby, NPCID.PirateCorsair, NPCID.PirateGhost, NPCID.Butcher, NPCID.Psycho, NPCID.Reaper, NPCID.SolarDrakomireRider, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.Pumpking, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesSword, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBones, NPCID.HellArmoredBonesSword, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>());
             #endregion
 
             #region Cannot Manipulate

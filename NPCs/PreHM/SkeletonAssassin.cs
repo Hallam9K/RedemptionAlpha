@@ -320,18 +320,19 @@ namespace Redemption.NPCs.PreHM
                         SoundEngine.PlaySound(SoundID.Item19, NPC.position);
                     if (AITimer >= 10 && globalNPC.attacker.Hitbox.Intersects(KnifeHitbox))
                     {
+                        int damage = NPC.GetGlobalNPC<BuffNPC>().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
                         if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
                         {
                             (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 20;
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
                             if (Main.rand.NextBool(3))
                                 (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
                         else if (globalNPC.attacker is Player)
                         {
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC); 
+                            BaseAI.DamagePlayer(globalNPC.attacker as Player, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC); 
                             if (Main.rand.NextBool(3))
                                 (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }

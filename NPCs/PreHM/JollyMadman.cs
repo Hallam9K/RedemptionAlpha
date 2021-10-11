@@ -275,18 +275,19 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.frame.Y == 6 * 62 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
                     {
+                        int damage = NPC.GetGlobalNPC<BuffNPC>().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
                         if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
                         {
                             (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 10;
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 5, hitDirection, NPC);
+                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage, 5, hitDirection, NPC);
                             (globalNPC.attacker as NPC).AddBuff(BuffID.Bleeding, 1000);
                             (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                         }
                         else if (globalNPC.attacker is Player)
                         {
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 5, hitDirection, NPC);
+                            BaseAI.DamagePlayer(globalNPC.attacker as Player, damage, 5, hitDirection, NPC);
                             if (Main.rand.NextBool(2) || Main.expertMode)
                             {
                                 (globalNPC.attacker as Player).AddBuff(BuffID.Bleeding, 1000);
