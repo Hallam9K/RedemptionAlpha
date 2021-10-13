@@ -534,6 +534,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                             NPC.frameCounter = 0;
                             NPC.position = NPC.FindGroundPlayer(15) - new Vector2(0, NPC.height);
                             AIState = ActionState.TeleportEnd;
+                            NPC.velocity.X = 0;
                             NPC.netUpdate = true;
                         }
                     }
