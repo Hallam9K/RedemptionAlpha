@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Friendly
                     }
                 }
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
                 NPC.frame.X = NPC.frame.Width * FallenType;
 
                 if (NPC.IsABestiaryIconDummy)

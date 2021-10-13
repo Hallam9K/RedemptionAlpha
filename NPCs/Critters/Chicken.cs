@@ -274,7 +274,7 @@ namespace Redemption.NPCs.Critters
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 4;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 4;
                 NPC.frame.X = ChickType switch
                 {
                     ChickenType.Red => NPC.frame.Width,

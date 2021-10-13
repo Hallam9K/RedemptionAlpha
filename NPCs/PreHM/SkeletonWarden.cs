@@ -344,7 +344,7 @@ namespace Redemption.NPCs.PreHM
             {
                 RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
                 NPC.frame.X = Personality switch
                 {
                     PersonalityState.Soulful => NPC.frame.Width * 1,

@@ -563,7 +563,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 }
                 oldrot[0] = NPC.rotation;
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
                 if (AIState is ActionState.Attacks && ID == 0 && AITimer >= 200)
                 {
                     NPC.frame.X = NPC.frame.Width;

@@ -226,7 +226,7 @@ namespace Redemption.NPCs.PreHM
             if (Main.netMode != NetmodeID.Server)
             {
                 RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
                 switch (AIState)
                 {
                     case ActionState.PillarAttack:

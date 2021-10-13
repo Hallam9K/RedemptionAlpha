@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Friendly
                     Level = 0;
                 }
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
                 NPC.frame.X = NPC.frame.Width * Level;
 
                 if (NPC.IsABestiaryIconDummy)

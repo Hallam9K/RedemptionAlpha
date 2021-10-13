@@ -868,7 +868,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                         VeilFrameY = 0;
                 }
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 4;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 4;
                 if (AIState is ActionState.Teddy)
                 {
                     if (TimerRand < 3)

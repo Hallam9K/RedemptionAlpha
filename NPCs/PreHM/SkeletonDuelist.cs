@@ -278,7 +278,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 6;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 6;
                 NPC.frame.X = Personality switch
                 {
                     PersonalityState.Soulful => NPC.frame.Width * (AIState is ActionState.Alert or ActionState.IdleAlert ? 2 : 3),

@@ -277,7 +277,7 @@ namespace Redemption.NPCs.Friendly
             if (Main.netMode != NetmodeID.Server)
             {
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
                 NPC.frame.X = NPC.frame.Width * WoodType;
                 EyeFrameX = WoodType;
 

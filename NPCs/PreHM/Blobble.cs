@@ -151,7 +151,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 7;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 7;
                 NPC.frame.X = NPC.frame.Width * (int)HatType;
                 if (NPC.collideY || NPC.velocity.Y == 0)
                 {

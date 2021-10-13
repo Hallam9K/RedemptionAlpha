@@ -622,7 +622,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 }
                 oldrot[0] = NPC.rotation;
 
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
                 NPC.frame.X = 0;
                 if (FreakOut)
                     NPC.frame.X = NPC.frame.Width;
