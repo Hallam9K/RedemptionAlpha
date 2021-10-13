@@ -6,6 +6,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
+using Redemption.Projectiles.Ranged;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -34,6 +35,7 @@ namespace Redemption.Globals.NPC
         public bool iceFrozen;
         public bool frozenFallen;
         public bool disarmed;
+        public bool silverwoodArrow;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -46,6 +48,7 @@ namespace Redemption.Globals.NPC
             necroticGouge = false;
             iceFrozen = false;
             disarmed = false;
+            silverwoodArrow = false;
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -183,6 +186,22 @@ namespace Redemption.Globals.NPC
                 }
                 else
                     npc.lifeRegen -= 12;
+            }
+            if (silverwoodArrow)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                int arrowCount = 0;
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.type == ModContent.ProjectileType<SilverwoodArrow>() && p.ai[0] == 1f && p.ai[1] == npc.whoAmI)
+                        arrowCount++;
+                }
+                npc.lifeRegen -= arrowCount * 7;
+                if (damage < arrowCount * 8)
+                    damage = arrowCount * 8;
             }
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

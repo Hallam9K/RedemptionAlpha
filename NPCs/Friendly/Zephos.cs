@@ -305,7 +305,7 @@ namespace Redemption.NPCs.Friendly
         public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
         {
             scale = 1f;
-            item = TextureAssets.Item[ModContent.ItemType<PureIronSword>()].Value;
+            item = TextureAssets.Item[ModContent.ItemType<SwordSlicer>()].Value;
             itemSize = 36;
         }
 

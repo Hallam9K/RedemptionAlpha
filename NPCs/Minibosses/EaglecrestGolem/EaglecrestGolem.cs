@@ -205,7 +205,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         NPC.netUpdate = true;
                     }
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) > 150 * 150 && Main.rand.NextBool(200))
+                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) > 150 * 150 && Main.rand.NextBool(400))
                     {
                         TimerRand2 = 0;
                         AIState = ActionState.Laser;

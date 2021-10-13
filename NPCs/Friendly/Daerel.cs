@@ -274,7 +274,10 @@ namespace Redemption.NPCs.Friendly
             //    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ForestGolemPainting>());
 
             if (NPC.downedBoss2)
+            {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestSpelltome>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SilverwoodBow>());
+            }
 
             if (RedeBossDowned.downedEaglecrestGolem)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GolemEye>());
@@ -305,7 +308,7 @@ namespace Redemption.NPCs.Friendly
         public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
         {
             scale = 1f;
-            item = ModContent.ItemType<LunarShot>();
+            item = ModContent.ItemType<SilverwoodBow>();
             closeness = 20;
         }
         public override void TownNPCAttackProj(ref int projType, ref int attackDelay)

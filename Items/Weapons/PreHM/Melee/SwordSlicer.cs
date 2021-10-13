@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sword Slicer");
+            DisplayName.SetDefault("Zephos' Sword Slicer");
             Tooltip.SetDefault("Hitting armed enemies inflicts Disarmed\n" +
                 "Disarmed heavily decreases contact damage and their weapon damage\n" +
                 "Blocks physical projectiles");
