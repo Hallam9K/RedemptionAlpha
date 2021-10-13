@@ -19,7 +19,7 @@ namespace Redemption.Items.Armor.PostML
             DisplayName.SetDefault("Shadehead");
             Tooltip.SetDefault("10% increased ritual damage"
                 + "\n15% increased ritual critical strike chance"
-                + "\n[c/bdffff:Spirit Level +2]");
+                + "\n[c/bdffff:Maximum Spirit Level +2]");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -48,7 +48,7 @@ namespace Redemption.Items.Armor.PostML
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Double tap DOWN to convert all absorable spirits to offensive shadesouls that home onto enemies";
+            player.setBonus = "Double tap DOWN to convert all absorbable spirits to offensive shadesouls that home onto enemies";
 
         }
     }

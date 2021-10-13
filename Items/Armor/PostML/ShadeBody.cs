@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PostML
         {
             DisplayName.SetDefault("Shadeplate");
             Tooltip.SetDefault("10% increased ritual damage\n" +
-                "\n[c/bdffff:Spirit Level +2]");
+                "\n[c/bdffff:Maximum Spirit Level +2]");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
