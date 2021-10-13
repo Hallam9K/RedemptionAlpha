@@ -614,30 +614,33 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void FindFrame(int frameHeight)
         {
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+            if (Main.netMode != NetmodeID.Server)
             {
-                oldrot[k] = oldrot[k - 1];
-            }
-            oldrot[0] = NPC.rotation;
-
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
-            NPC.frame.X = 0;
-            if (FreakOut)
-                NPC.frame.X = NPC.frame.Width;
-
-            if (++NPC.frameCounter >= (FreakOut ? 5 : 10))
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (!FreakOut && NPC.frame.Y == 4 * frameHeight)
+                for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 {
-                    if (!Main.rand.NextBool(4))
-                    {
-                        NPC.frame.Y = 0;
-                    }
+                    oldrot[k] = oldrot[k - 1];
                 }
-                if (NPC.frame.Y > 5 * frameHeight)
-                    NPC.frame.Y = 0 * frameHeight;
+                oldrot[0] = NPC.rotation;
+
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+                NPC.frame.X = 0;
+                if (FreakOut)
+                    NPC.frame.X = NPC.frame.Width;
+
+                if (++NPC.frameCounter >= (FreakOut ? 5 : 10))
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (!FreakOut && NPC.frame.Y == 4 * frameHeight)
+                    {
+                        if (!Main.rand.NextBool(4))
+                        {
+                            NPC.frame.Y = 0;
+                        }
+                    }
+                    if (NPC.frame.Y > 5 * frameHeight)
+                        NPC.frame.Y = 0 * frameHeight;
+                }
             }
         }
 

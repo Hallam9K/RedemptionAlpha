@@ -159,7 +159,7 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
 
-                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.type == TileID.HayBlock && 
+                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.type == TileID.HayBlock &&
                         tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
                     {
                         AITimer = 0;
@@ -272,81 +272,84 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 4;
-            NPC.frame.X = ChickType switch
+            if (Main.netMode != NetmodeID.Server)
             {
-                ChickenType.Red => NPC.frame.Width,
-                ChickenType.Leghorn => NPC.frame.Width * 2,
-                ChickenType.Black => NPC.frame.Width * 3,
-                _ => 0,
-            };
-
-            if (AIState is ActionState.Peck)
-            {
-                NPC.rotation = 0;
-
-                if (NPC.frame.Y < 14 * frameHeight)
-                    NPC.frame.Y = 14 * frameHeight;
-
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 5)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 4;
+                NPC.frame.X = ChickType switch
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 20 * frameHeight)
-                    {
-                        NPC.frame.Y = 0;
-                        AIState = ActionState.Idle;
-                    }
-                }
-                return;
-            }
-            if (AIState is ActionState.Sit)
-            {
-                NPC.rotation = 0;
+                    ChickenType.Red => NPC.frame.Width,
+                    ChickenType.Leghorn => NPC.frame.Width * 2,
+                    ChickenType.Black => NPC.frame.Width * 3,
+                    _ => 0,
+                };
 
-                if (NPC.frame.Y < 9 * frameHeight)
-                    NPC.frame.Y = 9 * frameHeight;
-
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 10)
+                if (AIState is ActionState.Peck)
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 13 * frameHeight)
-                    {
-                        NPC.frame.Y = 13 * frameHeight;
-                    }
-                }
-                return;
-            }
+                    NPC.rotation = 0;
 
-            if (NPC.collideY || NPC.velocity.Y == 0)
-            {
-                NPC.rotation = 0;
-                if (NPC.velocity.X == 0)
-                {
-                    NPC.frame.Y = 0;
-                }
-                else
-                {
-                    if (NPC.frame.Y < 1 * frameHeight)
-                        NPC.frame.Y = 1 * frameHeight;
+                    if (NPC.frame.Y < 14 * frameHeight)
+                        NPC.frame.Y = 14 * frameHeight;
 
-                    NPC.frameCounter += NPC.velocity.X * 0.75f;
-                    if (NPC.frameCounter is >= 5 or <= -5)
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter >= 5)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 8 * frameHeight)
+                        if (NPC.frame.Y > 20 * frameHeight)
+                        {
+                            NPC.frame.Y = 0;
+                            AIState = ActionState.Idle;
+                        }
+                    }
+                    return;
+                }
+                if (AIState is ActionState.Sit)
+                {
+                    NPC.rotation = 0;
+
+                    if (NPC.frame.Y < 9 * frameHeight)
+                        NPC.frame.Y = 9 * frameHeight;
+
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter >= 10)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 13 * frameHeight)
+                        {
+                            NPC.frame.Y = 13 * frameHeight;
+                        }
+                    }
+                    return;
+                }
+
+                if (NPC.collideY || NPC.velocity.Y == 0)
+                {
+                    NPC.rotation = 0;
+                    if (NPC.velocity.X == 0)
+                    {
+                        NPC.frame.Y = 0;
+                    }
+                    else
+                    {
+                        if (NPC.frame.Y < 1 * frameHeight)
                             NPC.frame.Y = 1 * frameHeight;
+
+                        NPC.frameCounter += NPC.velocity.X * 0.75f;
+                        if (NPC.frameCounter is >= 5 or <= -5)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > 8 * frameHeight)
+                                NPC.frame.Y = 1 * frameHeight;
+                        }
                     }
                 }
-            }
-            else
-            {
-                NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 2 * frameHeight;
+                else
+                {
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.Y = 2 * frameHeight;
+                }
             }
         }
 

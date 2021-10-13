@@ -102,7 +102,7 @@ namespace Redemption.NPCs.Friendly
                         Point tileToNPC = NPC.Center.ToTileCoordinates();
                         int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].type;
                         if (type == TileID.VanityTreeSakura)
-                            SakuraScore++; 
+                            SakuraScore++;
                         if (type == TileID.VanityTreeYellowWillow)
                             WillowScore++;
                     }
@@ -274,50 +274,54 @@ namespace Redemption.NPCs.Friendly
 
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = NPC.frame.Width * WoodType;
-            EyeFrameX = WoodType;
-
-            if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
+            if (Main.netMode != NetmodeID.Server)
             {
-                int goreType = GoreID.TreeLeaf_Normal;
-                switch (WoodType)
+
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.X = NPC.frame.Width * WoodType;
+                EyeFrameX = WoodType;
+
+                if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
                 {
-                    case 1:
-                        goreType = GoreID.TreeLeaf_VanityTreeYellowWillow;
-                        break;
-                    case 2:
-                        goreType = GoreID.TreeLeaf_VanityTreeSakura;
-                        break;
-                }
-                if (Main.rand.NextBool(60))
-                    Gore.NewGore(new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
+                    int goreType = GoreID.TreeLeaf_Normal;
+                    switch (WoodType)
+                    {
+                        case 1:
+                            goreType = GoreID.TreeLeaf_VanityTreeYellowWillow;
+                            break;
+                        case 2:
+                            goreType = GoreID.TreeLeaf_VanityTreeSakura;
+                            break;
+                    }
+                    if (Main.rand.NextBool(60))
+                        Gore.NewGore(new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
 
-                if (NPC.frame.Y < 4 * frameHeight)
-                    NPC.frame.Y = 4 * frameHeight;
-
-                if (++NPC.frameCounter >= 15)
-                {
-                    EyeFrameY = 1;
-
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 8 * frameHeight)
+                    if (NPC.frame.Y < 4 * frameHeight)
                         NPC.frame.Y = 4 * frameHeight;
-                }
-            }
-            else
-            {
-                if (++NPC.frameCounter >= 15)
-                {
-                    EyeFrameY = 0;
-                    if (Main.rand.NextBool(8))
+
+                    if (++NPC.frameCounter >= 15)
+                    {
                         EyeFrameY = 1;
 
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 3 * frameHeight)
-                        NPC.frame.Y = 0 * frameHeight;
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 8 * frameHeight)
+                            NPC.frame.Y = 4 * frameHeight;
+                    }
+                }
+                else
+                {
+                    if (++NPC.frameCounter >= 15)
+                    {
+                        EyeFrameY = 0;
+                        if (Main.rand.NextBool(8))
+                            EyeFrameY = 1;
+
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
+                    }
                 }
             }
         }

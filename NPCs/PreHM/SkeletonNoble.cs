@@ -263,7 +263,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Stab:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead()|| NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -296,93 +296,96 @@ namespace Redemption.NPCs.PreHM
         }
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = Personality switch
+            if (Main.netMode != NetmodeID.Server)
             {
-                PersonalityState.Soulful => NPC.frame.Width,
-                PersonalityState.Greedy => NPC.frame.Width * 2,
-                _ => 0,
-            };
-            AniFrameX = Personality switch
-            {
-                PersonalityState.Soulful => 1,
-                PersonalityState.Greedy => 2,
-                _ => 0,
-            };
-            switch (AIState)
-            {
-                case ActionState.Stab:
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter < 10)
-                        NPC.frame.Y = 13 * frameHeight;
-                    else if (NPC.frameCounter < 20)
-                        NPC.frame.Y = 14 * frameHeight;
-                    else if (NPC.frameCounter < 40)
-                        NPC.frame.Y = 15 * frameHeight;
-                    else
-                    {
-                        NPC.frame.Y = 0;
-                        NPC.frameCounter = 0;
-                        AIState = ActionState.Alert;
-                    }
-                    return;
-
-                case ActionState.Slash:
-                    if (++NPC.frameCounter >= 7)
-                    {
-                        NPC.frameCounter = 0;
-                        AniFrameY++;
-                        if (AniFrameY is 1)
-                            SoundEngine.PlaySound(SoundID.Item19, NPC.position);
-                        if (AniFrameY is 4)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.X = Personality switch
+                {
+                    PersonalityState.Soulful => NPC.frame.Width,
+                    PersonalityState.Greedy => NPC.frame.Width * 2,
+                    _ => 0,
+                };
+                AniFrameX = Personality switch
+                {
+                    PersonalityState.Soulful => 1,
+                    PersonalityState.Greedy => 2,
+                    _ => 0,
+                };
+                switch (AIState)
+                {
+                    case ActionState.Stab:
+                        NPC.frameCounter++;
+                        if (NPC.frameCounter < 10)
+                            NPC.frame.Y = 13 * frameHeight;
+                        else if (NPC.frameCounter < 20)
+                            NPC.frame.Y = 14 * frameHeight;
+                        else if (NPC.frameCounter < 40)
+                            NPC.frame.Y = 15 * frameHeight;
+                        else
                         {
-                            Player player = Main.player[NPC.target];
-                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
-                            NPC.velocity.X = 2 * NPC.spriteDirection;
-                        }
-                        if (AniFrameY > 5)
-                        {
-                            AniFrameY = 0;
+                            NPC.frame.Y = 0;
+                            NPC.frameCounter = 0;
                             AIState = ActionState.Alert;
                         }
-                    }
-                    return;
-            }
-            AniFrameY = 0;
+                        return;
 
-            if (NPC.collideY || NPC.velocity.Y == 0)
-            {
-                NPC.rotation = 0;
-                if (NPC.velocity.X == 0)
+                    case ActionState.Slash:
+                        if (++NPC.frameCounter >= 7)
+                        {
+                            NPC.frameCounter = 0;
+                            AniFrameY++;
+                            if (AniFrameY is 1)
+                                SoundEngine.PlaySound(SoundID.Item19, NPC.position);
+                            if (AniFrameY is 4)
+                            {
+                                Player player = Main.player[NPC.target];
+                                SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                                NPC.velocity.X = 2 * NPC.spriteDirection;
+                            }
+                            if (AniFrameY > 5)
+                            {
+                                AniFrameY = 0;
+                                AIState = ActionState.Alert;
+                            }
+                        }
+                        return;
+                }
+                AniFrameY = 0;
+
+                if (NPC.collideY || NPC.velocity.Y == 0)
                 {
-                    if (++NPC.frameCounter >= 10)
+                    NPC.rotation = 0;
+                    if (NPC.velocity.X == 0)
                     {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
-                            NPC.frame.Y = 0 * frameHeight;
+                        if (++NPC.frameCounter >= 10)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > 3 * frameHeight)
+                                NPC.frame.Y = 0 * frameHeight;
+                        }
+                    }
+                    else
+                    {
+                        if (NPC.frame.Y < 5 * frameHeight)
+                            NPC.frame.Y = 5 * frameHeight;
+
+                        NPC.frameCounter += NPC.velocity.X * 0.5f;
+                        if (NPC.frameCounter is >= 3 or <= -3)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > 12 * frameHeight)
+                                NPC.frame.Y = 5 * frameHeight;
+                        }
                     }
                 }
                 else
                 {
-                    if (NPC.frame.Y < 5 * frameHeight)
-                        NPC.frame.Y = 5 * frameHeight;
-
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 12 * frameHeight)
-                            NPC.frame.Y = 5 * frameHeight;
-                    }
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.Y = 4 * frameHeight;
                 }
-            }
-            else
-            {
-                NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 4 * frameHeight;
             }
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool friendly = false)

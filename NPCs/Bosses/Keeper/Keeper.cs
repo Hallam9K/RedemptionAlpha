@@ -850,95 +850,98 @@ namespace Redemption.NPCs.Bosses.Keeper
         private int VeilCounter;
         public override void FindFrame(int frameHeight)
         {
-            Player player = Main.player[NPC.target];
-
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+            if (Main.netMode != NetmodeID.Server)
             {
-                oldrot[k] = oldrot[k - 1];
-            }
-            oldrot[0] = NPC.rotation;
+                Player player = Main.player[NPC.target];
 
-            if (++VeilCounter >= 5)
-            {
-                VeilCounter = 0;
-                VeilFrameY++;
-                if (VeilFrameY > 5)
-                    VeilFrameY = 0;
-            }
-
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 4;
-            if (AIState is ActionState.Teddy)
-            {
-                if (TimerRand < 3)
-                    NPC.frame.X = (TimerRand == 2 ? 3 : 2) * NPC.frame.Width;
-
-                if (++NPC.frameCounter >= 5)
+                for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    switch (TimerRand)
-                    {
-                        case 0:
-                            if (NPC.frame.Y > 2 * frameHeight)
-                                NPC.frame.Y = 0 * frameHeight;
-                            break;
-                        case 1:
-                            if (NPC.frame.Y > 8 * frameHeight)
-                                NPC.frame.Y = 6 * frameHeight;
-                            break;
-                        case 2:
-                            if (NPC.frame.Y > 5 * frameHeight)
-                                NPC.frame.Y = 3 * frameHeight;
-                            break;
-                        case 3:
-                            if (NPC.frame.Y > 9 * frameHeight)
-                                NPC.frame.Y = 8 * frameHeight;
-                            break;
-                    }
+                    oldrot[k] = oldrot[k - 1];
                 }
-                return;
-            }
-            if (AIState is ActionState.Attacks && ID == 0 && AITimer >= 200)
-            {
-                NPC.frame.X = NPC.frame.Width;
+                oldrot[0] = NPC.rotation;
+
+                if (++VeilCounter >= 5)
+                {
+                    VeilCounter = 0;
+                    VeilFrameY++;
+                    if (VeilFrameY > 5)
+                        VeilFrameY = 0;
+                }
+
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 4;
+                if (AIState is ActionState.Teddy)
+                {
+                    if (TimerRand < 3)
+                        NPC.frame.X = (TimerRand == 2 ? 3 : 2) * NPC.frame.Width;
+
+                    if (++NPC.frameCounter >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        switch (TimerRand)
+                        {
+                            case 0:
+                                if (NPC.frame.Y > 2 * frameHeight)
+                                    NPC.frame.Y = 0 * frameHeight;
+                                break;
+                            case 1:
+                                if (NPC.frame.Y > 8 * frameHeight)
+                                    NPC.frame.Y = 6 * frameHeight;
+                                break;
+                            case 2:
+                                if (NPC.frame.Y > 5 * frameHeight)
+                                    NPC.frame.Y = 3 * frameHeight;
+                                break;
+                            case 3:
+                                if (NPC.frame.Y > 9 * frameHeight)
+                                    NPC.frame.Y = 8 * frameHeight;
+                                break;
+                        }
+                    }
+                    return;
+                }
+                if (AIState is ActionState.Attacks && ID == 0 && AITimer >= 200)
+                {
+                    NPC.frame.X = NPC.frame.Width;
+                    if (++NPC.frameCounter >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        NPC.velocity *= 0.8f;
+                        if (NPC.frame.Y == 4 * frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item71, NPC.position);
+                            NPC.velocity.X = MathHelper.Clamp(Math.Abs((player.Center.X - NPC.Center.X) / 30), 30, 50) * NPC.spriteDirection;
+                        }
+                        if (NPC.frame.Y > 7 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
+                    }
+                    return;
+                }
+                else
+                    NPC.frame.X = 0;
+
+                if (AIState is ActionState.Unveiled or ActionState.Death || SoulCharging)
+                {
+                    if (NPC.frame.Y < 6 * frameHeight)
+                        NPC.frame.Y = 6 * frameHeight;
+
+                    if (++NPC.frameCounter >= 10)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 8 * frameHeight)
+                            NPC.frame.Y = 7 * frameHeight;
+                    }
+                    return;
+                }
                 if (++NPC.frameCounter >= 5)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
-                    NPC.velocity *= 0.8f;
-                    if (NPC.frame.Y == 4 * frameHeight)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item71, NPC.position);
-                        NPC.velocity.X = MathHelper.Clamp(Math.Abs((player.Center.X - NPC.Center.X) / 30), 30, 50) * NPC.spriteDirection;
-                    }
-                    if (NPC.frame.Y > 7 * frameHeight)
+                    if (NPC.frame.Y > 5 * frameHeight)
                         NPC.frame.Y = 0 * frameHeight;
                 }
-                return;
-            }
-            else
-                NPC.frame.X = 0;
-
-            if (AIState is ActionState.Unveiled or ActionState.Death || SoulCharging)
-            {
-                if (NPC.frame.Y < 6 * frameHeight)
-                    NPC.frame.Y = 6 * frameHeight;
-
-                if (++NPC.frameCounter >= 10)
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 8 * frameHeight)
-                        NPC.frame.Y = 7 * frameHeight;
-                }
-                return;
-            }
-            if (++NPC.frameCounter >= 5)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 5 * frameHeight)
-                    NPC.frame.Y = 0 * frameHeight;
             }
         }
 

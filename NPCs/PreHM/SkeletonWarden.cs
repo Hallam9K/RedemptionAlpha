@@ -340,64 +340,67 @@ namespace Redemption.NPCs.PreHM
         }
         public override void FindFrame(int frameHeight)
         {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = Personality switch
+            if (Main.netMode != NetmodeID.Server)
             {
-                PersonalityState.Soulful => NPC.frame.Width * 1,
-                PersonalityState.Greedy => NPC.frame.Width * 2,
-                _ => 0,
-            };
-            if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 &&
-                globalNPC.attacker.Center.X < NPC.Center.X + 100)
-            {
-                NPC.rotation = 0;
+                RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
 
-                if (NPC.frame.Y < 13 * frameHeight)
-                    NPC.frame.Y = 13 * frameHeight;
-                if (++NPC.frameCounter >= 10)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.X = Personality switch
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 16 * frameHeight)
+                    PersonalityState.Soulful => NPC.frame.Width * 1,
+                    PersonalityState.Greedy => NPC.frame.Width * 2,
+                    _ => 0,
+                };
+                if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 &&
+                    globalNPC.attacker.Center.X < NPC.Center.X + 100)
+                {
+                    NPC.rotation = 0;
+
+                    if (NPC.frame.Y < 13 * frameHeight)
                         NPC.frame.Y = 13 * frameHeight;
-                }
-                return;
-            }
-
-            if (NPC.collideY || NPC.velocity.Y == 0)
-            {
-                NPC.rotation = 0;
-                if (NPC.velocity.X == 0)
-                {
                     if (++NPC.frameCounter >= 10)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
-                            NPC.frame.Y = 0 * frameHeight;
+                        if (NPC.frame.Y > 16 * frameHeight)
+                            NPC.frame.Y = 13 * frameHeight;
+                    }
+                    return;
+                }
+
+                if (NPC.collideY || NPC.velocity.Y == 0)
+                {
+                    NPC.rotation = 0;
+                    if (NPC.velocity.X == 0)
+                    {
+                        if (++NPC.frameCounter >= 10)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > 3 * frameHeight)
+                                NPC.frame.Y = 0 * frameHeight;
+                        }
+                    }
+                    else
+                    {
+                        if (NPC.frame.Y < 5 * frameHeight)
+                            NPC.frame.Y = 5 * frameHeight;
+
+                        NPC.frameCounter += NPC.velocity.X * 0.5f;
+                        if (NPC.frameCounter is >= 3 or <= -3)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > 12 * frameHeight)
+                                NPC.frame.Y = 5 * frameHeight;
+                        }
                     }
                 }
                 else
                 {
-                    if (NPC.frame.Y < 5 * frameHeight)
-                        NPC.frame.Y = 5 * frameHeight;
-
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 12 * frameHeight)
-                            NPC.frame.Y = 5 * frameHeight;
-                    }
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.Y = 4 * frameHeight;
                 }
-            }
-            else
-            {
-                NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 4 * frameHeight;
             }
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool nearestUndead = false)

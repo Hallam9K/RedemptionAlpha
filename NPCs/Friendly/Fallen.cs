@@ -74,33 +74,36 @@ namespace Redemption.NPCs.Friendly
         public int bestiaryTimer = -1;
         public override void FindFrame(int frameHeight)
         {
-            if (FallenType < 0)
+            if (Main.netMode != NetmodeID.Server)
             {
-                switch (NPC.GivenName)
+                if (FallenType < 0)
                 {
-                    case "Okvot":
-                        FallenType = 0;
-                        break;
-                    case "Tenvon":
-                        FallenType = 1;
-                        break;
-                    case "Happins":
-                        FallenType = 2;
-                        break;
+                    switch (NPC.GivenName)
+                    {
+                        case "Okvot":
+                            FallenType = 0;
+                            break;
+                        case "Tenvon":
+                            FallenType = 1;
+                            break;
+                        case "Happins":
+                            FallenType = 2;
+                            break;
+                    }
                 }
-            }
 
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = NPC.frame.Width * FallenType;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.X = NPC.frame.Width * FallenType;
 
-            if (NPC.IsABestiaryIconDummy)
-            {
-                bestiaryTimer++;
-                if (bestiaryTimer % 60 == 0)
+                if (NPC.IsABestiaryIconDummy)
                 {
-                    FallenType++;
-                    if (FallenType > 2)
-                        FallenType = 0;
+                    bestiaryTimer++;
+                    if (bestiaryTimer % 60 == 0)
+                    {
+                        FallenType++;
+                        if (FallenType > 2)
+                            FallenType = 0;
+                    }
                 }
             }
         }
@@ -212,8 +215,8 @@ namespace Redemption.NPCs.Friendly
                 shop = true;
             else
             {
-                int[] Frag = new int[] { 
-                    player.FindItem(ModContent.ItemType<ZweihanderFragment1>()), 
+                int[] Frag = new int[] {
+                    player.FindItem(ModContent.ItemType<ZweihanderFragment1>()),
                     player.FindItem(ModContent.ItemType<ZweihanderFragment2>()) };
 
                 if (Frag[0] >= 0 && Frag[1] >= 0)

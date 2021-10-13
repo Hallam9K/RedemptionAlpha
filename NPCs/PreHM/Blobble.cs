@@ -149,24 +149,27 @@ namespace Redemption.NPCs.PreHM
 
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 7;
-            NPC.frame.X = NPC.frame.Width * (int)HatType;
-            if (NPC.collideY || NPC.velocity.Y == 0)
+            if (Main.netMode != NetmodeID.Server)
             {
-                NPC.rotation = 0;
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 10)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 7;
+                NPC.frame.X = NPC.frame.Width * (int)HatType;
+                if (NPC.collideY || NPC.velocity.Y == 0)
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 2 * frameHeight)
-                        NPC.frame.Y = 0;
+                    NPC.rotation = 0;
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter >= 10)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 2 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
                 }
-            }
-            else
-            {
-                NPC.rotation = NPC.velocity.X * 0.03f;
-                NPC.frame.Y = 2 * frameHeight;
+                else
+                {
+                    NPC.rotation = NPC.velocity.X * 0.03f;
+                    NPC.frame.Y = 2 * frameHeight;
+                }
             }
         }
 

@@ -63,8 +63,11 @@ namespace Redemption.NPCs.Friendly
 
         public override void FindFrame(int frameHeight)
         {
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
-            NPC.frame.X = 0;
+            if (Main.netMode != NetmodeID.Server)
+            {
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+                NPC.frame.X = 0;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

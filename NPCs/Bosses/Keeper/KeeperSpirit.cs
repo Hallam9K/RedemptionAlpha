@@ -553,42 +553,45 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void FindFrame(int frameHeight)
         {
-            Player player = Main.player[NPC.target];
-
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+            if (Main.netMode != NetmodeID.Server)
             {
-                oldrot[k] = oldrot[k - 1];
-            }
-            oldrot[0] = NPC.rotation;
+                Player player = Main.player[NPC.target];
 
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
-            if (AIState is ActionState.Attacks && ID == 0 && AITimer >= 200)
-            {
-                NPC.frame.X = NPC.frame.Width;
+                for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                {
+                    oldrot[k] = oldrot[k - 1];
+                }
+                oldrot[0] = NPC.rotation;
+
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 2;
+                if (AIState is ActionState.Attacks && ID == 0 && AITimer >= 200)
+                {
+                    NPC.frame.X = NPC.frame.Width;
+                    if (++NPC.frameCounter >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        NPC.velocity *= 0.8f;
+                        if (NPC.frame.Y == 4 * frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item71, NPC.position);
+                            NPC.velocity.X = MathHelper.Clamp(Math.Abs((player.Center.X - NPC.Center.X) / 30), 30, 50) * NPC.spriteDirection;
+                        }
+                        if (NPC.frame.Y > 7 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
+                    }
+                    return;
+                }
+                else
+                    NPC.frame.X = 0;
+
                 if (++NPC.frameCounter >= 5)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
-                    NPC.velocity *= 0.8f;
-                    if (NPC.frame.Y == 4 * frameHeight)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item71, NPC.position);
-                        NPC.velocity.X = MathHelper.Clamp(Math.Abs((player.Center.X - NPC.Center.X) / 30), 30, 50) * NPC.spriteDirection;
-                    }
-                    if (NPC.frame.Y > 7 * frameHeight)
+                    if (NPC.frame.Y > 5 * frameHeight)
                         NPC.frame.Y = 0 * frameHeight;
                 }
-                return;
-            }
-            else
-                NPC.frame.X = 0;
-
-            if (++NPC.frameCounter >= 5)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 5 * frameHeight)
-                    NPC.frame.Y = 0 * frameHeight;
             }
         }
 

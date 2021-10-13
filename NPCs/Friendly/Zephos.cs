@@ -90,22 +90,25 @@ namespace Redemption.NPCs.Friendly
         public int bestiaryTimer = -1;
         public override void FindFrame(int frameHeight)
         {
-            if (Level < 0)
+            if (Main.netMode != NetmodeID.Server)
             {
-                Level = 0;
-            }
-
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = NPC.frame.Width * Level;
-
-            if (NPC.IsABestiaryIconDummy)
-            {
-                bestiaryTimer++;
-                if (bestiaryTimer % 60 == 0)
+                if (Level < 0)
                 {
-                    Level++;
-                    if (Level > 2)
-                        Level = 0;
+                    Level = 0;
+                }
+
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.X = NPC.frame.Width * Level;
+
+                if (NPC.IsABestiaryIconDummy)
+                {
+                    bestiaryTimer++;
+                    if (bestiaryTimer % 60 == 0)
+                    {
+                        Level++;
+                        if (Level > 2)
+                            Level = 0;
+                    }
                 }
             }
         }

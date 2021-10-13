@@ -43,23 +43,26 @@ namespace Redemption.NPCs.Friendly
         public int Level = -1;
         public override void FindFrame(int frameHeight)
         {
-            if (Level < 0)
+            if (Main.netMode != NetmodeID.Server)
             {
-                Level = 0;
-            }
+                if (Level < 0)
+                {
+                    Level = 0;
+                }
 
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
-            NPC.frame.X = NPC.frame.Width * Level;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Value.Width / 3;
+                NPC.frame.X = NPC.frame.Width * Level;
 
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 10)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 3 * frameHeight)
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 10)
                 {
                     NPC.frameCounter = 0;
-                    NPC.frame.Y = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 3 * frameHeight)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y = 0;
+                    }
                 }
             }
         }
