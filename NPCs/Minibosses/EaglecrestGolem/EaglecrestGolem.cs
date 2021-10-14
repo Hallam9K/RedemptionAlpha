@@ -142,7 +142,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientPebble>()));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientSlingShot>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestSling>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
 

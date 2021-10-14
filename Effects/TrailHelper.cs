@@ -48,11 +48,13 @@ namespace Redemption.Effects
 				CreateTrail(projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
 			else if (projectile.type == ModContent.ProjectileType<IceBolt>())
 				CreateTrail(projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
+			else if (projectile.type == ModContent.ProjectileType<EaglecrestSling_Proj>())
+				CreateTrail(projectile, new GradientTrail(new Color(135, 122, 119), new Color(41, 36, 35)), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
 		}
 
 		public static void TryTrailKill(Projectile projectile)
 		{
-			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>() || projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>() || projectile.type == ModContent.ProjectileType<Lightmass>() || projectile.type == ModContent.ProjectileType<IceBolt>())
+			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>() || projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>() || projectile.type == ModContent.ProjectileType<Lightmass>() || projectile.type == ModContent.ProjectileType<IceBolt>() || projectile.type == ModContent.ProjectileType<EaglecrestSling_Proj>())
 				RedeSystem.TrailManager.TryEndTrail(projectile, Math.Max(15f, projectile.velocity.Length() * 3f));
 		}
 
