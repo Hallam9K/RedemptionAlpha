@@ -70,7 +70,7 @@ namespace Redemption.Projectiles.Ranged
             Rectangle boom = new((int)Projectile.Center.X - 50, (int)Projectile.Center.Y - 50, 100, 100);
             foreach (NPC target in Main.npc.Take(Main.maxNPCs))
             {
-                if (!target.active)
+                if (!target.active || target.friendly)
                     continue;
 
                 if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
