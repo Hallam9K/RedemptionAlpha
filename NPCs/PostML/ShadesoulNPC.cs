@@ -1,13 +1,19 @@
-using Terraria;
-using Terraria.ID;
+using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Dusts;
+using Redemption.Base;
 using Redemption.Buffs.Debuffs;
-using Redemption.Items.Materials.PostML;
+using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Globals.Player;
+using Redemption.Items.Materials.PostML;
+using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.PostML
 {
@@ -22,9 +28,10 @@ namespace Redemption.NPCs.PostML
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadesoul");
+            Main.npcFrameCount[Type] = 8;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new (0)
             {
                 Velocity = 1f
             };
@@ -60,7 +67,7 @@ namespace Redemption.NPCs.PostML
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
+                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(),
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2 + Scale);
                     Main.dust[dust].velocity *= 5f;
                     Main.dust[dust].noGravity = true;
@@ -98,6 +105,7 @@ namespace Redemption.NPCs.PostML
                 NPC.active = false;
             }
         }
+
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), Main.rand.Next(10, 15));
