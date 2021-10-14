@@ -5,7 +5,7 @@ namespace Redemption.Buffs.Debuffs
 {
 	public class BlackenedHeartDebuff : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStatisticDefaults()
 		{
 			DisplayName.SetDefault("Soulless");
 			Description.SetDefault("...");
