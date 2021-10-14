@@ -39,5 +39,14 @@ namespace Redemption.Items.Armor.PostML
             player.GetDamage<RitualistClass>() += .8f;
             player.GetCritChance<RitualistClass>() += 15;
         }
+
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Shadesoul>(), 3)
+            .AddTile(TileID.AncientManipulator)
+            .Register();
+        }
     }
 }

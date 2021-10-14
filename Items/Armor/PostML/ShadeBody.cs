@@ -36,5 +36,14 @@ namespace Redemption.Items.Armor.PostML
             RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
             modPlayer.maxSpiritLevel += 2;
         }
+
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Shadesoul>(), 4)
+            .AddTile(TileID.AncientManipulator)
+            .Register();
+        }
     }
 }

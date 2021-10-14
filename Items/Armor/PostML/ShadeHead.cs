@@ -51,5 +51,13 @@ namespace Redemption.Items.Armor.PostML
             player.setBonus = "Double tap DOWN to convert all absorbable spirits to offensive shadesouls that home onto enemies";
 
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Shadesoul>(), 3)
+            .AddTile(TileID.AncientManipulator)
+            .Register();
+        }
     }
 }
