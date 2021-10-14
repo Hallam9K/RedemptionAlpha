@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using Redemption.Items.Materials.PostML;
 using System;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
@@ -45,7 +46,7 @@ namespace Redemption.Items.Armor.PostML
         {
             CreateRecipe()
             .AddIngredient(ModContent.ItemType<Shadesoul>(), 3)
-            .AddTile(TileID.AncientManipulator)
+            .AddTile(TileID.LunarCraftingStation)
             .Register();
         }
     }

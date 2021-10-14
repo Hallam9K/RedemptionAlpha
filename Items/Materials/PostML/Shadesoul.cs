@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.NPCs.PostML;
+using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -9,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PostML
 {
-    public class LostSoul : ModItem
+    public class Shadesoul : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -35,17 +37,17 @@ namespace Redemption.Items.Materials.PostML
             Item.noUseGraphic = true;
             Item.consumable = true;
         }
-        public override bool? UseItem(Player player)
-        {
-            int index = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y,
-                ModContent.NPCType<ShadesoulNPC>(), ai2: 60);
-            Main.npc[index].velocity = RedeHelper.PolarVector(10, (Main.MouseWorld - player.Center).ToRotation());
+        //public override bool? UseItem(Player player)
+        //{
+            //int index = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y,
+                //ModContent.NPCType<ShadesoulNPC>(), ai2: 60);
+            //Main.npc[index].velocity = RedeHelper.PolarVector(10, (Main.MouseWorld - player.Center).ToRotation());
 
-            if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                NetMessage.SendData(MessageID.SyncNPC, number: index);
+            //if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
+                //NetMessage.SendData(MessageID.SyncNPC, number: index);
 
-            return true;
-        }
+            //return true;
+        //}
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.GhostWhite.ToVector3() * 0.55f * Main.essScale);

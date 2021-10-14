@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using Redemption.Dusts;
+using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.PostML;
 using Redemption.Globals;
 using Terraria.Audio;
@@ -9,7 +11,7 @@ using Terraria.GameContent.Bestiary;
 
 namespace Redemption.NPCs.PostML
 {
-    public class LostSoulNPC : ModNPC
+    public class ShadesoulNPC : ModNPC
     {
         public ref float Scale => ref NPC.ai[0];
 
@@ -114,8 +116,7 @@ namespace Redemption.NPCs.PostML
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Lost Souls search around the world to look for corpses to infuse with. They roam catacombs and graveyards, sometimes taking many days to find a compatible vessel.")
+                new FlavorTextBestiaryInfoElement("Willpower exists in Epidotra - the happier or more you desire life, the stronger and bigger your soul can become, and vice versa. If someone loses their will to live, their soul can become so small it inverts and they become soulless.")
             });
         }
     }
