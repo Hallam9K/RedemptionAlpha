@@ -27,7 +27,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.accessory = true;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Accessories/PreHM/" + GetType().Name + "_Glow").Value;
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Accessories/PreHM/" + Item.ModItem.Texture + "_Glow").Value;
             }
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

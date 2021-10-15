@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.rare = ItemRarityID.Green;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/" + GetType().Name + "_Glow").Value;
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/" + Item.ModItem.Texture + "_Glow").Value;
             }
         }
 

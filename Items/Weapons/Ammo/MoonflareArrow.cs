@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.Ammo
 			Item.ammo = AmmoID.Arrow;
 			if (!Main.dedServ)
 			{
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/Ammo/" + GetType().Name + "_Glow").Value;
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/Ammo/" + Item.ModItem.Texture + "_Glow").Value;
 			}
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)

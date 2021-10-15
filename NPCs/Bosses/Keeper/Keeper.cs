@@ -947,7 +947,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/" + GetType().Name + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/" + NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D veilTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/VeilFX").Value;
             Texture2D closureTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/Keeper_Closure").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

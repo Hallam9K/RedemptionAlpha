@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = true;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PostML/Melee/" + GetType().Name + "_Glow").Value;
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PostML/Melee/" + Item.ModItem.Texture + "_Glow").Value;
             }
         }
     }
