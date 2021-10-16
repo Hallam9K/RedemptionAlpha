@@ -1,3 +1,4 @@
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
@@ -6,7 +7,7 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class MoonflareDebuff : ModBuff
     {
-        public override string Texture => "_DebuffTemplate";
+        public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Moonflare");
