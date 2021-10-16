@@ -444,7 +444,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/" + NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes").Value;
             Texture2D SlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

@@ -6,6 +6,9 @@ using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Redemption.Globals;
+using System;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -23,9 +26,9 @@ namespace Redemption.Projectiles.Magic
         }
         public float LaserLength = 0;
         public float LaserScale = 0;
-        public int LaserSegmentLength = 14;
+        public int LaserSegmentLength = 10;
         public int LaserWidth = 20;
-        public int LaserEndSegmentLength = 14;
+        public int LaserEndSegmentLength = 22;
 
         //should be set to about half of the end length
         private const float FirstSegmentDrawDist = 7;
@@ -47,21 +50,26 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 60;
+            Projectile.timeLeft = 180;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 5;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.OnFire3, 300);
+            target.AddBuff(BuffID.OnFire3, 60);
         }
 
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             Projectile host = Main.projectile[(int)Projectile.ai[0]];
-            Projectile.rotation = host.rotation;
+            Projectile.rotation = host.rotation + (host.spriteDirection == -1 ? (float)Math.PI : 0);
+
+            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Scale: 2);
+            Main.dust[dust].velocity = RedeHelper.PolarVector(30, Projectile.rotation);
+            Main.dust[dust].noGravity = true;
+
             #region Beginning And End Effects
             if (AITimer == 0)
             {
@@ -76,7 +84,7 @@ namespace Redemption.Projectiles.Magic
 
             if (AITimer <= 10)
             {
-                LaserScale += 0.09f;
+                LaserScale += 0.18f;
             }
             else if (!player.channel || Projectile.timeLeft < 10 || !player.active)
             {

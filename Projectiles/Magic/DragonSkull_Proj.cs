@@ -26,6 +26,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
 
+        private bool faceLeft;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -34,7 +35,26 @@ namespace Redemption.Projectiles.Magic
 
             if (player.channel && Projectile.ai[1] == 0 && Main.myPlayer == Projectile.owner)
             {
-                Projectile.rotation.SlowRotation(Main.MouseWorld.ToRotation(), (float)Math.PI / 80);
+                if (Main.MouseWorld.X > Projectile.Center.X)
+                {
+                    if (faceLeft)
+                    {
+                        Projectile.rotation -= MathHelper.Pi;
+                        faceLeft = false;
+                    }
+                    Projectile.spriteDirection = 1;
+                }
+                else
+                {
+                    if (!faceLeft)
+                    {
+                        Projectile.rotation += MathHelper.Pi;
+                        faceLeft = true;
+                    }
+                    Projectile.spriteDirection = -1;
+                }
+
+                Projectile.rotation.SlowRotation((Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), (float)Math.PI / (Projectile.ai[0] >= 180 ? 300 : 80));
                 if (Projectile.ai[0]++ == 0)
                 {
                     for (int i = 0; i < 20; i++)
@@ -43,10 +63,21 @@ namespace Redemption.Projectiles.Magic
                 if (Projectile.ai[0] == 40)
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ProjectileID.Flames, Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center,
+                        RedeHelper.PolarVector(8, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ProjectileID.Flames,
+                        Projectile.damage, Projectile.knockBack, Projectile.owner);
 
-                if (Projectile.ai[0] == 280)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, Projectile.rotation), ProjectileID.Flames, Projectile.damage, Projectile.knockBack, Projectile.owner);
+                if (Projectile.ai[0] == 180)
+                {
+                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
+                    DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 4, 4, 1, 2, nogravity: true);
+                    SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center,
+                        RedeHelper.PolarVector(0, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<HeatRay>(),
+                        Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                }
+                if (Projectile.ai[0] >= 380)
+                    Projectile.ai[1] = 1;
             }
             else
             {
@@ -55,6 +86,16 @@ namespace Redemption.Projectiles.Magic
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
             }
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
+            var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            return false;
         }
     }
 }

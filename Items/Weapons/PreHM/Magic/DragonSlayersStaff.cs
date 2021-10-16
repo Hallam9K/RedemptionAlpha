@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon Slayer's Staff");
-            Tooltip.SetDefault("Casts a molten dragon skull to spews out flames" +
+            Tooltip.SetDefault("Casts a molten dragon skull to spews out flames at cursor point" +
                 "\nHold down left click long enough to change the flames into a heat ray");
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
@@ -25,7 +27,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 45;
+            Item.damage = 26;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 15;
             Item.width = 50;
@@ -35,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.reuseDelay = 26;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.noUseGraphic = true;
+            Item.noUseGraphic = false;
             Item.knockBack = 4;
             Item.value = Item.sellPrice(0, 3, 50, 0);
             Item.channel = true;
@@ -43,6 +45,22 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.UseSound = SoundID.DD2_BetsySummon;
             Item.shootSpeed = 0;
             Item.shoot = ModContent.ProjectileType<DragonSkull_Proj>();
+            if (!Main.dedServ)
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+            if (tile.IsActiveUnactuated && Main.tileSolid[tile.type] && !Main.tileCut[tile.type])
+                return false;
+
+            return true;
+        }
+
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            position = Main.MouseWorld;
         }
 
         public override void AddRecipes()
