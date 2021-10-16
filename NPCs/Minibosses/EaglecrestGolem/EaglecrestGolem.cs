@@ -142,7 +142,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientPebble>()));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientSlingShot>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestSling>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
 
@@ -384,7 +384,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/EaglecrestGolem/" + GetType().Name + "_Slash").Value;
+            Texture2D SlashAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Slash").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy && AIState is ActionState.Roll)

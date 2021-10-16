@@ -160,8 +160,8 @@ namespace Redemption.NPCs.Critters
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>("Redemption/NPCs/Critters/" + GetType().Name + "_Glow").Value;
-            Texture2D Trail = ModContent.Request<Texture2D>("Redemption/NPCs/Critters/" + GetType().Name + "_Trail").Value;
+            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D Trail = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Trail").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!Main.dayTime && Main.moonPhase != 4)
