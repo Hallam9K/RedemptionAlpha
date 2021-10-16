@@ -6,7 +6,8 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class SilverwoodArrowDebuff : ModBuff
 	{
-		public override void SetStaticDefaults()
+        public override string Texture => "_DebuffTemplate";
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Silverwood Arrow");
 			Description.SetDefault("yowie!");

@@ -7,6 +7,7 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class PureChillDebuff : ModBuff
     {
+        public override string Texture => "_DebuffTemplate";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pure Chill");

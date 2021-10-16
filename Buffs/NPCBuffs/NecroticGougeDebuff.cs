@@ -7,6 +7,7 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class NecroticGougeDebuff : ModBuff
     {
+        public override string Texture => "_DebuffTemplate";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Necrotic Gouge");

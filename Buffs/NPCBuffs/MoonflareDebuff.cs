@@ -6,6 +6,7 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class MoonflareDebuff : ModBuff
     {
+        public override string Texture => "_DebuffTemplate";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Moonflare");
