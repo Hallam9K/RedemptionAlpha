@@ -31,7 +31,7 @@ namespace Redemption.StructureHelper
 
         public override bool? UseItem(Player player)
         {
-            if (player.altFunctionUse == 2 && !SecondPoint && TopLeft != null)
+            if (player.altFunctionUse == 2 && !SecondPoint)
                 Saver.SaveToFile(new Rectangle(TopLeft.X, TopLeft.Y, Width, Height));
 
             else if (!SecondPoint)

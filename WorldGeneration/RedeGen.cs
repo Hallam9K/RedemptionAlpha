@@ -24,6 +24,7 @@ using Redemption.Tiles.Natural;
 using Terraria.ModLoader.IO;
 using System.IO;
 using Redemption.NPCs.Friendly;
+using Redemption.Tiles.Furniture.AncientWood;
 
 namespace Redemption.WorldGeneration
 {
@@ -404,6 +405,10 @@ namespace Redemption.WorldGeneration
                     Point newbCavePoint = newbCaveVector.ToPoint();
                     WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), true);
                     NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), 0, 0, -1, -1);
+                    WorldGen.PlaceObject(newbCavePoint.X + 25, newbCavePoint.Y + 9, (ushort)ModContent.TileType<AncientWoodWorkbenchTile>(), true);
+                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 25, newbCavePoint.Y + 9, (ushort)ModContent.TileType<AncientWoodWorkbenchTile>(), 0, 0, -1, -1);
+                    WorldGen.PlaceObject(newbCavePoint.X + 26, newbCavePoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>(), true);
+                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 26, newbCavePoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>(), 0, 0, -1, -1);
                     WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), true);
                     NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), 0, 0, -1, -1);
 

@@ -59,9 +59,21 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 16; i++)
-                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood,
-                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                for (int i = 0; i < 30; i++)
+                {
+                    int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Sandnado, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f,
+                        Scale: 3);
+                    Main.dust[dustIndex].velocity.Y -= 6f;
+                    Main.dust[dustIndex].velocity.X *= 0.2f;
+                    Main.dust[dustIndex].noGravity = true;
+                }
             }
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.None;
         }
 
         public float shakeTimer;
@@ -106,10 +118,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     break;
                 case 2:
-                    shakeTimer = 0;
-
-                    if (Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
-                        Terraria.Graphics.Effects.Filters.Scene.Deactivate("MoonLordShake");
+                    shakeTimer -= 0.2f;
+                    if (shakeTimer <= 0)
+                    {
+                        if (Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
+                            Terraria.Graphics.Effects.Filters.Scene.Deactivate("MoonLordShake");
+                    }
 
                     if (AITimer++ == 80)
                     {
@@ -136,7 +150,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                         AITimer = 0;
                     }
                     break;
-
+                case 3:
+                    if (AITimer++ == 0)
+                    {
+                        NPC.Shoot(NPC.Center + new Vector2(0, -800), ModContent.ProjectileType<ScorchingRay>(), 0, new Vector2(0, 10), false, SoundID.Item162);
+                    }
+                    if (AITimer >= 90)
+                    {
+                        RedeHelper.SpawnNPC((int)NPC.Center.X + 180, (int)NPC.Center.Y - 80, ModContent.NPCType<Erhan>());
+                        NPC.dontTakeDamage = false;
+                        player.ApplyDamageToNPC(NPC, NPC.life, 0, 0, true);
+                    }
+                    break;
             }
         }
 
@@ -165,13 +190,18 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!NPC.noGravity && NPC.velocity.Y == 0)
             {
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 6)
+                if (TimerRand == 3)
+                    NPC.frame.Y = 12 * frameHeight;
+                else
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 16 * frameHeight)
-                        NPC.frame.Y = 13 * frameHeight;
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter >= 6)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 16 * frameHeight)
+                            NPC.frame.Y = 13 * frameHeight;
+                    }
                 }
             }
         }

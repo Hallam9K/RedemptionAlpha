@@ -47,7 +47,7 @@ namespace Redemption.StructureHelper
 
         public override bool? UseItem(Player player)
         {
-            if (player.altFunctionUse == 2 && !SecondPoint && TopLeft != null)
+            if (player.altFunctionUse == 2 && !SecondPoint)
                 StructureCache.Add(Saver.SaveStructure(target));
 
             else if (!SecondPoint)
