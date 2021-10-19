@@ -30,27 +30,6 @@ namespace Redemption.Effects
                 VertexColorEnabled = true
             };
         }
-		public void DoTrailCreation(Projectile projectile)
-		{
-			if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>())
-				CreateTrail(projectile, new GradientTrail(new Color(250, 205, 160), new Color(255, 255, 218)), new RoundCap(), new ArrowGlowPosition(), 20f, 150f);
-			else if (projectile.type == ModContent.ProjectileType<CantripEmber>())
-				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new ArrowGlowPosition(), 50f, 150f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
-			else if (projectile.type == ModContent.ProjectileType<CantripEmberS>())
-				CreateTrail(projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new DefaultTrailPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
-			else if (projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>())
-				CreateTrail(projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
-			else if (projectile.type == ModContent.ProjectileType<KeeperDreadCoil>())
-				CreateTrail(projectile, new GradientTrail(new Color(136, 123, 255), new Color(79, 15, 255)), new NoCap(), new DefaultTrailPosition(), 200f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
-			else if (projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>())
-				CreateTrail(projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.03f, 1f, 1f));
-			else if (projectile.type == ModContent.ProjectileType<Lightmass>())
-				CreateTrail(projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
-			else if (projectile.type == ModContent.ProjectileType<IceBolt>())
-				CreateTrail(projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
-			else if (projectile.type == ModContent.ProjectileType<EaglecrestSling_Proj>())
-				CreateTrail(projectile, new GradientTrail(new Color(135, 122, 119), new Color(41, 36, 35)), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
-		}
 
 		public static void TryTrailKill(Projectile projectile)
 		{
@@ -67,35 +46,51 @@ namespace Redemption.Effects
 
 		public void UpdateTrails()
 		{
-			for (int i = 0; i < _trails.Count; i++) {
+			for (int i = 0; i < _trails.Count; i++)
+			{
 				Trail trail = _trails[i];
 
 				trail.Update();
-				if (trail.Dead) {
+				if (trail.Dead)
+				{
 					_trails.RemoveAt(i);
 					i--;
 				}
 			}
 		}
 
+		public void ClearAllTrails() => _trails.Clear();
+
 		public void DrawTrails(SpriteBatch spriteBatch)
 		{
-			foreach (Trail trail in _trails) {
+			foreach (Trail trail in _trails)
+			{
 				trail.Draw(_effect, _basicEffect, spriteBatch.GraphicsDevice);
 			}
 		}
 
 		public void TryEndTrail(Projectile projectile, float dissolveSpeed)
 		{
-			for (int i = 0; i < _trails.Count; i++) {
+			for (int i = 0; i < _trails.Count; i++)
+			{
 				Trail trail = _trails[i];
 
-				if (trail.MyProjectile.whoAmI == projectile.whoAmI) {
+				if (trail.MyProjectile.whoAmI == projectile.whoAmI)
+				{
 					trail.StartDissolve(dissolveSpeed);
 					return;
 				}
 			}
 		}
+	}
+
+	public interface ITrailProjectile
+	{
+		/// <summary>
+		/// Method for creating vertex strips, called on projectile creation.
+		/// </summary>
+		/// <param name="tManager"></param>
+		void DoTrailCreation(TrailManager tManager);
 	}
 
 	public class Trail
@@ -147,10 +142,12 @@ namespace Redemption.Effects
 
 		public void Update()
 		{
-			if (_dissolving) {
+			if (_dissolving)
+			{
 				_maxLength -= _dissolveSpeed;
 				_widthStart = (_maxLength / _originalMaxLength) * _originalWidth;
-				if (_maxLength <= 0f) {
+				if (_maxLength <= 0f)
+				{
 					Dead = true;
 					return;
 				}
@@ -159,14 +156,16 @@ namespace Redemption.Effects
 				return;
 			}
 
-			if (!MyProjectile.active || MyProjectile.type != _originalProjectileType) {
+			if (!MyProjectile.active || MyProjectile.type != _originalProjectileType)
+			{
 				StartDissolve(_maxLength / 10f);
 				return;
 			}
 
 			Vector2 thisPoint = _trailPosition.GetNextTrailPosition(MyProjectile);
 
-			if (_points.Count == 0) {
+			if (_points.Count == 0)
+			{
 				_points.Add(thisPoint);
 				return;
 			}
@@ -175,10 +174,12 @@ namespace Redemption.Effects
 			_points.Insert(0, thisPoint);
 
 			//If adding the next point is too much
-			if (_currentLength + distance > _maxLength) {
+			if (_currentLength + distance > _maxLength)
+			{
 				TrimToLength(_maxLength);
 			}
-			else {
+			else
+			{
 				_currentLength += distance;
 			}
 		}
@@ -192,9 +193,11 @@ namespace Redemption.Effects
 			int firstPointOver = -1;
 			float newLength = 0;
 
-			for (int i = 1; i < _points.Count; i++) {
+			for (int i = 1; i < _points.Count; i++)
+			{
 				newLength += Vector2.Distance(_points[i], _points[i - 1]);
-				if (newLength > length) {
+				if (newLength > length)
+				{
 					firstPointOver = i;
 					break;
 				}
@@ -220,7 +223,8 @@ namespace Redemption.Effects
 
 			//calculate trail's length
 			float trailLength = 0f;
-			for (int i = 1; i < _points.Count; i++) {
+			for (int i = 1; i < _points.Count; i++)
+			{
 				trailLength += Vector2.Distance(_points[i - 1], _points[i]);
 			}
 
@@ -244,7 +248,8 @@ namespace Redemption.Effects
 			Color previousColor = _trailColor.GetColourAt(0f, trailLength, _points);
 
 			_trailCap.AddCap(vertices, ref currentIndex, previousColor, _points[0], startNormal, _widthStart);
-			for (int i = 1; i < _points.Count; i++) {
+			for (int i = 1; i < _points.Count; i++)
+			{
 				currentDistance += Vector2.Distance(_points[i - 1], _points[i]);
 
 				float thisPointsWidth = halfWidth * (1f - (i / (float)(_points.Count - 1)));
@@ -286,10 +291,12 @@ namespace Redemption.Effects
 		{
 			if (points.Count == 1) return points[0];
 
-			if (index == 0) {
+			if (index == 0)
+			{
 				return Clockwise90(Vector2.Normalize(points[1] - points[0]));
 			}
-			if (index == points.Count - 1) {
+			if (index == points.Count - 1)
+			{
 				return Clockwise90(Vector2.Normalize(points[index] - points[index - 1]));
 			}
 			return Clockwise90(Vector2.Normalize(points[index + 1] - points[index - 1]));
@@ -366,7 +373,7 @@ namespace Redemption.Effects
 	{
 		public Vector2 GetNextTrailPosition(Projectile projectile)
 		{
-			Vector2 drawOrigin = new Vector2(TextureAssets.Projectile[projectile.type].Value.Width * 0.5f, projectile.height * 0.5f);
+			Vector2 drawOrigin = new(TextureAssets.Projectile[projectile.type].Value.Width * 0.5f, projectile.height * 0.5f);
 			return projectile.position + drawOrigin + Vector2.UnitY * projectile.gfxOffY;
 		}
 	}
@@ -396,11 +403,13 @@ namespace Redemption.Effects
 			if (_zigType != 0) offset.Normalize();
 
 			_zigType += _zigMove;
-			if (_zigType == 2) {
+			if (_zigType == 2)
+			{
 				_zigType = 0;
 				_zigMove = -1;
 			}
-			else if (_zigType == -2) {
+			else if (_zigType == -2)
+			{
 				_zigType = 0;
 				_zigMove = 1;
 			}
@@ -478,10 +487,12 @@ namespace Redemption.Effects
 			h /= MathHelper.TwoPi;
 
 			float r = 0, g = 0, b = 0;
-			if (l != 0) {
+			if (l != 0)
+			{
 				if (s == 0)
 					r = g = b = l;
-				else {
+				else
+				{
 					float temp2;
 					if (l < 0.5f)
 						temp2 = l * (1f + s);
@@ -530,6 +541,37 @@ namespace Redemption.Effects
 			return _colour * (1f - progress);
 		}
 	}
+
+	public class OpacityUpdatingTrail : ITrailColor
+	{
+		private Color _startcolor;
+		private Color _endcolor;
+		private Projectile _proj;
+		private float _opacity = 1f;
+
+		public OpacityUpdatingTrail(Projectile proj, Color color)
+		{
+			_startcolor = color;
+			_endcolor = color;
+			_proj = proj;
+		}
+
+		public OpacityUpdatingTrail(Projectile proj, Color startColor, Color endColor)
+		{
+			_startcolor = startColor;
+			_endcolor = endColor;
+			_proj = proj;
+		}
+
+		public Color GetColourAt(float distanceFromStart, float trailLength, List<Vector2> points)
+		{
+			float progress = distanceFromStart / trailLength;
+			if (_proj.active && _proj != null)
+				_opacity = _proj.Opacity;
+
+			return Color.Lerp(_startcolor, _endcolor, progress) * (1f - progress) * _opacity;
+		}
+	}
 	#endregion
 
 	public interface ITrailCap
@@ -564,7 +606,8 @@ namespace Redemption.Effects
 			VertexPositionColorTexture center = new VertexPositionColorTexture(new Vector3(position.X, position.Y, 0f), colour, Vector2.One * 0.5f);
 			VertexPositionColorTexture prev = new VertexPositionColorTexture(new Vector3(position.X + x, position.Y + y, 0f), colour, Vector2.One);
 
-			for (int i = 0; i < segments; i++) {
+			for (int i = 0; i < segments; i++)
+			{
 				//apply matrix transformation
 				t = x;
 				x = cos * x - sin * y;
@@ -581,6 +624,34 @@ namespace Redemption.Effects
 			}
 		}
 	}
+
+	public class TriangleCap : ITrailCap
+	{
+		public int ExtraTris => 1;
+
+		private readonly float _widthmod;
+		private readonly float _length;
+		public TriangleCap(float width = 1f, float length = 1f)
+		{
+			_widthmod = width;
+			_length = length;
+		}
+
+		public void AddCap(VertexPositionColorTexture[] array, ref int currentIndex, Color colour, Vector2 position, Vector2 startNormal, float width)
+		{
+			width *= _widthmod;
+			float rotation = startNormal.ToRotation();
+			float halfwidth = width / 2;
+			Vector2 TipPos = position + (Vector2.UnitY.RotatedBy(rotation) * width * _length) - Main.screenPosition;
+			Vector2 LeftBasePos = position + (Vector2.UnitY.RotatedBy(rotation + MathHelper.PiOver2) * halfwidth) - Main.screenPosition;
+			Vector2 RightBasePos = position + (Vector2.UnitY.RotatedBy(rotation - MathHelper.PiOver2) * halfwidth) - Main.screenPosition;
+
+			array[currentIndex++] = new VertexPositionColorTexture(new Vector3(LeftBasePos, 0), colour, Vector2.Zero);
+			array[currentIndex++] = new VertexPositionColorTexture(new Vector3(RightBasePos, 0), colour, Vector2.One);
+			array[currentIndex++] = new VertexPositionColorTexture(new Vector3(TipPos, 0), colour, new Vector2(0.5f, 1f));
+		}
+	}
+
 	public class NoCap : ITrailCap
 	{
 		public int ExtraTris => 0;

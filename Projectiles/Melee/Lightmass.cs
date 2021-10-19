@@ -2,8 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Dusts;
+using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
@@ -14,7 +16,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee
 {
-    public class Lightmass : ModProjectile
+    public class Lightmass : ModProjectile, ITrailProjectile
     {
         public override string Texture => "Redemption/Textures/WhiteFlare";
         public override void SetStaticDefaults()
@@ -33,6 +35,11 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+        }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         public override void AI()

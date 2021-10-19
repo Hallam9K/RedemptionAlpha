@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class IceBolt : ModProjectile
+    public class IceBolt : ModProjectile, ITrailProjectile
     {
         public override void SetDefaults()
         {
@@ -24,6 +26,11 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = false;
             Projectile.tileCollide = false;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+        }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
         }
 
         private float glowRot;

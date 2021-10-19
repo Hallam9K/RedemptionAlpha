@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Effects;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
 {
-    public class LunarShot_Proj : ModProjectile
+    public class LunarShot_Proj : ModProjectile, ITrailProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -22,6 +23,12 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 600;
             Projectile.alpha = 0;
         }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(250, 205, 160), new Color(255, 255, 218)), new RoundCap(), new ArrowGlowPosition(), 20f, 150f);
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];

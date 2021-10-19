@@ -1,0 +1,57 @@
+﻿using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Redemption.NPCs.Minibosses.EaglecrestGolem;
+using Microsoft.Xna.Framework;
+using Terraria.GameContent.Creative;
+using Redemption.NPCs.Bosses.Erhan;
+
+namespace Redemption.Items.Usable.Summons
+{
+    public class DemonScroll : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Forbidden Ritual");
+            Tooltip.SetDefault("Summons a demon from the depths of Demonhollow"
+                + "\nNot consumable" +
+                "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
+
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.UseSound = SoundID.Item1;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useTurn = true;
+            Item.useAnimation = 17;
+            Item.useTime = 17;
+            Item.consumable = false;
+            Item.width = 30;
+            Item.height = 34;
+            Item.maxStack = 1;
+            Item.value = Item.sellPrice(0, 1, 50, 0);
+            Item.rare = ItemRarityID.Blue;
+        }
+        public override bool CanUseItem(Player player)
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>());
+        }
+        public override bool? UseItem(Player player)
+        {
+            if (player.whoAmI == Main.myPlayer)
+            {
+                int type = ModContent.NPCType<PalebatImp>();
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.SpawnOnPlayer(player.whoAmI, type);
+                else
+                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+            }
+            return true;
+        }
+    }
+}

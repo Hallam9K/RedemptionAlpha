@@ -1,0 +1,179 @@
+using Terraria;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Globals;
+using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
+using Terraria.DataStructures;
+using Redemption.Buffs.Debuffs;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader.Utilities;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Terraria.Utilities;
+using Redemption.Globals.NPC;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Buffs.NPCBuffs;
+using System;
+
+namespace Redemption.NPCs.Bosses.Erhan
+{
+    public class PalebatImp : ModNPC
+    {
+        public ref float AITimer => ref NPC.ai[1];
+
+        public ref float TimerRand => ref NPC.ai[2];
+
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[Type] = 17;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+
+        public override void SetDefaults()
+        {
+            NPC.width = 36;
+            NPC.height = 42;
+            NPC.damage = 0;
+            NPC.defense = 0;
+            NPC.lifeMax = 200;
+            NPC.HitSound = SoundID.DD2_KoboldHurt;
+            NPC.DeathSound = SoundID.DD2_KoboldDeath;
+            NPC.knockBackResist = 0.5f;
+            NPC.aiStyle = -1;
+            NPC.noGravity = true;
+            NPC.dontTakeDamage = true;
+            NPC.alpha = 255;
+            NPC.boss = true;
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 16; i++)
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood,
+                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+            }
+        }
+
+        public float shakeTimer;
+        public override void AI()
+        {
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
+
+            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+            switch (TimerRand)
+            {
+                case 0:
+                    NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y - 60);
+                    if (!Main.dedServ)
+                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ImpOfDoom");
+
+                    TimerRand = 1;
+                    NPC.netUpdate = true;
+                    break;
+                case 1:
+                    int dustIndex = Dust.NewDust(NPC.BottomLeft + new Vector2(0, 2), NPC.width, 1, DustID.Torch);
+                    Main.dust[dustIndex].velocity.Y -= 5f;
+                    Main.dust[dustIndex].velocity.X *= 0f;
+                    Main.dust[dustIndex].noGravity = true;
+
+                    shakeTimer += 0.004f;
+                    shakeTimer = MathHelper.Clamp(shakeTimer, 0, 1.2f);
+
+                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = shakeTimer * 10;
+
+                    if (AITimer == 80)
+                        NPC.alpha = 0;
+
+                    if (AITimer++ == 360)
+                    {
+                        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch, NPC.position);
+                        player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 18;
+                        DustHelper.DrawDustImage(NPC.Center, DustID.Torch, 0.5f, "Redemption/Effects/DustImages/DemonShape", 3, true, 0);
+                    }
+                    break;
+                case 2:
+                    shakeTimer = 0;
+
+                    if (Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
+                        Terraria.Graphics.Effects.Filters.Scene.Deactivate("MoonLordShake");
+
+                    if (AITimer++ == 80)
+                    {
+                        if (!Main.dedServ)
+                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
+
+                        for (int i = 0; i < 20; i++)
+                        {
+                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Torch,
+                                NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
+                            Main.dust[dust].velocity *= 5f;
+                            Main.dust[dust].noGravity = true;
+                        }
+                        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, NPC.position);
+                        player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                    }
+                    if (AITimer >= 80)
+                        NPC.noGravity = false;
+
+                    if (AITimer >= 200)
+                    {
+                        SoundEngine.PlaySound(SoundID.DD2_GoblinScream, NPC.position);
+                        TimerRand = 3;
+                        AITimer = 0;
+                    }
+                    break;
+
+            }
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (TimerRand == 1 && AITimer >= 80)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 15)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 11 * frameHeight)
+                    {
+                        NPC.frame.Y = 11 * frameHeight;
+                        if (AITimer >= 360)
+                        {
+                            NPC.frame.Y = 12 * frameHeight;
+                            AITimer = 0;
+                            TimerRand = 2;
+                            NPC.netUpdate = true;
+                        }
+                    }
+                }
+            }
+
+            if (!NPC.noGravity && NPC.velocity.Y == 0)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 6)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 16 * frameHeight)
+                        NPC.frame.Y = 13 * frameHeight;
+                }
+            }
+        }
+    }
+}

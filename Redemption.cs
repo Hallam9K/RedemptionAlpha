@@ -10,14 +10,18 @@ using Redemption.StructureHelper.ChestHelper.GUI;
 using Redemption.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption
 {
@@ -81,6 +85,120 @@ namespace Redemption
         public override void Unload()
         {
             RedeRecipe.Unload();
+        }
+
+        public ModPacket GetPacket(ModMessageType type, int capacity)
+        {
+            ModPacket packet = GetPacket(capacity + 1);
+            packet.Write((byte)type);
+            return packet;
+        }
+        public static ModPacket WriteToPacket(ModPacket packet, byte msg, params object[] param)
+        {
+            packet.Write(msg);
+
+            for (int m = 0; m < param.Length; m++)
+            {
+                object obj = param[m];
+                if (obj is bool boolean) packet.Write(boolean);
+                else
+                if (obj is byte @byte) packet.Write(@byte);
+                else
+                if (obj is int @int) packet.Write(@int);
+                else
+                if (obj is float single) packet.Write(single);
+            }
+            return packet;
+        }
+        public override void HandlePacket(BinaryReader bb, int whoAmI)
+        {
+            ModMessageType msgType = (ModMessageType)bb.ReadByte();
+            //byte player;
+            switch (msgType)
+            {
+                case ModMessageType.BossSpawnFromClient:
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        int bossType = bb.ReadInt32();
+                        int npcCenterX = bb.ReadInt32();
+                        int npcCenterY = bb.ReadInt32();
+
+                        if (NPC.AnyNPCs(bossType))
+                        {
+                            return;
+                        }
+
+                        int npcID = NPC.NewNPC(npcCenterX, npcCenterY, bossType);
+                        Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
+                        Main.npc[npcID].netUpdate2 = true;
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcID].GetTypeNetName()), new Color(175, 75, 255));
+                    }
+                    break;
+                case ModMessageType.NPCSpawnFromClient:
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        int NPCType = bb.ReadInt32();
+                        int npcCenterX = bb.ReadInt32();
+                        int npcCenterY = bb.ReadInt32();
+
+                        if (NPC.AnyNPCs(NPCType))
+                        {
+                            return;
+                        }
+
+                        int npcID = NPC.NewNPC(npcCenterX, npcCenterY, NPCType);
+                        Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
+                        Main.npc[npcID].netUpdate2 = true;
+                    }
+                    break;
+                case ModMessageType.NPCSpawnFromClient2:
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        int NPCType = bb.ReadInt32();
+                        int npcCenterX = bb.ReadInt32();
+                        int npcCenterY = bb.ReadInt32();
+
+                        int npcID = NPC.NewNPC(npcCenterX, npcCenterY, NPCType);
+                        Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
+                        Main.npc[npcID].netUpdate2 = true;
+                    }
+                    break;
+                case ModMessageType.SpawnTrail:
+                    int projindex = bb.ReadInt32();
+
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        WriteToPacket(GetPacket(), (byte)ModMessageType.SpawnTrail, projindex).Send();
+                        break;
+                    }
+
+                    ITrailProjectile trailproj = (Main.projectile[projindex].ModProjectile as ITrailProjectile);
+                    if (trailproj != null)
+                        trailproj.DoTrailCreation(RedeSystem.TrailManager);
+
+                    break;
+                    /*case ModMessageType.Dash:
+                        player = bb.ReadByte();
+                        DashType dash = (DashType)bb.ReadByte();
+                        sbyte dir = bb.ReadSByte();
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            ModPacket packet = GetPacket(ModMessageType.Dash, 3);
+                            packet.Write(player);
+                            packet.Write((byte)dash);
+                            packet.Write(dir);
+                            packet.Send(-1, whoAmI);
+                        }
+                        Main.player[player].GetModPlayer<DashPlayer>().PerformDash(dash, dir, false);
+                        break;
+                    case ModMessageType.StartChickArmy:
+                        ChickWorld.chickArmy = true;
+                        ChickWorld.ChickArmyStart();
+                        break;
+                    case ModMessageType.ChickArmyData:
+                        ChickWorld.HandlePacket(bb);
+                        break;*/
+            }
         }
     }
     public class RedeSystem : ModSystem
@@ -158,6 +276,7 @@ namespace Redemption
 
         public override void Unload()
         {
+            TrailManager = null;
             On.Terraria.Main.Update -= LoadTrailManager;
         }
 

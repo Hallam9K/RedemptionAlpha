@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Effects;
 using Redemption.Globals;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -7,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class WaterOrb : ModProjectile
+    public class WaterOrb : ModProjectile, ITrailProjectile
     {
         public override void SetDefaults()
         {
@@ -20,6 +23,11 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = false;
             Projectile.timeLeft = 240;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+        }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.03f, 1f, 1f));
         }
 
         float rot = 0.02f;
