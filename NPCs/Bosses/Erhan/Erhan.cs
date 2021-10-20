@@ -36,6 +36,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Begin,
             Idle,
             Attacks,
+            Fallen,
             Death
         }
 
@@ -158,6 +159,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 writer.Write(ID);
                 writer.Write(AttackNumber);
+                writer.Write(TimerRand2);
             }
         }
 
@@ -168,6 +170,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 ID = reader.ReadInt32();
                 AttackNumber = reader.ReadInt32();
+                TimerRand2 = reader.ReadInt32();
             }
         }
 
@@ -195,6 +198,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         private int AttackNumber;
         private Vector2 origin;
         private bool floatTimer;
+        private float TimerRand2;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -207,22 +211,25 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             DespawnHandler();
 
-            if (!floatTimer)
+            if (AIState is not ActionState.Fallen)
             {
-                NPC.velocity.Y += 0.03f;
-                if (NPC.velocity.Y > .5f)
+                if (!floatTimer)
                 {
-                    floatTimer = true;
-                    NPC.netUpdate = true;
+                    NPC.velocity.Y += 0.03f;
+                    if (NPC.velocity.Y > .5f)
+                    {
+                        floatTimer = true;
+                        NPC.netUpdate = true;
+                    }
                 }
-            }
-            else if (floatTimer)
-            {
-                NPC.velocity.Y -= 0.03f;
-                if (NPC.velocity.Y < -.5f)
+                else if (floatTimer)
                 {
-                    floatTimer = false;
-                    NPC.netUpdate = true;
+                    NPC.velocity.Y -= 0.03f;
+                    if (NPC.velocity.Y < -.5f)
+                    {
+                        floatTimer = false;
+                        NPC.netUpdate = true;
+                    }
                 }
             }
 
@@ -287,7 +294,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
                                         }
                                         if (RedeBossDowned.erhanDeath == 0)
-                                            RedeBossDowned.erhanDeath = 1; 
+                                            RedeBossDowned.erhanDeath = 1;
 
                                         TimerRand = 0;
                                         AITimer = 0;
@@ -335,9 +342,14 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     if (AITimer > 80)
                     {
-                        AttackChoice();
+                        if (AttackNumber != 0 && AttackNumber % 5 == 0)
+                            AIState = ActionState.Fallen;
+                        else
+                        {
+                            AttackChoice();
+                            AIState = ActionState.Attacks;
+                        }
                         AITimer = 0;
-                        AIState = ActionState.Attacks;
                         NPC.netUpdate = true;
                     }
                     break;
@@ -354,13 +366,27 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                             if (AITimer == 80)
                                 ArmType = 1;
-                            if (AITimer == 100 || (Main.rand.NextBool(2) ? AITimer == 120 : AITimer == -1))
+                            if (AttackNumber > 5)
                             {
-                                TeleGlow = true;
-                                TeleGlowTimer = 0;
-                                for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
-                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), false, SoundID.Item101);
+                                if (AITimer >= 100 && AITimer % (AttackNumber > 10 ? 6 : 10) == 0 && AITimer <= 130)
+                                {
+                                    TeleGlow = true;
+                                    TeleGlowTimer = 0;
+                                    for (int i = 0; i < Main.rand.Next(4, 7); i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
+                                            new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), false, SoundID.Item101);
+                                }
+                            }
+                            else
+                            {
+                                if (AITimer == 100 || (Main.rand.NextBool(2) ? AITimer == 120 : AITimer == -1))
+                                {
+                                    TeleGlow = true;
+                                    TeleGlowTimer = 0;
+                                    for (int i = 0; i < Main.rand.Next(4, 7); i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
+                                            new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), false, SoundID.Item101);
+                                }
                             }
                             if (AITimer == 140)
                                 ArmType = 0;
@@ -393,7 +419,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 HeadFrameY = 1;
                                 ArmType = 2;
                             }
-                            if (AITimer >= 40 && AITimer % 30 == 0 && AITimer <= 220)
+                            if (AITimer == 40)
+                            {
+                                NPC.Shoot(new Vector2(player.Center.X, player.Center.Y - 600),
+                                    ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f),
+                                    new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                            }
+                            if (AITimer >= 70 && AITimer % 30 == 0 && AITimer <= 220)
                             {
                                 NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y - 600),
                                     ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f),
@@ -436,6 +468,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item125);
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
                                     new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125);
+
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
                             }
                             if (AITimer == 150)
                                 ArmType = 0;
@@ -449,6 +486,85 @@ namespace Redemption.NPCs.Bosses.Erhan
                             }
                             break;
                             #endregion
+                    }
+                    break;
+                case ActionState.Fallen:
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            NPC.velocity *= 0.96f;
+                            if (NPC.velocity.Length() <= 1)
+                            {
+                                NPC.velocity.X = 0;
+                                TimerRand = 1;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 1:
+                            AITimer++;
+                            NPC.noGravity = false;
+                            NPC.noTileCollide = false;
+                            if ((AITimer > 5 && NPC.velocity.Y == 0) || AITimer > 300)
+                            {
+                                AITimer = 0;
+                                TimerRand = 2;
+                                NPC.netUpdate = true;
+
+                            }
+                            break;
+                        case 2:
+                            AITimer++;
+                            if (AITimer < 60)
+                            {
+                                for (int k = 0; k < 3; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 150);
+                                    vector.Y = (float)(Math.Cos(angle) * 150);
+                                    Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.GoldFlame, Scale: 2)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = dust2.position.DirectionTo(NPC.Center) * 15f;
+                                }
+                            }
+
+                            if (AITimer % 20 == 0 && AITimer < 60)
+                            {
+                                SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 28, 1, TimerRand2);
+                                TimerRand2 += 0.1f;
+                                NPC.netUpdate = true;
+                            }
+
+                            if (AITimer == 60)
+                            {
+                                DustHelper.DrawCircle(NPC.Center, DustID.GoldFlame, 5, 5, 5, 1, 2, nogravity: true);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield>(), 0, Vector2.Zero, false, SoundID.Item29, "", NPC.whoAmI);
+                            }
+
+                            if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
+                            {
+                                if (AITimer == 60)
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Huzzah! *pant* A shield!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                if (AITimer == 240)
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But alas, this shield is useless against a blade!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                if (AITimer == 500)
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("*pant* *pant* Alright'eth! I hath regained my breath. Have at thee!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                            }
+                            if (AITimer >= (RedeBossDowned.erhanDeath < 2 ? 500 : 360))
+                            {
+                                if (RedeBossDowned.erhanDeath < 2)
+                                    RedeBossDowned.erhanDeath = 2;
+
+                                AttackNumber++;
+                                NPC.noGravity = true;
+                                NPC.noTileCollide = true;
+                                AITimer = 0;
+                                TimerRand = 0;
+                                TimerRand2 = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
                     }
                     break;
                 case ActionState.Death:
@@ -508,6 +624,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                 }
             }
 
+            if (AIState is ActionState.Fallen && TimerRand != 0)
+            {
+                if (++NPC.frameCounter >= 10)
+                {
+                    NPC.frameCounter = 0;
+                    ArmFrameY++;
+                    if (ArmFrameY > 3)
+                        ArmFrameY = 0;
+                }
+                return;
+            }
+
             ArmFrameY = (NPC.frame.Y / frameHeight) + (6 * ArmType);
 
             if (++NPC.frameCounter >= 5)
@@ -551,9 +679,30 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Texture2D ArmsTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms").Value;
             Texture2D HeadTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Head").Value;
+            Texture2D FallTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Fall").Value;
+            Texture2D GroundedTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Grounded").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.Yellow, Color.Goldenrod * 0.7f, Color.Yellow);
+
+            if (AIState is ActionState.Fallen && TimerRand != 0)
+            {
+                if (TimerRand <= 1)
+                {
+                    Rectangle rectFall = new(0, 0, FallTex.Width, FallTex.Height);
+                    Vector2 originFall = new(FallTex.Width / 2f, FallTex.Height / 2f);
+                    spriteBatch.Draw(FallTex, NPC.Center - screenPos, new Rectangle?(rectFall), NPC.GetAlpha(drawColor), NPC.rotation, originFall, NPC.scale, effects, 0);
+                }
+                else
+                {
+                    int heightGrounded = GroundedTex.Height / 4;
+                    int yGrounded = heightGrounded * ArmFrameY;
+                    Rectangle rectGrounded = new(0, yGrounded, GroundedTex.Width, heightGrounded);
+                    Vector2 originGrounded = new(GroundedTex.Width / 2f, heightGrounded / 2f);
+                    spriteBatch.Draw(GroundedTex, NPC.Center - screenPos + new Vector2(0, 10), new Rectangle?(rectGrounded), NPC.GetAlpha(drawColor), NPC.rotation, originGrounded, NPC.scale, effects, 0);
+                }
+                return false;
+            }
 
             if (!NPC.IsABestiaryIconDummy)
             {
@@ -564,7 +713,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+                    spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
                 }
 
                 spriteBatch.End();
@@ -577,13 +726,13 @@ namespace Redemption.NPCs.Bosses.Erhan
             int yHead = heightHead * HeadFrameY;
             Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
             Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
-            Main.spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
+            spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
 
             int heightArms = ArmsTex.Height / 18;
             int yArms = heightArms * ArmFrameY;
             Rectangle rectArms = new(0, yArms, ArmsTex.Width, heightArms);
             Vector2 originArms = new(ArmsTex.Width / 2f, heightArms / 2f);
-            Main.spriteBatch.Draw(ArmsTex, NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -10), new Rectangle?(rectArms), NPC.GetAlpha(drawColor), NPC.rotation, originArms, NPC.scale, effects, 0);
+            spriteBatch.Draw(ArmsTex, NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -10), new Rectangle?(rectArms), NPC.GetAlpha(drawColor), NPC.rotation, originArms, NPC.scale, effects, 0);
 
             return false;
         }

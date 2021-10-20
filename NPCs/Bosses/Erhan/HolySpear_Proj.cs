@@ -17,12 +17,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class HolySpear_Proj : ModProjectile, ITrailProjectile
+    public class HolySpear_Proj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Spear");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
@@ -37,11 +37,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.alpha = 255;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
             Projectile.extraUpdates = 1;
-        }
-
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new OriginTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         private float TeleGlowTimer;
@@ -110,8 +105,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             Color colour2 = Color.Lerp(Color.White, Color.White, 1f / TeleGlowTimer * 10f) * (1f / TeleGlowTimer * 10f);
             if (TeleGlow)
             {
-                Main.EntitySpriteDraw(Glow, position2, new Rectangle?(rect2), colour2 * 0.6f, Projectile.rotation, origin2, 1.5f, SpriteEffects.None, 0);
-                Main.EntitySpriteDraw(Glow, position2, new Rectangle?(rect2), colour2 * 0.4f, Projectile.rotation, origin2, 1.5f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(Glow, position2, new Rectangle?(rect2), colour2 * 0.6f, Projectile.rotation, origin2, 1f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(Glow, position2, new Rectangle?(rect2), colour2 * 0.4f, Projectile.rotation, origin2, 1f, SpriteEffects.None, 0);
             }
 
             Main.spriteBatch.End();
