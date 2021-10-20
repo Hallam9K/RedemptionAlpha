@@ -184,7 +184,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
         }
 
-        public List<int> AttackList = new() { 0 };
+        public List<int> AttackList = new() { 0, 1, 2 };
         public List<int> CopyList = null;
 
         private float move;
@@ -231,10 +231,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         case 0:
                             if (!Main.dedServ)
-                            {
                                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod, "Anglonic High Priest");
-                            }
 
                             SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                             player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 14;
@@ -280,10 +277,15 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer >= 1040)
                                     {
                                         if (!Main.dedServ)
+                                        {
+                                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
+                                                "Anglonic High Priest");
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                        }
                                         TimerRand = 0;
                                         AITimer = 0;
                                         NPC.dontTakeDamage = false;
+                                        AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
                                     }
                                 }
@@ -295,10 +297,15 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer >= 120)
                                     {
                                         if (!Main.dedServ)
+                                        {
+                                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
+                                                "Anglonic High Priest");
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                        }
                                         TimerRand = 0;
                                         AITimer = 0;
                                         NPC.dontTakeDamage = false;
+                                        AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
                                     }
                                 }
@@ -307,7 +314,19 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     break;
                 case ActionState.Idle:
-                    if (AITimer++ > 60)
+                    if (AITimer++ == 0)
+                    {
+                        move = NPC.Center.X;
+                        speed = 9;
+                    }
+                    NPC.Move(new Vector2(move, player.Center.Y - 250), speed, 50, false);
+                    MoveClamp();
+                    if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                        speed *= 1.03f;
+                    else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                        speed *= 0.96f;
+
+                    if (AITimer > 80)
                     {
                         AttackChoice();
                         AITimer = 0;
@@ -318,8 +337,111 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case ActionState.Attacks:
                     switch (ID)
                     {
+                        #region Lightmass
                         case 0:
+                            AITimer++;
+                            if (AITimer < 60)
+                                NPC.Move(new Vector2(player.Center.X + (40 * NPC.spriteDirection), player.Center.Y - 250), 10, 40, false);
+                            else
+                                NPC.velocity *= 0.96f;
+
+                            if (AITimer == 80)
+                                ArmType = 1;
+                            if (AITimer == 100 || (Main.rand.NextBool(2) ? AITimer == 120 : AITimer == -1))
+                            {
+                                TeleGlow = true;
+                                TeleGlowTimer = 0;
+                                for (int i = 0; i < Main.rand.Next(4, 7); i++)
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
+                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), false, SoundID.Item101);
+                            }
+                            if (AITimer == 140)
+                                ArmType = 0;
+
+                            if (AITimer >= 200)
+                            {
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
                             break;
+                        #endregion
+
+                        #region Scorching Rays
+                        case 1:
+                            if (AITimer++ == 0)
+                            {
+                                move = NPC.Center.X;
+                                speed = 7;
+                            }
+                            NPC.Move(new Vector2(move, player.Center.Y - 250), speed, 50, false);
+                            MoveClamp();
+                            if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                                speed *= 1.03f;
+                            else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                                speed *= 0.96f;
+
+                            if (AITimer == 20)
+                            {
+                                HeadFrameY = 1;
+                                ArmType = 2;
+                            }
+                            if (AITimer >= 40 && AITimer % 30 == 0 && AITimer <= 220)
+                            {
+                                NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y - 600),
+                                    ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f),
+                                    new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                            }
+                            if (AITimer == 340)
+                            {
+                                HeadFrameY = 0;
+                                ArmType = 0;
+                            }
+
+                            if (AITimer >= 350)
+                            {
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        #endregion
+
+                        #region Holy Spears
+                        case 2:
+                            AITimer++;
+                            if (AITimer < 80)
+                                NPC.Move(new Vector2(player.Center.X + (40 * NPC.spriteDirection), player.Center.Y - 250), 10, 40, false);
+                            else
+                                NPC.velocity *= 0.5f;
+
+                            if (AITimer == 80)
+                                ArmType = 1;
+                            if (AITimer >= 90 && AITimer % 5 == 0 && AITimer <= 130)
+                            {
+                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                                TimerRand += (float)Math.PI / 15;
+                                if (TimerRand > (float)Math.PI)
+                                {
+                                    TimerRand -= (float)Math.PI * 2;
+                                }
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item125);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125);
+                            }
+                            if (AITimer == 150)
+                                ArmType = 0;
+
+                            if (AITimer >= 160)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                            #endregion
                     }
                     break;
                 case ActionState.Death:
@@ -379,16 +501,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 }
             }
 
-            if (ArmFrameY < 6 * ArmType)
-                ArmFrameY = 6 * ArmType;
-
-            if (++NPC.frameCounter >= 5)
-            {
-                NPC.frameCounter = 0;
-                ArmFrameY++;
-                if (ArmFrameY > (6 * (ArmType + 1)) - 1)
-                    ArmFrameY = 6 * ArmType;
-            }
+            ArmFrameY = (NPC.frame.Y / frameHeight) + (6 * ArmType);
 
             if (++NPC.frameCounter >= 5)
             {
@@ -396,6 +509,34 @@ namespace Redemption.NPCs.Bosses.Erhan
                 NPC.frame.Y += frameHeight;
                 if (NPC.frame.Y > 5 * frameHeight)
                     NPC.frame.Y = 0 * frameHeight;
+            }
+        }
+
+        public void MoveClamp()
+        {
+            Player player = Main.player[NPC.target];
+            int xFar = 400;
+            if (NPC.Center.X < player.Center.X)
+            {
+                if (move < player.Center.X - xFar)
+                {
+                    move = player.Center.X - xFar;
+                }
+                else if (move > player.Center.X - 200)
+                {
+                    move = player.Center.X - 200;
+                }
+            }
+            else
+            {
+                if (move > player.Center.X + xFar)
+                {
+                    move = player.Center.X + xFar;
+                }
+                else if (move < player.Center.X + 200)
+                {
+                    move = player.Center.X + 200;
+                }
             }
         }
 
@@ -469,6 +610,29 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+        }
+
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
+                damage = (int)(damage * 0.9f);
+
+            if (ItemTags.Holy.Has(item.type))
+                damage = (int)(damage * 0.5f);
+
+            if (ItemTags.Shadow.Has(item.type))
+                damage = (int)(damage * 1.25f);
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
+                damage = (int)(damage * 0.9f);
+
+            if (ProjectileTags.Holy.Has(projectile.type))
+                damage = (int)(damage * 0.5f);
+
+            if (ProjectileTags.Shadow.Has(projectile.type))
+                damage = (int)(damage * 1.25f);
         }
 
         private void DespawnHandler()

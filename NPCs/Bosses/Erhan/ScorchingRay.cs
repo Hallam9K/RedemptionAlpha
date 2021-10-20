@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Redemption.Base;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -52,9 +53,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.alpha = 255;
         }
 
-        public override bool CanHitPlayer(Player target) => AITimer >= 60;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 60;
+        public override bool CanHitPlayer(Player target) => AITimer >= 80;
+        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80;
         public override bool ShouldUpdatePosition() => false;
+
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(BuffID.OnFire, 300);
+        }
 
         public override void AI()
         {
