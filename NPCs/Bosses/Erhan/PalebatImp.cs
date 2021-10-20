@@ -84,17 +84,28 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             Player player = Main.player[NPC.target];
 
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+            if (RedeBossDowned.erhanDeath == 0)
+            {
+                player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+                player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+            }
             switch (TimerRand)
             {
                 case 0:
-                    NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y - 60);
-                    if (!Main.dedServ)
-                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ImpOfDoom");
+                    if (RedeBossDowned.erhanDeath > 0)
+                    {
+                        RedeHelper.SpawnNPC((int)player.Center.X + 180, (int)player.Center.Y - 80, ModContent.NPCType<Erhan>());
+                        NPC.active = false;
+                    }
+                    else
+                    {
+                        NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y - 60);
+                        if (!Main.dedServ)
+                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ImpOfDoom");
 
-                    TimerRand = 1;
-                    NPC.netUpdate = true;
+                        TimerRand = 1;
+                        NPC.netUpdate = true;
+                    }
                     break;
                 case 1:
                     int dustIndex = Dust.NewDust(NPC.BottomLeft + new Vector2(0, 2), NPC.width, 1, DustID.Torch);

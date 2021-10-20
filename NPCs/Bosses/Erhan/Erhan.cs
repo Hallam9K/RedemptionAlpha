@@ -157,6 +157,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (Main.netMode == NetmodeID.Server || Main.dedServ)
             {
                 writer.Write(ID);
+                writer.Write(AttackNumber);
             }
         }
 
@@ -166,6 +167,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 ID = reader.ReadInt32();
+                AttackNumber = reader.ReadInt32();
             }
         }
 
@@ -179,6 +181,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 ID = CopyList[Main.rand.Next(0, CopyList.Count)];
                 CopyList.Remove(ID);
                 NPC.netUpdate = true;
+                AttackNumber++;
 
                 attempts++;
             }
@@ -189,6 +192,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         private float move;
         private float speed = 6;
+        private int AttackNumber;
         private Vector2 origin;
         private bool floatTimer;
 
@@ -282,6 +286,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                                 "Anglonic High Priest");
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
                                         }
+                                        if (RedeBossDowned.erhanDeath == 0)
+                                            RedeBossDowned.erhanDeath = 1; 
+
                                         TimerRand = 0;
                                         AITimer = 0;
                                         NPC.dontTakeDamage = false;
