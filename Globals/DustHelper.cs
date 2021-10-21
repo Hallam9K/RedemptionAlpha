@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace Redemption.Globals
 {
@@ -55,7 +56,7 @@ namespace Redemption.Globals
 		{
 			if (Main.netMode != NetmodeID.Server) {
 				float rotation = Main.rand.NextFloat(0 - rot, rot);
-				Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath).Value;
+				Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;
 				Color[] data = new Color[glyphTexture.Width * glyphTexture.Height];
 				glyphTexture.GetData(data);
 				for (int i = 0; i < glyphTexture.Width; i += 2) {
@@ -80,7 +81,7 @@ namespace Redemption.Globals
 			Color color = new(red, green, blue);
 			if (Main.netMode != NetmodeID.Server) {
 				float rotation = Main.rand.NextFloat(0 - rot, rot);
-				Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath).Value;
+				Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;
 				Color[] data = new Color[glyphTexture.Width * glyphTexture.Height];
 				glyphTexture.GetData(data);
 				for (int i = 0; i < glyphTexture.Width; i += 2) {

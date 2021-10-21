@@ -14,24 +14,24 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Projectiles.Melee
+namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class Lightmass : ModProjectile, ITrailProjectile
+    public class Erhan_Lightmass : ModProjectile, ITrailProjectile
     {
         public override string Texture => "Redemption/Textures/WhiteFlare";
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Lightmass");
             ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
         public override void SetDefaults()
         {
             Projectile.width = 16;
             Projectile.height = 16;
-            Projectile.friendly = true;
-            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = 1;
-            Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
@@ -44,16 +44,17 @@ namespace Redemption.Projectiles.Melee
 
         public override void AI()
         {
-            if (Projectile.timeLeft > 150)
+            if (Projectile.timeLeft >= 150)
                 Projectile.velocity *= 0.98f;
-            else
+            else if (Projectile.timeLeft >= 100 && Projectile.timeLeft < 150)
             {
                 Vector2 move = Vector2.Zero;
-                float distance = 900f;
+                float distance = 4000f;
                 bool targetted = false;
-                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int p = 0; p < Main.maxPlayers; p++)
                 {
-                    if (!target.CanBeChasedBy() || target.GetGlobalNPC<RedeNPC>().invisible)
+                    Player target = Main.player[p];
+                    if (!target.active || target.dead || target.invis || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
                         continue;
 
                     Vector2 newMove = target.Center - Projectile.Center;
@@ -66,13 +67,13 @@ namespace Redemption.Projectiles.Melee
                     }
                 }
                 if (targetted)
-                    Projectile.Move(move, Projectile.timeLeft > 50 ? 30 : 50, 50);
+                    Projectile.Move(move, 30, 50);
                 else
                     Projectile.velocity *= 0.98f;
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 150;
+        public override bool CanHitPlayer(Player target) => Projectile.timeLeft <= 150;
 
         public override bool PreDraw(ref Color lightColor)
         {

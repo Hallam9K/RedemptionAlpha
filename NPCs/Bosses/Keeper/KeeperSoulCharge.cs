@@ -4,10 +4,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.Effects;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
-    public class KeeperSoulCharge : ModProjectile
+    public class KeeperSoulCharge : ModProjectile, ITrailProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -27,6 +28,11 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+        }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
         }
 
         public override void AI()

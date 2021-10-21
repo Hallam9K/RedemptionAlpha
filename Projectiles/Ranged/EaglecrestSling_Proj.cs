@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Effects;
 using Redemption.Globals.NPC;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -14,7 +16,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
 {
-    public class EaglecrestSling_Proj : ModProjectile
+    public class EaglecrestSling_Proj : ModProjectile, ITrailProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -30,6 +32,11 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
+        }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(135, 122, 119), new Color(41, 36, 35)), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
         }
 
         public override bool PreDraw(ref Color lightColor)

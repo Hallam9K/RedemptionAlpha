@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -30,7 +32,7 @@ namespace Redemption.UI
         public Color? ShadowColor = null;
         public static bool Visible = false;
 
-        public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float fontScale = 1, string whosespeaking = null, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, Vector2? speakerPosition = null, int font = 0, int id = 0)
+        public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float fontScale = 1, string whosespeaking = null, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, Vector2? speakerPosition = null, int font = 0, int id = 0, bool sound = false)
         {
             if (!RedeConfigClient.Instance.NoLoreElements && !Main.dedServ)
             {
@@ -51,6 +53,9 @@ namespace Redemption.UI
                  * textPosition - where (relative to the top left of the screen) the dialogue draws, defaults to the center and 1/3rd down from the top - PUBLIC 
                  * spwakerPosition - where the speech bubble arrow points to (not relative to the screen, relative to the world instead) - PUBLIC
                  */
+                if (sound)
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+
                 Text = text;
                 Title = whosespeaking;
                 FadeTimer = 0;

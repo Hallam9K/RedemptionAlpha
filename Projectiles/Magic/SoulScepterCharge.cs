@@ -5,10 +5,11 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
+using Redemption.Effects;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class SoulScepterCharge : ModProjectile
+    public class SoulScepterCharge : ModProjectile, ITrailProjectile
     {
         public override string Texture => "Redemption/NPCs/Bosses/Keeper/KeeperSoulCharge";
         public override void SetStaticDefaults()
@@ -28,6 +29,11 @@ namespace Redemption.Projectiles.Magic
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+        }
+
+        public void DoTrailCreation(TrailManager tManager)
+        {
+            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
         }
 
         private Vector2 move;

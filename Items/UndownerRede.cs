@@ -33,6 +33,8 @@ namespace Redemption.Items
             RedeBossDowned.keeperSaved = false;
             RedeBossDowned.skullDiggerSaved = false;
             RedeBossDowned.downedEaglecrestGolem = false;
+            RedeBossDowned.downedErhan = false;
+            RedeBossDowned.erhanDeath = 0;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
