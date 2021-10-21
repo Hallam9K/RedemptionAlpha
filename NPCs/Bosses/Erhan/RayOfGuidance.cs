@@ -7,11 +7,13 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class ScorchingRay : ModProjectile
+    public class RayOfGuidance : ModProjectile
     {
+        public override string Texture => "Redemption/NPCs/Bosses/Erhan/ScorchingRay";
         public float AITimer
         {
             get => Projectile.localAI[0];
@@ -23,7 +25,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             set => Projectile.localAI[1] = value;
         }
         public float LaserLength = 0;
-        public float LaserScale = 1;
+        public float LaserScale = 2;
         public int LaserSegmentLength = 60;
         public int LaserWidth = 76;
         public int LaserEndSegmentLength = 60;
@@ -38,7 +40,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scorching Ray");
+            DisplayName.SetDefault("Ray of Guidance");
         }
 
         public override void SetDefaults()
@@ -49,25 +51,38 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 400;
             Projectile.alpha = 255;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80;
-        public override bool ShouldUpdatePosition() => false;
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 300);
+            target.AddBuff(BuffID.OnFire, 600);
         }
 
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.rotation = MathHelper.PiOver2;
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)];
+            Projectile.MoveToVector2(player.Center + new Vector2(0, -800), 2);
+            Projectile.position.Y = player.position.Y - 800;
+
             #region Beginning And End Effects
+            if (AITimer == 0)
+            {
+                LaserScale = 2f;
+                //if (!Main.dedServ)
+                //{
+                //Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BallFire").WithVolume(.9f).WithPitchVariance(0f), (int)projectile.position.X, (int)projectile.position.Y);
+                //}
+            }
+
             if (AITimer >= 80)
             {
+                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             }
@@ -97,19 +112,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             #endregion
 
-            #region Frame and Timer Updates
-            /*++Projectile.frameCounter;
-            if (Projectile.frameCounter >= LaserFrameDelay)
-            {
-                Projectile.frameCounter = 0;
-                Frame++;
-                if (Frame >= maxLaserFrames)
-                {
-                    Frame = 0;
-                }
-            }*/
             ++AITimer;
-            #endregion
 
             #region misc
             //CutTiles();

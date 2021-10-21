@@ -32,13 +32,33 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)];
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<Erhan>() || host.ai[0] != 3)
+            if (!host.active || host.type != ModContent.NPCType<Erhan>())
                 Projectile.Kill();
             Projectile.timeLeft = 10;
             Projectile.rotation = (host.Center - Projectile.Center).ToRotation();
 
-            Projectile.localAI[0].SlowRotation((player.Center - host.Center).ToRotation() - MathHelper.PiOver4, (float)Math.PI / 60);
-            Projectile.Center = host.Center + Vector2.One.RotatedBy(Projectile.localAI[0]) * 100;
+            if (host.ai[0] != 3)
+            {
+                Projectile.alpha += 10;
+                if (Projectile.alpha >= 255)
+                    Projectile.Kill();
+            }
+
+            float offset = 0;
+            switch (Projectile.ai[1])
+            {
+                case 1:
+                    offset = MathHelper.PiOver2;
+                    break;
+                case 2:
+                    offset = -MathHelper.PiOver2;
+                    break;
+                case 3:
+                    offset = MathHelper.Pi;
+                    break;
+            }
+            Projectile.localAI[0].SlowRotation((player.Center - host.Center).ToRotation() - MathHelper.PiOver4 + offset, (float)Math.PI / 60);
+            Projectile.Center = host.Center + Vector2.One.RotatedBy(Projectile.localAI[0]) * 50;
 
             if (Projectile.alpha < 100)
             {
@@ -47,11 +67,16 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee || ProjectileID.Sets.CountsAsHoming[target.type] || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
+                    if (ProjectileID.Sets.CountsAsHoming[target.type])
+                    {
+                        target.Kill();
+                        continue;
+                    }
                     if (!target.hostile && target.friendly)
                     {
                         target.hostile = true;
@@ -66,7 +91,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
-            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0f, 0.1f, 0f);
+            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0f, 0.15f, 0f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -76,6 +101,63 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
+        }
+    }
+    public class Erhan_HolyShield2 : Erhan_HolyShield
+    {
+        public override string Texture => "Redemption/NPCs/Bosses/Erhan/Erhan_HolyShield";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Holy Shield");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+        }
+        public override bool PreAI()
+        {
+            NPC host = Main.npc[(int)Projectile.ai[0]];
+            if (!host.active || host.type != ModContent.NPCType<Erhan>())
+                Projectile.Kill();
+            Projectile.timeLeft = 10;
+            Projectile.rotation = (host.Center - Projectile.Center).ToRotation();
+
+            if (host.ai[0] == 3 && host.ai[2] < 2)
+            {
+                Projectile.alpha += 10;
+                if (Projectile.alpha >= 255)
+                    Projectile.Kill();
+            }
+
+            Projectile.localAI[0] += 0.04f;
+            Projectile.Center = host.Center + Vector2.One.RotatedBy(Projectile.localAI[0]) * 80;
+
+            if (Projectile.alpha < 100)
+            {
+                foreach (Projectile target in Main.projectile)
+                {
+                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
+                        continue;
+
+                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                        continue;
+
+                    SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
+                    DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
+                    if (ProjectileID.Sets.CountsAsHoming[target.type])
+                    {
+                        target.Kill();
+                        continue;
+                    }
+                    if (!target.hostile && target.friendly)
+                    {
+                        target.hostile = true;
+                    }
+                    target.damage /= 4;
+                    target.velocity = -target.velocity;
+                }
+            }
             return false;
         }
     }

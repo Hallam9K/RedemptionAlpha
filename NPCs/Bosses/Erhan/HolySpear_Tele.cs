@@ -17,12 +17,12 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public float LaserLength = 0;
         public float LaserScale = 1;
-        public int LaserSegmentLength = 5;
+        public int LaserSegmentLength = 10;
         public int LaserWidth = 1;
-        public int LaserEndSegmentLength = 5;
+        public int LaserEndSegmentLength = 10;
 
         //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 2;
+        private const float FirstSegmentDrawDist = 5;
 
         public int MaxLaserLength = 1000;
         public bool StopsOnTiles = true;
@@ -55,8 +55,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (Projectile.timeLeft >= 50)
             {
-                Projectile.alpha -= 10;
-                Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
+                Projectile.alpha -= 5;
+                Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 100, 255);
             }
             if (Projectile.timeLeft <= 30)
             {

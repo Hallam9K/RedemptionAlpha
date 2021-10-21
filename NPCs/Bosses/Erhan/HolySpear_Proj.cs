@@ -33,35 +33,22 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.hostile = true;
             Projectile.tileCollide = true;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 600;
             Projectile.alpha = 255;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
             Projectile.extraUpdates = 1;
         }
 
-        private float TeleGlowTimer;
-        private bool TeleGlow;
         public override void AI()
         {
-            if (TeleGlow)
-            {
-                TeleGlowTimer += 3;
-                if (TeleGlowTimer > 60)
-                {
-                    TeleGlow = false;
-                    TeleGlowTimer = 0;
-                }
-            }
-
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-            if (Projectile.timeLeft <= 240)
+            if (Projectile.timeLeft <= 540)
                 Projectile.velocity *= 1.05f;
 
             if (Projectile.localAI[0] == 0)
             {
-                Projectile.position += Projectile.velocity * 1200;
-                TeleGlow = true;
+                Projectile.position += Projectile.velocity * (Projectile.ai[0] == 1 ? 2000 : 1200);
                 DustHelper.DrawCircle(Projectile.Center, DustID.GoldFlame, 2, 2, 2, 1, 4, nogravity: true);
                 Projectile.alpha = 0;
                 Projectile.localAI[0] = 1;
@@ -73,11 +60,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
-            int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -86,37 +68,15 @@ namespace Redemption.NPCs.Bosses.Erhan
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale + 0.2f, SpriteEffects.None, 0);
             }
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             return false;
         }
-        public override void PostDraw(Color lightColor)
-        {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
-            Texture2D Glow = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value;
-            Rectangle rect2 = new(0, 0, Glow.Width, Glow.Height);
-            Vector2 origin2 = new(Glow.Width / 2, Glow.Height / 2);
-            Vector2 position2 = Projectile.Center - Main.screenPosition;
-            Color colour2 = Color.Lerp(Color.White, Color.White, 1f / TeleGlowTimer * 10f) * (1f / TeleGlowTimer * 10f);
-            if (TeleGlow)
-            {
-                Main.EntitySpriteDraw(Glow, position2, new Rectangle?(rect2), colour2 * 0.6f, Projectile.rotation, origin2, 1f, SpriteEffects.None, 0);
-                Main.EntitySpriteDraw(Glow, position2, new Rectangle?(rect2), colour2 * 0.4f, Projectile.rotation, origin2, 1f, SpriteEffects.None, 0);
-            }
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-        }
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 15; i++)
             {
-                int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
                 Main.dust[dust].noGravity = true;
             }
         }
