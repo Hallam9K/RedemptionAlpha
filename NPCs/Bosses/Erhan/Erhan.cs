@@ -144,7 +144,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (!RedeBossDowned.downedErhan)
             {
                 string fight = Spared ? "fighting" : "slaying";
-                RedeWorld.alignment += Spared ? 1 : 2;
+                RedeWorld.alignment -= Spared ? 1 : 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
@@ -553,8 +553,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 if (AITimer >= 60 && AITimer % 60 == 0 && AITimer <= 360)
                                 {
-                                    NPC.Shoot(new Vector2(player.Center.X + (Main.rand.Next(400, 600) *
-                                        Main.rand.NextFloatDirection()), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(),
+                                    NPC.Shoot(new Vector2(player.Center.X + (Main.rand.Next(600, 900) *
+                                        (Main.rand.NextBool() ? -1 : 1)), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(),
                                         (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
                                 }
                             }
@@ -721,23 +721,25 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer++ == 10)
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I forsee my defeat creeping up on me.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     if (AITimer == 190)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But cease your thoughts! For you see...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Well...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     if (AITimer == 370)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I hath... A revealed'nt weapon!", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-                                    if (AITimer == 500)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If all else fail'eth...", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    if (AITimer == 600)
                                     {
-                                        ArmType = 2;
-                                        NPC.Shoot(NPC.Center + new Vector2(40 * NPC.spriteDirection, -40),
+                                        ArmType = 1;
+                                        NPC.Shoot(NPC.Center + new Vector2(40 * NPC.spriteDirection, -80),
                                             ModContent.ProjectileType<HolyHandGrenadeOfAnglon>(), 0, Vector2.Zero, false, SoundID.Item30);
                                     }
                                     if (AITimer == 620)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 180, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Grenade.", 120, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     if (AITimer == 800)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, null, NPC.Center);
+                                    if (AITimer == 860)
                                     {
                                         HeadFrameY = 1;
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("How doth one use this thing?", 80, 1, 0, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("How doth one use this thing?", 60, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     }
-                                    if (AITimer >= 831)
+                                    if (AITimer >= 920)
                                     {
                                         HeadFrameY = 0;
                                         ArmType = 0;
@@ -779,20 +781,22 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 NPC.chaseable = false;
                                 if (AITimer++ == 60)
                                 {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It would appear'eth, I hath lost.", 180, 1, 0, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It would appear'eth, I hath lost.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                 }
                                 if (AITimer == 300)
                                 {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If, mayhaps you shan't spare my life...", 180, 1, 0, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If, mayhaps you shan't spare my life...", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                 }
                                 if (AITimer == 600)
                                 {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Send master Hallowed Knight my regards.", 180, 1, 0, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Send master Hallowed Knight my regards.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                 }
+                                if (AITimer >= 1200)
+                                    NPC.dontTakeDamage = true;
+
                                 if (AITimer == 1200)
                                 {
-                                    NPC.dontTakeDamage = true;
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Well... 'Til we meet again!", 180, 1, 0, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Well... 'Til we meet again!", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                 }
                                 if (AITimer == 1380)
                                 {
@@ -837,7 +841,11 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override bool CheckDead()
         {
             if (AIState is ActionState.Death)
+            {
+                if (!Spared)
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("", 1, 1, 0, "", 0, null, null, null, null);
                 return true;
+            }
             else
             {
                 NPC.dontTakeDamage = true;

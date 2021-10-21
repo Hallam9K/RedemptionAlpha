@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -71,15 +72,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.position.Y = player.position.Y - 800;
 
             #region Beginning And End Effects
-            if (AITimer == 0)
-            {
-                LaserScale = 2f;
-                //if (!Main.dedServ)
-                //{
-                //Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BallFire").WithVolume(.9f).WithPitchVariance(0f), (int)projectile.position.X, (int)projectile.position.Y);
-                //}
-            }
-
+            if (AITimer == 80)
+                SoundEngine.PlaySound(SoundID.Item122);
             if (AITimer >= 80)
             {
                 Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
