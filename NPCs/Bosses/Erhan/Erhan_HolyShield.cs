@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)];
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<Erhan>())
+            if (!host.active || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
                 Projectile.Kill();
             Projectile.timeLeft = 10;
             Projectile.rotation = (host.Center - Projectile.Center).ToRotation();
@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override bool PreAI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<Erhan>())
+            if (!host.active || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
                 Projectile.Kill();
             Projectile.timeLeft = 10;
             Projectile.rotation = (host.Center - Projectile.Center).ToRotation();

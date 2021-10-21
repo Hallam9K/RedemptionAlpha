@@ -38,7 +38,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>());
+            return !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
         }
         public override bool? UseItem(Player player)
         {

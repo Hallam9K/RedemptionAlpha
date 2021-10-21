@@ -57,6 +57,8 @@ namespace Redemption.Items.Usable
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are safe for now...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are choosing the right path. Please, continue.", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment >= -3 && RedeWorld.alignment <= -2)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Be wary, you are straying from the path of good...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue this road, he will come...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)

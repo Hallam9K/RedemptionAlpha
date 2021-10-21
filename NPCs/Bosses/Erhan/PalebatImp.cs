@@ -94,7 +94,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case 0:
                     if (RedeBossDowned.erhanDeath > 0)
                     {
-                        RedeHelper.SpawnNPC((int)player.Center.X + 180, (int)player.Center.Y - 80, ModContent.NPCType<Erhan>());
+                        int summon = RedeBossDowned.erhanDeath < 3 ? ModContent.NPCType<Erhan>() : ModContent.NPCType<ErhanSpirit>();
+                        RedeHelper.SpawnNPC((int)player.Center.X + 180, (int)player.Center.Y - 80, summon);
                         NPC.active = false;
                     }
                     else
