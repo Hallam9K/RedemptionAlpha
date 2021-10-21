@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Terraria.Audio;
 using Redemption.Base;
 using Terraria.Graphics.Shaders;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -47,6 +48,11 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
+
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -70,8 +76,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.netAlways = true;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = SoundID.NPCHit36;
+            NPC.DeathSound = SoundID.NPCDeath39;
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");

@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forbidden Ritual");
-            Tooltip.SetDefault("Summons a demon from the depths of Demonhollow"
+            Tooltip.SetDefault("May draw unwanted attention"
                 + "\nNot consumable" +
                 "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
 
