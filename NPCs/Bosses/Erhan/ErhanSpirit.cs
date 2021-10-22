@@ -17,6 +17,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Usable;
+using Redemption.Items.Placeable.Trophies;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {

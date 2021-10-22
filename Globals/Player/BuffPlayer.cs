@@ -41,6 +41,7 @@ namespace Redemption.Globals.Player
         public bool antiXenomiteBuff;
         public int infectionTimer;
         public bool eldritchRoot;
+        public bool ensnared;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -84,6 +85,7 @@ namespace Redemption.Globals.Player
             pureIronBonus = false;
             dragonLeadBonus = false;
             eldritchRoot = false;
+            ensnared = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -323,6 +325,13 @@ namespace Redemption.Globals.Player
             }
             if (spiderSwarmed)
                 Player.lifeRegen -= 4;
+            if (ensnared)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= (int)(Player.velocity.Length() * 20);
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {

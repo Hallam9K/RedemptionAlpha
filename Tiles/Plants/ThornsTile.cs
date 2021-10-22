@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Tiles.Plants
 {
@@ -30,6 +31,14 @@ namespace Redemption.Tiles.Plants
             AddMapEntry(new Color(159, 208, 159));
             DustType = DustID.GrassBlades;
             SoundType = SoundID.Grass;
+        }
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Player player = Main.LocalPlayer;
+            var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
+            if (player.active && !player.dead && dist <= 0.6f)
+                player.AddBuff(ModContent.BuffType<EnsnaredDebuff>(), 20);
         }
     }
 }
