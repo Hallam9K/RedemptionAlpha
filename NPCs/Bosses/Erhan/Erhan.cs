@@ -16,6 +16,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Placeable.Trophies;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -81,7 +82,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-            //BossBag = ModContent.ItemType<KeeperBag>();
+            BossBag = ModContent.ItemType<ErhanBag>();
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -116,8 +117,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.BossBag(BossBag));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KeeperTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanTrophy>(), 10));
 
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
 
