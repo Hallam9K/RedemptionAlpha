@@ -47,7 +47,7 @@ namespace Redemption.Items.Usable
             {
                 player.QuickSpawnItem(ModContent.ItemType<ErhanHelmet>());
             }
-            switch (Main.rand.Next(3))
+            switch (Main.rand.Next(2))
             {
                 case 0:
                     player.QuickSpawnItem(ModContent.ItemType<Bindeklinge>());
