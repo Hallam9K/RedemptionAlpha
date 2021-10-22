@@ -105,7 +105,16 @@ namespace Redemption.NPCs.PostML
                 NPC.active = false;
             }
         }
-
+        public override void FindFrame(int frameHeight)
+        {
+            if (++NPC.frameCounter >= 10)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 7 * frameHeight)
+                    NPC.frame.Y = 0;
+            }
+        }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), Main.rand.Next(10, 15));
