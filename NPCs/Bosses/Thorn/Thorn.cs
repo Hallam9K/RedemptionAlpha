@@ -20,6 +20,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.Chat;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -214,6 +215,18 @@ namespace Redemption.NPCs.Bosses.Thorn
                 NPC.LookAtEntity(player);
 
             Vector2 HeartOrigin = new(NPC.Center.X, NPC.Center.Y - 18);
+
+            for (int p = 0; p < Main.maxPlayers; p++)
+            {
+                Player pl = Main.player[p];
+                if (!pl.active || pl.dead || !NPC.Hitbox.Intersects(pl.Hitbox))
+                    continue;
+
+                if (AIState == ActionState.TeleportStart || AIState == ActionState.TeleportEnd || AIState == ActionState.Death)
+                    continue;
+
+                pl.AddBuff(ModContent.BuffType<EnsnaredDebuff>(), 10);
+            }
 
             switch (AIState)
             {
@@ -588,15 +601,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
-        }
-
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        {
-            return AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death;
-        }
-        public override bool? CanHitNPC(NPC target)
-        {
-            return target.friendly && AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death;
         }
 
         private void DespawnHandler()

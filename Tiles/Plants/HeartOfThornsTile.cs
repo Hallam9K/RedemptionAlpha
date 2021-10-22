@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
 using Redemption.Items.Usable.Summons;
 using Terraria;
 using Terraria.ID;
@@ -31,6 +32,13 @@ namespace Redemption.Tiles.Plants
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<HeartOfThorns>());
+        }
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Player player = Main.LocalPlayer;
+            var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
+            if (player.active && !player.dead && dist <= 1.5f)
+                player.AddBuff(ModContent.BuffType<EnsnaredDebuff>(), 20);
         }
     }
 }

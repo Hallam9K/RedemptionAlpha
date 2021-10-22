@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
@@ -45,8 +46,19 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 Projectile.Kill();
             }
+            for (int p = 0; p < Main.maxPlayers; p++)
+            {
+                Player player = Main.player[p];
+                if (!player.active || player.dead || !Projectile.Hitbox.Intersects(player.Hitbox))
+                    continue;
+
+                if (Projectile.frame < 7 || Projectile.ai[0] == 1)
+                    continue;
+
+                player.AddBuff(ModContent.BuffType<EnsnaredDebuff>(), 10);
+            }
         }
-        public override bool CanHitPlayer(Player target) => Projectile.frame >= 7 && Projectile.ai[0] != 1;
+        public override bool CanHitPlayer(Player target) => false;
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
