@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
 using Redemption.Globals.Player;
+using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -35,6 +36,15 @@ namespace Redemption.Items.Armor.PostML
             player.GetDamage<RitualistClass>() += .10f;
             RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
             modPlayer.maxSpiritLevel += 2;
+        }
+
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Shadesoul>(), 4)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
         }
     }
 }

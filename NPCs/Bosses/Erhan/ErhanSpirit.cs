@@ -13,6 +13,7 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Usable;

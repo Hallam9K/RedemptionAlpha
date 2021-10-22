@@ -1,3 +1,4 @@
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ID;
@@ -7,6 +8,7 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class PureChillDebuff : ModBuff
     {
+        public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pure Chill");

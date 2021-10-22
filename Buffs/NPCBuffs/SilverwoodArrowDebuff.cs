@@ -1,4 +1,5 @@
-﻿using Redemption.Globals.NPC;
+﻿using Redemption.Buffs.Debuffs;
+using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -6,7 +7,8 @@ namespace Redemption.Buffs.NPCBuffs
 {
     public class SilverwoodArrowDebuff : ModBuff
 	{
-		public override void SetStaticDefaults()
+        public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Silverwood Arrow");
 			Description.SetDefault("yowie!");

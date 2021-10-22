@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using Redemption.Items.Materials.PostML;
 using System;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
@@ -38,6 +39,15 @@ namespace Redemption.Items.Armor.PostML
             player.moveSpeed *= 1.4f;
             player.GetDamage<RitualistClass>() += .8f;
             player.GetCritChance<RitualistClass>() += 15;
+        }
+
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Shadesoul>(), 3)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
         }
     }
 }

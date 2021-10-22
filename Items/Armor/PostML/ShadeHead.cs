@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using Redemption.Items.Materials.PostML;
 using System;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
@@ -50,6 +51,14 @@ namespace Redemption.Items.Armor.PostML
         {
             player.setBonus = "Double tap DOWN to convert all absorbable spirits to offensive shadesouls that home onto enemies";
 
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Shadesoul>(), 3)
+            .AddTile(TileID.LunarCraftingStation)
+            .Register();
         }
     }
 }
