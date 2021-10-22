@@ -145,17 +145,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
-                    if (ProjectileID.Sets.CountsAsHoming[target.type])
-                    {
-                        target.Kill();
-                        continue;
-                    }
-                    if (!target.hostile && target.friendly)
-                    {
-                        target.hostile = true;
-                    }
-                    target.damage /= 4;
-                    target.velocity = -target.velocity;
+                    target.Kill();
                 }
             }
             return false;
