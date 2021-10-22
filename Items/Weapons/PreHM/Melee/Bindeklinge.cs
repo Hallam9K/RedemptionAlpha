@@ -27,8 +27,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.DamageType = DamageClass.Melee;
             Item.width = 54;
             Item.height = 54;
-            Item.useTime = 19;
-            Item.useAnimation = 19;
+            Item.useTime = 21;
+            Item.useAnimation = 21;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6.5f;
             Item.crit = 16;
@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = false;
             Item.useTurn = true;
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Blue;
             if (!Main.dedServ)
                 Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
@@ -49,24 +49,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
                     Projectile.NewProjectile(player.GetProjectileSource_Item(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), damage / 3, knockBack / 2, player.whoAmI);
             }
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.LightsBane)
-                .AddRecipeGroup("Redemption:GoldBar", 7)
-                .AddIngredient(ItemID.Ruby)
-                .AddIngredient(ItemID.Sapphire, 2)
-                .AddTile(TileID.Anvils)
-                .Register(); 
-            CreateRecipe()
-                .AddIngredient(ItemID.BloodButcherer)
-                .AddRecipeGroup("Redemption:GoldBar", 7)
-                .AddIngredient(ItemID.Ruby)
-                .AddIngredient(ItemID.Sapphire, 2)
-                .AddTile(TileID.Anvils)
-                .Register();
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

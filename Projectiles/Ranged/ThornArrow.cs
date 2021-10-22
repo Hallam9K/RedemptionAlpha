@@ -65,6 +65,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.friendly = false;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.timeLeft = 120;
             Projectile.alpha = 0;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;

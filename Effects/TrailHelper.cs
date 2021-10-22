@@ -146,7 +146,7 @@ namespace Redemption.Effects
 			if (_dissolving)
 			{
 				_maxLength -= _dissolveSpeed;
-				_widthStart = (_maxLength / _originalMaxLength) * _originalWidth;
+				_widthStart = _maxLength / _originalMaxLength * _originalWidth;
 				if (_maxLength <= 0f)
 				{
 					Dead = true;
@@ -431,7 +431,7 @@ namespace Redemption.Effects
 		public Vector2 GetNextTrailPosition(Projectile proj)
 		{
 			_counter += 0.33f;
-			Vector2 offset = Vector2.UnitX.RotatedBy((float)Math.Sin(MathHelper.PiOver4 * (_counter)));
+			Vector2 offset = Vector2.UnitX.RotatedBy((float)Math.Sin(MathHelper.PiOver4 * _counter));
 			return proj.Center + offset.RotatedBy(proj.velocity.ToRotation()) * _strength;
 		}
 	}

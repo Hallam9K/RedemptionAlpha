@@ -39,7 +39,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			Player player = Main.LocalPlayer;
 
 			Tile tile = Main.tile[i, j];
-			int spawnX = (i - (tile.frameX / 18)) + (tile.frameX >= 72 ? 5 : 2);
+			int spawnX = i - (tile.frameX / 18) + (tile.frameX >= 72 ? 5 : 2);
 			int spawnY = j + 2;
 			if (tile.frameY % 38 != 0)
 			{

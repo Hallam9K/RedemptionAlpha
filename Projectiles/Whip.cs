@@ -65,7 +65,7 @@ namespace Redemption.Projectiles
 			Projectile.ai[0] += 1f;
 			GetWhipSettings(Projectile, out var timeToFlyOut, out var _, out var _);
 			Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * (Projectile.ai[0] - 1f);
-			Projectile.spriteDirection = ((!(Vector2.Dot(Projectile.velocity, Vector2.UnitX) < 0f)) ? 1 : (-1));
+			Projectile.spriteDirection = (!(Vector2.Dot(Projectile.velocity, Vector2.UnitX) < 0f)) ? 1 : (-1);
 			if (Projectile.ai[0] >= timeToFlyOut || player.itemAnimation == 0)
 			{
 				Projectile.Kill();

@@ -24,7 +24,7 @@ namespace Redemption.Globals
 
 				float x = (float)Math.Cos(k + rand);
 				float y = (float)Math.Sin(k + rand);
-				float mult = ((Math.Abs(((k * (pointAmount / 2)) % (float)Math.PI) - (float)Math.PI / 2)) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
+				float mult = (Math.Abs((k * (pointAmount / 2) % (float)Math.PI) - (float)Math.PI / 2) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
 				Dust.NewDustPerfect(position, dustType, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, 0, default, dustSize).noGravity = noGravity;
 			}
 		}
@@ -63,8 +63,8 @@ namespace Redemption.Globals
 					for (int j = 0; j < glyphTexture.Height; j += 2) {
 						Color alpha = data[j * glyphTexture.Width + i];
 						if (alpha == new Color(0, 0, 0)) {
-							double dustX = (i - (glyphTexture.Width / 2));
-							double dustY = (j - (glyphTexture.Height / 2));
+							double dustX = i - (glyphTexture.Width / 2);
+							double dustY = j - (glyphTexture.Height / 2);
 							dustX *= size;
 							dustY *= size;
 							Dust.NewDustPerfect(position, dustType, new Vector2((float)dustX, (float)dustY).RotatedBy(rotation), Scale: dustSize).noGravity = noGravity;
@@ -88,8 +88,8 @@ namespace Redemption.Globals
 					for (int j = 0; j < glyphTexture.Height; j += 2) {
 						Color alpha = data[j * glyphTexture.Width + i];
 						if (alpha == new Color(0, 0, 0)) {
-							double dustX = (i - (glyphTexture.Width / 2));
-							double dustY = (j - (glyphTexture.Height / 2));
+							double dustX = i - (glyphTexture.Width / 2);
+							double dustY = j - (glyphTexture.Height / 2);
 							dustX *= size;
 							dustY *= size;
 							Vector2 dir = new Vector2((float)dustX, (float)dustY).RotatedBy(rotation);

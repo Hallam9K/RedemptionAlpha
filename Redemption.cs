@@ -172,7 +172,7 @@ namespace Redemption
                         break;
                     }
 
-                    ITrailProjectile trailproj = (Main.projectile[projindex].ModProjectile as ITrailProjectile);
+                    ITrailProjectile trailproj = Main.projectile[projindex].ModProjectile as ITrailProjectile;
                     if (trailproj != null)
                         trailproj.DoTrailCreation(RedeSystem.TrailManager);
 
