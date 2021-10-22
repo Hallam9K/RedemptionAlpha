@@ -548,6 +548,15 @@ namespace Redemption.Globals
             return ZephosActive() || DaerelActive();
         }
 
+        public static bool CanTarget(Projectile proj, Entity codable, Vector2 startPos, int maxDistToAttack = 800)
+        {
+            if (codable is Terraria.NPC npc)
+            {
+                return npc.active && npc.life > 0 && !npc.friendly && !npc.dontTakeDamage && npc.lifeMax > 5 && Vector2.Distance(startPos, npc.Center) < maxDistToAttack && Math.Abs(npc.Center.Y - startPos.Y) < (16f * (5 - 1)) && (BaseUtility.CanHit(proj.Hitbox, npc.Hitbox) || BaseUtility.CanHit(Main.player[proj.owner].Hitbox, npc.Hitbox));
+            }
+            return false;
+        }
+
         #region NPC Methods
 
         /// <summary>

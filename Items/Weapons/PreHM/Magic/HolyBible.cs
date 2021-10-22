@@ -1,14 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Melee;
 using Terraria.GameContent.Creative;
-using Terraria.DataStructures;
-using Redemption.Globals;
-using Terraria.Audio;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
 {
@@ -16,7 +9,8 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Shoots 4 short-ranged rays of light\n" +
+            Tooltip.SetDefault("Tosses the book, stopping at cursor point\n" +
+                "Shoots 4 short-ranged rays of light\n" +
                 "'You dare question the words of the mighty Jimmy!?'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

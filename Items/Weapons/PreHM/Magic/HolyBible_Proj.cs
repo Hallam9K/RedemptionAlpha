@@ -41,8 +41,16 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 Projectile.velocity *= 0.9f;
                 Projectile.rotation.SlowRotation(0, (float)Math.PI / 20);
             }
-            else
+            else if (Projectile.owner == player.whoAmI)
             {
+                if (Projectile.ai[0] < 30)
+                {
+                    Projectile.timeLeft = 600;
+                    Projectile.ai[0] = 0;
+                    Projectile.Move(Main.MouseWorld, 10, 10);
+                    if (Projectile.DistanceSQ(Main.MouseWorld) < 60 * 60)
+                        Projectile.ai[0] = 30;
+                }
                 Projectile.LookByVelocity();
                 Projectile.rotation += Projectile.velocity.Length() / 50 * Projectile.spriteDirection;
             }
