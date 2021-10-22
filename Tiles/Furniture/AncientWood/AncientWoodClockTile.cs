@@ -44,7 +44,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			}
 
 			//Divide by seconds in a day * 24
-			time = (time / 86400.0) * 24.0;
+			time = time / 86400.0 * 24.0;
 			//Dunno why we're taking 19.5. Something about hour formatting
 			time = time - 7.5 - 12.0;
 			//Format in readable time

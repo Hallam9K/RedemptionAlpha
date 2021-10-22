@@ -123,7 +123,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
             {
-                Vector2 start = Projectile.Center + (Vector2.UnitX.RotatedBy(Projectile.rotation)) * LaserLength;
+                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
                 if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
                 {
                     LaserLength -= LaserSegmentLength;
@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void CutTiles()
         {
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Vector2 unit = (new Vector2(1.5f, 0).RotatedBy(Projectile.rotation));
+            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
             Utils.PlotTileLine(Projectile.Center, Projectile.Center + unit * LaserLength, (Projectile.width + 16) * Projectile.scale, DelegateMethods.CutTiles);
         }
         private void CastLights()
@@ -168,14 +168,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), 0, 256, LaserEndSegmentLength), color, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale, 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + (maxDist * (1 / scale)) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), LaserSegmentLength + LaserEndSegmentLength, 256, LaserEndSegmentLength), color, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale, 0, 0);
 
             // Draws the Laser 'base'
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), 0, 256, LaserEndSegmentLength), color * 0.5f, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale * new Vector2(pulse, 1), 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + (maxDist * (1 / scale)) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), LaserSegmentLength + LaserEndSegmentLength, 256, LaserEndSegmentLength), color * 0.5f, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale * new Vector2(pulse, 1), 0, 0);
         }
         public override bool PreDraw(ref Color lightColor)

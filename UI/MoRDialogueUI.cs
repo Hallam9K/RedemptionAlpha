@@ -121,7 +121,7 @@ namespace Redemption.UI
             }
             else
             {
-                CenterPosition = new Vector2((Main.screenWidth / 2), (Main.screenHeight / 3));
+                CenterPosition = new Vector2(Main.screenWidth / 2, Main.screenHeight / 3);
             }
             // * Main.UIScale
             int centerX = (int)CenterPosition.X;
@@ -130,9 +130,9 @@ namespace Redemption.UI
             int textLength = (int)(font.MeasureString(Text).X * FontScale);
             int textHeight = (int)(font.MeasureString(Text).Y * FontScale);
 
-            float opacity = (FadeTimer / (float)MaxFadeTime);
-            Color drawColor = (new Color(255, 255, 255));
-            Color shadowColor = (new Color(25, 25, 25));
+            float opacity = FadeTimer / (float)MaxFadeTime;
+            Color drawColor = new Color(255, 255, 255);
+            Color shadowColor = new Color(25, 25, 25);
 
             Texture2D arrowTexture = ModContent.Request<Texture2D>("Redemption/Textures/MoRDialogueArrow").Value;
             Texture2D darkTexture = ModContent.Request<Texture2D>("Redemption/Textures/BlackSquare").Value;
@@ -140,7 +140,7 @@ namespace Redemption.UI
             int titleDrawX = centerX - (textLength / 2);
             int titleDrawY = centerY - (int)(textHeight * 0.6f);
 
-            int totalLength = (textLength);
+            int totalLength = textLength;
             int totalHeight = textHeight;
 
             int titleLength = 0;
@@ -187,7 +187,7 @@ namespace Redemption.UI
 
             for (int i = 0; i < 20; ++i)
             {
-                Vector2 fakeGaussianBlurEffect = new Vector2(20, 0).RotatedBy((MathHelper.TwoPi / 20f) * i);
+                Vector2 fakeGaussianBlurEffect = new Vector2(20, 0).RotatedBy(MathHelper.TwoPi / 20f * i);
                 Vector2 actualdrawposition = topleft + fakeGaussianBlurEffect;
                 Rectangle rect = new((int)actualdrawposition.X, (int)actualdrawposition.Y, totalLength, totalHeight);
 
@@ -213,7 +213,7 @@ namespace Redemption.UI
 
                 spriteBatch.Draw(arrowTexture, CenterPosition + arrowOffset, arrowTexture.Bounds, Color.White * opacity * 0.5f, rot, new Vector2(arrowTexture.Width / 2, arrowTexture.Height / 2), 1, SpriteEffects.None, 0);
             }
-            Vector2 textpos = new Vector2(centerX - (textLength / 2f), centerY - (textHeight / 2f)) + (new Vector2(Main.rand.NextFloat(0, Shake)).RotatedByRandom(MathHelper.TwoPi));
+            Vector2 textpos = new Vector2(centerX - (textLength / 2f), centerY - (textHeight / 2f)) + new Vector2(Main.rand.NextFloat(0, Shake)).RotatedByRandom(MathHelper.TwoPi);
             spriteBatch.DrawString(font, Text, textpos + new Vector2(2, 2), textShadowColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, Text, textpos, textColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
             if (Title != null)

@@ -163,7 +163,7 @@ namespace Redemption.Projectiles
 						if (flag3 != Projectile.tileCollide)
 						{
 							Projectile.tileCollide = flag3;
-							Projectile.ai[1] = (Projectile.tileCollide ? 1 : 0);
+							Projectile.ai[1] = Projectile.tileCollide ? 1 : 0;
 							Projectile.netUpdate = true;
 						}
 						if (num21 > num13)
@@ -243,7 +243,7 @@ namespace Redemption.Projectiles
 					break;
 			}
 			
-			Projectile.direction = ((Projectile.velocity.X > 0f) ? 1 : (-1));
+			Projectile.direction = (Projectile.velocity.X > 0f) ? 1 : (-1);
 			Projectile.spriteDirection = Projectile.direction;
 			Projectile.ownerHitCheck = flag2;
 			if (flag)
@@ -278,7 +278,7 @@ namespace Redemption.Projectiles
 			{
                 damage = (int)(damage * 1.2f);
 			}
-			if ((Projectile.ai[0] == 1f || Projectile.ai[0] == 2f))
+			if (Projectile.ai[0] == 1f || Projectile.ai[0] == 2f)
 			{
                 damage *= 2;
 			}

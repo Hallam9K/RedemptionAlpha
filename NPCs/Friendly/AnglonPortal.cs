@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Terraria.Utilities;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -51,6 +52,12 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.dontTakeDamage = true;
             NPC.rotation += .02f;
+
+            if (RedeWorld.DayNightCount >= 2 && !RedeHelper.WayfarerActive())
+            {
+                int wayfarer = WorldGen.crimson ? ModContent.NPCType<DaerelUnconscious>() : ModContent.NPCType<ZephosUnconscious>();
+                RedeHelper.SpawnNPC((int)NPC.Center.X + 110, (int)NPC.Center.Y, wayfarer);
+            }
 
             for (int i = 0; i < 30; i++)
             {

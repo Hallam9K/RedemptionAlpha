@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals.NPC;
+using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -532,6 +533,19 @@ namespace Redemption.Globals
                     0f, Main.myPlayer, ai0, ai1);
                 Main.projectile[proj].Center = pos;
             }
+        }
+
+        public static bool ZephosActive()
+        {
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Zephos>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<ZephosUnconscious>());
+        }
+        public static bool DaerelActive()
+        {
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Daerel>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<DaerelUnconscious>());
+        }
+        public static bool WayfarerActive()
+        {
+            return ZephosActive() || DaerelActive();
         }
 
         #region NPC Methods

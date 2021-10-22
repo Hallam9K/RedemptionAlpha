@@ -80,9 +80,9 @@ namespace Redemption.UI
             int textLength = (int)(font.MeasureString(Text).X * FontScale);
             int textHeight = (int)(font.MeasureString(Text).Y * FontScale);
 
-            float opacity = (FadeTimer / (float)MaxFadeTime);
-            Color drawColor = (new Color(255, 255, 255));
-            Color shadowColor = (new Color(25, 25, 25));
+            float opacity = FadeTimer / (float)MaxFadeTime;
+            Color drawColor = new Color(255, 255, 255);
+            Color shadowColor = new Color(25, 25, 25);
             int totalLength = textLength;
             int totalHeight = textHeight;
 
@@ -116,16 +116,16 @@ namespace Redemption.UI
             spriteBatch.Begin(default, BlendState.AlphaBlend);
 
             //draw line
-            for (int i = centerX - (totalLength / 2) + (totalLength / 2 % 38); i <= centerX + (totalLength / 2) - ((totalLength / 2) % 38); i += 38)
+            for (int i = centerX - (totalLength / 2) + (totalLength / 2 % 38); i <= centerX + (totalLength / 2) - (totalLength / 2 % 38); i += 38)
             {
                 Vector2 lineDrawPos = new(i, centerY);
                 spriteBatch.Draw(lineTexture, lineDrawPos, lineTexture.Bounds, drawColor * opacity, 0, RedeHelper.GetOrigin(lineTexture), FontScale, SpriteEffects.None, 0);
             }
             //draw line endings
-            Vector2 leftEndPos = new(centerX - (totalLength / 2) + ((totalLength / 2) % 38) - 23, centerY);
+            Vector2 leftEndPos = new(centerX - (totalLength / 2) + (totalLength / 2 % 38) - 23, centerY);
             spriteBatch.Draw(leftEndTexture, leftEndPos, leftEndTexture.Bounds, drawColor * opacity, 0, RedeHelper.GetOrigin(leftEndTexture), FontScale, SpriteEffects.None, 0);
 
-            Vector2 rightEndPos = new(centerX + (totalLength / 2) - ((totalLength / 2) % 38) + 23, centerY);
+            Vector2 rightEndPos = new(centerX + (totalLength / 2) - (totalLength / 2 % 38) + 23, centerY);
             spriteBatch.Draw(rightEndTexture, rightEndPos, rightEndTexture.Bounds, drawColor * opacity, 0, RedeHelper.GetOrigin(rightEndTexture), FontScale, SpriteEffects.None, 0);
 
             spriteBatch.End();

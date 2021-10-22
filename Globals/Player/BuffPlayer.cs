@@ -349,11 +349,10 @@ namespace Redemption.Globals.Player
             }
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (MetalSet && !Player.immune)
+            if (MetalSet)
                 SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
-            return true;
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)

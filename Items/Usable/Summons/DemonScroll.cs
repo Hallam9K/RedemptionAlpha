@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forbidden Ritual");
-            Tooltip.SetDefault("Summons a demon from the depths of Demonhollow"
+            Tooltip.SetDefault("May draw unwanted attention"
                 + "\nNot consumable" +
                 "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
 
@@ -38,7 +38,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>());
+            return !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
         }
         public override bool? UseItem(Player player)
         {

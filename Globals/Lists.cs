@@ -22,6 +22,7 @@ using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.NPCs.Bosses.Erhan;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.Globals
 {
@@ -559,7 +560,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Spirit
-            Spirit.SetMultiple(NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>());
+            Spirit.SetMultiple(NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>());
             #endregion
 
             #region Plantlike
@@ -658,7 +659,7 @@ namespace Redemption.Globals
 
             #region Holy
 
-            Holy.SetMultiple(ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.Hamdrax, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ModContent.ProjectileType<CorpseWalkerBolt>(), ModContent.ProjectileType<Sunshard>(), ModContent.ProjectileType<SunshardRay>(), ModContent.ProjectileType<Lightmass>(), ModContent.ProjectileType<ScorchingRay>());
+            Holy.SetMultiple(ProjectileID.TheDaoofPow, ProjectileID.HolyWater, ProjectileID.HolyArrow, ProjectileID.HallowStar, ProjectileID.LightBeam, ProjectileID.Hamdrax, ProjectileID.PaladinsHammerHostile, ProjectileID.PaladinsHammerFriendly, ProjectileID.SkyFracture, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.BatOfLight, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.HallowJoustingLance, ProjectileID.RainbowWhip, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ModContent.ProjectileType<CorpseWalkerBolt>(), ModContent.ProjectileType<Sunshard>(), ModContent.ProjectileType<SunshardRay>(), ModContent.ProjectileType<Lightmass>(), ModContent.ProjectileType<ScorchingRay>(), ModContent.ProjectileType<RayOfGuidance>(), ModContent.ProjectileType<HolySpear_Proj>(), ModContent.ProjectileType<HolyBible_Proj>(), ModContent.ProjectileType<HolyBible_Ray>());
 
             #endregion
 

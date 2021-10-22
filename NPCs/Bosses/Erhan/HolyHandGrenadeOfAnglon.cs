@@ -54,11 +54,12 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (Projectile.localAI[0] == 200)
             {
+                SoundEngine.PlaySound(SoundID.Tink);
                 Projectile.frame = 1;
                 Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
                     ModContent.Find<ModGore>("Redemption/HolyGrenadePin").Type);
             }
-            if (Projectile.localAI[0] == 380)
+            if (Projectile.localAI[0] == 320)
             {
                 TeleGlow = true;
                 Projectile.alpha = 255;
@@ -84,7 +85,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
                 }
             }
-            if (Projectile.localAI[0] >= 440)
+            if (Projectile.localAI[0] >= 380)
                 Projectile.Kill();
         }
         public override void PostDraw(Color lightColor)

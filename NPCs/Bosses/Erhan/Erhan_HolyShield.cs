@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)];
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<Erhan>())
+            if (!host.active || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
                 Projectile.Kill();
             Projectile.timeLeft = 10;
             Projectile.rotation = (host.Center - Projectile.Center).ToRotation();
@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override bool PreAI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<Erhan>())
+            if (!host.active || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
                 Projectile.Kill();
             Projectile.timeLeft = 10;
             Projectile.rotation = (host.Center - Projectile.Center).ToRotation();
@@ -145,17 +145,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
-                    if (ProjectileID.Sets.CountsAsHoming[target.type])
-                    {
-                        target.Kill();
-                        continue;
-                    }
-                    if (!target.hostile && target.friendly)
-                    {
-                        target.hostile = true;
-                    }
-                    target.damage /= 4;
-                    target.velocity = -target.velocity;
+                    target.Kill();
                 }
             }
             return false;

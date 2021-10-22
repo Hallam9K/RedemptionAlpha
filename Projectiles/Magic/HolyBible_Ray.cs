@@ -8,8 +8,9 @@ using Terraria.GameContent;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class SunshardRay : ModProjectile
+    public class HolyBible_Ray : ModProjectile
     {
+        public override string Texture => "Redemption/Projectiles/Magic/SunshardRay";
         public float AITimer
         {
             get => Projectile.localAI[0];
@@ -22,21 +23,21 @@ namespace Redemption.Projectiles.Magic
         }
         public float LaserLength = 0;
         public float LaserScale = 0;
-        public int LaserSegmentLength = 14;
+        public int LaserSegmentLength = 16;
         public int LaserWidth = 20;
         public int LaserEndSegmentLength = 14;
 
         //should be set to about half of the end length
         private const float FirstSegmentDrawDist = 7;
 
-        public int MaxLaserLength = 2000;
+        public int MaxLaserLength = 112;
         public int maxLaserFrames = 1;
         public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = true;
+        public bool StopsOnTiles = false;
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sunshard Ray");
+            DisplayName.SetDefault("Holy Ray");
         }
 
         public override void SetDefaults()
@@ -47,32 +48,24 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 60;
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 5;
+            Projectile.timeLeft = 180;
         }
 
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
+            Projectile proj = Main.projectile[(int)Projectile.ai[0]];
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
             if (AITimer == 0)
-            {
                 LaserScale = 0.1f;
-                //if (!Main.dedServ)
-                //{
-                //Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BallFire").WithVolume(.9f).WithPitchVariance(0f), (int)projectile.position.X, (int)projectile.position.Y);
-                //}
-            }
             else
-                Projectile.Center = player.Center + Vector2.Normalize(Projectile.velocity) * 36f;
+                Projectile.Center = proj.Center - Vector2.Normalize(Projectile.velocity) * 10f;
+
+            Projectile.velocity = Projectile.velocity.RotatedBy(-0.08f * proj.spriteDirection);
 
             if (AITimer <= 10)
-            {
                 LaserScale += 0.09f;
-            }
-            else if (!player.channel || Projectile.timeLeft < 10 || !player.active)
+            else if (Projectile.timeLeft < 10 || !proj.active)
             {
                 if (Projectile.timeLeft > 10)
                 {
@@ -93,24 +86,7 @@ namespace Redemption.Projectiles.Magic
             }
             #endregion
 
-            #region Frame and Timer Updates
-            /*++Projectile.frameCounter;
-            if (Projectile.frameCounter >= LaserFrameDelay)
-            {
-                Projectile.frameCounter = 0;
-                Frame++;
-                if (Frame >= maxLaserFrames)
-                {
-                    Frame = 0;
-                }
-            }*/
             ++AITimer;
-            #endregion
-
-            #region misc
-            //CutTiles();
-            //CastLights();
-            #endregion
         }
 
         #region Laser AI Submethods

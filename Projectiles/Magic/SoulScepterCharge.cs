@@ -23,6 +23,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.height = 34;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;

@@ -203,7 +203,7 @@ namespace Redemption.NPCs.Critters
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                     }
-                    if ((!BuryCheck() && Main.rand.NextBool(200)))
+                    if (!BuryCheck() && Main.rand.NextBool(200))
                     {
                         NPC.dontTakeDamage = false;
                         AITimer = 0;

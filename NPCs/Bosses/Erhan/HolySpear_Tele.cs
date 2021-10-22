@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
             {
-                Vector2 start = Projectile.Center + (Vector2.UnitX.RotatedBy(Projectile.rotation)) * LaserLength;
+                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
                 if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
                 {
                     LaserLength -= LaserSegmentLength;
@@ -112,7 +112,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle(LaserWidth, 0, LaserWidth, LaserEndSegmentLength), color, r, new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + (maxDist * (1 / scale)) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle(LaserWidth, LaserSegmentLength + LaserEndSegmentLength, LaserWidth, LaserEndSegmentLength), color, r, new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
         }
         public override bool PreDraw(ref Color lightColor)

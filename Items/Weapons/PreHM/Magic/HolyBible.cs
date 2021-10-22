@@ -1,0 +1,50 @@
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Redemption.Projectiles.Melee;
+using Terraria.GameContent.Creative;
+using Terraria.DataStructures;
+using Redemption.Globals;
+using Terraria.Audio;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Redemption.Items.Weapons.PreHM.Magic
+{
+    public class HolyBible : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Shoots 4 short-ranged rays of light\n" +
+                "'You dare question the words of the mighty Jimmy!?'");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+		{
+            Item.damage = 16;
+            Item.DamageType = DamageClass.Magic;
+            Item.width = 30;
+            Item.height = 36;
+            Item.useTime = 15;
+            Item.useAnimation = 15;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 1f;
+            Item.value = Item.sellPrice(0, 0, 54, 0);
+            Item.UseSound = SoundID.Item19;
+            Item.autoReuse = false;
+            Item.useTurn = true;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.rare = ItemRarityID.Blue;
+            Item.shoot = ModContent.ProjectileType<HolyBible_Proj>();
+            Item.shootSpeed = 10;
+        }
+        public override bool CanUseItem(Player player)
+        {
+            return player.ownedProjectileCounts[Item.shoot] < 1;
+        }
+    }
+}
