@@ -757,6 +757,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     NPC.noTileCollide = false;
                                     if ((AITimer > 85 && NPC.velocity.Y == 0) || AITimer > 300)
                                     {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            for (int i = 0; i < NPC.buffTime.Length; i++)
+                                            {
+                                                NPC.buffTime[i] = 0;
+                                                NPC.buffType[i] = 0;
+                                            }
+
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
+                                        }
+
                                         for (int i = 0; i < 20; i++)
                                         {
                                             int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, Alpha: 100, Scale: 3f);

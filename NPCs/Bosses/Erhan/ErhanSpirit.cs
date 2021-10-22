@@ -12,6 +12,9 @@ using Terraria.Audio;
 using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -109,13 +112,12 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
 
-            //LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
-            //    ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));
-            //notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 2, 4));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
+                ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>()));
 
-            //npcLoot.Add(notExpertRule);
+            npcLoot.Add(notExpertRule);
         }
 
         public override void OnKill()
