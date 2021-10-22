@@ -9,6 +9,8 @@ using Terraria.ID;
 using Redemption.Globals;
 using System;
 using Redemption.Base;
+using Redemption.Globals.Player;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -58,7 +60,13 @@ namespace Redemption.Projectiles.Magic
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.OnFire3, 60);
+            Player player = Main.player[Projectile.owner];
+
+            if (Main.rand.NextBool(3))
+                target.AddBuff(BuffID.OnFire3, 60);
+
+            if (player.GetModPlayer<BuffPlayer>().dragonLeadBonus)
+                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
 
         public override void AI()

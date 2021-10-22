@@ -595,6 +595,8 @@ namespace Redemption.NPCs.Bosses.Thorn
             }
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

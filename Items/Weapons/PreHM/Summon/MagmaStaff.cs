@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Minions;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Minions;
 using Terraria;
@@ -39,9 +41,11 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.buffType = ModContent.BuffType<MagmaCubeBuff>();
 			Item.shoot = ModContent.ProjectileType<MagmaCube>();
 			Item.mana = 10;
+			if (!Main.dedServ)
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
 		}
 
-        public override void AddRecipes()
+		public override void AddRecipes()
         {
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<DragonLeadAlloy>(), 7)
