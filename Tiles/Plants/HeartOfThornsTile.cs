@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Plants
         {
             Player player = Main.LocalPlayer;
             var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
-            if (player.active && !player.dead && dist <= 1f)
+            if (player.active && !player.dead && dist <= 0.2f)
                 player.AddBuff(ModContent.BuffType<EnsnaredDebuff>(), 20);
         }
     }

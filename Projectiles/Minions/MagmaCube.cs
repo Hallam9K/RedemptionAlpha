@@ -45,6 +45,7 @@ namespace Redemption.Projectiles.Minions
 
         public override void AI()
         {
+            Target();
             Player projOwner = Main.player[Projectile.owner];
 
             if (!CheckActive(projOwner))
@@ -74,30 +75,19 @@ namespace Redemption.Projectiles.Minions
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-            BaseAI.AIMinionSlime(Projectile, ref Projectile.ai, projOwner, false, 40, 800, 2000, 2, 5, 10, getTarget: (proj, owner) => { return target == projOwner ? null : target; });
+            BaseAI.AIMinionSlime(Projectile, ref Projectile.ai, projOwner, false, 40, 800, 2000, 3, 5, 10, getTarget: (proj, owner) => { return target == projOwner ? null : target; });
         }
 
         public int maxDistToAttack = 800;
         private Entity target;
+        private NPC target2;
         public void Target()
         {
-            Vector2 startPos = Main.player[Projectile.owner].Center;
-            if (target != null && target != Main.player[Projectile.owner] && !RedeHelper.CanTarget(Projectile, target, startPos))
-                target = null;
-
-            if (target == null || target == Main.player[Projectile.owner])
-            {
-                int[] npcs = BaseAI.GetNPCs(startPos, -1, default, maxDistToAttack);
-                float prevDist = maxDistToAttack;
-                foreach (int i in npcs)
-                {
-                    NPC npc = Main.npc[i];
-                    float dist = Vector2.Distance(startPos, npc.Center);
-                    if (RedeHelper.CanTarget(Projectile, npc, startPos) && dist < prevDist) { target = npc; prevDist = dist; }
-                }
-            }
-            if (target == null) 
-                target = Main.player[Projectile.owner];
+            Player projOwner = Main.player[Projectile.owner];
+            if (RedeHelper.ClosestNPC(ref target2, 800, Projectile.Center, false, projOwner.MinionAttackTargetNPC))
+                target = target2;
+            else 
+                target = projOwner;
         }
 
         public override bool PreDraw(ref Color lightColor)

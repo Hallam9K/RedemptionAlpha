@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace Redemption.Projectiles
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.DamageType = DamageClass.Summon;
+			Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
 			WhipDefaults();
 		}
 		public virtual void WhipDefaults()

@@ -21,6 +21,7 @@ using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.Chat;
 using Redemption.Buffs.Debuffs;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {

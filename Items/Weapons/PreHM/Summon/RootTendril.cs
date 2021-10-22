@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Melee
+namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class RootTendril : ModItem
     {

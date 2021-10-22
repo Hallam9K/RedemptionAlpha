@@ -330,7 +330,7 @@ namespace Redemption.Globals.Player
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
                 Player.lifeRegenTime = 0;
-                Player.lifeRegen -= (int)(Player.velocity.Length() * 10);
+                Player.lifeRegen -= (int)(Player.velocity.Length() * 20);
             }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

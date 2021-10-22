@@ -340,7 +340,6 @@ namespace Redemption.Base
 		{
 			if (jumpVelX == -1f) { jumpVelX = 2f + Main.player[projectile.owner].velocity.X; }
 			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(jumpVelX, jumpVelY); }
-			projectile.timeLeft = 10;
 			AIMinionSlime(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, lineDist, returnDist, teleportDist, jumpVelX, jumpVelY, maxSpeedFlying, getTarget);
 			projectile.spriteDirection = projectile.direction;
 			float dist = Vector2.Distance(projectile.Center, owner.Center);

@@ -19,8 +19,13 @@ namespace Redemption.Buffs.Debuffs
             player.GetModPlayer<BuffPlayer>().ensnared = true;
             if (player.velocity.Y < 0)
                 player.velocity.Y *= 0.6f;
+            if (player.velocity.Y < -2)
+            {
+                player.velocity.Y = 0;
+                player.jump = 0;
+            }
 
-            player.moveSpeed *= 0.1f;
+            player.velocity.X *= 0.8f;
         }
     }
 }
