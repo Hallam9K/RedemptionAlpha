@@ -198,7 +198,7 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength,
-                Projectile.GetAlpha(Main.dayTime ? Color.White : Color.AliceBlue) * opacity, (int)FirstSegmentDrawDist);
+                Projectile.GetAlpha(Main.dayTime ? Color.White : Color.CornflowerBlue) * opacity, (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
