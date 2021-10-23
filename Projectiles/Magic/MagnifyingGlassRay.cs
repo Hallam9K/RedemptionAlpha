@@ -11,7 +11,7 @@ using Redemption.Globals;
 using System;
 using Terraria.Audio;
 
-namespace Redemption.Projectiles.Misc
+namespace Redemption.Projectiles.Magic
 {
     public class MagnifyingGlassRay : ModProjectile
     {
@@ -54,6 +54,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.tileCollide = false;
             Projectile.timeLeft = 200;
             Projectile.alpha = 255;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
@@ -71,7 +72,7 @@ namespace Redemption.Projectiles.Misc
             Player player = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.Center = player.Center + new Vector2(20 * player.direction, -22);
-            Projectile.velocity = RedeHelper.PolarVector(1, player.direction == -1 ? (float)Math.PI - 0.4f : 0.4f);
+            Projectile.velocity = RedeHelper.PolarVector(1, player.direction == -1 ? (float)Math.PI - 0.3f : 0.3f);
 
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
@@ -196,7 +197,8 @@ namespace Redemption.Projectiles.Misc
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White) * opacity, (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength,
+                Projectile.GetAlpha(Main.dayTime ? Color.White : Color.AliceBlue) * opacity, (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

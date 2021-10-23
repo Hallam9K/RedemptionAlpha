@@ -1,17 +1,10 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
-using Redemption.Projectiles.Misc;
-using System.Collections.Generic;
+using Redemption.Projectiles.Magic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM
+namespace Redemption.Items.Weapons.PreHM.Magic
 {
     public class ErhanMagnifyingGlass : ModItem
     {
@@ -27,7 +20,8 @@ namespace Redemption.Items.Weapons.PreHM
         public override void SetDefaults()
         {
             Item.damage = 14;
-            Item.DamageType = DamageClass.Generic;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 10;
             Item.width = 38;
             Item.height = 44;
             Item.useTime = 20;
