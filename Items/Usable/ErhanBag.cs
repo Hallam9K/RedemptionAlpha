@@ -11,6 +11,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM;
 
 namespace Redemption.Items.Usable
 {
@@ -56,6 +57,8 @@ namespace Redemption.Items.Usable
                     player.QuickSpawnItem(ModContent.ItemType<HolyBible>());
                     break;
             }
+            if (Main.rand.NextBool(2))
+                player.QuickSpawnItem(ModContent.ItemType<ErhanMagnifyingGlass>());
         }
 
         public override Color? GetAlpha(Color lightColor)

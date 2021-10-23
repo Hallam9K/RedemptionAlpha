@@ -17,6 +17,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Weapons.PreHM;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -126,6 +127,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ErhanMagnifyingGlass>(), 2));
 
             npcLoot.Add(notExpertRule);
         }
