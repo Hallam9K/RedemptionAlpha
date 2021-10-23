@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
-    public class ForretStaff : ModItem
+    public class AntlerStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
