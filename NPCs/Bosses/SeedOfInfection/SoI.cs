@@ -17,6 +17,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -121,6 +122,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
 
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenomiteGlaive>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
 
             npcLoot.Add(notExpertRule);

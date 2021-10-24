@@ -48,6 +48,12 @@ namespace Redemption.Items.Usable
             {
                 player.QuickSpawnItem(ModContent.ItemType<InfectedMask>());
             }
+            switch (Main.rand.Next(1))
+            {
+                case 0:
+                    player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>());
+                    break;
+            }
             player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
         }
 

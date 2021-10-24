@@ -19,6 +19,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -125,6 +126,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ErhanHelmet>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
