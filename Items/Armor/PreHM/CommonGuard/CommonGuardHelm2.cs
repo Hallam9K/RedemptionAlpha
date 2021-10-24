@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using System;
 
-namespace Redemption.Items.Armor.PreHM
+namespace Redemption.Items.Armor.PreHM.CommonGuard
 {
     [AutoloadEquip(EquipType.Head)]
     public class CommonGuardHelm2 : ModItem

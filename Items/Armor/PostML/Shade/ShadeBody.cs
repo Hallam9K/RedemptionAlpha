@@ -8,7 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Armor.PostML
+namespace Redemption.Items.Armor.PostML.Shade
 {
     [AutoloadEquip(EquipType.Body)]
     public class ShadeBody : ModItem

@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Armor.PreHM
+namespace Redemption.Items.Armor.PreHM.LivingWood
 {
     [AutoloadEquip(EquipType.Body)]
     public class LivingWoodBody : ModItem

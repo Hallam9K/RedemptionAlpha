@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using System;
 
-namespace Redemption.Items.Armor.PreHM
+namespace Redemption.Items.Armor.PreHM.LivingWood
 {
     [AutoloadEquip(EquipType.Head)]
     public class LivingWoodHelmet : ModItem

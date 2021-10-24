@@ -10,48 +10,37 @@ using System;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
 
-namespace Redemption.Items.Armor.PostML
+namespace Redemption.Items.Armor.PostML.Shade
 {
-    [AutoloadEquip(EquipType.Head)]
-    public class ShadeHead : ModItem
+    [AutoloadEquip(EquipType.Legs)]
+    public class ShadeLeggings : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadehead");
-            Tooltip.SetDefault("10% increased ritual damage"
-                + "\n15% increased ritual critical strike chance"
-                + "\n[c/bdffff:Maximum Spirit Level +2]");
+            DisplayName.SetDefault("Shade Greaves");
+            Tooltip.SetDefault("8% increased ritual damage\n" +
+                "15% increased ritual critical strike chance\n" +
+                "30% increased movement speed");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 28;
-            Item.height = 40;
+            Item.width = 30;
+            Item.height = 24;
             Item.sellPrice(gold: 5);
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.defense = 24;
         }
 
-        public override bool IsArmorSet(Item head, Item body, Item legs)
-        {
-            return body.type == ModContent.ItemType<ShadeBody>() && legs.type == ModContent.ItemType<ShadeLeggings>();
-        }
-
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<RitualistClass>() += .10f;
+            player.moveSpeed *= 1.4f;
+            player.GetDamage<RitualistClass>() += .8f;
             player.GetCritChance<RitualistClass>() += 15;
-            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-            modPlayer.maxSpiritLevel += 2;
         }
 
-        public override void UpdateArmorSet(Player player)
-        {
-            player.setBonus = "Double tap DOWN to convert all absorbable spirits to offensive shadesouls that home onto enemies";
-
-        }
 
         public override void AddRecipes()
         {

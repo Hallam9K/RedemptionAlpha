@@ -5,31 +5,31 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Armor.Vanity
+namespace Redemption.Items.Armor.Vanity.SkySquire
 {
-    [AutoloadEquip(EquipType.Legs)]
-    public class SkySquiresGreaves : ModItem
+    [AutoloadEquip(EquipType.Body)]
+    public class SkySquiresTabard : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sky Squire's Greaves");
+            DisplayName.SetDefault("Sky Squire's Tabard");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
-            Item.height = 18;
-            Item.value = Item.sellPrice(0, 0, 59, 0);
+            Item.width = 34;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 0, 74, 0);
             Item.rare = ItemRarityID.Blue;
             Item.vanity = true;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.IronBar, 12)
-                .AddIngredient(ItemID.Silk, 6)
-                .AddIngredient(ItemID.Cloud, 2)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 16)
+                .AddIngredient(ItemID.Silk, 8)
+                .AddIngredient(ItemID.Cloud, 4)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -39,8 +39,8 @@ namespace Redemption.Items.Armor.Vanity
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'Greaves made of Kanite, worn by the Sky Squires of Ithon. The metal has a blue hue and a cold touch,\n" +
-                    "being used as a replacement for iron which is lacking in southern Ithon.\n\n" +
+                    "'A tabard made of Kanite and cloth in a checkered pattern, worn by the Sky Squires of Ithon. The metal\n" +
+                    "has a blue hue and a cold touch, being used as a replacement for iron which is lacking in southern Ithon.\n\n" +
                     "The Sky Squires are a unit of southern Ithon, protecting the kingdoms of Yln, Klycub, and Yesnora.\n" +
                     "The armour they wear allows better flexibility than most, useful for marching to the rescue swiftly'")
                 {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
 
-namespace Redemption.Items.Armor.PreHM
+namespace Redemption.Items.Armor.PreHM.CommonGuard
 {
 	[AutoloadEquip(EquipType.Legs)]
 	public class CommonGuardGreaves : ModItem
