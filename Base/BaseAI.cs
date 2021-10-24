@@ -229,7 +229,6 @@ namespace Redemption.Base
 			if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
 			if (maxSpeed == -1f){ maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
 			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
-			projectile.timeLeft = 10;
 			AIMinionFighter(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, ref projectile.gfxOffY, ref projectile.stepSpeed, pet ? 0 : projectile.minionPos, jumpDistX, jumpDistY, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget);
 			projectile.spriteDirection = projectile.direction;
 			float dist = Vector2.Distance(projectile.Center, owner.Center);

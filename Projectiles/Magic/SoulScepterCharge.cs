@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Soul Charge");
             Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
         }
         public override void SetDefaults()
         {
@@ -51,9 +52,14 @@ namespace Redemption.Projectiles.Magic
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
 
+            Player player = Main.player[Projectile.owner];
+
+            player.heldProj = Projectile.whoAmI;
+            player.itemTime = 2;
+            player.itemAnimation = 2;
+
             if (Main.myPlayer == Projectile.owner && Projectile.localAI[0] == 0)
             {
-                Player player = Main.player[Projectile.owner];
                 if (player.channel)
                 {
                     Projectile.ai[0] += 4;

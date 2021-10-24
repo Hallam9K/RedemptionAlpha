@@ -33,6 +33,10 @@ namespace Redemption.Projectiles.Magic
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
 
+            player.heldProj = Projectile.whoAmI;
+            player.itemTime = 2;
+            player.itemAnimation = 2;
+
             if (player.channel && Projectile.ai[1] == 0 && Main.myPlayer == Projectile.owner)
             {
                 if (Main.MouseWorld.X > Projectile.Center.X)

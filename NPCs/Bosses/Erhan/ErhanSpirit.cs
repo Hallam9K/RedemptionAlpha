@@ -18,6 +18,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Usable;
 using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -118,7 +119,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
-                ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>()));
+                ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
 
             npcLoot.Add(notExpertRule);
         }

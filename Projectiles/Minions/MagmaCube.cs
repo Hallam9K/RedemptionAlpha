@@ -75,7 +75,7 @@ namespace Redemption.Projectiles.Minions
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-            BaseAI.AIMinionSlime(Projectile, ref Projectile.ai, projOwner, false, 40, 800, 2000, 3, 5, 10, getTarget: (proj, owner) => { return target == projOwner ? null : target; });
+            BaseAI.AIMinionSlime(Projectile, ref Projectile.ai, projOwner, false, 40, 1400, 2000, 3, 5, 10, getTarget: (proj, owner) => { return target == projOwner ? null : target; });
         }
 
         public int maxDistToAttack = 800;

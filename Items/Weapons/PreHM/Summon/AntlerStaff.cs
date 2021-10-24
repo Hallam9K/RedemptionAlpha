@@ -12,11 +12,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
-    public class MagmaStaff : ModItem
+    public class AntlerStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Summons a Magma Cube to fight for you");
+            Tooltip.SetDefault("Summons a Forret to fight for you");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
@@ -25,31 +25,29 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
 		public override void SetDefaults()
 		{
-			Item.damage = 22;
+			Item.damage = 25;
 			Item.DamageType = DamageClass.Summon;
-			Item.width = 56;
-			Item.height = 60;
+			Item.width = 52;
+			Item.height = 52;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noMelee = true;
-			Item.knockBack = 2;
+			Item.knockBack = 6;
 			Item.value = Item.sellPrice(0, 0, 45, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item44;
 			Item.autoReuse = false;
-			Item.buffType = ModContent.BuffType<MagmaCubeBuff>();
-			Item.shoot = ModContent.ProjectileType<MagmaCube>();
+			Item.buffType = ModContent.BuffType<ForretBuff>();
+			Item.shoot = ModContent.ProjectileType<Forret>();
 			Item.mana = 10;
-			if (!Main.dedServ)
-				Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
 		}
 
 		public override void AddRecipes()
         {
 			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<DragonLeadAlloy>(), 7)
-				.AddIngredient(ItemID.Bone, 4)
+				.AddIngredient(ModContent.ItemType<PureIronAlloy>(), 7)
+				.AddIngredient(ItemID.Leather, 4)
 				.AddTile(TileID.Anvils)
 				.Register();
         }
