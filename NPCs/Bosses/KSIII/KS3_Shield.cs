@@ -1,0 +1,120 @@
+using System;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using System.Linq;
+using Terraria.Audio;
+using Redemption.Globals;
+
+namespace Redemption.NPCs.Bosses.KSIII
+{
+    public class KS3_Shield : ModProjectile
+    {
+        public override string Texture => "Redemption/Textures/BubbleShield";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Bubble Shield");
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 175;
+            Projectile.height = 175;
+            Projectile.penetrate = -1;
+            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+        }
+
+        public override void AI()
+        {
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+                Projectile.Kill();
+
+            Projectile.Center = npc.Center;
+            Projectile.timeLeft = 10;
+
+            Projectile.alpha += 2;
+            Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
+
+            Projectile.scale -= 0.02f;
+            Projectile.scale = (int)MathHelper.Clamp(Projectile.scale, 1, 2);
+
+            foreach (Projectile target in Main.projectile)
+            {
+                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
+                    continue;
+
+                target.Kill();
+                Projectile.localAI[0] += target.damage;
+                CombatText.NewText(Projectile.getRect(), Color.Orange, target.damage, true, true);
+                SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
+                Projectile.alpha -= 40;
+                Projectile.scale += 0.04f;
+
+                if (Projectile.localAI[0] < 3000)
+                    continue;
+
+                SoundEngine.PlaySound(SoundID.NPCDeath56, Projectile.position);
+                for (int k = 0; k < 20; k++)
+                {
+                    Vector2 vector;
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    vector.X = (float)(Math.Sin(angle) * 88);
+                    vector.Y = (float)(Math.Cos(angle) * 88);
+                    Dust dust2 = Main.dust[Dust.NewDust(Projectile.Center + vector, 2, 2, DustID.Frost, 0f, 0f, 100, default, 3f)];
+                    dust2.noGravity = true;
+                    dust2.velocity = Projectile.DirectionTo(dust2.position) * 4f;
+                }
+                Projectile.Kill();
+            }
+        }
+    }
+    public class KS3_Shield2 : ModProjectile
+    {
+        public override string Texture => "Redemption/Textures/BubbleShield";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Bubble Shield");
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 175;
+            Projectile.height = 175;
+            Projectile.penetrate = -1;
+            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+        }
+
+        public override void AI()
+        {
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+                Projectile.Kill();
+
+            Projectile.Center = npc.Center;
+            Projectile.alpha -= 5;
+
+            if (npc.dontTakeDamage)
+                return;
+
+            for (int k = 0; k < 20; k++)
+            {
+                Vector2 vector;
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                vector.X = (float)(Math.Sin(angle) * 88);
+                vector.Y = (float)(Math.Cos(angle) * 88);
+                Dust dust2 = Main.dust[Dust.NewDust(Projectile.Center + vector, 2, 2, DustID.Frost, 0f, 0f, 100, default, 3f)];
+                dust2.noGravity = true;
+                dust2.velocity = -Projectile.DirectionTo(dust2.position) * 4f;
+            }
+            Projectile.Kill();
+        }
+    }
+}

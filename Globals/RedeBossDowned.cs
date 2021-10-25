@@ -24,6 +24,7 @@ namespace Redemption.Globals
         public static bool downedVlitch3;
         public static bool downedErhan;
         public static int erhanDeath;
+        public static int slayerDeath;
         //public static bool downedOtherBoss = false;
 
         public override void OnWorldLoad()
@@ -43,6 +44,7 @@ namespace Redemption.Globals
             downedVlitch3 = false;
             downedErhan = false;
             erhanDeath = 0;
+            slayerDeath = 0;
             //downedOtherBoss = false;
         }
 
@@ -63,6 +65,7 @@ namespace Redemption.Globals
             downedVlitch3 = false;
             downedErhan = false;
             erhanDeath = 0;
+            slayerDeath = 0;
             //downedOtherBoss = false;
         }
 
@@ -101,6 +104,7 @@ namespace Redemption.Globals
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
+            tag["slayerDeath"] = slayerDeath;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -122,6 +126,7 @@ namespace Redemption.Globals
             downedVlitch3 = downed.Contains("downedVlitch3");
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
+            slayerDeath = tag.GetInt("slayerDeath");
             //downedOtherBoss = downed.Contains("downedOtherBoss");
         }
 
@@ -147,6 +152,7 @@ namespace Redemption.Globals
             writer.Write(flags2);
 
             writer.Write(erhanDeath);
+            writer.Write(slayerDeath);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -169,6 +175,7 @@ namespace Redemption.Globals
             downedErhan = flags2[5];
 
             erhanDeath = reader.ReadInt32();
+            slayerDeath = reader.ReadInt32();
         }
     }
 }

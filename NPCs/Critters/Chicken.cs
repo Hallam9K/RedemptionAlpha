@@ -65,7 +65,6 @@ namespace Redemption.NPCs.Critters
             {
                 Velocity = 1f
             };
-
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
