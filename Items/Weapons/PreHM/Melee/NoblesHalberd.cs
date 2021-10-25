@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.width = 58;
             Item.height = 58;
             Item.rare = ItemRarityID.Green;
-            Item.value = Item.sellPrice(silver: 25);
+            Item.value = Item.sellPrice(silver: 30);
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;
