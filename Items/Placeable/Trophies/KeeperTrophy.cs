@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 using Redemption.Tiles.Trophies;
 using Terraria.GameContent.Creative;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable.Trophies
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
-			Item.value = 100;
+			Item.value = Item.sellPrice(0, 1, 33, 0); ;
 			Item.rare = ItemRarityID.Blue;
 			Item.createTile = ModContent.TileType<KeeperTrophyTile>();
 		}

@@ -41,6 +41,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.rare = ItemRarityID.Yellow;
             Item.noMelee = true;
             Item.autoReuse = true;
+            Item.value = Item.sellPrice(0, 7, 50, 0);
             Item.UseSound = SoundID.Item125;
             Item.shootSpeed = 16f;
             Item.shoot = ModContent.ProjectileType<Sunshard>();
