@@ -230,7 +230,10 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             if (AITimer++ == 0)
                             {
                                 if (!Main.dedServ)
+                                {
                                     RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Skull Digger", 60, 90, 0.8f, 0, Color.LightCyan, "The Keeper's First Creation");
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SpookyNoise"), NPC.position);
+                                }
                                 if (!NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
                                 {
                                     NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y);

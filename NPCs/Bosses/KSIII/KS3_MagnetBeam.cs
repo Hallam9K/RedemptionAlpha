@@ -7,6 +7,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using Redemption.Base;
+using Terraria.Audio;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -31,7 +33,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         //should be set to about half of the end length
         private const float FirstSegmentDrawDist = 20;
 
-        public int MaxLaserLength = 1200;
+        public int MaxLaserLength = 1800;
         public int maxLaserFrames = 1;
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = false;
@@ -49,7 +51,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 220;
+            Projectile.timeLeft = 120;
         }
 
         public override void AI()
@@ -58,32 +60,33 @@ namespace Redemption.NPCs.Bosses.KSIII
             #region Beginning And End Effects
             if (AITimer == 0)
             {
-                LaserScale = 0.1f;
-                //if (!Main.dedServ)
-                //{
-                //Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BallFire").WithVolume(.9f).WithPitchVariance(0f), (int)projectile.position.X, (int)projectile.position.Y);
-                //}
+                if (Projectile.damage >= 10)
+                {
+                    float loudness = Projectile.damage / 15;
+                    loudness = MathHelper.Clamp(loudness, 1, 2);
+                    SoundEngine.PlaySound(SoundID.Zombie, (int)Projectile.position.X, (int)Projectile.position.Y, 104, loudness);
+                }
+                LaserScale = 0.2f;
             }
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active)
+            if (!npc.active || npc.type != ModContent.NPCType<KS3_Magnet>())
                 Projectile.Kill();
 
             Projectile.Center = npc.Center;
 
-            if (AITimer < 10 * (Projectile.damage / 50))
+            if (AITimer < Projectile.damage / 2)
                 LaserScale += 0.09f;
 
-            LaserScale = MathHelper.Clamp(LaserScale, 0.1f, 5);
+            if (Projectile.damage > 5)
+                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = Projectile.damage / 5;
 
-            if (Projectile.timeLeft < 10 || !npc.active)
+            if (Projectile.timeLeft < 30 || !npc.active)
             {
-                if (Projectile.timeLeft > 10)
-                {
-                    Projectile.timeLeft = 10;
-                }
-                LaserScale -= 0.2f;
+                Projectile.alpha += 4;
             }
+            else
+                LaserScale = MathHelper.Clamp(LaserScale, 0.2f, 4);
             #endregion
 
             #region Length Setting
@@ -151,7 +154,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Color.White, (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

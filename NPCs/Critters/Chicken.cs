@@ -121,6 +121,9 @@ namespace Redemption.NPCs.Critters
                 waterCooldown++;
             }
 
+            if (Main.rand.NextBool(500) && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChickenCluck" + (Main.rand.Next(3) + 1)), NPC.position);
+
             switch (AIState)
             {
                 case ActionState.Begin:

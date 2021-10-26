@@ -2,6 +2,8 @@
 using Terraria;
 using Terraria.ModLoader;
 using System;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -51,7 +53,24 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     break;
             }
-            Projectile.rotation = Projectile.velocity.ToRotation() + (1.57f * npc.spriteDirection) + Projectile.localAI[0];
+            Projectile.rotation = Projectile.velocity.ToRotation() + (1.57f * -npc.spriteDirection) + Projectile.localAI[0];
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
         }
     }
 }

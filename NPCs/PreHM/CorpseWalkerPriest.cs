@@ -85,7 +85,8 @@ namespace Redemption.NPCs.PreHM
 
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 2);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SkeletonNotice"), NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -98,6 +99,10 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             NPC.TargetClosest();
+
+            if (Main.rand.NextBool(500) && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
+
 
             switch (AIState)
             {
@@ -338,7 +343,8 @@ namespace Redemption.NPCs.PreHM
 
                 if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
                 {
-                    SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SkeletonNotice"), NPC.position);
                     globalNPC.attacker = player;
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
@@ -346,7 +352,8 @@ namespace Redemption.NPCs.PreHM
                 }
                 if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
                 {
-                    SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SkeletonNotice"), NPC.position);
                     globalNPC.attacker = Main.npc[gotNPC];
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;

@@ -61,10 +61,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             if (AITimer == 0)
             {
                 LaserScale = 0.1f;
-                //if (!Main.dedServ)
-                //{
-                //Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BallFire").WithVolume(.9f).WithPitchVariance(0f), (int)projectile.position.X, (int)projectile.position.Y);
-                //}
             }
             else
                 Projectile.Center = origin - Vector2.Normalize(Projectile.velocity) * 16f;

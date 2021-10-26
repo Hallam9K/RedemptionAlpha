@@ -190,7 +190,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (Projectile.localAI[0] == 0f)
             {
                 AdjustMagnitude(ref Projectile.velocity);
-                //if (!Main.dedServ) { Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Alarm2").WithVolume(.2f).WithPitchVariance(0.1f)); }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2").WithVolume(.2f).WithPitchVariance(0.1f), Projectile.position);
                 Projectile.localAI[0] = 1f;
             }
             if (Projectile.localAI[0]++ < 20)

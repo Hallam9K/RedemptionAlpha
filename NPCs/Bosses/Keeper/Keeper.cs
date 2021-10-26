@@ -626,7 +626,12 @@ namespace Redemption.NPCs.Bosses.Keeper
                     Unveiled = true;
 
                     if (AITimer++ == 0)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Shriek").WithVolume(0.4f), NPC.position);
+
                         NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                    }
 
                     if (AITimer >= 220)
                     {
@@ -766,7 +771,12 @@ namespace Redemption.NPCs.Bosses.Keeper
                     NPC.velocity *= 0;
 
                     if (AITimer++ == 0)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Shriek").WithVolume(0.4f), NPC.position);
+
                         NPC.alpha = 0;
+                    }
 
                     NPC.alpha++;
 

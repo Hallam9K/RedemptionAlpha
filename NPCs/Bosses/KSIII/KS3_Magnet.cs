@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
 
             NPC host = Main.npc[(int)NPC.ai[0]];
-            if (host.life <= 0 || !host.active || host.type != BodyType())
+            if (!host.active || host.type != BodyType())
                 NPC.active = false;
 
             if (++NPC.ai[1] % 80 == 0)
@@ -123,15 +123,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                     dust2.noGravity = true;
                     dust2.velocity *= 0f;
                 }
-                for (int p = 0; p < Main.maxProjectiles; p++)
+                foreach (Projectile target in Main.projectile)
                 {
-                    Projectile proj = Main.projectile[p];
-                    if (proj.active && proj.width < 40 && proj.height < 40 && NPC.DistanceSQ(proj.Center) < 200 * 200 && proj.friendly && proj.damage > 0 && proj.minionSlots == 0)
-                    {
-                        NPC.Shoot(proj.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), ai0: NPC.whoAmI);
-                        NPC.ai[3] += proj.damage;
-                        proj.Kill();
-                    }
+                    if (!target.active || target.width >= 40 || target.height >= 40 || NPC.DistanceSQ(target.Center) >= 200 * 200 || !target.friendly || target.damage <= 0 || target.minion || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
+                        continue;
+
+                    NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                    NPC.ai[3] += target.damage;
+                    target.Kill();
                 }
             }
             if (NPC.ai[2] >= 180 && NPC.ai[2] < 240)
@@ -147,10 +146,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                     dust2.velocity = -NPC.DirectionTo(dust2.position) * 8f;
                 }
             }
+            if (NPC.ai[2] == 210)
+                vector = player.Center;
             if (NPC.ai[2] == 240 && NPC.ai[3] > 10)
             {
                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_MagnetBeam>(), (int)NPC.ai[3] / 4,
-                    RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item1.WithVolume(0), ai0: NPC.whoAmI);
+                    RedeHelper.PolarVector(10, (vector - NPC.Center).ToRotation()), true, SoundID.Item1, "Sounds/Custom/BallFire", NPC.whoAmI);
             }
             if (NPC.ai[2] >= 400)
             {

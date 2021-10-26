@@ -126,6 +126,9 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
+            if (Main.rand.NextBool(500) && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
+
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -372,7 +375,8 @@ namespace Redemption.NPCs.PreHM
             int gotNPC = GetNearestNPC(nearestUndead: true);
             if (AIState != ActionState.Retreat && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;

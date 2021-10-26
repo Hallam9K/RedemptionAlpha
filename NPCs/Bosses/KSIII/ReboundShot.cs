@@ -37,10 +37,10 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            /*if (!Main.dedServ)
+            if (!Main.dedServ)
             {
-                SoundEngine.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BulletBounce3").WithVolume(.3f).WithPitchVariance(0.1f), (int)projectile.position.X, (int)projectile.position.Y);
-            }*/
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BulletBounce3").WithVolume(.3f).WithPitchVariance(0.1f), Projectile.position);
+            }
             if (Projectile.velocity.X != oldVelocity.X)
                 Projectile.velocity.X = -oldVelocity.X;
             if (Projectile.velocity.Y != oldVelocity.Y)

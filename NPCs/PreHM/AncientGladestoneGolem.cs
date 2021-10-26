@@ -273,7 +273,6 @@ namespace Redemption.NPCs.PreHM
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
                                 Player player = Main.player[NPC.target];
-                                SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                 player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
                             }
                             if (NPC.frame.Y > 9 * frameHeight)
