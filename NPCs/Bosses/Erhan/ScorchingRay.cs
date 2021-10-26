@@ -7,6 +7,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -66,6 +67,9 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
+            if (AITimer == 80 && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Bass1").WithPitchVariance(0.1f), Projectile.position);
+
             if (AITimer >= 80)
             {
                 Projectile.alpha -= 10;

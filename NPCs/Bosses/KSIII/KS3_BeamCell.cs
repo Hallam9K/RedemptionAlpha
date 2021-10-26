@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 230;
+            Projectile.timeLeft = 120;
         }
 
         public override void AI()
@@ -63,11 +63,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             Vector2 CellPos = new(npc.Center.X + 2 * npc.spriteDirection, npc.Center.Y - 16);
             Projectile.Center = CellPos;
-            Projectile.velocity = Projectile.velocity.RotatedBy(-0.02f * npc.spriteDirection);
-            if (npc.spriteDirection == 1)
-                Projectile.velocity *= 1;
-            else
-                Projectile.velocity *= -1;
+            Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * npc.spriteDirection) * npc.spriteDirection;
 
             if (AITimer <= 10)
             {

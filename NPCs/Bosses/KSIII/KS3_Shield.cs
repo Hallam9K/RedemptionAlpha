@@ -48,6 +48,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                 if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
                     continue;
 
+                if (!Projectile.Hitbox.Intersects(target.Hitbox))
+                    continue;
+
                 target.Kill();
                 Projectile.localAI[0] += target.damage;
                 CombatText.NewText(Projectile.getRect(), Color.Orange, target.damage, true, true);

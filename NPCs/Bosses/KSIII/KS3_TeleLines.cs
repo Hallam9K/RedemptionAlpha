@@ -53,12 +53,12 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC npc = Main.npc[(int)Projectile.ai[1]];
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            /*if (npc.active && npc.type == ModContent.NPCType<KS3>())
+            if (npc.active && npc.type == ModContent.NPCType<KS3>())
             {
                 Projectile.Center = npc.Center + RedeHelper.PolarVector(54, (npc.ModNPC as KS3).gunRot) + RedeHelper.PolarVector(13 * npc.spriteDirection,
                     (npc.ModNPC as KS3).gunRot - (float)Math.PI / 2);
                 Projectile.velocity = RedeHelper.PolarVector(10, (npc.ModNPC as KS3).gunRot);
-            }
+            }/*
             else if (npc.active && npc.type == ModContent.NPCType<KS3_Body_Clone>())
             {
                 projectile.Center = npc.Center + RedeHelper.PolarVector(54, (npc.modNPC as KS3_Body_Clone).gunRot) + RedeHelper.PolarVector(13 * npc.spriteDirection, (npc.modNPC as KS3_Body_Clone).gunRot - (float)Math.PI / 2);
