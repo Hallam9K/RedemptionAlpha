@@ -45,7 +45,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             for (int k = 0; k < Main.maxPlayers; k++)
             {
                 Player player = Main.player[k];
-                if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 200 * 200)
+                if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 240 * 240)
                     continue;
 
                 player.AddBuff(BuffID.Electrified, 180);
@@ -77,7 +77,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             for (int p = 0; p < Main.maxPlayers; p++)
             {
                 Player player = Main.player[p];
-                if (player.active || !player.noKnockback || !Projectile.Hitbox.Intersects(player.Hitbox))
+                if (!player.active || player.noKnockback || !Projectile.Hitbox.Intersects(player.Hitbox))
                     continue;
 
                 player.velocity = Projectile.velocity;

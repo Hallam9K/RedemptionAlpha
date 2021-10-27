@@ -48,9 +48,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             Vector2 HitPos = new(npc.Center.X, npc.Center.Y + 40);
             Projectile.Center = HitPos;
-
-            if (npc.ai[1] != 1 || npc.ai[0] != 5)
-                Projectile.Kill();
         }
 
     }

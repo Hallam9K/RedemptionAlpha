@@ -55,6 +55,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Main.dust[dustID].noGravity = true;
                 }
                 SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
+                if (ProjectileID.Sets.CountsAsHoming[target.type])
+                {
+                    target.Kill();
+                    continue;
+                }
                 if (Projectile.penetrate == 1)
                     Projectile.penetrate = 2;
 

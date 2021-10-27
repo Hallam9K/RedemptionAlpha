@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.hostile = false;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 60;
             Projectile.alpha = 255;
         }
 
@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (AITimer == 0)
                 LaserScale = 1;
 
-            if (Projectile.timeLeft >= 120)
+            if (Projectile.timeLeft >= 40)
             {
                 Projectile.alpha -= 5;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 100, 255);
@@ -212,7 +212,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.hostile = false;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 70;
             Projectile.alpha = 255;
         }
 
@@ -230,7 +230,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (AITimer == 0)
                 LaserScale = 1;
 
-            if (Projectile.timeLeft >= 170)
+            if (Projectile.timeLeft >= 40)
             {
                 Projectile.alpha -= 5;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 100, 255);

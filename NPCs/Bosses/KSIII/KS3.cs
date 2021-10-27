@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (NPC.ai[0] == 12)
                             RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Good thing you left him be...", 240, 30, 0, Color.DarkGoldenrod);
                         else
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Oh dear, he seems to have a very short temper, and you winning probably made it worse. I hope he doesn't do anything stupid.", 240, 30, 0, Color.DarkGoldenrod);
+                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Oh dear, he seems to have a very short temper, and you winning probably made it worse.\nI hope he doesn't do anything stupid.", 240, 30, 0, Color.DarkGoldenrod);
                     }
 
                 }
@@ -204,12 +204,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public int BodyState;
         public enum BodyAnim
         {
-            Idle, Charge, DropkickStart, Dropkick, WheelkickStart, Wheelkick, WheelkickEnd, Jojo, Pummel1, Pummel2, IdlePhysical, ShoulderBash, ShoulderBashEnd
-        }
-        public int ArmState;
-        private enum ArmsAnim
-        {
-            Idle, ArmCross, Gun, GunShoot, GunEnd, ShieldOn, ShieldOff, Charging, RocketFist, Shrug, Grenade
+            Idle, Crossed, Gun, GunShoot, GunEnd, RocketFist, Grenade, Charging, Shrug, ShieldOn, ShieldOff, IdlePhysical, WheelkickStart, Wheelkick, WheelkickEnd, ShoulderBash, ShoulderBashEnd, DropkickStart, Dropkick, Pummel1, Pummel2, Jojo
         }
 
         const float gunRotLimit = (float)Math.PI / 2;
@@ -231,13 +226,13 @@ namespace Redemption.NPCs.Bosses.KSIII
             DespawnHandler();
             chance = MathHelper.Clamp(chance, 0, 1);
             if (NPC.life < (int)(NPC.lifeMax * 0.75f) && phase < 1)
-                NPC.ai[0] = 2;
+                AIState = ActionState.PhaseChange;
             else if (NPC.life < NPC.lifeMax / 2 && phase < 2)
-                NPC.ai[0] = 2;
+                AIState = ActionState.PhaseChange;
             else if (NPC.life < NPC.lifeMax / 4 && phase < 3)
-                NPC.ai[0] = 2;
+                AIState = ActionState.PhaseChange;
             else if (NPC.life < (int)(NPC.lifeMax * 0.05f) && phase < 4 && !RedeConfigClient.Instance.NoLoreElements)
-                NPC.ai[0] = 2;
+                AIState = ActionState.PhaseChange;
 
             player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
 
@@ -251,7 +246,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
 
                     NPC.LookAtEntity(player);
-                    ArmState = (int)ArmsAnim.ArmCross;
+                    BodyState = (int)BodyAnim.Crossed;
                     player.GetModPlayer<ScreenPlayer>().Rumble(5, 5);
                     TeleVector = NPC.Center;
                     TeleGlow = true;
@@ -270,7 +265,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (RedeConfigClient.Instance.NoLoreElements)
                     {
                         if (AITimer == 60)
-                            ArmState = (int)ArmsAnim.Gun;
+                        {
+                            ArmsFrameY = 1;
+                            ArmsFrameX = 0;
+                            BodyState = (int)BodyAnim.Gun;
+                        }
                         NPC.netUpdate = true;
                         if (AITimer >= 160)
                         {
@@ -351,7 +350,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             }
                             if (AITimer == 590)
                             {
-                                ArmState = (int)ArmsAnim.Idle;
+                                BodyState = (int)BodyAnim.Idle;
                                 HeadType = 0;
                                 if (RedeBossDowned.downedKeeper && !Main.dedServ)
                                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Actually... You were the one that fought the Keeper, weren't you!", 240, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
@@ -372,7 +371,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             }
                             if (AITimer == 1150)
                             {
-                                ArmState = (int)ArmsAnim.ArmCross;
+                                BodyState = (int)BodyAnim.Crossed;
                                 HeadType = 0;
                                 NPC.netUpdate = true;
                             }
@@ -439,7 +438,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             }
                             if (AITimer == 180)
                             {
-                                ArmState = (int)ArmsAnim.ArmCross;
+                                BodyState = (int)BodyAnim.Crossed;
                                 NPC.netUpdate = true;
                             }
                             if (AITimer >= 240)
@@ -467,12 +466,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.rotation = 0;
                     NPC.velocity *= 0.9f;
 
-                    if (ArmState is (int)ArmsAnim.Gun)
-                        ArmState = (int)ArmsAnim.GunEnd;
-                    else if (ArmState is not (int)ArmsAnim.Idle && ArmState is not (int)ArmsAnim.GunEnd)
-                        ArmState = (int)ArmsAnim.Idle;
+                    if (BodyState is (int)BodyAnim.Gun)
+                        BodyState = (int)BodyAnim.GunEnd;
+                    else if (BodyState is not (int)BodyAnim.Idle && BodyState is not (int)BodyAnim.GunEnd)
+                        BodyState = (int)BodyAnim.Idle;
 
-                    if (ArmState is (int)ArmsAnim.Idle && NPC.velocity.Length() < 1f)
+                    if (BodyState is (int)BodyAnim.Idle && NPC.velocity.Length() < 1f)
                     {
                         switch (phase)
                         {
@@ -530,10 +529,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.velocity *= 0.9f;
                                 if (AITimer == 1)
                                 {
-                                    if (ArmState is (int)ArmsAnim.Gun)
-                                        ArmState = (int)ArmsAnim.GunEnd;
+                                    if (BodyState is (int)BodyAnim.Gun)
+                                        BodyState = (int)BodyAnim.GunEnd;
 
-                                    if (ArmState is (int)ArmsAnim.Idle && NPC.velocity.Length() < 1f)
+                                    if (BodyState is (int)BodyAnim.Idle && NPC.velocity.Length() < 1f)
                                     {
                                         AITimer = 0;
                                         AIState = ActionState.SpecialAttacks;
@@ -544,10 +543,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 else if (AITimer == 2)
                                 {
-                                    if (ArmState is (int)ArmsAnim.Gun)
-                                        ArmState = (int)ArmsAnim.GunEnd;
+                                    if (BodyState is (int)BodyAnim.Gun)
+                                        BodyState = (int)BodyAnim.GunEnd;
 
-                                    if (ArmState is (int)ArmsAnim.Idle && NPC.velocity.Length() < 1f)
+                                    if (BodyState is (int)BodyAnim.Idle && NPC.velocity.Length() < 1f)
                                     {
                                         BodyState = (int)BodyAnim.IdlePhysical;
                                         AITimer = 0;
@@ -570,15 +569,19 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) < 100 * 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
-                            if (ArmState < (int)ArmsAnim.Gun || ArmState > (int)ArmsAnim.GunEnd)
-                                ArmState = (int)ArmsAnim.Gun;
+                            if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                            {
+                                ArmsFrameY = 1;
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Gun;
+                            }
 
                             if (phase <= 1)
                             {
                                 if (AITimer % 40 == 0)
                                 {
                                     NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
                                 if (AITimer % 120 == 0)
@@ -588,7 +591,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         int rot = 25 * i;
                                         NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 25)), true, SoundID.Item1, "Sounds/Custom/Gun3");
                                     }
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                 }
                                 if (AITimer >= 370)
                                 {
@@ -603,7 +606,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer % 20 == 0)
                                 {
                                     NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
                                 if (AITimer % 100 == 0)
@@ -613,7 +616,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         int rot = 25 * i;
                                         NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, SoundID.Item1, "Sounds/Custom/Gun3");
                                     }
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                 }
                                 if (AITimer >= 310)
                                 {
@@ -628,7 +631,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer % 35 == 0)
                                 {
                                     NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
                                 if (AITimer % 105 == 0)
@@ -638,7 +641,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         int rot = 25 * i;
                                         NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, SoundID.Item1, "Sounds/Custom/Gun3");
                                     }
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                 }
                                 if (AITimer >= 330)
                                 {
@@ -660,10 +663,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer++;
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -300 : 300, 10);
 
-                            if (ArmState < (int)ArmsAnim.Gun || ArmState > (int)ArmsAnim.GunEnd)
-                                ArmState = (int)ArmsAnim.Gun;
+                            if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                            {
+                                ArmsFrameY = 1;
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Gun;
+                            }
 
-                            if (AITimer++ < 200)
+                            if (AITimer < 200)
                             {
                                 if (NPC.Distance(ShootPos) < 100 || (phase >= 5 ? AITimer > 40 : AITimer > 80))
                                 {
@@ -699,7 +706,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(Main.rand.Next(7, 11) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, SoundID.Item1, "Sounds/Custom/ShotgunBlast1");
                                     }
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
 
                                 }
@@ -722,13 +729,17 @@ namespace Redemption.NPCs.Bosses.KSIII
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -450 : 450, -10);
                             NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
-                            if (ArmState < (int)ArmsAnim.Gun || ArmState > (int)ArmsAnim.GunEnd)
-                                ArmState = (int)ArmsAnim.Gun;
+                            if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                            {
+                                ArmsFrameY = 1;
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Gun;
+                            }
 
                             if (phase >= 5 ? AITimer == 40 : AITimer == 60)
                             {
                                 NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun2");
-                                ArmState = (int)ArmsAnim.GunShoot;
+                                BodyState = (int)BodyAnim.GunShoot;
                                 NPC.netUpdate = true;
                             }
                             if (phase >= 5 ? AITimer > 60 : AITimer > 90)
@@ -762,13 +773,17 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -450 : 450, -10);
                                 NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
-                                if (ArmState < (int)ArmsAnim.Gun || ArmState > (int)ArmsAnim.GunEnd)
-                                    ArmState = (int)ArmsAnim.Gun;
+                                if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                                {
+                                    ArmsFrameY = 1;
+                                    ArmsFrameX = 0;
+                                    BodyState = (int)BodyAnim.Gun;
+                                }
 
                                 if (phase >= 5 ? AITimer == 41 || AITimer == 44 || AITimer == 47 : AITimer == 61 || AITimer == 64 || AITimer == 67)
                                 {
                                     NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun2");
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
                                 if (phase >= 5 ? AITimer > 61 : AITimer > 91)
@@ -804,13 +819,17 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
-                                if (ArmState < (int)ArmsAnim.Gun || ArmState > (int)ArmsAnim.GunEnd)
-                                    ArmState = (int)ArmsAnim.Gun;
+                                if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                                {
+                                    ArmsFrameY = 1;
+                                    ArmsFrameX = 0;
+                                    BodyState = (int)BodyAnim.Gun;
+                                }
 
                                 if (AITimer % 10 == 0)
                                 {
                                     NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(6 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
-                                    ArmState = (int)ArmsAnim.GunShoot;
+                                    BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
                                 if (AITimer >= 61)
@@ -852,7 +871,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.velocity *= 0.9f;
                                 if (AITimer == 1)
                                 {
-                                    if (ArmState is (int)ArmsAnim.Idle)
+                                    if (BodyState is (int)BodyAnim.Idle)
                                         BodyState = (int)BodyAnim.IdlePhysical;
 
                                     if (BodyState is (int)BodyAnim.IdlePhysical && NPC.velocity.Length() < 1f)
@@ -865,10 +884,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 else if (AITimer == 2)
                                 {
-                                    if (ArmState is (int)ArmsAnim.Idle)
-                                        ArmState = (int)ArmsAnim.ArmCross;
+                                    if (BodyState is (int)BodyAnim.Idle)
+                                    {
+                                        ArmsFrameY = 1;
+                                        ArmsFrameX = 0;
+                                        BodyState = (int)BodyAnim.Gun;
+                                    }
 
-                                    if (ArmState is (int)ArmsAnim.Gun && NPC.velocity.Length() < 1f)
+                                    if (BodyState is (int)BodyAnim.Gun && NPC.velocity.Length() < 1f)
                                     {
                                         AITimer = 0;
                                         AIState = ActionState.GunAttacks;
@@ -897,7 +920,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 NPC.velocity *= 0.96f;
                                 if (AITimer == 120)
-                                    ArmState = (int)ArmsAnim.RocketFist;
+                                    BodyState = (int)BodyAnim.RocketFist;
 
                                 if (AITimer == 135)
                                     NPC.Shoot(new Vector2(NPC.Center.X + 15 * NPC.spriteDirection, NPC.Center.Y - 11), ModContent.ProjectileType<KS3_Fist>(), 102, new Vector2(10 * NPC.spriteDirection, 0), true, SoundID.Item1, "Sounds/Custom/MissileFire1");
@@ -944,7 +967,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 {
                                     NPC.velocity *= 0.9f;
                                     if (AITimer == 120)
-                                        ArmState = (int)ArmsAnim.Grenade;
+                                        BodyState = (int)BodyAnim.Grenade;
 
                                     if (AITimer == 140)
                                         NPC.Shoot(new Vector2(NPC.Center.X + 21 * NPC.spriteDirection, NPC.Center.Y - 17), ModContent.ProjectileType<KS3_FlashGrenade>(), 78, new Vector2(10 * NPC.spriteDirection, -6), false, SoundID.Item1);
@@ -977,7 +1000,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 AITimer++;
-                                ArmState = (int)ArmsAnim.Charging;
+                                BodyState = (int)BodyAnim.Charging;
                                 ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -320 : 320, 0);
                                 if (AITimer < 100)
                                 {
@@ -1011,7 +1034,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                     if (AITimer > 240)
                                     {
-                                        ArmState = (int)ArmsAnim.Idle;
+                                        BodyState = (int)BodyAnim.Idle;
                                         chance -= Main.rand.NextFloat(0.5f, 1f);
                                         AITimer = 0;
                                         AttackChoice = -1;
@@ -1038,7 +1061,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 AITimer++;
-                                ArmState = (int)ArmsAnim.Charging;
+                                BodyState = (int)BodyAnim.Charging;
                                 ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -80 : 80, 0);
                                 if (AITimer < 200)
                                 {
@@ -1074,7 +1097,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     }
                                     if (AITimer > 232)
                                     {
-                                        ArmState = (int)ArmsAnim.Idle;
+                                        BodyState = (int)BodyAnim.Idle;
                                         chance -= Main.rand.NextFloat(0.4f, 0.7f);
                                         AITimer = 0;
                                         AttackChoice = -1;
@@ -1101,7 +1124,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 AITimer++;
-                                ArmState = (int)ArmsAnim.Shrug;
+                                BodyState = (int)BodyAnim.Shrug;
                                 NPC.velocity *= 0.98f;
                                 if (AITimer == 21)
                                 {
@@ -1123,7 +1146,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 if (AITimer > 31)
                                 {
-                                    ArmState = (int)ArmsAnim.Idle;
+                                    BodyState = (int)BodyAnim.Idle;
                                     AITimer = 0;
                                     AttackChoice = -1;
                                     NPC.netUpdate = true;
@@ -1156,14 +1179,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.Shoot(new Vector2(NPC.Center.X + 48 * NPC.spriteDirection, NPC.Center.Y - 12), ModContent.ProjectileType<KS3_Reflect>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                                 if (AITimer > 231)
-                                    ArmState = (int)ArmsAnim.ShieldOff;
+                                    BodyState = (int)BodyAnim.ShieldOff;
                                 else
-                                    ArmState = (int)ArmsAnim.ShieldOn;
+                                    BodyState = (int)BodyAnim.ShieldOn;
 
                                 if (AITimer > 261)
                                 {
                                     chance -= Main.rand.NextFloat(0.2f, 1f);
-                                    ArmState = (int)ArmsAnim.Idle;
+                                    BodyState = (int)BodyAnim.Idle;
                                     AITimer = 0;
                                     AttackChoice = -1;
                                     NPC.netUpdate = true;
@@ -1204,7 +1227,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer > 91)
                                 {
                                     chance -= Main.rand.NextFloat(0.2f, 1f);
-                                    ArmState = (int)ArmsAnim.Idle;
+                                    BodyState = (int)BodyAnim.Idle;
                                     AITimer = 0;
                                     AttackChoice = -1;
                                     NPC.netUpdate = true;
@@ -1245,7 +1268,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer > 91)
                                 {
                                     chance -= Main.rand.NextFloat(0.7f, 1f);
-                                    ArmState = (int)ArmsAnim.Idle;
+                                    BodyState = (int)BodyAnim.Idle;
                                     AITimer = 0;
                                     AttackChoice = -1;
                                     NPC.netUpdate = true;
@@ -1285,9 +1308,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer == 1)
                                 {
                                     if (BodyState is (int)BodyAnim.IdlePhysical)
-                                        ArmState = (int)ArmsAnim.Idle;
+                                        BodyState = (int)BodyAnim.Idle;
 
-                                    if (ArmState is (int)ArmsAnim.Idle && NPC.velocity.Length() < 1f)
+                                    if (BodyState is (int)BodyAnim.Idle && NPC.velocity.Length() < 1f)
                                     {
                                         AITimer = 0;
                                         AIState = ActionState.SpecialAttacks;
@@ -1298,8 +1321,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 else if (AITimer == 2)
                                 {
                                     if (BodyState is (int)BodyAnim.IdlePhysical)
-                                        ArmState = (int)ArmsAnim.Gun;
-                                    if (ArmState is (int)ArmsAnim.Gun && NPC.velocity.Length() < 1f)
+                                    {
+                                        ArmsFrameY = 1;
+                                        ArmsFrameX = 0;
+                                        BodyState = (int)BodyAnim.Gun;
+                                    }
+                                    if (BodyState is (int)BodyAnim.Gun && NPC.velocity.Length() < 1f)
                                     {
                                         AITimer = 0;
                                         AIState = ActionState.GunAttacks;
@@ -1320,7 +1347,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 17f, 5f, true);
                             }
                             if (AITimer == 40)
+                            {
+                                NPC.frame.X = 7 * NPC.frame.Width;
+                                NPC.frame.Y = 160;
                                 BodyState = (int)BodyAnim.WheelkickStart;
+                            }
 
                             if (AITimer > 40 && AITimer < 100)
                             {
@@ -1406,6 +1437,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (NPC.DistanceSQ(ShootPos) < 50 * 50 || AITimer > 70)
                                 {
                                     AITimer = 100;
+
+                                    NPC.frame.Y = 160 * 5;
+                                    NPC.frame.X = 0;
                                     BodyState = (int)BodyAnim.ShoulderBash;
                                     NPC.netUpdate = true;
                                 }
@@ -1439,6 +1473,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                         BaseAI.DamagePlayer(target, 120, 3, hitDirection, NPC);
+                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
                                     }
                                 }
 
@@ -1472,7 +1507,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 100;
                                     NPC.velocity.X = 0;
                                     NPC.velocity.Y = -25;
+
+                                    NPC.frame.X = 2 * NPC.frame.Width;
+                                    NPC.frame.Y = 160;
                                     BodyState = (int)BodyAnim.DropkickStart;
+
                                     SoundEngine.PlaySound(SoundID.Item74, NPC.position);
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine2>(), 0, NPC.DirectionTo(player.Center + player.velocity * 20f), false, SoundID.Item1.WithVolume(0), ai1: NPC.whoAmI);
                                     NPC.netUpdate = true;
@@ -1543,6 +1582,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (NPC.DistanceSQ(ShootPos) < 50 * 50 || AITimer > 40)
                                 {
                                     AITimer = 100;
+
+                                    NPC.frame.X = 0;
                                     BodyState = Main.rand.Next(2) == 0 ? (int)BodyAnim.Pummel1 : (int)BodyAnim.Pummel2;
                                     NPC.netUpdate = true;
                                 }
@@ -1623,7 +1664,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -80 : 80, 20);
 
                                 if (AITimer == 5)
+                                {
+                                    NPC.frame.X = 7 * NPC.frame.Width;
+                                    NPC.frame.Y = 160 * 2;
                                     BodyState = (int)BodyAnim.Jojo;
+                                }
 
                                 NPC.Move(ShootPos, NPC.Distance(player.Center) > 300 ? 20f : 9f, 8f, true);
                                 if (AITimer >= 15 && AITimer % 3 == 0)
@@ -2138,7 +2183,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             #region Teleporting
             if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
             {
-                if (AttackChoice == 3 && NPC.ai[0] == 5)
+                if (AttackChoice == 3 && AIState is ActionState.PhysicalAttacks)
                     return;
                 TeleportCount++;
                 Teleport(false, Vector2.Zero);
@@ -2149,7 +2194,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override bool CheckDead()
         {
-            if (phase >= 5 || RedeConfigClient.Instance.NoLoreElements || NPC.ai[0] == 12)
+            if (phase >= 5 || RedeConfigClient.Instance.NoLoreElements || AIState is ActionState.Spared)
                 return true;
             else
             {
@@ -2272,18 +2317,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                 oldrot[0] = NPC.rotation;
 
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 8;
-                if (AIState is not ActionState.PhysicalAttacks)
+                if (BodyState < (int)BodyAnim.IdlePhysical)
                 {
-                    if (NPC.velocity.Length() < 13f && BodyState is (int)BodyAnim.Charge)
-                        BodyState = (int)BodyAnim.Idle;
-                    else if (NPC.velocity.Length() >= 13f && BodyState is (int)BodyAnim.Idle)
-                        BodyState = (int)BodyAnim.Charge;
-                }
-
-                #region Body
-                switch (BodyState)
-                {
-                    case (int)BodyAnim.Idle:
+                    if (NPC.velocity.Length() < 13f)
+                    {
                         NPC.frame.Y = 0;
                         if (NPC.frameCounter++ >= 5)
                         {
@@ -2292,8 +2329,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (NPC.frame.X > 3 * NPC.frame.Width)
                                 NPC.frame.X = 0;
                         }
-                        break;
-                    case (int)BodyAnim.Charge:
+                    }
+                    else
+                    {
                         NPC.frame.Y = (int)MathHelper.Clamp(NPC.frame.Y, 0, frameHeight);
                         if (NPC.frame.Y is 0 && NPC.frame.X < 4 * NPC.frame.Width)
                             NPC.frame.X = 4 * NPC.frame.Width;
@@ -2311,6 +2349,144 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 NPC.frame.X = 6 * NPC.frame.Width;
                                 NPC.frame.Y = 0;
+                            }
+                        }
+                    }
+                }
+
+                #region Body
+
+                switch (BodyState)
+                {
+                    case (int)BodyAnim.Idle:
+                        ArmsFrameY = 0;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 3)
+                                ArmsFrameX = 0;
+                        }
+                        break;
+                    case (int)BodyAnim.Crossed:
+                        ArmsFrameY = 0;
+                        if (ArmsFrameX < 4)
+                            ArmsFrameX = 4;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 7)
+                                ArmsFrameX = 4;
+                        }
+                        break;
+                    case (int)BodyAnim.Gun:
+                        ArmsFrameY = 1;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 6)
+                                ArmsFrameX = 6;
+                        }
+                        break;
+                    case (int)BodyAnim.GunShoot:
+                        ArmsFrameY = 1;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 8)
+                            {
+                                ArmsFrameX = 6;
+                                BodyState = (int)BodyAnim.Gun;
+                            }
+                        }
+                        break;
+                    case (int)BodyAnim.GunEnd:
+                        ArmsFrameY = 1;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX--;
+                            if (ArmsFrameX < 0)
+                            {
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Idle;
+                            }
+                        }
+                        break;
+                    case (int)BodyAnim.RocketFist:
+                        ArmsFrameY = 3;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 7)
+                            {
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Idle;
+                            }
+                        }
+                        break;
+                    case (int)BodyAnim.Grenade:
+                        ArmsFrameY = 5;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 5)
+                            {
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Idle;
+                            }
+                        }
+                        break;
+                    case (int)BodyAnim.Charging:
+                        ArmsFrameY = 2;
+                        if (ArmsFrameX < 5)
+                            ArmsFrameX = 5;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 9)
+                                ArmsFrameX = 7;
+                        }
+                        break;
+                    case (int)BodyAnim.Shrug:
+                        ArmsFrameY = 4;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 6)
+                            {
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Idle;
+                            }
+                        }
+                        break;
+                    case (int)BodyAnim.ShieldOn:
+                        ArmsFrameY = 2;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX++;
+                            if (ArmsFrameX > 4)
+                                ArmsFrameX = 3;
+                        }
+                        break;
+                    case (int)BodyAnim.ShieldOff:
+                        ArmsFrameY = 2;
+                        if (ArmsCounter++ >= 5)
+                        {
+                            ArmsCounter = 0;
+                            ArmsFrameX--;
+                            if (ArmsFrameX < 0)
+                            {
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Idle;
                             }
                         }
                         break;
@@ -2381,7 +2557,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.frameCounter = 0;
                             NPC.frame.X += NPC.frame.Width;
                             if (NPC.frame.X > 6 * NPC.frame.Width)
+                            {
+                                NPC.frame.Y = 4 * frameHeight;
+                                NPC.frame.X = 4 * NPC.frame.Width;
                                 BodyState = (int)BodyAnim.IdlePhysical;
+                            }
                         }
                         break;
                     case (int)BodyAnim.Jojo:
@@ -2401,7 +2581,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (NPC.frame.Y == 3 * frameHeight && NPC.frame.X > 4 * NPC.frame.Width)
                             {
                                 NPC.frame.X = 1 * NPC.frame.Width;
-                                NPC.frame.Y = 2 * frameHeight;
+                                NPC.frame.Y = 3 * frameHeight;
                             }
                         }
                         break;
@@ -2420,7 +2600,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.frame.Y = 4 * frameHeight;
                             }
                             if (NPC.frame.Y == 4 * frameHeight && NPC.frame.X > 0 * NPC.frame.Width)
+                            {
+                                NPC.frame.Y = 4 * frameHeight;
+                                NPC.frame.X = 4 * NPC.frame.Width;
                                 BodyState = (int)BodyAnim.IdlePhysical;
+                            }
                         }
                         break;
                     case (int)BodyAnim.Pummel2:
@@ -2433,7 +2617,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.frameCounter = 0;
                             NPC.frame.X += NPC.frame.Width;
                             if (NPC.frame.X > 3 * NPC.frame.Width)
+                            {
+                                NPC.frame.Y = 4 * frameHeight;
+                                NPC.frame.X = 4 * NPC.frame.Width;
                                 BodyState = (int)BodyAnim.IdlePhysical;
+                            }
                         }
                         break;
                     case (int)BodyAnim.IdlePhysical:
@@ -2468,176 +2656,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.frameCounter = 0;
                             NPC.frame.X -= NPC.frame.Width;
                             if (NPC.frame.X < 0 * NPC.frame.Width)
+                            {
+                                NPC.frame.Y = 4 * frameHeight;
+                                NPC.frame.X = 4 * NPC.frame.Width;
                                 BodyState = (int)BodyAnim.IdlePhysical;
-                        }
-                        break;
-                }
-                #endregion
-
-                #region Arms
-                if (ArmsFrameX > 4)
-                {
-                    ArmsFrameX = 0;
-                    ArmsFrameY++;
-                }
-                else if (ArmsFrameX < 0)
-                {
-                    ArmsFrameX = 4;
-                    ArmsFrameY--;
-                }
-                switch (ArmState)
-                {
-                    case (int)ArmsAnim.Idle:
-                        ArmsFrameY = 0;
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameX > 3)
-                                ArmsFrameX = 0;
-                        }
-                        break;
-                    case (int)ArmsAnim.ArmCross:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 0, 1);
-                        if (ArmsFrameY == 0 && ArmsFrameX < 4)
-                            ArmsFrameX = 4;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameX > 2)
-                            {
-                                ArmsFrameX = 4;
-                                ArmsFrameY = 0;
                             }
-                        }
-                        break;
-                    case (int)ArmsAnim.Gun:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 1, 2);
-                        if (ArmsFrameY == 1 && ArmsFrameX < 3)
-                            ArmsFrameX = 3;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameY == 2 && ArmsFrameX > 4)
-                            {
-                                ArmsFrameX = 4;
-                                ArmsFrameY = 2;
-                            }
-                        }
-                        break;
-                    case (int)ArmsAnim.GunShoot:
-                        ArmsFrameY = 3;
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameX > 1)
-                            {
-                                ArmState = (int)ArmsAnim.Gun;
-                                ArmsFrameX = 4;
-                                ArmsFrameY = 2;
-                            }
-                        }
-                        break;
-                    case (int)ArmsAnim.GunEnd:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 1, 2);
-                        if (ArmsFrameY == 1 && ArmsFrameX < 3)
-                            ArmsFrameX = 3;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX--;
-                            if (ArmsFrameY == 1 && ArmsFrameX < 3)
-                                ArmState = (int)ArmsAnim.Idle;
-                        }
-                        break;
-                    case (int)ArmsAnim.ShieldOn:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 3, 4);
-                        if (ArmsFrameY == 3 && ArmsFrameX < 2)
-                            ArmsFrameX = 2;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameY == 4 && ArmsFrameX > 1)
-                            {
-                                ArmsFrameX = 0;
-                                ArmsFrameY = 4;
-                            }
-                        }
-                        break;
-                    case (int)ArmsAnim.ShieldOff:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 3, 4);
-                        if (ArmsFrameY == 3 && ArmsFrameX < 2)
-                            ArmsFrameX = 2;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX--;
-                            if (ArmsFrameY == 3 && ArmsFrameX < 2)
-                                ArmState = (int)ArmsAnim.Idle;
-                        }
-                        break;
-                    case (int)ArmsAnim.Charging:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 4, 5);
-                        if (ArmsFrameY == 4 && ArmsFrameX < 2)
-                            ArmsFrameX = 2;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameY == 4 && ArmsFrameX > 1)
-                            {
-                                ArmsFrameX = 0;
-                                ArmsFrameY = 4;
-                            }
-                        }
-                        break;
-                    case (int)ArmsAnim.RocketFist:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 5, 7);
-                        if (ArmsFrameY == 5 && ArmsFrameX < 3)
-                            ArmsFrameX = 3;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameY == 7 && ArmsFrameX > 0)
-                                ArmState = (int)ArmsAnim.Idle;
-                        }
-                        break;
-                    case (int)ArmsAnim.Shrug:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 7, 8);
-                        if (ArmsFrameY == 7 && ArmsFrameX < 1)
-                            ArmsFrameX = 1;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameY == 8 && ArmsFrameX > 2)
-                                ArmState = (int)ArmsAnim.Idle;
-                        }
-                        break;
-                    case (int)ArmsAnim.Grenade:
-                        ArmsFrameY = (int)MathHelper.Clamp(ArmsFrameY, 8, 9);
-                        if (ArmsFrameY == 8 && ArmsFrameX < 3)
-                            ArmsFrameX = 3;
-
-                        if (ArmsCounter++ >= 5)
-                        {
-                            ArmsCounter = 0;
-                            ArmsFrameX++;
-                            if (ArmsFrameY == 9 && ArmsFrameX > 3)
-                                ArmState = (int)ArmsAnim.Idle;
                         }
                         break;
                 }
@@ -2697,13 +2720,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    Main.spriteBatch.Draw(phase < 5 ? TextureAssets.Npc[NPC.type].Value : Overclock, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
             }
             spriteBatch.Draw(phase < 5 ? TextureAssets.Npc[NPC.type].Value : Overclock, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(phase < 5 ? Glow : OverclockGlow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            if (BodyState is (int)BodyAnim.Idle && phase < 5)
+            if (AIState != ActionState.GunAttacks && AIState != ActionState.PhysicalAttacks && AIState != ActionState.SpecialAttacks && NPC.velocity.Length() < 13f && phase < 5)
             {
                 Vector2 HeadPos = new(NPC.Center.X - 2 * NPC.spriteDirection, NPC.Center.Y - 35);
                 int HeadHeight = Head.Height / 20;
@@ -2713,19 +2736,23 @@ namespace Redemption.NPCs.Bosses.KSIII
                 spriteBatch.Draw(HeadGlow, HeadPos - screenPos, new Rectangle?(HeadRect), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(Head.Width / 2f, HeadHeight / 2f), NPC.scale, effects, 0f);
             }
 
-            if (BodyState is (int)BodyAnim.Idle or (int)BodyAnim.Charge)
+            if (BodyState < (int)BodyAnim.IdlePhysical)
             {
-                int height = Arms.Height / 10;
-                int width = Arms.Height / 5;
+                int height = Arms.Height / 6;
+                int width = Arms.Width / 10;
                 int y = height * ArmsFrameY;
                 int x = width * ArmsFrameX;
                 Rectangle ArmsRect = new(x, y, width, height);
                 Vector2 ArmsOrigin = new(width / 2f, height / 2f);
-                Vector2 ArmsPos = new(NPC.Center.X - 18 * NPC.spriteDirection, NPC.Center.Y - 13);
+                Vector2 ArmsPos = new(NPC.Center.X, NPC.Center.Y - 13);
 
-                spriteBatch.Draw(phase < 5 ? Arms : OverclockArms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(drawColor), NPC.rotation, ArmsOrigin, NPC.scale, effects, 0);
+                spriteBatch.Draw(phase < 5 ? Arms : OverclockArms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(drawColor),
+                    BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
+                    gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(phase < 5 ? ArmsGlow : OverclockArmsGlow, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White), NPC.rotation, ArmsOrigin, NPC.scale, effects, 0);
+                spriteBatch.Draw(phase < 5 ? ArmsGlow : OverclockArmsGlow, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
+                    BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
+                    gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
             }
             return false;
         }

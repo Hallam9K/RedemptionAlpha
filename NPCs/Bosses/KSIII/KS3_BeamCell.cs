@@ -29,7 +29,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         //should be set to about half of the end length
         private const float FirstSegmentDrawDist = 5;
 
-        public int MaxLaserLength = 1200;
+        public int MaxLaserLength = 2000;
         public int maxLaserFrames = 2;
         public int LaserFrameDelay = 10;
         public bool StopsOnTiles = false;
@@ -50,20 +50,35 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.timeLeft = 120;
         }
 
+        private bool faceLeft;
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
-            if (AITimer == 0)
-                LaserScale = 0.1f;
-
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active)
                 Projectile.Kill();
 
+            if (AITimer == 0)
+            {
+                LaserScale = 0.1f;
+                if (npc.spriteDirection != 1)
+                    faceLeft = true;
+            }
+
             Vector2 CellPos = new(npc.Center.X + 2 * npc.spriteDirection, npc.Center.Y - 16);
             Projectile.Center = CellPos;
-            Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * npc.spriteDirection) * npc.spriteDirection;
+            Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * npc.spriteDirection);
+            if (npc.spriteDirection == 1 && faceLeft)
+            {
+                Projectile.velocity *= -1;
+                faceLeft = false;
+            }
+            else if (npc.spriteDirection != 1 && !faceLeft)
+            {
+                Projectile.velocity *= -1;
+                faceLeft = true;
+            }
 
             if (AITimer <= 10)
             {

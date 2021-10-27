@@ -75,6 +75,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
 
         Vector2 vector;
+        Vector2 playerOrigin;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -147,11 +148,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                 }
             }
             if (NPC.ai[2] == 210)
-                vector = player.Center;
+                playerOrigin = player.Center;
             if (NPC.ai[2] == 240 && NPC.ai[3] > 10)
             {
                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_MagnetBeam>(), (int)NPC.ai[3] / 4,
-                    RedeHelper.PolarVector(10, (vector - NPC.Center).ToRotation()), true, SoundID.Item1, "Sounds/Custom/BallFire", NPC.whoAmI);
+                    RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), true, SoundID.Item1, "Sounds/Custom/BallFire", NPC.whoAmI);
             }
             if (NPC.ai[2] >= 400)
             {
