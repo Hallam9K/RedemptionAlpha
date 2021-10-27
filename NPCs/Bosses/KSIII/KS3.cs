@@ -140,21 +140,21 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (!RedeBossDowned.downedSlayer)
             {
-                RedeWorld.alignment -= NPC.ai[0] == 12 ? 0 : 1;
+                RedeWorld.alignment -= NPC.ai[0] == 12 ? 0 : 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 12 ? "+0" : "-1", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 12 ? "+0" : "-2", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
 
                     if (!Main.dedServ)
                     {
-                        if (NPC.ai[0] == 12)
+                        if (AIState is ActionState.Spared)
                             RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Good thing you left him be...", 240, 30, 0, Color.DarkGoldenrod);
                         else
                             RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Oh dear, he seems to have a very short temper, and you winning probably made it worse.\nI hope he doesn't do anything stupid.", 240, 30, 0, Color.DarkGoldenrod);
