@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using System.Linq;
 using Terraria.Audio;
 using Redemption.Globals;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -31,7 +33,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             Projectile.Center = npc.Center;
@@ -58,7 +60,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.alpha -= 40;
                 Projectile.scale += 0.04f;
 
-                if (Projectile.localAI[0] < 3000)
+                if (Projectile.localAI[0] < (npc.type == ModContent.NPCType<KS3>() ? 3000 : 9000))
                     continue;
 
                 SoundEngine.PlaySound(SoundID.NPCDeath56, Projectile.position);
@@ -75,7 +77,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.Kill();
             }
         }
-        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            return false;
+        }
     }
     public class KS3_Shield2 : ModProjectile
     {
@@ -99,7 +110,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             Projectile.Center = npc.Center;
@@ -120,6 +131,15 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             Projectile.Kill();
         }
-        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            return false;
+        }
     }
 }

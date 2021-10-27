@@ -31,6 +31,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width * 0.5f, Projectile.height * 0.5f);
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -38,14 +39,15 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return true;
         }
-        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
 
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             Vector2 HitPos = new(npc.Center.X, npc.Center.Y + 40);

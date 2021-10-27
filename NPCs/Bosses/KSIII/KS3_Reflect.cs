@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             Vector2 Pos = new(npc.Center.X + 48 * npc.spriteDirection, npc.Center.Y - 12);

@@ -58,12 +58,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.Center = npc.Center + RedeHelper.PolarVector(54, (npc.ModNPC as KS3).gunRot) + RedeHelper.PolarVector(13 * npc.spriteDirection,
                     (npc.ModNPC as KS3).gunRot - (float)Math.PI / 2);
                 Projectile.velocity = RedeHelper.PolarVector(10, (npc.ModNPC as KS3).gunRot);
-            }/*
-            else if (npc.active && npc.type == ModContent.NPCType<KS3_Body_Clone>())
+            }
+            else if (npc.active && npc.type == ModContent.NPCType<KS3_Clone>())
             {
-                projectile.Center = npc.Center + RedeHelper.PolarVector(54, (npc.modNPC as KS3_Body_Clone).gunRot) + RedeHelper.PolarVector(13 * npc.spriteDirection, (npc.modNPC as KS3_Body_Clone).gunRot - (float)Math.PI / 2);
-                projectile.velocity = RedeHelper.PolarVector(10, (npc.modNPC as KS3_Body_Clone).gunRot);
-            }*/
+                Projectile.Center = npc.Center + RedeHelper.PolarVector(54, (npc.ModNPC as KS3_Clone).gunRot) + RedeHelper.PolarVector(13 * npc.spriteDirection, (npc.ModNPC as KS3_Clone).gunRot - (float)Math.PI / 2);
+                Projectile.velocity = RedeHelper.PolarVector(10, (npc.ModNPC as KS3_Clone).gunRot);
+            }
 
             #region Beginning And End Effects
             if (AITimer == 0)

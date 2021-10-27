@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.velocity.Y = -oldVelocity.Y;
             return false;
         }
-        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

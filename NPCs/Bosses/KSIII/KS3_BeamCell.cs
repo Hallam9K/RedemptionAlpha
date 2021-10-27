@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active)
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             if (AITimer == 0)

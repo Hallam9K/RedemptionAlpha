@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 }
             }
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<KS3>())
+            if (!host.active || (host.type != ModContent.NPCType<KS3>() && host.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
             Vector2 CallPos = new(host.Center.X + 22 * host.spriteDirection, host.Center.Y - 56);
             Projectile.Center = CallPos;

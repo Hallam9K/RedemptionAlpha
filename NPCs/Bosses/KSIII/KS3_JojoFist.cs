@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.hostile = false;
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3>())
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             Vector2 HitPos = new((28 * npc.spriteDirection) + Main.rand.Next(-8, 8), -18 + Main.rand.Next(-18, 18));

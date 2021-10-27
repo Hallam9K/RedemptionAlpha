@@ -90,7 +90,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 NPC.soundDelay = 10;
             }
             NPC host = Main.npc[(int)NPC.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<KS3>())
+            if (!host.active || (host.type != ModContent.NPCType<KS3>() && host.type != ModContent.NPCType<KS3_Clone>()))
                 NPC.active = false;
 
             if (++NPC.ai[1] % 80 == 0)
