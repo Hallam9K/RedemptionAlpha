@@ -7,6 +7,7 @@ using Redemption.Globals;
 using Redemption.Base;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -115,7 +116,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                 if (NPC.frame.Y < 4 * frameHeight)
                     NPC.frame.Y = 4 * frameHeight;
 
-                NPC.frameCounter++;
                 if (NPC.frameCounter > 5)
                 {
                     NPC.frameCounter = 0;
@@ -132,6 +132,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                 if (NPC.frame.Y > 3 * frameHeight)
                     NPC.frame.Y = 0;
             }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

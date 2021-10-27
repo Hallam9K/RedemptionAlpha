@@ -75,6 +75,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 Projectile.Kill();
             }
         }
+        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
     }
     public class KS3_Shield2 : ModProjectile
     {
@@ -119,5 +120,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             Projectile.Kill();
         }
+        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
     }
 }

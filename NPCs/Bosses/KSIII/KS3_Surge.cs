@@ -51,6 +51,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 player.AddBuff(BuffID.Electrified, 180);
             }
         }
+        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
     }
     public class KS3_Surge2 : ModProjectile
     {

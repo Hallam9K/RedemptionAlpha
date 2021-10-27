@@ -43,5 +43,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             else 
                 Projectile.spriteDirection = 1;
         }
+
+        public override Color? GetAlpha(Color lightColor) => Color.White;
     }
 }

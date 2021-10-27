@@ -52,9 +52,46 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref bubbleTex);
+                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref portalTex);
+                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref holyGlowTex);
+                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref whiteFlareTex);
+                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref whiteOrbTex);
+                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref whiteLightBeamTex);
+                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref transitionTex);
+                });
             }
 
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
+        }
+
+        public static void PremultiplyTexture(ref Texture2D texture)
+        {
+            Color[] buffer = new Color[texture.Width * texture.Height];
+            texture.GetData(buffer);
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = Color.FromNonPremultiplied(
+                        buffer[i].R, buffer[i].G, buffer[i].B, buffer[i].A);
+            }
+            texture.SetData(buffer);
         }
 
         private void LoadCache()

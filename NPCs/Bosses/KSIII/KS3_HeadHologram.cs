@@ -89,5 +89,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                 RedeSystem.Instance.DialogueUIElement.TextColor = color;
             }
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
     }
 }

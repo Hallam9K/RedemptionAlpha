@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -32,5 +33,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (Projectile.frame >= 10)
                 Projectile.velocity.Y -= 1f;
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
     }
 }

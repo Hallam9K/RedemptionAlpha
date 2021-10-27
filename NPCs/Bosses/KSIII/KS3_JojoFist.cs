@@ -70,5 +70,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             else
                 Projectile.rotation = (float)Math.PI / 2;
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
     }
 }

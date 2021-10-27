@@ -40,6 +40,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             return true;
         }
+        public override Color? GetAlpha(Color lightColor) => Projectile.GetAlpha(Color.White);
+
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
