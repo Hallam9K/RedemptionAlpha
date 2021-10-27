@@ -126,7 +126,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("'What? You want my lore? Go get your own lore!'")
             });
         }
 
