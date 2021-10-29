@@ -892,6 +892,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 else if (AITimer == 2)
                                 {
+                                    gunRot = NPC.spriteDirection == 1 ? 0f : (float)Math.PI;
+
                                     if (BodyState is (int)BodyAnim.Idle)
                                     {
                                         ArmsFrameY = 1;
@@ -1328,6 +1330,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 else if (AITimer == 2)
                                 {
+                                    gunRot = NPC.spriteDirection == 1 ? 0f : (float)Math.PI;
+
                                     if (BodyState is (int)BodyAnim.IdlePhysical)
                                     {
                                         ArmsFrameY = 1;
