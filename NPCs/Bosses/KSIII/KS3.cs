@@ -1035,9 +1035,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 else
                                 {
                                     NPC.Move(ShootPos, 4f, 14f, true);
-                                    if (AITimer == 101)
+                                    if (AITimer == 121)
                                         NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_BeamCell>(), 96,
-                                            RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(30 * NPC.spriteDirection)),
+                                            RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(35 * NPC.spriteDirection)),
                                             false, SoundID.Item103, ai0: NPC.whoAmI);
 
                                     if (AITimer > 240)

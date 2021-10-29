@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             Vector2 CellPos = new(npc.Center.X + 2 * npc.spriteDirection, npc.Center.Y - 16);
             Projectile.Center = CellPos;
-            Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * npc.spriteDirection);
+            Projectile.velocity = Projectile.velocity.RotatedBy(0.01f * npc.spriteDirection);
             if (npc.spriteDirection == 1 && faceLeft)
             {
                 Projectile.velocity *= -1;
