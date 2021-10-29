@@ -18,6 +18,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -117,6 +118,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoITrophy>(), 10));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<CuddlyTeratoma>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

@@ -78,7 +78,7 @@ namespace Redemption.Items.Donator.Arche
         public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
         {
             if (!male)
-                equipSlot = Mod.AddEquipTexture(ModContent.GetInstance<ArchePatreonVanityLegs>(), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
+                equipSlot = Mod.GetEquipSlot("Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs);
         }
         public override void AddRecipes()
         {

@@ -10,26 +10,22 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
 {
-	public class Occie : ModProjectile
+	public class DevilImp_Proj : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.projFrames[Projectile.type] = 6;
+			DisplayName.SetDefault("Devil Imp");
+			Main.projFrames[Projectile.type] = 3;
 			Main.projPet[Projectile.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 32;
-			Projectile.height = 32;
+			Projectile.width = 30;
+			Projectile.height = 26;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.penetrate = -1;
-		}
-
-		public override Color? GetAlpha(Color lightColor)
-		{
-			return Color.White;
 		}
 
 		public override void AI()
@@ -45,14 +41,14 @@ namespace Redemption.Projectiles.Pets
 				Projectile.frame++;
 
 				if (Projectile.frame >= Main.projFrames[Projectile.type])
-				{
 					Projectile.frame = 0;
-				}
 			}
 			if (Projectile.velocity.X < -1 || Projectile.velocity.X > 1)
 				Projectile.LookByVelocity();
+			else
+				Projectile.spriteDirection = player.direction;
 
-			Projectile.Move(new Vector2(player.Center.X + (60 * -player.direction), player.Center.Y - 50), 10, 40);
+			Projectile.Move(new Vector2(player.Center.X - (80 * -player.direction), player.Center.Y - 40), 10, 40);
 
 			if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
 			{
@@ -64,10 +60,8 @@ namespace Redemption.Projectiles.Pets
 
 		private void CheckActive(Player player)
 		{
-			if (!player.dead && player.HasBuff(ModContent.BuffType<OcciePetBuff>()))
-			{
+			if (!player.dead && player.HasBuff(ModContent.BuffType<ErhanPetBuff>()))
 				Projectile.timeLeft = 2;
-			}
 		}
 	}
 }
