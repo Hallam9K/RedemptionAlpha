@@ -1,6 +1,7 @@
 ﻿using Redemption.DamageClasses;
 using Redemption.Globals.Player;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,9 +14,10 @@ namespace Redemption.Items.Accessories.PreHM
             DisplayName.SetDefault("Pouch Belt");
             Tooltip.SetDefault("+2 druidic damage"
                 + "\n2% increased druidic critical strike chance");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
             Item.width = 30;
             Item.height = 24;

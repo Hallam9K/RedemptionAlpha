@@ -1,4 +1,5 @@
 using Redemption.Items.Critters;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using Terraria;
@@ -15,6 +16,7 @@ namespace Redemption.Globals
         public static RecipeGroup SilverRecipeGroup;
         public static RecipeGroup CopperRecipeGroup;
         public static RecipeGroup GathicStoneRecipeGroup;
+        public static RecipeGroup BioweaponBileRecipeGroup;
 
         public static void AddRecipeGroups()
         {
@@ -32,6 +34,9 @@ namespace Redemption.Globals
 
             GathicStoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<GathicStone>())}", ModContent.ItemType<GathicStone>(), ModContent.ItemType<GathicGladestone>(), ModContent.ItemType<GathicStoneBrick>(), ModContent.ItemType<GathicGladestoneBrick>());
             RecipeGroup.RegisterGroup("Redemption:GathicStone", GathicStoneRecipeGroup);
+
+            BioweaponBileRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<Bioweapon>())}", ModContent.ItemType<Bioweapon>(), ModContent.ItemType<ToxicBile>());
+            RecipeGroup.RegisterGroup("Redemption:BioweaponBile", BioweaponBileRecipeGroup);
         }
 
         public static void Load(Mod mod)
@@ -46,6 +51,7 @@ namespace Redemption.Globals
             SilverRecipeGroup = null;
             CopperRecipeGroup = null;
             GathicStoneRecipeGroup = null;
+            BioweaponBileRecipeGroup = null;
         }
 
         private static void Redemption_AddRecipes(Mod mod)

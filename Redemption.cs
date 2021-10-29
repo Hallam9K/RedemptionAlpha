@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Items.Armor.PreHM;
+using Redemption.Items.Donator.Arche;
 using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
@@ -39,6 +40,7 @@ namespace Redemption
 
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
+        public static int archeFemLegID;
 
         public Redemption()
         {
