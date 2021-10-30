@@ -117,6 +117,8 @@ namespace Redemption.NPCs.Bosses.Thorn
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
 
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());

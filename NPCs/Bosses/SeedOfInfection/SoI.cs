@@ -120,6 +120,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoITrophy>(), 10));
 
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SoIRelic>()));
+
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<CuddlyTeratoma>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());

@@ -124,6 +124,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanTrophy>(), 10));
 
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<DevilsAdvocate>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
