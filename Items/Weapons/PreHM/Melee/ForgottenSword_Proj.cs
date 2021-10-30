@@ -112,7 +112,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            target.velocity.Y = -10 * target.knockBackResist;
+            if (target.knockBackResist > 0)
+                target.velocity.Y = -10 * target.knockBackResist;
         }
 
         public override bool PreDraw(ref Color lightColor)
