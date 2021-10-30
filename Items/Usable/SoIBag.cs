@@ -12,6 +12,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Items.Usable
 {
@@ -53,6 +54,10 @@ namespace Redemption.Items.Usable
                 case 0:
                     player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>());
                     break;
+                case 1:
+                    player.QuickSpawnItem(ModContent.ItemType<CystlingSummon>());
+                    break;
+                    // TODO: Xenomite Canister
             }
             player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
         }

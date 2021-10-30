@@ -43,6 +43,7 @@ namespace Redemption.Globals.Player
         public bool eldritchRoot;
         public bool ensnared;
         public bool lantardPet;
+        public bool erhanCross;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -88,6 +89,7 @@ namespace Redemption.Globals.Player
             eldritchRoot = false;
             ensnared = false;
             lantardPet = false;
+            erhanCross = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
