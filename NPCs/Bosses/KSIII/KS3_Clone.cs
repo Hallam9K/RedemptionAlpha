@@ -62,10 +62,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    BuffID.Venom
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);

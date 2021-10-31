@@ -5203,7 +5203,6 @@ namespace Redemption.Base
          */
         public static void DamagePlayer(Player player, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, int critChance = 0, float critMult = 1f)
         {
-            //TODO: FIX THIS
             if(hitThroughDefense){ dmgAmt += (int)(player.statDefense * 0.5f); }
             if (damager == null)
             {
@@ -5215,7 +5214,6 @@ namespace Redemption.Base
                 //bool crit = false;
                 //if (critChance > 0) { crit = Main.rand.Next(1, 101) <= critChance; }
                 //float mult = 2f;
-                //TODO: fix these by adding in the tmodloader equivilants
 
                 //player.ItemDamagePVP(subPlayer, hitDirection, ref dmgAmt, ref crit, ref mult);
                 //BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DamagePVP(player, subPlayer, hitDirection, ref dmgAmt, ref crit, ref mult); });
@@ -5239,7 +5237,6 @@ namespace Redemption.Base
                 if (p.friendly)
                 {
                     //bool crit = false; float mult = 2f;
-                    //TODO: fix these by adding in the tmodloader equivilants
 
                     //p.DamagePVP(player, hitDirection, ref dmgAmt, ref crit, ref mult);
 
@@ -5268,7 +5265,6 @@ namespace Redemption.Base
                 NPC npc = (NPC)damager;
 
                 //bool crit = false; float mult = 2f;
-                //TODO: fix these by adding in the tmodloader equivilants
 
                 //npc.DamagePlayer(player, hitDirection, ref dmgAmt, ref crit, ref mult);
                 //BuffDef.RunBuffMethod(npc, (modbuff) => { modbuff.DamagePlayer(npc, player, hitDirection, ref dmgAmt, ref crit, ref mult); });
@@ -5311,7 +5307,6 @@ namespace Redemption.Base
         {
 			if (npc.dontTakeDamage || npc.immortal)
 				return;
-            //TODO: FIX THIS
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
 			if (damager == null || damager is NPC)
 			{

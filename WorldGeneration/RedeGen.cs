@@ -32,6 +32,7 @@ namespace Redemption.WorldGeneration
     {
         public static bool dragonLeadSpawn;
         public static Vector2 newbCaveVector = new Vector2(-1, -1);
+        public static Vector2 slayerShipVector = new Vector2(-1, -1);
 
         public override void OnWorldLoad()
         {
@@ -41,12 +42,14 @@ namespace Redemption.WorldGeneration
                 dragonLeadSpawn = false;
 
             newbCaveVector = new Vector2(-1, -1);
+            slayerShipVector = new Vector2(-1, -1);
         }
 
         public override void OnWorldUnload()
         {
             dragonLeadSpawn = false;
             newbCaveVector = new Vector2(-1, -1);
+            slayerShipVector = new Vector2(-1, -1);
         }
 
         public override void PostUpdateWorld()
@@ -70,7 +73,7 @@ namespace Redemption.WorldGeneration
                         int tileDown = Framing.GetTileSafely(i2, j2 + 1).type;
                         int tileLeft = Framing.GetTileSafely(i2 - 1, j2).type;
                         int tileRight = Framing.GetTileSafely(i2 + 1, j2).type;
-                        if (!Framing.GetTileSafely(i2, j2).IsActive && 
+                        if (!Framing.GetTileSafely(i2, j2).IsActive &&
                             (tileUp == TileID.SnowBlock || tileDown == TileID.SnowBlock || tileLeft == TileID.SnowBlock || tileRight == TileID.SnowBlock || TileID.Sets.Conversion.Ice[tileUp] || TileID.Sets.Conversion.Ice[tileDown] || TileID.Sets.Conversion.Ice[tileLeft] || TileID.Sets.Conversion.Ice[tileRight]))
                         {
                             WorldGen.PlaceObject(i2, j2, ModContent.TileType<CryoCrystalTile>(), true);
@@ -221,7 +224,7 @@ namespace Redemption.WorldGeneration
             int GuideIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
             if (GuideIndex == -1)
                 return;
-            tasks.Insert(GuideIndex, new PassLegacy("Heart of Thorns", delegate (GenerationProgress progress, GameConfiguration configuration)
+            tasks.Insert(ShiniesIndex2, new PassLegacy("Heart of Thorns", delegate (GenerationProgress progress, GameConfiguration configuration)
             {
                 progress.Message = "Cursing the forest";
                 SpawnThornSummon();
@@ -450,6 +453,32 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
+                tasks.Insert(ShiniesIndex2 + 2, new PassLegacy("Clearing Liquids for Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    Point origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
+                    if (Main.dungeonX < Main.maxTilesX / 2)
+                        origin = new Point((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
+
+                    origin.Y = BaseWorldGen.GetFirstTileFloor(origin.X, origin.Y, true);
+                    origin.X -= 60;
+
+                    WorldUtils.Gen(origin, new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
+                    {
+                        new Actions.SetLiquid(0, 0)
+                    }));
+                    slayerShipVector = origin.ToVector2();
+
+                    SlayerShipClear delete = new();
+                    SlayerShip biome = new();
+                    delete.Place(origin, WorldGen.structures);
+                    biome.Place(origin, WorldGen.structures);
+                }));
+                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Slayer's Crashed Spaceship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    Point origin = slayerShipVector.ToPoint();
+                    SlayerShipDeco deco = new();
+                    deco.Place(origin, WorldGen.structures);
+                }));
             }
 
             #region Ancient Decal + Hall of Heroes
@@ -677,23 +706,29 @@ namespace Redemption.WorldGeneration
 
         public override void SaveWorldData(TagCompound tag)
         {
-            tag["newbCavePointX"] = newbCaveVector.X;
-            tag["newbCavePointY"] = newbCaveVector.Y;
+            tag["newbCaveVectorX"] = newbCaveVector.X;
+            tag["newbCaveVectorY"] = newbCaveVector.Y;
+            tag["slayerShipVectorX"] = slayerShipVector.X;
+            tag["slayerShipVectorY"] = slayerShipVector.Y;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            newbCaveVector.X = tag.GetFloat("newbCavePointX");
-            newbCaveVector.Y = tag.GetFloat("newbCavePointY");
+            newbCaveVector.X = tag.GetFloat("newbCaveVectorX");
+            newbCaveVector.Y = tag.GetFloat("newbCaveVectorY");
+            slayerShipVector.X = tag.GetFloat("slayerShipVectorX");
+            slayerShipVector.Y = tag.GetFloat("slayerShipVectorY");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
             writer.WritePackedVector2(newbCaveVector);
+            writer.WritePackedVector2(slayerShipVector);
         }
         public override void NetReceive(BinaryReader reader)
         {
             newbCaveVector = reader.ReadPackedVector2();
+            slayerShipVector = reader.ReadPackedVector2();
         }
     }
 }

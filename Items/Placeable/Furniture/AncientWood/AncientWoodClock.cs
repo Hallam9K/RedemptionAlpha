@@ -16,17 +16,11 @@ namespace Redemption.Items.Placeable.Furniture.AncientWood
 
 		public override void SetDefaults()
 		{
+			Item.DefaultToPlaceableTile(ModContent.TileType<AncientWoodClockTile>(), 0);
 			Item.width = 20;
 			Item.height = 30;
 			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
 			Item.value = 500;
-			Item.createTile = ModContent.TileType<AncientWoodClockTile>();
 		}
 
 		public override void AddRecipes()

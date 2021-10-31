@@ -15,17 +15,11 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
         }
         public override void SetDefaults()
 		{
+			Item.DefaultToPlaceableTile(ModContent.TileType<SlayerChairTile>(), 0);
 			Item.width = 26;
 			Item.height = 38;
 			Item.maxStack = 1;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
 			Item.rare = ItemRarityID.Cyan;
-			Item.createTile = ModContent.TileType<SlayerChairTile>();
 		}
 	}
 }

@@ -80,7 +80,6 @@ namespace Redemption.Base
             }
             if(player.statMana >= (int)(amount * player.manaCost))
             {
-                //TODO: FIX
                 //player.manaRegenDelay = (int)player.maxRegenDelay;
                 player.statMana -= (int)(amount * player.manaCost);
                 if(player.statMana < 0){ player.statMana = 0; }

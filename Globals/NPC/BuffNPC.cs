@@ -108,7 +108,6 @@ namespace Redemption.Globals.NPC
                 if (NPCTags.Inorganic.Has(i))
                 {
                     AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<DirtyWoundDebuff>(),
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });

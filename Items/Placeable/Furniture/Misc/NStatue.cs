@@ -19,19 +19,13 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         }
 
         public override void SetDefaults()
-		{
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<NStatueTile>(), 0);
             Item.width = 30;
             Item.height = 36;
             Item.maxStack = 99;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
             Item.rare = ModContent.RarityType<LegendaryRarity>();
-            Item.consumable = true;
             Item.value = Item.sellPrice(5, 0, 0, 0);
-            Item.createTile = ModContent.TileType<NStatueTile>();
         }
     }
 }

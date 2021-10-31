@@ -17,18 +17,12 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 
 		public override void SetDefaults()
 		{
+			Item.DefaultToPlaceableTile(ModContent.TileType<ChickenCoopTile>(), 0);
 			Item.width = 44;
 			Item.height = 42;
 			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Blue;
-			Item.consumable = true;
 			Item.value = Item.sellPrice(0, 0, 15, 0);
-			Item.createTile = ModContent.TileType<ChickenCoopTile>();
 		}
 
 		public override void AddRecipes()
