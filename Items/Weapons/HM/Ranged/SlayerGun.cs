@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 220;
+            Item.damage = 150;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 62;
             Item.height = 26;
@@ -64,7 +64,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 player.itemAnimationMax = Item.useTime * 3;
                 player.itemTime = Item.useTime * 3;
                 player.itemAnimation = Item.useTime * 3;
-                damage = (int)(damage * 1.5f);
+                damage = (int)(damage * 1.4f);
 
                 float numberProjectiles = 5;
                 float rotation = MathHelper.ToRadians(25);
