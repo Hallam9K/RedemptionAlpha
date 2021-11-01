@@ -2770,7 +2770,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
 
-                Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:BreacherScan"]?.GetShader().Shader;
+                Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
                 effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                 effect.Parameters["alpha"].SetValue(1);
                 effect.Parameters["red"].SetValue(new Color(0.1f, 1f, 1f, 1).ToVector4());
@@ -2806,7 +2806,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
 
-                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:BreacherScan"]?.GetShader().Shader;
+                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
                     effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                     effect.Parameters["alpha"].SetValue(1);
                     effect.Parameters["red"].SetValue(new Color(0.1f, 1f, 1f, 1).ToVector4());

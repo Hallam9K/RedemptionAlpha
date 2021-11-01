@@ -45,22 +45,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
             return true;
         }
 
-        public override bool CanUseItem(Player player)
-        {
-            if (player.altFunctionUse == 2)
-            {
-            }
-            else
-            {
-            }
-            return base.CanUseItem(player);
-        }
-
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (player.altFunctionUse == 2)
             {
-                //manually set animation times and projectile properties to avoid overwritting item stats
                 player.itemAnimationMax = Item.useTime * 3;
                 player.itemTime = Item.useTime * 3;
                 player.itemAnimation = Item.useTime * 3;
@@ -75,6 +63,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     Main.projectile[projectile1].hostile = false;
                     Main.projectile[projectile1].friendly = true;
                     Main.projectile[projectile1].DamageType = DamageClass.Ranged;
+                    Main.projectile[projectile1].netUpdate2 = true;
                 }
             }
             else
@@ -83,6 +72,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 Main.projectile[projectile2].hostile = false;
                 Main.projectile[projectile2].friendly = true;
                 Main.projectile[projectile2].DamageType = DamageClass.Ranged;
+                Main.projectile[projectile2].netUpdate2 = true;
             }
             return false;
         }

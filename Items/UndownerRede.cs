@@ -35,6 +35,8 @@ namespace Redemption.Items
             RedeBossDowned.downedEaglecrestGolem = false;
             RedeBossDowned.downedErhan = false;
             RedeBossDowned.erhanDeath = 0;
+            RedeBossDowned.downedSlayer = false;
+            RedeBossDowned.slayerDeath = 0;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);

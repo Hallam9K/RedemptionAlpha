@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Box");
+            DisplayName.SetDefault("Cyber Loot Box");
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;

@@ -92,9 +92,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             switch (TimerRand)
             {
                 case 0:
-                    if (RedeBossDowned.erhanDeath > 0)
+                    if (RedeBossDowned.erhanDeath > 0 || RedeConfigClient.Instance.NoLoreElements)
                     {
-                        int summon = RedeBossDowned.erhanDeath < 3 ? ModContent.NPCType<Erhan>() : ModContent.NPCType<ErhanSpirit>();
+                        int summon = RedeBossDowned.erhanDeath < 3 || RedeConfigClient.Instance.NoLoreElements ? ModContent.NPCType<Erhan>() : ModContent.NPCType<ErhanSpirit>();
                         RedeHelper.SpawnNPC((int)player.Center.X + 180, (int)player.Center.Y - 80, summon);
                         NPC.active = false;
                     }

@@ -29,6 +29,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
 

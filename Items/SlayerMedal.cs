@@ -1,3 +1,4 @@
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +12,8 @@ namespace Redemption.Items
             Tooltip.SetDefault("It reads - [c/b8eff5:'Congratulations, you beat me. Have a medal.]"
                 + "\n[c/b8eff5:... Stupid Terrarian.]"
                 + "\n'It's just a piece of painted wood in the shape of a medal...'");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
