@@ -1,5 +1,6 @@
 using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,6 +12,7 @@ namespace Redemption.Items.Materials.HM
         {
             DisplayName.SetDefault("Cyberscrap");
             Tooltip.SetDefault("'Versatile, and can be used to make anything'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
         }
 
         public override void SetDefaults()

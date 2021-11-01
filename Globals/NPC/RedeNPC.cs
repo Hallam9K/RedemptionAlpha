@@ -39,65 +39,68 @@ namespace Redemption.Globals.NPC
 
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            #region Elemental Attributes
-            if (NPCTags.Plantlike.Has(npc.type))
+            if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemTags.Fire.Has(item.type))
-                    damage = (int)(damage * 1.15f);
+                #region Elemental Attributes
+                if (NPCTags.Plantlike.Has(npc.type))
+                {
+                    if (ItemTags.Fire.Has(item.type))
+                        damage = (int)(damage * 1.15f);
 
-                if (ItemTags.Nature.Has(item.type))
-                    damage = (int)(damage * 0.75f);
+                    if (ItemTags.Nature.Has(item.type))
+                        damage = (int)(damage * 0.75f);
 
-                if (ItemTags.Poison.Has(item.type))
-                    damage = (int)(damage * 0.5f);
+                    if (ItemTags.Poison.Has(item.type))
+                        damage = (int)(damage * 0.5f);
+                }
+                if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
+                {
+                    if (ItemTags.Holy.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ItemTags.Shadow.Has(item.type))
+                        damage = (int)(damage * 0.8f);
+                }
+                if (NPCTags.Demon.Has(npc.type))
+                {
+                    if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type))
+                        damage = (int)(damage * 1.5f);
+
+                    if (ItemTags.Fire.Has(item.type))
+                        damage = (int)(damage * 0.5f);
+
+                    if (ItemTags.Water.Has(item.type) || ItemTags.Ice.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+                }
+                if (NPCTags.Spirit.Has(npc.type))
+                {
+                    if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Arcane.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+                }
+                if (NPCLists.IsSlime.Contains(npc.type))
+                {
+                    if (ItemTags.Fire.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ItemTags.Ice.Has(item.type))
+                        damage = (int)(damage * 0.75f);
+
+                    if (ItemTags.Water.Has(item.type))
+                        damage = (int)(damage * 0.5f);
+                }
+                if (NPCTags.Cold.Has(npc.type))
+                {
+                    if (ItemTags.Fire.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ItemTags.Ice.Has(item.type))
+                        damage = (int)(damage * 0.5f);
+
+                    if (ItemTags.Thunder.Has(item.type))
+                        damage = (int)(damage * 1.1f);
+                }
+                #endregion
             }
-            if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
-            {
-                if (ItemTags.Holy.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ItemTags.Shadow.Has(item.type))
-                    damage = (int)(damage * 0.8f);
-            }
-            if (NPCTags.Demon.Has(npc.type))
-            {
-                if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type))
-                    damage = (int)(damage * 1.5f);
-
-                if (ItemTags.Fire.Has(item.type))
-                    damage = (int)(damage * 0.5f);
-
-                if (ItemTags.Water.Has(item.type) || ItemTags.Ice.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-            }
-            if (NPCTags.Spirit.Has(npc.type))
-            {
-                if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Arcane.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-            }
-            if (NPCLists.IsSlime.Contains(npc.type))
-            {
-                if (ItemTags.Fire.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ItemTags.Ice.Has(item.type))
-                    damage = (int)(damage * 0.75f);
-
-                if (ItemTags.Water.Has(item.type))
-                    damage = (int)(damage * 0.5f);
-            }
-            if (NPCTags.Cold.Has(npc.type))
-            {
-                if (ItemTags.Fire.Has(item.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ItemTags.Ice.Has(item.type))
-                    damage = (int)(damage * 0.5f);
-
-                if (ItemTags.Thunder.Has(item.type))
-                    damage = (int)(damage * 1.1f);
-            }
-            #endregion
 
             // Decapitation
             if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCTags.SkeletonHumanoid.Has(npc.type))
@@ -120,65 +123,68 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            #region Elemental Attributes
-            if (NPCTags.Plantlike.Has(npc.type))
+            if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileTags.Fire.Has(projectile.type))
-                    damage = (int)(damage * 1.15f);
+                #region Elemental Attributes
+                if (NPCTags.Plantlike.Has(npc.type))
+                {
+                    if (ProjectileTags.Fire.Has(projectile.type))
+                        damage = (int)(damage * 1.15f);
 
-                if (ProjectileTags.Nature.Has(projectile.type))
-                    damage = (int)(damage * 0.75f);
+                    if (ProjectileTags.Nature.Has(projectile.type))
+                        damage = (int)(damage * 0.75f);
 
-                if (ProjectileTags.Poison.Has(projectile.type))
-                    damage = (int)(damage * 0.5f);
+                    if (ProjectileTags.Poison.Has(projectile.type))
+                        damage = (int)(damage * 0.5f);
+                }
+                if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
+                {
+                    if (ProjectileTags.Holy.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ProjectileTags.Shadow.Has(projectile.type))
+                        damage = (int)(damage * 0.8f);
+                }
+                if (NPCTags.Demon.Has(npc.type))
+                {
+                    if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type))
+                        damage = (int)(damage * 1.5f);
+
+                    if (ProjectileTags.Fire.Has(projectile.type))
+                        damage = (int)(damage * 0.5f);
+
+                    if (ProjectileTags.Water.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+                }
+                if (NPCTags.Spirit.Has(npc.type))
+                {
+                    if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Arcane.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+                }
+                if (NPCLists.IsSlime.Contains(npc.type))
+                {
+                    if (ProjectileTags.Fire.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ProjectileTags.Ice.Has(projectile.type))
+                        damage = (int)(damage * 0.75f);
+
+                    if (ProjectileTags.Water.Has(projectile.type))
+                        damage = (int)(damage * 0.5f);
+                }
+                if (NPCTags.Cold.Has(npc.type))
+                {
+                    if (ProjectileTags.Fire.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ProjectileTags.Ice.Has(projectile.type))
+                        damage = (int)(damage * 0.5f);
+
+                    if (ProjectileTags.Thunder.Has(projectile.type))
+                        damage = (int)(damage * 1.1f);
+                }
+                #endregion
             }
-            if (NPCTags.Undead.Has(npc.type) || NPCTags.Skeleton.Has(npc.type))
-            {
-                if (ProjectileTags.Holy.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ProjectileTags.Shadow.Has(projectile.type))
-                    damage = (int)(damage * 0.8f);
-            }
-            if (NPCTags.Demon.Has(npc.type))
-            {
-                if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type))
-                    damage = (int)(damage * 1.5f);
-
-                if (ProjectileTags.Fire.Has(projectile.type))
-                    damage = (int)(damage * 0.5f);
-
-                if (ProjectileTags.Water.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-            }
-            if (NPCTags.Spirit.Has(npc.type))
-            {
-                if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Arcane.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-            }
-            if (NPCLists.IsSlime.Contains(npc.type))
-            {
-                if (ProjectileTags.Fire.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ProjectileTags.Ice.Has(projectile.type))
-                    damage = (int)(damage * 0.75f);
-
-                if (ProjectileTags.Water.Has(projectile.type))
-                    damage = (int)(damage * 0.5f);
-            }
-            if (NPCTags.Cold.Has(npc.type))
-            {
-                if (ProjectileTags.Fire.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
-
-                if (ProjectileTags.Ice.Has(projectile.type))
-                    damage = (int)(damage * 0.5f);
-
-                if (ProjectileTags.Thunder.Has(projectile.type))
-                    damage = (int)(damage * 1.1f);
-            }
-            #endregion
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
         {

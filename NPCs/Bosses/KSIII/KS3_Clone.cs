@@ -1896,6 +1896,21 @@ namespace Redemption.NPCs.Bosses.KSIII
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
+
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:BreacherScan"]?.GetShader().Shader;
+            effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
+            effect.Parameters["alpha"].SetValue(1);
+            effect.Parameters["red"].SetValue(new Color(0.1f, 1f, 0.7f, 1).ToVector4());
+            effect.Parameters["red2"].SetValue(new Color(0.1f, 1f, 0.7f, 0.9f).ToVector4());
+
+            effect.CurrentTechnique.Passes[0].Apply();
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            spriteBatch.End();
+            spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+
             if (BodyState < (int)BodyAnim.IdlePhysical)
             {
                 int height = Arms.Height / 6;
@@ -1913,6 +1928,23 @@ namespace Redemption.NPCs.Bosses.KSIII
                 spriteBatch.Draw(ArmsGlow, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null);
+
+                effect = Terraria.Graphics.Effects.Filters.Scene["MoR:BreacherScan"]?.GetShader().Shader;
+                effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
+                effect.Parameters["alpha"].SetValue(1);
+                effect.Parameters["red"].SetValue(new Color(0.1f, 1f, 0.7f, 1).ToVector4());
+                effect.Parameters["red2"].SetValue(new Color(0.1f, 1f, 0.7f, 0.9f).ToVector4());
+
+                effect.CurrentTechnique.Passes[0].Apply();
+                spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
+                    BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
+                    gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
+
+                spriteBatch.End();
+                spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
             }
             return false;
         }

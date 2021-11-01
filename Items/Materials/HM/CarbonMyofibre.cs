@@ -1,3 +1,4 @@
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +10,7 @@ namespace Redemption.Items.Materials.HM
         {
             DisplayName.SetDefault("Carbon Myofibre");
             Tooltip.SetDefault("'Elastic and strong'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
         }
 
         public override void SetDefaults()

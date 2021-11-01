@@ -19,5 +19,9 @@ namespace Redemption
         [Label("Disable Camera Lock")]
         [Tooltip("Disables the locked camera during specific boss fights")]
         public bool CameraLockDisable;
+
+        [Label("Disable Elements")]
+        [Tooltip("Disables elemental resistances and damage")]
+        public bool ElementDisable;
     }
 }

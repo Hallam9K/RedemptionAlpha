@@ -130,14 +130,13 @@ namespace Redemption.WorldGeneration
                     ModContent.ItemType<Datalog28>()
             };
             int[] HoloChestLoot2 = new int[]
-            {   //ModContent.ItemType<ScrapMetal>(),
-                //ModContent.ItemType<AIChip>(),
+            {   ModContent.ItemType<ScrapMetal>(),
+                ModContent.ItemType<AIChip>(),
                 ModContent.ItemType<Capacitator>(),
                 ModContent.ItemType<Plating>()
             };
             int[] HoloChestLoot3 = new int[]
-            {   ModContent.ItemType<CarbonMyofibre>(),
-                ModContent.ItemType<XenomiteShard>(),
+            {   ModContent.ItemType<CarbonMyofibre>()
             };
             if (PlacementSuccess >= 0)
             {

@@ -2,6 +2,7 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Materials.HM
 {
@@ -13,6 +14,7 @@ namespace Redemption.Items.Materials.HM
             Tooltip.SetDefault("'The crushing gravity of a black hole resides within this fragment'");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()

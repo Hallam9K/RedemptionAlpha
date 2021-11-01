@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +10,7 @@ namespace Redemption.Items.Materials.PostML
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Empty Mutagen");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

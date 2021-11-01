@@ -831,25 +831,31 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
-                damage = (int)(damage * 0.9f);
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
+                    damage = (int)(damage * 0.9f);
 
-            if (ItemTags.Holy.Has(item.type))
-                damage = (int)(damage * 0.5f);
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * 0.5f);
 
-            if (ItemTags.Shadow.Has(item.type))
-                damage = (int)(damage * 1.25f);
+                if (ItemTags.Shadow.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+            }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
-                damage = (int)(damage * 0.9f);
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
+                    damage = (int)(damage * 0.9f);
 
-            if (ProjectileTags.Holy.Has(projectile.type))
-                damage = (int)(damage * 0.5f);
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage = (int)(damage * 0.5f);
 
-            if (ProjectileTags.Shadow.Has(projectile.type))
-                damage = (int)(damage * 1.25f);
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+            }
         }
 
         private void DespawnHandler()
