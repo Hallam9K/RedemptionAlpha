@@ -5,27 +5,23 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.Items.Usable
 {
-    public class SoIBag : ModItem
+    public class SlayerBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<SoI>();
+        public override int BossBagNPC => ModContent.NPCType<KS3>();
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Bag");
+            DisplayName.SetDefault("Treasure Box");
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;
-            ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
@@ -34,8 +30,8 @@ namespace Redemption.Items.Usable
         {
             Item.maxStack = 999;
             Item.consumable = true;
-            Item.width = 32;
-            Item.height = 34;
+            Item.width = 40;
+            Item.height = 24;
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
         }
@@ -46,19 +42,11 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(ModContent.ItemType<InfectedMask>());
+                player.QuickSpawnItem(ModContent.ItemType<KingSlayerMask>());
             }
-            switch (Main.rand.Next(2))
-            {
-                case 0:
-                    player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(ModContent.ItemType<CystlingSummon>());
-                    break;
-                    // TODO: Xenomite Canister
-            }
-            player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
+            player.QuickSpawnItem(ModContent.ItemType<SlayerGun>());
+            player.QuickSpawnItem(ModContent.ItemType<SlayerMedal>());
+            player.QuickSpawnItem(ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12));
         }
 
         public override Color? GetAlpha(Color lightColor)

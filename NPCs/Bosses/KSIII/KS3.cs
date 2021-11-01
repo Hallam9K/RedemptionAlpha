@@ -18,6 +18,11 @@ using Redemption.Base;
 using Redemption.Projectiles.Misc;
 using Redemption.UI;
 using Redemption.Dusts;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -104,7 +109,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
-            //BossBag = ModContent.ItemType<SlayerBag>();
+            BossBag = ModContent.ItemType<SlayerBag>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -124,6 +129,21 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                 new FlavorTextBestiaryInfoElement("'What? You want my lore? Go get your own lore!'")
             });
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerMedal>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
+
+            npcLoot.Add(notExpertRule);
         }
 
         public override void BossLoot(ref string name, ref int potionType)
