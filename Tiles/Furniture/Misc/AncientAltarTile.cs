@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -21,6 +22,7 @@ namespace Redemption.Tiles.Furniture.Misc
                 16,
             };
             TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.Origin = new Point16(0, 2);
             TileObjectData.addTile(Type);
             DustType = 7;
             MinPick = 500;
