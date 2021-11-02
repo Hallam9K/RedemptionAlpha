@@ -27,6 +27,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Minions;
 using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.Tiles.Tiles;
 
 namespace Redemption.Globals
 {
@@ -221,7 +222,8 @@ namespace Redemption.Globals
             TileID.LihzahrdBrick,
             TileID.BeeHive,
             TileID.Granite,
-            TileID.Marble
+            TileID.Marble,
+            ModContent.TileType<AncientHallBrickTile>()
         };
 
         public static List<int> ModdedChests = new();
