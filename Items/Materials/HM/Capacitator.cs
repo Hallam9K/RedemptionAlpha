@@ -1,3 +1,4 @@
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +9,8 @@ namespace Redemption.Items.Materials.HM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Capacitator");
-            Tooltip.SetDefault("'Holds an extreme amount of energy'");
+            Tooltip.SetDefault("'Holds a high amount of energy'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
 
         public override void SetDefaults()

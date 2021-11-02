@@ -9,6 +9,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -106,17 +107,11 @@ namespace Redemption.NPCs.Critters
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
 
-                    float soundVolume = NPC.velocity.Length() / 50 + 0.1f;
-
-                    if (soundVolume > 1f)
-                        soundVolume = 1f;
-
                     if (NPC.soundDelay == 0)
                     {
                         if (!Main.dedServ)
-                        {
-                            //SoundEngine.PlaySound(Mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/FlyBuzz").WithVolume(soundVolume).WithPitchVariance(0.1f), (int)NPC.position.X, (int)NPC.position.Y);
-                        }
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/FlyBuzz")
+                                .WithVolume(1 * NPC.scale).WithPitchVariance(0.1f), NPC.position);
 
                         NPC.soundDelay = 180;
                     }

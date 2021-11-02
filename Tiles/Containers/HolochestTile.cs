@@ -40,6 +40,10 @@ namespace Redemption.Tiles.Containers
             name.SetDefault("Holochest");
             AddMapEntry(new Color(0, 242, 170), name, MapChestName);
 
+            name = CreateMapEntryName(Name + "_Locked");
+            name.SetDefault("Locked Holochest");
+            AddMapEntry(new Color(0, 242, 170), name, MapChestName);
+
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -52,9 +56,18 @@ namespace Redemption.Tiles.Containers
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
         }
+
+        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+
         public override bool HasSmartInteract() => true;
 
-        public override bool IsLockedChest(int i, int j) => false;
+        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
+
+        public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
+        {
+            dustType = DustType;
+            return true;
+        }
 
         public static string MapChestName(string name, int i, int j)
         {
@@ -131,7 +144,8 @@ namespace Redemption.Tiles.Containers
                 player.editedChestName = false;
             }
 
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            bool isLocked = IsLockedChest(left, top);
+            if (Main.netMode == NetmodeID.MultiplayerClient && !isLocked)
             {
                 if (left == player.chestX && top == player.chestY && player.chest >= 0)
                 {
@@ -147,26 +161,40 @@ namespace Redemption.Tiles.Containers
             }
             else
             {
-                int chest = Chest.FindChest(left, top);
-                if (chest >= 0)
+                if (isLocked)
                 {
-                    Main.stackSplit = 600;
-                    if (chest == player.chest)
+                    int key = ModContent.ItemType<Holokey>();
+                    if (player.HasItem(key) && Chest.Unlock(left, top))
                     {
-                        player.chest = -1;
-                        SoundEngine.PlaySound(SoundID.MenuClose);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            NetMessage.SendData(MessageID.Unlock, -1, -1, null, player.whoAmI, 1f, left, top);
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    int chest = Chest.FindChest(left, top);
+                    if (chest >= 0)
                     {
-                        player.chest = chest;
-                        Main.playerInventory = true;
-                        Main.recBigList = false;
-                        player.chestX = left;
-                        player.chestY = top;
-                        SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
-                    }
+                        Main.stackSplit = 600;
+                        if (chest == player.chest)
+                        {
+                            player.chest = -1;
+                            SoundEngine.PlaySound(SoundID.MenuClose);
+                        }
+                        else
+                        {
+                            player.chest = chest;
+                            Main.playerInventory = true;
+                            Main.recBigList = false;
+                            player.chestX = left;
+                            player.chestY = top;
+                            SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+                        }
 
-                    Recipe.FindRecipes();
+                        Recipe.FindRecipes();
+                    }
                 }
             }
 
@@ -200,6 +228,10 @@ namespace Redemption.Tiles.Containers
                 if (player.cursorItemIconText == "Holochest")
                 {
                     player.cursorItemIconID = ModContent.ItemType<Holochest>();
+                    if (Main.tile[left, top].frameX / 36 == 1)
+                    {
+                        player.cursorItemIconID = ModContent.ItemType<Holokey>();
+                    }
 
                     player.cursorItemIconText = "";
                 }

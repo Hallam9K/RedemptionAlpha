@@ -22,6 +22,7 @@ using Terraria.Localization;
 using Terraria.Chat;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -115,6 +116,10 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

@@ -18,6 +18,8 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -113,9 +115,13 @@ namespace Redemption.NPCs.Bosses.Erhan
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanTrophy>(), 10));
 
-            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<DevilsAdvocate>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ErhanHelmet>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
@@ -825,25 +831,31 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
-                damage = (int)(damage * 0.9f);
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
+                    damage = (int)(damage * 0.9f);
 
-            if (ItemTags.Holy.Has(item.type))
-                damage = (int)(damage * 0.5f);
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * 0.5f);
 
-            if (ItemTags.Shadow.Has(item.type))
-                damage = (int)(damage * 1.25f);
+                if (ItemTags.Shadow.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+            }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
-                damage = (int)(damage * 0.9f);
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
+                    damage = (int)(damage * 0.9f);
 
-            if (ProjectileTags.Holy.Has(projectile.type))
-                damage = (int)(damage * 0.5f);
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage = (int)(damage * 0.5f);
 
-            if (ProjectileTags.Shadow.Has(projectile.type))
-                damage = (int)(damage * 1.25f);
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+            }
         }
 
         private void DespawnHandler()

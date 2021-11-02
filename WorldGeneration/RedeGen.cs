@@ -25,6 +25,18 @@ using Terraria.ModLoader.IO;
 using System.IO;
 using Redemption.NPCs.Friendly;
 using Redemption.Tiles.Furniture.AncientWood;
+using Redemption.Walls;
+using Redemption.Tiles.Bars;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Usable;
+using Redemption.Items.Armor.Single;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Placeable.MusicBoxes;
+using Redemption.Tiles.MusicBoxes;
+using Redemption.Tiles.Furniture.Archcloth;
 
 namespace Redemption.WorldGeneration
 {
@@ -32,6 +44,9 @@ namespace Redemption.WorldGeneration
     {
         public static bool dragonLeadSpawn;
         public static Vector2 newbCaveVector = new Vector2(-1, -1);
+        public static Vector2 gathicPortalVector = new Vector2(-1, -1);
+        public static Vector2 slayerShipVector = new Vector2(-1, -1);
+        public static Vector2 HallOfHeroesVector = new Vector2(-1, -1);
 
         public override void OnWorldLoad()
         {
@@ -41,12 +56,18 @@ namespace Redemption.WorldGeneration
                 dragonLeadSpawn = false;
 
             newbCaveVector = new Vector2(-1, -1);
+            gathicPortalVector = new Vector2(-1, -1);
+            slayerShipVector = new Vector2(-1, -1);
+            HallOfHeroesVector = new Vector2(-1, -1);
         }
 
         public override void OnWorldUnload()
         {
             dragonLeadSpawn = false;
             newbCaveVector = new Vector2(-1, -1);
+            gathicPortalVector = new Vector2(-1, -1);
+            slayerShipVector = new Vector2(-1, -1);
+            HallOfHeroesVector = new Vector2(-1, -1);
         }
 
         public override void PostUpdateWorld()
@@ -70,7 +91,7 @@ namespace Redemption.WorldGeneration
                         int tileDown = Framing.GetTileSafely(i2, j2 + 1).type;
                         int tileLeft = Framing.GetTileSafely(i2 - 1, j2).type;
                         int tileRight = Framing.GetTileSafely(i2 + 1, j2).type;
-                        if (!Framing.GetTileSafely(i2, j2).IsActive && 
+                        if (!Framing.GetTileSafely(i2, j2).IsActive &&
                             (tileUp == TileID.SnowBlock || tileDown == TileID.SnowBlock || tileLeft == TileID.SnowBlock || tileRight == TileID.SnowBlock || TileID.Sets.Conversion.Ice[tileUp] || TileID.Sets.Conversion.Ice[tileDown] || TileID.Sets.Conversion.Ice[tileLeft] || TileID.Sets.Conversion.Ice[tileRight]))
                         {
                             WorldGen.PlaceObject(i2, j2, ModContent.TileType<CryoCrystalTile>(), true);
@@ -221,7 +242,7 @@ namespace Redemption.WorldGeneration
             int GuideIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
             if (GuideIndex == -1)
                 return;
-            tasks.Insert(GuideIndex, new PassLegacy("Heart of Thorns", delegate (GenerationProgress progress, GameConfiguration configuration)
+            tasks.Insert(ShiniesIndex2, new PassLegacy("Heart of Thorns", delegate (GenerationProgress progress, GameConfiguration configuration)
             {
                 progress.Message = "Cursing the forest";
                 SpawnThornSummon();
@@ -385,6 +406,15 @@ namespace Redemption.WorldGeneration
                         Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveClear", AssetRequestMode.ImmediateLoad).Value;
 
                         Point origin = new(placeX - 34, placeY - 11);
+                        for (int i = 0; i <= 60; i++)
+                        {
+                            for (int j = 0; j <= 82; j++)
+                            {
+                                int type = Main.tile[origin.X + i, origin.Y + j].type;
+                                if (TileLists.WhitelistTiles.Contains(type))
+                                    continue;
+                            }
+                        }
                         Main.QueueMainThreadAction(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
@@ -402,37 +432,33 @@ namespace Redemption.WorldGeneration
                 {
                     progress.Message = "Thinking with portals";
 
-                    Point newbCavePoint = newbCaveVector.ToPoint();
-                    WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>(), 0, 0, -1, -1);
-                    WorldGen.PlaceObject(newbCavePoint.X + 25, newbCavePoint.Y + 9, (ushort)ModContent.TileType<AncientWoodWorkbenchTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 25, newbCavePoint.Y + 9, (ushort)ModContent.TileType<AncientWoodWorkbenchTile>(), 0, 0, -1, -1);
-                    WorldGen.PlaceObject(newbCavePoint.X + 26, newbCavePoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 26, newbCavePoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>(), 0, 0, -1, -1);
-                    WorldGen.PlaceObject(newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), true);
-                    NetMessage.SendObjectPlacment(-1, newbCavePoint.X + 34, newbCavePoint.Y + 64, (ushort)ModContent.TileType<NewbMound>(), 0, 0, -1, -1);
+                    Point originPoint = newbCaveVector.ToPoint();
+                    GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 25, originPoint.Y + 9, (ushort)ModContent.TileType<AncientWoodWorkbenchTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 26, originPoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 64, (ushort)ModContent.TileType<NewbMound>());
 
-                    BaseWorldGen.SmoothTiles(newbCavePoint.X, newbCavePoint.Y, newbCavePoint.X + 60, newbCavePoint.Y + 82);
+                    BaseWorldGen.SmoothTiles(originPoint.X, originPoint.Y, originPoint.X + 60, originPoint.Y + 82);
 
-                    for (int i = newbCavePoint.X; i < newbCavePoint.X + 60; i++)
+                    for (int i = originPoint.X; i < originPoint.X + 60; i++)
                     {
-                        for (int j = newbCavePoint.Y; j < newbCavePoint.Y + 30; j++)
+                        for (int j = originPoint.Y; j < originPoint.Y + 30; j++)
                         {
                             WorldGen.SpreadGrass(i, j);
                         }
                     }
-                    for (int i = newbCavePoint.X + 13; i < newbCavePoint.X + 53; i++)
+                    for (int i = originPoint.X + 13; i < originPoint.X + 53; i++)
                     {
-                        for (int j = newbCavePoint.Y + 66; j < newbCavePoint.Y + 74; j++)
+                        for (int j = originPoint.Y + 66; j < originPoint.Y + 74; j++)
                         {
                             if (!Framing.GetTileSafely(i, j).IsActive)
                                 WorldGen.PlaceLiquid(i, j, LiquidID.Water, 255);
                         }
                     }
 
-                    for (int i = newbCavePoint.X; i < newbCavePoint.X + 60; i++)
+                    for (int i = originPoint.X; i < originPoint.X + 60; i++)
                     {
-                        for (int j = newbCavePoint.Y; j < newbCavePoint.Y + 82; j++)
+                        for (int j = originPoint.Y; j < originPoint.Y + 82; j++)
                         {
                             WorldGen.GrowTree(i, j - 1);
                             if (Main.tile[i, j].type == TileID.Dirt && !Framing.GetTileSafely(i, j - 1).IsActive &&
@@ -449,6 +475,270 @@ namespace Redemption.WorldGeneration
                         }
                     }
                     #endregion
+                }));
+                tasks.Insert(ShiniesIndex2 + 2, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    #region Underground Portal
+                    progress.Message = "Thinking with portals";
+                    Mod mod = Redemption.Instance;
+                    Dictionary<Color, int> colorToTile = new()
+                    {
+                        [new Color(255, 0, 0)] = ModContent.TileType<GathicStoneBrickTile>(),
+                        [new Color(200, 0, 0)] = ModContent.TileType<GathicGladestoneBrickTile>(),
+                        [new Color(0, 255, 0)] = ModContent.TileType<GathicStoneTile>(),
+                        [new Color(0, 200, 0)] = ModContent.TileType<GathicGladestoneTile>(),
+                        [new Color(0, 0, 255)] = ModContent.TileType<AncientHallBrickTile>(),
+                        [new Color(100, 90, 70)] = ModContent.TileType<AncientDirtTile>(),
+                        [new Color(200, 200, 50)] = ModContent.TileType<AncientGoldCoinPileTile>(),
+                        [new Color(180, 180, 150)] = TileID.AmberGemspark,
+                        [new Color(150, 150, 150)] = -2,
+                        [Color.Black] = -1
+                    };
+
+                    Dictionary<Color, int> colorToWall = new()
+                    {
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
+                        [new Color(0, 255, 0)] = ModContent.WallType<AncientHallPillarWallTile>(),
+                        [new Color(150, 150, 150)] = -2,
+                        [Color.Black] = -1
+                    };
+
+                    bool placed = false;
+                    int attempts = 0;
+
+                    while (!placed && attempts++ < 200000)
+                    {
+                        int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
+
+                        int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
+
+                        if (!WorldGen.InWorld(placeX, placeY))
+                            continue;
+
+                        Tile tile = Main.tile[placeX, placeY];
+                        if (tile.type != TileID.Stone)
+                            continue;
+
+                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortal", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalWalls", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texSlope = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalSlopes", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalClear", AssetRequestMode.ImmediateLoad).Value;
+
+                        Point origin = new(placeX - 46, placeY - 23);
+
+                        for (int i = 0; i <= 88; i++)
+                        {
+                            for (int j = 0; j <= 47; j++)
+                            {
+                                int type = Main.tile[placeX + i, placeY + j].type;
+                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
+                                    continue;
+                            }
+                        }
+                        WorldUtils.Gen(origin, new Shapes.Rectangle(88, 47), Actions.Chain(new GenAction[]
+                        {
+                            new Actions.SetLiquid(0, 0)
+                        }));
+
+                        Main.QueueMainThreadAction(() =>
+                        {
+                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
+                            genC.Generate(origin.X, origin.Y, true, true);
+
+                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
+                            gen.Generate(origin.X, origin.Y, true, true);
+                        });
+
+                        gathicPortalVector = origin.ToVector2();
+                        placed = true;
+                    }
+                }));
+                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    progress.Message = "Thinking with portals";
+
+                    Point originPoint = gathicPortalVector.ToPoint();
+                    GenUtils.ObjectPlace(originPoint.X + 45, originPoint.Y + 21, (ushort)ModContent.TileType<GathuramPortalTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 16, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodTableTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 18, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodChairTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 12, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 21, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 69, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 78, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 71, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodClockTile>());
+
+                    AncientWoodChest(originPoint.X + 73, originPoint.Y + 22);
+                    AncientWoodChest(originPoint.X + 62, originPoint.Y + 36);
+
+                    for (int i = originPoint.X; i < originPoint.X + 88; i++)
+                    {
+                        for (int j = originPoint.Y; j < originPoint.Y + 47; j++)
+                        {
+                            switch (Main.tile[i, j].type)
+                            {
+                                case TileID.AmberGemspark:
+                                    Main.tile[i, j].ClearTile();
+                                    WorldGen.PlaceObject(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>(), true);
+                                    NetMessage.SendObjectPlacment(-1, i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>(), 0, 0, -1, -1);
+                                    break;
+                            }
+                            if (WorldGen.genRand.NextBool(3))
+                                WorldGen.PlacePot(i, j - 1);
+                        }
+                    }
+                    #endregion
+                }));
+                tasks.Insert(ShiniesIndex2 + 2, new PassLegacy("Hall of Heroes", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    #region Hall of Heroes
+                    progress.Message = "Unearthing Halls";
+                    Mod mod = Redemption.Instance;
+                    Dictionary<Color, int> colorToTile = new()
+                    {
+                        [new Color(255, 0, 0)] = ModContent.TileType<GathicStoneBrickTile>(),
+                        [new Color(200, 0, 0)] = ModContent.TileType<GathicGladestoneBrickTile>(),
+                        [new Color(0, 0, 255)] = ModContent.TileType<AncientHallBrickTile>(),
+                        [new Color(100, 80, 80)] = ModContent.TileType<AncientWoodTile>(),
+                        [new Color(200, 200, 50)] = ModContent.TileType<AncientGoldCoinPileTile>(),
+                        [new Color(200, 200, 200)] = TileID.Cobweb,
+                        [new Color(0, 255, 0)] = TileID.AmberGemspark,
+                        [new Color(255, 255, 0)] = TileID.AmethystGemspark,
+                        [new Color(0, 255, 255)] = TileID.DiamondGemspark,
+                        [new Color(150, 150, 150)] = -2,
+                        [Color.Black] = -1
+                    };
+
+                    Dictionary<Color, int> colorToWall = new()
+                    {
+                        [new Color(0, 255, 0)] = ModContent.WallType<AncientHallPillarWallTile>(),
+                        [new Color(150, 150, 150)] = -2,
+                        [Color.Black] = -1
+                    };
+
+                    bool placed = false;
+                    int attempts = 0;
+
+                    while (!placed && attempts++ < 200000)
+                    {
+                        int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
+
+                        int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
+
+                        if (!WorldGen.InWorld(placeX, placeY))
+                            continue;
+
+                        Tile tile = Main.tile[placeX, placeY];
+                        if (tile.type != TileID.Stone)
+                            continue;
+
+                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesTiles", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesWalls", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texSlope = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesSlopes", AssetRequestMode.ImmediateLoad).Value;
+                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesClear", AssetRequestMode.ImmediateLoad).Value;
+
+                        Point origin = new(placeX - 40, placeY - 27);
+
+                        for (int i = 0; i <= 88; i++)
+                        {
+                            for (int j = 0; j <= 47; j++)
+                            {
+                                int type = Main.tile[placeX + i, placeY + j].type;
+                                if (TileLists.WhitelistTiles.Contains(type) || type == ModContent.TileType<AncientHallBrickTile>())
+                                    continue;
+                            }
+                        }
+                        WorldUtils.Gen(origin, new Shapes.Rectangle(84, 43), Actions.Chain(new GenAction[]
+                        {
+                            new Actions.SetLiquid(0, 0)
+                        }));
+
+                        Main.QueueMainThreadAction(() =>
+                        {
+                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
+                            genC.Generate(origin.X, origin.Y, true, true);
+
+                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
+                            gen.Generate(origin.X, origin.Y, true, true);
+                        });
+
+                        HallOfHeroesVector = origin.ToVector2();
+                        placed = true;
+                    }
+                }));
+                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Hall of Heroes Deco", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    progress.Message = "Unearthing Halls";
+
+                    Point originPoint = HallOfHeroesVector.ToPoint();
+                    GenUtils.ObjectPlace(originPoint.X + 24, originPoint.Y + 24, (ushort)ModContent.TileType<KSStatueTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 52, originPoint.Y + 24, (ushort)ModContent.TileType<NStatueTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 43, originPoint.Y + 20, (ushort)ModContent.TileType<JStatueTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 35, originPoint.Y + 24, (ushort)ModContent.TileType<HKStatueTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 39, originPoint.Y + 16, (ushort)ModContent.TileType<HallOfHeroesBoxTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 39, originPoint.Y + 27, (ushort)ModContent.TileType<AncientAltarTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 59, originPoint.Y + 13, (ushort)ModContent.TileType<ArchclothBannerTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 20, originPoint.Y + 12, (ushort)ModContent.TileType<ArchclothBannerTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 49, originPoint.Y + 13, (ushort)ModContent.TileType<ArchclothBannerTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 30, originPoint.Y + 13, (ushort)ModContent.TileType<ArchclothBannerTile>());
+
+                    AncientWoodChest(originPoint.X + 2, originPoint.Y + 30);
+                    AncientWoodChest(originPoint.X + 75, originPoint.Y + 30);
+
+                    for (int i = originPoint.X; i < originPoint.X + 88; i++)
+                    {
+                        for (int j = originPoint.Y; j < originPoint.Y + 47; j++)
+                        {
+                            switch (Main.tile[i, j].type)
+                            {
+                                case TileID.AmberGemspark:
+                                    Main.tile[i, j].ClearTile();
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.SlopeTile(i, j, 2);
+                                    break;
+                                case TileID.AmethystGemspark:
+                                    Main.tile[i, j].ClearTile();
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.SlopeTile(i, j, 1);
+                                    break;
+                                case TileID.DiamondGemspark:
+                                    Main.tile[i, j].ClearTile();
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    break;
+                            }
+                            if (WorldGen.genRand.NextBool(3))
+                                WorldGen.PlacePot(i, j - 1, 0, WorldGen.genRand.Next(0, 4));
+                        }
+                    }
+                    #endregion
+                }));
+                tasks.Insert(ShiniesIndex2 + 1, new PassLegacy("Clearing Liquids for Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    Point origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
+                    if (Main.dungeonX < Main.maxTilesX / 2)
+                        origin = new Point((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
+
+                    origin.Y = BaseWorldGen.GetFirstTileFloor(origin.X, origin.Y, true);
+                    origin.X -= 60;
+
+                    WorldUtils.Gen(origin, new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
+                    {
+                        new Actions.SetLiquid(0, 0)
+                    }));
+                    slayerShipVector = origin.ToVector2();
+
+                    SlayerShipClear delete = new();
+                    SlayerShip biome = new();
+                    delete.Place(origin, WorldGen.structures);
+                    biome.Place(origin, WorldGen.structures);
+                }));
+                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Slayer's Crashed Spaceship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    Point origin = slayerShipVector.ToPoint();
+                    SlayerShipDeco deco = new();
+                    deco.Place(origin, WorldGen.structures);
                 }));
             }
 
@@ -634,66 +924,141 @@ namespace Redemption.WorldGeneration
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<AncientWoodChestTile>(), false);
 
-            //int[] ChestLoot2 = new int[]
-            //{
-            //ModContent.ItemType<AncientWoodStave>(), ModContent.ItemType<AncientWoodSword>(), ModContent.ItemType<AncientWoodBow>()
-            //};
+            int[] ChestLoot = new int[]
+            {
+                ModContent.ItemType<PouchBelt>(), ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>()
+            };
+            int[] ChestLoot2 = new int[]
+            {
+                ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>()
+            };
             int[] ChestLoot3 = new int[]
             {
-                ModContent.ItemType<AncientWood>(),
-                ModContent.ItemType<GathicStone>(),
-                ModContent.ItemType<AncientDirt>()
+                ItemID.MiningPotion, ItemID.BattlePotion, ItemID.BuilderPotion, ItemID.InvisibilityPotion
+            };
+            int[] ChestLoot4 = new int[]
+            {
+                ItemID.SpelunkerPotion, ItemID.StrangeBrew, ItemID.RecallPotion, ModContent.ItemType<VendettaPotion>(),
             };
             if (PlacementSuccess >= 0)
             {
+                int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                //chest.item[0].SetDefaults(ModContent.ItemType<Falcon>());
-                //chest.item[0].stack = 1;
+                chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
+                chest.item[slot++].stack = 1;
 
-                //chest.item[1].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
-                //chest.item[1].stack = 1;
-
-                chest.item[2].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot3));
-                chest.item[2].stack = WorldGen.genRand.Next(20, 60);
+                if (RedeHelper.Chance(.6f))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<GraveSteelAlloy>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(4, 10);
+                }
+                if (RedeHelper.Chance(.6f))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<AncientWood>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(5, 15);
+                }
+                if (RedeHelper.Chance(.6f))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<AncientGoldCoin>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(3, 16);
+                }
+                if (RedeHelper.Chance(.2f))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<Archcloth>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                }
+                if (RedeHelper.Chance(.1f))
+                {
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
+                    chest.item[slot++].stack = 1;
+                }
+                if (RedeHelper.Chance(.02f))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<JollyHelm>());
+                    chest.item[slot++].stack = 1;
+                }
+                if (RedeHelper.Chance(.66f))
+                {
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot3));
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                }
+                if (RedeHelper.Chance(.33f))
+                {
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot4));
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                }
+                chest.item[slot].SetDefaults(ItemID.SilverCoin);
+                chest.item[slot++].stack = WorldGen.genRand.Next(5, 10);
             }
-        }
-        public static void HeroHall()
-        {
-            Mod mod = Redemption.Instance;
-            Point16 origin = new((int)(Main.maxTilesX * 0.4f), (int)(Main.maxTilesY * 0.45f));
-            Generator.GenerateStructure("WorldGeneration/HallOfHeroes", origin, mod, false);
         }
 
         public override void PreUpdateWorld()
         {
-            Vector2 anglonPortalPos2 = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
-            if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 && Main.LocalPlayer.DistanceSQ(anglonPortalPos2) < 2000 * 2000 &&
+            Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
+            if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 && Main.LocalPlayer.DistanceSQ(anglonPortalPos) < 2000 * 2000 &&
                 !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
             {
-                NPC.NewNPC((int)anglonPortalPos2.X, (int)anglonPortalPos2.Y, ModContent.NPCType<AnglonPortal>());
+                NPC.NewNPC((int)anglonPortalPos.X, (int)anglonPortalPos.Y, ModContent.NPCType<AnglonPortal>());
+            }
+            Vector2 gathicPortalPos = new(((gathicPortalVector.X + 46) * 16) - 8, ((gathicPortalVector.Y + 23) * 16) - 4);
+            if (gathicPortalVector.X != -1 && gathicPortalVector.Y != -1 && Main.LocalPlayer.DistanceSQ(gathicPortalPos) < 2000 * 2000 &&
+                !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
+            {
+                NPC.NewNPC((int)gathicPortalPos.X, (int)gathicPortalPos.Y, ModContent.NPCType<GathuramPortal>());
             }
         }
 
         public override void SaveWorldData(TagCompound tag)
         {
-            tag["newbCavePointX"] = newbCaveVector.X;
-            tag["newbCavePointY"] = newbCaveVector.Y;
+            tag["newbCaveVectorX"] = newbCaveVector.X;
+            tag["newbCaveVectorY"] = newbCaveVector.Y;
+            tag["gathicPortalVectorX"] = gathicPortalVector.X;
+            tag["gathicPortalVectorY"] = gathicPortalVector.Y;
+            tag["slayerShipVectorX"] = slayerShipVector.X;
+            tag["slayerShipVectorY"] = slayerShipVector.Y;
+            tag["HallOfHeroesVectorX"] = HallOfHeroesVector.X;
+            tag["HallOfHeroesVectorY"] = HallOfHeroesVector.Y;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            newbCaveVector.X = tag.GetFloat("newbCavePointX");
-            newbCaveVector.Y = tag.GetFloat("newbCavePointY");
+            newbCaveVector.X = tag.GetFloat("newbCaveVectorX");
+            newbCaveVector.Y = tag.GetFloat("newbCaveVectorY");
+            gathicPortalVector.X = tag.GetFloat("gathicPortalVectorX");
+            gathicPortalVector.Y = tag.GetFloat("gathicPortalVectorY");
+            slayerShipVector.X = tag.GetFloat("slayerShipVectorX");
+            slayerShipVector.Y = tag.GetFloat("slayerShipVectorY");
+            HallOfHeroesVector.X = tag.GetFloat("HallOfHeroesVectorX");
+            HallOfHeroesVector.Y = tag.GetFloat("HallOfHeroesVectorY");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
             writer.WritePackedVector2(newbCaveVector);
+            writer.WritePackedVector2(gathicPortalVector);
+            writer.WritePackedVector2(slayerShipVector);
+            writer.WritePackedVector2(HallOfHeroesVector);
         }
         public override void NetReceive(BinaryReader reader)
         {
             newbCaveVector = reader.ReadPackedVector2();
+            gathicPortalVector = reader.ReadPackedVector2();
+            slayerShipVector = reader.ReadPackedVector2();
+            HallOfHeroesVector = reader.ReadPackedVector2();
+        }
+    }
+    public class GenUtils
+    {
+        public static void ObjectPlace(Point Origin, int x, int y, int TileType, int style = 0, int direction = -1)
+        {
+            WorldGen.PlaceObject(Origin.X + x, Origin.Y + y, TileType, true, style, 0, -1, direction);
+            NetMessage.SendObjectPlacment(-1, Origin.X + x, Origin.Y + y, TileType, style, 0, -1, direction);
+        }
+        public static void ObjectPlace(int x, int y, int TileType, int style = 0, int direction = -1)
+        {
+            WorldGen.PlaceObject(x, y, TileType, true, style, 0, -1, direction);
+            NetMessage.SendObjectPlacment(-1, x, y, TileType, style, 0, -1, direction);
         }
     }
 }

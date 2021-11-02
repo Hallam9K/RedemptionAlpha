@@ -15,16 +15,10 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void SetDefaults()
         {
+            Item.DefaultToPlacableWall((ushort)ModContent.WallType<ShinkiteBrickWallTile>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = 999;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 7;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
-            Item.createWall = ModContent.WallType<ShinkiteBrickWallTile>();
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
         }
 

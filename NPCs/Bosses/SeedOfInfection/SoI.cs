@@ -17,6 +17,9 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -117,10 +120,15 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoITrophy>(), 10));
 
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SoIRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<CuddlyTeratoma>(), 4));
+
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
 
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenomiteGlaive>(), ModContent.ItemType<CystlingSummon>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
 
             npcLoot.Add(notExpertRule);

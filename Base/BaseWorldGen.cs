@@ -50,27 +50,6 @@ namespace Redemption.Base
                 WorldGen.OreRunner(i2, j2, oreStrength, oreSteps, (ushort)tileType);
                 count++;
             }
-            //TODO: fix map debug
-
-            /*if (mapDebug) //can be laggy, but shows where the ore genned
-			{
-				for (int x1 = 10; x1 < Main.maxTilesX - 10; x1++)
-				{
-					for (int y1 = 10; y1 < Main.maxTilesY - 10; y1++)
-					{
-						Tile tile = Main.tile[x1, y1];
-						if(tile == null) tile = Main.tile[x1, y1] = new Tile();
-						if(tile.IsActive && tile.type == tileType)
-						{
-							if (Main.map[x1, y1] == null) Main.map[x1, y1] = new Map();
-							Main.map[x1, y1].setTile(x1, y1, (byte)Math.Max(Main.map[x1, y1].light, (byte)255));
-						}
-					}
-				}
-				Main.mapMinX = 10; Main.mapMinY = 10;
-				Main.mapMaxX = Main.maxTilesX - 10; Main.mapMaxY = Main.maxTilesY - 10;
-				API.main.DrawToMap();
-			}*/
         }
 
         /*
@@ -841,91 +820,6 @@ namespace Redemption.Base
                 }
             }
             Main.tileSolid[137] = true;
-        }
-
-        //screw it, this is broken
-        public class GenHelper
-        {
-            public List<TileData> tiles = new();
-            public Action<int, int> generate;
-            public float rotation;
-            public int rotX, rotY;
-
-            public GenHelper(Action<int, int> gen) { generate = gen; }
-
-            public void Gen(int x, int y)
-            {
-                Gen(x, y, rotX, rotY, rotation);
-            }
-
-            public void Gen(int x, int y, int rotationX, int rotationY, float genRotation)
-            {
-                tiles.Clear();
-                Tile[,] tempTiles = Main.tile; //TODO: CHANGE THIS IT WONT WORK IN MULTIPLAYER
-                Main.tile = new Tile[Main.maxTilesX, Main.maxTilesY];
-                generate(x, y);
-                for (int x1 = 0; x1 < Main.maxTilesX; x1++)
-                {
-                    for (int y1 = 0; y1 < Main.maxTilesY; y1++)
-                    {
-                        Tile tile = Main.tile[x1, y1];
-                        if (tile != null) tiles.Add(new TileData(x1, y1, tile));
-                    }
-                }
-                Main.tile = tempTiles;
-
-                Vector2 rotVec = new((x + rotationX) * 16, (y + rotationY) * 16);
-
-                List<Point> points = new();
-                foreach (TileData data in tiles)
-                {
-                    Vector2 rot = new(data.X * 16, data.Y * 16);
-                    rot = BaseUtility.RotateVector(rotVec, rot, genRotation);
-                    int x1 = (int)rot.X / 16, y1 = (int)rot.Y / 16;
-                    if (rot.X % 16 > 0) x1 -= 1; if (rot.Y % 16 > 0) y1 -= 1;
-                    Point point = new(x1, y1);
-                    /*if(points.Contains(point)) //this tile was set already, there's a hole
-    {
-        if(CheckTile(ref x1, ref y1, ref point, 0, 1)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, 0, -1)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, 1, 0)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, -1, 0)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, -1, -1)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, -1, 1)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, 1, -1)) { }
-        else if (CheckTile(ref x1, ref y1, ref point, 1, 1)) { }
-    }*/
-                    Point? lastPoint = point;
-                    points.Add(point);
-                    Main.tile[x1, y1] = data.tile;
-                }
-                foreach (Point point in points) //tileframes
-                {
-                    WorldGen.TileFrame(point.X, point.Y);
-                    Tile tile = Main.tile[point.X, point.Y];
-                    if (tile is {wall: > 0}) Framing.WallFrame(point.X, point.Y);
-                }
-                points.Clear();
-            }
-
-            public bool CheckTile(ref int x, ref int y, ref Point point, int offsetX, int offsetY)
-            {
-                int validX = x + offsetX, validY = y + offsetY;
-                if (ValidTile(validX, validY)) { x = validX; y = validY; point = new Point(validX, validY); return true; }
-                return false;
-            }
-
-            public bool ValidTile(int x, int y)
-            {
-                return Main.tile[x, y] == null || !Main.tile[x, y].IsActive && Main.tile[x, y].wall == 0;
-            }
-
-            public class TileData
-            {
-                public int X, Y;
-                public Tile tile;
-                public TileData(int i, int j, Tile t) { X = i; Y = j; tile = t; }
-            }
         }
     }
 

@@ -14,16 +14,10 @@ namespace Redemption.Items.Placeable.Tiles
 
 		public override void SetDefaults()
 		{
-			Item.width = 32;
-			Item.height = 32;
+			Item.DefaultToPlacableWall((ushort)ModContent.WallType<AncientWoodWallTile>());
+			Item.width = 24;
+			Item.height = 24;
 			Item.maxStack = 999;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 7;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
-			Item.createWall = ModContent.WallType<AncientWoodWallTile>();
 		}
 
 		public override void AddRecipes()

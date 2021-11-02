@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.AncientWood;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -24,6 +25,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Height = 5;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
+			TileObjectData.newTile.Origin = new Point16(0, 4);
 			TileObjectData.addTile(Type);
 
 			// Etc

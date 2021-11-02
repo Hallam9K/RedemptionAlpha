@@ -14,18 +14,12 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 
 		public override void SetDefaults()
 		{
+			Item.DefaultToPlaceableTile(ModContent.TileType<DoppelsSwordTile>(), 0);
 			Item.width = 46;
 			Item.height = 50;
 			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
-			Item.consumable = true;
 			Item.value = Item.sellPrice(0, 0, 50, 0);
-			Item.createTile = ModContent.TileType<DoppelsSwordTile>();
 		}
 	}
 }

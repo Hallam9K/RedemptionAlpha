@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Plants
             Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = true;
             Main.tileWaterDeath[Type] = true;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };

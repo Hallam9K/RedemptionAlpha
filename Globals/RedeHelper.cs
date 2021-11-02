@@ -13,7 +13,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using SoundType = Terraria.ModLoader.SoundType;
 
 namespace Redemption.Globals
 {
@@ -569,18 +568,10 @@ namespace Redemption.Globals
             bool customSound, LegacySoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
         {
             Mod mod = Redemption.Instance;
-            if (customSound)
-            {
-                if (!Main.dedServ)
-                {
-                    SoundEngine.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, soundString), (int)npc.position.X,
-                        (int)npc.position.Y);
-                }
-            }
+            if (customSound && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(mod, soundString), npc.position);
             else
-            {
                 SoundEngine.PlaySound(sound, (int)npc.position.X, (int)npc.position.Y);
-            }
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {

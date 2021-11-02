@@ -20,13 +20,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 
 		public override void SetDefaults()
 		{
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTurn = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.autoReuse = true;
-			Item.consumable = true;
-			Item.createTile = ModContent.TileType<SoIBoxTile>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<SoIBoxTile>(), 0);
 			Item.width = 32;
 			Item.height = 24;
 			Item.rare = ItemRarityID.LightRed;

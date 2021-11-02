@@ -19,6 +19,7 @@ namespace Redemption.Tiles.Plants
             Main.tileNoFail[Type] = true;
             Main.tileWaterDeath[Type] = true;
             Main.tileLavaDeath[Type] = true;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
             DustType = DustID.GrassBlades;
             SoundType = SoundID.Grass;
             Main.tileLighted[Type] = true;

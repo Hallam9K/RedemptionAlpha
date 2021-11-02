@@ -15,18 +15,12 @@ namespace Redemption.Items.Placeable.Furniture.Archcloth
 
 		public override void SetDefaults()
 		{
+			Item.DefaultToPlaceableTile(ModContent.TileType<ArchclothThroneTile>(), 0);
 			Item.width = 26;
 			Item.height = 36;
 			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.LightRed;
-			Item.consumable = true;
 			Item.value = Item.sellPrice(0, 30, 0, 0);
-			Item.createTile = ModContent.TileType<ArchclothThroneTile>();
 		}
 
 		public override void AddRecipes()

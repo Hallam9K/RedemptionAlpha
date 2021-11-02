@@ -19,6 +19,7 @@ namespace Redemption.NPCs.PreHM
 
         public bool HasEyes;
         public int CoinsDropped;
+        public string SoundString = "Skeleton";
 
         public ref float AITimer => ref NPC.ai[1];
 
@@ -121,6 +122,11 @@ namespace Redemption.NPCs.PreHM
             }
             else
                 VisionRange = 200 + VisionIncrease + (NPC.type == ModContent.NPCType<SkeletonNoble>() ? 50 : 0);
+
+            if (Personality is PersonalityState.Greedy)
+                SoundString = "GreedySkeleton";
+            else if (Personality is PersonalityState.Soulful)
+                SoundString = "SoulfulSkeleton";
         }
     }
 }

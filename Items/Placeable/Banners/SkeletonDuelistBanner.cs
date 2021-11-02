@@ -14,18 +14,12 @@ namespace Redemption.Items.Placeable.Banners
         }
         public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<SkeletonDuelistBannerTile>(), 0);
             Item.width = 12;
             Item.height = 28;
             Item.maxStack = 99;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.buyPrice(0, 0, 10, 0);
-            Item.createTile = ModContent.TileType<SkeletonDuelistBannerTile>();
         }
     }
 }

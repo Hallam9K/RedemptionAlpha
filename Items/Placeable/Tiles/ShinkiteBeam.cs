@@ -3,6 +3,7 @@ using Redemption.Tiles.Tiles;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -15,16 +16,10 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<ShinkiteBeamTile>(), 0);
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = 999;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
-            Item.createTile = ModContent.TileType<ShinkiteBeamTile>();
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
         }
         public override void AddRecipes()

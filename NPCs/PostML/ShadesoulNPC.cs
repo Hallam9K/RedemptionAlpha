@@ -50,7 +50,6 @@ namespace Redemption.NPCs.PostML
             NPC.lavaImmune = true;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
-            NPC.alpha = 200;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
@@ -117,7 +116,7 @@ namespace Redemption.NPCs.PostML
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
-            target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), Main.rand.Next(10, 15));
+            target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 15);
         }
         public override void OnKill()
         {

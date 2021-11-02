@@ -42,6 +42,8 @@ namespace Redemption.Globals.Player
         public int infectionTimer;
         public bool eldritchRoot;
         public bool ensnared;
+        public bool lantardPet;
+        public bool erhanCross;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -86,6 +88,8 @@ namespace Redemption.Globals.Player
             dragonLeadBonus = false;
             eldritchRoot = false;
             ensnared = false;
+            lantardPet = false;
+            erhanCross = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -179,102 +183,111 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
         {
-            #region Elemental Resistances
-            if (ProjectileTags.Arcane.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[0]));
-            if (ProjectileTags.Fire.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[1]));
-            if (ProjectileTags.Water.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[2]));
-            if (ProjectileTags.Ice.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[3]));
-            if (ProjectileTags.Earth.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[4]));
-            if (ProjectileTags.Wind.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[5]));
-            if (ProjectileTags.Thunder.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[6]));
-            if (ProjectileTags.Holy.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[7]));
-            if (ProjectileTags.Shadow.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[8]));
-            if (ProjectileTags.Nature.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[9]));
-            if (ProjectileTags.Poison.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[10]));
-            if (ProjectileTags.Blood.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[11]));
-            if (ProjectileTags.Psychic.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[12]));
-            if (ProjectileTags.Celestial.Has(proj.type))
-                damage = (int)(damage * (1 - ElementalResistance[13]));
-            #endregion
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Resistances
+                if (ProjectileTags.Arcane.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[0]));
+                if (ProjectileTags.Fire.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[1]));
+                if (ProjectileTags.Water.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[2]));
+                if (ProjectileTags.Ice.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[3]));
+                if (ProjectileTags.Earth.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[4]));
+                if (ProjectileTags.Wind.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[5]));
+                if (ProjectileTags.Thunder.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[6]));
+                if (ProjectileTags.Holy.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[7]));
+                if (ProjectileTags.Shadow.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[8]));
+                if (ProjectileTags.Nature.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[9]));
+                if (ProjectileTags.Poison.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[10]));
+                if (ProjectileTags.Blood.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[11]));
+                if (ProjectileTags.Psychic.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[12]));
+                if (ProjectileTags.Celestial.Has(proj.type))
+                    damage = (int)(damage * (1 - ElementalResistance[13]));
+                #endregion
+            }
         }
         public override void ModifyHitNPC(Item item, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            #region Elemental Damage
-            if (ItemTags.Arcane.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[0]));
-            if (ItemTags.Fire.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[1]));
-            if (ItemTags.Water.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[2]));
-            if (ItemTags.Ice.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[3]));
-            if (ItemTags.Earth.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[4]));
-            if (ItemTags.Wind.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[5]));
-            if (ItemTags.Thunder.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[6]));
-            if (ItemTags.Holy.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[7]));
-            if (ItemTags.Shadow.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[8]));
-            if (ItemTags.Nature.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[9]));
-            if (ItemTags.Poison.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[10]));
-            if (ItemTags.Blood.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[11]));
-            if (ItemTags.Psychic.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[12]));
-            if (ItemTags.Celestial.Has(item.type))
-                damage = (int)(damage * (1 + ElementalDamage[13]));
-            #endregion
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Damage
+                if (ItemTags.Arcane.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[0]));
+                if (ItemTags.Fire.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[1]));
+                if (ItemTags.Water.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[2]));
+                if (ItemTags.Ice.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[3]));
+                if (ItemTags.Earth.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[4]));
+                if (ItemTags.Wind.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[5]));
+                if (ItemTags.Thunder.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[6]));
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[7]));
+                if (ItemTags.Shadow.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[8]));
+                if (ItemTags.Nature.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[9]));
+                if (ItemTags.Poison.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[10]));
+                if (ItemTags.Blood.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[11]));
+                if (ItemTags.Psychic.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[12]));
+                if (ItemTags.Celestial.Has(item.type))
+                    damage = (int)(damage * (1 + ElementalDamage[13]));
+                #endregion
+            }
         }
         public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            #region Elemental Damage
-            if (ProjectileTags.Arcane.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[0]));
-            if (ProjectileTags.Fire.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[1]));
-            if (ProjectileTags.Water.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[2]));
-            if (ProjectileTags.Ice.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[3]));
-            if (ProjectileTags.Earth.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[4]));
-            if (ProjectileTags.Wind.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[5]));
-            if (ProjectileTags.Thunder.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[6]));
-            if (ProjectileTags.Holy.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[7]));
-            if (ProjectileTags.Shadow.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[8]));
-            if (ProjectileTags.Nature.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[9]));
-            if (ProjectileTags.Poison.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[10]));
-            if (ProjectileTags.Blood.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[11]));
-            if (ProjectileTags.Psychic.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[12]));
-            if (ProjectileTags.Celestial.Has(proj.type))
-                damage = (int)(damage * (1 + ElementalDamage[13]));
-            #endregion
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Damage
+                if (ProjectileTags.Arcane.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[0]));
+                if (ProjectileTags.Fire.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[1]));
+                if (ProjectileTags.Water.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[2]));
+                if (ProjectileTags.Ice.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[3]));
+                if (ProjectileTags.Earth.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[4]));
+                if (ProjectileTags.Wind.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[5]));
+                if (ProjectileTags.Thunder.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[6]));
+                if (ProjectileTags.Holy.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[7]));
+                if (ProjectileTags.Shadow.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[8]));
+                if (ProjectileTags.Nature.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[9]));
+                if (ProjectileTags.Poison.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[10]));
+                if (ProjectileTags.Blood.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[11]));
+                if (ProjectileTags.Psychic.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[12]));
+                if (ProjectileTags.Celestial.Has(proj.type))
+                    damage = (int)(damage * (1 + ElementalDamage[13]));
+                #endregion
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -353,6 +366,17 @@ namespace Redemption.Globals.Player
                 {
                     int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, ModContent.DustType<SpiderSwarmerDust>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
+            if (Player.HasBuff(ModContent.BuffType<StaticStunDebuff>()))
+            {
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, DustID.Electric, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 1.8f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
                     drawInfo.DustCache.Add(dust);
                 }
             }

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,6 +29,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
+            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
             Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
         }
 
@@ -70,12 +72,17 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 break;
                             case 1:
                                 Projectile.localAI[0]++;
+                                if (Projectile.localAI[0] >= 40 && Projectile.localAI[0] % 20 == 0)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithPitchVariance(0.1f), Projectile.position);
+
                                 rot += speed * host.spriteDirection;
                                 speed *= 1.04f;
                                 speed = MathHelper.Clamp(speed, MathHelper.ToRadians(2), MathHelper.ToRadians(25));
                                 Projectile.Center = originPos + new Vector2(0, 1).RotatedBy(rot) * length;
                                 if (Projectile.localAI[0] >= 120)
                                 {
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithPitchVariance(0.1f), Projectile.position);
+
                                     Projectile.velocity = RedeHelper.PolarVector(14 + (Projectile.Distance(player.Center) / 30), (player.Center - Projectile.Center).ToRotation());
                                     host.velocity = RedeHelper.PolarVector(14, (player.Center - host.Center).ToRotation());
                                     Projectile.localAI[0] = 0;
@@ -119,6 +126,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 break;
                             case 1:
                                 Projectile.localAI[0]++;
+                                if (Projectile.localAI[0] % 50 == 0)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithPitchVariance(0.1f), Projectile.position);
+
                                 length++;
                                 length = MathHelper.Clamp(length, 10, 100);
                                 rot += speed;

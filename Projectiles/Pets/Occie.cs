@@ -49,7 +49,9 @@ namespace Redemption.Projectiles.Pets
 					Projectile.frame = 0;
 				}
 			}
-			Projectile.LookByVelocity();
+			if (Projectile.velocity.X < -1 || Projectile.velocity.X > 1)
+				Projectile.LookByVelocity();
+
 			Projectile.Move(new Vector2(player.Center.X + (60 * -player.direction), player.Center.Y - 50), 10, 40);
 
 			if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)

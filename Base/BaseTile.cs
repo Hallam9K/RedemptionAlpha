@@ -202,7 +202,6 @@ namespace Redemption.Base
          */
         public static void PlayTileHitSound(float x, float y, int tileType)
         {
-			//TODO: FIX
             /*if (TileDef.sound.Length < tileType && TileDef.sound[tileType] > 0)
             {
 				int hitSound = TileDef.sound[tileType];

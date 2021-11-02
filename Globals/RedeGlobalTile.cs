@@ -88,21 +88,24 @@ namespace Redemption.Globals
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
-            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<GathuramPortalTile>() ||
+                Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
                 return false;
             return base.CanKillTile(i, j, type, ref blockDamaged);
         }
 
         public override bool CanExplode(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<GathuramPortalTile>() ||
+                Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
                 return false;
             return base.CanExplode(i, j, type);
         }
 
         public override bool Slope(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<GathuramPortalTile>() ||
+                Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
                 return false;
             return base.Slope(i, j, type);
         }

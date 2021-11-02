@@ -20,12 +20,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 
 		public override void SetDefaults()
 		{
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTurn = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.autoReuse = true;
-			Item.consumable = true;
+			Item.DefaultToPlaceableTile(ModContent.TileType<ForestBossBoxTile>(), 0);
 			Item.createTile = ModContent.TileType<ForestBossBoxTile>();
 			Item.width = 32;
 			Item.height = 24;

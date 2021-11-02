@@ -4,6 +4,7 @@ using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Hostile
@@ -52,7 +53,8 @@ namespace Redemption.Projectiles.Hostile
                 Projectile.alpha -= 10;
             else if (Projectile.localAI[0] == 30)
             {
-                //if (!Main.dedServ) { SoundEngine.PlaySound(Mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/EarthBoom").WithVolume(.3f), (int)projectile.position.X, (int)Projectile.position.Y); }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2").WithVolume(0.5f), Projectile.position);
                 Projectile.velocity.Y -= 10;
             }
             else if (Projectile.localAI[0] == 40)

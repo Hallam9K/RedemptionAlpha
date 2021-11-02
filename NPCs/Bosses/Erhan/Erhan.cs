@@ -19,6 +19,8 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -122,9 +124,13 @@ namespace Redemption.NPCs.Bosses.Erhan
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanTrophy>(), 10));
 
-            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<DevilsAdvocate>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ErhanHelmet>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
@@ -267,7 +273,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                         case 1:
                             if (!Main.dedServ)
                             {
-                                if (RedeBossDowned.erhanDeath <= 0)
+                                if (RedeBossDowned.erhanDeath <= 0 && !RedeConfigClient.Instance.NoLoreElements)
                                 {
                                     if (AITimer++ == 0)
                                     {
@@ -634,7 +640,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         SoundID.Item29, "", NPC.whoAmI, i);
                             }
 
-                            if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
+                            if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ && !RedeConfigClient.Instance.NoLoreElements)
                             {
                                 if (AITimer == 60)
                                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Huzzah! *pant* A shield!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
@@ -670,7 +676,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    if (RedeBossDowned.downedErhan)
+                    if (RedeBossDowned.downedErhan || RedeConfigClient.Instance.NoLoreElements)
                     {
                         if (AITimer++ == 0)
                         {
@@ -1058,25 +1064,31 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
-                damage = (int)(damage * 0.9f);
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
+                    damage = (int)(damage * 0.9f);
 
-            if (ItemTags.Holy.Has(item.type))
-                damage = (int)(damage * 0.5f);
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * 0.5f);
 
-            if (ItemTags.Shadow.Has(item.type))
-                damage = (int)(damage * 1.25f);
+                if (ItemTags.Shadow.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+            }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
-                damage = (int)(damage * 0.9f);
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
+                    damage = (int)(damage * 0.9f);
 
-            if (ProjectileTags.Holy.Has(projectile.type))
-                damage = (int)(damage * 0.5f);
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage = (int)(damage * 0.5f);
 
-            if (ProjectileTags.Shadow.Has(projectile.type))
-                damage = (int)(damage * 1.25f);
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+            }
         }
 
         private void DespawnHandler()

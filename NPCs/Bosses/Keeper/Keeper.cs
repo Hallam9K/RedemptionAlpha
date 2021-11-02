@@ -160,6 +160,8 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<KeepersVeil>(), 7));
+
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 2, 4));
@@ -307,6 +309,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     if (!Unveiled && NPC.life < NPC.lifeMax / 2)
                     {
                         NPC.velocity *= 0;
+                        AITimer = 0;
                         AIState = ActionState.Unveiled;
                         NPC.netUpdate = true;
                         break;
@@ -623,8 +626,13 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                     Unveiled = true;
 
-                    if (AITimer++ == 0)
+                    if (AITimer++ == 1)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Shriek").WithVolume(0.4f), NPC.position);
+
                         NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                    }
 
                     if (AITimer >= 220)
                     {
@@ -647,7 +655,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     if (AITimer++ == 0)
                         RedeHelper.SpawnNPC((int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>(), ai3: NPC.whoAmI);
 
-                    if (AITimer >= 660)
+                    if (AITimer >= (RedeConfigClient.Instance.NoLoreElements ? 200 : 660))
                     {
                         AITimer = 0;
                         AIState = ActionState.Idle;
@@ -764,7 +772,12 @@ namespace Redemption.NPCs.Bosses.Keeper
                     NPC.velocity *= 0;
 
                     if (AITimer++ == 0)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Shriek").WithVolume(0.4f), NPC.position);
+
                         NPC.alpha = 0;
+                    }
 
                     NPC.alpha++;
 
@@ -831,7 +844,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override bool CheckDead()
         {
-            if (AIState is ActionState.Death)
+            if (AIState is ActionState.Death && AITimer > 0)
                 return true;
             else
             {

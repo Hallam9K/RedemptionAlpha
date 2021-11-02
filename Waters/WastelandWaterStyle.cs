@@ -11,7 +11,7 @@ namespace Redemption.Waters
 
 		public override int GetSplashDust() => Find<ModDust>("Redemption/Dusts/WastelandWaterSplash").Type; 
 
-		public override int GetDropletGore() => Find<ModGore>("Redemption/Gores/Friendly/CoastScarabGore2").Type; //TODO replace with lab drop obviously
+		public override int GetDropletGore() => Find<ModGore>("Redemption/Gores/Misc/XenoDroplet").Type;
 
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b)
 		{

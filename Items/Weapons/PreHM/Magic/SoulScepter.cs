@@ -39,6 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.knockBack = 1;
             Item.value = 2000;
             Item.channel = true;
+            Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item9.WithVolume(0);
             Item.autoReuse = true;

@@ -62,6 +62,8 @@ namespace Redemption.Items.Usable
             }
             if (Main.rand.NextBool(2))
                 player.QuickSpawnItem(ModContent.ItemType<ErhanMagnifyingGlass>());
+
+            player.QuickSpawnItem(ModContent.ItemType<ErhanCross>());
         }
 
         public override Color? GetAlpha(Color lightColor)

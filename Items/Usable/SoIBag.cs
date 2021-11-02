@@ -5,13 +5,13 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using Redemption.NPCs.Bosses.Thorn;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Items.Usable
 {
@@ -47,6 +47,16 @@ namespace Redemption.Items.Usable
             if (Main.rand.NextBool(7))
             {
                 player.QuickSpawnItem(ModContent.ItemType<InfectedMask>());
+            }
+            switch (Main.rand.Next(2))
+            {
+                case 0:
+                    player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>());
+                    break;
+                case 1:
+                    player.QuickSpawnItem(ModContent.ItemType<CystlingSummon>());
+                    break;
+                    // TODO: Xenomite Canister
             }
             player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
         }

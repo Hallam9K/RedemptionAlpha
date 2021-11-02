@@ -38,7 +38,6 @@ namespace Redemption
 			}
 		}
 
-		// TODO: Eldrazi - Should not have anything to unload AFAIK.
 		public void Unload() { }
 
 		internal static void LoadShader(string shaderName, string shaderPath)

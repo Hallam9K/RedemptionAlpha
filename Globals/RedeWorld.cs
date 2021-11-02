@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -27,6 +28,13 @@ namespace Redemption.Globals
         public static int daerelDownedTimer;
         public static int zephosDownedTimer;
         public static bool spawnWayfarer;
+        public static float RotTime;
+
+        public override void PreUpdateWorld()
+        {
+            RotTime += (float)Math.PI / 60;
+            if (RotTime >= Math.PI * 2) RotTime = 0;
+        }
 
         public override void PostUpdateNPCs()
         {

@@ -81,13 +81,7 @@ namespace Redemption.Projectiles.Magic
 
             #region Beginning And End Effects
             if (AITimer == 0)
-            {
                 LaserScale = 0.1f;
-                //if (!Main.dedServ)
-                //{
-                //Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/BallFire").WithVolume(.9f).WithPitchVariance(0f), (int)projectile.position.X, (int)projectile.position.Y);
-                //}
-            }
             else
                 Projectile.Center = host.Center;
 

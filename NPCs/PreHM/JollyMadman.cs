@@ -122,21 +122,24 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (ItemTags.Holy.Has(item.type))
-                damage = (int)(damage * 3f);
-
-            if (ItemTags.Psychic.Has(item.type))
+            if (!RedeConfigClient.Instance.ElementDisable)
             {
-                SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
-                if (NPC.life < NPC.lifeMax)
-                {
-                    NPC.life += (damage / 10) + 1;
-                    NPC.HealEffect((damage / 10) + 1);
-                }
-                if (NPC.life > NPC.lifeMax)
-                    NPC.life = NPC.lifeMax;
+                if (ItemTags.Holy.Has(item.type))
+                    damage = (int)(damage * 3f);
 
-                damage = 1;
+                if (ItemTags.Psychic.Has(item.type))
+                {
+                    SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
+                    if (NPC.life < NPC.lifeMax)
+                    {
+                        NPC.life += (damage / 10) + 1;
+                        NPC.HealEffect((damage / 10) + 1);
+                    }
+                    if (NPC.life > NPC.lifeMax)
+                        NPC.life = NPC.lifeMax;
+
+                    damage = 1;
+                }
             }
 
             if (item.hammer > 0 || ItemTags.Psychic.Has(item.type) || crit)
@@ -144,21 +147,24 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (ProjectileTags.Holy.Has(projectile.type))
-                damage = (int)(damage * 3f);
-
-            if (ProjectileTags.Psychic.Has(projectile.type))
+            if (!RedeConfigClient.Instance.ElementDisable)
             {
-                SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
-                if (NPC.life < NPC.lifeMax)
-                {
-                    NPC.life += (damage / 10) + 1;
-                    NPC.HealEffect((damage / 10) + 1);
-                }
-                if (NPC.life > NPC.lifeMax)
-                    NPC.life = NPC.lifeMax;
+                if (ProjectileTags.Holy.Has(projectile.type))
+                    damage = (int)(damage * 3f);
 
-                damage = 1;
+                if (ProjectileTags.Psychic.Has(projectile.type))
+                {
+                    SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
+                    if (NPC.life < NPC.lifeMax)
+                    {
+                        NPC.life += (damage / 10) + 1;
+                        NPC.HealEffect((damage / 10) + 1);
+                    }
+                    if (NPC.life > NPC.lifeMax)
+                        NPC.life = NPC.lifeMax;
+
+                    damage = 1;
+                }
             }
 
             if (crit || ProjectileTags.Psychic.Has(projectile.type))
