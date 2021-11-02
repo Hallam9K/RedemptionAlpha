@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.Pets
 			else
 				Projectile.spriteDirection = player.direction;
 
-			Projectile.Move(new Vector2(player.Center.X + (80 * -player.direction), player.Center.Y - 40), 10, 40);
+			Projectile.Move(new Vector2(player.Center.X + (30 * -player.direction), player.Center.Y - 30), 10, 40);
 
 			if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
 			{

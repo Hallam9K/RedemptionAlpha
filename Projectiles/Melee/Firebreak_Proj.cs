@@ -47,7 +47,7 @@ namespace Redemption.Projectiles.Melee
         public override void Kill(int timeLeft)
         {
             if (!Projectile.wet)
-                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(0.4f), Projectile.position);
             for (int i = 0; i < 24; i++)
             {
                 int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);

@@ -369,6 +369,17 @@ namespace Redemption.Globals.Player
                     drawInfo.DustCache.Add(dust);
                 }
             }
+            if (Player.HasBuff(ModContent.BuffType<StaticStunDebuff>()))
+            {
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, DustID.Electric, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 1.8f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
         }
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
