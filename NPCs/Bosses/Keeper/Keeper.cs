@@ -156,6 +156,8 @@ namespace Redemption.NPCs.Bosses.Keeper
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KeeperTrophy>(), 10));
 
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KeeperRelic>()));
+
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OcciesCollar>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
