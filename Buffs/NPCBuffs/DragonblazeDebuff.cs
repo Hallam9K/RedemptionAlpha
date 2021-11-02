@@ -1,4 +1,3 @@
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ID;
