@@ -7,6 +7,7 @@ using Redemption.Dusts;
 using Terraria.Utilities;
 using Terraria.GameContent;
 using Redemption.Globals;
+using System;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -48,6 +49,7 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool UsesPartyHat() => false;
+        private float RotTime;
         public override void AI()
         {
             NPC.dontTakeDamage = true;
@@ -57,6 +59,15 @@ namespace Redemption.NPCs.Friendly
             {
                 int wayfarer = WorldGen.crimson ? ModContent.NPCType<DaerelUnconscious>() : ModContent.NPCType<ZephosUnconscious>();
                 RedeHelper.SpawnNPC((int)NPC.Center.X + 110, (int)NPC.Center.Y, wayfarer);
+            }
+
+            if (Vector2.Distance(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), NPC.Center) <= Main.screenWidth / 2 + 100)
+            {
+                RotTime += (float)Math.PI / 120;
+                RotTime *= 1.01f;
+                if (RotTime >= Math.PI) RotTime = 0;
+                float timer = RotTime;
+                Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(2, 8, 5).UseTargetPosition(NPC.Center);
             }
 
             for (int i = 0; i < 30; i++)
