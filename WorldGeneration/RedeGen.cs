@@ -517,6 +517,12 @@ namespace Redemption.WorldGeneration
                         Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalClear", AssetRequestMode.ImmediateLoad).Value;
 
                         Point origin = new(placeX - 46, placeY - 23);
+
+                        WorldUtils.Gen(origin, new Shapes.Rectangle(88, 47), Actions.Chain(new GenAction[]
+                        {
+                            new Actions.SetLiquid(0, 0)
+                        }));
+
                         Main.QueueMainThreadAction(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
