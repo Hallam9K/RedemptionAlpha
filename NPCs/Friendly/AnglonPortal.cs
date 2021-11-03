@@ -8,6 +8,7 @@ using Terraria.Utilities;
 using Terraria.GameContent;
 using Redemption.Globals;
 using System;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -68,6 +69,9 @@ namespace Redemption.NPCs.Friendly
                 if (RotTime >= Math.PI) RotTime = 0;
                 float timer = RotTime;
                 Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(2, 8, 5).UseTargetPosition(NPC.Center);
+
+                if (RotTime > 0.5 && RotTime < 0.6 && !Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PortalWub"), NPC.position);
             }
 
             for (int i = 0; i < 30; i++)

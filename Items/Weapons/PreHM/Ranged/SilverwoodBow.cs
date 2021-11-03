@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -52,6 +53,27 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ModContent.ProjectileType<SilverwoodArrow>();
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'Given to Daerel by Syllessa, a half-Forest Nymph, during training. The wood is beyond ancient,\n" +
+                    "and the string is made from a golden flexible thread. It is capable of shooting arrows at high velocities.'")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
     }
 }

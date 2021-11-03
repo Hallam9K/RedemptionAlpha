@@ -19,7 +19,9 @@ namespace Redemption.Items.Accessories.PreHM
 		{
             DisplayName.SetDefault("Erhan's Cross");
             Tooltip.SetDefault("Summons a holy shield to orbit around the user, reflecting most projectiles" +
-                "\nThe shield breaks once enough damage has been dealt to it");
+                "\nThe shield breaks once enough damage has been dealt to it" +
+                "\n10% increased Holy elemental resistance" +
+                "\n10% decreased Shadow elemental resistance");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -34,8 +36,12 @@ namespace Redemption.Items.Accessories.PreHM
             Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
-		{
-            player.GetModPlayer<BuffPlayer>().erhanCross = true;
+        {
+            BuffPlayer modPlayer = player.GetModPlayer<BuffPlayer>();
+            modPlayer.ElementalResistance[7] += 0.1f;
+            modPlayer.ElementalResistance[8] -= 0.1f;
+
+            modPlayer.erhanCross = true;
             if (player.whoAmI == Main.myPlayer && player.active && !player.dead && player.ownedProjectileCounts[ModContent.ProjectileType<ErhanCross_Shield>()] < 1 &&
                 !player.HasBuff<ErhanCrossCooldown>())
                 Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<ErhanCross_Shield>(), 0, 0, player.whoAmI);

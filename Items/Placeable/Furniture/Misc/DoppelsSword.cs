@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework;
 using Redemption.Tiles.Furniture.Misc;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,5 +23,26 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 0, 50, 0);
 		}
-	}
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A strange sword from the Silver Age, made of shining steel. Marks of battle are scarce,\n" +
+                    "as it was seldom used by its wielder. It feels oddly nostalgic.'")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
+        }
+    }
 }

@@ -180,7 +180,7 @@ namespace Redemption.WorldGeneration
             {
                 int placeX = Main.spawnTileX + WorldGen.genRand.Next(-600, 600);
 
-                int placeY = (int)Main.worldSurface - 200;
+                int placeY = (int)Main.worldSurface - 180;
 
                 if (placeX > Main.spawnTileX - 100 && placeX < Main.spawnTileX + 100)
                     continue;
@@ -537,7 +537,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 47; j++)
                             {
-                                int type = Main.tile[placeX + i, placeY + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].type;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
                                     continue;
                             }
@@ -654,7 +654,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 21; j++)
                             {
-                                int type = Main.tile[placeX + i, placeY + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].type;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
                                     continue;
                             }
@@ -686,7 +686,7 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 20, origin.Y + 12, (ushort)ModContent.TileType<AncientWoodChairTile>(), 0, 1);
                     GenUtils.ObjectPlace(origin.X + 14, origin.Y + 17, (ushort)ModContent.TileType<DoppelsSwordTile>());
 
-                    AncientWoodChest(origin.X + 4, origin.Y + 13);
+                    AncientWoodChest(origin.X + 4, origin.Y + 13, 1);
 
                     for (int i = origin.X; i < origin.X + 88; i++)
                     {
@@ -772,7 +772,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 47; j++)
                             {
-                                int type = Main.tile[placeX2 + i, placeY2 + j].type;
+                                int type = Main.tile[origin2.X + i, origin2.Y + j].type;
                                 if (TileLists.WhitelistTiles.Contains(type))
                                     continue;
                             }
@@ -894,7 +894,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 16; j++)
                             {
-                                int type = Main.tile[placeX + i, placeY + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].type;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
                                     continue;
                             }
@@ -950,7 +950,7 @@ namespace Redemption.WorldGeneration
                 }));
             }
         }
-        public static void AncientWoodChest(int x, int y)
+        public static void AncientWoodChest(int x, int y, int ID = 0)
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<AncientWoodChestTile>(), false);
 
@@ -975,7 +975,10 @@ namespace Redemption.WorldGeneration
                 int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
+                if (ID == 1)
+                    chest.item[slot].SetDefaults(ModContent.ItemType<ForgottenSword>());
+                else
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
 
                 if (RedeHelper.Chance(.6f))
