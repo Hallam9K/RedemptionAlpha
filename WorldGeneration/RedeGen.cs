@@ -1040,6 +1040,12 @@ namespace Redemption.WorldGeneration
             {
                 NPC.NewNPC((int)gathicPortalPos.X, (int)gathicPortalPos.Y, ModContent.NPCType<GathuramPortal>());
             }
+            Vector2 slayerSittingPos = new(((slayerShipVector.X + 92) * 16), ((slayerShipVector.Y + 28) * 16));
+            if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer &&
+                Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()))
+            {
+                NPC.NewNPC((int)slayerSittingPos.X, (int)slayerSittingPos.Y, ModContent.NPCType<KS3Sitting>());
+            }
         }
 
         public override void SaveWorldData(TagCompound tag)

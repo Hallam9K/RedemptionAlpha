@@ -29,6 +29,7 @@ namespace Redemption.Globals
         public static int zephosDownedTimer;
         public static bool spawnWayfarer;
         public static float RotTime;
+        public static int slayerRep;
 
         public override void PreUpdateWorld()
         {
@@ -204,6 +205,7 @@ namespace Redemption.Globals
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
             spawnWayfarer = false;
+            slayerRep = 0;
         }
 
         public override void OnWorldUnload()
@@ -217,6 +219,7 @@ namespace Redemption.Globals
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
             spawnWayfarer = false;
+            slayerRep = 0;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -232,6 +235,7 @@ namespace Redemption.Globals
             tag["tbotDownedTimer"] = tbotDownedTimer;
             tag["daerelDownedTimer"] = daerelDownedTimer;
             tag["zephosDownedTimer"] = zephosDownedTimer;
+            tag["slayerRep"] = slayerRep;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -244,6 +248,7 @@ namespace Redemption.Globals
             tbotDownedTimer = tag.GetInt("tbotDownedTimer");
             daerelDownedTimer = tag.GetInt("daerelDownedTimer");
             zephosDownedTimer = tag.GetInt("zephosDownedTimer");
+            slayerRep = tag.GetInt("slayerRep");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -257,6 +262,7 @@ namespace Redemption.Globals
             writer.Write(tbotDownedTimer);
             writer.Write(daerelDownedTimer);
             writer.Write(zephosDownedTimer);
+            writer.Write(slayerRep);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -269,6 +275,7 @@ namespace Redemption.Globals
             tbotDownedTimer = reader.ReadInt32();
             daerelDownedTimer = reader.ReadInt32();
             zephosDownedTimer = reader.ReadInt32();
+            slayerRep = reader.ReadInt32();
         }
     }
 }

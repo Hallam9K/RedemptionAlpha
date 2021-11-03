@@ -24,9 +24,11 @@ namespace Redemption.Biomes
             DisplayName.SetDefault("Abandoned Lab");
         }
 
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 10;
+            return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 50;
         }
     }
 }
