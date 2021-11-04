@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Backgrounds
 {
-    public class LabSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
+    public class WastelandSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
     {
 		public override void ModifyFarFades(float[] fades, float transitionSpeed)
 		{

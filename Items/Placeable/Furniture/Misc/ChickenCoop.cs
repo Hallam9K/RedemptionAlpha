@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void AddRecipes()
 		{
 			CreateRecipe()
-				.AddRecipeGroup("Redemption:Chickens", 2)
+				.AddRecipeGroup(RedeRecipe.ChickenRecipeGroup, 2)
 				.AddRecipeGroup(RecipeGroupID.Wood, 30)
 				.AddIngredient(ItemID.Hay, 10)
 				.AddTile(TileID.Sawmill)

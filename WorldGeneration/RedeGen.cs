@@ -37,6 +37,7 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Placeable.MusicBoxes;
 using Redemption.Tiles.MusicBoxes;
 using Redemption.Tiles.Furniture.Archcloth;
+using Redemption.NPCs.Bosses.KSIII;
 
 namespace Redemption.WorldGeneration
 {
@@ -1041,8 +1042,8 @@ namespace Redemption.WorldGeneration
                 NPC.NewNPC((int)gathicPortalPos.X, (int)gathicPortalPos.Y, ModContent.NPCType<GathuramPortal>());
             }
             Vector2 slayerSittingPos = new(((slayerShipVector.X + 92) * 16), ((slayerShipVector.Y + 28) * 16));
-            if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer &&
-                Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()))
+            if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedVlitch3 &&
+                Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
                 NPC.NewNPC((int)slayerSittingPos.X, (int)slayerSittingPos.Y, ModContent.NPCType<KS3Sitting>());
             }

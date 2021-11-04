@@ -40,7 +40,7 @@ namespace Redemption.Items.Usable
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CursedGem>())
-                .AddIngredient(ItemID.SteampunkCup)
+                .AddIngredient(ModContent.ItemType<ChaliceFragments>())
                 .AddTile(TileID.DemonAltar)
                 .Register();
         }

@@ -18,6 +18,8 @@ using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -28,8 +30,6 @@ namespace Redemption
 {
     public class Redemption : Mod
     {
-        public override void AddRecipes() => RedeRecipe.Load(this);
-
         public static Redemption Instance { get; private set; }
 
         public const string Abbreviation = "MoR";
@@ -81,6 +81,8 @@ namespace Redemption
                 });
             }
 
+            Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
+
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
 
@@ -119,11 +121,6 @@ namespace Redemption
 
                 _loadCache[i].Load();
             }
-        }
-
-        public override void Unload()
-        {
-            RedeRecipe.Unload();
         }
 
         public ModPacket GetPacket(ModMessageType type, int capacity)

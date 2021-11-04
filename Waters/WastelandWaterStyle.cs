@@ -9,9 +9,9 @@ namespace Redemption.Waters
 
 		public override int ChooseWaterfallStyle() => Find<ModWaterfallStyle>("Redemption/WastelandWaterfallStyle").Slot;
 
-		public override int GetSplashDust() => Find<ModDust>("Dusts/WastelandWaterSplash").Type; 
+		public override int GetSplashDust() => Find<ModDust>("Redemption/WastelandWaterSplash").Type; 
 
-		public override int GetDropletGore() => Find<ModGore>("Gores/Misc/XenoDroplet").Type;
+		public override int GetDropletGore() => Find<ModGore>("Redemption/XenoDroplet").Type;
 
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b)
 		{

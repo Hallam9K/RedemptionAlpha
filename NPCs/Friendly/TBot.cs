@@ -7,6 +7,7 @@ using Terraria.Utilities;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Bestiary;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -431,9 +432,9 @@ namespace Redemption.NPCs.Friendly
             }*/
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenomiteShard>());
             nextSlot++;
-            /*shop.item[nextSlot].SetDefaults(ModContent.ItemType<Starlite>());
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Starlite>());
             nextSlot++;
-            if (NPC.downedPlantBoss)
+            /*if (NPC.downedPlantBoss)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk3Capacitator>());
                 nextSlot++;

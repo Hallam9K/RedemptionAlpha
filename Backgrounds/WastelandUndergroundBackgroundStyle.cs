@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Backgrounds
 {
-	public class LabUndergroundBackgroundStyle : ModUndergroundBackgroundStyle
+	public class WastelandUndergroundBackgroundStyle : ModUndergroundBackgroundStyle
 	{		
 		public override void FillTextureArray(int[] textureSlots)
 		{

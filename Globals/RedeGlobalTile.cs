@@ -1,8 +1,12 @@
+using Microsoft.Xna.Framework;
+using Redemption.Biomes;
+using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Critters;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
+using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -12,6 +16,20 @@ namespace Redemption.Globals
 {
     public class RedeGlobalTile : GlobalTile
     {
+        public override void NearbyEffects(int i, int j, int type, bool closer)
+        {
+            Tile topperTile = Framing.GetTileSafely(i, --j);
+
+            if (closer && (Main.LocalPlayer.InModBiome(ModContent.GetInstance<WastelandBiome>()) || Main.LocalPlayer.InModBiome(ModContent.GetInstance<LabBiome>())) &&
+                topperTile.LiquidAmount > 0 && topperTile.LiquidType == LiquidID.Water)
+            {
+                for (; j > 0 && Main.tile[i, j - 1] != null && Main.tile[i, j - 1].LiquidAmount > 0 && Main.tile[i, j - 1].LiquidType == LiquidID.Water; --j);
+
+                if (Main.rand.NextBool(200))
+                    Dust.NewDust(new Vector2(i * 16, j * 16), 0, 0, ModContent.DustType<XenoWaterDust>(), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-4f, -2f));
+            }
+        }
+
         public override bool Drop(int i, int j, int type)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions && !WorldGen.gen)
@@ -30,6 +48,9 @@ namespace Redemption.Globals
             if ((type == TileID.LeafBlock || type == TileID.LivingMahoganyLeaves) && Main.rand.NextBool(4))
                 Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<LivingTwig>());
 
+            if (type == TileID.Dirt && TileID.Sets.BreakableWhenPlacing[TileID.Dirt])
+                return false;
+
             return base.Drop(i, j, type);
         }
         public override void RandomUpdate(int i, int j, int type)
@@ -46,11 +67,21 @@ namespace Redemption.Globals
             }
             if (type == TileID.Grass && Main.dayTime && RedeBossDowned.downedThorn)
             {
-                if (!Framing.GetTileSafely(i, j - 1).IsActive && !Framing.GetTileSafely(i, j - 2).IsActive && !Framing.GetTileSafely(i + 1, j - 1).IsActive && !Framing.GetTileSafely(i + 1, j - 2).IsActive && Main.tile[i, j].IsActive && Main.tile[i + 1, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
+                if (!Framing.GetTileSafely(i, j - 1).IsActive && !Framing.GetTileSafely(i + 1, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i + 1, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
                 {
                     if (Main.rand.NextBool(6000))
                     {
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
+                    }
+                }
+            }
+            if (type == ModContent.TileType<DeadGrassTileCorruption>() || type == ModContent.TileType<IrradiatedEbonstoneTile>() || type == ModContent.TileType<DeadGrassTileCrimson>() || type == ModContent.TileType<IrradiatedCrimstoneTile>())
+            {
+                if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0)
+                {
+                    if (Main.rand.NextBool(300))
+                    {
+                        WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
                     }
                 }
             }

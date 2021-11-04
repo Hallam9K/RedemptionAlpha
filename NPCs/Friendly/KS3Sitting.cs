@@ -153,6 +153,7 @@ namespace Redemption.NPCs.Friendly
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
             Player player = Main.LocalPlayer;
+            Main.npcChatCornerItem = 0;
             if (firstButton)
             {
                 if (ChatNumber == 2 && RedeWorld.slayerRep == 0)
@@ -173,6 +174,7 @@ namespace Redemption.NPCs.Friendly
                         Main.npcChatText = chat;
 
                         player.QuickSpawnItem(ItemID.SilverCoin, 20);
+                        ChatNumber++;
                         RedeWorld.slayerRep++;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
@@ -184,6 +186,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
+                        Main.npcChatCornerItem = ModContent.ItemType<Uranium>();
                         Main.npcChatText = "You don't have any uranium, idiot.";
                         SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
                     }
@@ -228,6 +231,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
+                        Main.npcChatCornerItem = ModContent.ItemType<SlayerWiringKit>();
                         Main.npcChatText = QuestChat();
                         SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
                     }
@@ -274,6 +278,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
+                        Main.npcChatCornerItem = ModContent.ItemType<SlayerHullPlating>();
                         Main.npcChatText = QuestChat();
                         SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
                     }
@@ -289,6 +294,7 @@ namespace Redemption.NPCs.Friendly
                         if (player.inventory[ShipEngine].stack <= 0)
                             player.inventory[ShipEngine] = new Item();
 
+                        Main.npcChatCornerItem = ModContent.ItemType<MemoryChip>();
                         Main.npcChatText = "Was helping me with all that really necessary for you? You don't gain anything from it. But thank you regardless. I'll be leaving soon, but I want you to have this. I have yet to figure out a use for it, but take it.";
 
                         player.QuickSpawnItem(ItemID.GoldCoin, 12);
@@ -331,6 +337,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
+                        Main.npcChatCornerItem = ModContent.ItemType<SlayerShipEngine>();
                         Main.npcChatText = QuestChat();
                         SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
                     }
