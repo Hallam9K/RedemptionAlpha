@@ -24,4 +24,13 @@ namespace Redemption.Globals
             return RedeWorld.SkeletonInvasion && player.ZoneOverworldHeight;
         }
     }
+    public class NukeMusic : ModSceneEffect
+    {
+        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Warhead");
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return RedeWorld.nukeCountdownActive;
+        }
+    }
 }

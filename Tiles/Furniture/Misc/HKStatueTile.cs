@@ -39,12 +39,8 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
-            int dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
-            if (dist <= 30)
-            {
-                player.AddBuff(ModContent.BuffType<HKStatueBuff>(), 20);
-                player.GetModPlayer<RedePlayer>().foundHall = true;
-            }
+            player.AddBuff(ModContent.BuffType<HKStatueBuff>(), 20);
+            player.GetModPlayer<RedePlayer>().foundHall = true;
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

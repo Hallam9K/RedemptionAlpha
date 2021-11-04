@@ -1,3 +1,4 @@
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Redemption.Tiles.Tiles;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -24,6 +25,10 @@ namespace Redemption.Items.Placeable.Tiles
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<PetrifiedWoodWall>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<PetrifiedWoodFence>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

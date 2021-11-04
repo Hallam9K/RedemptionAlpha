@@ -2,15 +2,20 @@ using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
+using Redemption.Projectiles.Misc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Redemption.Globals
 {
@@ -30,6 +35,14 @@ namespace Redemption.Globals
         public static bool spawnWayfarer;
         public static float RotTime;
         public static int slayerRep;
+
+        #region Nuke Shenanigans
+        public static int nukeTimerInternal = 1800;
+        public static int nukeTimerShown = 30;
+        public static int nukeFireballRadius = 287;
+        public static bool nukeCountdownActive = false;
+        public static Vector2 nukeGroundZero = Vector2.Zero;
+        #endregion
 
         public override void PreUpdateWorld()
         {
@@ -192,7 +205,114 @@ namespace Redemption.Globals
             }
             if (blobbleSwarmCooldown > 0)
                 blobbleSwarmCooldown--;
+
+            UpdateNukeCountdown();
         }
+
+        #region Warhead Countdown
+        public void UpdateNukeCountdown()
+        {
+            if (!nukeCountdownActive)
+            {
+                nukeTimerInternal = 1800;
+                return;
+            }
+            else if (nukeGroundZero == Vector2.Zero)
+            {
+                nukeCountdownActive = false;
+                return;
+            }
+            else
+            {
+                nukeTimerShown = nukeTimerInternal / 60;
+                if (nukeTimerInternal % 60 == 0 && nukeTimerInternal > 0)
+                {
+                    if (RedeConfigClient.Instance.NoLoreElements)
+                    {
+                        Main.NewText(nukeTimerShown.ToString(), Color.Red);
+                    }
+                    else
+                    {
+                        if (!Main.dedServ)
+                        {
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
+                        }
+                    }
+                }
+                --nukeTimerInternal;
+                if (nukeTimerInternal <= 0)
+                {
+                    MoonlordDeathDrama.RequestLight(1f, nukeGroundZero);
+                    for (int i = 0; i < Main.maxPlayers; ++i)
+                    {
+                        Terraria.Player player = Main.player[i];
+                        if (!player.active || player.dead)
+                            continue;
+
+                        if (Vector2.Distance(player.Center, nukeGroundZero) < 287 * 16)
+                            MoonlordDeathDrama.RequestLight(1f, player.Center);
+                        else if (Vector2.Distance(player.Center, nukeGroundZero) < 287 * 2 * 16)
+                            MoonlordDeathDrama.RequestLight(0.5f, player.Center);
+                        else
+                            MoonlordDeathDrama.RequestLight(0.35f, player.Center);
+                    }
+                }
+                if (nukeTimerInternal <= -60)
+                {
+                    RedeHelper.ProjectileExplosion(new ProjectileSource_TileBreak((int)nukeGroundZero.X, (int)nukeGroundZero.Y), nukeGroundZero, 0, 90, ModContent.ProjectileType<NukeShockwave>(), 1, 80, nukeGroundZero.X, nukeGroundZero.Y);
+                    HandleNukeExplosion();
+                    WorldGen.KillTile((int)(nukeGroundZero.X / 16), (int)(nukeGroundZero.Y / 16), false, false, true);
+                    ConversionHandler.ConvertWasteland(nukeGroundZero, 287);
+                    nukeCountdownActive = false;
+                    nukeGroundZero = Vector2.Zero;
+                    RedeBossDowned.nukeDropped = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+            }
+        }
+
+        public void HandleNukeExplosion()
+        {
+            for (int i = 0; i < Main.maxPlayers; ++i)
+            {
+                Terraria.Player player = Main.player[i];
+                if (!player.active || player.dead)
+                    continue;
+
+                if (player.Distance(nukeGroundZero) < 287 * 16)
+                {
+                    string nukeDeathReason;
+
+                    WeightedRandom<string> nukeDeaths = new(Main.rand);
+                    nukeDeaths.Add(player.name + " saw a second sunrise.", 5);
+                    nukeDeaths.Add(player.name + " was wiped off the face of " + Main.worldName + ".", 5);
+                    nukeDeaths.Add(player.name + " experienced doomsday.", 5);
+                    nukeDeaths.Add(player.name + " became a shadow on the ground.", 5);
+                    nukeDeaths.Add(player.name + " couldn't find the fridge in time.", 1);
+
+                    nukeDeathReason = nukeDeaths;
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/NukeExplosion"), player.position);
+
+                    player.KillMe(PlayerDeathReason.ByCustomReason(nukeDeathReason), 999999, 1);
+                }
+                if (player.Distance(nukeGroundZero) < 287 * 2 * 16 && Collision.CanHit(player.position, player.width, player.height, nukeGroundZero, 1, 1))
+                    player.AddBuff(BuffID.Blackout, 900);
+
+            }
+            for (int i = 0; i < Main.maxNPCs; ++i)
+            {
+                Terraria.NPC npc = Main.npc[i];
+                if (!npc.active)
+                    continue;
+
+                Terraria.Player player = Main.LocalPlayer;
+                if (npc.Distance(nukeGroundZero) < 287 * 16)
+                    player.ApplyDamageToNPC(npc, 50000, 0, 0, false);
+            }
+        }
+        #endregion
 
         public override void OnWorldLoad()
         {

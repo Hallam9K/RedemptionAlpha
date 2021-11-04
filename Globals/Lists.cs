@@ -214,7 +214,7 @@ namespace Redemption.Globals
             60
         };
 
-        public static List<int> WhitelistTiles = new()
+        public static List<int> BlacklistTiles = new()
         {
             TileID.BlueDungeonBrick,
             TileID.GreenDungeonBrick,
@@ -223,7 +223,8 @@ namespace Redemption.Globals
             TileID.BeeHive,
             TileID.Granite,
             TileID.Marble,
-            ModContent.TileType<AncientHallBrickTile>()
+            ModContent.TileType<AncientHallBrickTile>(),
+            ModContent.TileType<SlayerShipPanelTile>()
         };
 
         public static List<int> ModdedChests = new();

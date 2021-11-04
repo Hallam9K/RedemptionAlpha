@@ -8,6 +8,10 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Bestiary;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -369,53 +373,34 @@ namespace Redemption.NPCs.Friendly
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
             Player player = Main.player[Main.myPlayer];
-            /*if (Main.hardMode)
+            if (Main.hardMode)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NuclearWarhead>());
+
+            if (RedeBossDowned.nukeDropped)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<WarheadItem>());
-                nextSlot++;
-            }
-            if (RedeWorld.nukeDropped)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRock>());
-                nextSlot++;
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
                 if (Main.bloodMoon)
                 {
                     if (WorldGen.crimson)
-                    {
-                        shop.item[nextSlot].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
-                        nextSlot++;
-                    }
+                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
                     else
-                    {
-                        shop.item[nextSlot].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
-                        nextSlot++;
-                    }
+                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
                 }
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRockWall>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<AntiXenomiteApplier>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenoSolution>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<AntiXenoSolution>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<GasMask>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<HazmatSuit>());
-                nextSlot++;
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CrystalSerum>());
+                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XenoSolution>());
+                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AntiXenoSolution>());
+                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GasMask>());
+                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit>());
             }
             if (Main.hardMode)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<AIChip>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<CarbonMyofibre>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk1Capacitator>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk1Plating>());
-                nextSlot++;
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AIChip>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CarbonMyofibre>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Capacitator>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Plating>());
             }
-            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            /*if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk2Capacitator>());
                 nextSlot++;
@@ -430,23 +415,11 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<RadiationPill>());
                 nextSlot++;
             }*/
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenomiteShard>());
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Starlite>());
-            nextSlot++;
-            /*if (NPC.downedPlantBoss)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk3Capacitator>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk3Plating>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedSoI)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<GeigerCounter>());
-                nextSlot++;
-            }
-            if (NPC.downedMoonlord)
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XenomiteShard>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Starlite>());
+            if (RedeBossDowned.downedSeed)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AnomalyDetector>());
+            /*if (NPC.downedMoonlord)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart1>());
                 nextSlot++;

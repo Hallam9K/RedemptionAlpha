@@ -266,6 +266,9 @@ namespace Redemption
         public UserInterface TitleUILayer;
         public TitleCard TitleCardUIElement;
 
+        public UserInterface NukeUILayer;
+        public NukeDetonationUI NukeUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -287,6 +290,10 @@ namespace Redemption
                 ChaliceUILayer = new UserInterface();
                 ChaliceUIElement = new ChaliceAlignmentUI();
                 ChaliceUILayer.SetState(ChaliceUIElement);
+
+                NukeUILayer = new UserInterface();
+                NukeUIElement = new NukeDetonationUI();
+                NukeUILayer.SetState(NukeUIElement);
 
                 GeneratorMenuUI = new UserInterface();
                 GeneratorMenu = new ManualGeneratorMenu();
@@ -363,6 +370,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex, ChaliceAlignmentUI.Visible, "Chalice");
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 1, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 2, TitleCard.Showing, "Title Card");
+                AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 3, NukeDetonationUI.Visible, "Nuke UI");
             }
         }
 

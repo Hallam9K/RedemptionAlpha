@@ -1,0 +1,32 @@
+using Redemption.Tiles.Furniture.PetrifiedWood;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
+{
+    public class PetrifiedWoodCandle : ModItem
+	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodCandleTile>(), 0);
+			Item.width = 12;
+			Item.height = 16;
+			Item.maxStack = 99;
+		}
+
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<Tiles.PetrifiedWood>(), 4)
+				.AddIngredient(ItemID.Torch)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+		}
+	}
+}

@@ -318,7 +318,7 @@ namespace Redemption.WorldGeneration
                             {
                                 for (int y = 0; y < tex.Height; y++)
                                 {
-                                    if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.WhitelistTiles.Contains(Main.tile[tilesX + x, tilesY + y].type))
+                                    if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(Main.tile[tilesX + x, tilesY + y].type))
                                     {
                                         whitelist = true;
                                         break;
@@ -415,7 +415,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 82; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
-                                if (TileLists.WhitelistTiles.Contains(type))
+                                if (TileLists.BlacklistTiles.Contains(type))
                                     continue;
                             }
                         }
@@ -539,7 +539,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 47; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
-                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
+                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                     continue;
                             }
                         }
@@ -656,7 +656,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 21; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
-                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
+                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                     continue;
                             }
                         }
@@ -774,7 +774,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 47; j++)
                             {
                                 int type = Main.tile[origin2.X + i, origin2.Y + j].type;
-                                if (TileLists.WhitelistTiles.Contains(type))
+                                if (TileLists.BlacklistTiles.Contains(type))
                                     continue;
                             }
                         }
@@ -896,7 +896,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 16; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
-                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.WhitelistTiles.Contains(type))
+                                if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                     continue;
                             }
                         }
@@ -1041,7 +1041,7 @@ namespace Redemption.WorldGeneration
             {
                 NPC.NewNPC((int)gathicPortalPos.X, (int)gathicPortalPos.Y, ModContent.NPCType<GathuramPortal>());
             }
-            Vector2 slayerSittingPos = new(((slayerShipVector.X + 92) * 16), ((slayerShipVector.Y + 28) * 16));
+            Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
             if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedVlitch3 &&
                 Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {

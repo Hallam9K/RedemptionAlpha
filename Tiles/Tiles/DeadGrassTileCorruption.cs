@@ -20,12 +20,14 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<DeadGrassTileCrimson>()][Type] = true;
             Main.tileMerge[Type][TileID.Dirt] = true;
             Main.tileMerge[TileID.Dirt][Type] = true;
+            Main.tileMerge[Type][TileID.Grass] = true;
+            Main.tileMerge[TileID.Grass][Type] = true;
             TileID.Sets.Conversion.Grass[Type] = true;
-            Main.tileBlendAll[Type] = true;
             TileID.Sets.Grass[Type] = true;
+            TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
             TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Dirt;
-            Main.tileMergeDirt[Type] = true;
+            Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             AddMapEntry(new Color(103, 101, 107));
