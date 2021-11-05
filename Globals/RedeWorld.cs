@@ -289,6 +289,7 @@ namespace Redemption.Globals
                     nukeDeaths.Add(player.name + " was wiped off the face of " + Main.worldName + ".", 5);
                     nukeDeaths.Add(player.name + " experienced doomsday.", 5);
                     nukeDeaths.Add(player.name + " became a shadow on the ground.", 5);
+                    nukeDeaths.Add(player.name + " went out with a bang.", 5);
                     nukeDeaths.Add(player.name + " couldn't find the fridge in time.", 1);
 
                     nukeDeathReason = nukeDeaths;
