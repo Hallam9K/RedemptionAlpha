@@ -32,6 +32,9 @@ namespace Redemption.Globals.Player
                         irradiatedLevel++;
                 }
             }
+            if (irradiatedLevel == 0)
+                return;
+
             switch (irradiatedLevel)
             {
                 case 1:
