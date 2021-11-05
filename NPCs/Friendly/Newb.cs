@@ -114,7 +114,7 @@ namespace Redemption.NPCs.Friendly
             {
                 chat.Add("Do I know you?");
             }*/
-            chat.Add("Who you? You Terrarian?");
+            chat.Add("Who you? You human?");
             chat.Add("Me find shiny stones!");
             chat.Add("You look stupid! Haha!");
             chat.Add("My dirt is 10% off!");

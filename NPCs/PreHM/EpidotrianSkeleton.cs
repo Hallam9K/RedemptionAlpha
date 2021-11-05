@@ -396,7 +396,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
                 new FlavorTextBestiaryInfoElement(
-                    "These skeletons are from Epidotra's mainland, they are slightly taller and smarter than the Terrarian ones. Their strength is dependent on their soul, which is also known as Willpower.")
+                    "These skeletons are from Epidotra's mainland, they are slightly taller and smarter than the island's ones. Their strength is dependent on their soul, which is also known as Willpower.")
             });
         }
     }

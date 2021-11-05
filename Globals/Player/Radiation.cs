@@ -376,6 +376,10 @@ namespace Redemption.Globals.Player
             if (irradiatedLevel > 5)
                 irradiatedLevel = 5;
         }
+        public override void PreUpdate()
+        {
+            Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
+        }
         public override void UpdateDead()
         {
             irradiatedLevel = 0;
