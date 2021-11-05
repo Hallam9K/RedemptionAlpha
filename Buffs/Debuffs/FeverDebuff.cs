@@ -16,7 +16,6 @@ namespace Redemption.Buffs.Debuffs
         public override void Update(Player player, ref int buffIndex)
 		{
             player.manaSick = true;
-            player.venom = true;
             player.blind = true;
             player.bleed = true;
             player.chilled = true;

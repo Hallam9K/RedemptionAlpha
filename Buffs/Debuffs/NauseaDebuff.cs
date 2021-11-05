@@ -18,7 +18,6 @@ namespace Redemption.Buffs.Debuffs
             player.manaSick = true;
             player.confused = true;
             player.moveSpeed *= 0.5f;
-            player.venom = true;
             player.blind = true;
             player.stinky = true;
         }
