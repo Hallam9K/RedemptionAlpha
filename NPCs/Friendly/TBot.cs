@@ -13,6 +13,8 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -92,74 +94,60 @@ namespace Redemption.NPCs.Friendly
 
         public override string GetChat()
         {
+            Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
 
             int GuideID = NPC.FindFirstNPC(NPCID.Guide);
             if (GuideID >= 0)
-            {
                 chat.Add(Main.npc[GuideID].GivenName + " knows quite a lot about this place you call home. It's way more interesting and lively compared to where I'm from. And less hazardous to your kind.");
-            }
+
             int MerchantID = NPC.FindFirstNPC(NPCID.Merchant);
             if (MerchantID >= 0)
-            {
                 chat.Add("Your tenant " + Main.npc[MerchantID].GivenName + " is... Interesting I suppose. Though I don't appreciate him constantly trying to barter with me, I don't want his relatively weak tools or dirt.");
-            }
+
             int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
             if (DryadID >= 0)
-            {
                 chat.Add(Main.npc[DryadID].GivenName + " has informed me of 'Corruption' in your world. What is it exactly? A plague in the world that spreads madness and hate, or something more eldritch in nature? It's somewhat similar to my concept of corruption, more accurately called assimilation. My kind being assimilated turns them from free-thinking and having personality, into husks of themselves, who only take orders from our 'mother'.");
-            }
+
             int NurseID = NPC.FindFirstNPC(NPCID.Nurse);
             if (NurseID >= 0)
-            {
                 chat.Add("The nurse, " + Main.npc[NurseID].GivenName + ", doesn't know anything about irradiation or how to treat it. If you're unfortunate enough to start suffering ARS, she won't be able to help you. To detect hazards that might cause it, I suggest buying a Geiger Muller from me or finding one somewhere.");
-            }
+
             int ArmsDealerID = NPC.FindFirstNPC(NPCID.ArmsDealer);
             if (ArmsDealerID >= 0)
-            {
                 chat.Add(Main.npc[ArmsDealerID].GivenName + "'s weapons are useless to me. I already own a wide arsenal of destructive firearms and melee weapons, and I would rather not use them on living beings, as it would violate the first Law of Robotics.");
-            }
+
             int cyborgID = NPC.FindFirstNPC(NPCID.Cyborg);
             if (cyborgID >= 0)
-            {
                 chat.Add("Meanwhile every other tenant gives me a bit of a stink eye, " + Main.npc[cyborgID].GivenName + " seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.");
-            }
+
             if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
-            {
                 chat.Add("When I say 'Our father', I mean our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.");
-            }
+
             if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
-            {
                 chat.Add("When I say 'Our mother', I mean the first AI, which is the precursor to our AI. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.");
-            }
+
             if (NPC.downedPlantBoss)
-            {
                 chat.Add("I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...");
-            }
+
             if (NPC.downedGolemBoss)
-            {
                 chat.Add("There's an ancient civilization of lizard people in your world? And they worshipped an idol of sun? That's strange... I find your island more intriguing the more I learn about it.");
-            }
-            if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && NPC.downedGolemBoss && NPC.downedAncientCultist && NPC.downedTowers && NPC.downedMoonlord)
-            {
+
+            if (NPC.downedMoonlord)
                 chat.Add("An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with the lands outside this island, but I've met some of the more important figures. They seem like a good bunch.");
-            }
-            /*if (RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2)
-            {
+
+            if (RedeBossDowned.downedVlitch1 || RedeBossDowned.downedVlitch2)
                 chat.Add("You've defeated a Vlitch Overlord? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?");
-            }
-            if (RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2)
-            {
+
+            if (RedeBossDowned.downedVlitch1 || RedeBossDowned.downedVlitch2)
                 chat.Add("Why am I concerned about the Overlords? Well, our 'mother' isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even our father. I want you to be extremely careful around her. She doesn't mess around.");
-            }
-            if (RedeWorld.downedSlayer)
-            {
+
+            if (RedeBossDowned.downedSlayer)
                 chat.Add("King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.");
-            }
-            if (RedeWorld.downedVolt)
+            /*if (RedeWorld.downedVolt)
             {
                 chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. Meanwhile you were gone, I went to look around my stash of gear and found some, that I think would be good fit for your needs. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.");
-            }
+            }*/
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
             {
                 chat.Add("Am I looking at a mirror? Oh wait, it's just you. Hey.");
@@ -179,10 +167,9 @@ namespace Redemption.NPCs.Friendly
                     chat.Add("You were lucky the first time... There won't be a third time.");
                 }
             }
-            if (BasePlayer.HasItem(player, ModContent.ItemType<WarheadItem>()))
-            {
+            if (BasePlayer.HasItem(player, ModContent.ItemType<NuclearWarhead>()))
                 chat.Add("Is that a nuclear warhead in your pocket or are you hap- ...Why do you have a warhead with you?");
-            }*/
+
             chat.Add("I've come here to hide from our 'mother'. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.");
             chat.Add("I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what our 'mother' wasn't.");
             chat.Add("Good day. I hope my familiar yet robotic look won't disturb you.");
@@ -430,13 +417,10 @@ namespace Redemption.NPCs.Friendly
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<TeslaCannon>());
                 nextSlot++;
-            }
+            }*/
             if (player.IsTBotHead())
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<AdamHead>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedJanitor && !RedeWorld.labAccess[0])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AdamHead>());
+            /*if (RedeWorld.downedJanitor && !RedeWorld.labAccess[0])
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel1A>());
                 nextSlot++;

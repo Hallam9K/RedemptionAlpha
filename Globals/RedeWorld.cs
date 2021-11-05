@@ -100,7 +100,7 @@ namespace Redemption.Globals
                 if (!Main.dayTime && spawnSkeletonInvasion && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 1)
                 {
                     string status = "The skeletons are invading!";
-                    if (WorldGen.spawnEye || Main.bloodMoon)
+                    if (WorldGen.spawnEye || Main.bloodMoon || WorldGen.spawnHardBoss > 0)
                         status = "The skeletons reconsidered invading tonight...";
                     else
                         SkeletonInvasion = true;

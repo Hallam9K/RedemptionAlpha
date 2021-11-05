@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.Audio;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Misc
 {
@@ -52,9 +53,9 @@ namespace Redemption.Projectiles.Misc
         {
             if (!target.behindBackWall)
             {
-                target.AddBuff(BuffID.OnFire, 600); // TODO: nuke debuffs
-                //target.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 900);
-                //target.AddBuff(ModContent.BuffType<RadiationDebuff>(), 300);
+                target.AddBuff(BuffID.OnFire, 600);
+                target.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 900);
+                target.AddBuff(ModContent.BuffType<RadiationDebuff>(), 300);
                 
                 Vector2 groundZeroPos = new(Projectile.ai[0], Projectile.ai[1]);
                 Vector2 throwVelocity = target.Center - groundZeroPos;

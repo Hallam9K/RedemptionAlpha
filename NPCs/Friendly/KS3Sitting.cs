@@ -501,10 +501,9 @@ namespace Redemption.NPCs.Friendly
                 }
                 else
                 {
-                    // TODO: t-bot
-                    //if (player.IsFullTBot())
-                    //    chat.Add("Oh great, the robot is here... What do you want?");
-                    //else
+                    if (player.IsFullTBot())
+                        chat.Add("Oh great, the robot is here... What do you want?");
+                    else
                     chat.Add("Oh great, the Terrarian is here... What do you want?");
                     chat.Add("Did you really feel the need to break into my ship?");
                     chat.Add("Fight's over. I'm busy. Get lost.");
