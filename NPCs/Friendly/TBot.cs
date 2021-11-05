@@ -12,6 +12,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -400,21 +401,13 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Capacitator>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Plating>());
             }
-            /*if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk2Capacitator>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk2Plating>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<MiniNuke>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<GeigerMuller>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabGeigerCounter>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<RadiationPill>());
-                nextSlot++;
-            }*/
+                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniNuke>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
+                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabGeigerCounter>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
+            }
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XenomiteShard>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Starlite>());
             if (RedeBossDowned.downedSeed)

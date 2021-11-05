@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -11,6 +12,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Ritualist Emblem");
             Tooltip.SetDefault("15% increased ritual damage");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

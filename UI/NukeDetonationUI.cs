@@ -28,8 +28,8 @@ namespace Redemption.UI
         {
             BgSprite.Width.Set(608, 0f);
             BgSprite.Height.Set(332, 0f);
-            BgSprite.Top.Set((Main.screenHeight / 2) - 608 / 2, 0f);
-            BgSprite.Left.Set((Main.screenWidth / 2) - 664, 0f);
+            BgSprite.Top.Set((Main.screenHeight / 2) - 332 / 2, 0f);
+            BgSprite.Left.Set((Main.screenWidth / 2) - 608 / 2, 0f);
             BgSprite.VAlign = BgSprite.HAlign = 0.5f;
 
             ButtonSprite.Left.Set(8, 0f);
