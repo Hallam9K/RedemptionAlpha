@@ -24,8 +24,8 @@ namespace Redemption.Items.Usable.Potions
             Item.useTime = 14;
             Item.maxStack = 999;
             Item.consumable = true;
-            Item.width = 28;
-            Item.height = 26;
+            Item.width = 32;
+            Item.height = 30;
             Item.value = 80;
             Item.rare = ItemRarityID.Cyan;
             Item.buffType = ModContent.BuffType<WellFed4>();

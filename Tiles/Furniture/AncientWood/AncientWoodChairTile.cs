@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.CanBeSatOnForNPCs[Type] = true;
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 

@@ -20,6 +20,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.PreHM;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Buffs;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -278,6 +279,8 @@ namespace Redemption.NPCs.Friendly
 
             if (RedeBossDowned.downedEaglecrestGolem)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GolemEye>());
+
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
 
             /*if (RedeBossDowned.downedMossyGoliath)
             {

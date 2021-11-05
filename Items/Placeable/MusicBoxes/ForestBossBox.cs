@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.GameContent.Creative;
@@ -33,7 +34,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
 				.AddIngredient(ModContent.ItemType<AncientWood>(), 40)
-				.AddRecipeGroup("Redemption:GathicStone", 20)
+				.AddRecipeGroup(RedeRecipe.GathicStoneRecipeGroup, 20)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
 		}

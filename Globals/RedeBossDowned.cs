@@ -25,7 +25,7 @@ namespace Redemption.Globals
         public static bool downedErhan;
         public static int erhanDeath;
         public static int slayerDeath;
-        //public static bool downedOtherBoss = false;
+        public static bool nukeDropped;
 
         public override void OnWorldLoad()
         {
@@ -45,6 +45,7 @@ namespace Redemption.Globals
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
+            nukeDropped = false;
             //downedOtherBoss = false;
         }
 
@@ -66,6 +67,7 @@ namespace Redemption.Globals
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
+            nukeDropped = false;
             //downedOtherBoss = false;
         }
 
@@ -101,6 +103,8 @@ namespace Redemption.Globals
                 downed.Add("downedVlitch3");
             if (downedErhan)
                 downed.Add("downedErhan");
+            if (nukeDropped)
+                downed.Add("nukeDropped");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -127,6 +131,7 @@ namespace Redemption.Globals
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
             slayerDeath = tag.GetInt("slayerDeath");
+            nukeDropped = downed.Contains("nukeDropped");
             //downedOtherBoss = downed.Contains("downedOtherBoss");
         }
 
@@ -149,6 +154,7 @@ namespace Redemption.Globals
             flags[3] = downedVlitch2;
             flags[4] = downedVlitch3;
             flags[5] = downedErhan;
+            flags[6] = nukeDropped;
             writer.Write(flags2);
 
             writer.Write(erhanDeath);
@@ -173,6 +179,7 @@ namespace Redemption.Globals
             downedVlitch2 = flags2[3];
             downedVlitch3 = flags2[4];
             downedErhan = flags2[5];
+            nukeDropped = flags2[6];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

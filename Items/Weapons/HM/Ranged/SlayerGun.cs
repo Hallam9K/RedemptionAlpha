@@ -63,6 +63,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     Main.projectile[projectile1].hostile = false;
                     Main.projectile[projectile1].friendly = true;
                     Main.projectile[projectile1].DamageType = DamageClass.Ranged;
+                    Main.projectile[projectile1].tileCollide = true;
                     Main.projectile[projectile1].netUpdate2 = true;
                 }
             }
@@ -72,6 +73,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 Main.projectile[projectile2].hostile = false;
                 Main.projectile[projectile2].friendly = true;
                 Main.projectile[projectile2].DamageType = DamageClass.Ranged;
+                Main.projectile[projectile2].tileCollide = true;
                 Main.projectile[projectile2].netUpdate2 = true;
             }
             return false;

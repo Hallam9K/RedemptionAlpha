@@ -15,7 +15,7 @@ namespace Redemption
             logoScale = 0.75f;
             return true;
         }
-        public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<LabSurfaceBackgroundStyle>();
+        public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<WastelandSurfaceBackgroundStyle>();
         public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>($"{MenuAssetPath}/Logo");
 
         public override string DisplayName => "Ruined Kingdom";

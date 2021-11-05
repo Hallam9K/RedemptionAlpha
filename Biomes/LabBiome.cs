@@ -10,8 +10,8 @@ namespace Redemption.Biomes
     {
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
 
-        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/LabUndergroundBackgroundStyle");
-        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/LabSurfaceBackgroundStyle");
+        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandUndergroundBackgroundStyle");
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandSurfaceBackgroundStyle");
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabMusic");
 
@@ -24,9 +24,11 @@ namespace Redemption.Biomes
             DisplayName.SetDefault("Abandoned Lab");
         }
 
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 10;
+            return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 50;
         }
     }
 }

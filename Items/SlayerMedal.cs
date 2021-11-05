@@ -10,7 +10,7 @@ namespace Redemption.Items
         {
             DisplayName.SetDefault("Medal");
             Tooltip.SetDefault("It reads - [c/b8eff5:'Congratulations, you beat me. Have a medal.]"
-                + "\n[c/b8eff5:... Stupid Terrarian.]"
+                + "\n[c/b8eff5:... Stupid dumb idiot.]"
                 + "\n'It's just a piece of painted wood in the shape of a medal...'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

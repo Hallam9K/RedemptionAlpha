@@ -1,4 +1,9 @@
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Biomes;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -16,6 +21,21 @@ namespace Redemption.Globals.Player
         public override void Initialize()
         {
             foundHall = false;
+        }
+        public override void PostUpdateMiscEffects()
+        {
+            if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
+            {
+                ReLogic.Content.Asset<Texture2D> rain = ModContent.Request<Texture2D>("Redemption/Textures/RainOriginal", ReLogic.Content.AssetRequestMode.ImmediateLoad);
+                ReLogic.Content.Asset<Texture2D> rainWasteland = ModContent.Request<Texture2D>("Redemption/Textures/Rain2", ReLogic.Content.AssetRequestMode.ImmediateLoad);
+
+                if (Main.bloodMoon)
+                    TextureAssets.Rain = rain;
+                else if (Main.raining && Player.InModBiome(ModContent.GetInstance<WastelandBiome>()))
+                    TextureAssets.Rain = rainWasteland;
+                else
+                    TextureAssets.Rain = rain;
+            }
         }
         public override void SaveData(TagCompound tag)
         {

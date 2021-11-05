@@ -13,6 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
 using Redemption.Buffs;
+using System.Collections.Generic;
 
 namespace Redemption.Globals.Player
 {
@@ -44,6 +45,7 @@ namespace Redemption.Globals.Player
         public bool ensnared;
         public bool lantardPet;
         public bool erhanCross;
+        public bool hairLoss;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -90,6 +92,7 @@ namespace Redemption.Globals.Player
             ensnared = false;
             lantardPet = false;
             erhanCross = false;
+            hairLoss = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -159,6 +162,12 @@ namespace Redemption.Globals.Player
                 Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", shockDebuff);
             }
             #endregion
+        }
+
+        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
+        {
+            if (hairLoss)
+                drawInfo.hideHair = true;
         }
 
         public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

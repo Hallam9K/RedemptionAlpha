@@ -4,6 +4,7 @@ using Terraria.ID;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
+using Redemption.Globals;
 
 namespace Redemption.Items.Donator.Rain
 {
@@ -30,7 +31,7 @@ namespace Redemption.Items.Donator.Rain
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 12)
-                .AddRecipeGroup("Redemption:BioweaponBile", 6)
+                .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 6)
                 .AddTile(TileID.Loom)
                 .Register();
         }

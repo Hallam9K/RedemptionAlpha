@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria.DataStructures;
+using Redemption.Globals;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -60,7 +61,7 @@ namespace Redemption.Items.Usable.Summons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup("Redemption:SilverBar", 6)
+                .AddRecipeGroup(RedeRecipe.SilverRecipeGroup, 6)
                 .AddIngredient(ItemID.MeteoriteBar, 12)
                 .AddIngredient(ItemID.Obsidian, 2)
                 .AddTile(TileID.Anvils)

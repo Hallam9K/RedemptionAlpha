@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.SlayerShip;
 using Terraria;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Quest.KingSlayer
                 .AddIngredient(ModContent.ItemType<Plating>(), 4)
                 .AddIngredient(ModContent.ItemType<Capacitator>())
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 2)
-                .AddRecipeGroup("Redemption:CopperBar", 8)
+                .AddRecipeGroup(RedeRecipe.CopperRecipeGroup, 8)
                 .AddIngredient(ItemID.Wire, 15)
                 .AddTile(ModContent.TileType<SlayerFabricatorTile>())
                 .Register();

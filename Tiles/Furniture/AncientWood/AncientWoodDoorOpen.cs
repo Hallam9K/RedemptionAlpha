@@ -18,13 +18,13 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			Main.tileSolid[Type] = false;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileNoSunLight[Type] = true;
-			TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
+			TileID.Sets.HousingWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
-			DustType = DustID.t_BorealWood;
+			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.OpenDoor };
 			CloseDoorID = ModContent.TileType<AncientWoodDoorClosed>();
 

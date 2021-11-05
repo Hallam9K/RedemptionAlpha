@@ -17,6 +17,8 @@ using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -27,8 +29,6 @@ namespace Redemption
 {
     public class Redemption : Mod
     {
-        public override void AddRecipes() => RedeRecipe.Load(this);
-
         public static Redemption Instance { get; private set; }
 
         public const string Abbreviation = "MoR";
@@ -53,6 +53,8 @@ namespace Redemption
             {
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
             }
+
+            Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
 
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
@@ -80,11 +82,6 @@ namespace Redemption
 
                 _loadCache[i].Load();
             }
-        }
-
-        public override void Unload()
-        {
-            RedeRecipe.Unload();
         }
 
         public ModPacket GetPacket(ModMessageType type, int capacity)
@@ -230,6 +227,9 @@ namespace Redemption
         public UserInterface TitleUILayer;
         public TitleCard TitleCardUIElement;
 
+        public UserInterface NukeUILayer;
+        public NukeDetonationUI NukeUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -251,6 +251,10 @@ namespace Redemption
                 ChaliceUILayer = new UserInterface();
                 ChaliceUIElement = new ChaliceAlignmentUI();
                 ChaliceUILayer.SetState(ChaliceUIElement);
+
+                NukeUILayer = new UserInterface();
+                NukeUIElement = new NukeDetonationUI();
+                NukeUILayer.SetState(NukeUIElement);
 
                 GeneratorMenuUI = new UserInterface();
                 GeneratorMenu = new ManualGeneratorMenu();
@@ -327,6 +331,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex, ChaliceAlignmentUI.Visible, "Chalice");
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 1, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 2, TitleCard.Showing, "Title Card");
+                AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 3, NukeDetonationUI.Visible, "Nuke UI");
             }
         }
 
