@@ -18,20 +18,6 @@ namespace Redemption.Globals.Player
 
         public override void PostUpdateMiscEffects()
         {
-            if (Player.InModBiome(ModContent.GetInstance<WastelandBiome>()))
-            {
-                if (Main.raining)
-                {
-                    if (Player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(500) && !Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), Player.position);
-
-                    if (Player.ZoneOverworldHeight || Player.ZoneSkyHeight)
-                        Player.AddBuff(ModContent.BuffType<HeavyRadiationDebuff>(), 10);
-
-                    if (Main.rand.Next(80000) == 0 && irradiatedLevel == 0) //&& !HEVPower && !hazmatPower)
-                        irradiatedLevel++;
-                }
-            }
             if (irradiatedLevel == 0)
                 return;
 
@@ -388,6 +374,14 @@ namespace Redemption.Globals.Player
         }
         public override void PostUpdateBuffs()
         {
+            if (Player.InModBiome(ModContent.GetInstance<WastelandBiome>()) && Player.wet && !Player.lavaWet && !Player.honeyWet) // TODO: && !labWaterImmune)
+            {
+                if (Player.lifeRegen > 10)
+                    Player.lifeRegen = 10;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 60;
+            }
             if (Player.HasBuff(ModContent.BuffType<RadiationDebuff>()))
             {
                 Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
