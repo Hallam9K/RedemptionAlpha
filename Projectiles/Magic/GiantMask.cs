@@ -29,7 +29,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             Projectile.alpha = 255;
-            Projectile.timeLeft = 1800;
+            Projectile.timeLeft = 720;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
