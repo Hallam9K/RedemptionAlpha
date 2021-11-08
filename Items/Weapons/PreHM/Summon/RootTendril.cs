@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.knockBack = 4f;
-            Item.damage = 14;
+            Item.damage = 16;
             Item.noUseGraphic = true;
             Item.shoot = ModContent.ProjectileType<RootTendril_Proj>();
             Item.shootSpeed = 4;
