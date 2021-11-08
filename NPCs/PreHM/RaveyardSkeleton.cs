@@ -50,7 +50,7 @@ namespace Redemption.NPCs.PreHM
         {
             NPC.width = 24;
             NPC.height = 48;
-            NPC.damage = 0;
+            NPC.damage = 18;
             NPC.friendly = false;
             NPC.defense = 7;
             NPC.lifeMax = 54;
@@ -81,6 +81,14 @@ namespace Redemption.NPCs.PreHM
 
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone,
                 NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+
+            if (Main.rand.NextBool(3))
+            {
+                int life = NPC.life;
+                NPC.Transform(ModContent.NPCType<EpidotrianSkeleton>());
+                NPC.life = life;
+                NPC.ai[2] = 1;
+            }
         }
 
         public override void AI()
