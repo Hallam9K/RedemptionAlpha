@@ -49,7 +49,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 24;
-            NPC.height = 48;
+            NPC.height = 46;
             NPC.damage = 18;
             NPC.friendly = false;
             NPC.defense = 7;
@@ -105,12 +105,23 @@ namespace Redemption.NPCs.PreHM
                         HasEyes = true;
                     SetStats();
                     DanceType = Main.rand.Next(6);
+                    DanceSpeed = Main.rand.Next(4, 11);
 
                     AIState = TimerRand == 0 ? ActionState.Trumpet : ActionState.Dancing;
                     break;
                 case ActionState.Trumpet:
                     if (Main.rand.NextBool(500) && !Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Doot").WithPitchVariance(0.3f), NPC.position);
+                    break;
+                case ActionState.Dancing:
+                    int gotNPC2 = GetNearestNPC();
+                    if (gotNPC2 == -1)
+                    {
+                        int life = NPC.life;
+                        NPC.Transform(ModContent.NPCType<EpidotrianSkeleton>());
+                        NPC.life = life;
+                        NPC.ai[2] = 1;
+                    }
                     break;
             }
             if (NPC.velocity.Y == 0)
@@ -122,6 +133,7 @@ namespace Redemption.NPCs.PreHM
         }
         private int StartFrame;
         private int EndFrame;
+        private int DanceSpeed = 10;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
@@ -172,7 +184,7 @@ namespace Redemption.NPCs.PreHM
 
                 if (NPC.frame.Y < StartFrame * frameHeight)
                     NPC.frame.Y = StartFrame * frameHeight;
-                if (++NPC.frameCounter >= 10)
+                if (++NPC.frameCounter >= DanceSpeed)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
@@ -236,7 +248,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "Created when a corpse is bound by a soul, and the soul can still remember the last piece of music it heard. It will try to mimic the exact sounds the music it hears make. If it can't do that, then it will just dance uncontrollably... These boneheads are unrelated to the previous description and just enjoy dancing.")
+                    "Created when a corpse is bound by a soul, and the soul can still remember the last piece of music it heard. It will attempt to mimic the exact sounds it remembers. If it can't do that, then it will just dance uncontrollably. Some tunes are more deadly than others.")
             });
         }
     }

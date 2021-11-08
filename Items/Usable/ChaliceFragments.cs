@@ -15,7 +15,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Holding this will point to an ancient structure");
+            Tooltip.SetDefault("Holding this in your hand will point to an ancient structure");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 

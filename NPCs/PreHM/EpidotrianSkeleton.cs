@@ -56,6 +56,7 @@ namespace Redemption.NPCs.PreHM
             NPC.DeathSound = SoundID.DD2_SkeletonDeath;
             NPC.value = 95;
             NPC.knockBackResist = 0.5f;
+            NPC.alpha = 255;
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
@@ -132,6 +133,7 @@ namespace Redemption.NPCs.PreHM
 
                     TimerRand = Main.rand.Next(80, 280);
                     AIState = ActionState.Idle;
+                    NPC.alpha = 0;
                     break;
 
                 case ActionState.Idle:
@@ -358,7 +360,7 @@ namespace Redemption.NPCs.PreHM
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.IsABestiaryIconDummy ? drawColor : NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (HasEyes)
                 spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
