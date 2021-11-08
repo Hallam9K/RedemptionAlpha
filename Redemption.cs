@@ -431,7 +431,7 @@ namespace Redemption
                 int descOffset = (descBackground.Height - (int)(32f * scmp)) / 2;
                 Rectangle icon = new(descBackground.X + descOffset + 7, descBackground.Y + descOffset, (int)(32 * scmp), (int)(32 * scmp));
                 spriteBatch.Draw(InvIcon, icon, Color.White);
-                Utils.DrawBorderString(spriteBatch, "Bone Party!", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, 0.8f, 0.3f, 0.4f);
+                Utils.DrawBorderString(spriteBatch, "Raveyard", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, 0.8f, 0.3f, 0.4f);
             }
         }
         #endregion

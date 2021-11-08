@@ -89,7 +89,7 @@ namespace Redemption.Globals
                         {
                             spawnSkeletonInvasion = true;
 
-                            string status = "The skeletons are plotting an invasion at dusk..." + (RedeBossDowned.downedSkeletonInvasion ? " Again." : "");
+                            string status = "The skeletons are plotting a party at dusk..." + (RedeBossDowned.downedSkeletonInvasion ? " Again." : "");
                             if (Main.netMode == NetmodeID.Server)
                                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
                             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -99,9 +99,9 @@ namespace Redemption.Globals
                 }
                 if (!Main.dayTime && spawnSkeletonInvasion && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 1)
                 {
-                    string status = "The skeletons are invading!";
+                    string status = "The skeletons are partying!";
                     if (WorldGen.spawnEye || Main.bloodMoon || WorldGen.spawnHardBoss > 0)
-                        status = "The skeletons reconsidered invading tonight...";
+                        status = "The skeletons reconsidered partying tonight...";
                     else
                         SkeletonInvasion = true;
 

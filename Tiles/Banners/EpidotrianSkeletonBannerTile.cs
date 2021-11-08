@@ -34,6 +34,7 @@ namespace Redemption.Tiles.Banners
             {
                 Main.SceneMetrics.hasBanner = true;
                 Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<EpidotrianSkeleton>()] = true;
+                Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<RaveyardSkeleton>()] = true;
             }
         }
     }
