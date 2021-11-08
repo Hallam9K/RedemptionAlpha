@@ -6,6 +6,8 @@ float satLevel;
 float radius;
 float alphaMult;
 
+float4 reColor;
+
 //Calculations
 float Epsilon = 1e-10;
  
@@ -56,7 +58,7 @@ float4 BloomFloat(float2 coords : TEXCOORD0) : COLOR0
     float2 uv = coords;
     
     // Pixel colour
-    float4 Color = tex2D(uImage0, uv);
+    float4 Color = float4(reColor.x, reColor.y, reColor.z, tex2D(uImage0, uv).a * reColor.a);
     
     // Blur calculations
     for (float d = 0.0; d < 6.28; d += 6.28 / Directions)

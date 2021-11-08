@@ -228,7 +228,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "Created when a corpse is bound by a soul, and the soul can still remember the last piece of music it heard. It will try to mimic the exact sounds the music it hears make. If it can't do that, then it will just dance uncontrollably.")
+                    "Created when a corpse is bound by a soul, and the soul can still remember the last piece of music it heard. It will try to mimic the exact sounds the music it hears make. If it can't do that, then it will just dance uncontrollably... These boneheads are unrelated to the previous description and just enjoy dancing.")
             });
         }
     }
