@@ -251,7 +251,7 @@ namespace Redemption.Globals.NPC
             if (RedeWorld.SkeletonInvasion && spawnInfo.player.ZoneOverworldHeight)
             {
                 pool.Clear();
-                pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 5);
+                pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 3);
                 pool.Add(ModContent.NPCType<EpidotrianSkeleton>(), 5);
                 pool.Add(ModContent.NPCType<CavernSkeletonSpawner>(), 5);
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);

@@ -9,6 +9,8 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Dusts;
+using Redemption.Base;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -102,10 +104,10 @@ namespace Redemption.NPCs.Friendly
         {
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
-            /*if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
+            if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
             {
                 chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?");
-            }
+            }/*
             if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
             {
                 chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");

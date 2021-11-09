@@ -374,7 +374,7 @@ namespace Redemption.Globals.Player
         }
         public override void PostUpdateBuffs()
         {
-            if (Player.InModBiome(ModContent.GetInstance<WastelandBiome>()) && Player.wet && !Player.lavaWet && !Player.honeyWet) // TODO: && !labWaterImmune)
+            if ((Player.InModBiome(ModContent.GetInstance<WastelandBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet) // TODO: && !labWaterImmune)
             {
                 if (Player.lifeRegen > 10)
                     Player.lifeRegen = 10;
