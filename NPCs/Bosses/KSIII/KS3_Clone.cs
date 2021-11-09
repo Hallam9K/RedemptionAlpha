@@ -1431,7 +1431,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (AttackChoice == 3 && AIState is ActionState.PhysicalAttacks)
                     return;
-                TeleportCount++;
                 Teleport(false, Vector2.Zero);
                 NPC.netUpdate = true;
             }
