@@ -23,6 +23,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -136,6 +137,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SlayerProjector>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

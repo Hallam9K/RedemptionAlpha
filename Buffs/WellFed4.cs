@@ -16,6 +16,7 @@ namespace Redemption.Buffs
         public override void Update(Player player, ref int buffIndex)
         {         
             player.GetModPlayer<BuffPlayer>().wellFed4 = true;
+            player.wellFed = true;
             player.moveSpeed *= 1.5f;
             player.statDefense += 6;
             player.meleeSpeed *= 1.2f;
