@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetDefaults()
 		{
-            Item.damage = 17;
+            Item.damage = 19;
             Item.DamageType = DamageClass.Melee;
             Item.width = 54;
             Item.height = 54;
@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 21;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6.5f;
-            Item.crit = 16;
+            Item.crit = 18;
             Item.value = Item.sellPrice(0, 0, 54, 0);
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = false;
@@ -47,7 +47,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                    Projectile.NewProjectile(player.GetProjectileSource_Item(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), damage / 3, knockBack / 2, player.whoAmI);
+                    Projectile.NewProjectile(player.GetProjectileSource_Item(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), damage / 4, knockBack / 2, player.whoAmI);
             }
         }
 

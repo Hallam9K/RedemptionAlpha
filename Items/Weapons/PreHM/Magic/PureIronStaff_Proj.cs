@@ -103,15 +103,14 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Star").Value;
-            Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             Vector2 position = Projectile.Center - Main.screenPosition + RedeHelper.PolarVector(15, Projectile.velocity.ToRotation()) + Vector2.UnitY * Projectile.gfxOffY;
             Color colour = Color.Lerp(Color.LightBlue, Color.LightCyan, 1f / Opacity * 10f) * (1f / Opacity * 10f);
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (glow)
             {
-                Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), colour, Projectile.rotation, origin, 0.8f, spriteEffects, 0);
-                Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), colour * 0.4f, Projectile.rotation, origin, 1, spriteEffects, 0);
+                Main.EntitySpriteDraw(texture, position, null, colour, Projectile.rotation, origin, 0.8f, spriteEffects, 0);
+                Main.EntitySpriteDraw(texture, position, null, colour * 0.4f, Projectile.rotation, origin, 1, spriteEffects, 0);
             }
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

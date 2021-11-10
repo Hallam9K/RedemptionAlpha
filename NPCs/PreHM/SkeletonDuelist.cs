@@ -442,8 +442,8 @@ namespace Redemption.NPCs.PreHM
             choice.Add(PersonalityState.Normal, 10);
             choice.Add(PersonalityState.Calm, 6);
             choice.Add(PersonalityState.Aggressive, 7);
-            choice.Add(PersonalityState.Soulful, 2);
-            choice.Add(PersonalityState.Greedy, 1);
+            choice.Add(PersonalityState.Soulful, 1);
+            choice.Add(PersonalityState.Greedy, 0.5);
 
             Personality = choice;
             if (Main.rand.NextBool(3) || Personality == PersonalityState.Soulful)

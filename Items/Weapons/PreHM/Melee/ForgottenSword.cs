@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 29;
+            Item.damage = 33;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;

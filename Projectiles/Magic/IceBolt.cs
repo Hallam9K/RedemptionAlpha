@@ -105,7 +105,6 @@ namespace Redemption.Projectiles.Magic
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glowTex = ModContent.Request<Texture2D>("Redemption/Textures/Star").Value;
-            Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Rectangle rectGlow = new(0, 0, glowTex.Width, glowTex.Height);
             Vector2 drawOriginGlow = new(glowTex.Width / 2, glowTex.Height / 2);
@@ -114,7 +113,7 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 0.5f, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 0.5f, effects, 0);
 
             if (Projectile.ai[0] == 0)
             {

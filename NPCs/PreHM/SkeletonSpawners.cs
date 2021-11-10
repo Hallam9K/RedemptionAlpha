@@ -197,4 +197,73 @@ namespace Redemption.NPCs.PreHM
             return baseChance * multiplier;
         }
     }
+    public class RaveyardSkeletonSpawner : ModNPC
+    {
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+        public override void SetDefaults()
+        {
+            NPC.width = 32;
+            NPC.height = 54;
+            NPC.lifeMax = 1;
+            NPC.aiStyle = -1;
+        }
+        public enum SpawnType
+        {
+            SmallGroup, Group, LargeGroup
+        }
+        public override bool PreAI()
+        {
+            WeightedRandom<SpawnType> SpawnChoice = new(Main.rand);
+            SpawnChoice.Add(SpawnType.SmallGroup, 6);
+            SpawnChoice.Add(SpawnType.Group, 3);
+            SpawnChoice.Add(SpawnType.LargeGroup, 1);
+
+            int NPCType = ModContent.NPCType<RaveyardSkeleton>();
+
+            Vector2 pos = Vector2.Zero;
+            switch ((SpawnType)SpawnChoice)
+            {
+                case SpawnType.SmallGroup:
+                    pos = RedeHelper.FindGround(NPC, 15);
+                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        pos = RedeHelper.FindGround(NPC, 15);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                    }
+                    NPC.active = false;
+                    break;
+                case SpawnType.Group:
+                    pos = RedeHelper.FindGround(NPC, 15);
+                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        pos = RedeHelper.FindGround(NPC, 15);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                    }
+                    NPC.active = false;
+                    break;
+                case SpawnType.LargeGroup:
+                    pos = RedeHelper.FindGround(NPC, 15);
+                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        pos = RedeHelper.FindGround(NPC, 15);
+                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                    }
+                    NPC.active = false;
+                    break;
+            }
+            return true;
+        }
+    }
 }

@@ -103,8 +103,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'A golden wand, used by ancient clerics in Thamor.\n" +
-                    "Imbued with holy magic, it was used to heal townsfolk, as well as defending small settlements.'")
+                    "'A golden staff, protected by a monastery of clerics in Thamor\n" +
+                    "Imbued with holy magic, it was primarily revered for its healing capabilities\n" +
+                    "With numerous quantities of people pursuing its power to heal themselves or their loved ones.'")
                 {
                     overrideColor = Color.LightGray
                 };

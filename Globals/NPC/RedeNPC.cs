@@ -236,7 +236,7 @@ namespace Redemption.Globals.NPC
             }
             if (RedeWorld.SkeletonInvasion)
             {
-                spawnRate = 17;
+                spawnRate = 18;
                 maxSpawns = 12;
             }
         }
@@ -251,10 +251,11 @@ namespace Redemption.Globals.NPC
             if (RedeWorld.SkeletonInvasion && spawnInfo.player.ZoneOverworldHeight)
             {
                 pool.Clear();
+                pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 3);
                 pool.Add(ModContent.NPCType<EpidotrianSkeleton>(), 5);
                 pool.Add(ModContent.NPCType<CavernSkeletonSpawner>(), 5);
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
-                pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 1);
+                pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
             }
         }
