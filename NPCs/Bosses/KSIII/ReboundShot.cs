@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.aiStyle = -1;
             Projectile.friendly = false;
             Projectile.hostile = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 3;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;

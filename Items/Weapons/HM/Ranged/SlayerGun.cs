@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.KSIII;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -11,16 +13,16 @@ namespace Redemption.Items.Weapons.HM.Ranged
     public class SlayerGun : ModItem
     {
         public override void SetStaticDefaults()
-        {        
+        {
             DisplayName.SetDefault("Hyper-Tech Blaster");
             Tooltip.SetDefault("'Pewpewpewpewpewpewpew'"
                 + "\nReplaces normal bullets with Phantasmal Bolts"
-                + "\nRight-clicking fires 5 bolts in an arc");
+                + "\nRight-clicking changes type of fire");
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 150;
+            Item.damage = 130;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 62;
             Item.height = 26;
@@ -31,56 +33,157 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Cyan;
-            Item.UseSound = SoundID.Item91;
+            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun1");
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.shootSpeed = 90;
+            Item.shootSpeed = 8;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
                 Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
-        public override bool AltFunctionUse(Player player)
+        public int AttackMode;
+        public override bool AltFunctionUse(Player player) => true;
+        public override bool CanUseItem(Player player)
         {
+            if (player.altFunctionUse == 2)
+            {
+                Item.UseSound = SoundID.Item1; // TODO: Gun switch sound effect
+            }
+            else
+            {
+                switch (AttackMode)
+                {
+                    case 0:
+                        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun1");
+                        break;
+                    case 1:
+                        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun3");
+                        break;
+                    case 2:
+                        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun2");
+                        break;
+                }
+            }
             return true;
+        }
+
+        public override bool CanConsumeAmmo(Player player)
+        {
+            return player.altFunctionUse != 2;
         }
 
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (player.altFunctionUse == 2)
             {
-                player.itemAnimationMax = Item.useTime * 3;
-                player.itemTime = Item.useTime * 3;
-                player.itemAnimation = Item.useTime * 3;
-                damage = (int)(damage * 1.4f);
+                player.itemAnimationMax = 5;
+                player.itemTime = 5;
+                player.itemAnimation = 5;
 
-                float numberProjectiles = 5;
-                float rotation = MathHelper.ToRadians(25);
-                for (int i = 0; i < numberProjectiles; i++)
+                AttackMode++;
+                if (AttackMode >= 3)
+                    AttackMode = 0;
+
+                switch (AttackMode)
                 {
-                    Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                    int projectile1 = Projectile.NewProjectile(source, position, perturbedSpeed, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
-                    Main.projectile[projectile1].hostile = false;
-                    Main.projectile[projectile1].friendly = true;
-                    Main.projectile[projectile1].DamageType = DamageClass.Ranged;
-                    Main.projectile[projectile1].tileCollide = true;
-                    Main.projectile[projectile1].netUpdate2 = true;
+                    case 0:
+                        CombatText.NewText(player.getRect(), Color.LightCyan, "Barrage Shot", true, false);
+                        break;
+                    case 1:
+                        CombatText.NewText(player.getRect(), Color.LightCyan, "Spread Shot", true, false);
+                        break;
+                    case 2:
+                        CombatText.NewText(player.getRect(), Color.LightCyan, "Rebound Shot", true, false);
+                        break;
                 }
             }
             else
             {
-                int projectile2 = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
-                Main.projectile[projectile2].hostile = false;
-                Main.projectile[projectile2].friendly = true;
-                Main.projectile[projectile2].DamageType = DamageClass.Ranged;
-                Main.projectile[projectile2].tileCollide = true;
-                Main.projectile[projectile2].netUpdate2 = true;
+                switch (AttackMode)
+                {
+                    case 0:
+                        int proj = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
+                        Main.projectile[proj].hostile = false;
+                        Main.projectile[proj].friendly = true;
+                        Main.projectile[proj].DamageType = DamageClass.Ranged;
+                        Main.projectile[proj].tileCollide = true;
+                        Main.projectile[proj].netUpdate2 = true;
+                        break;
+                    case 1:
+                        player.itemAnimationMax = Item.useTime * 3;
+                        player.itemTime = Item.useTime * 3;
+                        player.itemAnimation = Item.useTime * 3;
+                        damage = (int)(damage * 1.4f);
+
+                        float numberProjectiles = 3;
+                        float rotation = MathHelper.ToRadians(15);
+                        for (int i = 0; i < numberProjectiles; i++)
+                        {
+                            Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
+                            int proj3 = Projectile.NewProjectile(source, position, perturbedSpeed, ProjectileID.MartianTurretBolt, damage, knockback, player.whoAmI);
+                            Main.projectile[proj3].hostile = false;
+                            Main.projectile[proj3].friendly = true;
+                            Main.projectile[proj3].DamageType = DamageClass.Ranged;
+                            Main.projectile[proj3].tileCollide = true;
+                            Main.projectile[proj3].netUpdate2 = true;
+                        }
+                        int proj2 = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
+                        Main.projectile[proj2].hostile = false;
+                        Main.projectile[proj2].friendly = true;
+                        Main.projectile[proj2].DamageType = DamageClass.Ranged;
+                        Main.projectile[proj2].tileCollide = true;
+                        Main.projectile[proj2].netUpdate2 = true;
+                        break;
+                    case 2:
+                        player.itemAnimationMax = Item.useTime * 2;
+                        player.itemTime = Item.useTime * 2;
+                        player.itemAnimation = Item.useTime * 2;
+
+                        int proj4 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ReboundShot>(), damage, knockback, player.whoAmI);
+                        Main.projectile[proj4].hostile = false;
+                        Main.projectile[proj4].friendly = true;
+                        Main.projectile[proj4].DamageType = DamageClass.Ranged;
+                        Main.projectile[proj4].netUpdate2 = true;
+                        break;
+
+                }
             }
             return false;
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            Vector2 Offset = Vector2.Normalize(velocity) * 40f;
+
+            if (Collision.CanHit(position, 0, 0, position + Offset, 0, 0))
+            {
+                position += Offset;
+            }
         }
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-4, 0);
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string shotType = "";
+            switch (AttackMode)
+            {
+                case 0:
+                    shotType = "Barrage Shot";
+                    break;
+                case 1:
+                    shotType = "Spread Shot";
+                    break;
+                case 2:
+                    shotType = "Rebound Shot";
+                    break;
+            }
+            TooltipLine line = new(Mod, "ShotName", shotType)
+            {
+                overrideColor = Color.LightCyan,
+            };
+            tooltips.Add(line);
         }
     }
 }

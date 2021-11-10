@@ -7,4 +7,3 @@ TODO
 - Change projectile source of the trees to tile breaking when its added
 - Hardlight Armour
 - Eaglecrest javelin
-- Rework Hyper-Tech Blaster to have right-click that switches firing mode, 3 firing modes are normal, slow electric arc shot, and rebound spray
