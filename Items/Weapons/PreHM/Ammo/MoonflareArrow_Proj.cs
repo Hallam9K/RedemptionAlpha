@@ -8,18 +8,17 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.Ammo
+namespace Redemption.Items.Weapons.PreHM.Ammo
 {
     public class MoonflareArrow_Proj : ModProjectile
 	{
-        public override string Texture => "Redemption/Items/Weapons/Ammo/MoonflareArrow";
+        public override string Texture => "Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Moonflare Arrow");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;
@@ -55,7 +54,7 @@ namespace Redemption.Items.Weapons.Ammo
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>("Redemption/Items/Weapons/Ammo/MoonflareArrow_Glow").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
             Main.spriteBatch.End();

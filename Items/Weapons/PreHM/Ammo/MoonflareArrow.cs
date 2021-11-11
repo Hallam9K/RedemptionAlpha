@@ -9,7 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.Ammo
+namespace Redemption.Items.Weapons.PreHM.Ammo
 {
     public class MoonflareArrow : ModItem
 	{

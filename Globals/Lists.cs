@@ -12,7 +12,7 @@ using Redemption.Projectiles.Hostile;
 using Redemption.NPCs.Friendly;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Ranged;
-using Redemption.Items.Weapons.Ammo;
+using Redemption.Items.Weapons.PreHM.Ammo;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Redemption.NPCs.Bosses.Thorn;
