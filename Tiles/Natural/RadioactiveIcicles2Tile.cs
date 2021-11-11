@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.AnchorBottom = default;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<RadioactiveIceTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedIceTile>() };
             TileObjectData.addTile(Type);
             DustType = DustID.Ice;
         }

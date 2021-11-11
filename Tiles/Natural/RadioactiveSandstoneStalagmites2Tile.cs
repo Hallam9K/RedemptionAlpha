@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Natural
             Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.DrawYOffset = 4;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<RadioactiveSandstoneTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedSandstoneTile>() };
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<IrradiatedStoneDust>();
         }
