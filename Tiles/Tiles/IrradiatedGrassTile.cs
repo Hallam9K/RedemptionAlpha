@@ -17,8 +17,8 @@ namespace Redemption.Tiles.Tiles
             SetModTree(new IrradiatedPurityTree());
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimsonGrassTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedCrimsonGrassTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedCorruptGrass>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedCorruptGrass>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedCorruptGrassTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedCorruptGrassTile>()][Type] = true;
             Main.tileMerge[Type][TileID.Dirt] = true;
             Main.tileMerge[TileID.Dirt][Type] = true;
             Main.tileMerge[Type][TileID.Grass] = true;

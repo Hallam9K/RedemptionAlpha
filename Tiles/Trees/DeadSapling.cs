@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Trees
 				ModContent.TileType<IrradiatedEbonstoneTile>(),
 				ModContent.TileType<IrradiatedCrimstoneTile>(),
 				ModContent.TileType<IrradiatedGrassTile>(),
-				ModContent.TileType<IrradiatedCorruptGrass>(),
+				ModContent.TileType<IrradiatedCorruptGrassTile>(),
 				ModContent.TileType<IrradiatedCrimsonGrassTile>()
 			};
 			TileObjectData.newTile.StyleHorizontal = true;

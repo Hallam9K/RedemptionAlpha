@@ -28,7 +28,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorValidTiles = new int[]
             {
                 ModContent.TileType<IrradiatedGrassTile>(),
-                ModContent.TileType<IrradiatedCorruptGrass>(),
+                ModContent.TileType<IrradiatedCorruptGrassTile>(),
                 ModContent.TileType<IrradiatedCrimsonGrassTile>(),
                 ModContent.TileType<IrradiatedIceTile>()
             };

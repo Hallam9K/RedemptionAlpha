@@ -12,11 +12,10 @@ namespace Redemption.Tiles.Tiles
 		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedGrassTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedGrassTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedCorruptGrass>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedCorruptGrass>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedCorruptGrassTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedCorruptGrassTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimsonGrassTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedCrimsonGrassTile>()][Type] = true;
             Main.tileBlendAll[Type] = true;

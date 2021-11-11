@@ -161,7 +161,7 @@ namespace Redemption
                     ModContent.TileType<IrradiatedStoneTile>(),
                     // Grass
                     ModContent.TileType<IrradiatedGrassTile>(),
-                    ModContent.TileType<IrradiatedCorruptGrass>(),
+                    ModContent.TileType<IrradiatedCorruptGrassTile>(),
                     ModContent.TileType<IrradiatedCrimsonGrassTile>(),
                     ModContent.TileType<IrradiatedGrassTile>(),
                     // Ice

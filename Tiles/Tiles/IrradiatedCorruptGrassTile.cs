@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
-    public class IrradiatedCorruptGrass : ModTile
+    public class IrradiatedCorruptGrassTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -52,7 +52,7 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<DeadGrass>(), true, Main.rand.Next(5));
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<DeadGrass>(), Main.rand.Next(5), 0, -1, -1);
             }
-            WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), TileID.Dirt, ModContent.TileType<IrradiatedCorruptGrass>(), false, 0);
+            WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), TileID.Dirt, ModContent.TileType<IrradiatedCorruptGrassTile>(), false, 0);
 
             if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(100))
             {
