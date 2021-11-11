@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.AnchorBottom = default;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<RadioactiveSandstoneTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedSandstoneTile>() };
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<IrradiatedStoneDust>();
         }

@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Tiles
             MineResist = 2.5f;
             SoundType = SoundID.Tink;
             AddMapEntry(new Color(48, 63, 73));
-            SetModTree(new DeadTree());
+            SetModTree(new IrradiatedPurityTree());
         }
         public override void RandomUpdate(int i, int j)
         {

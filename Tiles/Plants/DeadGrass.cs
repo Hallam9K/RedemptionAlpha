@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeadGrassTile>(), ModContent.TileType<DeadGrassTileCorruption>(), ModContent.TileType<DeadGrassTileCrimson>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedGrassTile>(), ModContent.TileType<IrradiatedCorruptGrass>(), ModContent.TileType<IrradiatedCrimsonGrassTile>() };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.CoordinateWidth = 16;

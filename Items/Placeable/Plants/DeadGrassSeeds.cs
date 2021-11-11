@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Plants
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.useTurn = true;
-			Item.createTile = ModContent.TileType<DeadGrassTile>();
+			Item.createTile = ModContent.TileType<IrradiatedGrassTile>();
 			Item.consumable = true;		
         }
 

@@ -25,12 +25,11 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<IrradiatedStone>();
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
-            DustType = ModContent.DustType<IrradiatedStoneDust>();
+            DustType = DustID.Ash;
             MinPick = 100;
             MineResist = 2.5f;
             SoundType = SoundID.Tink;
             AddMapEntry(new Color(48, 63, 73));
-            SetModTree(new DeadTree());
         }
         public override void RandomUpdate(int i, int j)
         {
