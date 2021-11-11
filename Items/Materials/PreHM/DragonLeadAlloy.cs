@@ -12,7 +12,6 @@ namespace Redemption.Items.Materials.PreHM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon-Lead Alloy");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults()

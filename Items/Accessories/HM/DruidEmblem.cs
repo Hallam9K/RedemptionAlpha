@@ -14,7 +14,6 @@ namespace Redemption.Items.Accessories.HM
             Tooltip.SetDefault("15% increased druidic damage");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-
         public override void SetDefaults()
         {
             Item.width = 28;
@@ -23,7 +22,6 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.LightRed;
             Item.accessory = true;
         }
-
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage<DruidClass>() *= 1.15f;

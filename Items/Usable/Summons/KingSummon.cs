@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.KSIII;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +14,8 @@ namespace Redemption.Items.Usable.Summons
 		{
 			DisplayName.SetDefault("Cyber Tech");
 			Tooltip.SetDefault("Summons King Slayer III\nOnly usable at day\nNot consumable");
-			ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
 		}
 		public override void SetDefaults()
 		{

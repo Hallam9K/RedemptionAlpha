@@ -16,7 +16,6 @@ namespace Redemption.Items.Accessories.HM
                 "'Hudda hudda!'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-
         public override void SetDefaults()
         {
             Item.width = 38;
