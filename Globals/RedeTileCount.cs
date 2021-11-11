@@ -14,7 +14,7 @@ namespace Redemption.Globals
         {
             LabTileCount = tileCounts[ModContent.TileType<LabTileUnsafe>()];
             SlayerShipTileCount = tileCounts[ModContent.TileType<SlayerShipPanelTile>()];
-            WastelandTileCount = tileCounts[ModContent.TileType<IrradiatedStoneTile>()] + tileCounts[ModContent.TileType<DeadGrassTile>()] + tileCounts[ModContent.TileType<RadioactiveSandTile>()] + tileCounts[ModContent.TileType<RadioactiveSandstoneTile>()] + tileCounts[ModContent.TileType<RadioactiveIceTile>()];
+            WastelandTileCount = tileCounts[ModContent.TileType<IrradiatedStoneTile>()] + tileCounts[ModContent.TileType<IrradiatedGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedIceTile>()];
         }
     }
 }

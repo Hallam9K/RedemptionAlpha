@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Natural
             Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.AnchorValidTiles = new int[]
             {
-                ModContent.TileType<RadioactiveSandstoneTile>(),
+                ModContent.TileType<IrradiatedSandstoneTile>(),
                 ModContent.TileType<IrradiatedStoneTile>(),
                 ModContent.TileType<IrradiatedCrimstoneTile>(),
                 ModContent.TileType<IrradiatedEbonstoneTile>()

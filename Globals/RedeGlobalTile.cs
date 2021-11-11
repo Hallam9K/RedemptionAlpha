@@ -75,7 +75,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            if (type == ModContent.TileType<DeadGrassTileCorruption>() || type == ModContent.TileType<IrradiatedEbonstoneTile>() || type == ModContent.TileType<DeadGrassTileCrimson>() || type == ModContent.TileType<IrradiatedCrimstoneTile>())
+            if (type == ModContent.TileType<IrradiatedCorruptGrass>() || type == ModContent.TileType<IrradiatedEbonstoneTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedCrimstoneTile>())
             {
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0)
                 {

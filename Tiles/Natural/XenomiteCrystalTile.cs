@@ -27,10 +27,10 @@ namespace Redemption.Tiles.Natural
             Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.AnchorValidTiles = new int[]
             {
-                ModContent.TileType<DeadGrassTile>(),
-                ModContent.TileType<DeadGrassTileCorruption>(),
-                ModContent.TileType<DeadGrassTileCrimson>(),
-                ModContent.TileType<RadioactiveIceTile>()
+                ModContent.TileType<IrradiatedGrassTile>(),
+                ModContent.TileType<IrradiatedCorruptGrass>(),
+                ModContent.TileType<IrradiatedCrimsonGrassTile>(),
+                ModContent.TileType<IrradiatedIceTile>()
             };
             TileObjectData.addTile(Type);
         }

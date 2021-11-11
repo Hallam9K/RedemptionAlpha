@@ -160,32 +160,32 @@ namespace Redemption
                     ModContent.TileType<IrradiatedCrimstoneTile>(),
                     ModContent.TileType<IrradiatedStoneTile>(),
                     // Grass
-                    ModContent.TileType<DeadGrassTile>(),
-                    ModContent.TileType<DeadGrassTileCorruption>(),
-                    ModContent.TileType<DeadGrassTileCrimson>(),
-                    ModContent.TileType<DeadGrassTile>(),
+                    ModContent.TileType<IrradiatedGrassTile>(),
+                    ModContent.TileType<IrradiatedCorruptGrass>(),
+                    ModContent.TileType<IrradiatedCrimsonGrassTile>(),
+                    ModContent.TileType<IrradiatedGrassTile>(),
                     // Ice
-                    ModContent.TileType<RadioactiveIceTile>(),
-                    ModContent.TileType<RadioactiveIceTile>(),
-                    ModContent.TileType<RadioactiveIceTile>(),
-                    ModContent.TileType<RadioactiveIceTile>(),
+                    ModContent.TileType<IrradiatedIceTile>(),
+                    ModContent.TileType<IrradiatedIceTile>(),
+                    ModContent.TileType<IrradiatedIceTile>(),
+                    ModContent.TileType<IrradiatedIceTile>(),
                     // Sand
-                    ModContent.TileType<RadioactiveSandTile>(),
-                    ModContent.TileType<RadioactiveSandTile>(),
-                    ModContent.TileType<RadioactiveSandTile>(),
-                    ModContent.TileType<RadioactiveSandTile>(),
+                    ModContent.TileType<IrradiatedSandTile>(),
+                    ModContent.TileType<IrradiatedSandTile>(),
+                    ModContent.TileType<IrradiatedSandTile>(),
+                    ModContent.TileType<IrradiatedSandTile>(),
                     // Hardened Sand
-                    ModContent.TileType<HardenedRadioactiveSandTile>(),
-                    ModContent.TileType<HardenedRadioactiveSandTile>(),
-                    ModContent.TileType<HardenedRadioactiveSandTile>(),
-                    ModContent.TileType<HardenedRadioactiveSandTile>(),
+                    ModContent.TileType<IrradiatedHardenedSandTile>(),
+                    ModContent.TileType<IrradiatedHardenedSandTile>(),
+                    ModContent.TileType<IrradiatedHardenedSandTile>(),
+                    ModContent.TileType<IrradiatedHardenedSandTile>(),
                     // Sandstone
-                    ModContent.TileType<RadioactiveSandstoneTile>(),
-                    ModContent.TileType<RadioactiveSandstoneTile>(),
-                    ModContent.TileType<RadioactiveSandstoneTile>(),
-                    ModContent.TileType<RadioactiveSandstoneTile>(),
+                    ModContent.TileType<IrradiatedSandstoneTile>(),
+                    ModContent.TileType<IrradiatedSandstoneTile>(),
+                    ModContent.TileType<IrradiatedSandstoneTile>(),
+                    ModContent.TileType<IrradiatedSandstoneTile>(),
                     //
-                    ModContent.TileType<LivingDeadWoodTile>(),
+                    ModContent.TileType<IrradiatedLivingWoodTile>(),
                     // Gems
                     ModContent.TileType<StarliteGemOreTile>(),
                     ModContent.TileType<StarliteGemOreTile>(),
@@ -197,10 +197,6 @@ namespace Redemption
             BaseWorldGen.ReplaceWalls(Center, 287,
                 new int[]
                 {
-                    WallID.GrassUnsafe,
-                    WallID.CorruptGrassUnsafe,
-                    WallID.CrimsonGrassUnsafe,
-                    WallID.HallowedGrassUnsafe,
                     WallID.Stone,
                     WallID.EbonstoneUnsafe,
                     WallID.CrimstoneUnsafe,
@@ -217,32 +213,26 @@ namespace Redemption
                     WallID.HallowSandstone,
                     //
                     WallID.IceUnsafe,
-                    WallID.LivingLeaf,
                     WallID.LivingWood
                 },
                 new int[]
                 {
-                    ModContent.WallType<DeadGrassWallTile>(),
-                    ModContent.WallType<DeadGrassWallTile>(),
-                    ModContent.WallType<DeadGrassWallTile>(),
-                    ModContent.WallType<DeadGrassWallTile>(),
                     ModContent.WallType<IrradiatedStoneWallTile>(),
                     ModContent.WallType<IrradiatedStoneWallTile>(),
                     ModContent.WallType<IrradiatedStoneWallTile>(),
                     ModContent.WallType<IrradiatedStoneWallTile>(),
                     //
-                    ModContent.WallType<HardenedRadioactiveSandWallTile>(),
-                    ModContent.WallType<HardenedRadioactiveSandWallTile>(),
-                    ModContent.WallType<HardenedRadioactiveSandWallTile>(),
-                    ModContent.WallType<HardenedRadioactiveSandWallTile>(),
+                    ModContent.WallType<IrradiatedHardenedSandWallTile>(),
+                    ModContent.WallType<IrradiatedHardenedSandWallTile>(),
+                    ModContent.WallType<IrradiatedHardenedSandWallTile>(),
+                    ModContent.WallType<IrradiatedHardenedSandWallTile>(),
                     //
-                    ModContent.WallType<RadioactiveSandstoneWallTile>(),
-                    ModContent.WallType<RadioactiveSandstoneWallTile>(),
-                    ModContent.WallType<RadioactiveSandstoneWallTile>(),
-                    ModContent.WallType<RadioactiveSandstoneWallTile>(),
+                    ModContent.WallType<IrradiatedSandstoneWallTile>(),
+                    ModContent.WallType<IrradiatedSandstoneWallTile>(),
+                    ModContent.WallType<IrradiatedSandstoneWallTile>(),
+                    ModContent.WallType<IrradiatedSandstoneWallTile>(),
                     //
-                    ModContent.WallType<RadioactiveIceWallTile>(),
-                    ModContent.WallType<LivingDeadLeavesWallTile>(),
+                    ModContent.WallType<IrradiatedIceWallTile>(),
                     ModContent.WallType<LivingDeadWoodWallTile>()
                 }, true);
             int radiusLeft = (int)(Center.X / 16f - radius);
