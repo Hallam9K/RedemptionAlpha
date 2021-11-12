@@ -50,7 +50,7 @@ namespace Redemption.Backgrounds
         }
         public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
         {
-            float a = 1300f;
+            float a = 1800f;
             float b = 1750f;
             int[] textureSlots = new int[] {
                 BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandSnowBG3"),
@@ -71,12 +71,12 @@ namespace Redemption.Backgrounds
                 float screenOff = typeof(Main).GetFieldValue<float>("screenOff", Main.instance);
                 float scAdj = typeof(Main).GetFieldValue<float>("scAdj", Main.instance);
                 int bgStart = (int)(-Math.IEEERemainder(Main.screenPosition.X * bgParallax, bgW) - (bgW / 2));
-                int bgTop = (int)((-Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * a + b) + (int)scAdj - ((length - i) * 200);
+                int bgTop = (int)((-Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * a + b) + (int)scAdj - ((length - i) * 300);
                 if (Main.gameMenu)
                 {
                     bgTop = 320;
                 }
-                Color backColor = typeof(Main).GetFieldValue<Color>("backColor", Main.instance); // TODO: Fix that
+                Color backColor = typeof(Main).GetFieldValue<Color>("ColorOfSurfaceBackgroundsModified", Main.instance);
                 int bgLoops = Main.screenWidth / bgW + 2;
                 if (Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
                 {
