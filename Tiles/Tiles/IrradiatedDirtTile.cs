@@ -26,6 +26,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Grass][Type] = true;
             TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(117, 99, 86));
             MinPick = 10;

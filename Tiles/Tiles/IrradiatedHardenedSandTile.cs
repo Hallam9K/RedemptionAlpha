@@ -20,7 +20,10 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<IrradiatedSandstoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedSandTile>()] = true;
             TileID.Sets.Conversion.HardenedSand[Type] = true;
+            TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.isDesertBiomeSand[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+            TileID.Sets.ChecksForMerge[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             AddMapEntry(new Color(149, 133, 121));

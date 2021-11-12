@@ -23,6 +23,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlendAll[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.DrawsWalls[Type] = true;
+			TileID.Sets.ChecksForMerge[Type] = true;
 			AddMapEntry(new Color(111, 100, 93));
             DustType = DustID.Ash;
             MineResist = 2.5f;

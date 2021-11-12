@@ -33,6 +33,7 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.Conversion.Sand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.Falling[Type] = true;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
             Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(132, 127, 111));
             DustType = DustID.Ash;

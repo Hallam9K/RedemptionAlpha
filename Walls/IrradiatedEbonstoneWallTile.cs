@@ -11,8 +11,9 @@ namespace Redemption.Walls
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.wallHouse[Type] = false;
-			DustType = DustID.Ash;
+			Main.wallHouse[Type] = false; 
+            WallID.Sets.Corrupt[Type] = true;
+            DustType = DustID.Ash;
 			AddMapEntry(new Color(31, 30, 33));
 		}
     }

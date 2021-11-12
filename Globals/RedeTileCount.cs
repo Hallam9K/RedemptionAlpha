@@ -15,9 +15,13 @@ namespace Redemption.Globals
         public int WastelandCorruptTileCount;
         public int WastelandCrimsonTileCount;
 
-        // TODO: Find how to make tiles count to vanilla biomes in tmodloader source
-        public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) // TODO: look through tileid.sets for the wasteland tiles
+        public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
+            Main.SceneMetrics.SandTileCount += tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()];
+            Main.SceneMetrics.SnowTileCount += tileCounts[ModContent.TileType<IrradiatedIceTile>()] + tileCounts[ModContent.TileType<IrradiatedSnowTile>()];
+            Main.SceneMetrics.EvilTileCount += tileCounts[ModContent.TileType<IrradiatedCorruptGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedEbonstoneTile>()];
+            Main.SceneMetrics.BloodTileCount += tileCounts[ModContent.TileType<IrradiatedCrimsonGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()];
+
             LabTileCount = tileCounts[ModContent.TileType<LabTileUnsafe>()];
             SlayerShipTileCount = tileCounts[ModContent.TileType<SlayerShipPanelTile>()];
             WastelandTileCount = tileCounts[ModContent.TileType<IrradiatedStoneTile>()] + tileCounts[ModContent.TileType<IrradiatedGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedIceTile>()] + tileCounts[ModContent.TileType<IrradiatedCorruptGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimsonGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedEbonstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedSnowTile>()];

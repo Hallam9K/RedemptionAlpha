@@ -31,6 +31,11 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
             TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<IrradiatedDirtTile>();
+            TileID.Sets.CanBeDugByShovel[Type] = true;
+            TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = true;
+            TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
+            TileID.Sets.SpreadOverground[Type] = true;
+            TileID.Sets.SpreadUnderground[Type] = true;
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(125, 115, 97));
@@ -64,7 +69,7 @@ namespace Redemption.Tiles.Tiles
                 }
             }
 
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(5) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<PurityWastelandFoliage>(), true, Main.rand.Next(14));
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<PurityWastelandFoliage>(), Main.rand.Next(14), 0, -1, -1);

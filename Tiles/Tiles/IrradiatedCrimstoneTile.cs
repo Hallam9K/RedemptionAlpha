@@ -26,8 +26,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<IrradiatedStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
             ItemDrop = ModContent.ItemType<IrradiatedCrimstone>();
-            TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
+            TileID.Sets.Stone[Type] = true;
+            TileID.Sets.GeneralPlacementTiles[Type] = true;
+            TileID.Sets.Crimson[Type] = true;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
             DustType = DustID.Ash;
             MinPick = 100;
             MineResist = 2.5f;
