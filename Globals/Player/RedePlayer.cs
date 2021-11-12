@@ -31,7 +31,7 @@ namespace Redemption.Globals.Player
 
                 if (Main.bloodMoon)
                     TextureAssets.Rain = rain;
-                else if (Main.raining && Player.InModBiome(ModContent.GetInstance<WastelandBiome>()))
+                else if (Main.raining && Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
                     TextureAssets.Rain = rainWasteland;
                 else
                     TextureAssets.Rain = rain;

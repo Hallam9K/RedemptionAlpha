@@ -59,7 +59,7 @@ namespace Redemption.Items.Armor.HM
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "TBD";
+            player.setBonus = "TBD"; // TODO: Xenomite set bonus
         }
     }
 }

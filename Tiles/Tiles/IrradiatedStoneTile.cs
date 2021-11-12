@@ -73,7 +73,7 @@ namespace Redemption.Tiles.Tiles
         public override int SaplingGrowthType(ref int style)
         {
             style = 0;
-            return ModContent.TileType<DeadSapling>();
+            return ModContent.TileType<IrradiatedPuritySapling>();
         }
     }
 }

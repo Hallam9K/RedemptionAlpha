@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Plants
 {
-    public class DeadGrassSeeds : ModItem
+    public class IrradiatedCorruptGrassSeeds : ModItem
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dead Seeds");
-            Tooltip.SetDefault("Plants dead grass on dirt");
+            DisplayName.SetDefault("Irradiated Corrupt Seeds");
+            Tooltip.SetDefault("Plants irradiated corrupt grass on dirt");
 		}		
 		
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Plants
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.useTurn = true;
-			Item.createTile = ModContent.TileType<IrradiatedGrassTile>();
+			Item.createTile = ModContent.TileType<IrradiatedCorruptGrassTile>();
 			Item.consumable = true;		
         }
 

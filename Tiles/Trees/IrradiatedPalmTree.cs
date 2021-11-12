@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Trees
 {
-    class DeadPalmTree : ModPalmTree
+    class IrradiatedPalmTree : ModPalmTree
     {
         private static Mod Mod
         {
@@ -27,12 +27,12 @@ namespace Redemption.Tiles.Trees
 
         public override Texture2D GetTexture()
         {
-            return Mod.Assets.Request<Texture2D>("Tiles/Trees/DeadPalmTree").Value;
+            return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedPalmTree").Value;
         }
 
         public override Texture2D GetTopTextures()
         {
-            return Mod.Assets.Request<Texture2D>("Tiles/Trees/DeadPalmTree_Tops").Value;
+            return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedPalmTree_Top").Value;
         }
     }
 }

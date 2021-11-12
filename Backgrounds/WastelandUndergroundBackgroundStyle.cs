@@ -8,10 +8,10 @@ namespace Redemption.Backgrounds
 	{		
 		public override void FillTextureArray(int[] textureSlots)
 		{
-			textureSlots[0] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeUG0"); 
-			textureSlots[1] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeUG1");
-			textureSlots[2] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeUG2");
-			textureSlots[3] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandBiomeUG3");
+			textureSlots[0] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandUGBG1"); 
+			textureSlots[1] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandUGBG2");
+			textureSlots[2] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCavernBG1");
+			textureSlots[3] = BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCavernBG2");
 		}
 	}
 }

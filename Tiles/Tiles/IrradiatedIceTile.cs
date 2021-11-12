@@ -22,6 +22,8 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.IcesSlush[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedSnowTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedSnowTile>()] = true;
             Main.tileMerge[TileID.SnowBlock][Type] = true;
             Main.tileMerge[Type][TileID.SnowBlock] = true;
             Main.tileMerge[TileID.IceBlock][Type] = true;

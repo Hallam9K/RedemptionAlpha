@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Trees
 {
-    public class DeadSapling : ModTile
+    public class IrradiatedBorealSapling : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -28,12 +28,7 @@ namespace Redemption.Tiles.Trees
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorValidTiles = new int[]{
-				ModContent.TileType<IrradiatedStoneTile>(),
-				ModContent.TileType<IrradiatedEbonstoneTile>(),
-				ModContent.TileType<IrradiatedCrimstoneTile>(),
-				ModContent.TileType<IrradiatedGrassTile>(),
-				ModContent.TileType<IrradiatedCorruptGrassTile>(),
-				ModContent.TileType<IrradiatedCrimsonGrassTile>()
+				ModContent.TileType<IrradiatedSnowTile>()
 			};
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;
@@ -42,9 +37,9 @@ namespace Redemption.Tiles.Trees
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Sapling");
+			name.SetDefault("Petrified Boreal Sapling");
 			AddMapEntry(new Color(200, 200, 200), name);
-            DustType = DustID.t_LivingWood;
+            DustType = DustID.Ash;
 			AdjTiles = new int[]{ TileID.Saplings };
 		}
 

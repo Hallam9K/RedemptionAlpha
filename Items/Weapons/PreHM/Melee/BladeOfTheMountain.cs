@@ -71,7 +71,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .Register();
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void ModifyTooltips(List<TooltipLine> tooltips) // TODO: lore
         {
             if (Main.keyState.PressingShift())
             {

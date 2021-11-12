@@ -31,7 +31,6 @@ namespace Redemption.Tiles.Tiles
             MineResist = 2.5f;
             SoundType = SoundID.Tink;
             AddMapEntry(new Color(48, 63, 73));
-            SetModTree(new IrradiatedPurityTree());
         }
         public override void RandomUpdate(int i, int j)
         {
@@ -76,11 +75,6 @@ namespace Redemption.Tiles.Tiles
             r = 0.02f;
             g = 0.01f;
             b = 0.04f;
-        }
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return ModContent.TileType<DeadSapling>();
         }
     }
 }

@@ -100,9 +100,9 @@ namespace Redemption
                     TileID.LavaMoss,
                     TileID.PurpleMoss,
                     TileID.RedMoss,
-                    TileID.RedMoss,
-                    TileID.RedMoss,
-                    TileID.RedMoss,
+                    TileID.ArgonMoss,
+                    TileID.KryptonMoss,
+                    TileID.XenonMoss,
                     //
                     TileID.Ebonstone,
                     TileID.Crimstone,
@@ -117,6 +117,7 @@ namespace Redemption
                     TileID.CorruptIce,
                     TileID.FleshIce,
                     TileID.HallowedIce,
+                    TileID.SnowBlock,
                     // Sand
                     TileID.Sand,
                     TileID.Ebonsand,
@@ -134,6 +135,7 @@ namespace Redemption
                     TileID.HallowSandstone,
                     //
                     TileID.LivingWood,
+                    TileID.WoodBlock,
                     // Gems
                     TileID.Amethyst,
                     TileID.Topaz,
@@ -169,6 +171,7 @@ namespace Redemption
                     ModContent.TileType<IrradiatedIceTile>(),
                     ModContent.TileType<IrradiatedIceTile>(),
                     ModContent.TileType<IrradiatedIceTile>(),
+                    ModContent.TileType<IrradiatedSnowTile>(),
                     // Sand
                     ModContent.TileType<IrradiatedSandTile>(),
                     ModContent.TileType<IrradiatedSandTile>(),
@@ -186,6 +189,7 @@ namespace Redemption
                     ModContent.TileType<IrradiatedSandstoneTile>(),
                     //
                     ModContent.TileType<IrradiatedLivingWoodTile>(),
+                    ModContent.TileType<PetrifiedWoodTile>(),
                     // Gems
                     ModContent.TileType<StarliteGemOreTile>(),
                     ModContent.TileType<StarliteGemOreTile>(),
@@ -213,13 +217,18 @@ namespace Redemption
                     WallID.HallowSandstone,
                     //
                     WallID.IceUnsafe,
-                    WallID.LivingWood
+                    WallID.SnowWallUnsafe,
+                    WallID.LivingWood,
+                    WallID.DirtUnsafe,
+                    WallID.MudUnsafe,
+                    WallID.Wood
+
                 },
                 new int[]
                 {
                     ModContent.WallType<IrradiatedStoneWallTile>(),
-                    ModContent.WallType<IrradiatedStoneWallTile>(),
-                    ModContent.WallType<IrradiatedStoneWallTile>(),
+                    ModContent.WallType<IrradiatedEbonstoneWallTile>(),
+                    ModContent.WallType<IrradiatedCrimstoneWallTile>(),
                     ModContent.WallType<IrradiatedStoneWallTile>(),
                     //
                     ModContent.WallType<IrradiatedHardenedSandWallTile>(),
@@ -233,7 +242,11 @@ namespace Redemption
                     ModContent.WallType<IrradiatedSandstoneWallTile>(),
                     //
                     ModContent.WallType<IrradiatedIceWallTile>(),
-                    ModContent.WallType<LivingDeadWoodWallTile>()
+                    ModContent.WallType<IrradiatedSnowWallTile>(),
+                    ModContent.WallType<IrradiatedLivingWoodWallTile>(),
+                    ModContent.WallType<IrradiatedDirtWallTile>(),
+                    ModContent.WallType<IrradiatedMudWallTile>(),
+                    ModContent.WallType<PetrifiedWoodWallTile>()
                 }, true);
             int radiusLeft = (int)(Center.X / 16f - radius);
             int radiusRight = (int)(Center.X / 16f + radius);
@@ -251,9 +264,13 @@ namespace Redemption
                 {
                     double dist = Vector2.Distance(new Vector2(x1 * 16f + 8f, y1 * 16f + 8f), Center);
                     if (!WorldGen.InWorld(x1, y1, 0)) continue;
-                    if (dist < distRad && Main.tile[x1, y1] != null && Main.tile[x1, y1].IsActive && Main.tile[x1, y1].type == TileID.LeafBlock)
+                    if (dist < distRad && Main.tile[x1, y1] != null)
                     {
-                        WorldGen.KillTile(x1, y1, false, false, true);
+                        if (Main.tile[x1, y1].IsActive && Main.tile[x1, y1].type == TileID.LeafBlock)
+                            WorldGen.KillTile(x1, y1, false, false, true);
+                        if (Main.tile[x1, y1].wall == WallID.LivingLeaf || Main.tile[x1, y1].wall == WallID.GrassUnsafe ||
+                            Main.tile[x1, y1].wall == WallID.FlowerUnsafe)
+                            WorldGen.KillWall(x1, y1, false);
                     }
                 }
             }

@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Plants
 {
-    public class DeadCrimsonGrassSeeds : ModItem
+    public class IrradiatedCrimsonGrassSeeds : ModItem
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dead Crimson Seeds");
-            Tooltip.SetDefault("Plants dead crimson grass on dirt");
+            DisplayName.SetDefault("Irradiated Crimson Seeds");
+            Tooltip.SetDefault("Plants irradiated crimson grass on dirt");
 		}		
 		
         public override void SetDefaults()
