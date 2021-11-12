@@ -50,7 +50,7 @@ namespace Redemption
                     Dictionary<Color, int> colorToTile = new()
                     {
                         [new Color(0, 255, 255)] = ModContent.TileType<PlutoniumTile>(),
-                        [new Color(0, 0, 255)] = TileID.Sandstone,
+                        [new Color(0, 0, 255)] = ModContent.TileType<IrradiatedSandstoneTile>(),
                         [new Color(255, 0, 0)] = TileID.Glass,
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
@@ -71,7 +71,7 @@ namespace Redemption
                     Dictionary<Color, int> colorToTile = new()
                     {
                         [new Color(0, 255, 255)] = ModContent.TileType<PlutoniumTile>(),
-                        [new Color(0, 0, 255)] = TileID.Dirt,
+                        [new Color(0, 0, 255)] = ModContent.TileType<IrradiatedDirtTile>(),
                         [new Color(255, 0, 0)] = TileID.Ash,
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
@@ -112,6 +112,7 @@ namespace Redemption
                     TileID.CorruptGrass,
                     TileID.CrimsonGrass,
                     TileID.HallowedGrass,
+                    TileID.Dirt,
                     // Ice
                     TileID.IceBlock,
                     TileID.CorruptIce,
@@ -166,6 +167,7 @@ namespace Redemption
                     ModContent.TileType<IrradiatedCorruptGrassTile>(),
                     ModContent.TileType<IrradiatedCrimsonGrassTile>(),
                     ModContent.TileType<IrradiatedGrassTile>(),
+                    ModContent.TileType<IrradiatedDirtTile>(),
                     // Ice
                     ModContent.TileType<IrradiatedIceTile>(),
                     ModContent.TileType<IrradiatedIceTile>(),
@@ -220,6 +222,7 @@ namespace Redemption
                     WallID.SnowWallUnsafe,
                     WallID.LivingWood,
                     WallID.DirtUnsafe,
+                    WallID.DirtUnsafe1,
                     WallID.MudUnsafe,
                     WallID.Wood
 
@@ -244,6 +247,7 @@ namespace Redemption
                     ModContent.WallType<IrradiatedIceWallTile>(),
                     ModContent.WallType<IrradiatedSnowWallTile>(),
                     ModContent.WallType<IrradiatedLivingWoodWallTile>(),
+                    ModContent.WallType<IrradiatedDirtWallTile>(),
                     ModContent.WallType<IrradiatedDirtWallTile>(),
                     ModContent.WallType<IrradiatedMudWallTile>(),
                     ModContent.WallType<PetrifiedWoodWallTile>()

@@ -48,7 +48,7 @@ namespace Redemption.Globals
             if ((type == TileID.LeafBlock || type == TileID.LivingMahoganyLeaves) && Main.rand.NextBool(4))
                 Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<LivingTwig>());
 
-            if (type == TileID.Dirt && TileID.Sets.BreakableWhenPlacing[TileID.Dirt])
+            if (type == ModContent.TileType<IrradiatedDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()])
                 return false;
 
             return base.Drop(i, j, type);

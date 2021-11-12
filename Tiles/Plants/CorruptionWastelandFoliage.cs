@@ -8,7 +8,7 @@ using Terraria.Enums;
 
 namespace Redemption.Tiles.Plants
 {
-    public class DeadGrass : ModTile
+    public class CorruptionWastelandFoliage : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -20,13 +20,13 @@ namespace Redemption.Tiles.Plants
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
+            TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedGrassTile>(), ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedCorruptGrassTile>() };
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 5;
+            TileObjectData.newTile.RandomStyleRange = 22;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.addTile(Type);

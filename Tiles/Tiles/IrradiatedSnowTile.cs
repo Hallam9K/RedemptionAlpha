@@ -21,6 +21,8 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.Ices[Type] = true;
             TileID.Sets.IcesSnow[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedIceTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedIceTile>()] = true;
             Main.tileMerge[TileID.SnowBlock][Type] = true;
@@ -36,9 +38,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.HallowedIce][Type] = true;
             Main.tileMerge[Type][TileID.HallowedIce] = true;
             DustType = DustID.Ash;
-            AddMapEntry(new Color(187, 241, 96));
-            SoundStyle = 50;
-            SoundType = SoundID.Item;
+            AddMapEntry(new Color(204, 215, 191));
             ItemDrop = ModContent.ItemType<IrradiatedSnow>();
             SetModTree(new IrradiatedBorealTree());
         }

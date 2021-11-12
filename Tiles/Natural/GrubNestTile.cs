@@ -20,7 +20,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.DrawYOffset = 4;
             TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedSandstoneTile>() };
             TileObjectData.addTile(Type);
-            DustType = ModContent.DustType<IrradiatedStoneDust>();
+            DustType = DustID.Ash;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Grub Nest");
             AddMapEntry(new Color(40, 60, 40), name);

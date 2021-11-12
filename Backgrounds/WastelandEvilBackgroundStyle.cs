@@ -30,7 +30,7 @@ namespace Redemption.Backgrounds
 
 		public override int ChooseFarTexture()
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCorruptionBG1");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCorruptionBG3");
 		}
 
 		public override int ChooseMiddleTexture()
@@ -40,7 +40,7 @@ namespace Redemption.Backgrounds
 
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCorruptionBG3");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCorruptionBG1");
 		}
 	}
 	public class WastelandCrimsonBackgroundStyle : ModSurfaceBackgroundStyle
@@ -70,7 +70,7 @@ namespace Redemption.Backgrounds
 
 		public override int ChooseFarTexture()
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCrimsonBG1");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCrimsonBG3");
 		}
 
 		public override int ChooseMiddleTexture()
@@ -80,7 +80,7 @@ namespace Redemption.Backgrounds
 
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
 		{
-			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCrimsonBG3");
+			return BackgroundTextureLoader.GetBackgroundSlot("Redemption/Backgrounds/WastelandCrimsonBG1");
 		}
 	}
 }

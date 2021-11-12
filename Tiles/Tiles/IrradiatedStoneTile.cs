@@ -19,6 +19,8 @@ namespace Redemption.Tiles.Tiles
             Main.tileSpelunker[Type] = false;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<StarliteGemOreTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimstoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
@@ -29,7 +31,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 100;
             MineResist = 2.5f;
             SoundType = SoundID.Tink;
-            AddMapEntry(new Color(48, 63, 73));
+            AddMapEntry(new Color(87, 87, 87));
         }
         public override void RandomUpdate(int i, int j)
         {

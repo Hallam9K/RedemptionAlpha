@@ -95,7 +95,7 @@ namespace Redemption.Biomes
         public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/SnowWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
-        public override bool IsPrimaryBiome => true;
+        public override bool IsPrimaryBiome => false;
         public override void SpecialVisuals(Player player)
         {
             WastelandEffect.SpecialVisuals(player);
@@ -134,7 +134,7 @@ namespace Redemption.Biomes
         public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/DesertWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
-        public override bool IsPrimaryBiome => true;
+        public override bool IsPrimaryBiome => false;
         public override void SpecialVisuals(Player player)
         {
             WastelandEffect.SpecialVisuals(player);
@@ -174,7 +174,7 @@ namespace Redemption.Biomes
         public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/CorruptionWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
-        public override bool IsPrimaryBiome => true;
+        public override bool IsPrimaryBiome => false;
         public override void SpecialVisuals(Player player)
         {
             WastelandEffect.SpecialVisuals(player);
@@ -214,7 +214,7 @@ namespace Redemption.Biomes
         public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/CrimsonWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
-        public override bool IsPrimaryBiome => true;
+        public override bool IsPrimaryBiome => false;
         public override void SpecialVisuals(Player player)
         {
             WastelandEffect.SpecialVisuals(player);

@@ -37,8 +37,8 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.HallowedIce][Type] = true;
             Main.tileMerge[Type][TileID.HallowedIce] = true;
             Main.tileLighted[Type] = true;
-            DustType = DustID.Ice;
-            AddMapEntry(new Color(187, 241, 96));
+            DustType = DustID.Ash;
+            AddMapEntry(new Color(163, 183, 155));
             SoundStyle = 50;
             SoundType = SoundID.Item;
             ItemDrop = ModContent.ItemType<IrradiatedIce>();

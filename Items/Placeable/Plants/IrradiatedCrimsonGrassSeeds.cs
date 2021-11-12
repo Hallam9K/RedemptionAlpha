@@ -33,10 +33,10 @@ namespace Redemption.Items.Placeable.Plants
 		public override bool CanUseItem(Player p)
 		{
 			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
-			if(tile != null && tile.IsActive && tile.type == TileID.Dirt)
+			if(tile != null && tile.IsActive && tile.type == ModContent.TileType<IrradiatedDirtTile>())
 			{
 				WorldGen.destroyObject = true;
-				TileID.Sets.BreakableWhenPlacing[TileID.Dirt] = true;
+				TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()] = true;
 				return base.CanUseItem(p);
 			}
 			return false;
@@ -45,7 +45,7 @@ namespace Redemption.Items.Placeable.Plants
 		public override bool? UseItem(Player p)
 		{
 			WorldGen.destroyObject = false;
-			TileID.Sets.BreakableWhenPlacing[TileID.Dirt] = false;
+			TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()] = false;
 			return base.UseItem(p);
 		}
 	}

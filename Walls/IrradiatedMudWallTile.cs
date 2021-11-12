@@ -13,7 +13,7 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = DustID.Ash;
-			AddMapEntry(new Color(20, 20, 20));
+			AddMapEntry(new Color(45, 42, 41));
 		}
 	}
     public class IrradiatedMudWall : PlaceholderTile

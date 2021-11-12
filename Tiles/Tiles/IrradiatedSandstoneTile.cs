@@ -15,6 +15,8 @@ namespace Redemption.Tiles.Tiles
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedSandTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedSandTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedHardenedSandTile>()] = true;
@@ -24,9 +26,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlendAll[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			AddMapEntry(new Color(62, 88, 90));
+			AddMapEntry(new Color(137, 120, 112));
             MineResist = 2.5f;
-            DustType = ModContent.DustType<IrradiatedStoneDust>();
+            DustType = DustID.Ash;
             ItemDrop = ModContent.ItemType<IrradiatedSandstone>();
 		}
         public override void RandomUpdate(int i, int j)

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Walls
@@ -11,8 +12,8 @@ namespace Redemption.Walls
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			DustType = ModContent.DustType<IrradiatedStoneDust>();
-			AddMapEntry(new Color(20, 20, 20));
+			DustType = DustID.Ash;
+			AddMapEntry(new Color(50, 40, 40));
         }
         public class IrradiatedCrimstoneWall : PlaceholderTile
         {

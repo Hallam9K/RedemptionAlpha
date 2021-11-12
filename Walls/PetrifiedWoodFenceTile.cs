@@ -13,7 +13,7 @@ namespace Redemption.Walls
 			Main.wallHouse[Type] = true;
             DustType = DustID.Ash;
 			ItemDrop = ModContent.ItemType<PetrifiedWoodFence>();
-			AddMapEntry(new Color(47, 47, 44));
+			AddMapEntry(new Color(48, 44, 42));
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

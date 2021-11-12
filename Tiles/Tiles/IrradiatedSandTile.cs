@@ -20,6 +20,8 @@ namespace Redemption.Tiles.Tiles
             SetModCactus(new IrradiatedCactus());
             SetModPalmTree(new IrradiatedPalmTree());
             Main.tileMergeDirt[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedSandstoneTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedSandstoneTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedHardenedSandTile>()] = true;
@@ -32,8 +34,8 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.Falling[Type] = true;
             Main.tileBlockLight[Type] = true;
-            AddMapEntry(new Color(36, 43, 57));
-            DustType = ModContent.DustType<RadioactiveSandDust>();
+            AddMapEntry(new Color(132, 127, 111));
+            DustType = DustID.Ash;
             ItemDrop = ModContent.ItemType<IrradiatedSand>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -57,7 +59,7 @@ namespace Redemption.Tiles.Tiles
 
             if (canFall)
             {
-                int projectileType = ModContent.ProjectileType<RadioactiveSandBall>();
+                int projectileType = ModContent.ProjectileType<IrradiatedSandBall>();
                 float positionX = i * 16 + 8;
                 float positionY = j * 16 + 8;
 
@@ -100,7 +102,7 @@ namespace Redemption.Tiles.Tiles
             return true;
         }
     }
-    public class RadioactiveSandBall : ModProjectile
+    public class IrradiatedSandBall : ModProjectile
     {
         protected bool falling = true;
         protected int tileType;
@@ -108,7 +110,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Radioactive Sand Ball");
+            DisplayName.SetDefault("Irradiated Sand Ball");
             ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
         }
 
@@ -121,7 +123,7 @@ namespace Redemption.Tiles.Tiles
             Projectile.hostile = false;
             Projectile.penetrate = -1;
             tileType = ModContent.TileType<IrradiatedSandTile>();
-            dustType = ModContent.DustType<RadioactiveSandDust>();
+            dustType = DustID.Ash;
         }
 
         public override void AI()

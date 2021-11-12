@@ -11,7 +11,7 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = true;
             DustType = DustID.Ash;
-			AddMapEntry(new Color(44, 44, 44));
+			AddMapEntry(new Color(44, 38, 32));
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

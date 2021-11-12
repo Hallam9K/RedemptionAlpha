@@ -323,6 +323,33 @@ namespace Redemption
             On.Terraria.Main.Update -= LoadTrailManager;
         }
 
+        public override void ModifyLightingBrightness(ref float scale)
+        {
+            if (ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50 || ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50)
+                scale = 0.9f;
+        }
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        {
+            RedeTileCount tileCount = ModContent.GetInstance<RedeTileCount>();
+            if (tileCount.WastelandTileCount > 0)
+            {
+                float Strength = tileCount.WastelandTileCount / 200f;
+                Strength = Math.Min(Strength, 1f);
+
+                int sunR = backgroundColor.R;
+                int sunG = backgroundColor.G;
+                int sunB = backgroundColor.B;
+                sunR -= (int)(200 * Strength * (backgroundColor.R / 255f));
+                sunB -= (int)(200f * Strength * (backgroundColor.B / 255f));
+                sunG -= (int)(170f * Strength * (backgroundColor.G / 255f));
+                sunR = Utils.Clamp(sunR, 15, 255);
+                sunG = Utils.Clamp(sunG, 15, 255);
+                sunB = Utils.Clamp(sunB, 15, 255);
+                backgroundColor.R = (byte)sunR;
+                backgroundColor.G = (byte)sunG;
+                backgroundColor.B = (byte)sunB;
+            }
+        }
         public override void PreUpdateProjectiles()
         {
             if (Main.netMode != NetmodeID.Server)
