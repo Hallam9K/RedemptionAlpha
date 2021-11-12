@@ -224,7 +224,11 @@ namespace Redemption
                     WallID.DirtUnsafe,
                     WallID.DirtUnsafe1,
                     WallID.MudUnsafe,
-                    WallID.Wood
+                    WallID.Wood,
+                    WallID.GrassUnsafe,
+                    WallID.FlowerUnsafe,
+                    WallID.CrimsonGrassUnsafe,
+                    WallID.CorruptGrassUnsafe
 
                 },
                 new int[]
@@ -250,7 +254,11 @@ namespace Redemption
                     ModContent.WallType<IrradiatedDirtWallTile>(),
                     ModContent.WallType<IrradiatedDirtWallTile>(),
                     ModContent.WallType<IrradiatedMudWallTile>(),
-                    ModContent.WallType<PetrifiedWoodWallTile>()
+                    ModContent.WallType<PetrifiedWoodWallTile>(),
+                    ModContent.WallType<IrradiatedDirtWallTile>(),
+                    ModContent.WallType<IrradiatedDirtWallTile>(),
+                    ModContent.WallType<IrradiatedDirtWallTile>(),
+                    ModContent.WallType<IrradiatedDirtWallTile>()
                 }, true);
             int radiusLeft = (int)(Center.X / 16f - radius);
             int radiusRight = (int)(Center.X / 16f + radius);
@@ -272,8 +280,7 @@ namespace Redemption
                     {
                         if (Main.tile[x1, y1].IsActive && Main.tile[x1, y1].type == TileID.LeafBlock)
                             WorldGen.KillTile(x1, y1, false, false, true);
-                        if (Main.tile[x1, y1].wall == WallID.LivingLeaf || Main.tile[x1, y1].wall == WallID.GrassUnsafe ||
-                            Main.tile[x1, y1].wall == WallID.FlowerUnsafe)
+                        if (Main.tile[x1, y1].wall == WallID.LivingLeaf)
                             WorldGen.KillWall(x1, y1, false);
                     }
                 }

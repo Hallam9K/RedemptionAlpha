@@ -79,7 +79,7 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandTileCount >= 100;
+            return ModContent.GetInstance<RedeTileCount>().WastelandTileCount >= 200;
         }
     }
     public class WastelandSnowBiome : ModBiome
@@ -158,7 +158,7 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandDesertTileCount >= 50;
+            return ModContent.GetInstance<RedeTileCount>().WastelandDesertTileCount >= 200;
         }
     }
     public class WastelandCorruptionBiome : ModBiome
@@ -198,7 +198,7 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50;
+            return ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 200;
         }
     }
     public class WastelandCrimsonBiome : ModBiome
@@ -238,7 +238,7 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50;
+            return ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 200;
         }
     }
 }

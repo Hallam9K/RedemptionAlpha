@@ -74,8 +74,8 @@ namespace Redemption.Tiles.Tiles
 
             if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), true, Main.rand.Next(22));
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), Main.rand.Next(22), 0, -1, -1);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CrimsonWastelandFoliage>(), true, Main.rand.Next(22));
+                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<CrimsonWastelandFoliage>(), Main.rand.Next(22), 0, -1, -1);
             }
             if (Main.rand.NextBool(4))
                 WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false, 0);
