@@ -16,7 +16,6 @@ namespace Redemption.Tiles.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileSpelunker[Type] = false;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
@@ -70,12 +69,6 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
-        }
-
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return ModContent.TileType<IrradiatedPuritySapling>();
         }
     }
 }

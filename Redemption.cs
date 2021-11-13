@@ -80,6 +80,10 @@ namespace Redemption
                     PremultiplyTexture(ref transitionTex);
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
+                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref wastelandCrimsonBG3Tex);
+                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref wastelandCorruptionBG3Tex);
                 });
             }
 
