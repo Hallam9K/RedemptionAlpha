@@ -22,7 +22,7 @@ namespace Redemption.Globals
             Main.SceneMetrics.EvilTileCount += tileCounts[ModContent.TileType<IrradiatedCorruptGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedEbonstoneTile>()];
             Main.SceneMetrics.BloodTileCount += tileCounts[ModContent.TileType<IrradiatedCrimsonGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()];
 
-            LabTileCount = tileCounts[ModContent.TileType<LabTileUnsafe>()];
+            LabTileCount = tileCounts[ModContent.TileType<LabPlatingTileUnsafe>()];
             SlayerShipTileCount = tileCounts[ModContent.TileType<SlayerShipPanelTile>()];
             WastelandTileCount = tileCounts[ModContent.TileType<IrradiatedStoneTile>()] + tileCounts[ModContent.TileType<IrradiatedGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedIceTile>()] + tileCounts[ModContent.TileType<IrradiatedCorruptGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimsonGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedEbonstoneTile>()] + tileCounts[ModContent.TileType<IrradiatedSnowTile>()];
             WastelandSnowTileCount = tileCounts[ModContent.TileType<IrradiatedIceTile>()] + tileCounts[ModContent.TileType<IrradiatedSnowTile>()];

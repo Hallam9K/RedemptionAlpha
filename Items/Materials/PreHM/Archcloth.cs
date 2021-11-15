@@ -16,8 +16,8 @@ namespace Redemption.Items.Materials.PreHM
 
         public override void SetDefaults()
         {
-            Item.width = 24;
-            Item.height = 22;
+            Item.width = 34;
+            Item.height = 26;
             Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Orange;

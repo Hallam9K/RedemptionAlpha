@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,18 +14,5 @@ namespace Redemption.Walls
             AddMapEntry(new Color(35, 34, 40));
 		}
         public override bool CanExplode(int i, int j) => false;
-    }
-    public class SlayerShipPanelWall : PlaceholderTile
-    {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Slayer's Ship Wall Panel");
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createWall = ModContent.WallType<SlayerShipPanelWallTile>();
-        }
     }
 }

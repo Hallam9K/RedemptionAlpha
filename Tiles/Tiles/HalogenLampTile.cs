@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -14,8 +15,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileLighted[Type] = true;
             DustType = DustID.Electric;
-            MinPick = 500;
+            MinPick = 10;
             MineResist = 3f;
+            ItemDrop = ModContent.ItemType<HalogenLamp>();
             SoundType = SoundID.Tink;
             AddMapEntry(new Color(193, 255, 219));
             AnimationFrameHeight = 90;

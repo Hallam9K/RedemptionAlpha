@@ -13,7 +13,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
-            DustType = DustID.Electric;
+            DustType = DustID.Glass;
             MinPick = 500;
             MineResist = 7f;
             SoundType = SoundID.Tink;

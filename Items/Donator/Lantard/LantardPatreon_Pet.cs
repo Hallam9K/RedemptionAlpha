@@ -35,7 +35,7 @@ namespace Redemption.Items.Donator.Lantard
             Player player = Main.player[Projectile.owner];
             CheckActive(player);
 
-            if (Main.dayTime)
+            if (!Main.dayTime)
                 frameWidth = 1;
             else
                 frameWidth = 0;
