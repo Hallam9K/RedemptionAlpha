@@ -28,6 +28,7 @@ using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Minions;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Tiles.Tiles;
+using Redemption.NPCs.Lab;
 
 namespace Redemption.Globals
 {
@@ -315,6 +316,7 @@ namespace Redemption.Globals
             NPCID.QueenSlimeMinionPurple,
             NPCID.HoppinJack,
             ModContent.NPCType<Blobble>(),
+            ModContent.NPCType<SludgeBlob>(),
         };
 
         public static List<int> IsBunny = new()

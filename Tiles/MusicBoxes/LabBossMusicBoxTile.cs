@@ -7,7 +7,7 @@ using Redemption.Items.Placeable.MusicBoxes;
 
 namespace Redemption.Tiles.MusicBoxes
 {
-    class SoIBoxTile : ModTile
+    class LabBossMusicBoxTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -21,12 +21,12 @@ namespace Redemption.Tiles.MusicBoxes
 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Music Box");
-			AddMapEntry(new Color(200, 200, 200), name);
+			AddMapEntry(new Color(189, 191, 200), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<SoIBox>());
+			Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<LabBossMusicBox>());
 		}
 
 		public override void MouseOver(int i, int j)
@@ -34,7 +34,7 @@ namespace Redemption.Tiles.MusicBoxes
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<SoIBox>();
+			player.cursorItemIconID = ModContent.ItemType<LabBossMusicBox>();
 		}
 	}
 }

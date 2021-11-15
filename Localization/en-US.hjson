@@ -1,0 +1,18 @@
+Mods: {
+	Redemption: {	
+		
+		Currencies: {
+			AntiqueDorulCurrency: antique doruls
+		}
+		
+		BiomeName: {
+			WastelandPurityBiome: Wasteland
+			WastelandSnowBiome: Snow Wasteland
+			WastelandDesertBiome: Desert Wasteland
+			WastelandCorruptionBiome: Corrupt Wasteland
+			WastelandCrimsonBiome: Crimson Wasteland
+			LabBiome: Abandoned Laboratory
+			SlayerShipBiome: Slayer's Crashed Cruiser
+		}
+	}
+}

@@ -12,9 +12,21 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 namespace Redemption.Biomes
 {
-    public static class WastelandEffect
+    public class WastelandPurityBiome : ModBiome
     {
-        public static void SpecialVisuals(Player player)
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
+
+        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandUndergroundBackgroundStyle");
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandSurfaceBackgroundStyle");
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
+
+        public override string BestiaryIcon => "Textures/Bestiary/Wasteland";
+        public override string BackgroundPath => "Textures/MapBackgrounds/PurityWastelandMap1";
+        public override Color? BackgroundColor => base.BackgroundColor;
+
+        public override bool IsPrimaryBiome => true;
+        public override void SpecialVisuals(Player player)
         {
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false); //|| BasePlayer.HasAccessory(player, ModContent.ItemType<HEVSuit>(), true, false);
             player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()), player.Center);
@@ -23,12 +35,17 @@ namespace Redemption.Biomes
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()));
         }
-        public static void OnInBiome(Player player, Mod mod)
+        public override void OnLeave(Player player)
+        {
+            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
+        }
+        public override void OnInBiome(Player player)
         {
             if (Main.raining)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(500) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
 
                 if (player.ZoneOverworldHeight || player.ZoneSkyHeight)
                     player.AddBuff(ModContent.BuffType<HeavyRadiationDebuff>(), 30);
@@ -40,34 +57,6 @@ namespace Redemption.Biomes
             }
             else
                 player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);
-        }
-    }
-    public class WastelandPurityBiome : ModBiome
-    {
-        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
-
-        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandUndergroundBackgroundStyle");
-        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandSurfaceBackgroundStyle");
-
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
-
-        public override string BestiaryIcon => "Redemption/Textures/Bestiary/Wasteland";
-        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/PurityWastelandMap1";
-        public override Color? BackgroundColor => base.BackgroundColor;
-
-        public override bool IsPrimaryBiome => true;
-        public override void SpecialVisuals(Player player)
-        {
-            WastelandEffect.SpecialVisuals(player);
-        }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
-        public override void OnInBiome(Player player)
-        {
-            WastelandEffect.OnInBiome(player, Mod);
         }
 
         public override void SetStaticDefaults()
@@ -91,35 +80,22 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandSnow";
-        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/SnowWastelandMap1";
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandSnow";
+        public override string BackgroundPath => "Textures/MapBackgrounds/SnowWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
         public override bool IsPrimaryBiome => false;
-        public override void SpecialVisuals(Player player)
-        {
-            WastelandEffect.SpecialVisuals(player);
-        }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
-        public override void OnInBiome(Player player)
-        {
-            WastelandEffect.OnInBiome(player, Mod);
-        }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Taiga Wasteland");
+            DisplayName.SetDefault("Snow Wasteland");
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandSnowTileCount >= 50;
+            return ModContent.GetInstance<RedeTileCount>().WastelandSnowTileCount >= 200;
         }
     }
     public class WastelandDesertBiome : ModBiome
@@ -130,24 +106,11 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandDesert";
-        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/DesertWastelandMap1";
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandDesert";
+        public override string BackgroundPath => "Textures/MapBackgrounds/DesertWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
         public override bool IsPrimaryBiome => false;
-        public override void SpecialVisuals(Player player)
-        {
-            WastelandEffect.SpecialVisuals(player);
-        }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
-        public override void OnInBiome(Player player)
-        {
-            WastelandEffect.OnInBiome(player, Mod);
-        }
 
         public override void SetStaticDefaults()
         {
@@ -170,24 +133,11 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandCorrupt";
-        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/CorruptionWastelandMap1";
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandCorrupt";
+        public override string BackgroundPath => "Textures/MapBackgrounds/CorruptionWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
         public override bool IsPrimaryBiome => false;
-        public override void SpecialVisuals(Player player)
-        {
-            WastelandEffect.SpecialVisuals(player);
-        }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
-        public override void OnInBiome(Player player)
-        {
-            WastelandEffect.OnInBiome(player, Mod);
-        }
 
         public override void SetStaticDefaults()
         {
@@ -210,24 +160,11 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandCrimson";
-        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/CrimsonWastelandMap1";
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandCrimson";
+        public override string BackgroundPath => "Textures/MapBackgrounds/CrimsonWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
         public override bool IsPrimaryBiome => false;
-        public override void SpecialVisuals(Player player)
-        {
-            WastelandEffect.SpecialVisuals(player);
-        }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
-        public override void OnInBiome(Player player)
-        {
-            WastelandEffect.OnInBiome(player, Mod);
-        }
 
         public override void SetStaticDefaults()
         {

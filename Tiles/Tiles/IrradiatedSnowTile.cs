@@ -46,11 +46,23 @@ namespace Redemption.Tiles.Tiles
         }
         public override void RandomUpdate(int i, int j)
         {
+            Tile tileBelow = Framing.GetTileSafely(i, j + 1);
+            Tile tileBelow2 = Framing.GetTileSafely(i, j + 2);
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(100))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
+            }
+            if (!tileBelow.IsActive && !tileBelow2.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            {
+                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), true);
+                NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
+            }
+            if (!tileBelow.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            {
+                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), true);
+                NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
             }
         }
         public override int SaplingGrowthType(ref int style)

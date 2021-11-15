@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
+using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.Tiles.Natural
 {
@@ -33,7 +34,10 @@ namespace Redemption.Tiles.Natural
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Xenomite>(), Main.rand.Next(3, 6));
+            if (Main.hardMode)
+                Item.NewItem(i * 16, j * 16, 48, 48, ModContent.ItemType<Xenomite>(), Main.rand.Next(3, 6));
+            else
+                Item.NewItem(i * 16, j * 16, 48, 48, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 24));
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

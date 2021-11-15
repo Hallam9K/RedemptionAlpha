@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +16,18 @@ namespace Redemption.NPCs.Lab
         {
             DisplayName.SetDefault("Sludge Blob");
             Main.npcFrameCount[NPC.type] = 2;
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Bleeding,
+                    BuffID.Poisoned
+                }
+            });
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
@@ -30,6 +45,13 @@ namespace Redemption.NPCs.Lab
             AIType = NPCID.Crimslime;
             AnimationType = NPCID.SlimeMasked;
             NPC.lavaImmune = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				new FlavorTextBestiaryInfoElement("Blob blob blob.")
+            });
         }
         public override void HitEffect(int hitDirection, double damage)
         {

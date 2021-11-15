@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Redemption.Buffs.Debuffs;
 using Terraria.GameContent.Creative;
+using Redemption.Tiles.Ores;
 
 namespace Redemption.Items.Materials.PreHM
 {
@@ -25,6 +26,14 @@ namespace Redemption.Items.Materials.PreHM
 			Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 0, 0, 25);
             Item.rare = ItemRarityID.Green;
-		}
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.createTile = ModContent.TileType<XenomiteShardTile>();
+        }
     }
 }

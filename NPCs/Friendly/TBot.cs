@@ -15,6 +15,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.Base;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -48,13 +49,13 @@ namespace Redemption.NPCs.Friendly
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0.5f;
             AnimationType = NPCID.Guide;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandSnowBiome>().Type };
         }
 
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Snow,
 
                 new FlavorTextBestiaryInfoElement("Quiet, mildly melancholic but happy to help you, Adam is an android and the leader of a small group called the Alpha. They are your go-to guide for all-things Liden.\n\n\"I may be the only one of my kind to honor all Three Laws... I can't assure the others will take you in with open arms like I did. Stay safe out there.\""),
             });
