@@ -1,0 +1,49 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+using Redemption.Items.Placeable.Tiles;
+
+namespace Redemption.Tiles.Tiles
+{
+    public class DangerTapeTile : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
+            DustType = DustID.Electric;
+            ItemDrop = ModContent.ItemType<DangerTape>();
+            MinPick = 500;
+            MineResist = 3f;
+            SoundType = SoundID.Tink;
+            AddMapEntry(new Color(49, 49, 52));
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+        public override bool CanExplode(int i, int j) => false;
+    }
+    public class DangerTape2Tile : ModTile
+    {
+        public override string Texture => "Redemption/Tiles/Tiles/DangerTapeTile";
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
+            DustType = DustID.Electric;
+            ItemDrop = ModContent.ItemType<DangerTape2>();
+            MinPick = 50;
+            MineResist = 1f;
+            SoundType = SoundID.Tink;
+            AddMapEntry(new Color(49, 49, 52));
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+    }
+}

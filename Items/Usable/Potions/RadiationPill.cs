@@ -8,9 +8,9 @@ using Redemption.Globals.Player;
 namespace Redemption.Items.Usable.Potions
 {
     public class RadiationPill : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Tooltip.SetDefault("Cures radiation poisoning"
                 + "\nREAD INSTRUCTIONS:"
                 + "\n'Radiation normally cannot be cured, but with this new medicine, we are slowly progressing."
@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable.Potions
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.UseSound = SoundID.Item3;
             Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;

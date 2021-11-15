@@ -1,0 +1,30 @@
+using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Tiles;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.Walls
+{
+    public class DangerTapeWallTile : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = false;
+            ItemDrop = ModContent.ItemType<DangerTapeWall>();
+            AddMapEntry(new Color(43, 43, 44));
+        }
+        public override bool CanExplode(int i, int j) => false;
+        public override void KillWall(int i, int j, ref bool fail) => fail = true;
+    }
+    public class DangerTapeWall2Tile : ModWall
+    {
+        public override string Texture => "Redemption/Walls/DangerTapeWallTile";
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            ItemDrop = ModContent.ItemType<DangerTapeWall2>();
+            AddMapEntry(new Color(43, 43, 44));
+        }
+    }
+}

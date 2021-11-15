@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -14,7 +15,7 @@ namespace Redemption.Tiles.Tiles
 			Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = false;
             TileID.Sets.IsBeam[Type] = true;
-            DustType = DustID.Electric;
+            DustType = ModContent.DustType<LabPlatingDust>();
             ItemDrop = ModContent.ItemType<MetalSupportBeam>();
             MinPick = 200;
             MineResist = 6f;
