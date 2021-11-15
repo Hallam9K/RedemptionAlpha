@@ -275,6 +275,9 @@ namespace Redemption
         public UserInterface NukeUILayer;
         public NukeDetonationUI NukeUIElement;
 
+        public UserInterface AMemoryUILayer;
+        public AMemoryUIState AMemoryUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -300,6 +303,10 @@ namespace Redemption
                 NukeUILayer = new UserInterface();
                 NukeUIElement = new NukeDetonationUI();
                 NukeUILayer.SetState(NukeUIElement);
+
+                AMemoryUILayer = new UserInterface();
+                AMemoryUIElement = new AMemoryUIState();
+                AMemoryUILayer.SetState(AMemoryUIElement);
 
                 GeneratorMenuUI = new UserInterface();
                 GeneratorMenu = new ManualGeneratorMenu();
@@ -400,10 +407,11 @@ namespace Redemption
             int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
             if (MouseTextIndex != -1)
             {
-                AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex, ChaliceAlignmentUI.Visible, "Chalice");
-                AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 1, MoRDialogueUI.Visible, "Dialogue");
-                AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 2, TitleCard.Showing, "Title Card");
-                AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 3, NukeDetonationUI.Visible, "Nuke UI");
+                AddInterfaceLayer(layers, AMemoryUILayer, AMemoryUIElement, MouseTextIndex, AMemoryUIState.Visible, "Lab Photo");
+                AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex + 1, ChaliceAlignmentUI.Visible, "Chalice");
+                AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
+                AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
+                AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
             }
         }
 

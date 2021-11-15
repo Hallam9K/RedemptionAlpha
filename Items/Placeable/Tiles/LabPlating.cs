@@ -1,3 +1,4 @@
+using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -34,6 +35,10 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddIngredient(ModContent.ItemType<LabPlatingWall>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
+            CreateRecipe(2)
+               .AddIngredient(ModContent.ItemType<LabPlatform>(), 2)
+               .AddTile(TileID.WorkBenches)
+               .Register();
         }
     }
 }

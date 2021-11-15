@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Danger Tape");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power after Patient Zero)]");
+            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
 
         public override void SetDefaults()

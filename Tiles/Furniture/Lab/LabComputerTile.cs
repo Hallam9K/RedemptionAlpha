@@ -23,6 +23,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide | AnchorType.Table, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<LabPlatingDust>();
@@ -34,7 +35,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<LabComputer>());
+            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<LabComputer>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

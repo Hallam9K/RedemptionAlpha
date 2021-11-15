@@ -40,7 +40,6 @@ namespace Redemption.Tiles.Furniture.Lab
             name.SetDefault("Server Cabinet");
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = ModContent.DustType<LabPlatingDust>();
-            AdjTiles = new int[] { TileID.Bookcases };
             AnimationFrameHeight = 72;
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -50,7 +49,7 @@ namespace Redemption.Tiles.Furniture.Lab
             b = 0.1f;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(i * 16, j * 16, 48, 64, ModContent.ItemType<ServerCabinet>());
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(i * 16, j * 16, 32, 64, ModContent.ItemType<ServerCabinet>());
         public override bool CanExplode(int i, int j) => false;
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

@@ -20,6 +20,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+            TileObjectData.newTile.Origin = new Point16(1, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -58,7 +59,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<LabCeilingMonitor>());
+            Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<LabCeilingMonitor>());
         }
         public override bool CanExplode(int i, int j) => false;
     }
