@@ -311,6 +311,18 @@ namespace Redemption.Globals
             //spriteBatch.Draw(mod.GetTexture(glowMaskTexture), new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, Color.White, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
         }
 
+        public static bool BossActive()
+        {
+            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            {
+                if (!npc.active || !npc.boss)
+                    continue;
+
+                return true;
+            }
+            return false;
+        }
+
         public static float GradToRad(float grad) => grad * (float)Math.PI / 180.0f;
 
         public static Vector2 RandomPosition(Vector2 pos1, Vector2 pos2) =>
