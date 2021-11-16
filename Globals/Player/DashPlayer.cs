@@ -76,45 +76,44 @@ namespace Redemption
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
                                 NPC npc = Main.npc[i];
-                                if (npc.active && !npc.dontTakeDamage && !npc.friendly)
+                                if (!npc.active || npc.dontTakeDamage || npc.friendly)
+                                    continue;
+
+                                if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
+                                    continue;
+
+                                float damage = 40 * Player.GetDamage(DamageClass.Melee);
+                                float knockback = 10;
+                                bool crit = false;
+
+                                if (Player.kbGlove)
+                                    knockback *= 2f;
+                                if (Player.kbBuff)
+                                    knockback *= 1.5f;
+
+                                if (Main.rand.Next(100) < Player.GetCritChance(DamageClass.Melee))
+                                    crit = true;
+
+                                int hitDirection = Player.velocity.X < 0f ? -1 : 1;
+
+                                if (Player.whoAmI == Main.myPlayer)
                                 {
-                                    if (hitbox.Intersects(npc.Hitbox) && (npc.noTileCollide || Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height)))
-                                    {
-                                        float damage = 40 * Player.GetDamage<DruidClass>();
-                                        float knockback = 10;
-                                        bool crit = false;
+                                    npc.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 600);
+                                    if (Main.rand.NextBool(5))
+                                        npc.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);
 
-                                        if (Player.kbGlove)
-                                            knockback *= 2f;
-                                        if (Player.kbBuff)
-                                            knockback *= 1.5f;
-
-                                        if (Main.rand.Next(100) < Player.GetCritChance<DruidClass>())
-                                            crit = true;
-
-                                        int hitDirection = Player.velocity.X < 0f ? -1 : 1;
-
-                                        if (Player.whoAmI == Main.myPlayer)
-                                        {
-                                            npc.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 600);
-                                            if (Main.rand.NextBool(5))
-                                            {
-                                                npc.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);
-                                            }
-                                            npc.StrikeNPC((int)damage, knockback, hitDirection, crit);
-                                            if (Main.netMode != NetmodeID.SinglePlayer)
-                                                NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
-                                                    0, 0);
-                                        }
-
-                                        Player.dashDelay = 30;
-                                        Player.velocity.X = -hitDirection * 1f;
-                                        Player.velocity.Y = -4f;
-                                        Player.immune = true;
-                                        Player.immuneTime = 10;
-                                        infectedShieldHit = i;
-                                    }
+                                    npc.StrikeNPC((int)damage, knockback, hitDirection, crit);
+                                    if (Main.netMode != NetmodeID.SinglePlayer)
+                                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
+                                            0, 0);
                                 }
+
+                                Player.dashDelay = 30;
+                                Player.velocity.X = -hitDirection * 1f;
+                                Player.velocity.Y = -4f;
+                                Player.immune = true;
+                                Player.immuneTime = 10;
+                                infectedShieldHit = i;
                             }
                         }
                         break;
@@ -125,64 +124,64 @@ namespace Redemption
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
                                 NPC npc = Main.npc[i];
-                                if (npc.active && !npc.dontTakeDamage && !npc.friendly)
+                                if (!npc.active || npc.dontTakeDamage || npc.friendly)
+                                    continue;
+
+                                if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
+                                    continue;
+
+                                float damage = 20 * Player.GetDamage(DamageClass.Melee);
+                                float knockback = 8;
+                                bool crit = false;
+
+                                if (Player.kbGlove)
+                                    knockback *= 2f;
+                                if (Player.kbBuff)
+                                    knockback *= 1.5f;
+
+                                if (Main.rand.Next(100) < Player.GetCritChance(DamageClass.Melee))
+                                    crit = true;
+
+                                int hitDirection = Player.velocity.X < 0f ? -1 : 1;
+
+                                if (Player.whoAmI == Main.myPlayer)
                                 {
-                                    if (hitbox.Intersects(npc.Hitbox) && (npc.noTileCollide || Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height)))
-                                    {
-                                        float damage = 20 * Player.GetDamage(DamageClass.Melee);
-                                        float knockback = 8;
-                                        bool crit = false;
-
-                                        if (Player.kbGlove)
-                                            knockback *= 2f;
-                                        if (Player.kbBuff)
-                                            knockback *= 1.5f;
-
-                                        if (Main.rand.Next(100) < Player.GetCritChance(DamageClass.Melee))
-                                            crit = true;
-
-                                        int hitDirection = Player.velocity.X < 0f ? -1 : 1;
-
-                                        if (Player.whoAmI == Main.myPlayer)
-                                        {
-                                            npc.StrikeNPC((int)damage, knockback, hitDirection, crit);
-                                            if (Main.netMode != NetmodeID.SinglePlayer)
-                                                NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
-                                                    0, 0);
-                                        }
-
-                                        Player.dashDelay = 30;
-                                        Player.velocity.X = -hitDirection * 1f;
-                                        Player.velocity.Y = -4f;
-                                        Player.immune = true;
-                                        Player.immuneTime = 10;
-                                        holoshieldHit = i;
-                                    }
+                                    npc.StrikeNPC((int)damage, knockback, hitDirection, crit);
+                                    if (Main.netMode != NetmodeID.SinglePlayer)
+                                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
+                                            0, 0);
                                 }
+
+                                Player.dashDelay = 30;
+                                Player.velocity.X = -hitDirection * 1f;
+                                Player.velocity.Y = -4f;
+                                Player.immune = true;
+                                Player.immuneTime = 10;
+                                holoshieldHit = i;
                             }
                             for (int i = 0; i < Main.maxProjectiles; i++)
                             {
                                 Projectile proj = Main.projectile[i];
-                                if (proj.active && proj.hostile && !proj.friendly && proj.damage < 100 && proj.velocity.Length() > 0)
-                                {
-                                    if (hitbox.Intersects(proj.Hitbox) && (!proj.tileCollide || Collision.CanHit(Player.position, Player.width, Player.height, proj.position, proj.width, proj.height)))
-                                    {
-                                        if (!Main.dedServ)
-                                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Reflect").WithVolume(.5f).WithPitchVariance(.1f));
-                                        proj.damage *= 2;
-                                        proj.velocity = -proj.velocity;
-                                        proj.friendly = true;
-                                        proj.hostile = false;
+                                if (!proj.active || !proj.hostile || proj.friendly || proj.damage >= 200 || proj.velocity.Length() <= 0)
+                                    continue;
 
-                                        int hitDirection = Player.velocity.X < 0f ? -1 : 1;
-                                        Player.dashDelay = 30;
-                                        Player.velocity.X = -hitDirection * 1f;
-                                        Player.velocity.Y = -4f;
-                                        Player.immune = true;
-                                        Player.immuneTime = 10;
-                                        holoshieldHit = i;
-                                    }
-                                }
+                                if (!hitbox.Intersects(proj.Hitbox) || proj.tileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, proj.position, proj.width, proj.height))
+                                    continue;
+
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Reflect").WithVolume(.5f).WithPitchVariance(.1f));
+                                proj.damage *= 2;
+                                proj.velocity = -proj.velocity;
+                                proj.friendly = true;
+                                proj.hostile = false;
+
+                                int hitDirection = Player.velocity.X < 0f ? -1 : 1;
+                                Player.dashDelay = 30;
+                                Player.velocity.X = -hitDirection * 1f;
+                                Player.velocity.Y = -4f;
+                                Player.immune = true;
+                                Player.immuneTime = 10;
+                                holoshieldHit = i;
                             }
                         }
                         break;

@@ -18,7 +18,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Infected Thornshield");
             Tooltip.SetDefault("Double tap a direction to dash"
-                + "\n14% increased druidic critical strike chance"
+                + "\n8% increased melee critical strike chance"
                 + "\nInflicts Infection upon dashing into an enemy"
                 + "\nReleases acid-like sparks as you move");
         }
@@ -30,7 +30,7 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Lime;
             Item.value = 80000;
             Item.damage = 40;
-            Item.DamageType = ModContent.GetInstance<DruidClass>();
+            Item.DamageType = DamageClass.Melee;
             Item.accessory = true;
             Item.crit = 4;
             Item.knockBack = 10;
@@ -56,7 +56,7 @@ namespace Redemption.Items.Accessories.HM
                 }
             }
             modPlayer.infectedThornshield = true;
-            player.GetCritChance<DruidClass>() += 14;
+            player.GetCritChance(DamageClass.Melee) += 8;
         }
     }
     public class InfectionShield_AcidSpark : ModProjectile
