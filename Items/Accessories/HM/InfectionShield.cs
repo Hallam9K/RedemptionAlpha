@@ -50,7 +50,7 @@ namespace Redemption.Items.Accessories.HM
             DashPlayer modPlayer = player.GetModPlayer<DashPlayer>();
             if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {
-                if (Main.rand.Next(10) == 0)
+                if (Main.rand.NextBool(10))
                 {
                     Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), new Vector2(player.position.X + Main.rand.NextFloat(player.width), player.position.Y + Main.rand.NextFloat(player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<InfectionShield_AcidSpark>(), 0, 0, Main.myPlayer);
                 }
