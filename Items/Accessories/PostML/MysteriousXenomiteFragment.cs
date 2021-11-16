@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PostML
 {
-    public class SuspiciousXenomiteShard : ModItem
+    public class MysteriousXenomiteFragment : ModItem
     {
         public override void SetStaticDefaults()
         {

@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             set => Projectile.localAI[1] = value;
         }
         public float LaserLength = 0;
-        public float LaserScale = 0;
+        public float LaserScale = 1;
         public int shoot;
         public int LaserSegmentLength = 30;
         public int LaserWidth = 46;

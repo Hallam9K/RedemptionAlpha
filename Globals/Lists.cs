@@ -225,7 +225,8 @@ namespace Redemption.Globals
             TileID.Granite,
             TileID.Marble,
             ModContent.TileType<AncientHallBrickTile>(),
-            ModContent.TileType<SlayerShipPanelTile>()
+            ModContent.TileType<SlayerShipPanelTile>(),
+            ModContent.TileType<LabPlatingTileUnsafe>()
         };
 
         public static List<int> ModdedChests = new();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.DamageClasses;
 using System;
@@ -38,7 +39,7 @@ namespace Redemption
                 // Prevent vanilla dashes
                 Player.dash = 0;
 
-                if (Player.pulley)
+                if (Player.doubleTapCardinalTimer[Player.dashDelay] < 15)
                 {
                     DashMovement(dash);
                 }
@@ -301,6 +302,9 @@ namespace Redemption
         public DashType FindDashes()
         {
             if (Player.mount.Active)
+                return DashType.None;
+
+            if (BasePlayer.HasAccessory(Player, ItemID.MasterNinjaGear, true, false))
                 return DashType.None;
 
             if (infectedThornshield)

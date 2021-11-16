@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Pets
 			{
 				Projectile.frameCounter = 0;
 				Projectile.frame++;
-				if (Projectile.frame > Main.projFrames[Projectile.type])
+				if (Projectile.frame >= Main.projFrames[Projectile.type])
 					Projectile.frame = 0;
 			}
 			if (Projectile.velocity.X < -2 || Projectile.velocity.X > 2)
