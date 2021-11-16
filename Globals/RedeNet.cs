@@ -7,8 +7,8 @@ namespace Redemption.Globals
             BossSpawnFromClient,
             NPCSpawnFromClient,
             NPCSpawnFromClient2,
-            SpawnTrail
-            //Dash,
+            SpawnTrail,
+            Dash,
             //StartChickArmy,
             //ChickArmyData
         }

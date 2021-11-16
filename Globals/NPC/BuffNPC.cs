@@ -37,6 +37,7 @@ namespace Redemption.Globals.NPC
         public bool disarmed;
         public bool silverwoodArrow;
         public bool blackHeart;
+        public bool bileDebuff;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -51,6 +52,8 @@ namespace Redemption.Globals.NPC
             disarmed = false;
             silverwoodArrow = false;
             blackHeart = false;
+            bileDebuff = false;
+
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -213,6 +216,24 @@ namespace Redemption.Globals.NPC
                 if (damage < 2)
                     damage = 2;
             }
+            if (bileDebuff)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 5;
+            }
+        }
+        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (bileDebuff)
+                player.armorPenetration += 15;
+        }
+        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            Terraria.Player player = Main.player[projectile.owner];
+            if (bileDebuff)
+                player.armorPenetration += 15;
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -242,7 +263,6 @@ namespace Redemption.Globals.NPC
                 damage = (int)(damage * 0.85f);
             if (disarmed)
                 damage = (int)(damage * 0.2f);
-
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
@@ -313,6 +333,21 @@ namespace Redemption.Globals.NPC
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<VoidFlame>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
+                }
+            }
+            if (bileDebuff)
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.GreenFairy, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 1.5f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    if (Main.rand.NextBool(4))
+                    {
+                        Main.dust[dust].noGravity = false;
+                        Main.dust[dust].scale *= 0.5f;
+                    }
                 }
             }
         }

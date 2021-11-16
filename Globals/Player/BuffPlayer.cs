@@ -46,6 +46,7 @@ namespace Redemption.Globals.Player
         public bool lantardPet;
         public bool erhanCross;
         public bool hairLoss;
+        public bool bileDebuff;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -93,6 +94,7 @@ namespace Redemption.Globals.Player
             lantardPet = false;
             erhanCross = false;
             hairLoss = false;
+            bileDebuff = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -112,6 +114,23 @@ namespace Redemption.Globals.Player
                 dirtyWound = false;
                 dirtyWoundTime = 0;
             }
+        }
+
+        public override void UpdateDead()
+        {
+            devilScented = false;
+            spiderSwarmed = false;
+            greenRashes = false;
+            glowingPustules = false;
+            fleshCrystals = false;
+            hemorrhageDebuff = false;
+            necrosisDebuff = false;
+            shockDebuff = false;
+            antibodiesBuff = false;
+            antiXenomiteBuff = false;
+            ensnared = false;
+            hairLoss = false;
+            bileDebuff = false;
         }
 
         public override void PostUpdateBuffs()
@@ -354,6 +373,15 @@ namespace Redemption.Globals.Player
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= (int)(Player.velocity.Length() * 20);
             }
+            if (bileDebuff)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 5;
+                Player.statDefense -= 30;
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -383,6 +411,17 @@ namespace Redemption.Globals.Player
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
                     int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, DustID.Electric, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 1.8f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
+            if (bileDebuff)
+            {
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.GreenFairy, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 1.2f);
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity *= 1.8f;
                     Main.dust[dust].velocity.Y -= 0.5f;
