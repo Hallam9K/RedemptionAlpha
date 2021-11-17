@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
             Projectile.extraUpdates = 1;
         }
 

@@ -78,7 +78,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = -1;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
         }
 
         public override void SetStats(ref int throwTime, ref float throwSpeed, ref float recoverDistance, ref float recoverDistance2, ref int attackCooldown)

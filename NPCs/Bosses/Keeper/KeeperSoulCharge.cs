@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.DamageType = DamageClass.Magic;
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()

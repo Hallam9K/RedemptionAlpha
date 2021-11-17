@@ -842,7 +842,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
+            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                 strongHit = true;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

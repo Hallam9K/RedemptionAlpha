@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
             Projectile.extraUpdates = 1;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()

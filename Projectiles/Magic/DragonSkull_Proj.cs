@@ -23,7 +23,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         private bool faceLeft;

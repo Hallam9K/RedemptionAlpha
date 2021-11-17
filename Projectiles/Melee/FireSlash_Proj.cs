@@ -32,7 +32,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()

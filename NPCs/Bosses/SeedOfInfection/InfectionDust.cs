@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()

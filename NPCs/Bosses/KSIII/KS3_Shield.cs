@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             foreach (Projectile target in Main.projectile)
             {
-                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
+                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))

@@ -30,7 +30,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.ignoreWater = true;
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

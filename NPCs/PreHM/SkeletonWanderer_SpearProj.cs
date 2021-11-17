@@ -29,8 +29,8 @@ namespace Redemption.NPCs.PreHM
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
         }
         public override bool? CanHitNPC(NPC target)
         {
