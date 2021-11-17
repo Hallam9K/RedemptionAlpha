@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -145,7 +146,19 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (NPCTags.Dragonlike.Has(target.type))
                 damage *= 4;
+
+            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            {
+                if (Main.rand.NextBool(200))
+                {
+                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
+                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
+                    damage = damage < target.life ? target.life : damage;
+                    crit = true;
+                }
+            }
         }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];

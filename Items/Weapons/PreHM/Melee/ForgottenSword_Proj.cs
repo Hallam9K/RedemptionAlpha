@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -114,6 +115,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (target.knockBackResist > 0)
                 target.velocity.Y = -10 * target.knockBackResist;
+
+            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            {
+                if (Main.rand.NextBool(200))
+                {
+                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
+                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
+                    damage = damage < target.life ? target.life : damage;
+                    crit = true;
+                }
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

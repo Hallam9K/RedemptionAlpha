@@ -37,7 +37,7 @@ namespace Redemption.Globals
             if (RedeGen.LabVector.X != -1 && RedeGen.LabVector.Y != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<CraneOperator>()))
                 Terraria.NPC.NewNPC((int)CraneOperatorPos.X, (int)CraneOperatorPos.Y, ModContent.NPCType<CraneOperator>());
 
-            Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 10, (RedeGen.LabVector.Y + 42) * 16);
+            Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 14, (RedeGen.LabVector.Y + 42) * 16);
             if (RedeGen.LabVector.X != -1 && RedeGen.LabVector.Y != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<JustANormalToaster>()))
                 Terraria.NPC.NewNPC((int)ToasterPos.X, (int)ToasterPos.Y, ModContent.NPCType<JustANormalToaster>());
         }

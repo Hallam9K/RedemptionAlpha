@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Globals.Player;
 using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Melee;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -46,6 +47,25 @@ namespace Redemption.Globals
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic)
+            {
+                if (item.axe > 0)
+                {
+                    TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { overrideColor = Colors.RarityOrange };
+                    tooltips.Add(axeLine);
+                }
+                else if (!ItemTags.BluntSwing.Has(item.type) && item.hammer == 0 && item.pick == 0)
+                {
+                    TooltipLine axeLine = new(Mod, "SlashBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+                    tooltips.Add(axeLine);
+                }
+            }
+            if (item.hammer > 0)
+            {
+                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Ignores enemy Guard Points") { overrideColor = Colors.RarityOrange };
+                tooltips.Add(axeLine);
+            }
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemTags.Arcane.Has(item.type) || ProjectileTags.Arcane.Has(item.shoot))

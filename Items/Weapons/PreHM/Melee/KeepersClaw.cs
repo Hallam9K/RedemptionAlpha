@@ -48,5 +48,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<KeepersClaw_Slash>();
         }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Sharp Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            tooltips.Add(axeLine);
+        }
     }
 }
