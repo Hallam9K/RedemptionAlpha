@@ -26,7 +26,7 @@ namespace Redemption.Biomes
             LabArea.Active = true;
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
         public override bool IsBiomeActive(Player player)
         {
