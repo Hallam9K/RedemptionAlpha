@@ -224,6 +224,8 @@ namespace Redemption.Globals
             TileID.BeeHive,
             TileID.Granite,
             TileID.Marble,
+            ModContent.TileType<GathicStoneBrickTile>(),
+            ModContent.TileType<GathicGladestoneBrickTile>(),
             ModContent.TileType<AncientHallBrickTile>(),
             ModContent.TileType<SlayerShipPanelTile>(),
             ModContent.TileType<LabPlatingTileUnsafe>()

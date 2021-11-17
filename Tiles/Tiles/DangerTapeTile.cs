@@ -14,8 +14,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
+            Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
             DustType = DustID.Electric;
             ItemDrop = ModContent.ItemType<DangerTape>();
             MinPick = 500;
@@ -35,8 +38,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
+            Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
             DustType = DustID.Electric;
             ItemDrop = ModContent.ItemType<DangerTape2>();
             MinPick = 50;

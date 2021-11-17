@@ -28,7 +28,9 @@ namespace Redemption.Biomes
         public override bool IsPrimaryBiome => true;
         public override void SpecialVisuals(Player player)
         {
-            bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false); //|| BasePlayer.HasAccessory(player, ModContent.ItemType<HEVSuit>(), true, false);
+            bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
+                player.GetModPlayer<BuffPlayer>().HEVSuit;
+
             player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()), player.Center);
 
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(fogSafe ? 0.25f : 0.3f).UseIntensity(fogSafe ? 0.6f : 1f)
@@ -52,7 +54,7 @@ namespace Redemption.Biomes
                 else
                     player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);
 
-                if (Main.rand.Next(80000) == 0 && player.GetModPlayer<Radiation>().irradiatedLevel == 0) //&& !HEVPower && !hazmatPower)
+                if (Main.rand.Next(80000) == 0 && player.GetModPlayer<Radiation>().irradiatedLevel == 0 && !player.GetModPlayer<BuffPlayer>().HEVSuit && !player.GetModPlayer<BuffPlayer>().hazmatSuit)
                     player.GetModPlayer<Radiation>().irradiatedLevel++;
             }
             else

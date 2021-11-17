@@ -21,28 +21,25 @@ namespace Redemption.Globals.Player
             if (irradiatedLevel == 0)
                 return;
 
+            BuffPlayer suit = Player.GetModPlayer<BuffPlayer>();
             switch (irradiatedLevel)
             {
                 case 1:
                     irradiatedTimer++;
                     if (irradiatedTimer == 39999 || irradiatedTimer == 47999)
                     {
-                        // TODO: hazmat hev radiation
-                        /*if (hazmatPower || HEVPower)
+                        if (suit.hazmatSuit || suit.HEVSuit)
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        else*/
-                        //{
-                        if (Main.rand.NextBool(2))
+                        else if (Main.rand.NextBool(2))
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        //}
                     }
                     if (irradiatedTimer >= 38000 && irradiatedTimer < 40000)
                     {
@@ -87,21 +84,18 @@ namespace Redemption.Globals.Player
                     irradiatedTimer++;
                     if (irradiatedTimer == 37999 || irradiatedTimer == 45999)
                     {
-                        /*if (hazmatPower || HEVPower)
+                        if (suit.hazmatSuit || suit.HEVSuit)
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        else*/
-                        //{
-                        if (Main.rand.NextBool(3))
+                        else if (Main.rand.NextBool(3))
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        //}
                     }
                     if (irradiatedTimer >= 36000 && irradiatedTimer < 38000)
                     {
@@ -146,30 +140,24 @@ namespace Redemption.Globals.Player
                     irradiatedTimer++;
                     if (irradiatedTimer == 33999 || irradiatedTimer == 41999)
                     {
-                        /*if (HEVPower)
+                        if (suit.HEVSuit)
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        else if (hazmatPower)
-                        {
-                            if (Main.rand.NextBool(2))
-                            {
-                                irradiatedEffect = 0;
-                                irradiatedLevel = 0;
-                                irradiatedTimer = 0;
-                            }
-                        }
-                        else*/
-                        //{
-                        if (Main.rand.NextBool(5))
+                        else if (suit.hazmatSuit && Main.rand.NextBool(2))
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        //}
+                        else if (Main.rand.NextBool(5))
+                        {
+                            irradiatedEffect = 0;
+                            irradiatedLevel = 0;
+                            irradiatedTimer = 0;
+                        }
                     }
                     if (irradiatedTimer >= 32000 && irradiatedTimer < 34000)
                     {
@@ -216,33 +204,24 @@ namespace Redemption.Globals.Player
                     irradiatedTimer++;
                     if (irradiatedTimer == 33999 || irradiatedTimer == 37999)
                     {
-                        /*if (HEVPower)
-                        {
-                            if (Main.rand.NextBool(5))
-                            {
-                                irradiatedEffect = 0;
-                                irradiatedLevel = 0;
-                                irradiatedTimer = 0;
-                            }
-                        }
-                        else if (hazmatPower)
-                        {
-                            if (Main.rand.NextBool(10))
-                            {
-                                irradiatedEffect = 0;
-                                irradiatedLevel = 0;
-                                irradiatedTimer = 0;
-                            }
-                        }
-                        else*/
-                        //{
-                        if (Main.rand.NextBool(15))
+                        if (suit.HEVSuit && Main.rand.NextBool(5))
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        //}
+                        else if (suit.hazmatSuit && Main.rand.NextBool(10))
+                        {
+                            irradiatedEffect = 0;
+                            irradiatedLevel = 0;
+                            irradiatedTimer = 0;
+                        }
+                        else if (Main.rand.NextBool(15))
+                        {
+                            irradiatedEffect = 0;
+                            irradiatedLevel = 0;
+                            irradiatedTimer = 0;
+                        }
                     }
                     if (irradiatedTimer >= 30000 && irradiatedTimer < 34000)
                     {
@@ -289,33 +268,24 @@ namespace Redemption.Globals.Player
                     irradiatedTimer++;
                     if (irradiatedTimer == 27999 || irradiatedTimer == 29999)
                     {
-                        /*if (HEVPower)
-                        {
-                            if (Main.rand.NextBool(20))
-                            {
-                                irradiatedEffect = 0;
-                                irradiatedLevel = 0;
-                                irradiatedTimer = 0;
-                            }
-                        }
-                        else if (hazmatPower)
-                        {
-                            if (Main.rand.NextBool(30))
-                            {
-                                irradiatedEffect = 0;
-                                irradiatedLevel = 0;
-                                irradiatedTimer = 0;
-                            }
-                        }
-                        else*/
-                        //{
-                        if (Main.rand.NextBool(40))
+                        if (suit.HEVSuit && Main.rand.NextBool(20))
                         {
                             irradiatedEffect = 0;
                             irradiatedLevel = 0;
                             irradiatedTimer = 0;
                         }
-                        //}
+                        else if (suit.hazmatSuit && Main.rand.NextBool(30))
+                        {
+                            irradiatedEffect = 0;
+                            irradiatedLevel = 0;
+                            irradiatedTimer = 0;
+                        }
+                        else if (Main.rand.NextBool(40))
+                        {
+                            irradiatedEffect = 0;
+                            irradiatedLevel = 0;
+                            irradiatedTimer = 0;
+                        }
                     }
                     if (irradiatedTimer >= 26000 && irradiatedTimer < 28000)
                     {
@@ -374,14 +344,6 @@ namespace Redemption.Globals.Player
         }
         public override void PostUpdateBuffs()
         {
-            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet) // TODO: && !labWaterImmune)
-            {
-                if (Player.lifeRegen > 10)
-                    Player.lifeRegen = 10;
-
-                Player.lifeRegenTime = 0;
-                Player.lifeRegen -= 60;
-            }
             if (Player.HasBuff(ModContent.BuffType<RadiationDebuff>()))
             {
                 Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)

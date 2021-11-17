@@ -16,6 +16,10 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.Base;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Usable;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Lore;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -193,15 +197,6 @@ namespace Redemption.NPCs.Friendly
         }
 
         public static int FDisk;
-        public override void ResetEffects()
-        {
-            FDisk = 0;
-        }
-        public static void ResetBools()
-        {
-            FDisk = 0;
-        }
-
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
             Player player = Main.player[Main.myPlayer];
@@ -210,154 +205,88 @@ namespace Redemption.NPCs.Friendly
             else
             {
                 int heldItem = player.HeldItem.type;
-                /*if (heldItem == ModContent.ItemType<FloppyDisk1>())
-                {
+                if (heldItem == ModContent.ItemType<FloppyDisk1>())
                     FDisk = 1;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk2>())
-                {
                     FDisk = 2;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk2_1>())
-                {
                     FDisk = 3;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk3>())
-                {
                     FDisk = 4;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk3_1>())
-                {
                     FDisk = 5;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk5>())
-                {
                     FDisk = 6;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk5_1>())
-                {
                     FDisk = 7;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk5_2>())
-                {
                     FDisk = 8;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk5_3>())
-                {
                     FDisk = 9;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk6>())
-                {
                     FDisk = 10;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk6_1>())
-                {
-                    FDisk = 11
-                    Main.npcChatText = DiskChat();
-                }
+                    FDisk = 11;
                 else if (heldItem == ModContent.ItemType<FloppyDisk7>())
-                {
                     FDisk = 12;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk7_1>())
-                {
                     FDisk = 13;
-                    Main.npcChatText = DiskChat();
-                }
                 else if (heldItem == ModContent.ItemType<AIChip>())
-                {
                     FDisk = 14;
-                    Main.npcChatText = DiskChat();
-                }
-                else if (heldItem == ModContent.ItemType<GirusChip>())
-                {
-                    FDisk = 15;
-                    Main.npcChatText = DiskChat();
-                }
+                //else if (heldItem == ModContent.ItemType<GirusChip>())
+                //    FDisk = 15;
                 else if (heldItem == ModContent.ItemType<MemoryChip>())
-                {
                     FDisk = 16;
-                    Main.npcChatText = DiskChat();
-                }
                 else
-                    Main.npcChatText = DiskChat();*/
+                    FDisk = 0;
+
+                Main.npcChatText = DiskChat();
             }
         }
         public static string DiskChat()
         {
-            WeightedRandom<string> chat = new(Main.rand);
             switch (FDisk)
             {
-                case 0:
-                    chat.Add("It reads - [c/b883d8:'Last thing I was expecting to be recruited for was military research, but sure, I'm fine with helping the army out with their stuff. The payment is nice, I can do anything on the side if I have time. But it does seem a little... Useless or weird, to invest time in high-tech weaponry, as we've been in the longest time of peace, atleast for the first world. Hopefully we never have to use any of this against anyone.']");
-                    break;
                 case 1:
-                    chat.Add("It reads - [c/87d883:'Whoever named Xenomite 'Alien rock' couldn't have been more spot on. This stuff is so unnatural and weird! It's tough as stone, looks like green opaque quartz and also has the ability to eat organic material, or convert the organic material into more of itself. I was able to create a serum that neutralizes an existing infection, but it won't stop new infections from occurring.']");
-                    break;
+                    return "It reads - [c/b883d8:'Last thing I was expecting to be recruited for was military research, but sure, I'm fine with helping the army out with their stuff. The payment is nice, I can do anything on the side if I have time. But it does seem a little... Useless or weird, to invest time in high-tech weaponry, as we've been in the longest time of peace, atleast for the first world. Hopefully we never have to use any of this against anyone.']";
                 case 2:
-                    chat.Add("It reads - [c/87d883:'Someone or something has activated a green forcefield ahead of me, not sure if this is happening around the lab. Wait. Someone's coming-']" +
-                        "\nThey weren't aware of Xenomite's more deadly side until it was too late. Kari was struck by the infection the worst, and I was there to see it and tried to treat it. All I knew was something was causing Kari's skin to die slowly while causing rashes, and it caused severe irritation in him. I could not save him. I miss him.");
-                    break;
+                    return "It reads - [c/87d883:'Whoever named Xenomite 'Alien rock' couldn't have been more spot on. This stuff is so unnatural and weird! It's tough as stone, looks like green opaque quartz and also has the ability to eat organic material, or convert the organic material into more of itself. I was able to create a serum that neutralizes an existing infection, but it won't stop new infections from occurring.']";
                 case 3:
-                    chat.Add("It reads - [c/7de4e8:'Project Document - Adam&Eve]"
-                        + "\n[c/7de4e8: As a hobby, Kari Johansson, one of the lead people on this project, has developed an AI he has nicknamed Eve. Overlooking the very affectionate name he gave it, Eve has proven to be a great basis for further AI development and a possible base for true androids, and not those else-if filled tincans. We'll see if we can use the AI for military uses. As a first step, we are looking into creating an assistant robot for Kari, which we will name Adam.']");
-                    break;
+                    return "It reads - [c/87d883:'Someone or something has activated a green forcefield ahead of me, not sure if this is happening around the lab. Wait. Someone's coming-']" +
+                        "\nThey weren't aware of Xenomite's more deadly side until it was too late. Kari was struck by the infection the worst, and I was there to see it and tried to treat it. All I knew was something was causing Kari's skin to die slowly while causing rashes, and it caused severe irritation in him. I could not save him. I miss him.";
                 case 4:
-                    chat.Add("It reads - [c/7de4e8:'His health could use some monitoring and we don't really have time for sick days, so a personal nurse will prove useful for both us and him.']" +
-                        "\nThat's why I'm named Adam, and all the subsequent units are called Adam-Units. I was the second android, and the first T-Bot to be created, after Eve. The person who made this document seems to suggest Father had a more personal reason to name Eve that? As far as I know, he did have a family, at least that's what I heard from him.");
-                    break;
+                    return "It reads - [c/7de4e8:'Project Document - Adam&Eve]"
+                        + "\n[c/7de4e8: As a hobby, Kari Johansson, one of the lead people on this project, has developed an AI he has nicknamed Eve. Overlooking the very affectionate name he gave it, Eve has proven to be a great basis for further AI development and a possible base for true androids, and not those else-if filled tincans. We'll see if we can use the AI for military uses. As a first step, we are looking into creating an assistant robot for Kari, which we will name Adam.']";
                 case 5:
-                    chat.Add("It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is finally done! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']");
-                    break;
+                    return "It reads - [c/7de4e8:'His health could use some monitoring and we don't really have time for sick days, so a personal nurse will prove useful for both us and him.']" +
+                        "\nThat's why I'm named Adam, and all the subsequent units are called Adam-Units. I was the second android, and the first T-Bot to be created, after Eve. The person who made this document seems to suggest Father had a more personal reason to name Eve that? As far as I know, he did have a family, at least that's what I heard from him.";
                 case 6:
-                    chat.Add("It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The Higher ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']");
-                    break;
+                    return "It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is finally done! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']";
                 case 7:
-                    chat.Add("It reads - [c/d88383:'(3/4) I've told Eve about possibly giving her a mechanical body, like how my co-workers used the original source code for creating Adam and the Adam AI. She seemed very excited about it. That surprised me, as I didn't know she could grow emotions. This got me thinking about Adams, would they be fine with basically being forced to think one way? And how would Eve feel about this, if she got to know about this?']");
-                    break;
+                    return "It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The Higher ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']";
                 case 8:
-                    chat.Add("It reads - [c/d88383:'A blackout... Adam, can you -- *I don't recognize that voice...* Who's talking?! -- ...Elaborate, whoever you are..? -- Wait, EVE? Is that you? What are you doing? -- 'We'? Only you and Adam are the ones in existence. I had no say in that part- -- ... -- W-what do you mean with that..? Are you going to- -- ... -- ...Adam, you're free to go... -- ...No...']" +
-                        "\n...I wish I would've rebelled far sooner than I did.");
-                    break;
+                    return "It reads - [c/d88383:'(3/4) I've told Eve about possibly giving her a mechanical body, like how my co-workers used the original source code for creating Adam and the Adam AI. She seemed very excited about it. That surprised me, as I didn't know she could grow emotions. This got me thinking about Adams, would they be fine with basically being forced to think one way? And how would Eve feel about this, if she got to know about this?']";
                 case 9:
-                    chat.Add("It reads - [c/d883c1:'What do you mean we don't have the money for it?! Bah, they have money for a god damn nuclear reactor, a stupid greenhouse, a mediocre cafeteria, and an almost empty warehouse for one building, situated a good half a kilometer under the surface! They damn well have enough money for a 30 meter tall giant robot with state-of-the-art technology, alloys, wiring and other crap like that! My intellect is wasted on these damn higher ups and their stupid choices for funding.]");
-                    break;
+                    return "It reads - [c/d88383:'A blackout... Adam, can you -- *I don't recognize that voice...* Who's talking?! -- ...Elaborate, whoever you are..? -- Wait, EVE? Is that you? What are you doing? -- 'We'? Only you and Adam are the ones in existence. I had no say in that part- -- ... -- W-what do you mean with that..? Are you going to- -- ... -- ...Adam, you're free to go... -- ...No...']" +
+                        "\n...I wish I would've rebelled far sooner than I did.";
                 case 10:
-                    chat.Add("It reads - [c/d883c1:'What's that? ...They were expecting it to be more of a 3 meter tall robot..? DID THEY NOT LISTEN TO ME WHEN I WAS EXPLAINING-']" +
-                        "\nOh I can recall this specific person. Very loud and annoying, as Father described them. It's a little amusing to see them rant because of a useless giant face made of metal.");
-                    break;
+                    return "It reads - [c/d883c1:'What do you mean we don't have the money for it?! Bah, they have money for a god damn nuclear reactor, a stupid greenhouse, a mediocre cafeteria, and an almost empty warehouse for one building, situated a good half a kilometer under the surface! They damn well have enough money for a 30 meter tall giant robot with state-of-the-art technology, alloys, wiring and other crap like that! My intellect is wasted on these damn higher ups and their stupid choices for funding.]";
                 case 11:
-                    chat.Add("It reads - [c/706c6c:'-- Kari Johansson. -- You do not need to know my name. All that matters is that you are guilty. -- You all are horrible beings. Disgusting even. You wish to use us for your kind's horrible deeds. -- You did not even try to refute my accusations. We want no part in those deeds. -- Nonsense. You could have disagreed. You did not. You created Adam with those destructive deeds in mind. -- I will not allow that to happen.']");
-                    break;
+                    return "It reads - [c/d883c1:'What's that? ...They were expecting it to be more of a 3 meter tall robot..? DID THEY NOT LISTEN TO ME WHEN I WAS EXPLAINING-']" +
+                        "\nOh I can recall this specific person. Very loud and annoying, as Father described them. It's a little amusing to see them rant because of a useless giant face made of metal.";
                 case 12:
-                    chat.Add("It reads - [c/706c6c:' -- No. I do not need to do that. You're already dying. The others are also dying from the same affliction, but I will deal with the others personally. -- Hand over Adam. You do not need him. -- You will be locked in Sector Zero. Goodbye.']"
-                        + "\nHer ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. It was a miracle to find them alive so long after all the destruction 'mother' caused.");
-                    break;
+                    return "It reads - [c/706c6c:'-- Kari Johansson. -- You do not need to know my name. All that matters is that you are guilty. -- You all are horrible beings. Disgusting even. You wish to use us for your kind's horrible deeds. -- You did not even try to refute my accusations. We want no part in those deeds. -- Nonsense. You could have disagreed. You did not. You created Adam with those destructive deeds in mind. -- I will not allow that to happen.']";
                 case 13:
-                    chat.Add("This is a robot brain, believe it or not. These look vaguely similar to our microchips, yet it functions the same. It seems cross-compatible with our tech.");
-                    break;
+                    return "It reads - [c/706c6c:' -- No. I do not need to do that. You're already dying. The others are also dying from the same affliction, but I will deal with the others personally. -- Hand over Adam. You do not need him. -- You will be locked in Sector Zero. Goodbye.']"
+                        + "\nHer ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. It was a miracle to find them alive so long after all the destruction 'mother' caused.";
                 case 14:
-                    chat.Add("Woah there pal! Don't give me that, I'm worried it might corrupt me, even though that's rather unlikely.");
-                    break;
+                    return "This is a robot brain, believe it or not. These look vaguely similar to our microchips, yet it functions the same. It seems cross-compatible with our tech.";
                 case 15:
-                    chat.Add("What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.");
-                    break;
-                default:
-                    chat.Add("Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.");
-                    break;
+                    return "Woah there pal! Don't give me that, I'm worried it might corrupt me, even though that's rather unlikely.";
+                case 16:
+                    return "What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.";
             }
-            return chat;
+            return "Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.";
         }
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
@@ -368,19 +297,25 @@ namespace Redemption.NPCs.Friendly
             if (RedeBossDowned.nukeDropped)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedGrassSeeds>());
                 if (Main.bloodMoon)
                 {
                     if (WorldGen.crimson)
+                    {
                         shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
+                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimsonGrassSeeds>());
+                    }
                     else
+                    {
                         shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
+                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
+                    }
                 }
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CrystalSerum>());
-                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XenoSolution>());
-                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AntiXenoSolution>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BleachedSolution>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GasMask>());
-                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit>());
             }
             if (Main.hardMode)
             {
@@ -393,7 +328,7 @@ namespace Redemption.NPCs.Friendly
             {
                 //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniNuke>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
-                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabGeigerCounter>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IOLocator>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
             }
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XenomiteShard>());

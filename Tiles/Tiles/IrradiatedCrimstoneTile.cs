@@ -20,6 +20,14 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            Main.tileMerge[Type][TileID.Crimstone] = true;
+            Main.tileMerge[TileID.Crimstone][Type] = true;
+            Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[TileID.Stone][Type] = true;
+            Main.tileMerge[Type][TileID.Ebonstone] = true;
+            Main.tileMerge[TileID.Ebonstone][Type] = true;
+            Main.tileMerge[Type][TileID.Pearlstone] = true;
+            Main.tileMerge[TileID.Pearlstone][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<StarliteGemOreTile>()] = true;

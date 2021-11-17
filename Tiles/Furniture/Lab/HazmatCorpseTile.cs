@@ -48,7 +48,7 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 Player player = Main.LocalPlayer; // TODO: crowbar and hazmat corpse drop
                 //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
-                //player.QuickSpawnItem(ModContent.ItemType<HazmatSuit>());
+                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit>());
             }
             for (int x = left; x < left + 3; x++)
             {
@@ -68,7 +68,7 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 Player player = Main.LocalPlayer;
                 //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
-                //player.QuickSpawnItem(ModContent.ItemType<HazmatSuit>());
+                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit>());
             }
         }
         public override bool CanExplode(int i, int j) => false;

@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.hostile = false;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 60;
+            Projectile.timeLeft = 160;
             Projectile.alpha = 255;
         }
 

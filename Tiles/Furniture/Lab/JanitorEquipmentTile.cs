@@ -36,4 +36,19 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;
     }
+    public class JanitorEquipment : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Janitor Equipment");
+            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<JanitorEquipmentTile>();
+        }
+    }
 }

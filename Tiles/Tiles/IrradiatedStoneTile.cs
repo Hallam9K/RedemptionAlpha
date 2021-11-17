@@ -23,6 +23,14 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<StarliteGemOreTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimstoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
+            Main.tileMerge[Type][TileID.Crimstone] = true;
+            Main.tileMerge[TileID.Crimstone][Type] = true;
+            Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[TileID.Stone][Type] = true;
+            Main.tileMerge[Type][TileID.Ebonstone] = true;
+            Main.tileMerge[TileID.Ebonstone][Type] = true;
+            Main.tileMerge[Type][TileID.Pearlstone] = true;
+            Main.tileMerge[TileID.Pearlstone][Type] = true;
             ItemDrop = ModContent.ItemType<IrradiatedStone>();
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;

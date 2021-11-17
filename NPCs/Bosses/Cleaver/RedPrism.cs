@@ -30,7 +30,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public int shoot;
         public int LaserSegmentLength = 30;
         public int LaserWidth = 46;
-        int multiplier = 1;
         public int LaserEndSegmentLength = 40;
 
         //should be set to about half of the end length

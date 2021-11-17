@@ -21,6 +21,11 @@ namespace Redemption.Biomes
             DisplayName.SetDefault("Abandoned Laboratory");
         }
 
+        public override void OnInBiome(Player player)
+        {
+            LabArea.Active = true;
+        }
+
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override bool IsBiomeActive(Player player)

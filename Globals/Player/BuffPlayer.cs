@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using Redemption.DamageClasses;
 using Redemption.Buffs;
 using System.Collections.Generic;
+using Redemption.Biomes;
 
 namespace Redemption.Globals.Player
 {
@@ -47,11 +48,14 @@ namespace Redemption.Globals.Player
         public bool erhanCross;
         public bool hairLoss;
         public bool bileDebuff;
+        public bool hazmatSuit;
+        public bool HEVSuit;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
 
         public bool MetalSet;
+        public bool WastelandWaterImmune;
 
         public int MeleeDamageFlat;
         public int DruidDamageFlat;
@@ -95,6 +99,9 @@ namespace Redemption.Globals.Player
             erhanCross = false;
             hairLoss = false;
             bileDebuff = false;
+            hazmatSuit = false;
+            HEVSuit = false;
+            WastelandWaterImmune = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -381,6 +388,14 @@ namespace Redemption.Globals.Player
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 5;
                 Player.statDefense -= 30;
+            }
+            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.GetModPlayer<BuffPlayer>().WastelandWaterImmune)
+            {
+                if (Player.lifeRegen > 10)
+                    Player.lifeRegen = 10;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 60;
             }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

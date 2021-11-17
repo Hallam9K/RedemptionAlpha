@@ -8,7 +8,6 @@ namespace Redemption.Globals
             NPCSpawnFromClient,
             NPCSpawnFromClient2,
             SpawnTrail,
-            Dash,
             //StartChickArmy,
             //ChickArmyData
         }

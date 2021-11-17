@@ -688,7 +688,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 gunRot.SlowRotation(NPC.DirectionTo(player.Center + player.velocity * 20f).ToRotation(), (float)Math.PI / 60f);
 
                             SnapGunToFiringArea();
-                            AITimer++;
+                            if (AITimer++ == 0)
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine1>(), 0, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item1.WithVolume(0), ai1: NPC.whoAmI);
+
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -300 : 300, 10);
 
                             if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
@@ -707,7 +709,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 else
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine1>(), 0, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item1.WithVolume(0), ai1: NPC.whoAmI);
                                     NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 13f, 14f, true);
                                 }
                             }

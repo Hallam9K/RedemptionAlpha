@@ -26,6 +26,12 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Dirt][Type] = true;
             Main.tileMerge[Type][TileID.Grass] = true;
             Main.tileMerge[TileID.Grass][Type] = true;
+            Main.tileMerge[Type][TileID.CorruptGrass] = true;
+            Main.tileMerge[TileID.CorruptGrass][Type] = true;
+            Main.tileMerge[Type][TileID.CrimsonGrass] = true;
+            Main.tileMerge[TileID.CrimsonGrass][Type] = true;
+            Main.tileMerge[Type][TileID.HallowedGrass] = true;
+            Main.tileMerge[TileID.HallowedGrass][Type] = true;
             TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
             TileID.Sets.Grass[Type] = true;

@@ -47,4 +47,19 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override bool CanExplode(int i, int j) => false;
     }
+    public class WideLabConsole : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Wide Laboratory Console");
+            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<WideLabConsoleTile>();
+        }
+    }
 }

@@ -153,11 +153,14 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...", 0.2);
 
             chat.Add("Need anything? I can restring your bow, or poison your weapon. It'll cost you though.");
-            chat.Add("You don't mind me staying here, right?");
+            if (!NPC.homeless)
+            {
+                chat.Add("You don't mind me staying here, right?");
+                chat.Add("I've been travelling this land for a while, but staying in a house is nice.");
+            }
             chat.Add("I got some pretty nice loot I can sell you, I kinda need money right now.");
             chat.Add("My favourite colour is green, not sure why I'm telling you though...");
             chat.Add("Cats are obviously superior to dogs.");
-            chat.Add("I've been travelling this land for a while, but staying in a house is nice.");
             chat.Add("Have you seen a guy with slicked back, hazel hair? He carries a sword and wears a green tunic last I saw. I lost him before travelling through the portal, hope he's doing alright.");
             return chat;
         }

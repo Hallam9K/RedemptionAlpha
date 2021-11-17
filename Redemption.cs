@@ -155,7 +155,7 @@ namespace Redemption
         public override void HandlePacket(BinaryReader bb, int whoAmI)
         {
             ModMessageType msgType = (ModMessageType)bb.ReadByte();
-            byte player;
+            //byte player;
             switch (msgType)
             {
                 case ModMessageType.BossSpawnFromClient:
@@ -219,20 +219,6 @@ namespace Redemption
                         trailproj.DoTrailCreation(RedeSystem.TrailManager);
 
                     break;
-                    case ModMessageType.Dash:
-                        player = bb.ReadByte();
-                        DashType dash = (DashType)bb.ReadByte();
-                        sbyte dir = bb.ReadSByte();
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            ModPacket packet = GetPacket(ModMessageType.Dash, 3);
-                            packet.Write(player);
-                            packet.Write((byte)dash);
-                            packet.Write(dir);
-                            packet.Send(-1, whoAmI);
-                        }
-                        Main.player[player].GetModPlayer<DashPlayer>().PerformDash(dash, dir, false);
-                        break;
                     /*case ModMessageType.StartChickArmy:
                         ChickWorld.chickArmy = true;
                         ChickWorld.ChickArmyStart();

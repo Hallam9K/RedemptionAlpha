@@ -43,4 +43,19 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override bool CanExplode(int i, int j) => false;
     }
+    public class KariBed : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Kari's Hospital Bed");
+            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<KariBedTile>();
+        }
+    }
 }

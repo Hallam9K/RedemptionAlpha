@@ -26,7 +26,7 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/LabClear", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabClear", AssetRequestMode.ImmediateLoad).Value;
             bool genned = false;
             bool placed = false;
             while (!genned)
@@ -75,6 +75,7 @@ namespace Redemption.WorldGeneration
                 [new Color(255, 100, 100)] = ModContent.TileType<RedLaserTile>(),
                 [new Color(100, 255, 100)] = ModContent.TileType<GreenLaserTile>(),
                 [new Color(100, 0, 100)] = ModContent.TileType<ElectricHazardTile>(),
+                //[new Color(200, 200, 70)] = ModContent.TileType<DangerTapeTile>(),
                 [new Color(150, 150, 150)] = -2,
                 [Color.Black] = -1
             };
@@ -130,7 +131,7 @@ namespace Redemption.WorldGeneration
 
             GenUtils.ObjectPlace(origin.X + 156, origin.Y + 7, (ushort)ModContent.TileType<LabBossDoorTileH>());
             GenUtils.ObjectPlace(origin.X + 62, origin.Y + 72, (ushort)ModContent.TileType<LabBossDoorTile>());
-            GenUtils.ObjectPlace(origin.X + 223, origin.Y + 176, (ushort)ModContent.TileType<LabBossDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 223, origin.Y + 179, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 128, origin.Y + 103, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 104, origin.Y + 165, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 42, origin.Y + 165, (ushort)ModContent.TileType<LabBossDoorTile>());
@@ -140,8 +141,8 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 61, origin.Y + 56, (ushort)ModContent.TileType<ElectricitySignTile>());
             GenUtils.ObjectPlace(origin.X + 206, origin.Y + 55, (ushort)ModContent.TileType<BiohazardSignTile>());
             GenUtils.ObjectPlace(origin.X + 203, origin.Y + 55, (ushort)ModContent.TileType<SkullSignTile>());
-            GenUtils.ObjectPlace(origin.X + 210, origin.Y + 175, (ushort)ModContent.TileType<SkullSignTile>());
-            GenUtils.ObjectPlace(origin.X + 204, origin.Y + 175, (ushort)ModContent.TileType<BiohazardSignTile>());
+            GenUtils.ObjectPlace(origin.X + 210, origin.Y + 178, (ushort)ModContent.TileType<SkullSignTile>());
+            GenUtils.ObjectPlace(origin.X + 204, origin.Y + 178, (ushort)ModContent.TileType<BiohazardSignTile>());
             GenUtils.ObjectPlace(origin.X + 75, origin.Y + 137, (ushort)ModContent.TileType<ElectricitySignTile>());
             GenUtils.ObjectPlace(origin.X + 107, origin.Y + 164, (ushort)ModContent.TileType<SkullSignTile>());
             GenUtils.ObjectPlace(origin.X + 108, origin.Y + 173, (ushort)ModContent.TileType<BiohazardSignTile>());
@@ -276,10 +277,10 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 233, origin.Y + 159, (ushort)ModContent.TileType<SewerHoleTile>());
             GenUtils.ObjectPlace(origin.X + 238, origin.Y + 173, (ushort)ModContent.TileType<SewerHoleTile>());
             // Blisterface Arena
-            GenUtils.ObjectPlace(origin.X + 194, origin.Y + 177, (ushort)ModContent.TileType<SmallVentTile>());
-            GenUtils.ObjectPlace(origin.X + 203, origin.Y + 177, (ushort)ModContent.TileType<SmallVentTile>());
-            GenUtils.ObjectPlace(origin.X + 211, origin.Y + 177, (ushort)ModContent.TileType<SmallVentTile>());
-            GenUtils.ObjectPlace(origin.X + 220, origin.Y + 177, (ushort)ModContent.TileType<SmallVentTile>());
+            GenUtils.ObjectPlace(origin.X + 194, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
+            GenUtils.ObjectPlace(origin.X + 203, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
+            GenUtils.ObjectPlace(origin.X + 211, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
+            GenUtils.ObjectPlace(origin.X + 220, origin.Y + 180, (ushort)ModContent.TileType<SmallVentTile>());
             // Broken Elevator
             GenUtils.ObjectPlace(origin.X + 19, origin.Y + 74, (ushort)ModContent.TileType<InfectedCorpse2Tile>());
             GenUtils.ObjectPlace(origin.X + 4, origin.Y + 84, (ushort)ModContent.TileType<InfectedCorpse1Tile>(), 0, 1);
@@ -332,6 +333,8 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 113, origin.Y + 175, (ushort)ModContent.TileType<LabTableTile>());
             GenUtils.ObjectPlace(origin.X + 112, origin.Y + 173, (ushort)ModContent.TileType<RadiationPillTile>());
             GenUtils.ObjectPlace(origin.X + 113, origin.Y + 173, (ushort)ModContent.TileType<LabComputerTile>());
+            GenUtils.ObjectPlace(origin.X + 44, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>(), 0, 1);
+            GenUtils.ObjectPlace(origin.X + 102, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>());
 
             GenUtils.ObjectPlace(origin.X + 106, origin.Y + 156, (ushort)ModContent.TileType<LabReceptionDeskTile>());
             GenUtils.ObjectPlace(origin.X + 109, origin.Y + 156, (ushort)ModContent.TileType<LabChairTile>());
@@ -377,8 +380,8 @@ namespace Redemption.WorldGeneration
             LabChest(origin.X + 231, origin.Y + 101);
             LabChest(origin.X + 159, origin.Y + 157);
             LabChest(origin.X + 156, origin.Y + 157);
-            LabChest(origin.X + 184, origin.Y + 178);
-            LabChest(origin.X + 187, origin.Y + 178);
+            LabChest(origin.X + 184, origin.Y + 181);
+            LabChest(origin.X + 187, origin.Y + 181);
             LabChest(origin.X + 276, origin.Y + 164);
             LabChest(origin.X + 279, origin.Y + 164);
 

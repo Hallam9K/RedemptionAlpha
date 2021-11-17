@@ -21,6 +21,14 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<IrradiatedSandTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedHardenedSandTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedHardenedSandTile>()][Type] = true;
+            Main.tileMerge[Type][TileID.Sandstone] = true;
+            Main.tileMerge[TileID.Sandstone][Type] = true;
+            Main.tileMerge[Type][TileID.CorruptSandstone] = true;
+            Main.tileMerge[TileID.CorruptSandstone][Type] = true;
+            Main.tileMerge[Type][TileID.CrimsonSandstone] = true;
+            Main.tileMerge[TileID.CrimsonSandstone][Type] = true;
+            Main.tileMerge[Type][TileID.HallowSandstone] = true;
+            Main.tileMerge[TileID.HallowSandstone][Type] = true;
             TileID.Sets.Conversion.Sandstone[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.isDesertBiomeSand[Type] = true;
