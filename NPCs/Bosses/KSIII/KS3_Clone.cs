@@ -814,7 +814,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.velocity *= 0.9f;
                                     if (AITimer == 202)
                                     {
-                                        NPC.Shoot(new Vector2(NPC.spriteDirection == 1 ? NPC.Center.X + 2 : NPC.Center.X - 2, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge>(), 80, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Zap1", ai0: NPC.whoAmI);
+                                        NPC.Shoot(new Vector2(NPC.spriteDirection == 1 ? NPC.Center.X + 2 : NPC.Center.X - 2, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge>(), 80, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/ElectricNoise", ai0: NPC.whoAmI);
 
                                         for (int i = 0; i < 18; i++)
                                             NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge2>(), 0, RedeHelper.PolarVector(14, MathHelper.ToRadians(20) * i), false, SoundID.Item1.WithVolume(0));

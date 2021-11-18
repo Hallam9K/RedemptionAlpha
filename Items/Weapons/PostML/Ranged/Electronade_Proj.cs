@@ -37,7 +37,9 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item93, Projectile.position);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricNoise"), Projectile.position);
+
             DustHelper.DrawCircle(Projectile.Center, DustID.Electric, 3, 3, 3, 1, 1, nogravity: true);
             for (int i = 0; i < 20; i++)
             {

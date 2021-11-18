@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -9,6 +10,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 {
     public class KS3_Surge : ModProjectile
     {
+        public override string Texture => "Redemption/Textures/StaticBall";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Core Surge");
@@ -16,8 +18,8 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         public override void SetDefaults()
         {
-            Projectile.width = 100;
-            Projectile.height = 100;
+            Projectile.width = 164;
+            Projectile.height = 164;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;
@@ -37,8 +39,13 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 4)
+                if (++Projectile.frame >= 3)
                     Projectile.frame = 0;
+            }
+            if (Projectile.alpha < 200 && Main.rand.NextBool(3))
+            {
+                DustHelper.DrawElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), DustID.Electric, 1, 20, default, 0.2f);
+                DustHelper.DrawElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), DustID.Electric, 1, 20, default, 0.2f);
             }
 
             Projectile.alpha += 10;
@@ -48,22 +55,28 @@ namespace Redemption.NPCs.Bosses.KSIII
             for (int k = 0; k < Main.maxPlayers; k++)
             {
                 Player player = Main.player[k];
-                if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 240 * 240)
+                if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 280 * 280)
                     continue;
 
-                player.AddBuff(BuffID.Electrified, 180);
+                player.AddBuff(BuffID.Electrified, 320);
             }
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int height = texture.Height / 4;
+            int height = texture.Height / 3;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            Vector2 drawOrigin = new(texture.Width / 2, height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.LightCyan), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
     }
