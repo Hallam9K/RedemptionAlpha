@@ -7,11 +7,6 @@ namespace Redemption.Items.Placeable.Tiles
 {
     public class HardenedSludge : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Hardened Sludge");
-        }
-
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<HardenedSludgeTile>(), 0);

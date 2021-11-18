@@ -8,7 +8,7 @@ using Redemption.NPCs.Lab;
 
 namespace Redemption.Tiles.Tiles
 {
-    public class SuperHardenedSludgeTile : ModTile
+    public class BlackHardenedSludgeTile : ModTile
 	{
         public override void SetStaticDefaults()
 		{
@@ -20,7 +20,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 300;
             MineResist = 8f;
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Super Hardened Sludge");
+            name.SetDefault("Black Hardened Sludge");
             AddMapEntry(new Color(31, 30, 46));
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

@@ -5,16 +5,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
 {
-    public class SuperHardenedSludge : ModItem
+    public class BlackHardenedSludge : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Super Hardened Sludge");
-        }
-
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<SuperHardenedSludgeTile>(), 0);
+            Item.DefaultToPlaceableTile(ModContent.TileType<BlackHardenedSludgeTile>(), 0);
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = 999;

@@ -1028,42 +1028,42 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
 
-                if (RedeHelper.Chance(.6f))
+                if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<GraveSteelAlloy>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(4, 10);
                 }
-                if (RedeHelper.Chance(.6f))
+                if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<AncientWood>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(5, 15);
                 }
-                if (RedeHelper.Chance(.6f))
+                if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<AncientGoldCoin>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(3, 16);
                 }
-                if (RedeHelper.Chance(.2f))
+                if (RedeHelper.GenChance(.2f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<Archcloth>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
                 }
-                if (RedeHelper.Chance(.1f))
+                if (RedeHelper.GenChance(.1f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
                     chest.item[slot++].stack = 1;
                 }
-                if (RedeHelper.Chance(.02f))
+                if (RedeHelper.GenChance(.02f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<JollyHelm>());
                     chest.item[slot++].stack = 1;
                 }
-                if (RedeHelper.Chance(.66f))
+                if (RedeHelper.GenChance(.66f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot3));
                     chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
                 }
-                if (RedeHelper.Chance(.33f))
+                if (RedeHelper.GenChance(.33f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot4));
                     chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);

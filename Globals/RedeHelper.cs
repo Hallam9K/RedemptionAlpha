@@ -460,6 +460,7 @@ namespace Redemption.Globals
         }
 
         public static bool Chance(float chance) => Main.rand.NextFloat() <= chance;
+        public static bool GenChance(float chance) => WorldGen.genRand.NextFloat() <= chance;
 
         public static Vector2 SmoothFromTo(Vector2 from, Vector2 to, float smooth = 60f) => from + (to - from) / smooth;
 

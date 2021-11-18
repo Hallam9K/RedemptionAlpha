@@ -5,17 +5,16 @@ using Redemption.Walls;
 
 namespace Redemption.Items.Placeable.Tiles
 {
-    public class SuperHardenedSludgeWall : ModItem
+    public class BlackHardenedSludgeWall : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Super Hardened Sludge Wall");
             Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()
 		{
-            Item.DefaultToPlacableWall((ushort)ModContent.WallType<SuperHardenedSludgeWallTile>());
+            Item.DefaultToPlacableWall((ushort)ModContent.WallType<BlackHardenedSludgeWallTile>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = 999;

@@ -12,6 +12,17 @@ using Terraria.WorldBuilding;
 using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Redemption.Items.Lore;
+using Redemption.Items.Usable;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Materials.PreHM;
+using Terraria.Utilities;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.WorldGeneration
 {
@@ -68,7 +79,7 @@ namespace Redemption.WorldGeneration
                 [new Color(255, 200, 255)] = ModContent.TileType<PlutoniumTile>(),
                 [new Color(255, 100, 0)] = ModContent.TileType<SolidCoriumTile>(),
                 [new Color(255, 255, 0)] = ModContent.TileType<HardenedSludgeTile>(),
-                [new Color(17, 54, 17)] = ModContent.TileType<SuperHardenedSludgeTile>(),
+                [new Color(17, 54, 17)] = ModContent.TileType<BlackHardenedSludgeTile>(),
                 [new Color(120, 255, 255)] = ModContent.TileType<LabTubeTile>(),
                 [new Color(255, 120, 255)] = ModContent.TileType<LabTankTile>(),
                 [new Color(220, 255, 255)] = ModContent.TileType<HalogenLampTile>(),
@@ -85,7 +96,7 @@ namespace Redemption.WorldGeneration
                 [new Color(0, 255, 0)] = ModContent.WallType<LabPlatingWallTileUnsafe>(),
                 [new Color(255, 255, 0)] = ModContent.WallType<VentWallTile>(),
                 [new Color(0, 0, 255)] = ModContent.WallType<HardenedSludgeWallTile>(),
-                [new Color(100, 0, 0)] = ModContent.WallType<SuperHardenedSludgeWallTile>(),
+                [new Color(100, 0, 0)] = ModContent.WallType<BlackHardenedSludgeWallTile>(),
                 [new Color(0, 255, 255)] = ModContent.WallType<MossyLabPlatingWallTile>(),
                 [new Color(255, 0, 255)] = ModContent.WallType<MossyLabWallTile>(),
                 [new Color(150, 150, 150)] = -2,
@@ -399,12 +410,15 @@ namespace Redemption.WorldGeneration
             return true;
         }
 
-        public void LabChest(int x, int y)
+        public static void LabChest(int x, int y)
         {
-            Mod mod = Redemption.Instance;
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<LabChestTileLocked>(), false, 1);
 
-            /*int[] LabChestLoot = new int[]
+            int[] LabChestLoot = new int[]
+            {
+                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>() // ModContent.ItemType<Petridish>(), ModContent.ItemType<DNAgger>(), ModContent.ItemType<TeslaManipulatorPrototype>()
+            };
+            int[] FloppyDiskLoot = new int[]
             {
                 ModContent.ItemType<FloppyDisk5>(),
                 ModContent.ItemType<FloppyDisk5_1>(),
@@ -415,56 +429,76 @@ namespace Redemption.WorldGeneration
             {
                 ModContent.ItemType<ScrapMetal>(),
                 ModContent.ItemType<AIChip>(),
-                ModContent.ItemType<Mk3Capacitator>(),
-                ModContent.ItemType<Mk3Plating>(),
+                ModContent.ItemType<Capacitator>(),
+                ModContent.ItemType<Plating>(),
                 ModContent.ItemType<RawXenium>()
             };
             int[] LabChestLoot3 = new int[]
             {
                 ModContent.ItemType<Starlite>(),
                 ModContent.ItemType<XenomiteShard>(),
-                ModContent.ItemType<Electronade>(),
                 ItemID.LunarOre
-            };
+            }; 
             int[] LabChestLoot4 = new int[]
+            {
+                ModContent.ItemType<Uranium>(),
+                ModContent.ItemType<Plutonium>()
+            };
+            /*int[] LabChestLoot4 = new int[]
             {
                 ModContent.ItemType<TerraBombaPart1>(),
                 ModContent.ItemType<TerraBombaPart2>(),
                 ModContent.ItemType<TerraBombaPart3>()
-            };
+            };*/
             if (PlacementSuccess >= 0)
             {
+                int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                Item item0 = chest.item[0];
-                UnifiedRandom genRand0 = WorldGen.genRand;
-                int[] array0 = new int[]
-                { ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<SuspiciousXenomiteShard>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<DNAgger>(), ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<TeslaManipulatorPrototype>() };
-                item0.SetDefaults(Utils.Next(genRand0, array0), false);
+                chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
 
-                chest.item[1].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
-                chest.item[1].stack = WorldGen.genRand.Next(1, 3);
+                chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
+                chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
 
-                chest.item[2].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot3));
-                chest.item[2].stack = WorldGen.genRand.Next(8, 12);
+                chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot3));
+                chest.item[slot++].stack = WorldGen.genRand.Next(8, 18);
 
-                if (WorldGen.genRand.Next(2) == 0)
+                if (WorldGen.genRand.NextBool(4))
                 {
-                    chest.item[3].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot4));
+                    chest.item[slot++].stack = WorldGen.genRand.Next(3, 12);
                 }
 
-                if (WorldGen.genRand.Next(4) == 0)
+                if (WorldGen.genRand.NextBool(2))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<Electronade>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(10, 30);
+                }
+
+                if (WorldGen.genRand.NextBool(2))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<CrystalSerum>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(2, 6);
+                }
+
+                if (WorldGen.genRand.NextBool(2))
+                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, FloppyDiskLoot));
+
+                /*if (WorldGen.genRand.Next(4) == 0)
                 {
                     chest.item[4].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot4));
-                }
-            */
+                }*/
+            }
         }
-        public void DeadWoodChest(int x, int y)
+        public static void DeadWoodChest(int x, int y)
         {
-            Mod mod = Redemption.Instance;
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<PetrifiedWoodChestTile>(), false);
 
-            /*int[] LabChestLoot = new int[]
+            int[] LabChestLoot = new int[]
+            {
+                ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>() //, ModContent.ItemType<MiniNuke>(), ModContent.ItemType<PlasmaSaber>(), ModContent.ItemType<RadioactiveLauncher>(), ModContent.ItemType<SludgeSpoon>()
+            };
+            int[] FloppyDiskLoot = new int[]
             {
                 ModContent.ItemType<FloppyDisk1>(),
                 ModContent.ItemType<FloppyDisk3>(),
@@ -474,72 +508,55 @@ namespace Redemption.WorldGeneration
             {
                 ModContent.ItemType<ScrapMetal>(),
                 ModContent.ItemType<AIChip>(),
-                ModContent.ItemType<Mk1Capacitator>(),
-                ModContent.ItemType<Mk2Capacitator>(),
-                ModContent.ItemType<Mk3Capacitator>(),
-                ModContent.ItemType<Mk1Plating>(),
-                ModContent.ItemType<Mk2Plating>(),
-                ModContent.ItemType<Mk3Plating>()
+                ModContent.ItemType<Capacitator>(),
+                ModContent.ItemType<Plating>()
             };
             int[] LabChestLoot3 = new int[]
             {
-                ModContent.ItemType<AntiXenomiteApplier>(),
+                ModContent.ItemType<CrystalSerum>(),
                 ModContent.ItemType<CarbonMyofibre>(),
                 ModContent.ItemType<Starlite>(),
-                ModContent.ItemType<XenomiteShard>(),
-                ItemID.GoldCoin
-            };
+                ModContent.ItemType<XenomiteShard>()
+            }; 
             if (PlacementSuccess >= 0)
             {
+                int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                Item item0 = chest.item[0];
-                UnifiedRandom genRand0 = WorldGen.genRand;
-                int[] array0 = new int[]
-                { ModContent.ItemType<GasMask>(), ModContent.ItemType<PlasmaShield>(), ModContent.ItemType<MiniNuke>(), ModContent.ItemType<PlasmaSaber>(), ModContent.ItemType<RadioactiveLauncher>(), ModContent.ItemType<SludgeSpoon>() };
-                item0.SetDefaults(Utils.Next(genRand0, array0), false);
+                chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
 
-                chest.item[1].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
-                chest.item[1].stack = WorldGen.genRand.Next(1, 3);
+                chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
+                chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
 
-                chest.item[2].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot3));
-                chest.item[2].stack = WorldGen.genRand.Next(8, 12);
+                chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot3));
+                chest.item[slot++].stack = WorldGen.genRand.Next(8, 12);
 
-                if (Main.rand.Next(4) == 0)
+                if (WorldGen.genRand.NextBool(4))
+                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, FloppyDiskLoot));
+
+                if (WorldGen.genRand.NextBool(4))
                 {
-                    chest.item[3].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
+                    chest.item[slot].SetDefaults(ItemID.GoldCoin);
+                    chest.item[slot++].stack = WorldGen.genRand.Next(2, 5);
                 }
-            }*/
+            }
         }
-        public void SpecialLabChest(int x, int y)
+        public static void SpecialLabChest(int x, int y)
         {
-            Mod mod = Redemption.Instance;
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<LabChestTileLocked2>(), false, 1);
-
-            /*int[] LabChestLoot = new int[]
-            {
-                ModContent.ItemType<RawXenium>()
-            };
-            int[] LabChestLoot2 = new int[]
-            {
-                ModContent.ItemType<Starlite>()
-            };
             if (PlacementSuccess >= 0)
             {
+                int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                Item item0 = chest.item[0];
-                UnifiedRandom genRand0 = WorldGen.genRand;
-                int[] array0 = new int[]
-                { ModContent.ItemType<NanoAxe>() };
-                item0.SetDefaults(Utils.Next(genRand0, array0), false);
+                chest.item[slot++].SetDefaults(ModContent.ItemType<NanoPickaxe>());
 
-                chest.item[1].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
-                chest.item[1].stack = WorldGen.genRand.Next(68, 92);
+                chest.item[slot].SetDefaults(ModContent.ItemType<RawXenium>());
+                chest.item[slot++].stack = WorldGen.genRand.Next(68, 92);
 
-                chest.item[2].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
-                chest.item[2].stack = WorldGen.genRand.Next(20, 40);
-            }*/
+                chest.item[slot].SetDefaults(ModContent.ItemType<Starlite>());
+                chest.item[slot++].stack = WorldGen.genRand.Next(20, 40);
+            }
         }
     }
 }

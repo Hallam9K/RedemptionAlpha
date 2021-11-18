@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             if (!Main.dedServ)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BulletBounce3").WithVolume(.3f).WithPitchVariance(0.1f), Projectile.position);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BulletBounce" + (Main.rand.Next(3) + 1)).WithVolume(.3f).WithPitchVariance(0.1f), Projectile.position);
             }
             if (Projectile.velocity.X != oldVelocity.X)
                 Projectile.velocity.X = -oldVelocity.X;

@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             if (player.altFunctionUse == 2)
             {
-                Item.UseSound = SoundID.Item1; // TODO: Gun switch sound effect
+                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ShootChange");
             }
             else
             {

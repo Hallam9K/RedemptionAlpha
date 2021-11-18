@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Walls
 {
-	public class SuperHardenedSludgeWallTile : ModWall
+	public class BlackHardenedSludgeWallTile : ModWall
 	{
 		public override void SetStaticDefaults()
 		{

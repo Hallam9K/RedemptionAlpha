@@ -38,6 +38,7 @@ namespace Redemption.Globals.NPC
         public bool silverwoodArrow;
         public bool blackHeart;
         public bool bileDebuff;
+        public bool electrified;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -53,6 +54,7 @@ namespace Redemption.Globals.NPC
             silverwoodArrow = false;
             blackHeart = false;
             bileDebuff = false;
+            electrified = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -223,6 +225,16 @@ namespace Redemption.Globals.NPC
 
                 npc.lifeRegen -= 5;
             }
+            if (electrified)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= (int)(npc.velocity.Length() * 20);
+
+                if (damage < 2)
+                    damage = 2;
+            }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
@@ -348,6 +360,15 @@ namespace Redemption.Globals.NPC
                         Main.dust[dust].noGravity = false;
                         Main.dust[dust].scale *= 0.5f;
                     }
+                }
+            }
+            if (electrified)
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Electric, Scale: 2);
+                    Main.dust[sparkle].velocity *= 0.3f;
+                    Main.dust[sparkle].noGravity = true;
                 }
             }
         }

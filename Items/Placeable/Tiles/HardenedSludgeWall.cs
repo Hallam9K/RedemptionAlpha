@@ -5,13 +5,8 @@ using Redemption.Walls;
 
 namespace Redemption.Items.Placeable.Tiles
 {
-    public class SludgeWall : ModItem
+    public class HardenedSludgeWall : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Hardened Sludge Wall");
-        }
-
         public override void SetDefaults()
 		{
             Item.DefaultToPlacableWall((ushort)ModContent.WallType<HardenedSludgeWallTile>());

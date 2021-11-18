@@ -78,6 +78,9 @@ namespace Redemption
                     Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex",
                         ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref transitionTex);
+                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref staticBallTex);
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
                     Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
