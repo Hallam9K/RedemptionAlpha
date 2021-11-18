@@ -39,11 +39,6 @@ namespace Redemption.Items.Armor.HM
             player.GetCritChance(DamageClass.Ranged) += 5;
         }
 
-        public override void ArmorSetShadows(Player player)
-        {
-            player.armorEffectDrawShadow = true;
-        }
-
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == ModContent.ItemType<HardlightPlate>() && legs.type == ModContent.ItemType<HardlightBoots>();

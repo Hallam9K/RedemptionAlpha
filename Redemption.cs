@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 using Redemption.Items.Armor.PreHM;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Usable;
@@ -41,6 +42,7 @@ namespace Redemption
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
         public static int archeFemLegID;
+        public static int archeMaleLegID;
 
         public Redemption()
         {
@@ -54,6 +56,8 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
+                archeMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs");
+                archeFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
 
                 Main.QueueMainThreadAction(() =>
                 {
@@ -93,6 +97,19 @@ namespace Redemption
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
 
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
+        }
+
+        public override void PostSetupContent()
+        {
+            if (!Main.dedServ)
+            {
+                Main.QueueMainThreadAction(() =>
+                {
+                    OnHeadDraw.RegisterHeads();
+                    OnLegDraw.RegisterLegs();
+                    OnBodyDraw.ReigsterBodies();
+                });
+            }
         }
 
         public static void PremultiplyTexture(ref Texture2D texture)

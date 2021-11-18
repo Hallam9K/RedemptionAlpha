@@ -36,11 +36,7 @@ namespace Redemption.Items.Armor.HM
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Summon) += .13f;
-        }
-
-        public override void ArmorSetShadows(Player player)
-        {
-            player.armorEffectDrawShadow = true;
+            player.maxMinions += 2;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

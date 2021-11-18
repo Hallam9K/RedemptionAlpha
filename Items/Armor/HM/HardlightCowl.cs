@@ -38,11 +38,7 @@ namespace Redemption.Items.Armor.HM
         {
             player.GetDamage(DamageClass.Magic) += .13f;
             player.GetCritChance(DamageClass.Magic) += 5;
-        }
-
-        public override void ArmorSetShadows(Player player)
-        {
-            player.armorEffectDrawShadow = true;
+            player.statManaMax2 += 50;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
