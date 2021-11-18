@@ -22,141 +22,147 @@ namespace Redemption.Base
         //------------------------------------------------------//
         //  Author(s): Grox the Great, Yoraiz0r                 //
         //------------------------------------------------------//
-   
+
         #region Custom AI Methods
 
-		public static void AIDive(Projectile projectile, ref int chargeTime, int chargeTimeMax, Vector2 targetCenter)
-		{
-			chargeTime = Math.Max(0, chargeTime - 1);
-			if (chargeTime > 0)
-			{
-				//while this is running, the velocity of the proj should not be touched, as doing so will break this AI.
-				//this AI also ignores tile collision, just a quick concept
-				Vector2 positionOld = projectile.position - projectile.velocity;
-				float percent = chargeTime / (float)chargeTimeMax;
-				float place = (float)Math.Sin((float)Math.PI * percent); //where on the sin path it is
-				float distX = Math.Abs(targetCenter.X - projectile.Center.X), distY = Math.Abs(targetCenter.Y - projectile.Center.Y);
-				float distPercentX = distX / chargeTimeMax, distPercentY = distY / chargeTimeMax;
-				projectile.velocity = new Vector2(distPercentX * chargeTime * projectile.direction, place * distPercentY); //move on the x axis a fixed amount per tick and on the Y axis by how much the sine is multiplied by the a percentage of the distance on the y axis.
-				projectile.position = positionOld;
-			}
-		}
+        public static void AIDive(Projectile projectile, ref int chargeTime, int chargeTimeMax, Vector2 targetCenter)
+        {
+            chargeTime = Math.Max(0, chargeTime - 1);
+            if (chargeTime > 0)
+            {
+                //while this is running, the velocity of the proj should not be touched, as doing so will break this AI.
+                //this AI also ignores tile collision, just a quick concept
+                Vector2 positionOld = projectile.position - projectile.velocity;
+                float percent = chargeTime / (float)chargeTimeMax;
+                float place = (float)Math.Sin((float)Math.PI * percent); //where on the sin path it is
+                float distX = Math.Abs(targetCenter.X - projectile.Center.X), distY = Math.Abs(targetCenter.Y - projectile.Center.Y);
+                float distPercentX = distX / chargeTimeMax, distPercentY = distY / chargeTimeMax;
+                projectile.velocity = new Vector2(distPercentX * chargeTime * projectile.direction, place * distPercentY); //move on the x axis a fixed amount per tick and on the Y axis by how much the sine is multiplied by the a percentage of the distance on the y axis.
+                projectile.position = positionOld;
+            }
+        }
 
-		public static void AIMinionPlant(Projectile projectile, ref float[] ai, Entity owner, Vector2 endPoint, bool setTime = true, float vineLength = 150f, float vineLengthLong = 200f, int vineTimeExtend = 300, int vineTimeMax = 450, float moveInterval = 0.035f, float speedMax = 2f, Vector2 targetOffset = default, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
-		{
-			if (setTime){ projectile.timeLeft = 10; }
-			Entity target = getTarget == null ? null : getTarget(projectile, owner);
-			if (target == null) { target = owner; }
-			bool targetOwner = target == owner;
-			ai[0] += 1f;
-			if (ai[0] > vineTimeExtend)
-			{
-				vineLength = vineLengthLong;
-				if (ai[0] > vineTimeMax) { ai[0] = 0f; }
-			}
-			Vector2 targetCenter = target.Center + targetOffset + (target == owner ? new Vector2(0f, owner is Player ? ((Player)owner).gfxOffY : owner is NPC ? ((NPC)owner).gfxOffY : ((Projectile)owner).gfxOffY) : default);
-			if (!targetOwner)
-			{
-				float distTargetX = targetCenter.X - endPoint.X;
-				float distTargetY = targetCenter.Y - endPoint.Y;
-				float distTarget = (float)Math.Sqrt(distTargetX * distTargetX + distTargetY * distTargetY);
-				if (distTarget > vineLength)
-				{
-					projectile.velocity *= 0.85f;
-					projectile.velocity += owner.velocity;
-					distTarget = vineLength / distTarget;
-					distTargetX *= distTarget;
-					distTargetY *= distTarget;
-				}
-				bool dontMove = shootTarget != null && shootTarget(projectile, owner, target);
-				if (!dontMove)
-				{
-					if (projectile.position.X < endPoint.X + distTargetX)
-					{
-						projectile.velocity.X += moveInterval;
-						if (projectile.velocity.X < 0f && distTargetX > 0f) { projectile.velocity.X += moveInterval * 1.5f; }
-					}else
-					if (projectile.position.X > endPoint.X + distTargetX)
-					{
-						projectile.velocity.X -= moveInterval;
-						if (projectile.velocity.X > 0f && distTargetX < 0f) { projectile.velocity.X -= moveInterval * 1.5f; }
-					}
-					if (projectile.position.Y < endPoint.Y + distTargetY)
-					{
-						projectile.velocity.Y += moveInterval;
-						if (projectile.velocity.Y < 0f && distTargetY > 0f) { projectile.velocity.Y += moveInterval * 1.5f; }
-					}else
-					if (projectile.position.Y > endPoint.Y + distTargetY)
-					{
-						projectile.velocity.Y -= moveInterval;
-						if (projectile.velocity.Y > 0f && distTargetY < 0f) { projectile.velocity.Y -= moveInterval * 1.5f; }
-					}
-				}else
-				{
-					projectile.velocity *= 0.85f;
-					if (Math.Abs(projectile.velocity.X) < moveInterval + 0.01f) { projectile.velocity.X = 0f; }
-					if (Math.Abs(projectile.velocity.Y) < moveInterval + 0.01f) { projectile.velocity.Y = 0f; }
-				}
-				projectile.velocity.X = MathHelper.Clamp(projectile.velocity.X, -speedMax, speedMax);
-				projectile.velocity.Y = MathHelper.Clamp(projectile.velocity.Y, -speedMax, speedMax);
-				if (distTargetX > 0f) { projectile.spriteDirection = 1; projectile.rotation = (float)Math.Atan2(distTargetY, distTargetX); }else
-				if (distTargetX < 0f) { projectile.spriteDirection = -1; projectile.rotation = (float)Math.Atan2(distTargetY, distTargetX) + 3.14f; }
-				if (projectile.tileCollide)
-				{
-					Vector4 slopeVec = Collision.SlopeCollision(projectile.position, projectile.velocity, projectile.width, projectile.height);
-					projectile.position = new Vector2(slopeVec.X, slopeVec.Y);
-					projectile.velocity = new Vector2(slopeVec.Z, slopeVec.W);
-				}
-				projectile.position += owner.position - owner.oldPosition;
-			}else
-			{
-				projectile.position += owner.position - owner.oldPosition;
-				projectile.spriteDirection = owner.Center.X > projectile.Center.X ? -1 : 1;
-				projectile.velocity = AIVelocityLinear(projectile, targetCenter, moveInterval, speedMax, true);
-				if (Vector2.Distance(projectile.Center, targetCenter) < speedMax * 1.1f) 
-				{
-					projectile.rotation = 0f;
-					projectile.velocity *= 0f; projectile.Center = targetCenter; 
-				}else
-				{
-					projectile.rotation = BaseUtility.RotationTo(targetCenter, projectile.Center) + (projectile.spriteDirection == -1 ? 3.14f : 0f);
-				}
-			}
-		}
+        public static void AIMinionPlant(Projectile projectile, ref float[] ai, Entity owner, Vector2 endPoint, bool setTime = true, float vineLength = 150f, float vineLengthLong = 200f, int vineTimeExtend = 300, int vineTimeMax = 450, float moveInterval = 0.035f, float speedMax = 2f, Vector2 targetOffset = default, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
+        {
+            if (setTime) { projectile.timeLeft = 10; }
+            Entity target = getTarget == null ? null : getTarget(projectile, owner);
+            if (target == null) { target = owner; }
+            bool targetOwner = target == owner;
+            ai[0] += 1f;
+            if (ai[0] > vineTimeExtend)
+            {
+                vineLength = vineLengthLong;
+                if (ai[0] > vineTimeMax) { ai[0] = 0f; }
+            }
+            Vector2 targetCenter = target.Center + targetOffset + (target == owner ? new Vector2(0f, owner is Player ? ((Player)owner).gfxOffY : owner is NPC ? ((NPC)owner).gfxOffY : ((Projectile)owner).gfxOffY) : default);
+            if (!targetOwner)
+            {
+                float distTargetX = targetCenter.X - endPoint.X;
+                float distTargetY = targetCenter.Y - endPoint.Y;
+                float distTarget = (float)Math.Sqrt(distTargetX * distTargetX + distTargetY * distTargetY);
+                if (distTarget > vineLength)
+                {
+                    projectile.velocity *= 0.85f;
+                    projectile.velocity += owner.velocity;
+                    distTarget = vineLength / distTarget;
+                    distTargetX *= distTarget;
+                    distTargetY *= distTarget;
+                }
+                bool dontMove = shootTarget != null && shootTarget(projectile, owner, target);
+                if (!dontMove)
+                {
+                    if (projectile.position.X < endPoint.X + distTargetX)
+                    {
+                        projectile.velocity.X += moveInterval;
+                        if (projectile.velocity.X < 0f && distTargetX > 0f) { projectile.velocity.X += moveInterval * 1.5f; }
+                    }
+                    else
+                    if (projectile.position.X > endPoint.X + distTargetX)
+                    {
+                        projectile.velocity.X -= moveInterval;
+                        if (projectile.velocity.X > 0f && distTargetX < 0f) { projectile.velocity.X -= moveInterval * 1.5f; }
+                    }
+                    if (projectile.position.Y < endPoint.Y + distTargetY)
+                    {
+                        projectile.velocity.Y += moveInterval;
+                        if (projectile.velocity.Y < 0f && distTargetY > 0f) { projectile.velocity.Y += moveInterval * 1.5f; }
+                    }
+                    else
+                    if (projectile.position.Y > endPoint.Y + distTargetY)
+                    {
+                        projectile.velocity.Y -= moveInterval;
+                        if (projectile.velocity.Y > 0f && distTargetY < 0f) { projectile.velocity.Y -= moveInterval * 1.5f; }
+                    }
+                }
+                else
+                {
+                    projectile.velocity *= 0.85f;
+                    if (Math.Abs(projectile.velocity.X) < moveInterval + 0.01f) { projectile.velocity.X = 0f; }
+                    if (Math.Abs(projectile.velocity.Y) < moveInterval + 0.01f) { projectile.velocity.Y = 0f; }
+                }
+                projectile.velocity.X = MathHelper.Clamp(projectile.velocity.X, -speedMax, speedMax);
+                projectile.velocity.Y = MathHelper.Clamp(projectile.velocity.Y, -speedMax, speedMax);
+                if (distTargetX > 0f) { projectile.spriteDirection = 1; projectile.rotation = (float)Math.Atan2(distTargetY, distTargetX); }
+                else
+                if (distTargetX < 0f) { projectile.spriteDirection = -1; projectile.rotation = (float)Math.Atan2(distTargetY, distTargetX) + 3.14f; }
+                if (projectile.tileCollide)
+                {
+                    Vector4 slopeVec = Collision.SlopeCollision(projectile.position, projectile.velocity, projectile.width, projectile.height);
+                    projectile.position = new Vector2(slopeVec.X, slopeVec.Y);
+                    projectile.velocity = new Vector2(slopeVec.Z, slopeVec.W);
+                }
+                projectile.position += owner.position - owner.oldPosition;
+            }
+            else
+            {
+                projectile.position += owner.position - owner.oldPosition;
+                projectile.spriteDirection = owner.Center.X > projectile.Center.X ? -1 : 1;
+                projectile.velocity = AIVelocityLinear(projectile, targetCenter, moveInterval, speedMax, true);
+                if (Vector2.Distance(projectile.Center, targetCenter) < speedMax * 1.1f)
+                {
+                    projectile.rotation = 0f;
+                    projectile.velocity *= 0f; projectile.Center = targetCenter;
+                }
+                else
+                {
+                    projectile.rotation = BaseUtility.RotationTo(targetCenter, projectile.Center) + (projectile.spriteDirection == -1 ? 3.14f : 0f);
+                }
+            }
+        }
 
-		public static void TileCollidePlant(Projectile projectile, ref Vector2 velocity, float speedMax)
-		{
-			if (projectile.velocity.X != velocity.X)
-			{
-				projectile.netUpdate = true;
-				projectile.velocity.X *= -0.7f;
-				projectile.velocity.X = MathHelper.Clamp(projectile.velocity.X, -speedMax, speedMax);
-			}
-			if (projectile.velocity.Y != velocity.Y)
-			{
-				projectile.netUpdate = true;
-				projectile.velocity.Y *= -0.7f;
-				projectile.velocity.Y = MathHelper.Clamp(projectile.velocity.Y, -speedMax, speedMax);
-			}
-		}
+        public static void TileCollidePlant(Projectile projectile, ref Vector2 velocity, float speedMax)
+        {
+            if (projectile.velocity.X != velocity.X)
+            {
+                projectile.netUpdate = true;
+                projectile.velocity.X *= -0.7f;
+                projectile.velocity.X = MathHelper.Clamp(projectile.velocity.X, -speedMax, speedMax);
+            }
+            if (projectile.velocity.Y != velocity.Y)
+            {
+                projectile.netUpdate = true;
+                projectile.velocity.Y *= -0.7f;
+                projectile.velocity.Y = MathHelper.Clamp(projectile.velocity.Y, -speedMax, speedMax);
+            }
+        }
 
 
-		public static void AIMinionFlier(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, bool movementFixed = false, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, bool autoSpriteDir = true, bool dummyTileCollide = false, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
-		{
-			if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
-			if (maxSpeed == -1f) { maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
-			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
-			projectile.timeLeft = 10;
-			bool tileCollide = projectile.tileCollide;
-			AIMinionFlier(projectile, ref ai, owner, ref tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, movementFixed, hover, hoverHeight, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget, shootTarget);
-			if(!dummyTileCollide) projectile.tileCollide = tileCollide;
-			if (autoSpriteDir) { projectile.spriteDirection = projectile.direction; }
-			float dist = Vector2.Distance(projectile.Center, owner.Center);
-			if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
-			if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && Math.Abs(projectile.velocity.X + projectile.velocity.Y) <= 0.025f) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
-		}
+        public static void AIMinionFlier(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, bool movementFixed = false, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, bool autoSpriteDir = true, bool dummyTileCollide = false, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
+        {
+            if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
+            if (maxSpeed == -1f) { maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
+            if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
+            projectile.timeLeft = 10;
+            bool tileCollide = projectile.tileCollide;
+            AIMinionFlier(projectile, ref ai, owner, ref tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, movementFixed, hover, hoverHeight, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget, shootTarget);
+            if (!dummyTileCollide) projectile.tileCollide = tileCollide;
+            if (autoSpriteDir) { projectile.spriteDirection = projectile.direction; }
+            float dist = Vector2.Distance(projectile.Center, owner.Center);
+            if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
+            if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && Math.Abs(projectile.velocity.X + projectile.velocity.Y) <= 0.025f) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
+        }
 
-		/*
+        /*
 		 * Custom AI that works similarly to fighter minion AI. (uses ai[0, 1])
 		 * 
 		 * owner : The Projectile or NPC who is this minion's owner.
@@ -173,71 +179,71 @@ namespace Redemption.Base
 		 * maxSpeedFlying : The maximum speed whist 'flying' back to the player.
 		 * GetTarget : a Func(Entity codable, Entity owner), returns a Vector2 of the a target's position. If GetTarget is null or it returns default(Vector2) the target is assumed to be the owner.
 		 */
-		public static void AIMinionFlier(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, bool movementFixed, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
-		{
-			float dist = Vector2.Distance(codable.Center, owner.Center);
-			if (dist > teleportDist) { codable.Center = owner.Center; }
-			int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
-			Tile tile = Main.tile[tileX, tileY];
-			bool inTile = tile is {IsActiveUnactuated: true} && Main.tileSolid[tile.type];
-			float prevAI = ai[0];
-			ai[0] = ai[0] == 1 && (dist > Math.Max(lineDist, returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox)) || dist > returnDist || inTile ? 1 : 0;
-			if (ai[0] != prevAI) { netUpdate = true; }
-			if (ai[0] == 0 || ai[0] == 1)
-			{
-				if (ai[0] == 1) { moveInterval *= 1.5f; maxSpeedFlying *= 1.5f; }
-				tileCollide = ai[0] == 0;
-				Entity target = getTarget == null ? owner : getTarget(codable, owner);
-				if (target == null) { target = owner; }
-				Vector2 targetCenter = target.Center;
-				bool isOwner = target == owner;
-				bool dontMove = ai[0] == 0 && shootTarget != null && shootTarget(codable, owner, target);
-				if (isOwner)
-				{
-					targetCenter.Y -= hoverHeight;
-					if (hover){ targetCenter.X += (lineDist + lineDist * minionPos) * -target.direction; }
-				}
-				if (!hover || !isOwner)
-				{
-					float dirDist = hover ? 1.2f : 1.8f;
-					float dir = dist < lineDist * minionPos + lineDist * dirDist ? codable.velocity.X > 0 ? 1f : -1f : target.Center.X > codable.Center.X ? 1f : -1f;
-					//Semierratic movement so it looks more like a swarm and less like synchronized swimmers.
-					targetCenter.X += (minionPos == 0 ? 0f : minionPos % 5 == 0 ? lineDist / 4f : minionPos % 4 == 0 ? lineDist / 2f : minionPos % 3 == 0 ? lineDist / 3f : 0f) * dir;
-					targetCenter.X += lineDist * 2f * dir;
-					targetCenter.Y -= hoverHeight / 4f * minionPos;
-					targetCenter.Y -= (codable.velocity.X < 0 ? lineDist * 0.25f : -lineDist * 0.25f) * (minionPos % 2 == 0 ? 1 : -1);
-				}
-				float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
-				float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
-				bool slowdownX = hover && owner.velocity.X < 0.025f && targetDistX < 8f * Math.Max(1f, maxSpeed / 4f);
-				bool slowdownY = hover && owner.velocity.Y < 0.025f && targetDistY < 8f * Math.Max(1f, maxSpeed / 4f);
-				Vector2 vel = AIVelocityLinear(codable, targetCenter, moveInterval, ai[0] == 0 ? maxSpeed : maxSpeedFlying, true);
-				if(!dontMove && !slowdownX){ codable.velocity.X += vel.X * 0.125f; }
-				if(!dontMove && !slowdownY){ codable.velocity.Y += vel.Y * 0.125f; }
-				if (dontMove || slowdownX){ codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.85f : 0f; }
-				if (vel.X > 0 && codable.velocity.X > vel.X || vel.X < 0 && codable.velocity.X < vel.X){ codable.velocity.X = vel.X; }
-				if (dontMove || slowdownY){ codable.velocity.Y *= Math.Abs(codable.velocity.Y) > 0.01f ? 0.85f : 0f; }
-				if (vel.Y > 0 && codable.velocity.Y > vel.Y || vel.Y < 0 && codable.velocity.X < vel.Y){ codable.velocity.Y = vel.Y; }
-			}
-		}
+        public static void AIMinionFlier(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, bool movementFixed, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null, Func<Entity, Entity, Entity, bool> shootTarget = null)
+        {
+            float dist = Vector2.Distance(codable.Center, owner.Center);
+            if (dist > teleportDist) { codable.Center = owner.Center; }
+            int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
+            Tile tile = Main.tile[tileX, tileY];
+            bool inTile = tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type];
+            float prevAI = ai[0];
+            ai[0] = ai[0] == 1 && (dist > Math.Max(lineDist, returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox)) || dist > returnDist || inTile ? 1 : 0;
+            if (ai[0] != prevAI) { netUpdate = true; }
+            if (ai[0] == 0 || ai[0] == 1)
+            {
+                if (ai[0] == 1) { moveInterval *= 1.5f; maxSpeedFlying *= 1.5f; }
+                tileCollide = ai[0] == 0;
+                Entity target = getTarget == null ? owner : getTarget(codable, owner);
+                if (target == null) { target = owner; }
+                Vector2 targetCenter = target.Center;
+                bool isOwner = target == owner;
+                bool dontMove = ai[0] == 0 && shootTarget != null && shootTarget(codable, owner, target);
+                if (isOwner)
+                {
+                    targetCenter.Y -= hoverHeight;
+                    if (hover) { targetCenter.X += (lineDist + lineDist * minionPos) * -target.direction; }
+                }
+                if (!hover || !isOwner)
+                {
+                    float dirDist = hover ? 1.2f : 1.8f;
+                    float dir = dist < lineDist * minionPos + lineDist * dirDist ? codable.velocity.X > 0 ? 1f : -1f : target.Center.X > codable.Center.X ? 1f : -1f;
+                    //Semierratic movement so it looks more like a swarm and less like synchronized swimmers.
+                    targetCenter.X += (minionPos == 0 ? 0f : minionPos % 5 == 0 ? lineDist / 4f : minionPos % 4 == 0 ? lineDist / 2f : minionPos % 3 == 0 ? lineDist / 3f : 0f) * dir;
+                    targetCenter.X += lineDist * 2f * dir;
+                    targetCenter.Y -= hoverHeight / 4f * minionPos;
+                    targetCenter.Y -= (codable.velocity.X < 0 ? lineDist * 0.25f : -lineDist * 0.25f) * (minionPos % 2 == 0 ? 1 : -1);
+                }
+                float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
+                float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
+                bool slowdownX = hover && owner.velocity.X < 0.025f && targetDistX < 8f * Math.Max(1f, maxSpeed / 4f);
+                bool slowdownY = hover && owner.velocity.Y < 0.025f && targetDistY < 8f * Math.Max(1f, maxSpeed / 4f);
+                Vector2 vel = AIVelocityLinear(codable, targetCenter, moveInterval, ai[0] == 0 ? maxSpeed : maxSpeedFlying, true);
+                if (!dontMove && !slowdownX) { codable.velocity.X += vel.X * 0.125f; }
+                if (!dontMove && !slowdownY) { codable.velocity.Y += vel.Y * 0.125f; }
+                if (dontMove || slowdownX) { codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.85f : 0f; }
+                if (vel.X > 0 && codable.velocity.X > vel.X || vel.X < 0 && codable.velocity.X < vel.X) { codable.velocity.X = vel.X; }
+                if (dontMove || slowdownY) { codable.velocity.Y *= Math.Abs(codable.velocity.Y) > 0.01f ? 0.85f : 0f; }
+                if (vel.Y > 0 && codable.velocity.Y > vel.Y || vel.Y < 0 && codable.velocity.X < vel.Y) { codable.velocity.Y = vel.Y; }
+            }
+        }
 
 
 
 
-		public static void AIMinionFighter(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> getTarget = null)
-		{
-			if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
-			if (maxSpeed == -1f){ maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
-			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
-			AIMinionFighter(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, ref projectile.gfxOffY, ref projectile.stepSpeed, pet ? 0 : projectile.minionPos, jumpDistX, jumpDistY, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget);
-			projectile.spriteDirection = projectile.direction;
-			float dist = Vector2.Distance(projectile.Center, owner.Center);
-			if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
-			if ((getTarget == null ||  getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
-		}
+        public static void AIMinionFighter(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = -1f, float maxSpeed = -1f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> getTarget = null)
+        {
+            if (moveInterval == -1f) { moveInterval = 0.08f * Main.player[projectile.owner].moveSpeed; }
+            if (maxSpeed == -1f) { maxSpeed = Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed); }
+            if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
+            AIMinionFighter(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, ref projectile.gfxOffY, ref projectile.stepSpeed, pet ? 0 : projectile.minionPos, jumpDistX, jumpDistY, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget);
+            projectile.spriteDirection = projectile.direction;
+            float dist = Vector2.Distance(projectile.Center, owner.Center);
+            if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
+            if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
+        }
 
 
-		/*
+        /*
 		 * Custom AI that works similarly to fighter minion AI. (uses ai[0, 1])
 		 * 
 		 * owner : The Projectile or NPC who is this minion's owner.
@@ -256,97 +262,103 @@ namespace Redemption.Base
 		 * maxSpeedFlying : The maximum speed whist 'flying' back to the player.
 		 * GetTarget : a Func(Entity codable, Entity owner), returns a Vector2 of the a target's position. If GetTarget is null or it returns default(Vector2) the target is assumed to be the owner.
 		 */
-		public static void AIMinionFighter(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, ref float gfxOffY, ref float stepSpeed, int minionPos, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null)
-		{
-			float dist = Vector2.Distance(codable.Center, owner.Center);
-			if (dist > teleportDist) { codable.Center = owner.Center; }
-			int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
-			Tile tile = Main.tile[tileX, tileY];
-			bool inTile = tile is {IsActiveUnactuated: true} && Main.tileSolid[tile.type];
-			float prevAI = ai[0];
-			ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
-			if (ai[0] != prevAI) { netUpdate = true; }
-			if (ai[0] == 0) //walking
-			{
-				tileCollide = true;
-				Entity target = getTarget == null ? null : getTarget(codable, owner);
-				Vector2 targetCenter = target == null ? default : target.Center;
-				bool isOwner = target == null || targetCenter == owner.Center;
-				if (targetCenter == default)
-				{
-					targetCenter = owner.Center;
-					targetCenter.X += (owner.width + 10 + lineDist * minionPos) * -owner.direction;
-				}
-				float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
-				float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
-				int moveDirection = targetCenter.X > codable.Center.X ? 1 : -1;
-				int moveDirectionY = targetCenter.Y > codable.Center.Y ? 1 : -1;
-				if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
-				{
-					codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f;
-				}else
-				if (codable.velocity.X < -maxSpeed || codable.velocity.X > maxSpeed)
-				{
-					if (codable.velocity.Y == 0f){ codable.velocity *= 0.85f; }
-				}else
-				if (codable.velocity.X < maxSpeed && moveDirection == 1)
-				{
-					if(codable.velocity.X < 0){ codable.velocity.X *= 0.85f; }
-					codable.velocity.X += moveInterval * (codable.velocity.X < 0 ? 2f : 1f);
-					if (codable.velocity.X > maxSpeed){ codable.velocity.X = maxSpeed; }
-				}else
-				if (codable.velocity.X > -maxSpeed && moveDirection == -1)
-				{
-					if(codable.velocity.X > 0) { codable.velocity.X *= 0.8f; }
-					codable.velocity.X -= moveInterval * (codable.velocity.X > 0 ? 2f : 1f);
-					if(codable.velocity.X < -maxSpeed){ codable.velocity.X = -maxSpeed; }
-				}
-				WalkupHalfBricks(codable, ref gfxOffY, ref stepSpeed);
-				if (HitTileOnSide(codable, 3))
-				{
-					if (codable.velocity.X < 0f && moveDirection == -1 || codable.velocity.X > 0f && moveDirection == 1)
-					{
-						bool test = target != null && !isOwner && targetDistX < 50f && targetDistY > codable.height + codable.height / 2 && targetDistY < 16f * (jumpDistY + 1) && BaseUtility.CanHit(codable.Hitbox, target.Hitbox);
-						Vector2 newVec = AttemptJump(codable.position, codable.velocity, codable.width, codable.height, moveDirection, moveDirectionY, jumpDistX, jumpDistY, maxSpeed, true, target, test);
-						if (tileCollide)
-						{
-							newVec = Collision.TileCollision(codable.position, newVec, codable.width, codable.height);
-							Vector4 slopeVec = Collision.SlopeCollision(codable.position, newVec, codable.width, codable.height);
-							codable.position = new Vector2(slopeVec.X, slopeVec.Y);
-							codable.velocity = new Vector2(slopeVec.Z, slopeVec.W);
-						}
-						if (codable.velocity != newVec) { codable.velocity = newVec; netUpdate = true; }
-					}
-				}else{ codable.velocity.Y += 0.35f; } //gravity
-			}else //flying
-			{
-				tileCollide = false;
-				Vector2 targetCenter = owner.Center;
-				if (owner.velocity.Y != 0f && dist < 80)
-				{
-					targetCenter = owner.Center + BaseUtility.RotateVector(default, new Vector2(10, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
-				}
-				Vector2 newVel = BaseUtility.RotateVector(default, new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, targetCenter));
-				if (owner.velocity.Y != 0f && (newVel.X > 0 && codable.velocity.X < 0 || newVel.X < 0 && codable.velocity.X > 0))
-				{
-					codable.velocity *= 0.98f; newVel *= 0.02f; codable.velocity += newVel;
-				}else{ codable.velocity = newVel; }
-				codable.position += owner.velocity;	
-			}
-		}
+        public static void AIMinionFighter(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, ref float gfxOffY, ref float stepSpeed, int minionPos, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null)
+        {
+            float dist = Vector2.Distance(codable.Center, owner.Center);
+            if (dist > teleportDist) { codable.Center = owner.Center; }
+            int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
+            Tile tile = Main.tile[tileX, tileY];
+            bool inTile = tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type];
+            float prevAI = ai[0];
+            ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
+            if (ai[0] != prevAI) { netUpdate = true; }
+            if (ai[0] == 0) //walking
+            {
+                tileCollide = true;
+                Entity target = getTarget == null ? null : getTarget(codable, owner);
+                Vector2 targetCenter = target == null ? default : target.Center;
+                bool isOwner = target == null || targetCenter == owner.Center;
+                if (targetCenter == default)
+                {
+                    targetCenter = owner.Center;
+                    targetCenter.X += (owner.width + 10 + lineDist * minionPos) * -owner.direction;
+                }
+                float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
+                float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
+                int moveDirection = targetCenter.X > codable.Center.X ? 1 : -1;
+                int moveDirectionY = targetCenter.Y > codable.Center.Y ? 1 : -1;
+                if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
+                {
+                    codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f;
+                }
+                else
+                if (codable.velocity.X < -maxSpeed || codable.velocity.X > maxSpeed)
+                {
+                    if (codable.velocity.Y == 0f) { codable.velocity *= 0.85f; }
+                }
+                else
+                if (codable.velocity.X < maxSpeed && moveDirection == 1)
+                {
+                    if (codable.velocity.X < 0) { codable.velocity.X *= 0.85f; }
+                    codable.velocity.X += moveInterval * (codable.velocity.X < 0 ? 2f : 1f);
+                    if (codable.velocity.X > maxSpeed) { codable.velocity.X = maxSpeed; }
+                }
+                else
+                if (codable.velocity.X > -maxSpeed && moveDirection == -1)
+                {
+                    if (codable.velocity.X > 0) { codable.velocity.X *= 0.8f; }
+                    codable.velocity.X -= moveInterval * (codable.velocity.X > 0 ? 2f : 1f);
+                    if (codable.velocity.X < -maxSpeed) { codable.velocity.X = -maxSpeed; }
+                }
+                WalkupHalfBricks(codable, ref gfxOffY, ref stepSpeed);
+                if (HitTileOnSide(codable, 3))
+                {
+                    if (codable.velocity.X < 0f && moveDirection == -1 || codable.velocity.X > 0f && moveDirection == 1)
+                    {
+                        bool test = target != null && !isOwner && targetDistX < 50f && targetDistY > codable.height + codable.height / 2 && targetDistY < 16f * (jumpDistY + 1) && BaseUtility.CanHit(codable.Hitbox, target.Hitbox);
+                        Vector2 newVec = AttemptJump(codable.position, codable.velocity, codable.width, codable.height, moveDirection, moveDirectionY, jumpDistX, jumpDistY, maxSpeed, true, target, test);
+                        if (tileCollide)
+                        {
+                            newVec = Collision.TileCollision(codable.position, newVec, codable.width, codable.height);
+                            Vector4 slopeVec = Collision.SlopeCollision(codable.position, newVec, codable.width, codable.height);
+                            codable.position = new Vector2(slopeVec.X, slopeVec.Y);
+                            codable.velocity = new Vector2(slopeVec.Z, slopeVec.W);
+                        }
+                        if (codable.velocity != newVec) { codable.velocity = newVec; netUpdate = true; }
+                    }
+                }
+                else { codable.velocity.Y += 0.35f; } //gravity
+            }
+            else //flying
+            {
+                tileCollide = false;
+                Vector2 targetCenter = owner.Center;
+                if (owner.velocity.Y != 0f && dist < 80)
+                {
+                    targetCenter = owner.Center + BaseUtility.RotateVector(default, new Vector2(10, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
+                }
+                Vector2 newVel = BaseUtility.RotateVector(default, new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, targetCenter));
+                if (owner.velocity.Y != 0f && (newVel.X > 0 && codable.velocity.X < 0 || newVel.X < 0 && codable.velocity.X > 0))
+                {
+                    codable.velocity *= 0.98f; newVel *= 0.02f; codable.velocity += newVel;
+                }
+                else { codable.velocity = newVel; }
+                codable.position += owner.velocity;
+            }
+        }
 
-		public static void AIMinionSlime(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = -1f, float jumpVelY = 20f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> getTarget = null)
-		{
-			if (jumpVelX == -1f) { jumpVelX = 2f + Main.player[projectile.owner].velocity.X; }
-			if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(jumpVelX, jumpVelY); }
-			AIMinionSlime(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, lineDist, returnDist, teleportDist, jumpVelX, jumpVelY, maxSpeedFlying, getTarget);
-			projectile.spriteDirection = projectile.direction;
-			float dist = Vector2.Distance(projectile.Center, owner.Center);
-			if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
-			if ((getTarget == null ||  getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
-		}		
-		
-		/*
+        public static void AIMinionSlime(Projectile projectile, ref float[] ai, Entity owner, bool pet = false, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = -1f, float jumpVelY = 20f, float maxSpeedFlying = -1f, Func<Entity, Entity, Entity> getTarget = null)
+        {
+            if (jumpVelX == -1f) { jumpVelX = 2f + Main.player[projectile.owner].velocity.X; }
+            if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(jumpVelX, jumpVelY); }
+            AIMinionSlime(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, lineDist, returnDist, teleportDist, jumpVelX, jumpVelY, maxSpeedFlying, getTarget);
+            projectile.spriteDirection = projectile.direction;
+            float dist = Vector2.Distance(projectile.Center, owner.Center);
+            if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
+            if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
+        }
+
+        /*
 		 * Custom AI that works similarly to slime minion AI. (uses ai[0, 1])
 		 * 
 		 * owner : The Projectile or NPC who is this minion's owner.
@@ -363,59 +375,61 @@ namespace Redemption.Base
 		 * maxSpeedFlying : The maximum speed whist 'flying' back to the player.
 		 * GetTarget : a Func(Entity codable, Entity owner), returns a Vector2 of the a target's position. If GetTarget is null or it returns default(Vector2) the target is assumed to be the owner.
 		 */
-		public static void AIMinionSlime(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = 2f, float jumpVelY = 20f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null)
-		{
-			float dist = Vector2.Distance(codable.Center, owner.Center);
-			if (dist > teleportDist) { codable.Center = owner.Center; }
-			int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
-			Tile tile = Main.tile[tileX, tileY];
-			bool inTile = tile is {IsActiveUnactuated: true} && Main.tileSolid[tile.type];
-			float prevAI = ai[0];
-			ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
-			if (ai[0] != prevAI) { netUpdate = true; }
-			if (ai[0] == 0) //walking
-			{
-				tileCollide = true;
-				Entity target = getTarget == null ? null : getTarget(codable, owner);
-				Vector2 targetCenter = target == null ? default : target.Center;
-				bool isOwner = target == null || targetCenter == owner.Center;
-				if (targetCenter == default)
-				{
-					targetCenter = owner.Center;
-					targetCenter.X += (lineDist + lineDist * minionPos) * -owner.direction;
-				}
-				float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
-				float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
-				int moveDirection = targetCenter.X > codable.Center.X ? 1 : -1;
-				int moveDirectionY = targetCenter.Y > codable.Center.Y ? 1 : -1;					
-				if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
-				{
-					codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f;
-				}else
-				if (codable.velocity.Y == 0f)
-				{
-					codable.velocity.X *= 0.8f;
-					if (codable.velocity.X is > -0.1f and < 0.1f){ codable.velocity.X = 0f; }
-					codable.velocity.Y = -jumpVelY;
-					codable.velocity.X += jumpVelX * moveDirection;
-					codable.position += codable.velocity;
-				}
-				if (HitTileOnSide(codable, 3))
-				{
-					if (codable.velocity.X < 0f && moveDirection == -1 || codable.velocity.X > 0f && moveDirection == 1)
-					{
-						Vector2 newVec = codable.velocity;
-						if (tileCollide)
-						{
-							newVec = Collision.TileCollision(codable.position, newVec, codable.width, codable.height);
-							Vector4 slopeVec = Collision.SlopeCollision(codable.position, newVec, codable.width, codable.height);
-							codable.position = new Vector2(slopeVec.X, slopeVec.Y);
-							codable.velocity = new Vector2(slopeVec.Z, slopeVec.W);
-						}
-						if (codable.velocity != newVec) { codable.velocity = newVec; netUpdate = true; }
-					}
-				}else{ codable.velocity.Y += 0.35f; } //gravity*/			
-				/*if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
+        public static void AIMinionSlime(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = 2f, float jumpVelY = 20f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> getTarget = null)
+        {
+            float dist = Vector2.Distance(codable.Center, owner.Center);
+            if (dist > teleportDist) { codable.Center = owner.Center; }
+            int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
+            Tile tile = Main.tile[tileX, tileY];
+            bool inTile = tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type];
+            float prevAI = ai[0];
+            ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
+            if (ai[0] != prevAI) { netUpdate = true; }
+            if (ai[0] == 0) //walking
+            {
+                tileCollide = true;
+                Entity target = getTarget == null ? null : getTarget(codable, owner);
+                Vector2 targetCenter = target == null ? default : target.Center;
+                bool isOwner = target == null || targetCenter == owner.Center;
+                if (targetCenter == default)
+                {
+                    targetCenter = owner.Center;
+                    targetCenter.X += (lineDist + lineDist * minionPos) * -owner.direction;
+                }
+                float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
+                float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
+                int moveDirection = targetCenter.X > codable.Center.X ? 1 : -1;
+                int moveDirectionY = targetCenter.Y > codable.Center.Y ? 1 : -1;
+                if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
+                {
+                    codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f;
+                }
+                else
+                if (codable.velocity.Y == 0f)
+                {
+                    codable.velocity.X *= 0.8f;
+                    if (codable.velocity.X is > -0.1f and < 0.1f) { codable.velocity.X = 0f; }
+                    codable.velocity.Y = -jumpVelY;
+                    codable.velocity.X += jumpVelX * moveDirection;
+                    codable.position += codable.velocity;
+                }
+                if (HitTileOnSide(codable, 3))
+                {
+                    if (codable.velocity.X < 0f && moveDirection == -1 || codable.velocity.X > 0f && moveDirection == 1)
+                    {
+                        Vector2 newVec = codable.velocity;
+                        if (tileCollide)
+                        {
+                            newVec = Collision.TileCollision(codable.position, newVec, codable.width, codable.height);
+                            Vector4 slopeVec = Collision.SlopeCollision(codable.position, newVec, codable.width, codable.height);
+                            codable.position = new Vector2(slopeVec.X, slopeVec.Y);
+                            codable.velocity = new Vector2(slopeVec.Z, slopeVec.W);
+                        }
+                        if (codable.velocity != newVec) { codable.velocity = newVec; netUpdate = true; }
+                    }
+                }
+                else { codable.velocity.Y += 0.35f; } //gravity*/			
+                /*if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
 				{
 					codable.velocity.X *= (Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f);
 				}else
@@ -451,25 +465,27 @@ namespace Redemption.Base
 						if (codable.velocity != newVec) { codable.velocity = newVec; netUpdate = true; }
 					}
 				}else{ codable.velocity.Y += 0.35f; } //gravity*/
-			}else //flying
-			{
-				tileCollide = false;
-				Vector2 targetCenter = owner.Center;
-				if (owner.velocity.Y != 0f && dist < 80)
-				{
-					targetCenter = owner.Center + BaseUtility.RotateVector(default, new Vector2(10, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
-				}
-				Vector2 newVel = BaseUtility.RotateVector(default, new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, targetCenter));
-				if (owner.velocity.Y != 0f && (newVel.X > 0 && codable.velocity.X < 0 || newVel.X < 0 && codable.velocity.X > 0))
-				{
-					codable.velocity *= 0.98f; newVel *= 0.02f; codable.velocity += newVel;
-				}else{ codable.velocity = newVel; }
-				codable.position += owner.velocity;	
-			}
-		}
-				
-		
-		/*
+            }
+            else //flying
+            {
+                tileCollide = false;
+                Vector2 targetCenter = owner.Center;
+                if (owner.velocity.Y != 0f && dist < 80)
+                {
+                    targetCenter = owner.Center + BaseUtility.RotateVector(default, new Vector2(10, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
+                }
+                Vector2 newVel = BaseUtility.RotateVector(default, new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, targetCenter));
+                if (owner.velocity.Y != 0f && (newVel.X > 0 && codable.velocity.X < 0 || newVel.X < 0 && codable.velocity.X > 0))
+                {
+                    codable.velocity *= 0.98f; newVel *= 0.02f; codable.velocity += newVel;
+                }
+                else { codable.velocity = newVel; }
+                codable.position += owner.velocity;
+            }
+        }
+
+
+        /*
 		 * Custom AI that will cause the npc to rotate around a point in a fixed circle.
 		 * 
 		 * rotation : The codable's rotation.
@@ -481,52 +497,56 @@ namespace Redemption.Base
 		 * rotAmount : How much to rotate each tick.
 		 * moveTowards : Only used if absolute is false, if outside the rotation, move towards it.
 		 */
-		public static void AIRotate(Entity codable, ref float rotation, ref float moveRot, Vector2 rotateCenter, bool absolute = false, float rotDistance = 50f, float rotThreshold = 20f, float rotAmount = 0.024f, bool moveTowards = true)
-		{
-			if (absolute)
-			{
-				moveRot += rotAmount;
-				Vector2 rotVec = BaseUtility.RotateVector(default, new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
-				codable.Center = rotVec;
-				rotVec.Normalize();
-				rotation = BaseUtility.RotationTo(codable.Center, rotateCenter) - 1.57f;
-				codable.velocity *= 0f;
-			}else
-			{
-				float dist = Vector2.Distance(codable.Center, rotateCenter);
-				if (dist < rotDistance)//close enough to rotate
-				{
-					if (rotDistance - dist > rotThreshold) //too close, get back into position
-					{
-						moveRot += rotAmount;
-						Vector2 rotVec = BaseUtility.RotateVector(default, new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
-						float rot2 = BaseUtility.RotationTo(codable.Center, rotVec);
-						codable.velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), rot2);
-						rotation = BaseUtility.RotationTo(codable.Center, codable.Center + codable.velocity);
-					}else
-					{
-						moveRot += rotAmount;
-						Vector2 rotVec = BaseUtility.RotateVector(default, new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
-						float rot2 = BaseUtility.RotationTo(codable.Center, rotVec);
-						codable.velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), rot2);
-						rotation = BaseUtility.RotationTo(codable.Center, codable.Center + codable.velocity);
-					}
-				}else
-				if (moveTowards)
-				{
-					codable.velocity = AIVelocityLinear(codable, rotateCenter, rotAmount, rotAmount, true);
-					rotation = BaseUtility.RotationTo(codable.Center, rotateCenter) - 1.57f;
-				}else { codable.velocity *= 0.95f; }
-			}
-		}
+        public static void AIRotate(Entity codable, ref float rotation, ref float moveRot, Vector2 rotateCenter, bool absolute = false, float rotDistance = 50f, float rotThreshold = 20f, float rotAmount = 0.024f, bool moveTowards = true)
+        {
+            if (absolute)
+            {
+                moveRot += rotAmount;
+                Vector2 rotVec = BaseUtility.RotateVector(default, new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
+                codable.Center = rotVec;
+                rotVec.Normalize();
+                rotation = BaseUtility.RotationTo(codable.Center, rotateCenter) - 1.57f;
+                codable.velocity *= 0f;
+            }
+            else
+            {
+                float dist = Vector2.Distance(codable.Center, rotateCenter);
+                if (dist < rotDistance)//close enough to rotate
+                {
+                    if (rotDistance - dist > rotThreshold) //too close, get back into position
+                    {
+                        moveRot += rotAmount;
+                        Vector2 rotVec = BaseUtility.RotateVector(default, new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
+                        float rot2 = BaseUtility.RotationTo(codable.Center, rotVec);
+                        codable.velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), rot2);
+                        rotation = BaseUtility.RotationTo(codable.Center, codable.Center + codable.velocity);
+                    }
+                    else
+                    {
+                        moveRot += rotAmount;
+                        Vector2 rotVec = BaseUtility.RotateVector(default, new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
+                        float rot2 = BaseUtility.RotationTo(codable.Center, rotVec);
+                        codable.velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), rot2);
+                        rotation = BaseUtility.RotationTo(codable.Center, codable.Center + codable.velocity);
+                    }
+                }
+                else
+                if (moveTowards)
+                {
+                    codable.velocity = AIVelocityLinear(codable, rotateCenter, rotAmount, rotAmount, true);
+                    rotation = BaseUtility.RotationTo(codable.Center, rotateCenter) - 1.57f;
+                }
+                else { codable.velocity *= 0.95f; }
+            }
+        }
 
 
         public static void AIPounce(Entity codable, Player player, float pounceScalar = 3f, float maxSpeed = 5f, float yBoost = -5.2f, float minDistance = 50, float maxDistance = 60)
         {
-            if (player is not {active: true} || player.dead) { return; }
+            if (player is not { active: true } || player.dead) { return; }
             AIPounce(codable, player.Center, pounceScalar, maxSpeed, yBoost, minDistance, maxDistance);
         }
-        
+
         /*
          * Custom AI that will cause the npc to 'pounce' at the given target when it is within range.
          * 
@@ -546,9 +566,10 @@ namespace Redemption.Base
                 if (codable.velocity.Y == 0 && (onLeft && direction == -1 || !onLeft && direction == 1))
                 {
                     codable.velocity.X *= pounceScalar;
-                    if (codable.velocity.X > maxSpeed) { codable.velocity.X = maxSpeed; } if (codable.velocity.X < -maxSpeed) { codable.velocity.X = -maxSpeed; }
+                    if (codable.velocity.X > maxSpeed) { codable.velocity.X = maxSpeed; }
+                    if (codable.velocity.X < -maxSpeed) { codable.velocity.X = -maxSpeed; }
                     codable.velocity.Y = yBoost;
-                    if(codable is NPC nPc1) { nPc1.netUpdate = true; }
+                    if (codable is NPC nPc1) { nPc1.netUpdate = true; }
                 }
             }
         }
@@ -575,14 +596,15 @@ namespace Redemption.Base
                 if (destVec == default)
                 {
                     npc.velocity *= 0.95f;
-                    if(Main.netMode != NetmodeID.MultiplayerClient)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         destVec = points[(int)npc.ai[2]];
                         ai[0] = destVec.X; ai[1] = destVec.Y;
                         ai[2]++;
                         npc.netUpdate = true;
                     }
-                }else //otherwise move to the point.
+                }
+                else //otherwise move to the point.
                 {
                     npc.velocity = AIVelocityLinear(npc, destVec, moveInterval, maxSpeed, direct);
                 }
@@ -617,8 +639,9 @@ namespace Redemption.Base
                     destVec = point;
                     ai[0] = destVec.X; ai[1] = destVec.Y;
                 }
-                if(Main.netMode == NetmodeID.Server){ npc.netUpdate = true; }
-            }else //otherwise move to the point.
+                if (Main.netMode == NetmodeID.Server) { npc.netUpdate = true; }
+            }
+            else //otherwise move to the point.
             {
                 npc.velocity = AIVelocityLinear(npc, destVec, moveInterval, maxSpeed, direct);
             }
@@ -666,7 +689,8 @@ namespace Redemption.Base
                 if (canCrossCenter)
                 {
                     destVec = BaseUtility.GetRandomPosNear(point, rand, minDistance, maxDistance);
-                }else
+                }
+                else
                 {
                     int distance = maxDistance - minDistance;
                     Vector2 topLeft = new(point.X - (minDistance + rand.Next(distance)), point.Y - (minDistance + rand.Next(distance)));
@@ -684,12 +708,14 @@ namespace Redemption.Base
                             closestPoint = corner;
                         }
                     }
-                    if (closestPoint == topLeft || closestPoint == bottomRight) { destVec = rand.Next(2) == 0 ? topRight : bottomLeft; }else
+                    if (closestPoint == topLeft || closestPoint == bottomRight) { destVec = rand.Next(2) == 0 ? topRight : bottomLeft; }
+                    else
                     if (closestPoint == topRight || closestPoint == bottomLeft) { destVec = rand.Next(2) == 0 ? topLeft : bottomRight; }
                 }
                 ai[0] = destVec.X; ai[1] = destVec.Y;
-                if(Main.netMode == NetmodeID.Server){ npc.netUpdate = true; }
-            }else
+                if (Main.netMode == NetmodeID.Server) { npc.netUpdate = true; }
+            }
+            else
             if (destVec != default) //otherwise move towards the point.
             {
                 npc.velocity = AIVelocityLinear(npc, destVec, moveInterval, maxSpeed, direct);
@@ -705,7 +731,8 @@ namespace Redemption.Base
             {
                 Vector2 rotVec = BaseUtility.RotateVector(codable.Center, codable.Center + new Vector2(maxSpeed, 0f), BaseUtility.RotationTo(codable.Center, destVec));
                 returnVelocity = rotVec - codable.Center;
-            }else
+            }
+            else
             {
                 if (codable.Center.X > destVec.X) { returnVelocity.X = Math.Max(-maxSpeed, returnVelocity.X - moveInterval); } else if (codable.Center.X < destVec.X) { returnVelocity.X = Math.Min(maxSpeed, returnVelocity.X + moveInterval); }
                 if (codable.Center.Y > destVec.Y) { returnVelocity.Y = Math.Max(-maxSpeed, returnVelocity.Y - moveInterval); } else if (codable.Center.Y < destVec.Y) { returnVelocity.Y = Math.Min(maxSpeed, returnVelocity.Y + moveInterval); }
@@ -729,31 +756,31 @@ namespace Redemption.Base
          * 
          * ----------------------------------------
          */
-	 
-		public static void AILightningBolt(Projectile projectile, ref float[] ai, float changeAngleAt = 40)
-		{
-			int projFrameCounter = projectile.frameCounter;
-			projectile.frameCounter = projFrameCounter + 1;
-			if (projectile.velocity == Vector2.Zero)
-			{
-				if (projectile.frameCounter >= projectile.extraUpdates * 2)
-				{
-					projectile.frameCounter = 0;
-					bool shouldKillProjectile = true;
-					for (int m = 1; m < projectile.oldPos.Length; m = projFrameCounter + 1)
-					{
-						if (projectile.oldPos[m] != projectile.oldPos[0])
-						{
-							shouldKillProjectile = false;
-						}
-						projFrameCounter = m;
-					}
-					if (shouldKillProjectile)
-					{
-						projectile.Kill();
+
+        public static void AILightningBolt(Projectile projectile, ref float[] ai, float changeAngleAt = 40)
+        {
+            int projFrameCounter = projectile.frameCounter;
+            projectile.frameCounter = projFrameCounter + 1;
+            if (projectile.velocity == Vector2.Zero)
+            {
+                if (projectile.frameCounter >= projectile.extraUpdates * 2)
+                {
+                    projectile.frameCounter = 0;
+                    bool shouldKillProjectile = true;
+                    for (int m = 1; m < projectile.oldPos.Length; m = projFrameCounter + 1)
+                    {
+                        if (projectile.oldPos[m] != projectile.oldPos[0])
+                        {
+                            shouldKillProjectile = false;
+                        }
+                        projFrameCounter = m;
                     }
-				}
-				/*if (Main.rand.Next(projectile.extraUpdates) == 0)
+                    if (shouldKillProjectile)
+                    {
+                        projectile.Kill();
+                    }
+                }
+                /*if (Main.rand.Next(projectile.extraUpdates) == 0)
 				{
 					for (int m2 = 0; m2 < 2; m2 = projFrameCounter + 1)
 					{
@@ -775,115 +802,115 @@ namespace Redemption.Base
 						return;
 					}
 				}*/
-			}
-			else if (projectile.frameCounter >= projectile.extraUpdates * 2)
-			{
-				projectile.frameCounter = 0;
-				float velSpeed = projectile.velocity.Length();
-				UnifiedRandom unifiedRandom = new((int)projectile.ai[1]);
-				int newFrameCounter = 0;
-				Vector2 projVelocity = -Vector2.UnitY;
-				Vector2 angleVector;
-				do
-				{
-					int percentile = unifiedRandom.Next();
-					projectile.ai[1] = percentile;
-					percentile %= 100;
-					float f = percentile / 100f * 6.28318548f;
-					angleVector = f.ToRotationVector2();
-					if (angleVector.Y > 0f)
-					{
-						angleVector.Y *= -1f;
-					}
-					bool moreFrames = false;
-					if (angleVector.Y > -0.02f)
-					{
-						moreFrames = true;
-					}
-					if (angleVector.X * (projectile.extraUpdates + 1) * 2f * velSpeed + projectile.localAI[0] > changeAngleAt)
-					{
-						moreFrames = true;
-					}
-					if (angleVector.X * (projectile.extraUpdates + 1) * 2f * velSpeed + projectile.localAI[0] < -changeAngleAt)
-					{
-						moreFrames = true;
-					}
-					if (!moreFrames)
-					{
-						goto IL_2608D;
-					}
-					projFrameCounter = newFrameCounter;
-					newFrameCounter = projFrameCounter + 1;
-				}
-				while (projFrameCounter < 100);
-				projectile.velocity = Vector2.Zero;
-				projectile.localAI[1] = 1f;
-				goto IL_26099;
-				IL_2608D:
-				projVelocity = angleVector;
-				IL_26099:
-				if (projectile.velocity != Vector2.Zero)
-				{
-					projectile.localAI[0] += projVelocity.X * (projectile.extraUpdates + 1) * 2f * velSpeed;
-					projectile.velocity = projVelocity.RotatedBy(projectile.ai[0] + 1.57079637f) * velSpeed;
-					projectile.rotation = projectile.velocity.ToRotation() + 1.57079637f;
+            }
+            else if (projectile.frameCounter >= projectile.extraUpdates * 2)
+            {
+                projectile.frameCounter = 0;
+                float velSpeed = projectile.velocity.Length();
+                UnifiedRandom unifiedRandom = new((int)projectile.ai[1]);
+                int newFrameCounter = 0;
+                Vector2 projVelocity = -Vector2.UnitY;
+                Vector2 angleVector;
+                do
+                {
+                    int percentile = unifiedRandom.Next();
+                    projectile.ai[1] = percentile;
+                    percentile %= 100;
+                    float f = percentile / 100f * 6.28318548f;
+                    angleVector = f.ToRotationVector2();
+                    if (angleVector.Y > 0f)
+                    {
+                        angleVector.Y *= -1f;
+                    }
+                    bool moreFrames = false;
+                    if (angleVector.Y > -0.02f)
+                    {
+                        moreFrames = true;
+                    }
+                    if (angleVector.X * (projectile.extraUpdates + 1) * 2f * velSpeed + projectile.localAI[0] > changeAngleAt)
+                    {
+                        moreFrames = true;
+                    }
+                    if (angleVector.X * (projectile.extraUpdates + 1) * 2f * velSpeed + projectile.localAI[0] < -changeAngleAt)
+                    {
+                        moreFrames = true;
+                    }
+                    if (!moreFrames)
+                    {
+                        goto IL_2608D;
+                    }
+                    projFrameCounter = newFrameCounter;
+                    newFrameCounter = projFrameCounter + 1;
                 }
-			}
-		}
+                while (projFrameCounter < 100);
+                projectile.velocity = Vector2.Zero;
+                projectile.localAI[1] = 1f;
+                goto IL_26099;
+            IL_2608D:
+                projVelocity = angleVector;
+            IL_26099:
+                if (projectile.velocity != Vector2.Zero)
+                {
+                    projectile.localAI[0] += projVelocity.X * (projectile.extraUpdates + 1) * 2f * velSpeed;
+                    projectile.velocity = projVelocity.RotatedBy(projectile.ai[0] + 1.57079637f) * velSpeed;
+                    projectile.rotation = projectile.velocity.ToRotation() + 1.57079637f;
+                }
+            }
+        }
 
-		public static void AIProjWorm(Projectile p, ref float[] ai, int[] wormTypes, int wormLength, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
-		{
+        public static void AIProjWorm(Projectile p, ref float[] ai, int[] wormTypes, int wormLength, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
+        {
             int[] wtypes = new int[wormTypes.Length == 1 ? 1 : wormLength];
             wtypes[0] = wormTypes[0];
-			if (wormTypes.Length > 1)
-			{
-				wtypes[^1] = wormTypes[2];
-				for (int m = 1; m < wtypes.Length - 1; m++)
-				{
-					wtypes[m] = wormTypes[1];
-				}
-			}
-			int dummyNPC = -1;
-			AIProjWorm(p, ref ai, ref dummyNPC, wtypes, velScalar, velScalarIdle, velocityMax, velocityMaxIdle);
-		}
+            if (wormTypes.Length > 1)
+            {
+                wtypes[^1] = wormTypes[2];
+                for (int m = 1; m < wtypes.Length - 1; m++)
+                {
+                    wtypes[m] = wormTypes[1];
+                }
+            }
+            int dummyNPC = -1;
+            AIProjWorm(p, ref ai, ref dummyNPC, wtypes, velScalar, velScalarIdle, velocityMax, velocityMaxIdle);
+        }
 
-		public static void AIProjWorm(Projectile p, ref float[] ai, ref int npcTargetToAttack, int[] wormTypes, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
-		{
-			Player plrOwner = Main.player[p.owner];
-			if ((int)Main.time % 120 == 0) p.netUpdate = true;
-			if (!plrOwner.active){ p.active = false; return; }
-			bool isHead = p.type == wormTypes[0];
-			bool isWorm = BaseUtility.InArray(wormTypes, p.type);
-			bool isTail = p.type == wormTypes[^1];
-			int wormWidthHeight = 10;
-			if (isWorm)
-			{
-				p.timeLeft = 2;
-				wormWidthHeight = 30;
-			}
-			if (isHead)
-			{
-				Vector2 plrCenter = plrOwner.Center;
-				float minAttackDist = 700f;
-				float returnDist = 1000f;
-				float teleportDist = 2000f;
-				int target = -1;
-				if (p.Distance(plrCenter) > teleportDist)
-				{
-					p.Center = plrCenter;
-					p.netUpdate = true;
-				}
-				bool flag66 = true;
-				if (flag66)
-				{
-					NPC ownerMinionAttackTargetNPC5 = p.OwnerMinionAttackTargetNPC;
-					if (ownerMinionAttackTargetNPC5 != null && ownerMinionAttackTargetNPC5.CanBeChasedBy(p))
-					{
-						float ownerTargetDist = p.Distance(ownerMinionAttackTargetNPC5.Center);
-						if (ownerTargetDist < minAttackDist * 2f)
-						{
-							target = ownerMinionAttackTargetNPC5.whoAmI;
-							/*if (ownerMinionAttackTargetNPC5.boss)
+        public static void AIProjWorm(Projectile p, ref float[] ai, ref int npcTargetToAttack, int[] wormTypes, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
+        {
+            Player plrOwner = Main.player[p.owner];
+            if ((int)Main.time % 120 == 0) p.netUpdate = true;
+            if (!plrOwner.active) { p.active = false; return; }
+            bool isHead = p.type == wormTypes[0];
+            bool isWorm = BaseUtility.InArray(wormTypes, p.type);
+            bool isTail = p.type == wormTypes[^1];
+            int wormWidthHeight = 10;
+            if (isWorm)
+            {
+                p.timeLeft = 2;
+                wormWidthHeight = 30;
+            }
+            if (isHead)
+            {
+                Vector2 plrCenter = plrOwner.Center;
+                float minAttackDist = 700f;
+                float returnDist = 1000f;
+                float teleportDist = 2000f;
+                int target = -1;
+                if (p.Distance(plrCenter) > teleportDist)
+                {
+                    p.Center = plrCenter;
+                    p.netUpdate = true;
+                }
+                bool flag66 = true;
+                if (flag66)
+                {
+                    NPC ownerMinionAttackTargetNPC5 = p.OwnerMinionAttackTargetNPC;
+                    if (ownerMinionAttackTargetNPC5 != null && ownerMinionAttackTargetNPC5.CanBeChasedBy(p))
+                    {
+                        float ownerTargetDist = p.Distance(ownerMinionAttackTargetNPC5.Center);
+                        if (ownerTargetDist < minAttackDist * 2f)
+                        {
+                            target = ownerMinionAttackTargetNPC5.whoAmI;
+                            /*if (ownerMinionAttackTargetNPC5.boss)
 							{
 								int whoAmI = ownerMinionAttackTargetNPC5.whoAmI;
 							}
@@ -891,444 +918,456 @@ namespace Redemption.Base
 							{
 								int whoAmI2 = ownerMinionAttackTargetNPC5.whoAmI;
 							}*/
-						}
-					}
-					if (target < 0)
-					{
-						int dummy;
-						for (int m = 0; m < 200; m = dummy + 1)
-						{
-							NPC npcTarget = Main.npc[m];
-							if (npcTarget.CanBeChasedBy(p) && plrOwner.Distance(npcTarget.Center) < returnDist)
-							{
-								float npcTargetDist = p.Distance(npcTarget.Center);
-								if (npcTargetDist < minAttackDist)
-								{
-									target = m;
-									bool boss = npcTarget.boss;
-								}
-							}
-							dummy = m;
-						}
-					}
-				}
-				npcTargetToAttack = target;
-				if (target != -1)
-				{
-					NPC npcTarget2 = Main.npc[target];
-					Vector2 npcDist = npcTarget2.Center - p.Center;
-					(npcDist.X > 0f).ToDirectionInt();
-					(npcDist.Y > 0f).ToDirectionInt();
-					float velocityScalar = 0.4f;
-					if (npcDist.Length() < 600f) velocityScalar = 0.6f;
-					if (npcDist.Length() < 300f) velocityScalar = 0.8f;
-					velocityScalar *= velScalar;
-					if (npcDist.Length() > npcTarget2.Size.Length() * 0.75f)
-					{
-						p.velocity += Vector2.Normalize(npcDist) * velocityScalar * 1.5f;
-						if (Vector2.Dot(p.velocity, npcDist) < 0.25f)
-						{
-							p.velocity *= 0.8f;
-						}
-					}
-					if (p.velocity.Length() > velocityMax)
-					{
-						p.velocity = Vector2.Normalize(p.velocity) * velocityMax;
-					}
-				}else
-				{
-					float velocityScalarIdle = 0.2f;
-					Vector2 newPointDist = plrCenter - p.Center;
-					if (newPointDist.Length() < 200f)
-					{
-						velocityScalarIdle = 0.12f;
-					}
-					if (newPointDist.Length() < 140f)
-					{
-						velocityScalarIdle = 0.06f;
-					}
-					velocityScalarIdle *= velScalarIdle;
-					if (newPointDist.Length() > 100f)
-					{
-						if (Math.Abs(plrCenter.X - p.Center.X) > 20f)
-						{
-							p.velocity.X += velocityScalarIdle * Math.Sign(plrCenter.X - p.Center.X);
-						}
-						if (Math.Abs(plrCenter.Y - p.Center.Y) > 10f)
-						{
-							p.velocity.Y += velocityScalarIdle * Math.Sign(plrCenter.Y - p.Center.Y);
-						}
-					}
-					else if (p.velocity.Length() > 2f)
-					{
-						p.velocity *= 0.96f;
-					}
-					if (Math.Abs(p.velocity.Y) < 1f)
-					{
-						p.velocity.Y -= 0.1f;
-					}
-					if (p.velocity.Length() > velocityMaxIdle)
-					{
-						p.velocity = Vector2.Normalize(p.velocity) * velocityMaxIdle;
-					}
-				}
-				p.rotation = p.velocity.ToRotation() + 1.57079637f;
-				int direction = p.direction;
-				p.direction = p.spriteDirection = p.velocity.X > 0f ? 1 : -1;
-				if (direction != p.direction)
-				{
-					p.netUpdate = true;
-				}
-				float scaleChange = MathHelper.Clamp(p.localAI[0], 0f, 50f);
-				p.position = p.Center;
-				p.scale = 1f + scaleChange * 0.01f;
-				p.width = p.height = (int)(wormWidthHeight * p.scale);
-				p.Center = p.position;
-				if (p.alpha > 0)
-				{
-					p.alpha -= 42;
-					if (p.alpha < 0)
-					{
-						p.alpha = 0;
+                        }
                     }
-				}
-			}else
-			{
-				bool npcInFront = false;
-				Vector2 projCenter = Vector2.Zero;
-				float projRot = 0f;
-				float tileScalar = 0f;
-				float projectileScale = 1f;
-				if (p.ai[1] == 1f)
-				{
-					p.ai[1] = 0f;
-					p.netUpdate = true;
-				}
-				int byUuid = Projectile.GetByUUID(p.owner, (int)p.ai[0]);
-				if (isWorm && byUuid >= 0 && Main.projectile[byUuid].active && !isTail)
-				{
-					npcInFront = true;
-					projCenter = Main.projectile[byUuid].Center;
-					projRot = Main.projectile[byUuid].rotation;
-					float projScale = MathHelper.Clamp(Main.projectile[byUuid].scale, 0f, 50f);
-					projectileScale = projScale;
-					tileScalar = 16f;
-					int num1064 = Main.projectile[byUuid].alpha;
-					Main.projectile[byUuid].localAI[0] = p.localAI[0] + 1f;
-					if (Main.projectile[byUuid].type != wormTypes[0])
-					{
-						Main.projectile[byUuid].localAI[1] = p.whoAmI;
-					}
-					if (p.owner == Main.myPlayer && Main.projectile[byUuid].type == wormTypes[0] && p.type == wormTypes[^1])
-					{
-						Main.projectile[byUuid].Kill();
-						p.Kill();
-						return;
-					}
-				}
-				if (!npcInFront)
-				{
-					return;
-				}
-				p.alpha -= 42;
-				if (p.alpha < 0)
-				{
-					p.alpha = 0;
-				}
-				p.velocity = Vector2.Zero;
-				Vector2 centerDist = projCenter - p.Center;
-				if (projRot != p.rotation)
-				{
-					float rotDist = MathHelper.WrapAngle(projRot - p.rotation);
-					centerDist = centerDist.RotatedBy(rotDist * 0.1f);
-				}
-				p.rotation = centerDist.ToRotation() + 1.57079637f;
-				p.position = p.Center;
-				p.scale = projectileScale;
-				p.width = p.height = (int)(wormWidthHeight * p.scale);
-				p.Center = p.position;
-				if (centerDist != Vector2.Zero)
-				{
-					p.Center = projCenter - Vector2.Normalize(centerDist) * tileScalar * projectileScale;
-				}
-				p.spriteDirection = centerDist.X > 0f ? 1 : -1;
+                    if (target < 0)
+                    {
+                        int dummy;
+                        for (int m = 0; m < 200; m = dummy + 1)
+                        {
+                            NPC npcTarget = Main.npc[m];
+                            if (npcTarget.CanBeChasedBy(p) && plrOwner.Distance(npcTarget.Center) < returnDist)
+                            {
+                                float npcTargetDist = p.Distance(npcTarget.Center);
+                                if (npcTargetDist < minAttackDist)
+                                {
+                                    target = m;
+                                    bool boss = npcTarget.boss;
+                                }
+                            }
+                            dummy = m;
+                        }
+                    }
+                }
+                npcTargetToAttack = target;
+                if (target != -1)
+                {
+                    NPC npcTarget2 = Main.npc[target];
+                    Vector2 npcDist = npcTarget2.Center - p.Center;
+                    (npcDist.X > 0f).ToDirectionInt();
+                    (npcDist.Y > 0f).ToDirectionInt();
+                    float velocityScalar = 0.4f;
+                    if (npcDist.Length() < 600f) velocityScalar = 0.6f;
+                    if (npcDist.Length() < 300f) velocityScalar = 0.8f;
+                    velocityScalar *= velScalar;
+                    if (npcDist.Length() > npcTarget2.Size.Length() * 0.75f)
+                    {
+                        p.velocity += Vector2.Normalize(npcDist) * velocityScalar * 1.5f;
+                        if (Vector2.Dot(p.velocity, npcDist) < 0.25f)
+                        {
+                            p.velocity *= 0.8f;
+                        }
+                    }
+                    if (p.velocity.Length() > velocityMax)
+                    {
+                        p.velocity = Vector2.Normalize(p.velocity) * velocityMax;
+                    }
+                }
+                else
+                {
+                    float velocityScalarIdle = 0.2f;
+                    Vector2 newPointDist = plrCenter - p.Center;
+                    if (newPointDist.Length() < 200f)
+                    {
+                        velocityScalarIdle = 0.12f;
+                    }
+                    if (newPointDist.Length() < 140f)
+                    {
+                        velocityScalarIdle = 0.06f;
+                    }
+                    velocityScalarIdle *= velScalarIdle;
+                    if (newPointDist.Length() > 100f)
+                    {
+                        if (Math.Abs(plrCenter.X - p.Center.X) > 20f)
+                        {
+                            p.velocity.X += velocityScalarIdle * Math.Sign(plrCenter.X - p.Center.X);
+                        }
+                        if (Math.Abs(plrCenter.Y - p.Center.Y) > 10f)
+                        {
+                            p.velocity.Y += velocityScalarIdle * Math.Sign(plrCenter.Y - p.Center.Y);
+                        }
+                    }
+                    else if (p.velocity.Length() > 2f)
+                    {
+                        p.velocity *= 0.96f;
+                    }
+                    if (Math.Abs(p.velocity.Y) < 1f)
+                    {
+                        p.velocity.Y -= 0.1f;
+                    }
+                    if (p.velocity.Length() > velocityMaxIdle)
+                    {
+                        p.velocity = Vector2.Normalize(p.velocity) * velocityMaxIdle;
+                    }
+                }
+                p.rotation = p.velocity.ToRotation() + 1.57079637f;
+                int direction = p.direction;
+                p.direction = p.spriteDirection = p.velocity.X > 0f ? 1 : -1;
+                if (direction != p.direction)
+                {
+                    p.netUpdate = true;
+                }
+                float scaleChange = MathHelper.Clamp(p.localAI[0], 0f, 50f);
+                p.position = p.Center;
+                p.scale = 1f + scaleChange * 0.01f;
+                p.width = p.height = (int)(wormWidthHeight * p.scale);
+                p.Center = p.position;
+                if (p.alpha > 0)
+                {
+                    p.alpha -= 42;
+                    if (p.alpha < 0)
+                    {
+                        p.alpha = 0;
+                    }
+                }
             }
-		}
+            else
+            {
+                bool npcInFront = false;
+                Vector2 projCenter = Vector2.Zero;
+                float projRot = 0f;
+                float tileScalar = 0f;
+                float projectileScale = 1f;
+                if (p.ai[1] == 1f)
+                {
+                    p.ai[1] = 0f;
+                    p.netUpdate = true;
+                }
+                int byUuid = Projectile.GetByUUID(p.owner, (int)p.ai[0]);
+                if (isWorm && byUuid >= 0 && Main.projectile[byUuid].active && !isTail)
+                {
+                    npcInFront = true;
+                    projCenter = Main.projectile[byUuid].Center;
+                    projRot = Main.projectile[byUuid].rotation;
+                    float projScale = MathHelper.Clamp(Main.projectile[byUuid].scale, 0f, 50f);
+                    projectileScale = projScale;
+                    tileScalar = 16f;
+                    int num1064 = Main.projectile[byUuid].alpha;
+                    Main.projectile[byUuid].localAI[0] = p.localAI[0] + 1f;
+                    if (Main.projectile[byUuid].type != wormTypes[0])
+                    {
+                        Main.projectile[byUuid].localAI[1] = p.whoAmI;
+                    }
+                    if (p.owner == Main.myPlayer && Main.projectile[byUuid].type == wormTypes[0] && p.type == wormTypes[^1])
+                    {
+                        Main.projectile[byUuid].Kill();
+                        p.Kill();
+                        return;
+                    }
+                }
+                if (!npcInFront)
+                {
+                    return;
+                }
+                p.alpha -= 42;
+                if (p.alpha < 0)
+                {
+                    p.alpha = 0;
+                }
+                p.velocity = Vector2.Zero;
+                Vector2 centerDist = projCenter - p.Center;
+                if (projRot != p.rotation)
+                {
+                    float rotDist = MathHelper.WrapAngle(projRot - p.rotation);
+                    centerDist = centerDist.RotatedBy(rotDist * 0.1f);
+                }
+                p.rotation = centerDist.ToRotation() + 1.57079637f;
+                p.position = p.Center;
+                p.scale = projectileScale;
+                p.width = p.height = (int)(wormWidthHeight * p.scale);
+                p.Center = p.position;
+                if (centerDist != Vector2.Zero)
+                {
+                    p.Center = projCenter - Vector2.Normalize(centerDist) * tileScalar * projectileScale;
+                }
+                p.spriteDirection = centerDist.X > 0f ? 1 : -1;
+            }
+        }
 
-		public static void AIProjSpaceOctopus(Projectile p, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, Action<int, Projectile> spawnDust = null)
-		{
-			AIProjSpaceOctopus(p, ref ai, parentNPCType, fireProjType, shootVelocity, hoverTime, xMult, yMult, -1, true, false, spawnDust);
-		}
+        public static void AIProjSpaceOctopus(Projectile p, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, Action<int, Projectile> spawnDust = null)
+        {
+            AIProjSpaceOctopus(p, ref ai, parentNPCType, fireProjType, shootVelocity, hoverTime, xMult, yMult, -1, true, false, spawnDust);
+        }
 
-		public static void AIProjSpaceOctopus(Projectile projectile, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, int fireDmg = -1, bool useParentTarget = true, bool noParentHover = false, Action<int, Projectile> spawnDust = null)
-		{
-			if(fireDmg == -1) fireDmg = projectile.damage;
-			
-			ai[0] += 1f;
-			if (ai[0] < hoverTime)
-			{
-				bool parentAlive = true;
-				int parentID = (int)ai[1];
-				if (Main.npc[parentID].active && Main.npc[parentID].type == parentNPCType)
-				{
-					if (!noParentHover && Main.npc[parentID].oldPos[1] != Vector2.Zero)
-					{
-						projectile.position += Main.npc[parentID].position - Main.npc[parentID].oldPos[1];
-					}
-				}else
-				{
-					ai[0] = hoverTime;
-					parentAlive = false;
-				}
-				if (parentAlive && !noParentHover)
-				{
-					projectile.velocity += new Vector2(Math.Sign(Main.npc[parentID].Center.X - projectile.Center.X), Math.Sign(Main.npc[parentID].Center.Y - projectile.Center.Y)) * new Vector2(xMult, yMult);
-					if (projectile.velocity.Length() > 6f)
-					{
-						projectile.velocity *= 6f / projectile.velocity.Length();
-					}
-				}
-				if(spawnDust != null) spawnDust(0, projectile);
-				projectile.rotation = projectile.velocity.X * 0.1f;
-			}
-			if (ai[0] == hoverTime)
-			{
-				bool hasParentTarget = true;
-				int parentTarget = -1;
-				if (!useParentTarget)
-				{
-					int parentID2 = (int)ai[1];
-					if (Main.npc[parentID2].active && Main.npc[parentID2].type == parentNPCType)
-					{
-						parentTarget = Main.npc[parentID2].target;
-					}else
-					{
-						hasParentTarget = false;
-					}
-				}else
-				{
-					hasParentTarget = false;
-				}
-				if (!hasParentTarget)
-				{
-					parentTarget = Player.FindClosest(projectile.position, projectile.width, projectile.height);
-				}
-				Vector2 distanceVec = Main.player[parentTarget].Center - projectile.Center;
-				distanceVec.X += Main.rand.Next(-50, 51);
-				distanceVec.Y += Main.rand.Next(-50, 51);
-				distanceVec.X *= Main.rand.Next(80, 121) * 0.01f;
-				distanceVec.Y *= Main.rand.Next(80, 121) * 0.01f;
-				Vector2 distVecNormal = Vector2.Normalize(distanceVec);
-				if (distVecNormal.HasNaNs())
-				{
-					distVecNormal = Vector2.UnitY;
-				}
-				if (fireProjType == -1)
-				{
-					projectile.velocity = distVecNormal * shootVelocity;
-					projectile.netUpdate = true;
-				}else
-				{
-					if (Main.netMode != NetmodeID.MultiplayerClient && Collision.CanHitLine(projectile.Center, 0, 0, Main.player[parentTarget].Center, 0, 0))
-					{
-						Projectile.NewProjectile(Projectile.InheritSource(projectile), projectile.Center.X, projectile.Center.Y, distVecNormal.X * shootVelocity, distVecNormal.Y * shootVelocity, fireProjType, fireDmg, 1f, Main.myPlayer);
-					}
-					ai[0] = 0f;
-				}
-			}
-			if (ai[0] >= hoverTime)
-			{
-				projectile.rotation = projectile.rotation.AngleLerp(projectile.velocity.ToRotation() + 1.57079637f, 0.4f);
-				if(spawnDust != null) spawnDust(1, projectile);
-			}
-		}
-		 
-		public static void AIYoyo(Projectile p, ref float[] ai, ref float[] localAI, float yoyoTimeMax = -1, float maxRange = -1, float topSpeed = -1, bool dontChannel = false, float rotAmount = 0.45f)
-		{
-			if(yoyoTimeMax == -1) yoyoTimeMax = ProjectileID.Sets.YoyosLifeTimeMultiplier[p.type];
-			if(maxRange == -1) maxRange = ProjectileID.Sets.YoyosMaximumRange[p.type];
-			if(topSpeed == -1) topSpeed = ProjectileID.Sets.YoyosTopSpeed[p.type];	
-			AIYoyo(p, ref ai, ref localAI, Main.player[p.owner], Main.player[p.owner].channel, default, yoyoTimeMax, maxRange, topSpeed, dontChannel, rotAmount);
-		}
+        public static void AIProjSpaceOctopus(Projectile projectile, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, int fireDmg = -1, bool useParentTarget = true, bool noParentHover = false, Action<int, Projectile> spawnDust = null)
+        {
+            if (fireDmg == -1) fireDmg = projectile.damage;
 
-		public static void AIYoyo(Projectile p, ref float[] ai, ref float[] localAI, Entity owner, bool isChanneling, Vector2 targetPos = default, float yoyoTimeMax = 120, float maxRange = 150, float topSpeed = 8f, bool dontChannel = false, float rotAmount = 0.45f)
-		{
-			bool playerYoyo = owner is Player;
-			Player powner = playerYoyo ? (Player)owner : null;
-			float meleeSpeed = playerYoyo ? powner.meleeSpeed : 1f;
-			Vector2 targetP = targetPos;
-			if(playerYoyo && Main.myPlayer == p.owner && targetPos == default) targetP = Main.ReverseGravitySupport(Main.MouseScreen) + Main.screenPosition;
+            ai[0] += 1f;
+            if (ai[0] < hoverTime)
+            {
+                bool parentAlive = true;
+                int parentID = (int)ai[1];
+                if (Main.npc[parentID].active && Main.npc[parentID].type == parentNPCType)
+                {
+                    if (!noParentHover && Main.npc[parentID].oldPos[1] != Vector2.Zero)
+                    {
+                        projectile.position += Main.npc[parentID].position - Main.npc[parentID].oldPos[1];
+                    }
+                }
+                else
+                {
+                    ai[0] = hoverTime;
+                    parentAlive = false;
+                }
+                if (parentAlive && !noParentHover)
+                {
+                    projectile.velocity += new Vector2(Math.Sign(Main.npc[parentID].Center.X - projectile.Center.X), Math.Sign(Main.npc[parentID].Center.Y - projectile.Center.Y)) * new Vector2(xMult, yMult);
+                    if (projectile.velocity.Length() > 6f)
+                    {
+                        projectile.velocity *= 6f / projectile.velocity.Length();
+                    }
+                }
+                if (spawnDust != null) spawnDust(0, projectile);
+                projectile.rotation = projectile.velocity.X * 0.1f;
+            }
+            if (ai[0] == hoverTime)
+            {
+                bool hasParentTarget = true;
+                int parentTarget = -1;
+                if (!useParentTarget)
+                {
+                    int parentID2 = (int)ai[1];
+                    if (Main.npc[parentID2].active && Main.npc[parentID2].type == parentNPCType)
+                    {
+                        parentTarget = Main.npc[parentID2].target;
+                    }
+                    else
+                    {
+                        hasParentTarget = false;
+                    }
+                }
+                else
+                {
+                    hasParentTarget = false;
+                }
+                if (!hasParentTarget)
+                {
+                    parentTarget = Player.FindClosest(projectile.position, projectile.width, projectile.height);
+                }
+                Vector2 distanceVec = Main.player[parentTarget].Center - projectile.Center;
+                distanceVec.X += Main.rand.Next(-50, 51);
+                distanceVec.Y += Main.rand.Next(-50, 51);
+                distanceVec.X *= Main.rand.Next(80, 121) * 0.01f;
+                distanceVec.Y *= Main.rand.Next(80, 121) * 0.01f;
+                Vector2 distVecNormal = Vector2.Normalize(distanceVec);
+                if (distVecNormal.HasNaNs())
+                {
+                    distVecNormal = Vector2.UnitY;
+                }
+                if (fireProjType == -1)
+                {
+                    projectile.velocity = distVecNormal * shootVelocity;
+                    projectile.netUpdate = true;
+                }
+                else
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Collision.CanHitLine(projectile.Center, 0, 0, Main.player[parentTarget].Center, 0, 0))
+                    {
+                        Projectile.NewProjectile(Projectile.InheritSource(projectile), projectile.Center.X, projectile.Center.Y, distVecNormal.X * shootVelocity, distVecNormal.Y * shootVelocity, fireProjType, fireDmg, 1f, Main.myPlayer);
+                    }
+                    ai[0] = 0f;
+                }
+            }
+            if (ai[0] >= hoverTime)
+            {
+                projectile.rotation = projectile.rotation.AngleLerp(projectile.velocity.ToRotation() + 1.57079637f, 0.4f);
+                if (spawnDust != null) spawnDust(1, projectile);
+            }
+        }
 
-			bool yoyoFound = false;
-			if(owner is Player)
-			{
-				for (int i = 0; i < p.whoAmI; i++)
-				{
-					if (Main.projectile[i].active && Main.projectile[i].owner == p.owner && Main.projectile[i].type == p.type) yoyoFound = true;
-				}
-			}
-			if (playerYoyo && p.owner == Main.myPlayer || !playerYoyo && Main.netMode != NetmodeID.MultiplayerClient)
-			{
-				localAI[0] += 1f;
-				if (yoyoFound) localAI[0] += Main.rand.Next(10, 31) * 0.1f;
-				float yoyoTimeLeft = localAI[0] / 60f;
-				yoyoTimeLeft /= (1f + meleeSpeed) / 2f;
-				if (yoyoTimeMax != -1f && yoyoTimeLeft > yoyoTimeMax) ai[0] = -1f;
-			}
-			if (playerYoyo && powner.dead || !playerYoyo && !owner.active){ p.Kill(); return; }
-			if (playerYoyo && !dontChannel && !yoyoFound)
-			{
-				powner.heldProj = p.whoAmI;
-				powner.itemAnimation = 2;
-				powner.itemTime = 2;
-				if (p.position.X + p.width / 2 > powner.position.X + powner.width / 2)
-				{
-					powner.ChangeDir(1);
-					p.direction = 1;
-				}else
-				{
-					powner.ChangeDir(-1);
-					p.direction = -1;
-				}
-			}
-			if (p.velocity.HasNaNs()) p.Kill();
-			p.timeLeft = 6;
-			float pMaxRange = maxRange; 
-			float pTopSpeed = topSpeed;
-			if (playerYoyo && powner.yoyoString)
-			{
-				pMaxRange = pMaxRange * 1.25f + 30f;
-			}
-			pMaxRange /= (1f + meleeSpeed * 3f) / 4f;
-			pTopSpeed /= (1f + meleeSpeed * 3f) / 4f;
-			float topSpeedX = 14f - pTopSpeed / 2f;
-			float topSpeedY = 5f + pTopSpeed / 2f;
-			if (yoyoFound)
-			{
-				topSpeedY += 20f;
-			}
-			if (ai[0] >= 0f)
-			{
-				if (p.velocity.Length() > pTopSpeed)
-				{
-					p.velocity *= 0.98f;
-				}
-				bool yoyoTooFar = false;
-				bool yoyoWayTooFar = false;
-				Vector2 centerDist = owner.Center - p.Center;
-				if (centerDist.Length() > pMaxRange)
-				{
-					yoyoTooFar = true;
-					if (centerDist.Length() > pMaxRange * 1.3)
-					{
-						yoyoWayTooFar = true;
-					}
-				}
-				if (playerYoyo && p.owner == Main.myPlayer || !playerYoyo && Main.netMode != NetmodeID.MultiplayerClient)
-				{
-					if (playerYoyo && (!isChanneling || powner.stoned || powner.frozen) || !playerYoyo && !isChanneling)
-					{
-						ai[0] = -1f;
-						ai[1] = 0f;
-						p.netUpdate = true;
-					}else
-					{
-						Vector2 mousePos = targetP;
-						float x = mousePos.X;
-						float y = mousePos.Y;
-						Vector2 mouseDist = new Vector2(x, y) - owner.Center;
-						if (mouseDist.Length() > pMaxRange)
-						{
-							mouseDist.Normalize();
-							mouseDist *= pMaxRange;
-							mouseDist = owner.Center + mouseDist;
-							x = mouseDist.X;
-							y = mouseDist.Y;
-						}
-						if (ai[0] != x || ai[1] != y)
-						{
-							Vector2 coord = new(x, y);
-							Vector2 coordDist = coord - owner.Center;
-							if (coordDist.Length() > pMaxRange - 1f)
-							{
-								coordDist.Normalize();
-								coordDist *= pMaxRange - 1f;
-								coord = owner.Center + coordDist;
-								x = coord.X;
-								y = coord.Y;
-							}
-							ai[0] = x;
-							ai[1] = y;
-							p.netUpdate = true;
-						}
-					}
-				}
-				if (yoyoWayTooFar && p.owner == Main.myPlayer)
-				{
-					ai[0] = -1f;
-					p.netUpdate = true;
-				}
-				if (ai[0] >= 0f)
-				{
-					if (yoyoTooFar)
-					{
-						topSpeedX /= 2f;
-						pTopSpeed *= 2f;
-						if (p.Center.X > owner.Center.X && p.velocity.X > 0f) p.velocity.X *= 0.5f;
-						if (p.Center.Y > owner.Center.Y && p.velocity.Y > 0f) p.velocity.Y *= 0.5f;
-						if (p.Center.X < owner.Center.X && p.velocity.X > 0f) p.velocity.X *= 0.5f;
-						if (p.Center.Y < owner.Center.Y && p.velocity.Y > 0f) p.velocity.Y *= 0.5f;
-					}
-					Vector2 coord = new(ai[0], ai[1]);
-					Vector2 coordDist = coord - p.Center;
-					p.velocity.Length();
-					float coordLength = coordDist.Length();
-					if (coordLength > topSpeedY)
-					{
-						coordDist.Normalize();
-						float scaleFactor = coordLength > pTopSpeed * 2f ? pTopSpeed : coordLength / 2f;
-						coordDist *= scaleFactor;
-						p.velocity = (p.velocity * (topSpeedX - 1f) + coordDist) / topSpeedX;
-					}else if (yoyoFound)
-					{
-						if (p.velocity.Length() < pTopSpeed * 0.6)
-						{
-							coordDist = p.velocity;
-							coordDist.Normalize();
-							coordDist *= pTopSpeed * 0.6f;
-							p.velocity = (p.velocity * (topSpeedX - 1f) + coordDist) / topSpeedX;
-						}
-					}else
-					{
-						p.velocity *= 0.8f;
-					}
-					if (yoyoFound && !yoyoTooFar && p.velocity.Length() < pTopSpeed * 0.6)
-					{
-						p.velocity.Normalize();
-						p.velocity *= pTopSpeed * 0.6f;
-					}
-				}
-			}else
-			{
-				topSpeedX = (int)(topSpeedX * 0.8);
-				pTopSpeed *= 1.5f;
-				p.tileCollide = false;
-				Vector2 posDist = owner.position - p.Center;
-				float posLength = posDist.Length();
-				if (posLength < pTopSpeed + 10f || posLength == 0f)
-				{
-					p.Kill();
-				}else
-				{
-					posDist.Normalize();
-					posDist *= pTopSpeed;
-					p.velocity = (p.velocity * (topSpeedX - 1f) + posDist) / topSpeedX;
-				}
-			}
-			p.rotation += rotAmount;
-		}
-		 
-		/*
+        public static void AIYoyo(Projectile p, ref float[] ai, ref float[] localAI, float yoyoTimeMax = -1, float maxRange = -1, float topSpeed = -1, bool dontChannel = false, float rotAmount = 0.45f)
+        {
+            if (yoyoTimeMax == -1) yoyoTimeMax = ProjectileID.Sets.YoyosLifeTimeMultiplier[p.type];
+            if (maxRange == -1) maxRange = ProjectileID.Sets.YoyosMaximumRange[p.type];
+            if (topSpeed == -1) topSpeed = ProjectileID.Sets.YoyosTopSpeed[p.type];
+            AIYoyo(p, ref ai, ref localAI, Main.player[p.owner], Main.player[p.owner].channel, default, yoyoTimeMax, maxRange, topSpeed, dontChannel, rotAmount);
+        }
+
+        public static void AIYoyo(Projectile p, ref float[] ai, ref float[] localAI, Entity owner, bool isChanneling, Vector2 targetPos = default, float yoyoTimeMax = 120, float maxRange = 150, float topSpeed = 8f, bool dontChannel = false, float rotAmount = 0.45f)
+        {
+            bool playerYoyo = owner is Player;
+            Player powner = playerYoyo ? (Player)owner : null;
+            float meleeSpeed = playerYoyo ? powner.meleeSpeed : 1f;
+            Vector2 targetP = targetPos;
+            if (playerYoyo && Main.myPlayer == p.owner && targetPos == default) targetP = Main.ReverseGravitySupport(Main.MouseScreen) + Main.screenPosition;
+
+            bool yoyoFound = false;
+            if (owner is Player)
+            {
+                for (int i = 0; i < p.whoAmI; i++)
+                {
+                    if (Main.projectile[i].active && Main.projectile[i].owner == p.owner && Main.projectile[i].type == p.type) yoyoFound = true;
+                }
+            }
+            if (playerYoyo && p.owner == Main.myPlayer || !playerYoyo && Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                localAI[0] += 1f;
+                if (yoyoFound) localAI[0] += Main.rand.Next(10, 31) * 0.1f;
+                float yoyoTimeLeft = localAI[0] / 60f;
+                yoyoTimeLeft /= (1f + meleeSpeed) / 2f;
+                if (yoyoTimeMax != -1f && yoyoTimeLeft > yoyoTimeMax) ai[0] = -1f;
+            }
+            if (playerYoyo && powner.dead || !playerYoyo && !owner.active) { p.Kill(); return; }
+            if (playerYoyo && !dontChannel && !yoyoFound)
+            {
+                powner.heldProj = p.whoAmI;
+                powner.itemAnimation = 2;
+                powner.itemTime = 2;
+                if (p.position.X + p.width / 2 > powner.position.X + powner.width / 2)
+                {
+                    powner.ChangeDir(1);
+                    p.direction = 1;
+                }
+                else
+                {
+                    powner.ChangeDir(-1);
+                    p.direction = -1;
+                }
+            }
+            if (p.velocity.HasNaNs()) p.Kill();
+            p.timeLeft = 6;
+            float pMaxRange = maxRange;
+            float pTopSpeed = topSpeed;
+            if (playerYoyo && powner.yoyoString)
+            {
+                pMaxRange = pMaxRange * 1.25f + 30f;
+            }
+            pMaxRange /= (1f + meleeSpeed * 3f) / 4f;
+            pTopSpeed /= (1f + meleeSpeed * 3f) / 4f;
+            float topSpeedX = 14f - pTopSpeed / 2f;
+            float topSpeedY = 5f + pTopSpeed / 2f;
+            if (yoyoFound)
+            {
+                topSpeedY += 20f;
+            }
+            if (ai[0] >= 0f)
+            {
+                if (p.velocity.Length() > pTopSpeed)
+                {
+                    p.velocity *= 0.98f;
+                }
+                bool yoyoTooFar = false;
+                bool yoyoWayTooFar = false;
+                Vector2 centerDist = owner.Center - p.Center;
+                if (centerDist.Length() > pMaxRange)
+                {
+                    yoyoTooFar = true;
+                    if (centerDist.Length() > pMaxRange * 1.3)
+                    {
+                        yoyoWayTooFar = true;
+                    }
+                }
+                if (playerYoyo && p.owner == Main.myPlayer || !playerYoyo && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    if (playerYoyo && (!isChanneling || powner.stoned || powner.frozen) || !playerYoyo && !isChanneling)
+                    {
+                        ai[0] = -1f;
+                        ai[1] = 0f;
+                        p.netUpdate = true;
+                    }
+                    else
+                    {
+                        Vector2 mousePos = targetP;
+                        float x = mousePos.X;
+                        float y = mousePos.Y;
+                        Vector2 mouseDist = new Vector2(x, y) - owner.Center;
+                        if (mouseDist.Length() > pMaxRange)
+                        {
+                            mouseDist.Normalize();
+                            mouseDist *= pMaxRange;
+                            mouseDist = owner.Center + mouseDist;
+                            x = mouseDist.X;
+                            y = mouseDist.Y;
+                        }
+                        if (ai[0] != x || ai[1] != y)
+                        {
+                            Vector2 coord = new(x, y);
+                            Vector2 coordDist = coord - owner.Center;
+                            if (coordDist.Length() > pMaxRange - 1f)
+                            {
+                                coordDist.Normalize();
+                                coordDist *= pMaxRange - 1f;
+                                coord = owner.Center + coordDist;
+                                x = coord.X;
+                                y = coord.Y;
+                            }
+                            ai[0] = x;
+                            ai[1] = y;
+                            p.netUpdate = true;
+                        }
+                    }
+                }
+                if (yoyoWayTooFar && p.owner == Main.myPlayer)
+                {
+                    ai[0] = -1f;
+                    p.netUpdate = true;
+                }
+                if (ai[0] >= 0f)
+                {
+                    if (yoyoTooFar)
+                    {
+                        topSpeedX /= 2f;
+                        pTopSpeed *= 2f;
+                        if (p.Center.X > owner.Center.X && p.velocity.X > 0f) p.velocity.X *= 0.5f;
+                        if (p.Center.Y > owner.Center.Y && p.velocity.Y > 0f) p.velocity.Y *= 0.5f;
+                        if (p.Center.X < owner.Center.X && p.velocity.X > 0f) p.velocity.X *= 0.5f;
+                        if (p.Center.Y < owner.Center.Y && p.velocity.Y > 0f) p.velocity.Y *= 0.5f;
+                    }
+                    Vector2 coord = new(ai[0], ai[1]);
+                    Vector2 coordDist = coord - p.Center;
+                    p.velocity.Length();
+                    float coordLength = coordDist.Length();
+                    if (coordLength > topSpeedY)
+                    {
+                        coordDist.Normalize();
+                        float scaleFactor = coordLength > pTopSpeed * 2f ? pTopSpeed : coordLength / 2f;
+                        coordDist *= scaleFactor;
+                        p.velocity = (p.velocity * (topSpeedX - 1f) + coordDist) / topSpeedX;
+                    }
+                    else if (yoyoFound)
+                    {
+                        if (p.velocity.Length() < pTopSpeed * 0.6)
+                        {
+                            coordDist = p.velocity;
+                            coordDist.Normalize();
+                            coordDist *= pTopSpeed * 0.6f;
+                            p.velocity = (p.velocity * (topSpeedX - 1f) + coordDist) / topSpeedX;
+                        }
+                    }
+                    else
+                    {
+                        p.velocity *= 0.8f;
+                    }
+                    if (yoyoFound && !yoyoTooFar && p.velocity.Length() < pTopSpeed * 0.6)
+                    {
+                        p.velocity.Normalize();
+                        p.velocity *= pTopSpeed * 0.6f;
+                    }
+                }
+            }
+            else
+            {
+                topSpeedX = (int)(topSpeedX * 0.8);
+                pTopSpeed *= 1.5f;
+                p.tileCollide = false;
+                Vector2 posDist = owner.position - p.Center;
+                float posLength = posDist.Length();
+                if (posLength < pTopSpeed + 10f || posLength == 0f)
+                {
+                    p.Kill();
+                }
+                else
+                {
+                    posDist.Normalize();
+                    posDist *= pTopSpeed;
+                    p.velocity = (p.velocity * (topSpeedX - 1f) + posDist) / topSpeedX;
+                }
+            }
+            p.rotation += rotAmount;
+        }
+
+        /*
 		public static void AICounterweight(Projectile p, ref float[] ai)
 		{
 			p.timeLeft = 6;
@@ -1621,81 +1660,82 @@ namespace Redemption.Base
 	
 		*/
 
-		public static void TileCollideYoyo(Projectile p, ref Vector2 velocity, Vector2 newVelocity)
-		{
-			bool normalizeVelocity = false;
-			if (velocity.X != newVelocity.X)
-			{
-				normalizeVelocity = true;
-				velocity.X = newVelocity.X * -1f;
-			}
-			if (velocity.Y != newVelocity.Y)
-			{
-				normalizeVelocity = true;
-				velocity.Y = newVelocity.Y * -1f;
-			}
-			if (normalizeVelocity)
-			{
-				Vector2 centerDist = Main.player[p.owner].Center - p.Center;
-				centerDist.Normalize();
-				centerDist *= velocity.Length();
-				centerDist *= 0.25f;
-				velocity *= 0.75f;
-				velocity += centerDist;
-				if (velocity.Length() > 6f)
-				{
-					velocity *= 0.5f;
-				}
-			}	
-		}
+        public static void TileCollideYoyo(Projectile p, ref Vector2 velocity, Vector2 newVelocity)
+        {
+            bool normalizeVelocity = false;
+            if (velocity.X != newVelocity.X)
+            {
+                normalizeVelocity = true;
+                velocity.X = newVelocity.X * -1f;
+            }
+            if (velocity.Y != newVelocity.Y)
+            {
+                normalizeVelocity = true;
+                velocity.Y = newVelocity.Y * -1f;
+            }
+            if (normalizeVelocity)
+            {
+                Vector2 centerDist = Main.player[p.owner].Center - p.Center;
+                centerDist.Normalize();
+                centerDist *= velocity.Length();
+                centerDist *= 0.25f;
+                velocity *= 0.75f;
+                velocity += centerDist;
+                if (velocity.Length() > 6f)
+                {
+                    velocity *= 0.5f;
+                }
+            }
+        }
 
-		public static void EntityCollideYoyo(Projectile p, ref float[] ai, ref float[] localAI, Entity owner, Entity target, bool spawnCounterweight = true, float velMult = 1f)
-		{
-			if(owner is Player && spawnCounterweight){ ((Player)owner).Counterweight(target.Center, p.damage, p.knockBack); }
-			if (target.Center.X < owner.Center.X){ p.direction = -1; }else{ p.direction = 1; }
-			if (ai[0] >= 0f)
-			{
-				Vector2 value2 = p.Center - target.Center;
-				value2.Normalize();
-				float scaleFactor = 16f;
-				p.velocity *= -0.5f;
-				p.velocity += value2 * scaleFactor;
-				p.velocity *= velMult;
-				p.netUpdate = true;
-				localAI[0] += 20f;
-				if (!Collision.CanHit(p.position, p.width, p.height, owner.position, owner.width, owner.height))
-				{
-					localAI[0] += 40f;
-					//num8 = (int)((double)num8 * 0.75);
-				}
-			}		
-		}
+        public static void EntityCollideYoyo(Projectile p, ref float[] ai, ref float[] localAI, Entity owner, Entity target, bool spawnCounterweight = true, float velMult = 1f)
+        {
+            if (owner is Player && spawnCounterweight) { ((Player)owner).Counterweight(target.Center, p.damage, p.knockBack); }
+            if (target.Center.X < owner.Center.X) { p.direction = -1; } else { p.direction = 1; }
+            if (ai[0] >= 0f)
+            {
+                Vector2 value2 = p.Center - target.Center;
+                value2.Normalize();
+                float scaleFactor = 16f;
+                p.velocity *= -0.5f;
+                p.velocity += value2 * scaleFactor;
+                p.velocity *= velMult;
+                p.netUpdate = true;
+                localAI[0] += 20f;
+                if (!Collision.CanHit(p.position, p.width, p.height, owner.position, owner.width, owner.height))
+                {
+                    localAI[0] += 40f;
+                    //num8 = (int)((double)num8 * 0.75);
+                }
+            }
+        }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Star AI. (Starfury stars, etc.) (AIStyle 5)
 		 * 
 		 * landingHorizon: The Y value at which the star should begin tile colliding. (-1 == always tile collide)
 		 * fadein: If true, projectile fades in when first spawned.
 		 * delayedCollide: If true, star does not collide with tiles until it's past the horizon of it's target
 		 */
-		public static void AIStar(Projectile p, ref float[] ai, float landingHorizon = -1, bool fadein = true)
-		{
-			if (landingHorizon != -1)
-			{
-				if (p.position.Y > landingHorizon) p.tileCollide = true;
-			}else
-			{
-				if (ai[0] == 0f && !Collision.SolidCollision(p.position, p.width, p.height))
-				{
-					ai[0] = 1f;
-					p.netUpdate = true;
-				}
-				if (ai[0] != 0f) p.tileCollide = true;
-			}
-			if(fadein) p.alpha = Math.Max(0, p.alpha - 25);
-		}
+        public static void AIStar(Projectile p, ref float[] ai, float landingHorizon = -1, bool fadein = true)
+        {
+            if (landingHorizon != -1)
+            {
+                if (p.position.Y > landingHorizon) p.tileCollide = true;
+            }
+            else
+            {
+                if (ai[0] == 0f && !Collision.SolidCollision(p.position, p.width, p.height))
+                {
+                    ai[0] = 1f;
+                    p.netUpdate = true;
+                }
+                if (ai[0] != 0f) p.tileCollide = true;
+            }
+            if (fadein) p.alpha = Math.Max(0, p.alpha - 25);
+        }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Explosives AI. (Grenades, Bombs, etc.)
 		 * 
 		 * rocket : changes behavior to act like rockets.
@@ -1704,67 +1744,69 @@ namespace Redemption.Base
 		 * slowdownX : How fast to slow down per tick. (not applied if rocket == true)
 		 * gravity: The gravity amount. (not applied if rocket == true)
 		 */
-		public static void AIExplosive(Projectile p, ref float[] ai, bool rocket = false, bool rotate = true, int beginGravity = 10, float slowdownX = 0.97f, float gravity = 0.2f)
-		{
-			if (rocket)
-			{
-				if (Math.Abs(p.velocity.X) < 15f && Math.Abs(p.velocity.Y) < 15f){ p.velocity *= 1.1f; }
-			}
-			ai[0] += 1f;
-			if (rocket)
-			{
-				if (p.velocity.X < 0f)
-				{
-					p.spriteDirection = -1;
-					p.rotation = (float)Math.Atan2(-p.velocity.Y, -p.velocity.X) - 1.57f;
-				}else
-				{
-					p.spriteDirection = 1;
-					p.rotation = (float)Math.Atan2(p.velocity.Y, p.velocity.X) + 1.57f;
-				}
-			}else
-			if (ai[0] > beginGravity)
-			{
-				ai[0] = beginGravity;
-				if (p.velocity.Y == 0f && p.velocity.X != 0f)
-				{
-					p.velocity.X *= slowdownX;
-					if (p.velocity.X is > -0.01f and < 0.01f)
-					{
-						p.velocity.X = 0f;
-						p.netUpdate = true;
-					}
-				}
-				p.velocity.Y += gravity;
-			}
-			if (rotate){ p.rotation += p.velocity.X * 0.1f; }
-		}
+        public static void AIExplosive(Projectile p, ref float[] ai, bool rocket = false, bool rotate = true, int beginGravity = 10, float slowdownX = 0.97f, float gravity = 0.2f)
+        {
+            if (rocket)
+            {
+                if (Math.Abs(p.velocity.X) < 15f && Math.Abs(p.velocity.Y) < 15f) { p.velocity *= 1.1f; }
+            }
+            ai[0] += 1f;
+            if (rocket)
+            {
+                if (p.velocity.X < 0f)
+                {
+                    p.spriteDirection = -1;
+                    p.rotation = (float)Math.Atan2(-p.velocity.Y, -p.velocity.X) - 1.57f;
+                }
+                else
+                {
+                    p.spriteDirection = 1;
+                    p.rotation = (float)Math.Atan2(p.velocity.Y, p.velocity.X) + 1.57f;
+                }
+            }
+            else
+            if (ai[0] > beginGravity)
+            {
+                ai[0] = beginGravity;
+                if (p.velocity.Y == 0f && p.velocity.X != 0f)
+                {
+                    p.velocity.X *= slowdownX;
+                    if (p.velocity.X is > -0.01f and < 0.01f)
+                    {
+                        p.velocity.X = 0f;
+                        p.netUpdate = true;
+                    }
+                }
+                p.velocity.Y += gravity;
+            }
+            if (rotate) { p.rotation += p.velocity.X * 0.1f; }
+        }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of tile collison for Explosives.
 		 * bomb: Set to true if you want bomblike collision.
 		 */
-		public static void TileCollideExplosive(Projectile p, ref Vector2 velocity, bool bomb = false)
-		{
-			if (p.velocity.X != velocity.X){ p.velocity.X = velocity.X * -0.4f; }
-			if (p.velocity.Y != velocity.Y && velocity.Y > 0.7f && !bomb){ p.velocity.Y = velocity.Y * -0.4f; }
-		}
+        public static void TileCollideExplosive(Projectile p, ref Vector2 velocity, bool bomb = false)
+        {
+            if (p.velocity.X != velocity.X) { p.velocity.X = velocity.X * -0.4f; }
+            if (p.velocity.Y != velocity.Y && velocity.Y > 0.7f && !bomb) { p.velocity.Y = velocity.Y * -0.4f; }
+        }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Arrow AI. (Arrows, etc.) (AIStyle 1) (Can be used with NPCs or Projectiles)
 		 * 
 		 * gravApplyInterval: The rate at which to apply gravity. Higher values == less gravity, greater values == more gravity.
 		 * gravity: the amount to induce gravity upon the codable.
 		 * maxSpeedY: The maximum speed the projectile can be doing down.
 		 */
-		public static void AIArrow(Entity codable, ref float[] ai, int gravApplyInterval = 50, float gravity = 0.1f, float maxSpeedY = 16f)
-		{
-			ai[0]++;
-			if (ai[0] >= gravApplyInterval){ codable.velocity.Y += gravity; }
-			if (codable.velocity.Y > maxSpeedY){ codable.velocity.Y = maxSpeedY; }
-		}
+        public static void AIArrow(Entity codable, ref float[] ai, int gravApplyInterval = 50, float gravity = 0.1f, float maxSpeedY = 16f)
+        {
+            ai[0]++;
+            if (ai[0] >= gravApplyInterval) { codable.velocity.Y += gravity; }
+            if (codable.velocity.Y > maxSpeedY) { codable.velocity.Y = maxSpeedY; }
+        }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Demon Scythe AI. (Demon Scythe, etc.) (AIStyle 18) (Can be used with NPCs or Projectiles)
 		 * 
 		 * startSpeedupInterval : The value to begin velocity speedup.
@@ -1773,20 +1815,20 @@ namespace Redemption.Base
 		 * speedupScalar : The scalar for the speedup interval.
 		 * maxSpeed : The speed to cap the projectile/npc at.
 		 */
-		public static void AIDemonScythe(Entity codable, ref float[] ai, int startSpeedupInterval = 30, int stopSpeedupInterval = 100, float rotateScalar = 0.8f, float speedupScalar = 1.06f, float maxSpeed = 8f)
-		{
-			if (codable is Projectile) { ((Projectile)codable).rotation += codable.direction * rotateScalar; }
-			if (codable is NPC) { ((NPC)codable).rotation += codable.direction * rotateScalar; } 		
-			ai[0] += 1f;
-			if (ai[0] >= startSpeedupInterval)
-			{
-				if (ai[0] < stopSpeedupInterval) { codable.velocity *= speedupScalar; } else { ai[0] = stopSpeedupInterval; }
-			}
-			if ((Math.Abs(codable.velocity.X) + Math.Abs(codable.velocity.Y)) * 0.5f > maxSpeed)
-			{
-				codable.velocity.Normalize(); codable.velocity *= maxSpeed;
-			}
-		}
+        public static void AIDemonScythe(Entity codable, ref float[] ai, int startSpeedupInterval = 30, int stopSpeedupInterval = 100, float rotateScalar = 0.8f, float speedupScalar = 1.06f, float maxSpeed = 8f)
+        {
+            if (codable is Projectile) { ((Projectile)codable).rotation += codable.direction * rotateScalar; }
+            if (codable is NPC) { ((NPC)codable).rotation += codable.direction * rotateScalar; }
+            ai[0] += 1f;
+            if (ai[0] >= startSpeedupInterval)
+            {
+                if (ai[0] < stopSpeedupInterval) { codable.velocity *= speedupScalar; } else { ai[0] = stopSpeedupInterval; }
+            }
+            if ((Math.Abs(codable.velocity.X) + Math.Abs(codable.velocity.Y)) * 0.5f > maxSpeed)
+            {
+                codable.velocity.Normalize(); codable.velocity *= maxSpeed;
+            }
+        }
 
         /*
          * A cleaned up (and edited) copy of Vilethorn AI. (Vilethorn, etc.)
@@ -1805,7 +1847,7 @@ namespace Redemption.Base
                 {
                     p.alpha = 0;
                     p.ai[0] = 1f;
-                    if (p.ai[1] == 0f){ p.ai[1] += 1f; p.position += p.velocity; }
+                    if (p.ai[1] == 0f) { p.ai[1] += 1f; p.position += p.velocity; }
                     if (p.ai[1] < length && Main.myPlayer == p.owner)
                     {
                         Vector2 rotVec = p.velocity;
@@ -1813,16 +1855,17 @@ namespace Redemption.Base
                         Main.projectile[id].damage = p.damage;
                         Main.projectile[id].ai[1] = p.ai[1] + 1f;
                         NetMessage.SendData(MessageID.SyncProjectile, -1, -1, NetworkText.FromLiteral(""), id);
-						p.position -= p.velocity;
+                        p.position -= p.velocity;
                         return;
                     }
                 }
-            }else
+            }
+            else
             {
                 p.alpha += alphaReduction;
-                if (p.alpha >= 255){ p.Kill(); return; }
+                if (p.alpha >= 255) { p.Kill(); return; }
             }
-			p.position -= p.velocity;
+            p.position -= p.velocity;
         }
 
         /*
@@ -1836,51 +1879,52 @@ namespace Redemption.Base
          */
         public static void AIStream(Projectile p, float scaleReduce = 0.04f, float gravity = 0.075f, bool goldenShower = false, int start = 3, Func<Projectile, Vector2, int, int, int> spawnDust = null)
         {
-			if (goldenShower)
-			{
-				p.scale -= scaleReduce;
-				if (p.scale <= 0f){ p.Kill(); }
-				if (p.ai[0] <= start){ p.ai[0] += 1f; return; }
-				p.velocity.Y += gravity;
-				if (Main.netMode != NetmodeID.Server && spawnDust != null)
-				{
-					for (int m = 0; m < 3; m++)
-					{
-						float dustX = p.velocity.X / 3f * m;
-						float dustY = p.velocity.Y / 3f * m;
-						int offset = 1;
-						Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
-						int width = p.width + offset * 2; int height = p.height + offset * 2;
-						int dustID = spawnDust(p, pos, width, height);
-						if (dustID != -1)
-						{
-							Main.dust[dustID].noGravity = true;
-							Main.dust[dustID].velocity *= 0.1f;
-							Main.dust[dustID].velocity += p.velocity * 0.5f;
-							Main.dust[dustID].position.X -= dustX;
-							Main.dust[dustID].position.Y -= dustY;
-						}
-					}
-					if (Main.rand.Next(8) == 0)
-					{
-						int offset = 1;
-						Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
-						int width = p.width + offset * 2; int height = p.height + offset * 2;
-						int dustID = spawnDust(p, pos, width, height);
-						if (dustID != -1)
-						{
-							Main.dust[dustID].velocity *= 0.25f;
-							Main.dust[dustID].velocity += p.velocity * 0.5f;
-						}
-					}
-				}
-			}else
-			{
-				p.scale -= scaleReduce;
-				if (p.scale <= 0f) { p.Kill(); }
-				p.velocity.Y += gravity;
-				if (Main.netMode != NetmodeID.Server && spawnDust != null) spawnDust(p, p.position, p.width, p.height);
-			}
+            if (goldenShower)
+            {
+                p.scale -= scaleReduce;
+                if (p.scale <= 0f) { p.Kill(); }
+                if (p.ai[0] <= start) { p.ai[0] += 1f; return; }
+                p.velocity.Y += gravity;
+                if (Main.netMode != NetmodeID.Server && spawnDust != null)
+                {
+                    for (int m = 0; m < 3; m++)
+                    {
+                        float dustX = p.velocity.X / 3f * m;
+                        float dustY = p.velocity.Y / 3f * m;
+                        int offset = 1;
+                        Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
+                        int width = p.width + offset * 2; int height = p.height + offset * 2;
+                        int dustID = spawnDust(p, pos, width, height);
+                        if (dustID != -1)
+                        {
+                            Main.dust[dustID].noGravity = true;
+                            Main.dust[dustID].velocity *= 0.1f;
+                            Main.dust[dustID].velocity += p.velocity * 0.5f;
+                            Main.dust[dustID].position.X -= dustX;
+                            Main.dust[dustID].position.Y -= dustY;
+                        }
+                    }
+                    if (Main.rand.Next(8) == 0)
+                    {
+                        int offset = 1;
+                        Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
+                        int width = p.width + offset * 2; int height = p.height + offset * 2;
+                        int dustID = spawnDust(p, pos, width, height);
+                        if (dustID != -1)
+                        {
+                            Main.dust[dustID].velocity *= 0.25f;
+                            Main.dust[dustID].velocity += p.velocity * 0.5f;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                p.scale -= scaleReduce;
+                if (p.scale <= 0f) { p.Kill(); }
+                p.velocity.Y += gravity;
+                if (Main.netMode != NetmodeID.Server && spawnDust != null) spawnDust(p, p.position, p.width, p.height);
+            }
         }
 
         /*
@@ -1901,19 +1945,20 @@ namespace Redemption.Base
             {
                 p.velocity.Y += yIncrement;
                 p.velocity.X *= xScalar;
-            }else
-            if (!spin){ p.rotation = BaseUtility.RotationTo(p.Center, p.Center + p.velocity) + 1.57f; }
-            if (p.velocity.Y > maxSpeedY){ p.velocity.Y = maxSpeedY; }
+            }
+            else
+            if (!spin) { p.rotation = BaseUtility.RotationTo(p.Center, p.Center + p.velocity) + 1.57f; }
+            if (p.velocity.Y > maxSpeedY) { p.velocity.Y = maxSpeedY; }
         }
 
         public static void AISpear(Projectile p, ref float[] ai, float initialSpeed = 3f, float moveOutward = 1.4f, float moveInward = 1.6f, bool overrideKill = false)
         {
             Player plr = Main.player[p.owner];
             Item item = plr.inventory[plr.selectedItem];
-            if (Main.myPlayer == p.owner && item is {autoReuse: true} && plr.itemAnimation == 1) { p.Kill(); return; } //prevents a bug with autoReuse and spears
+            if (Main.myPlayer == p.owner && item is { autoReuse: true } && plr.itemAnimation == 1) { p.Kill(); return; } //prevents a bug with autoReuse and spears
             Main.player[p.owner].heldProj = p.whoAmI;
             Main.player[p.owner].itemTime = Main.player[p.owner].itemAnimation;
-			Vector2 gfxOffset = new(0, plr.gfxOffY);
+            Vector2 gfxOffset = new(0, plr.gfxOffY);
             AISpear(p, ref ai, plr.Center + gfxOffset, plr.direction, plr.itemAnimation, plr.itemAnimationMax, initialSpeed, moveOutward, moveInward, overrideKill, plr.frozen);
         }
 
@@ -1936,16 +1981,17 @@ namespace Redemption.Base
             p.direction = ownerDirection;
             p.position.X = center.X - p.width * 0.5f;
             p.position.Y = center.Y - p.height * 0.5f;
-            if (ai[0] == 0f){ ai[0] = initialSpeed; p.netUpdate = true; }
-			if (!frozen)
-			{
-				if (itemAnimation < itemAnimationMax * 0.33f) { ai[0] -= moveInward; } else { ai[0] += moveOutward; }
-			}
-			p.position += p.velocity * ai[0];
-            if (!overrideKill && Main.player[p.owner].itemAnimation == 0){ p.Kill(); }
+            if (ai[0] == 0f) { ai[0] = initialSpeed; p.netUpdate = true; }
+            if (!frozen)
+            {
+                if (itemAnimation < itemAnimationMax * 0.33f) { ai[0] -= moveInward; } else { ai[0] += moveOutward; }
+            }
+            p.position += p.velocity * ai[0];
+            if (!overrideKill && Main.player[p.owner].itemAnimation == 0) { p.Kill(); }
             p.rotation = (float)Math.Atan2(p.velocity.Y, p.velocity.X) + 2.355f;
-			if (p.direction == -1) { p.rotation -= 0f; }else
-			if (p.direction == 1) { p.rotation -= 1.57f; }
+            if (p.direction == -1) { p.rotation -= 0f; }
+            else
+            if (p.direction == 1) { p.rotation -= 1.57f; }
         }
 
         /*
@@ -1969,7 +2015,7 @@ namespace Redemption.Base
             if (playSound && p.soundDelay == 0)
             {
                 p.soundDelay = 8;
-				SoundEngine.PlaySound(SoundID.Item, (int)p.position.X, (int)p.position.Y, 7);
+                SoundEngine.PlaySound(SoundID.Item, (int)p.position.X, (int)p.position.Y, 7);
             }
             if (ai[0] == 0f)
             {
@@ -1980,7 +2026,8 @@ namespace Redemption.Base
                     ai[1] = 0f;
                     p.netUpdate = true;
                 }
-            }else
+            }
+            else
             {
                 p.tileCollide = false;
                 float distPlayerX = center.X - p.Center.X;
@@ -1993,7 +2040,8 @@ namespace Redemption.Base
                 if (direct)
                 {
                     p.velocity = BaseUtility.RotateVector(default, new Vector2(speedInterval, 0f), BaseUtility.RotationTo(p.Center, center));
-                }else
+                }
+                else
                 {
                     distPlayer = maxDistance / distPlayer;
                     distPlayerX *= distPlayer;
@@ -2002,7 +2050,8 @@ namespace Redemption.Base
                     {
                         p.velocity.X += speedInterval;
                         if (p.velocity.X < 0f && distPlayerX > 0f) { p.velocity.X += speedInterval; }
-                    }else
+                    }
+                    else
                     if (p.velocity.X > distPlayerX)
                     {
                         p.velocity.X -= speedInterval;
@@ -2012,7 +2061,8 @@ namespace Redemption.Base
                     {
                         p.velocity.Y += speedInterval;
                         if (p.velocity.Y < 0f && distPlayerY > 0f) { p.velocity.Y += speedInterval; }
-                    }else
+                    }
+                    else
                     if (p.velocity.Y > distPlayerY)
                     {
                         p.velocity.Y -= speedInterval;
@@ -2039,7 +2089,8 @@ namespace Redemption.Base
             {
                 if (p.velocity.X != velocity.X) { p.velocity.X = -velocity.X; }
                 if (p.velocity.Y != velocity.Y) { p.velocity.Y = -velocity.Y; }
-            }else
+            }
+            else
             {
                 p.ai[0] = 1f;
                 p.velocity.X = -velocity.X;
@@ -2084,7 +2135,8 @@ namespace Redemption.Base
                 {
                     ai[0] = 1f;
                     p.netUpdate = true;
-                }else
+                }
+                else
                 {
                     if (!channel)
                     {
@@ -2093,7 +2145,8 @@ namespace Redemption.Base
                         p.velocity.X *= 0.9f;
                     }
                 }
-            }else
+            }
+            else
             if (ai[0] == 1f)
             {
                 float meleeSpeed1 = 14f / meleeSpeed;
@@ -2129,7 +2182,8 @@ namespace Redemption.Base
                     p.velocity.Y *= 0.98f;
                     p.velocity.X += pointX2;
                     p.velocity.Y += pointY2;
-                }else
+                }
+                else
                 {
                     if (Math.Abs(p.velocity.X) + Math.Abs(p.velocity.Y) < 6f)
                     {
@@ -2167,244 +2221,246 @@ namespace Redemption.Base
                 {
                     p.netUpdate = true;
                     Collision.HitTiles(p.position, p.velocity, p.width, p.height);
-					if (playSound) { SoundEngine.PlaySound(SoundID.Dig, (int)p.position.X, (int)p.position.Y); }
+                    if (playSound) { SoundEngine.PlaySound(SoundID.Dig, (int)p.position.X, (int)p.position.Y); }
                 }
             }
         }
 
         #endregion
 
-		#region Vanilla Projectile AI Code Excerpts
+        #region Vanilla Projectile AI Code Excerpts
 
-		/*
+        /*
 		 * (Edited) Sticky code used by projectiles to stick to tiles. Returns true if it is 'sticking' to a tile.
 		 * 
 		 * beginGravity : the time (in ticks) when to begin applying gravity
 		 * 
 		 * 
 		 */
-		public static bool StickToTiles(Vector2 position, ref Vector2 velocity, int width, int height, Func<int, int, bool> canStick = null)
-		{
-			int tileLeftX = (int)(position.X / 16f) - 1;
-			int tileRightX = (int)((position.X + width) / 16f) + 2;
-			int tileLeftY = (int)(position.Y / 16f) - 1;
-			int tileRightY = (int)((position.Y + height) / 16f) + 2;
-			if (tileLeftX < 0) { tileLeftX = 0; } if (tileRightX > Main.maxTilesX) { tileRightX = Main.maxTilesX; }
-			if (tileLeftY < 0) { tileLeftY = 0; } if (tileRightY > Main.maxTilesY) { tileRightY = Main.maxTilesY; }
-			bool stick = false;
-			for (int x = tileLeftX; x < tileRightX; x++)
-			{
-				for (int y = tileLeftY; y < tileRightY; y++)
-				{
-					if (Main.tile[x, y] != null && Main.tile[x, y].IsActiveUnactuated && (canStick != null ? canStick(x, y) : Main.tileSolid[Main.tile[x, y].type] || Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))
-					{
-						Vector2 pos = new(x * 16, y * 16);
-						if (position.X + width - 4f > pos.X && position.X + 4f < pos.X + 16f && position.Y + height - 4f > pos.Y && position.Y + 4f < pos.Y + 16f)
-						{
-							stick = true; velocity *= 0f; break;
-						}
-					}
-				}
-				if (stick) break;
-			}
-			return stick;
-		}
+        public static bool StickToTiles(Vector2 position, ref Vector2 velocity, int width, int height, Func<int, int, bool> canStick = null)
+        {
+            int tileLeftX = (int)(position.X / 16f) - 1;
+            int tileRightX = (int)((position.X + width) / 16f) + 2;
+            int tileLeftY = (int)(position.Y / 16f) - 1;
+            int tileRightY = (int)((position.Y + height) / 16f) + 2;
+            if (tileLeftX < 0) { tileLeftX = 0; }
+            if (tileRightX > Main.maxTilesX) { tileRightX = Main.maxTilesX; }
+            if (tileLeftY < 0) { tileLeftY = 0; }
+            if (tileRightY > Main.maxTilesY) { tileRightY = Main.maxTilesY; }
+            bool stick = false;
+            for (int x = tileLeftX; x < tileRightX; x++)
+            {
+                for (int y = tileLeftY; y < tileRightY; y++)
+                {
+                    if (Main.tile[x, y] != null && Main.tile[x, y].IsActiveUnactuated && (canStick != null ? canStick(x, y) : Main.tileSolid[Main.tile[x, y].type] || Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))
+                    {
+                        Vector2 pos = new(x * 16, y * 16);
+                        if (position.X + width - 4f > pos.X && position.X + 4f < pos.X + 16f && position.Y + height - 4f > pos.Y && position.Y + 4f < pos.Y + 16f)
+                        {
+                            stick = true; velocity *= 0f; break;
+                        }
+                    }
+                }
+                if (stick) break;
+            }
+            return stick;
+        }
 
 
-		#endregion
+        #endregion
 
-		#region Vanilla NPC AI Copy Methods
+        #region Vanilla NPC AI Copy Methods
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Shadowflame Ghost AI. (aiStyle 86) (Shadowflame Apparition, etc.)
 		 * 
 		 * speedupOverTime: Wether or not to speed up when aligned to the player over time.
 		 * distanceBeforeTakeoff: The distance from the target player before the NPC turns around.
-		 */		
-		public static void AIShadowflameGhost(NPC npc, ref float[] ai, bool speedupOverTime = false, float distanceBeforeTakeoff = 660f, float velIntervalX = 0.3f, float velMaxX = 7f, float velIntervalY = 0.2f, float velMaxY = 4f, float velScalarY = 4f, float velScalarYMax = 15f, float velIntervalXTurn = 0.4f, float velIntervalYTurn = 0.4f, float velIntervalScalar = 0.95f, float velIntervalMaxTurn = 5f)
-		{
-			int npcAvoidCollision;
-			for (int m = 0; m < 200; m = npcAvoidCollision + 1)
-			{
-				if (m != npc.whoAmI && Main.npc[m].active && Main.npc[m].type == npc.type)
-				{
-					Vector2 dist = Main.npc[m].Center - npc.Center;
-					if (dist.Length() < 50f)
-					{
-						dist.Normalize();
-						if (dist.X == 0f && dist.Y == 0f)
-						{
-							if (m > npc.whoAmI)
-								dist.X = 1f;
-							else
-								dist.X = -1f;
-						}
-						dist *= 0.4f;
-						npc.velocity -= dist;
-						Main.npc[m].velocity += dist;
-					}
-				}
-				npcAvoidCollision = m;
-			}
-			if (speedupOverTime)
-			{
-				float timerMax = 120f;
-				if (npc.localAI[0] < timerMax)
-				{
-					if (npc.localAI[0] == 0f)
-					{
-						SoundEngine.PlaySound(SoundID.Item8, npc.Center);
-						npc.TargetClosest();
-						if (npc.direction > 0)
-						{
-							npc.velocity.X += 2f;
-						}
-						else
-						{
-							npc.velocity.X -= 2f;
-						}
-						for (int m = 0; m < 20; m = npcAvoidCollision + 1)
-						{
-							npcAvoidCollision = m;
-						}
-					}
-					npc.localAI[0] += 1f;
-					float timerPartial = 1f - npc.localAI[0] / timerMax;
-					float timerPartialTimes20 = timerPartial * 20f;
-					int nextNPC = 0;
-					while (nextNPC < timerPartialTimes20)
-					{
-						npcAvoidCollision = nextNPC;
-						nextNPC = npcAvoidCollision + 1;
-					}
-				}
-			}
-			if (npc.ai[0] == 0f)
-			{
-				npc.TargetClosest();
-				npc.ai[0] = 1f;
-				npc.ai[1] = npc.direction;
-			}
-			else if (npc.ai[0] == 1f)
-			{
-				npc.TargetClosest();
-				npc.velocity.X += npc.ai[1] * velIntervalX;
-				
-				if (npc.velocity.X > velMaxX)
-					npc.velocity.X = velMaxX;
-				else if (npc.velocity.X < -velMaxX)
-					npc.velocity.X = -velMaxX;
+		 */
+        public static void AIShadowflameGhost(NPC npc, ref float[] ai, bool speedupOverTime = false, float distanceBeforeTakeoff = 660f, float velIntervalX = 0.3f, float velMaxX = 7f, float velIntervalY = 0.2f, float velMaxY = 4f, float velScalarY = 4f, float velScalarYMax = 15f, float velIntervalXTurn = 0.4f, float velIntervalYTurn = 0.4f, float velIntervalScalar = 0.95f, float velIntervalMaxTurn = 5f)
+        {
+            int npcAvoidCollision;
+            for (int m = 0; m < 200; m = npcAvoidCollision + 1)
+            {
+                if (m != npc.whoAmI && Main.npc[m].active && Main.npc[m].type == npc.type)
+                {
+                    Vector2 dist = Main.npc[m].Center - npc.Center;
+                    if (dist.Length() < 50f)
+                    {
+                        dist.Normalize();
+                        if (dist.X == 0f && dist.Y == 0f)
+                        {
+                            if (m > npc.whoAmI)
+                                dist.X = 1f;
+                            else
+                                dist.X = -1f;
+                        }
+                        dist *= 0.4f;
+                        npc.velocity -= dist;
+                        Main.npc[m].velocity += dist;
+                    }
+                }
+                npcAvoidCollision = m;
+            }
+            if (speedupOverTime)
+            {
+                float timerMax = 120f;
+                if (npc.localAI[0] < timerMax)
+                {
+                    if (npc.localAI[0] == 0f)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item8, npc.Center);
+                        npc.TargetClosest();
+                        if (npc.direction > 0)
+                        {
+                            npc.velocity.X += 2f;
+                        }
+                        else
+                        {
+                            npc.velocity.X -= 2f;
+                        }
+                        for (int m = 0; m < 20; m = npcAvoidCollision + 1)
+                        {
+                            npcAvoidCollision = m;
+                        }
+                    }
+                    npc.localAI[0] += 1f;
+                    float timerPartial = 1f - npc.localAI[0] / timerMax;
+                    float timerPartialTimes20 = timerPartial * 20f;
+                    int nextNPC = 0;
+                    while (nextNPC < timerPartialTimes20)
+                    {
+                        npcAvoidCollision = nextNPC;
+                        nextNPC = npcAvoidCollision + 1;
+                    }
+                }
+            }
+            if (npc.ai[0] == 0f)
+            {
+                npc.TargetClosest();
+                npc.ai[0] = 1f;
+                npc.ai[1] = npc.direction;
+            }
+            else if (npc.ai[0] == 1f)
+            {
+                npc.TargetClosest();
+                npc.velocity.X += npc.ai[1] * velIntervalX;
 
-				float playerDistY = Main.player[npc.target].Center.Y - npc.Center.Y;
-				if (Math.Abs(playerDistY) > velMaxY)
-					velScalarY = velScalarYMax;
+                if (npc.velocity.X > velMaxX)
+                    npc.velocity.X = velMaxX;
+                else if (npc.velocity.X < -velMaxX)
+                    npc.velocity.X = -velMaxX;
 
-				if (playerDistY > velMaxY) 
-					playerDistY = velMaxY;
-				else if (playerDistY < -velMaxY) 
-					playerDistY = -velMaxY;
-				
-				npc.velocity.Y = (npc.velocity.Y * (velScalarY - 1f) + playerDistY) / velScalarY;
-				if (npc.ai[1] > 0f && Main.player[npc.target].Center.X - npc.Center.X < -distanceBeforeTakeoff || npc.ai[1] < 0f && Main.player[npc.target].Center.X - npc.Center.X > distanceBeforeTakeoff)
-				{
-					npc.ai[0] = 2f;
-					npc.ai[1] = 0f;
-					if (npc.Center.Y + 20f > Main.player[npc.target].Center.Y)
-						npc.ai[1] = -1f;
-					else
-						npc.ai[1] = 1f;
-				}
-			}
-			else if (npc.ai[0] == 2f)
-			{
-				npc.velocity.Y += npc.ai[1] * velIntervalYTurn;
-				
-				if (npc.velocity.Length() > velIntervalMaxTurn)
-					npc.velocity *= velIntervalScalar;
-				
-				if (npc.velocity.X is > -1f and < 1f)
-				{
-					npc.TargetClosest();
-					npc.ai[0] = 3f;
-					npc.ai[1] = npc.direction;
-				}
-			}
-			else if (npc.ai[0] == 3f)
-			{
-				npc.velocity.X += npc.ai[1] * velIntervalXTurn;
-				
-				if (npc.Center.Y > Main.player[npc.target].Center.Y)
-					npc.velocity.Y -= velIntervalY;
-				else
-					npc.velocity.Y += velIntervalY;
-				
-				if (npc.velocity.Length() > velIntervalMaxTurn)
-					npc.velocity *= velIntervalScalar;
-				
-				if (npc.velocity.Y is > -1f and < 1f)
-				{
-					npc.TargetClosest();
-					npc.ai[0] = 0f;
-					npc.ai[1] = npc.direction;
-				}
-			}																
-		}
-		
-		
-		public static void AISpaceOctopus(NPC npc, ref float[] ai, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> fireProj = null)
-		{
-			npc.TargetClosest();		
-			AISpaceOctopus(npc, ref ai, Main.player[npc.target].Center, moveSpeed, velMax, hoverDistance, shootProjInterval, fireProj);
-		}
+                float playerDistY = Main.player[npc.target].Center.Y - npc.Center.Y;
+                if (Math.Abs(playerDistY) > velMaxY)
+                    velScalarY = velScalarYMax;
 
-		public static void AISpaceOctopus(NPC npc, ref float[] ai, Vector2 targetCenter = default, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> fireProj = null)
-		{
-			Vector2 wantedVelocity = targetCenter - npc.Center + new Vector2(0f, -hoverDistance);
-			float dist = wantedVelocity.Length();
-			if (dist < 20f)
-			{
-				wantedVelocity = npc.velocity;
-			}
-			else if (dist < 40f)
-			{
-				wantedVelocity.Normalize();
-				wantedVelocity *= velMax * 0.35f;
-			}
-			else if (dist < 80f)
-			{
-				wantedVelocity.Normalize();
-				wantedVelocity *= velMax * 0.65f;
-			}
-			else
-			{
-				wantedVelocity.Normalize();
-				wantedVelocity *= velMax;
-			}
-			npc.SimpleFlyMovement(wantedVelocity, moveSpeed);
-			npc.rotation = npc.velocity.X * 0.1f;
-			if (fireProj != null && shootProjInterval > -1 && (ai[0] += 1f) >= shootProjInterval)
-			{
-				ai[0] = 0f;
-				if (Main.netMode != NetmodeID.MultiplayerClient)
-				{
-					Vector2 projVelocity = Vector2.Zero;
-					while (Math.Abs(projVelocity.X) < 1.5f)
-					{
-						projVelocity = Vector2.UnitY.RotatedByRandom(1.5707963705062866) * new Vector2(5f, 3f);
-					}
-					fireProj(npc, projVelocity);
-				}
-			}	
-		}
+                if (playerDistY > velMaxY)
+                    playerDistY = velMaxY;
+                else if (playerDistY < -velMaxY)
+                    playerDistY = -velMaxY;
 
-		public static void AIElemental(NPC npc, ref float[] ai, bool? noDamageMode = null, int noDamageTimeMax = 120, bool gravityChange = true, bool tileCollideChange = true, float startPhaseDist = 800f, float stopPhaseDist = 600f, int idleTooLong = 180, float velSpeed = 2f)
-		{
-			int timerDummy = (int)npc.localAI[0];
-			AIElemental(npc, ref ai, ref timerDummy, noDamageMode, noDamageTimeMax, gravityChange, tileCollideChange, startPhaseDist, stopPhaseDist, idleTooLong, velSpeed);
-			npc.localAI[0] = timerDummy;
-		}
-		
-		/*
+                npc.velocity.Y = (npc.velocity.Y * (velScalarY - 1f) + playerDistY) / velScalarY;
+                if (npc.ai[1] > 0f && Main.player[npc.target].Center.X - npc.Center.X < -distanceBeforeTakeoff || npc.ai[1] < 0f && Main.player[npc.target].Center.X - npc.Center.X > distanceBeforeTakeoff)
+                {
+                    npc.ai[0] = 2f;
+                    npc.ai[1] = 0f;
+                    if (npc.Center.Y + 20f > Main.player[npc.target].Center.Y)
+                        npc.ai[1] = -1f;
+                    else
+                        npc.ai[1] = 1f;
+                }
+            }
+            else if (npc.ai[0] == 2f)
+            {
+                npc.velocity.Y += npc.ai[1] * velIntervalYTurn;
+
+                if (npc.velocity.Length() > velIntervalMaxTurn)
+                    npc.velocity *= velIntervalScalar;
+
+                if (npc.velocity.X is > -1f and < 1f)
+                {
+                    npc.TargetClosest();
+                    npc.ai[0] = 3f;
+                    npc.ai[1] = npc.direction;
+                }
+            }
+            else if (npc.ai[0] == 3f)
+            {
+                npc.velocity.X += npc.ai[1] * velIntervalXTurn;
+
+                if (npc.Center.Y > Main.player[npc.target].Center.Y)
+                    npc.velocity.Y -= velIntervalY;
+                else
+                    npc.velocity.Y += velIntervalY;
+
+                if (npc.velocity.Length() > velIntervalMaxTurn)
+                    npc.velocity *= velIntervalScalar;
+
+                if (npc.velocity.Y is > -1f and < 1f)
+                {
+                    npc.TargetClosest();
+                    npc.ai[0] = 0f;
+                    npc.ai[1] = npc.direction;
+                }
+            }
+        }
+
+
+        public static void AISpaceOctopus(NPC npc, ref float[] ai, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> fireProj = null)
+        {
+            npc.TargetClosest();
+            AISpaceOctopus(npc, ref ai, Main.player[npc.target].Center, moveSpeed, velMax, hoverDistance, shootProjInterval, fireProj);
+        }
+
+        public static void AISpaceOctopus(NPC npc, ref float[] ai, Vector2 targetCenter = default, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> fireProj = null)
+        {
+            Vector2 wantedVelocity = targetCenter - npc.Center + new Vector2(0f, -hoverDistance);
+            float dist = wantedVelocity.Length();
+            if (dist < 20f)
+            {
+                wantedVelocity = npc.velocity;
+            }
+            else if (dist < 40f)
+            {
+                wantedVelocity.Normalize();
+                wantedVelocity *= velMax * 0.35f;
+            }
+            else if (dist < 80f)
+            {
+                wantedVelocity.Normalize();
+                wantedVelocity *= velMax * 0.65f;
+            }
+            else
+            {
+                wantedVelocity.Normalize();
+                wantedVelocity *= velMax;
+            }
+            npc.SimpleFlyMovement(wantedVelocity, moveSpeed);
+            npc.rotation = npc.velocity.X * 0.1f;
+            if (fireProj != null && shootProjInterval > -1 && (ai[0] += 1f) >= shootProjInterval)
+            {
+                ai[0] = 0f;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Vector2 projVelocity = Vector2.Zero;
+                    while (Math.Abs(projVelocity.X) < 1.5f)
+                    {
+                        projVelocity = Vector2.UnitY.RotatedByRandom(1.5707963705062866) * new Vector2(5f, 3f);
+                    }
+                    fireProj(npc, projVelocity);
+                }
+            }
+        }
+
+        public static void AIElemental(NPC npc, ref float[] ai, bool? noDamageMode = null, int noDamageTimeMax = 120, bool gravityChange = true, bool tileCollideChange = true, float startPhaseDist = 800f, float stopPhaseDist = 600f, int idleTooLong = 180, float velSpeed = 2f)
+        {
+            int timerDummy = (int)npc.localAI[0];
+            AIElemental(npc, ref ai, ref timerDummy, noDamageMode, noDamageTimeMax, gravityChange, tileCollideChange, startPhaseDist, stopPhaseDist, idleTooLong, velSpeed);
+            npc.localAI[0] = timerDummy;
+        }
+
+        /*
 		 * A cleaned up (and edited) copy of Elemental AI. (aiStyle 91) (Granite Elemental, etc.)
 		 * 
 		 * idleTimer : A localized value, which is randomly ticked up to 5.
@@ -2417,200 +2473,201 @@ namespace Redemption.Base
 		 * idleTooLong : The maximum amount of ticks the npc can be 'idle' before it attempts to change movement modes. (default 180)
 		 * velSpeed : The speed of the entity when moving to the player. This value is used for all states; changing it speeds or slows the npc in all of them.
 		 */
-		public static void AIElemental(NPC npc, ref float[] ai, ref int idleTimer, bool? noDamageMode = null, int noDamageTimeMax = 120, bool gravityChange = true, bool tileCollideChange = true, float startPhaseDist = 800f, float stopPhaseDist = 600f, int idleTooLong = 180, float velSpeed = 2f)
-		{
-			bool noDmg = noDamageMode == null ? Main.expertMode : (bool)noDamageMode;
-			if(gravityChange) npc.noGravity = true;
-			if(tileCollideChange) npc.noTileCollide = false;
-			if(noDmg) npc.dontTakeDamage = false;
-			Player targetPlayer = npc.target < 0 ? null : Main.player[npc.target];
-			Vector2 playerCenter = targetPlayer == null ? npc.Center + new Vector2(0, 5f) : targetPlayer.Center;
-			Vector2 dist = playerCenter - npc.Center;
-			
-			if (npc.justHit && Main.netMode != NetmodeID.MultiplayerClient && noDmg && Main.rand.Next(6) == 0)
-			{
-				npc.netUpdate = true;
-				ai[0] = -1f;
-				ai[1] = 0f;
-			}
-			if (ai[0] == -1f) //immortal
-			{
-				if(noDmg) npc.dontTakeDamage = true;
-				if(gravityChange) npc.noGravity = false;
-				npc.velocity.X *= 0.98f;
-				ai[1] += 1f;
-				if (ai[1] >= noDamageTimeMax)
-				{
-					ai[0] = ai[1] = ai[2] = ai[3] = 0f;
-                }
-			}
-			else if (ai[0] == 0f) //targeting mode (chosing how to act)
-			{
-				npc.TargetClosest();
-				targetPlayer = Main.player[npc.target];
-				playerCenter = targetPlayer.Center;
-				dist = playerCenter - npc.Center;
-				if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
-				{
-					ai[0] = 1f;
-					return;
-				}
-				Vector2 centerDiff = playerCenter - npc.Center;
-				centerDiff.Y -= targetPlayer.height / 4;
-				float centerDist = centerDiff.Length();
-				if (centerDist > startPhaseDist)
-				{
-					ai[0] = 2f;
-					return;
-				}
-				Vector2 npcCenter = npc.Center;
-				npcCenter.X = playerCenter.X;
-				Vector2 npcCentDiff = npcCenter - npc.Center;
-				if (npcCentDiff.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1))
-				{
-					ai[0] = 3f;
-					ai[1] = npcCenter.X;
-					ai[2] = npcCenter.Y;
-					Vector2 npcCenter2 = npc.Center;
-					npcCenter2.Y = playerCenter.Y;
-					if (npcCentDiff.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter2, 1, 1) && Collision.CanHit(npcCenter2, 1, 1, targetPlayer.position, 1, 1))
-					{
-						ai[0] = 3f;
-						ai[1] = npcCenter2.X;
-						ai[2] = npcCenter2.Y;
-					}
-				}else
-				{
-					npcCenter = npc.Center;
-					npcCenter.Y = playerCenter.Y;
-					if ((npcCenter - npc.Center).Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1))
-					{
-						ai[0] = 3f;
-						ai[1] = npcCenter.X;
-						ai[2] = npcCenter.Y;
-					}
-				}
-				if (ai[0] == 0f)
-				{
-					npc.localAI[0] = 0f;
-					centerDiff.Normalize();
-					centerDiff *= 0.5f;
-					npc.velocity += centerDiff;
-					ai[0] = 4f;
-					ai[1] = 0f;
-                }
-			}
-			else if (ai[0] == 1f) //move to player
-			{
-				Vector2 distDiff = playerCenter - npc.Center;
-				float distLength = distDiff.Length();
-				float velSpeed2 = velSpeed; velSpeed2 += distLength / 200f;
-				float speedAdjuster = 50f;
-				distDiff.Normalize();
-				distDiff *= velSpeed2;
-				npc.velocity = (npc.velocity * (speedAdjuster - 1) + distDiff) / speedAdjuster;
-				if (!Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
-				{
-					ai[0] = 0f;
-					ai[1] = 0f;
-                }
-			}
-			else if (ai[0] == 2f) //phase slowly through tiles to player
-			{
-				npc.noTileCollide = true;
-				Vector2 distDiff = playerCenter - npc.Center;
-				float distLength = distDiff.Length();
-				float velSpeedPhase = velSpeed;
-				float speedAdjusterPhase = 4f;
-				distDiff.Normalize();
-				distDiff *= velSpeedPhase;
-				npc.velocity = (npc.velocity * (speedAdjusterPhase - 1) + distDiff) / speedAdjusterPhase;
-				if (distLength < stopPhaseDist && !Collision.SolidCollision(npc.position, npc.width, npc.height))
-				{
-					ai[0] = 0f;
-                }
-			}
-			else if (ai[0] == 3f) // horizontal floating to player
-			{
-				Vector2 targetLoc = new(ai[1], ai[2]);
-				Vector2 targetDiff = targetLoc - npc.Center;
-				float targetLength = targetDiff.Length();
-				float velSpeedHorizontal = velSpeed < 1f ? velSpeed * 0.5f : Math.Max(0.1f, velSpeed - 1f);
-				float speedAdjusterHorizontal = 3f;
-				targetDiff.Normalize();
-				targetDiff *= velSpeedHorizontal;
-				npc.velocity = (npc.velocity * (speedAdjusterHorizontal - 1f) + targetDiff) / speedAdjusterHorizontal;
-				if (npc.collideX || npc.collideY)
-				{
-					ai[0] = 4f;
-					ai[1] = 0f;
-				}
-				if (targetLength < velSpeedHorizontal || targetLength > startPhaseDist || Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
-				{
-					ai[0] = 0f;
-                }
-			}
-			else if (ai[0] == 4f) //idle floating
-			{
-				if (npc.collideX) npc.velocity.X *= -0.8f;
-				if (npc.collideY) npc.velocity.Y *= -0.8f;
-				Vector2 velVec;
-				if (npc.velocity.X == 0f && npc.velocity.Y == 0f)
-				{
-					velVec = playerCenter - npc.Center;
-					velVec.Y -= targetPlayer.height / 4;
-					velVec.Normalize();
-					npc.velocity = velVec * 0.1f;
-				}
-				float velSpeedIdle = velSpeed < 1f ? velSpeed * 0.75f : Math.Max(0.1f, velSpeed - 0.5f);
-				float speedAdjusterIdle = 20f;
-				velVec = npc.velocity;
-				velVec.Normalize();
-				velVec *= velSpeedIdle;
-				npc.velocity = (npc.velocity * (speedAdjusterIdle - 1f) + velVec) / speedAdjusterIdle;
-				ai[1] += 1f;
-				if (ai[1] > idleTooLong)
-				{
-					ai[0] = 0f;
-					ai[1] = 0f;
-				}
-				if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
-				{
-					ai[0] = 0f;
-				}
-				idleTimer += 1;
-				if (idleTimer >= 5 && !Collision.SolidCollision(npc.position - new Vector2(10f, 10f), npc.width + 20, npc.height + 20))
-				{
-					idleTimer = 0;
-					Vector2 npcCenter = npc.Center;
-					npcCenter.X = playerCenter.X;
-					if (Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1) && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1) && Collision.CanHit(playerCenter, 1, 1, npcCenter, 1, 1))
-					{
-						ai[0] = 3f;
-						ai[1] = npcCenter.X;
-						ai[2] = npcCenter.Y;
-						return;
-					}
-					npcCenter = npc.Center;
-					npcCenter.Y = playerCenter.Y;
-					if (Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1) && Collision.CanHit(playerCenter, 1, 1, npcCenter, 1, 1))
-					{
-						ai[0] = 3f;
-						ai[1] = npcCenter.X;
-						ai[2] = npcCenter.Y;
-                    }
-				}
-			}		
-		}
-		
-		
-		public static void AIWeapon(NPC npc, ref float[] ai, int rotTime = 120, int moveTime = 100, float maxSpeed = 6f, float movementScalar = 1f, float rotScalar = 1f)
-		{
-			if (npc.target is < 0 or 255 || Main.player[npc.target].dead) npc.TargetClosest();
-			AIWeapon(npc, ref ai, ref npc.rotation, Main.player[npc.target].Center, npc.justHit, rotTime, moveTime, maxSpeed, movementScalar, rotScalar);
-		}
+        public static void AIElemental(NPC npc, ref float[] ai, ref int idleTimer, bool? noDamageMode = null, int noDamageTimeMax = 120, bool gravityChange = true, bool tileCollideChange = true, float startPhaseDist = 800f, float stopPhaseDist = 600f, int idleTooLong = 180, float velSpeed = 2f)
+        {
+            bool noDmg = noDamageMode == null ? Main.expertMode : (bool)noDamageMode;
+            if (gravityChange) npc.noGravity = true;
+            if (tileCollideChange) npc.noTileCollide = false;
+            if (noDmg) npc.dontTakeDamage = false;
+            Player targetPlayer = npc.target < 0 ? null : Main.player[npc.target];
+            Vector2 playerCenter = targetPlayer == null ? npc.Center + new Vector2(0, 5f) : targetPlayer.Center;
+            Vector2 dist = playerCenter - npc.Center;
 
-		/*
+            if (npc.justHit && Main.netMode != NetmodeID.MultiplayerClient && noDmg && Main.rand.Next(6) == 0)
+            {
+                npc.netUpdate = true;
+                ai[0] = -1f;
+                ai[1] = 0f;
+            }
+            if (ai[0] == -1f) //immortal
+            {
+                if (noDmg) npc.dontTakeDamage = true;
+                if (gravityChange) npc.noGravity = false;
+                npc.velocity.X *= 0.98f;
+                ai[1] += 1f;
+                if (ai[1] >= noDamageTimeMax)
+                {
+                    ai[0] = ai[1] = ai[2] = ai[3] = 0f;
+                }
+            }
+            else if (ai[0] == 0f) //targeting mode (chosing how to act)
+            {
+                npc.TargetClosest();
+                targetPlayer = Main.player[npc.target];
+                playerCenter = targetPlayer.Center;
+                dist = playerCenter - npc.Center;
+                if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
+                {
+                    ai[0] = 1f;
+                    return;
+                }
+                Vector2 centerDiff = playerCenter - npc.Center;
+                centerDiff.Y -= targetPlayer.height / 4;
+                float centerDist = centerDiff.Length();
+                if (centerDist > startPhaseDist)
+                {
+                    ai[0] = 2f;
+                    return;
+                }
+                Vector2 npcCenter = npc.Center;
+                npcCenter.X = playerCenter.X;
+                Vector2 npcCentDiff = npcCenter - npc.Center;
+                if (npcCentDiff.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1))
+                {
+                    ai[0] = 3f;
+                    ai[1] = npcCenter.X;
+                    ai[2] = npcCenter.Y;
+                    Vector2 npcCenter2 = npc.Center;
+                    npcCenter2.Y = playerCenter.Y;
+                    if (npcCentDiff.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter2, 1, 1) && Collision.CanHit(npcCenter2, 1, 1, targetPlayer.position, 1, 1))
+                    {
+                        ai[0] = 3f;
+                        ai[1] = npcCenter2.X;
+                        ai[2] = npcCenter2.Y;
+                    }
+                }
+                else
+                {
+                    npcCenter = npc.Center;
+                    npcCenter.Y = playerCenter.Y;
+                    if ((npcCenter - npc.Center).Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1))
+                    {
+                        ai[0] = 3f;
+                        ai[1] = npcCenter.X;
+                        ai[2] = npcCenter.Y;
+                    }
+                }
+                if (ai[0] == 0f)
+                {
+                    npc.localAI[0] = 0f;
+                    centerDiff.Normalize();
+                    centerDiff *= 0.5f;
+                    npc.velocity += centerDiff;
+                    ai[0] = 4f;
+                    ai[1] = 0f;
+                }
+            }
+            else if (ai[0] == 1f) //move to player
+            {
+                Vector2 distDiff = playerCenter - npc.Center;
+                float distLength = distDiff.Length();
+                float velSpeed2 = velSpeed; velSpeed2 += distLength / 200f;
+                float speedAdjuster = 50f;
+                distDiff.Normalize();
+                distDiff *= velSpeed2;
+                npc.velocity = (npc.velocity * (speedAdjuster - 1) + distDiff) / speedAdjuster;
+                if (!Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
+                {
+                    ai[0] = 0f;
+                    ai[1] = 0f;
+                }
+            }
+            else if (ai[0] == 2f) //phase slowly through tiles to player
+            {
+                npc.noTileCollide = true;
+                Vector2 distDiff = playerCenter - npc.Center;
+                float distLength = distDiff.Length();
+                float velSpeedPhase = velSpeed;
+                float speedAdjusterPhase = 4f;
+                distDiff.Normalize();
+                distDiff *= velSpeedPhase;
+                npc.velocity = (npc.velocity * (speedAdjusterPhase - 1) + distDiff) / speedAdjusterPhase;
+                if (distLength < stopPhaseDist && !Collision.SolidCollision(npc.position, npc.width, npc.height))
+                {
+                    ai[0] = 0f;
+                }
+            }
+            else if (ai[0] == 3f) // horizontal floating to player
+            {
+                Vector2 targetLoc = new(ai[1], ai[2]);
+                Vector2 targetDiff = targetLoc - npc.Center;
+                float targetLength = targetDiff.Length();
+                float velSpeedHorizontal = velSpeed < 1f ? velSpeed * 0.5f : Math.Max(0.1f, velSpeed - 1f);
+                float speedAdjusterHorizontal = 3f;
+                targetDiff.Normalize();
+                targetDiff *= velSpeedHorizontal;
+                npc.velocity = (npc.velocity * (speedAdjusterHorizontal - 1f) + targetDiff) / speedAdjusterHorizontal;
+                if (npc.collideX || npc.collideY)
+                {
+                    ai[0] = 4f;
+                    ai[1] = 0f;
+                }
+                if (targetLength < velSpeedHorizontal || targetLength > startPhaseDist || Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
+                {
+                    ai[0] = 0f;
+                }
+            }
+            else if (ai[0] == 4f) //idle floating
+            {
+                if (npc.collideX) npc.velocity.X *= -0.8f;
+                if (npc.collideY) npc.velocity.Y *= -0.8f;
+                Vector2 velVec;
+                if (npc.velocity.X == 0f && npc.velocity.Y == 0f)
+                {
+                    velVec = playerCenter - npc.Center;
+                    velVec.Y -= targetPlayer.height / 4;
+                    velVec.Normalize();
+                    npc.velocity = velVec * 0.1f;
+                }
+                float velSpeedIdle = velSpeed < 1f ? velSpeed * 0.75f : Math.Max(0.1f, velSpeed - 0.5f);
+                float speedAdjusterIdle = 20f;
+                velVec = npc.velocity;
+                velVec.Normalize();
+                velVec *= velSpeedIdle;
+                npc.velocity = (npc.velocity * (speedAdjusterIdle - 1f) + velVec) / speedAdjusterIdle;
+                ai[1] += 1f;
+                if (ai[1] > idleTooLong)
+                {
+                    ai[0] = 0f;
+                    ai[1] = 0f;
+                }
+                if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
+                {
+                    ai[0] = 0f;
+                }
+                idleTimer += 1;
+                if (idleTimer >= 5 && !Collision.SolidCollision(npc.position - new Vector2(10f, 10f), npc.width + 20, npc.height + 20))
+                {
+                    idleTimer = 0;
+                    Vector2 npcCenter = npc.Center;
+                    npcCenter.X = playerCenter.X;
+                    if (Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1) && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1) && Collision.CanHit(playerCenter, 1, 1, npcCenter, 1, 1))
+                    {
+                        ai[0] = 3f;
+                        ai[1] = npcCenter.X;
+                        ai[2] = npcCenter.Y;
+                        return;
+                    }
+                    npcCenter = npc.Center;
+                    npcCenter.Y = playerCenter.Y;
+                    if (Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1) && Collision.CanHit(playerCenter, 1, 1, npcCenter, 1, 1))
+                    {
+                        ai[0] = 3f;
+                        ai[1] = npcCenter.X;
+                        ai[2] = npcCenter.Y;
+                    }
+                }
+            }
+        }
+
+
+        public static void AIWeapon(NPC npc, ref float[] ai, int rotTime = 120, int moveTime = 100, float maxSpeed = 6f, float movementScalar = 1f, float rotScalar = 1f)
+        {
+            if (npc.target is < 0 or 255 || Main.player[npc.target].dead) npc.TargetClosest();
+            AIWeapon(npc, ref ai, ref npc.rotation, Main.player[npc.target].Center, npc.justHit, rotTime, moveTime, maxSpeed, movementScalar, rotScalar);
+        }
+
+        /*
 		 * A cleaned up (and edited) copy of Possessed Weapon AI. (aiStyle 23) (Enchanted Sword, Demon Hammer, etc.)
 		 * 
 		 * targetPos : The center of the target of projectile codable.
@@ -2620,55 +2677,59 @@ namespace Redemption.Base
 		 * movementScalar : A scalar for how much to move per tick.
 		 * 
 		 */
-		public static void AIWeapon(Entity codable, ref float[] ai, ref float rotation, Vector2 targetPos, bool justHit = false, int rotTime = 120, int moveTime = 100, float maxSpeed = 6f, float movementScalar = 1f, float rotScalar = 1f)
-		{
-			if (ai[0] == 0f)
-			{
-				Vector2 vector2 = codable.Center;
-				float distX = targetPos.X - vector2.X;
-				float distY = targetPos.Y - vector2.Y;
-				float dist = (float)Math.Sqrt(distX * distX + distY * distY);
-				float distMult = 9f / dist;
-				codable.velocity.X = distX * distMult * movementScalar;
-				codable.velocity.Y = distY * distMult * movementScalar;
-				if (codable.velocity.X > maxSpeed) { codable.velocity.X = maxSpeed; } if (codable.velocity.X < -maxSpeed) { codable.velocity.X = -maxSpeed; }
-				if (codable.velocity.Y > maxSpeed) { codable.velocity.Y = maxSpeed; } if (codable.velocity.Y < -maxSpeed) { codable.velocity.Y = -maxSpeed; }
-				rotation = (float)Math.Atan2(codable.velocity.Y, codable.velocity.X);
-				ai[0] = 1f;
-				ai[1] = 0.0f;
-			}else if (ai[0] == 1f)
-			{
-				if (justHit)
-				{
-					ai[0] = 2f;
-					ai[1] = 0.0f;
-				}
-				codable.velocity *= 0.99f;
-				++ai[1];
-				if (ai[1] < moveTime) return;
-				ai[0] = 2f;
-				ai[1] = 0.0f;
-				codable.velocity.X = 0.0f;
-				codable.velocity.Y = 0.0f;
-			}else
-			{
-				if (justHit)
-				{
-					ai[0] = 2f;
-					ai[1] = 0.0f;
-				}
-				codable.velocity *= 0.96f;
-				++ai[1];
-				rotation += (float)(0.1 + (double)(ai[1] / rotTime) * 0.4f) * codable.direction * rotScalar;
-				if (ai[1] < rotTime) return;
-				if (codable is NPC) { ((NPC)codable).netUpdate = true; } else if (codable is Projectile) { ((Projectile)codable).netUpdate = true; }
-				ai[0] = 0.0f;
-				ai[1] = 0.0f;
-			}
-		}
+        public static void AIWeapon(Entity codable, ref float[] ai, ref float rotation, Vector2 targetPos, bool justHit = false, int rotTime = 120, int moveTime = 100, float maxSpeed = 6f, float movementScalar = 1f, float rotScalar = 1f)
+        {
+            if (ai[0] == 0f)
+            {
+                Vector2 vector2 = codable.Center;
+                float distX = targetPos.X - vector2.X;
+                float distY = targetPos.Y - vector2.Y;
+                float dist = (float)Math.Sqrt(distX * distX + distY * distY);
+                float distMult = 9f / dist;
+                codable.velocity.X = distX * distMult * movementScalar;
+                codable.velocity.Y = distY * distMult * movementScalar;
+                if (codable.velocity.X > maxSpeed) { codable.velocity.X = maxSpeed; }
+                if (codable.velocity.X < -maxSpeed) { codable.velocity.X = -maxSpeed; }
+                if (codable.velocity.Y > maxSpeed) { codable.velocity.Y = maxSpeed; }
+                if (codable.velocity.Y < -maxSpeed) { codable.velocity.Y = -maxSpeed; }
+                rotation = (float)Math.Atan2(codable.velocity.Y, codable.velocity.X);
+                ai[0] = 1f;
+                ai[1] = 0.0f;
+            }
+            else if (ai[0] == 1f)
+            {
+                if (justHit)
+                {
+                    ai[0] = 2f;
+                    ai[1] = 0.0f;
+                }
+                codable.velocity *= 0.99f;
+                ++ai[1];
+                if (ai[1] < moveTime) return;
+                ai[0] = 2f;
+                ai[1] = 0.0f;
+                codable.velocity.X = 0.0f;
+                codable.velocity.Y = 0.0f;
+            }
+            else
+            {
+                if (justHit)
+                {
+                    ai[0] = 2f;
+                    ai[1] = 0.0f;
+                }
+                codable.velocity *= 0.96f;
+                ++ai[1];
+                rotation += (float)(0.1 + (double)(ai[1] / rotTime) * 0.4f) * codable.direction * rotScalar;
+                if (ai[1] < rotTime) return;
+                if (codable is NPC) { ((NPC)codable).netUpdate = true; } else if (codable is Projectile) { ((Projectile)codable).netUpdate = true; }
+                ai[0] = 0.0f;
+                ai[1] = 0.0f;
+            }
+        }
 
 
-		/*
+        /*
          * A cleaned up (and edited) copy of Snail AI. (Snail, etc.) (AIStyle 67)
          * 
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -2676,178 +2737,194 @@ namespace Redemption.Base
 		 * moveInterval : The amount to move by per tick.
 		 * rotAmt : The amount to rotate by when reaching corners.
          */
-		public static void AISnail(NPC npc, ref float[] ai, ref int snailStatus, float moveInterval = 0.3f, float rotAmt = 0.1f)
-		{
-			if (ai[0] == 0f)
-			{
-				npc.TargetClosest(); npc.directionY = 1; ai[0] = 1f;
-				if (npc.direction > 0){ npc.spriteDirection = 1; }
-			}
-			bool collisonOnX = false;
-			if (Main.netMode != NetmodeID.MultiplayerClient)
-			{
-				if (ai[2] == 0f && Main.rand.Next(7200) == 0){ ai[2] = 2f; npc.netUpdate = true; }
-				if (!npc.collideX && !npc.collideY)
-				{
-					npc.localAI[3] += 1f;
-					if (npc.localAI[3] > 5f){ ai[2] = 2f; npc.netUpdate = true; }
-				}else{ npc.localAI[3] = 0f; }
-			}
-			if (ai[2] > 0f)
-			{
-				ai[1] = 0f; ai[0] = 1f; npc.directionY = 1;
-				if (npc.velocity.Y > moveInterval){ npc.rotation += npc.direction * 0.1f; }else{ npc.rotation = 0f; }
-				npc.spriteDirection = npc.direction;
-				npc.velocity.X = moveInterval * npc.direction;
-				npc.noGravity = false;
-				snailStatus = 0;
-				//int tileX = (int)(npc.Center.X + (float)(npc.width / 2 * -npc.direction)) / 16;
-				//int tileY = (int)(npc.position.Y + (float)npc.height + 8f) / 16;
-				//if (Main.tile[tileX, tileY] != null && Main.tile[tileX, tileY].Slope != 1 && npc.collideY){ ai[2] -= 1f; }
-				//tileX = (int)(npc.Center.X + (float)(npc.width / 2 * npc.direction)) / 16;
-				//tileY = (int)(npc.position.Y + (float)npc.height - 4f) / 16;
-				//if (Main.tile[num1058, scaleChange] != null && Main.tile[num1058, scaleChange].bottomSlope){ npc.direction *= -1; }
-				if (npc.collideX && npc.velocity.Y == 0f){ collisonOnX = true; ai[2] = 0f; ai[1] = 1f; npc.directionY = -1; }
-				if (npc.velocity.Y == 0f)
-				{
-					if (npc.localAI[1] == npc.position.X)
-					{
-						npc.localAI[2] += 1f;
-						if (npc.localAI[2] > 10f)
-						{
-							npc.direction = 1;
-							npc.velocity.X = npc.direction * moveInterval;
-							npc.localAI[2] = 0f;
-						}
-					}else{ npc.localAI[2] = 0f; npc.localAI[1] = npc.position.X; }
-				}
-			}
-			if (ai[2] == 0f)
-			{
-				npc.noGravity = true;
-				if (ai[1] == 0f)
-				{
-					if (npc.collideY){ ai[0] = 2f; }
-					if (!npc.collideY && ai[0] == 2f)
-					{
-						npc.direction = -npc.direction;
-						ai[1] = 1f;
-						ai[0] = 1f;
-					}
-					if (npc.collideX){ npc.directionY = -npc.directionY; ai[1] = 1f; }
-				}else
-				{
-					if (npc.collideX){ ai[0] = 2f; }
-					if (!npc.collideX && ai[0] == 2f)
-					{
-						npc.directionY = -npc.directionY;
-						ai[1] = 0f;
-						ai[0] = 1f;
-					}
-					if (npc.collideY){ npc.direction = -npc.direction; ai[1] = 0f; }
-				}
-				if (!collisonOnX)
-				{
-					float prevRot = npc.rotation;
-					if (npc.directionY < 0)
-					{
-						if (npc.direction < 0)
-						{
-							if (npc.collideX)
-							{
-								npc.rotation = 1.57f;
-								npc.spriteDirection = -1;
-							}else if (npc.collideY)
-							{
-								npc.rotation = 3.14f;
-								npc.spriteDirection = 1;
-							}
-						}else if (npc.collideY)
-						{
-							npc.rotation = 3.14f;
-							npc.spriteDirection = -1;
-						}else if (npc.collideX)
-						{
-							npc.rotation = 4.71f;
-							npc.spriteDirection = 1;
-						}
-					}else 
-					if (npc.direction < 0)
-					{
-						if (npc.collideY)
-						{
-							npc.rotation = 0f;
-							npc.spriteDirection = -1;
-						}else if (npc.collideX)
-						{
-							npc.rotation = 1.57f;
-							npc.spriteDirection = 1;
-						}
-					}else if (npc.collideX){ npc.rotation = 4.71f; npc.spriteDirection = -1; }else 
-					if (npc.collideY){ npc.rotation = 0f; npc.spriteDirection = 1; }
-					float prevRot2 = npc.rotation;
-					npc.rotation = prevRot;
-					if (npc.rotation > 6.28){ npc.rotation -= 6.28f; } if (npc.rotation < 0f){ npc.rotation += 6.28f; }
-					float rotDiffAbs = Math.Abs(npc.rotation - prevRot2);
-					if (npc.rotation > prevRot2)
-					{
-						if (rotDiffAbs > 3.14){ npc.rotation += rotAmt; }else
-						{
-							npc.rotation -= rotAmt;
-							if (npc.rotation < prevRot2){ npc.rotation = prevRot2; }
-						}
-					}
-					if (npc.rotation < prevRot2)
-					{
-						if (rotDiffAbs > 3.14){ npc.rotation -= rotAmt; }else
-						{
-							npc.rotation += rotAmt;
-							if (npc.rotation > prevRot2){ npc.rotation = prevRot2; }
-						}
-					}
-				}
+        public static void AISnail(NPC npc, ref float[] ai, ref int snailStatus, float moveInterval = 0.3f, float rotAmt = 0.1f)
+        {
+            if (ai[0] == 0f)
+            {
+                npc.TargetClosest(); npc.directionY = 1; ai[0] = 1f;
+                if (npc.direction > 0) { npc.spriteDirection = 1; }
+            }
+            bool collisonOnX = false;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                if (ai[2] == 0f && Main.rand.Next(7200) == 0) { ai[2] = 2f; npc.netUpdate = true; }
+                if (!npc.collideX && !npc.collideY)
+                {
+                    npc.localAI[3] += 1f;
+                    if (npc.localAI[3] > 5f) { ai[2] = 2f; npc.netUpdate = true; }
+                }
+                else { npc.localAI[3] = 0f; }
+            }
+            if (ai[2] > 0f)
+            {
+                ai[1] = 0f; ai[0] = 1f; npc.directionY = 1;
+                if (npc.velocity.Y > moveInterval) { npc.rotation += npc.direction * 0.1f; } else { npc.rotation = 0f; }
+                npc.spriteDirection = npc.direction;
+                npc.velocity.X = moveInterval * npc.direction;
+                npc.noGravity = false;
+                snailStatus = 0;
+                //int tileX = (int)(npc.Center.X + (float)(npc.width / 2 * -npc.direction)) / 16;
+                //int tileY = (int)(npc.position.Y + (float)npc.height + 8f) / 16;
+                //if (Main.tile[tileX, tileY] != null && Main.tile[tileX, tileY].Slope != 1 && npc.collideY){ ai[2] -= 1f; }
+                //tileX = (int)(npc.Center.X + (float)(npc.width / 2 * npc.direction)) / 16;
+                //tileY = (int)(npc.position.Y + (float)npc.height - 4f) / 16;
+                //if (Main.tile[num1058, scaleChange] != null && Main.tile[num1058, scaleChange].bottomSlope){ npc.direction *= -1; }
+                if (npc.collideX && npc.velocity.Y == 0f) { collisonOnX = true; ai[2] = 0f; ai[1] = 1f; npc.directionY = -1; }
+                if (npc.velocity.Y == 0f)
+                {
+                    if (npc.localAI[1] == npc.position.X)
+                    {
+                        npc.localAI[2] += 1f;
+                        if (npc.localAI[2] > 10f)
+                        {
+                            npc.direction = 1;
+                            npc.velocity.X = npc.direction * moveInterval;
+                            npc.localAI[2] = 0f;
+                        }
+                    }
+                    else { npc.localAI[2] = 0f; npc.localAI[1] = npc.position.X; }
+                }
+            }
+            if (ai[2] == 0f)
+            {
+                npc.noGravity = true;
+                if (ai[1] == 0f)
+                {
+                    if (npc.collideY) { ai[0] = 2f; }
+                    if (!npc.collideY && ai[0] == 2f)
+                    {
+                        npc.direction = -npc.direction;
+                        ai[1] = 1f;
+                        ai[0] = 1f;
+                    }
+                    if (npc.collideX) { npc.directionY = -npc.directionY; ai[1] = 1f; }
+                }
+                else
+                {
+                    if (npc.collideX) { ai[0] = 2f; }
+                    if (!npc.collideX && ai[0] == 2f)
+                    {
+                        npc.directionY = -npc.directionY;
+                        ai[1] = 0f;
+                        ai[0] = 1f;
+                    }
+                    if (npc.collideY) { npc.direction = -npc.direction; ai[1] = 0f; }
+                }
+                if (!collisonOnX)
+                {
+                    float prevRot = npc.rotation;
+                    if (npc.directionY < 0)
+                    {
+                        if (npc.direction < 0)
+                        {
+                            if (npc.collideX)
+                            {
+                                npc.rotation = 1.57f;
+                                npc.spriteDirection = -1;
+                            }
+                            else if (npc.collideY)
+                            {
+                                npc.rotation = 3.14f;
+                                npc.spriteDirection = 1;
+                            }
+                        }
+                        else if (npc.collideY)
+                        {
+                            npc.rotation = 3.14f;
+                            npc.spriteDirection = -1;
+                        }
+                        else if (npc.collideX)
+                        {
+                            npc.rotation = 4.71f;
+                            npc.spriteDirection = 1;
+                        }
+                    }
+                    else
+                    if (npc.direction < 0)
+                    {
+                        if (npc.collideY)
+                        {
+                            npc.rotation = 0f;
+                            npc.spriteDirection = -1;
+                        }
+                        else if (npc.collideX)
+                        {
+                            npc.rotation = 1.57f;
+                            npc.spriteDirection = 1;
+                        }
+                    }
+                    else if (npc.collideX) { npc.rotation = 4.71f; npc.spriteDirection = -1; }
+                    else
+                   if (npc.collideY) { npc.rotation = 0f; npc.spriteDirection = 1; }
+                    float prevRot2 = npc.rotation;
+                    npc.rotation = prevRot;
+                    if (npc.rotation > 6.28) { npc.rotation -= 6.28f; }
+                    if (npc.rotation < 0f) { npc.rotation += 6.28f; }
+                    float rotDiffAbs = Math.Abs(npc.rotation - prevRot2);
+                    if (npc.rotation > prevRot2)
+                    {
+                        if (rotDiffAbs > 3.14) { npc.rotation += rotAmt; }
+                        else
+                        {
+                            npc.rotation -= rotAmt;
+                            if (npc.rotation < prevRot2) { npc.rotation = prevRot2; }
+                        }
+                    }
+                    if (npc.rotation < prevRot2)
+                    {
+                        if (rotDiffAbs > 3.14) { npc.rotation -= rotAmt; }
+                        else
+                        {
+                            npc.rotation += rotAmt;
+                            if (npc.rotation > prevRot2) { npc.rotation = prevRot2; }
+                        }
+                    }
+                }
 
-				if(npc.directionY == -1 && !npc.collideX){ snailStatus = 1; }else
-				if(npc.directionY == 1 && !npc.collideX){ snailStatus = 0; }else
-				if(npc.direction == 1 && !npc.collideY){ snailStatus = 3; }else
-				{ snailStatus = 2; }
-				npc.velocity.X = moveInterval * npc.direction;
-				npc.velocity.Y = moveInterval * npc.directionY;
-			}
-		}
+                if (npc.directionY == -1 && !npc.collideX) { snailStatus = 1; }
+                else
+                if (npc.directionY == 1 && !npc.collideX) { snailStatus = 0; }
+                else
+                if (npc.direction == 1 && !npc.collideY) { snailStatus = 3; }
+                else
+                { snailStatus = 2; }
+                npc.velocity.X = moveInterval * npc.direction;
+                npc.velocity.Y = moveInterval * npc.directionY;
+            }
+        }
 
-		public static void CollisionTest(NPC npc, ref bool left, ref bool right, ref bool up, ref bool down)
-		{
-			up = down = left = right = false;
-			int lengthX = npc.width / 16 + (npc.width % 16 > 0 ? 1 : 0);
-			int lengthY = npc.height / 16 + (npc.height % 16 > 0 ? 1 : 0);			
-			int xLeft = Math.Max(0, Math.Min(Main.maxTilesX - 1, (int)(npc.position.X / 16f) - 1)), xRight = Math.Max(0, Math.Min(Main.maxTilesX - 1, xLeft + lengthX + 1));
-			int yUp = Math.Max(0, Math.Min(Main.maxTilesY - 1, (int)(npc.position.Y / 16f) - 1)), yDown = Math.Max(0, Math.Min(Main.maxTilesY - 1, yUp + lengthY + 1));
-			//TOP/DOWN
-			for(int x2 = xLeft; x2 < xRight; x2++)
-			{
-				Tile tileUp = Main.tile[x2, yUp], tileDown = Main.tile[x2, yDown];
-				if(tileUp is {IsActiveUnactuated: true} && Main.tileSolid[tileUp.type] && !Main.tileSolidTop[tileUp.type]) up = true;
-				if(tileDown is {IsActiveUnactuated: true} && Main.tileSolid[tileDown.type]) down = true;		
-				if(up && down) break;
-			}
-			//LEFT/RIGHT
-			for(int y2 = yUp; y2 < yDown; y2++)
-			{
-				Tile tileLeft = Main.tile[xLeft, y2], tileRight = Main.tile[xRight, y2];
-				if(tileLeft is {IsActiveUnactuated: true} && Main.tileSolid[tileLeft.type] && !Main.tileSolidTop[tileLeft.type]) left = true;
-				if(tileRight is {IsActiveUnactuated: true} && Main.tileSolid[tileRight.type] && !Main.tileSolidTop[tileRight.type]) right = true;	
-				if(left && right) break;				
-			}
-		}
+        public static void CollisionTest(NPC npc, ref bool left, ref bool right, ref bool up, ref bool down)
+        {
+            up = down = left = right = false;
+            int lengthX = npc.width / 16 + (npc.width % 16 > 0 ? 1 : 0);
+            int lengthY = npc.height / 16 + (npc.height % 16 > 0 ? 1 : 0);
+            int xLeft = Math.Max(0, Math.Min(Main.maxTilesX - 1, (int)(npc.position.X / 16f) - 1)), xRight = Math.Max(0, Math.Min(Main.maxTilesX - 1, xLeft + lengthX + 1));
+            int yUp = Math.Max(0, Math.Min(Main.maxTilesY - 1, (int)(npc.position.Y / 16f) - 1)), yDown = Math.Max(0, Math.Min(Main.maxTilesY - 1, yUp + lengthY + 1));
+            //TOP/DOWN
+            for (int x2 = xLeft; x2 < xRight; x2++)
+            {
+                Tile tileUp = Main.tile[x2, yUp], tileDown = Main.tile[x2, yDown];
+                if (tileUp is { IsActiveUnactuated: true } && Main.tileSolid[tileUp.type] && !Main.tileSolidTop[tileUp.type]) up = true;
+                if (tileDown is { IsActiveUnactuated: true } && Main.tileSolid[tileDown.type]) down = true;
+                if (up && down) break;
+            }
+            //LEFT/RIGHT
+            for (int y2 = yUp; y2 < yDown; y2++)
+            {
+                Tile tileLeft = Main.tile[xLeft, y2], tileRight = Main.tile[xRight, y2];
+                if (tileLeft is { IsActiveUnactuated: true } && Main.tileSolid[tileLeft.type] && !Main.tileSolidTop[tileLeft.type]) left = true;
+                if (tileRight is { IsActiveUnactuated: true } && Main.tileSolid[tileRight.type] && !Main.tileSolidTop[tileRight.type]) right = true;
+                if (left && right) break;
+            }
+        }
 
-		public static void AISpore(NPC npc, ref float[] ai, float moveIntervalX = 0.1f, float moveIntervalY = 0.02f, float maxSpeedX = 5f, float maxSpeedY = 1f)
-		{
-			npc.TargetClosest();
-			AISpore(npc, ref ai, Main.player[npc.target].Center, Main.player[npc.target].width, moveIntervalX, moveIntervalY, maxSpeedX, maxSpeedY);
-		}
+        public static void AISpore(NPC npc, ref float[] ai, float moveIntervalX = 0.1f, float moveIntervalY = 0.02f, float maxSpeedX = 5f, float maxSpeedY = 1f)
+        {
+            npc.TargetClosest();
+            AISpore(npc, ref ai, Main.player[npc.target].Center, Main.player[npc.target].width, moveIntervalX, moveIntervalY, maxSpeedX, maxSpeedY);
+        }
 
-		/*
+        /*
          * A cleaned up (and edited) copy of Spore AI. (Fungi Spore, Plantera Spore, etc.) (AIStyle 50)
          * 
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -2858,25 +2935,26 @@ namespace Redemption.Base
 		 * maxSpeedX : The maximum speed of the codable on the X axis.
 		 * maxSpeedY : The maximum speed of the codable on the Y axis.
          */
-		public static void AISpore(Entity codable, ref float[] ai, Vector2 target, int targetWidth = 16, float moveIntervalX = 0.1f, float moveIntervalY = 0.02f, float maxSpeedX = 5f, float maxSpeedY = 1f)
-		{
-			codable.velocity.Y += moveIntervalY;
-			if (codable.velocity.Y < 0f) codable.velocity.Y *= 0.99f;
-			if (codable.velocity.Y > 1f) codable.velocity.Y = 1f;
-			int widthHalf = targetWidth / 2;
-			if (codable.position.X + codable.width < target.X - widthHalf)
-			{
-				if (codable.velocity.X < 0) codable.velocity.X *= 0.98f;
-				codable.velocity.X += moveIntervalX;
-			}else if (codable.position.X > target.X + widthHalf)
-			{
-				if (codable.velocity.X > 0) codable.velocity.X *= 0.98f;
-				codable.velocity.X -= moveIntervalX;
-			}
-			if (codable.velocity.X > maxSpeedX || codable.velocity.X < -maxSpeedX) codable.velocity.X *= 0.97f;
-		}
+        public static void AISpore(Entity codable, ref float[] ai, Vector2 target, int targetWidth = 16, float moveIntervalX = 0.1f, float moveIntervalY = 0.02f, float maxSpeedX = 5f, float maxSpeedY = 1f)
+        {
+            codable.velocity.Y += moveIntervalY;
+            if (codable.velocity.Y < 0f) codable.velocity.Y *= 0.99f;
+            if (codable.velocity.Y > 1f) codable.velocity.Y = 1f;
+            int widthHalf = targetWidth / 2;
+            if (codable.position.X + codable.width < target.X - widthHalf)
+            {
+                if (codable.velocity.X < 0) codable.velocity.X *= 0.98f;
+                codable.velocity.X += moveIntervalX;
+            }
+            else if (codable.position.X > target.X + widthHalf)
+            {
+                if (codable.velocity.X > 0) codable.velocity.X *= 0.98f;
+                codable.velocity.X -= moveIntervalX;
+            }
+            if (codable.velocity.X > maxSpeedX || codable.velocity.X < -maxSpeedX) codable.velocity.X *= 0.97f;
+        }
 
-		/*
+        /*
 		 * *UNTESTED, MAY NOT WORK PROPERLY*
 		 * 
          * A cleaned up (and edited) copy of Charger AI. (Unicorns, wolves, etc.) (AIStyle 26)
@@ -2887,58 +2965,62 @@ namespace Redemption.Base
          * allowBoredom : If false, npc will not get 'bored' trying to harass a target and wander off.
          * ticksUntilBoredom : the amount of ticks until the npc gets 'bored' following a target.
          */
-		public static void AICharger(NPC npc, ref float[] ai, float moveInterval = 0.07f, float maxSpeed = 6f, bool allowBoredom = true, int ticksUntilBoredom = 30)
-		{
-			bool isMoving = false;
-			if (npc.velocity.Y == 0f && (npc.velocity.X > 0f && npc.direction < 0 || npc.velocity.X < 0f && npc.direction > 0))
-			{
-				isMoving = true;
-				++ai[3];
-			}
-			if (npc.position.X == npc.oldPosition.X || ai[3] >= ticksUntilBoredom || isMoving) ++ai[3];
-			else if (ai[3] > 0f) --ai[3];
-			if (ai[3] > ticksUntilBoredom * 10) ai[3] = 0f;
-			if (npc.justHit) ai[3] = 0f;
-			if (ai[3] == ticksUntilBoredom) npc.netUpdate = true;
-			Vector2 npcCenter = npc.Center;
-			float distX = Main.player[npc.target].Center.X - npcCenter.X;
-			float distY = Main.player[npc.target].Center.Y - npcCenter.Y;
-			float dist = (float)Math.Sqrt(distX * distX + distY * distY);
-			if (dist < 200f) ai[3] = 0f;
-			if (!allowBoredom || ai[3] < ticksUntilBoredom)
-			{
-				npc.TargetClosest();
-			}else
-			{
-				if (npc.velocity.X == 0f)
-				{
-					if (npc.velocity.Y == 0f)
-					{
-						++ai[0];
-						if (ai[0] >= 2.0){ npc.direction *= -1; npc.spriteDirection = npc.direction; ai[0] = 0f; }
-					}
-				}else ai[0] = 0f;
-				npc.directionY = -1;
-				if (npc.direction == 0) npc.direction = 1;
-			}
-			if (npc.velocity.Y == 0f || npc.wet || npc.velocity.X <= 0f && npc.direction < 0 || npc.velocity.X >= 0f && npc.direction > 0)
-			{
-				if (npc.velocity.X < -maxSpeed || npc.velocity.X > maxSpeed)
-				{
-					if (npc.velocity.Y == 0f) npc.velocity *= 0.8f;
-				}else if (npc.velocity.X < maxSpeed && npc.direction == 1)
-				{
-					npc.velocity.X += moveInterval;
-					if (npc.velocity.X > maxSpeed) npc.velocity.X = maxSpeed;
-				}else if (npc.velocity.X > -maxSpeed && npc.direction == -1)
-				{
-					npc.velocity.X -= moveInterval;
-					if (npc.velocity.X < -maxSpeed) npc.velocity.X = -maxSpeed;
-				}
-			}
-		}
+        public static void AICharger(NPC npc, ref float[] ai, float moveInterval = 0.07f, float maxSpeed = 6f, bool allowBoredom = true, int ticksUntilBoredom = 30)
+        {
+            bool isMoving = false;
+            if (npc.velocity.Y == 0f && (npc.velocity.X > 0f && npc.direction < 0 || npc.velocity.X < 0f && npc.direction > 0))
+            {
+                isMoving = true;
+                ++ai[3];
+            }
+            if (npc.position.X == npc.oldPosition.X || ai[3] >= ticksUntilBoredom || isMoving) ++ai[3];
+            else if (ai[3] > 0f) --ai[3];
+            if (ai[3] > ticksUntilBoredom * 10) ai[3] = 0f;
+            if (npc.justHit) ai[3] = 0f;
+            if (ai[3] == ticksUntilBoredom) npc.netUpdate = true;
+            Vector2 npcCenter = npc.Center;
+            float distX = Main.player[npc.target].Center.X - npcCenter.X;
+            float distY = Main.player[npc.target].Center.Y - npcCenter.Y;
+            float dist = (float)Math.Sqrt(distX * distX + distY * distY);
+            if (dist < 200f) ai[3] = 0f;
+            if (!allowBoredom || ai[3] < ticksUntilBoredom)
+            {
+                npc.TargetClosest();
+            }
+            else
+            {
+                if (npc.velocity.X == 0f)
+                {
+                    if (npc.velocity.Y == 0f)
+                    {
+                        ++ai[0];
+                        if (ai[0] >= 2.0) { npc.direction *= -1; npc.spriteDirection = npc.direction; ai[0] = 0f; }
+                    }
+                }
+                else ai[0] = 0f;
+                npc.directionY = -1;
+                if (npc.direction == 0) npc.direction = 1;
+            }
+            if (npc.velocity.Y == 0f || npc.wet || npc.velocity.X <= 0f && npc.direction < 0 || npc.velocity.X >= 0f && npc.direction > 0)
+            {
+                if (npc.velocity.X < -maxSpeed || npc.velocity.X > maxSpeed)
+                {
+                    if (npc.velocity.Y == 0f) npc.velocity *= 0.8f;
+                }
+                else if (npc.velocity.X < maxSpeed && npc.direction == 1)
+                {
+                    npc.velocity.X += moveInterval;
+                    if (npc.velocity.X > maxSpeed) npc.velocity.X = maxSpeed;
+                }
+                else if (npc.velocity.X > -maxSpeed && npc.direction == -1)
+                {
+                    npc.velocity.X -= moveInterval;
+                    if (npc.velocity.X < -maxSpeed) npc.velocity.X = -maxSpeed;
+                }
+            }
+        }
 
-		/*
+        /*
          * A cleaned up (and edited) copy of Friendly AI. (Town NPCs, Bunnies, Penguins, etc.) (AIStyle 7)
          * 
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -2949,295 +3031,317 @@ namespace Redemption.Base
 		 * canFindHouse : If true, the npc can search for a home. If false, it will only ever attempt to teleport to it's preset home.
 		 * canOpenDoors : If true, the npc can open and close doors.
          */
-		public static void AIFriendly(NPC npc, ref float[] ai, float moveInterval = 0.07f, float maxSpeed = 1f, bool critter = false, bool? seekHome = null, bool canTeleportHome = true, bool canFindHouse = true, bool canOpenDoors = true)
-		{
-			bool seekHouse = Main.raining;
-			if (!Main.dayTime || Main.eclipse) seekHouse = true;
-			if (seekHome != null) seekHouse = (bool)seekHome;
-			int npcTileX = (int)(npc.position.X + (double)(npc.width / 2)) / 16;
-			int npcTileY = (int)(npc.position.Y + (double)npc.height + 1.0) / 16;
-			if (critter && npc.target == 255)
-			{
-				npc.TargetClosest();
-				npc.direction = npc.Center.X < Main.player[npc.target].Center.X ? 1 : -1;
-				npc.spriteDirection = npc.direction;
-				if (npc.homeTileX == -1) npc.homeTileX = (int)(npc.Center.X / 16f);
-			}
-			bool isTalking = false;
-			npc.directionY = -1;
-			if (npc.direction == 0) npc.direction = 1;
-			//Sets AI if the npc is speaking to a player
-			for (int m1 = 0; m1 < 255; ++m1)
-			{
-				if (Main.player[m1].active && Main.player[m1].talkNPC == npc.whoAmI)
-				{
-					isTalking = true;
-					if (ai[0] != 0f) npc.netUpdate = true;
-					ai[0] = 0f; ai[1] = 300f; ai[2] = 100f;
-					npc.direction = Main.player[m1].Center.X >= npc.Center.X ? 1 : -1;
-				}
-			}
-			if (ai[3] > 0f)
-			{
-				npc.life = -1;
-				npc.HitEffect();
-				npc.active = false;
-				if (npc.type == NPCID.OldMan)
+        public static void AIFriendly(NPC npc, ref float[] ai, float moveInterval = 0.07f, float maxSpeed = 1f, bool critter = false, bool? seekHome = null, bool canTeleportHome = true, bool canFindHouse = true, bool canOpenDoors = true)
+        {
+            bool seekHouse = Main.raining;
+            if (!Main.dayTime || Main.eclipse) seekHouse = true;
+            if (seekHome != null) seekHouse = (bool)seekHome;
+            int npcTileX = (int)(npc.position.X + (double)(npc.width / 2)) / 16;
+            int npcTileY = (int)(npc.position.Y + (double)npc.height + 1.0) / 16;
+            if (critter && npc.target == 255)
+            {
+                npc.TargetClosest();
+                npc.direction = npc.Center.X < Main.player[npc.target].Center.X ? 1 : -1;
+                npc.spriteDirection = npc.direction;
+                if (npc.homeTileX == -1) npc.homeTileX = (int)(npc.Center.X / 16f);
+            }
+            bool isTalking = false;
+            npc.directionY = -1;
+            if (npc.direction == 0) npc.direction = 1;
+            //Sets AI if the npc is speaking to a player
+            for (int m1 = 0; m1 < 255; ++m1)
+            {
+                if (Main.player[m1].active && Main.player[m1].talkNPC == npc.whoAmI)
+                {
+                    isTalking = true;
+                    if (ai[0] != 0f) npc.netUpdate = true;
+                    ai[0] = 0f; ai[1] = 300f; ai[2] = 100f;
+                    npc.direction = Main.player[m1].Center.X >= npc.Center.X ? 1 : -1;
+                }
+            }
+            if (ai[3] > 0f)
+            {
+                npc.life = -1;
+                npc.HitEffect();
+                npc.active = false;
+                if (npc.type == NPCID.OldMan)
                     SoundEngine.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
-			}
-			//prevent a -1, -1 saving scenario
-			if (npc.type >= Main.maxNPCTypes && npc.homeTileX == -1 && npc.homeTileY == -1 || npc.homeTileX == ushort.MaxValue && npc.homeTileY == ushort.MaxValue)
-			{
-				npc.homeTileX = (int)npc.Center.X / 16;
-				npc.homeTileY = (int)npc.Center.Y / 16;
-			}
-			int homeTileY = npc.homeTileY;
-			if (Main.netMode != NetmodeID.MultiplayerClient && npc.homeTileY > 0)
-			{
-				while (!WorldGen.SolidTile(npc.homeTileX, homeTileY) && homeTileY < Main.maxTilesY - 20)
-					++homeTileY;
-			}
-			//handle teleporting to the home tile
-			if (Main.netMode != NetmodeID.MultiplayerClient && canTeleportHome && seekHouse && (npcTileX != npc.homeTileX || npcTileY != homeTileY) && !npc.homeless)
-			{
-				bool moveToHome = true;
-				for (int m2 = 0; m2 < 2; ++m2)
-				{
-					Rectangle checkRect = new((int)(npc.Center.X - NPC.sWidth / 2 - NPC.safeRangeX), (int)(npc.Center.Y - NPC.sHeight / 2 - NPC.safeRangeY), NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
-					if (m2 == 1)
-						checkRect = new Rectangle(npc.homeTileX * 16 + 8 - NPC.sWidth / 2 - NPC.safeRangeX, homeTileY * 16 + 8 - NPC.sHeight / 2 - NPC.safeRangeY, NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
-					for (int m3 = 0; m3 < 255; m3++)
+            }
+            //prevent a -1, -1 saving scenario
+            if (npc.type >= Main.maxNPCTypes && npc.homeTileX == -1 && npc.homeTileY == -1 || npc.homeTileX == ushort.MaxValue && npc.homeTileY == ushort.MaxValue)
+            {
+                npc.homeTileX = (int)npc.Center.X / 16;
+                npc.homeTileY = (int)npc.Center.Y / 16;
+            }
+            int homeTileY = npc.homeTileY;
+            if (Main.netMode != NetmodeID.MultiplayerClient && npc.homeTileY > 0)
+            {
+                while (!WorldGen.SolidTile(npc.homeTileX, homeTileY) && homeTileY < Main.maxTilesY - 20)
+                    ++homeTileY;
+            }
+            //handle teleporting to the home tile
+            if (Main.netMode != NetmodeID.MultiplayerClient && canTeleportHome && seekHouse && (npcTileX != npc.homeTileX || npcTileY != homeTileY) && !npc.homeless)
+            {
+                bool moveToHome = true;
+                for (int m2 = 0; m2 < 2; ++m2)
+                {
+                    Rectangle checkRect = new((int)(npc.Center.X - NPC.sWidth / 2 - NPC.safeRangeX), (int)(npc.Center.Y - NPC.sHeight / 2 - NPC.safeRangeY), NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
+                    if (m2 == 1)
+                        checkRect = new Rectangle(npc.homeTileX * 16 + 8 - NPC.sWidth / 2 - NPC.safeRangeX, homeTileY * 16 + 8 - NPC.sHeight / 2 - NPC.safeRangeY, NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
+                    for (int m3 = 0; m3 < 255; m3++)
                     {
-                        if (Main.player[m3].active && Main.player[m3].Hitbox.Intersects(checkRect)){ moveToHome = false; break; }
+                        if (Main.player[m3].active && Main.player[m3].Hitbox.Intersects(checkRect)) { moveToHome = false; break; }
                         if (!moveToHome) break;
                     }
-				}
-				if (moveToHome)
-				{
-					if (!Collision.SolidTiles(npc.homeTileX - 1, npc.homeTileX + 1, homeTileY - 3, homeTileY - 1)) //either move to preestablished home..
-					{
-						npc.velocity.X = 0.0f;
-						npc.velocity.Y = 0.0f;
-						npc.position.X = npc.homeTileX * 16 + 8 - npc.width / 2;
-						npc.position.Y = homeTileY * 16 - npc.height - 0.1f;
-						npc.netUpdate = true;
-					}else //or find a new one
-					if(canFindHouse)
-					{
-						npc.homeless = true;
-						WorldGen.QuickFindHome(npc.whoAmI);
-					}
-				}
-			}
-			//slow down
-			if (ai[0] == 0f)
-			{
-				if (ai[2] > 0f) --ai[2];
-				if (seekHouse && !isTalking && !critter)
-				{
-					if (Main.netMode != NetmodeID.MultiplayerClient)
-					{
-						//stop at the home tile
-						if (npcTileX == npc.homeTileX && npcTileY == homeTileY)
-						{
-							if (npc.velocity.X != 0f) npc.netUpdate = true;
-							if (npc.velocity.X > 0.1f) npc.velocity.X -= 0.1f;
-							else if (npc.velocity.X < -0.1f) npc.velocity.X += 0.1f;
-							else npc.velocity.X = 0f;
-						}else
-						{
-							npc.direction = npcTileX <= npc.homeTileX ? 1 : -1;
-							ai[0] = 1f; ai[1] = 200 + Main.rand.Next(200); ai[2] = 0f;
-							npc.netUpdate = true;
-						}
-					}
-				}else
-				{
-					//just stop in general
-					if (npc.velocity.X > 0.1f) npc.velocity.X -= 0.1f;
-					else if (npc.velocity.X < -0.1f) npc.velocity.X += 0.1f;
-					else npc.velocity.X = 0f;
-					if (Main.netMode != NetmodeID.MultiplayerClient)
-					{
-						if (ai[1] > 0) --ai[1];
-						if (ai[1] <= 0)
-						{
-							ai[0] = 1f;
-							ai[1] = 200 + Main.rand.Next(200);
-							if (critter) ai[1] += Main.rand.Next(200, 400);
-							ai[2] = 0f;
-							npc.netUpdate = true;
-						}
-					}
-				}
-				if (Main.netMode == NetmodeID.MultiplayerClient || seekHouse && (npcTileX != npc.homeTileX || npcTileY != homeTileY)) return;
-				//move towards the home point
-				if (npcTileX < npc.homeTileX - 25 || npcTileX > npc.homeTileX + 25)
-				{
-					if (ai[2] != 0f) return;
-					if (npcTileX < npc.homeTileX - 50 && npc.direction == -1){ npc.direction = 1; npc.netUpdate = true; }else
-					{ if (npcTileX <= npc.homeTileX + 50 || npc.direction != 1) return; npc.direction = -1; npc.netUpdate = true; }
-				}else
-				{
-					if (Main.rand.Next(80) != 0 || (double)ai[2] != 0) return;
-					ai[2] = 200f;
-					npc.direction *= -1;
-					npc.netUpdate = true;
-				}
-			}else
-			if (ai[0] != 1) {
-            }else
-			//move around within the home
-			if (Main.netMode != NetmodeID.MultiplayerClient && !critter && seekHouse && npcTileX == npc.homeTileX && npcTileY == npc.homeTileY)
-			{
-				ai[0] = 0f; ai[1] = 200 + Main.rand.Next(200); ai[2] = 60f;
-				npc.netUpdate = true;
-			}else
-			{
-				if (Main.netMode != NetmodeID.MultiplayerClient && !npc.homeless && !Main.tileDungeon[Main.tile[npcTileX, npcTileY].type] && (npcTileX < npc.homeTileX - 35 || npcTileX > npc.homeTileX + 35))
-				{
-					if (npc.Center.X < npc.homeTileX * 16 && npc.direction == -1)
-						ai[1] -= 5f;
-					else if (npc.Center.X > npc.homeTileX * 16 && npc.direction == 1)
-						ai[1] -= 5f;
-				}
-				--ai[1];
-				if (ai[1] <= 0f)
-				{
-					ai[0] = 0f; ai[1] = 300 + Main.rand.Next(300);
-					if (critter) ai[1] -= Main.rand.Next(100);
-					ai[2] = 60f; npc.netUpdate = true;
-				}
-				//close doors the npc has opened
-				if (npc.closeDoor && (npc.Center.X / 16f > npc.doorX + 2 || npc.Center.X / 16f < npc.doorX - 2))
-				{
-					if (WorldGen.CloseDoor(npc.doorX, npc.doorY))
-					{
-						npc.closeDoor = false;
-						NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 1, npc.doorX, npc.doorY, npc.direction);
-					}
-					if (npc.Center.X / 16f > npc.doorX + 4 || npc.Center.X / 16f < npc.doorX - 4 || npc.Center.Y / 16f > npc.doorY + 4 || npc.Center.Y / 16f < npc.doorY - 4)
-						npc.closeDoor = false;
-				}
-				if (npc.Center.X < -maxSpeed || npc.velocity.X > maxSpeed)
-				{
-					if (npc.velocity.Y == 0) npc.velocity *= 0.8f;
-				}else if (npc.velocity.X < maxSpeed && npc.direction == 1)
-				{
-					npc.velocity.X += moveInterval;
-					if (npc.velocity.X > maxSpeed) npc.velocity.X = maxSpeed;
-				}else if (npc.velocity.X > -maxSpeed && npc.direction == -1)
-				{
-					npc.velocity.X -= moveInterval;
-					if (npc.velocity.X > maxSpeed) npc.velocity.X = maxSpeed;
-				}
-				WalkupHalfBricks(npc);
-				if (npc.velocity.Y != 0f) return;
-				if (npc.position.X == ai[2]) npc.direction *= -1;
-				ai[2] = -1f;
-				int tileX2 = (int)((npc.Center.X + 15 * npc.direction) / 16f);
-				int tileY2 = (int)((npc.position.Y + npc.height - 16f) / 16f);
-				#region denull tiles
-				if (Main.tile[tileX2, tileY2] == null) Main.tile[tileX2, tileY2] = new Tile();
-				if (Main.tile[tileX2, tileY2 - 1] == null) Main.tile[tileX2, tileY2 - 1] = new Tile();
-				if (Main.tile[tileX2, tileY2 - 2] == null) Main.tile[tileX2, tileY2 - 2] = new Tile();
-				if (Main.tile[tileX2, tileY2 - 3] == null) Main.tile[tileX2, tileY2 - 3] = new Tile();
-				if (Main.tile[tileX2, tileY2 + 1] == null) Main.tile[tileX2, tileY2 + 1] = new Tile();
-				if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null) Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
-				if (Main.tile[tileX2 + npc.direction, tileY2 - 1] == null) Main.tile[tileX2 + npc.direction, tileY2 - 1] = new Tile();
-				if (Main.tile[tileX2 + npc.direction, tileY2 + 1] == null) Main.tile[tileX2 + npc.direction, tileY2 + 1] = new Tile();
-				#endregion
-				//Main.tile[tileX2 - npc.direction, tileY2 + 1].halfBrick();
-				if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tile[tileX2, tileY2 - 2].type == 10 && (Main.rand.Next(10) == 0 || seekHouse))
-				{
-					if (Main.netMode == NetmodeID.MultiplayerClient)
-						return;
-					//attempt to open the door...
-					if (WorldGen.OpenDoor(tileX2, tileY2 - 2, npc.direction))
-					{
-						npc.closeDoor = true;
-						npc.doorX = tileX2;
-						npc.doorY = tileY2 - 2;
-						NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 0, tileX2, tileY2 - 2, npc.direction);
-						npc.netUpdate = true;
-						ai[1] += 80f;
-					//if that fails, attempt to open it the other way...
-					}else if (WorldGen.OpenDoor(tileX2, tileY2 - 2, -npc.direction))
-					{
-						npc.closeDoor = true;
-						npc.doorX = tileX2;
-						npc.doorY = tileY2 - 2;
-						NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 0, tileX2, tileY2 - 2, -npc.direction);
-						npc.netUpdate = true;
-						ai[1] += 80f;
-					//if it still fails, you can't open the door, so turn around
-					}else
-					{
-						npc.direction *= -1;
-						npc.netUpdate = true;
-					}
-				}else
-				{
-					if (npc.velocity.X < 0f && npc.spriteDirection == -1 || npc.velocity.X > 0f && npc.spriteDirection == 1)
-					{
-						if (Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 2].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 2].type])
-						{
-							if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 5, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 5, tileY2 - 1))
-							{
-								if (!Collision.SolidTiles(tileX2, tileX2, tileY2 - 5, tileY2 - 3))
-								{
-									npc.velocity.Y = -6f; npc.netUpdate = true;
-								}else{ npc.direction *= -1; npc.netUpdate = true; }
-							}else{ npc.direction *= -1; npc.netUpdate = true; }
-						}else if (Main.tile[tileX2, tileY2 - 1].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 1].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 1].type])
-						{
-							if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 4, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 4, tileY2 - 1))
-							{
-								if (!Collision.SolidTiles(tileX2, tileX2, tileY2 - 4, tileY2 - 2))
-								{
-									npc.velocity.Y = -5f; npc.netUpdate = true;
-								}else{ npc.direction *= -1; npc.netUpdate = true; }
-							}else{ npc.direction *= -1; npc.netUpdate = true; }
-						}else if (npc.position.Y + npc.height - tileY2 * 16f > 20f)
-						{
-							if (Main.tile[tileX2, tileY2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2].type] && Main.tile[tileX2, tileY2].Slope == 0)
-							{
-								if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2, tileY2 - 3, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2, tileX2 + 2, tileY2 - 3, tileY2 - 1))
-								{
-									npc.velocity.Y = -4.4f;
-									npc.netUpdate = true;
-								}else{ npc.direction *= -1; npc.netUpdate = true; }
-							}
-						}
-						try
-						{
-							#region more denulling tiles
-							if (Main.tile[tileX2, tileY2 + 1] == null) Main.tile[tileX2, tileY2 + 1] = new Tile();
-							if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null) Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
-							if (Main.tile[tileX2, tileY2 + 2] == null) Main.tile[tileX2, tileY2 + 2] = new Tile();
-							if (Main.tile[tileX2 - npc.direction, tileY2 + 2] == null) Main.tile[tileX2 - npc.direction, tileY2 + 2] = new Tile();
-							if (Main.tile[tileX2, tileY2 + 3] == null) Main.tile[tileX2, tileY2 + 3] = new Tile();
-							if (Main.tile[tileX2 - npc.direction, tileY2 + 3] == null) Main.tile[tileX2 - npc.direction, tileY2 + 3] = new Tile();
-							if (Main.tile[tileX2, tileY2 + 4] == null) Main.tile[tileX2, tileY2 + 4] = new Tile();
-							if (Main.tile[tileX2 - npc.direction, tileY2 + 4] == null) Main.tile[tileX2 - npc.direction, tileY2 + 4] = new Tile();
-							#endregion
-							if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 1].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 1].type]) && (!Main.tile[tileX2, tileY2 + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 2].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 2].type]) && (!Main.tile[tileX2, tileY2 + 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 3].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 3].type]) && (!Main.tile[tileX2, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 4].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 4].type]))
-							{
-								npc.direction *= -1;
-								npc.velocity.X *= -1f;
-								npc.netUpdate = true;
-							}
-						}catch{ }
-						if ((double)npc.velocity.Y < 0f) ai[2] = npc.position.X;
-					}
-					if (npc.velocity.Y < 0f && npc.wet) npc.velocity.Y *= 1.2f;
-					npc.velocity.Y *= 1.2f;
-				}
-			}
-		}
+                }
+                if (moveToHome)
+                {
+                    if (!Collision.SolidTiles(npc.homeTileX - 1, npc.homeTileX + 1, homeTileY - 3, homeTileY - 1)) //either move to preestablished home..
+                    {
+                        npc.velocity.X = 0.0f;
+                        npc.velocity.Y = 0.0f;
+                        npc.position.X = npc.homeTileX * 16 + 8 - npc.width / 2;
+                        npc.position.Y = homeTileY * 16 - npc.height - 0.1f;
+                        npc.netUpdate = true;
+                    }
+                    else //or find a new one
+                    if (canFindHouse)
+                    {
+                        npc.homeless = true;
+                        WorldGen.QuickFindHome(npc.whoAmI);
+                    }
+                }
+            }
+            //slow down
+            if (ai[0] == 0f)
+            {
+                if (ai[2] > 0f) --ai[2];
+                if (seekHouse && !isTalking && !critter)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        //stop at the home tile
+                        if (npcTileX == npc.homeTileX && npcTileY == homeTileY)
+                        {
+                            if (npc.velocity.X != 0f) npc.netUpdate = true;
+                            if (npc.velocity.X > 0.1f) npc.velocity.X -= 0.1f;
+                            else if (npc.velocity.X < -0.1f) npc.velocity.X += 0.1f;
+                            else npc.velocity.X = 0f;
+                        }
+                        else
+                        {
+                            npc.direction = npcTileX <= npc.homeTileX ? 1 : -1;
+                            ai[0] = 1f; ai[1] = 200 + Main.rand.Next(200); ai[2] = 0f;
+                            npc.netUpdate = true;
+                        }
+                    }
+                }
+                else
+                {
+                    //just stop in general
+                    if (npc.velocity.X > 0.1f) npc.velocity.X -= 0.1f;
+                    else if (npc.velocity.X < -0.1f) npc.velocity.X += 0.1f;
+                    else npc.velocity.X = 0f;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        if (ai[1] > 0) --ai[1];
+                        if (ai[1] <= 0)
+                        {
+                            ai[0] = 1f;
+                            ai[1] = 200 + Main.rand.Next(200);
+                            if (critter) ai[1] += Main.rand.Next(200, 400);
+                            ai[2] = 0f;
+                            npc.netUpdate = true;
+                        }
+                    }
+                }
+                if (Main.netMode == NetmodeID.MultiplayerClient || seekHouse && (npcTileX != npc.homeTileX || npcTileY != homeTileY)) return;
+                //move towards the home point
+                if (npcTileX < npc.homeTileX - 25 || npcTileX > npc.homeTileX + 25)
+                {
+                    if (ai[2] != 0f) return;
+                    if (npcTileX < npc.homeTileX - 50 && npc.direction == -1) { npc.direction = 1; npc.netUpdate = true; }
+                    else
+                    { if (npcTileX <= npc.homeTileX + 50 || npc.direction != 1) return; npc.direction = -1; npc.netUpdate = true; }
+                }
+                else
+                {
+                    if (Main.rand.Next(80) != 0 || (double)ai[2] != 0) return;
+                    ai[2] = 200f;
+                    npc.direction *= -1;
+                    npc.netUpdate = true;
+                }
+            }
+            else
+            if (ai[0] != 1)
+            {
+            }
+            else
+            //move around within the home
+            if (Main.netMode != NetmodeID.MultiplayerClient && !critter && seekHouse && npcTileX == npc.homeTileX && npcTileY == npc.homeTileY)
+            {
+                ai[0] = 0f; ai[1] = 200 + Main.rand.Next(200); ai[2] = 60f;
+                npc.netUpdate = true;
+            }
+            else
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient && !npc.homeless && !Main.tileDungeon[Main.tile[npcTileX, npcTileY].type] && (npcTileX < npc.homeTileX - 35 || npcTileX > npc.homeTileX + 35))
+                {
+                    if (npc.Center.X < npc.homeTileX * 16 && npc.direction == -1)
+                        ai[1] -= 5f;
+                    else if (npc.Center.X > npc.homeTileX * 16 && npc.direction == 1)
+                        ai[1] -= 5f;
+                }
+                --ai[1];
+                if (ai[1] <= 0f)
+                {
+                    ai[0] = 0f; ai[1] = 300 + Main.rand.Next(300);
+                    if (critter) ai[1] -= Main.rand.Next(100);
+                    ai[2] = 60f; npc.netUpdate = true;
+                }
+                //close doors the npc has opened
+                if (npc.closeDoor && (npc.Center.X / 16f > npc.doorX + 2 || npc.Center.X / 16f < npc.doorX - 2))
+                {
+                    if (WorldGen.CloseDoor(npc.doorX, npc.doorY))
+                    {
+                        npc.closeDoor = false;
+                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 1, npc.doorX, npc.doorY, npc.direction);
+                    }
+                    if (npc.Center.X / 16f > npc.doorX + 4 || npc.Center.X / 16f < npc.doorX - 4 || npc.Center.Y / 16f > npc.doorY + 4 || npc.Center.Y / 16f < npc.doorY - 4)
+                        npc.closeDoor = false;
+                }
+                if (npc.Center.X < -maxSpeed || npc.velocity.X > maxSpeed)
+                {
+                    if (npc.velocity.Y == 0) npc.velocity *= 0.8f;
+                }
+                else if (npc.velocity.X < maxSpeed && npc.direction == 1)
+                {
+                    npc.velocity.X += moveInterval;
+                    if (npc.velocity.X > maxSpeed) npc.velocity.X = maxSpeed;
+                }
+                else if (npc.velocity.X > -maxSpeed && npc.direction == -1)
+                {
+                    npc.velocity.X -= moveInterval;
+                    if (npc.velocity.X > maxSpeed) npc.velocity.X = maxSpeed;
+                }
+                WalkupHalfBricks(npc);
+                if (npc.velocity.Y != 0f) return;
+                if (npc.position.X == ai[2]) npc.direction *= -1;
+                ai[2] = -1f;
+                int tileX2 = (int)((npc.Center.X + 15 * npc.direction) / 16f);
+                int tileY2 = (int)((npc.position.Y + npc.height - 16f) / 16f);
+                #region denull tiles
+                if (Main.tile[tileX2, tileY2] == null) Main.tile[tileX2, tileY2] = new Tile();
+                if (Main.tile[tileX2, tileY2 - 1] == null) Main.tile[tileX2, tileY2 - 1] = new Tile();
+                if (Main.tile[tileX2, tileY2 - 2] == null) Main.tile[tileX2, tileY2 - 2] = new Tile();
+                if (Main.tile[tileX2, tileY2 - 3] == null) Main.tile[tileX2, tileY2 - 3] = new Tile();
+                if (Main.tile[tileX2, tileY2 + 1] == null) Main.tile[tileX2, tileY2 + 1] = new Tile();
+                if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null) Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
+                if (Main.tile[tileX2 + npc.direction, tileY2 - 1] == null) Main.tile[tileX2 + npc.direction, tileY2 - 1] = new Tile();
+                if (Main.tile[tileX2 + npc.direction, tileY2 + 1] == null) Main.tile[tileX2 + npc.direction, tileY2 + 1] = new Tile();
+                #endregion
+                //Main.tile[tileX2 - npc.direction, tileY2 + 1].halfBrick();
+                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tile[tileX2, tileY2 - 2].type == 10 && (Main.rand.Next(10) == 0 || seekHouse))
+                {
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        return;
+                    //attempt to open the door...
+                    if (WorldGen.OpenDoor(tileX2, tileY2 - 2, npc.direction))
+                    {
+                        npc.closeDoor = true;
+                        npc.doorX = tileX2;
+                        npc.doorY = tileY2 - 2;
+                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 0, tileX2, tileY2 - 2, npc.direction);
+                        npc.netUpdate = true;
+                        ai[1] += 80f;
+                        //if that fails, attempt to open it the other way...
+                    }
+                    else if (WorldGen.OpenDoor(tileX2, tileY2 - 2, -npc.direction))
+                    {
+                        npc.closeDoor = true;
+                        npc.doorX = tileX2;
+                        npc.doorY = tileY2 - 2;
+                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 0, tileX2, tileY2 - 2, -npc.direction);
+                        npc.netUpdate = true;
+                        ai[1] += 80f;
+                        //if it still fails, you can't open the door, so turn around
+                    }
+                    else
+                    {
+                        npc.direction *= -1;
+                        npc.netUpdate = true;
+                    }
+                }
+                else
+                {
+                    if (npc.velocity.X < 0f && npc.spriteDirection == -1 || npc.velocity.X > 0f && npc.spriteDirection == 1)
+                    {
+                        if (Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 2].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 2].type])
+                        {
+                            if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 5, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 5, tileY2 - 1))
+                            {
+                                if (!Collision.SolidTiles(tileX2, tileX2, tileY2 - 5, tileY2 - 3))
+                                {
+                                    npc.velocity.Y = -6f; npc.netUpdate = true;
+                                }
+                                else { npc.direction *= -1; npc.netUpdate = true; }
+                            }
+                            else { npc.direction *= -1; npc.netUpdate = true; }
+                        }
+                        else if (Main.tile[tileX2, tileY2 - 1].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 1].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 1].type])
+                        {
+                            if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 4, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 4, tileY2 - 1))
+                            {
+                                if (!Collision.SolidTiles(tileX2, tileX2, tileY2 - 4, tileY2 - 2))
+                                {
+                                    npc.velocity.Y = -5f; npc.netUpdate = true;
+                                }
+                                else { npc.direction *= -1; npc.netUpdate = true; }
+                            }
+                            else { npc.direction *= -1; npc.netUpdate = true; }
+                        }
+                        else if (npc.position.Y + npc.height - tileY2 * 16f > 20f)
+                        {
+                            if (Main.tile[tileX2, tileY2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2].type] && Main.tile[tileX2, tileY2].Slope == 0)
+                            {
+                                if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2, tileY2 - 3, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2, tileX2 + 2, tileY2 - 3, tileY2 - 1))
+                                {
+                                    npc.velocity.Y = -4.4f;
+                                    npc.netUpdate = true;
+                                }
+                                else { npc.direction *= -1; npc.netUpdate = true; }
+                            }
+                        }
+                        try
+                        {
+                            #region more denulling tiles
+                            if (Main.tile[tileX2, tileY2 + 1] == null) Main.tile[tileX2, tileY2 + 1] = new Tile();
+                            if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null) Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
+                            if (Main.tile[tileX2, tileY2 + 2] == null) Main.tile[tileX2, tileY2 + 2] = new Tile();
+                            if (Main.tile[tileX2 - npc.direction, tileY2 + 2] == null) Main.tile[tileX2 - npc.direction, tileY2 + 2] = new Tile();
+                            if (Main.tile[tileX2, tileY2 + 3] == null) Main.tile[tileX2, tileY2 + 3] = new Tile();
+                            if (Main.tile[tileX2 - npc.direction, tileY2 + 3] == null) Main.tile[tileX2 - npc.direction, tileY2 + 3] = new Tile();
+                            if (Main.tile[tileX2, tileY2 + 4] == null) Main.tile[tileX2, tileY2 + 4] = new Tile();
+                            if (Main.tile[tileX2 - npc.direction, tileY2 + 4] == null) Main.tile[tileX2 - npc.direction, tileY2 + 4] = new Tile();
+                            #endregion
+                            if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 1].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 1].type]) && (!Main.tile[tileX2, tileY2 + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 2].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 2].type]) && (!Main.tile[tileX2, tileY2 + 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 3].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 3].type]) && (!Main.tile[tileX2, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 4].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 4].type]))
+                            {
+                                npc.direction *= -1;
+                                npc.velocity.X *= -1f;
+                                npc.netUpdate = true;
+                            }
+                        }
+                        catch { }
+                        if ((double)npc.velocity.Y < 0f) ai[2] = npc.position.X;
+                    }
+                    if (npc.velocity.Y < 0f && npc.wet) npc.velocity.Y *= 1.2f;
+                    npc.velocity.Y *= 1.2f;
+                }
+            }
+        }
 
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Eater of Souls AI. (EoS, Corruptor, etc.) (AIStyle 5)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -3247,119 +3351,123 @@ namespace Redemption.Base
 		 * fleeAtDay : If true, npc will flee if it becomes day.
 		 * ignoreWet : If true, npc will ignore being wet.
 		 */
-		public static void AIEater(NPC npc, ref float[] ai, float moveInterval = 0.022f, float distanceDivider = 4.2f, float bounceScalar = 0.7f, bool fleeAtDay = false, bool ignoreWet = false)
+        public static void AIEater(NPC npc, ref float[] ai, float moveInterval = 0.022f, float distanceDivider = 4.2f, float bounceScalar = 0.7f, bool fleeAtDay = false, bool ignoreWet = false)
         {
-            if (npc.target is < 0 or byte.MaxValue || Main.player[npc.target].dead){ npc.TargetClosest(); }
-			float distX = Main.player[npc.target].Center.X;
-			float distY = Main.player[npc.target].Center.Y;
+            if (npc.target is < 0 or byte.MaxValue || Main.player[npc.target].dead) { npc.TargetClosest(); }
+            float distX = Main.player[npc.target].Center.X;
+            float distY = Main.player[npc.target].Center.Y;
             Vector2 npcCenter = npc.Center;
-			float distDx = (int)(distX / 8f) * 8f;
-			float distDy = (int)(distY / 8f) * 8f;
-			npcCenter.X = (int)(npcCenter.X / 8f) * 8f;
-			npcCenter.Y = (int)(npcCenter.Y / 8f) * 8f;
-			float distX2 = distDx - npcCenter.X;
-			float distY2 = distDy - npcCenter.Y;
-			float dist = (float) Math.Sqrt(distX2 * distX2 + distY2 * distY2);
-			float speedX1;
-			float speedY1;
-			if (dist == 0f)
-			{
-				speedX1 = npc.velocity.X;
-				speedY1 = npc.velocity.Y;
-			}else
-			{
-				float distScalar = distanceDivider / dist;
-				speedX1 = distX2 * distScalar;
-				speedY1 = distY2 * distScalar;
-			}
-			++ai[0];
-            if (ai[0] > 0f){ npc.velocity.Y += 23f / 1000f; }else{ npc.velocity.Y -= 23f / 1000f; }
-            if (ai[0] < -100f || (double)ai[0] > 100f){ npc.velocity.X += 23f / 1000f; }else{ npc.velocity.X -= 23f / 1000f; }
-            if (ai[0] > 200f){ ai[0] = -200f; }
-			if (dist < 150f){	npc.velocity.X += speedX1 * 0.007f; npc.velocity.Y += speedY1 * 0.007f; }
-			if (Main.player[npc.target].dead)
-			{
-				speedX1 = npc.direction * distanceDivider / 2f;
-				speedY1 = -distanceDivider / 2f;
-			}
-			if (npc.velocity.X < speedX1){ npc.velocity.X += moveInterval; }else 
-            if (npc.velocity.X > speedX1){ npc.velocity.X -= moveInterval; }
-			if (npc.velocity.Y < speedY1){ npc.velocity.Y += moveInterval; }else 
-            if (npc.velocity.Y > speedY1){ npc.velocity.Y -= moveInterval; }
-			npc.rotation = (float) Math.Atan2(speedY1, speedX1) - 1.57f;
-			if (npc.collideX)
-			{
-				npc.netUpdate = true;
-				npc.velocity.X = npc.oldVelocity.X * -bounceScalar;
-                if (npc.direction == -1 && npc.velocity.X is > 0f and < 2f){ npc.velocity.X = 2f; }
-                if (npc.direction == 1 && npc.velocity.X is < 0f and > -2f){ npc.velocity.X = -2f; }
-			}
-			if (npc.collideY)
-			{
-				npc.netUpdate = true;
-				npc.velocity.Y = npc.oldVelocity.Y * -bounceScalar;
-                if (npc.velocity.Y is > 0f and < 1.5f){ npc.velocity.Y = 2f; }
-                if (npc.velocity.Y is < 0f and > -1.5f){ npc.velocity.Y = -2f; }
-			}
-			if (!ignoreWet && npc.wet)
-			{
-                if(npc.velocity.Y > 0f){ npc.velocity.Y *= 0.95f; }
-				npc.velocity.Y -= 0.3f;
-                if(npc.velocity.Y < -2f){ npc.velocity.Y = -2f; }
-			}
-			if(fleeAtDay && Main.dayTime || Main.player[npc.target].dead)
-			{
-				npc.velocity.Y -= moveInterval * 2f;
-                if (npc.timeLeft > 10){ npc.timeLeft = 10; }
-			}
-			if ((npc.velocity.X <= 0f || npc.oldVelocity.X >= 0f) && (npc.velocity.X >= 0f || npc.oldVelocity.X <= 0f) && (npc.velocity.Y <= 0f || npc.oldVelocity.Y >= 0f) && (npc.velocity.Y >= 0.0 || npc.oldVelocity.Y <= 0f) || npc.justHit)
-				return;
-			npc.netUpdate = true;
+            float distDx = (int)(distX / 8f) * 8f;
+            float distDy = (int)(distY / 8f) * 8f;
+            npcCenter.X = (int)(npcCenter.X / 8f) * 8f;
+            npcCenter.Y = (int)(npcCenter.Y / 8f) * 8f;
+            float distX2 = distDx - npcCenter.X;
+            float distY2 = distDy - npcCenter.Y;
+            float dist = (float)Math.Sqrt(distX2 * distX2 + distY2 * distY2);
+            float speedX1;
+            float speedY1;
+            if (dist == 0f)
+            {
+                speedX1 = npc.velocity.X;
+                speedY1 = npc.velocity.Y;
+            }
+            else
+            {
+                float distScalar = distanceDivider / dist;
+                speedX1 = distX2 * distScalar;
+                speedY1 = distY2 * distScalar;
+            }
+            ++ai[0];
+            if (ai[0] > 0f) { npc.velocity.Y += 23f / 1000f; } else { npc.velocity.Y -= 23f / 1000f; }
+            if (ai[0] < -100f || (double)ai[0] > 100f) { npc.velocity.X += 23f / 1000f; } else { npc.velocity.X -= 23f / 1000f; }
+            if (ai[0] > 200f) { ai[0] = -200f; }
+            if (dist < 150f) { npc.velocity.X += speedX1 * 0.007f; npc.velocity.Y += speedY1 * 0.007f; }
+            if (Main.player[npc.target].dead)
+            {
+                speedX1 = npc.direction * distanceDivider / 2f;
+                speedY1 = -distanceDivider / 2f;
+            }
+            if (npc.velocity.X < speedX1) { npc.velocity.X += moveInterval; }
+            else
+            if (npc.velocity.X > speedX1) { npc.velocity.X -= moveInterval; }
+            if (npc.velocity.Y < speedY1) { npc.velocity.Y += moveInterval; }
+            else
+            if (npc.velocity.Y > speedY1) { npc.velocity.Y -= moveInterval; }
+            npc.rotation = (float)Math.Atan2(speedY1, speedX1) - 1.57f;
+            if (npc.collideX)
+            {
+                npc.netUpdate = true;
+                npc.velocity.X = npc.oldVelocity.X * -bounceScalar;
+                if (npc.direction == -1 && npc.velocity.X is > 0f and < 2f) { npc.velocity.X = 2f; }
+                if (npc.direction == 1 && npc.velocity.X is < 0f and > -2f) { npc.velocity.X = -2f; }
+            }
+            if (npc.collideY)
+            {
+                npc.netUpdate = true;
+                npc.velocity.Y = npc.oldVelocity.Y * -bounceScalar;
+                if (npc.velocity.Y is > 0f and < 1.5f) { npc.velocity.Y = 2f; }
+                if (npc.velocity.Y is < 0f and > -1.5f) { npc.velocity.Y = -2f; }
+            }
+            if (!ignoreWet && npc.wet)
+            {
+                if (npc.velocity.Y > 0f) { npc.velocity.Y *= 0.95f; }
+                npc.velocity.Y -= 0.3f;
+                if (npc.velocity.Y < -2f) { npc.velocity.Y = -2f; }
+            }
+            if (fleeAtDay && Main.dayTime || Main.player[npc.target].dead)
+            {
+                npc.velocity.Y -= moveInterval * 2f;
+                if (npc.timeLeft > 10) { npc.timeLeft = 10; }
+            }
+            if ((npc.velocity.X <= 0f || npc.oldVelocity.X >= 0f) && (npc.velocity.X >= 0f || npc.oldVelocity.X <= 0f) && (npc.velocity.Y <= 0f || npc.oldVelocity.Y >= 0f) && (npc.velocity.Y >= 0.0 || npc.oldVelocity.Y <= 0f) || npc.justHit)
+                return;
+            npc.netUpdate = true;
         }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Wheel AI. (Blazing Wheel) (AIStyle 21)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * moveInterval : How much to move each tick (NOTE: very high numbers can result in the AI breaking!)
 		 * rotate : If true, rotates the npc like a Blazing Wheel.
 		 */
-		public static void AIWheel(NPC npc, ref float[] ai, float moveInterval = 6f, bool rotate = false)
+        public static void AIWheel(NPC npc, ref float[] ai, float moveInterval = 6f, bool rotate = false)
         {
-			if (ai[0] == 0f)
-			{
-				npc.TargetClosest();
-				npc.directionY = 1;
-				ai[0] = 1f;
-			}
-			if (ai[1] == 0f)
-			{
-                if (rotate){ npc.rotation += npc.direction * npc.directionY * 0.13f; }
-				if (npc.collideY) ai[0] = 2f;
-				if (!npc.collideY && ai[0] == 2f)
-				{
-					npc.direction = -npc.direction;
-					ai[1] = 1f;
-					ai[0] = 1f;
-				}
-				if (npc.collideX){ npc.directionY = -npc.directionY; ai[1] = 1f; }
-			}else
-			{
-                if (rotate){ npc.rotation -= npc.direction * npc.directionY * 0.13f; }
-				if (npc.collideX) ai[0] = 2f;
-				if (!npc.collideX && ai[0] == 2f)
-				{
-					npc.directionY = -npc.directionY;
-					ai[1] = 0f;
-					ai[0] = 1f;
-				}
-				if (npc.collideY){ npc.direction = -npc.direction; ai[1] = 0.0f; }
-			}
-			npc.velocity.X = moveInterval * npc.direction;
-			npc.velocity.Y = moveInterval * npc.directionY;
+            if (ai[0] == 0f)
+            {
+                npc.TargetClosest();
+                npc.directionY = 1;
+                ai[0] = 1f;
+            }
+            if (ai[1] == 0f)
+            {
+                if (rotate) { npc.rotation += npc.direction * npc.directionY * 0.13f; }
+                if (npc.collideY) ai[0] = 2f;
+                if (!npc.collideY && ai[0] == 2f)
+                {
+                    npc.direction = -npc.direction;
+                    ai[1] = 1f;
+                    ai[0] = 1f;
+                }
+                if (npc.collideX) { npc.directionY = -npc.directionY; ai[1] = 1f; }
+            }
+            else
+            {
+                if (rotate) { npc.rotation -= npc.direction * npc.directionY * 0.13f; }
+                if (npc.collideX) ai[0] = 2f;
+                if (!npc.collideX && ai[0] == 2f)
+                {
+                    npc.directionY = -npc.directionY;
+                    ai[1] = 0f;
+                    ai[0] = 1f;
+                }
+                if (npc.collideY) { npc.direction = -npc.direction; ai[1] = 0.0f; }
+            }
+            npc.velocity.X = moveInterval * npc.direction;
+            npc.velocity.Y = moveInterval * npc.directionY;
         }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Spider Wallwalking AI. (Blood Crawler, etc.) (AIStyle 40)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -3371,10 +3479,10 @@ namespace Redemption.Base
 		 * bounceScalar : scalar for how big a 'bounce' is if the npc hits a tile.
 		 * transformType : if not -1, will check if there's a wall behind the npc and if there is not, will change projectile npc to the type provided.
 		 */
-		public static void AISpider(NPC npc, ref float[] ai, bool ignoreSight = false, float moveInterval = 0.08f, float slowSpeed = 1.5f, float maxSpeed = 3f, float distanceDivider = 2f, float bounceScalar = 0.5f, int transformType = -1)
+        public static void AISpider(NPC npc, ref float[] ai, bool ignoreSight = false, float moveInterval = 0.08f, float slowSpeed = 1.5f, float maxSpeed = 3f, float distanceDivider = 2f, float bounceScalar = 0.5f, int transformType = -1)
         {
-			if (npc.target is < 0 or 255 || Main.player[npc.target].dead)
-				npc.TargetClosest();
+            if (npc.target is < 0 or 255 || Main.player[npc.target].dead)
+                npc.TargetClosest();
             Vector2 npcCenter = npc.Center;
             float distX = Main.player[npc.target].Center.X;
             float distY = Main.player[npc.target].Center.Y;
@@ -3385,98 +3493,104 @@ namespace Redemption.Base
             float distX2 = distDx - npcCenter.X;
             float distY2 = distDy - npcCenter.Y;
             float dist = (float)Math.Sqrt(distX2 * distX2 + distY2 * distY2);
-			float velX;
-			float velY;
-			if (dist == 0f)
-			{
-				velX = npc.velocity.X;
-				velY = npc.velocity.Y;
-			}else
-			{
-				float speedMult = distanceDivider / dist;
-				velX = distX2 * speedMult;
-				velY = distY2 * speedMult;
-			}
-			if (Main.player[npc.target].dead)
-			{
-				velX = npc.direction * distanceDivider / 2f;
-				velY = -distanceDivider / 2f;
-			}
-			npc.spriteDirection = -1;
-			if (!ignoreSight && !Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height))
-			{
-				++ai[0];
-                if (ai[0] > 0f){ npc.velocity.Y += 23f / 1000f; }else{ npc.velocity.Y -= 23f / 1000f; }
-                if (ai[0] < -100f || (double)ai[0] > 100f){ npc.velocity.X += 23f / 1000f; }else{ npc.velocity.X -= 23f / 1000f; }
-                if (ai[0] > 200f){ ai[0] = -200f; }
-				npc.velocity.X += velX * 0.007f;
-				npc.velocity.Y += velY * 0.007f;
-				npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X);
-                if (npc.velocity.X > slowSpeed || npc.velocity.X < -slowSpeed){ npc.velocity.X *= 0.9f; }
-				if (npc.velocity.Y > slowSpeed || npc.velocity.Y < -slowSpeed){ npc.velocity.Y *= 0.9f; }
-                if (npc.velocity.X > maxSpeed){ npc.velocity.X = maxSpeed; }else
-                if (npc.velocity.X < -maxSpeed){ npc.velocity.X = -maxSpeed; }
-                if (npc.velocity.Y > maxSpeed){ npc.velocity.Y = maxSpeed; }else
-                if (npc.velocity.Y < -maxSpeed){ npc.velocity.Y = -maxSpeed; }
-			}else
-			{
-				if (npc.velocity.X < (double)velX)
-				{
-					npc.velocity.X += moveInterval;
-					if ((double)npc.velocity.X < 0 && (double)velX > 0)
-						npc.velocity.X += moveInterval;
-				}else if (npc.velocity.X > (double)velX)
-				{
-					npc.velocity.X -= moveInterval;
-					if ((double)npc.velocity.X > 0 && (double)velX < 0)
-						npc.velocity.X -= moveInterval;
-				}
-				if (npc.velocity.Y < (double)velY)
-				{
-					npc.velocity.Y += moveInterval;
-					if ((double)npc.velocity.Y < 0 && (double)velY > 0)
-						npc.velocity.Y += moveInterval;
-				}else if (npc.velocity.Y > (double)velY)
-				{
-					npc.velocity.Y -= moveInterval;
-					if ((double)npc.velocity.Y > 0 && (double)velY < 0)
-						npc.velocity.Y -= moveInterval;
-				}
-				npc.rotation = (float)Math.Atan2(velY, velX);
-			}
-			if (npc.collideX)
-			{
-				npc.netUpdate = true;
-				npc.velocity.X = npc.oldVelocity.X * -bounceScalar;
-				if (npc.direction == -1 && npc.velocity.X is > 0f and < 2f){ npc.velocity.X = 2f; }
-				if (npc.direction == 1 && npc.velocity.X is < 0f and > -2f){ npc.velocity.X = -2f; }
-			}
-			if (npc.collideY)
-			{
-				npc.netUpdate = true;
-				npc.velocity.Y = npc.oldVelocity.Y * -bounceScalar;
-				if (npc.velocity.Y is > 0f and < 1.5f){ npc.velocity.Y = 2f; }
-                if (npc.velocity.Y is < 0f and > -1.5f){ npc.velocity.Y = -2f; }
-			}
-			if ((npc.velocity.X > 0f && npc.oldVelocity.X < 0f || npc.velocity.X < 0f && npc.oldVelocity.X > 0f || npc.velocity.Y > 0f && npc.oldVelocity.Y < 0f || npc.velocity.Y < 0f && npc.oldVelocity.Y > 0f) && !npc.justHit)
-				npc.netUpdate = true;
-			if(Main.netMode != NetmodeID.MultiplayerClient && transformType != -1)
+            float velX;
+            float velY;
+            if (dist == 0f)
             {
-			    int centerTileX = (int)npc.Center.X / 16;
-			    int centerTileY = (int)npc.Center.Y / 16;
-			    bool wallExists = false;
-			    for (int x = centerTileX - 1; x <= centerTileX + 1; ++x)
-			    {
-				    for (int y = centerTileY - 1; y <= centerTileY + 1; ++y)
-				    {
+                velX = npc.velocity.X;
+                velY = npc.velocity.Y;
+            }
+            else
+            {
+                float speedMult = distanceDivider / dist;
+                velX = distX2 * speedMult;
+                velY = distY2 * speedMult;
+            }
+            if (Main.player[npc.target].dead)
+            {
+                velX = npc.direction * distanceDivider / 2f;
+                velY = -distanceDivider / 2f;
+            }
+            npc.spriteDirection = -1;
+            if (!ignoreSight && !Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height))
+            {
+                ++ai[0];
+                if (ai[0] > 0f) { npc.velocity.Y += 23f / 1000f; } else { npc.velocity.Y -= 23f / 1000f; }
+                if (ai[0] < -100f || (double)ai[0] > 100f) { npc.velocity.X += 23f / 1000f; } else { npc.velocity.X -= 23f / 1000f; }
+                if (ai[0] > 200f) { ai[0] = -200f; }
+                npc.velocity.X += velX * 0.007f;
+                npc.velocity.Y += velY * 0.007f;
+                npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X);
+                if (npc.velocity.X > slowSpeed || npc.velocity.X < -slowSpeed) { npc.velocity.X *= 0.9f; }
+                if (npc.velocity.Y > slowSpeed || npc.velocity.Y < -slowSpeed) { npc.velocity.Y *= 0.9f; }
+                if (npc.velocity.X > maxSpeed) { npc.velocity.X = maxSpeed; }
+                else
+                if (npc.velocity.X < -maxSpeed) { npc.velocity.X = -maxSpeed; }
+                if (npc.velocity.Y > maxSpeed) { npc.velocity.Y = maxSpeed; }
+                else
+                if (npc.velocity.Y < -maxSpeed) { npc.velocity.Y = -maxSpeed; }
+            }
+            else
+            {
+                if (npc.velocity.X < (double)velX)
+                {
+                    npc.velocity.X += moveInterval;
+                    if ((double)npc.velocity.X < 0 && (double)velX > 0)
+                        npc.velocity.X += moveInterval;
+                }
+                else if (npc.velocity.X > (double)velX)
+                {
+                    npc.velocity.X -= moveInterval;
+                    if ((double)npc.velocity.X > 0 && (double)velX < 0)
+                        npc.velocity.X -= moveInterval;
+                }
+                if (npc.velocity.Y < (double)velY)
+                {
+                    npc.velocity.Y += moveInterval;
+                    if ((double)npc.velocity.Y < 0 && (double)velY > 0)
+                        npc.velocity.Y += moveInterval;
+                }
+                else if (npc.velocity.Y > (double)velY)
+                {
+                    npc.velocity.Y -= moveInterval;
+                    if ((double)npc.velocity.Y > 0 && (double)velY < 0)
+                        npc.velocity.Y -= moveInterval;
+                }
+                npc.rotation = (float)Math.Atan2(velY, velX);
+            }
+            if (npc.collideX)
+            {
+                npc.netUpdate = true;
+                npc.velocity.X = npc.oldVelocity.X * -bounceScalar;
+                if (npc.direction == -1 && npc.velocity.X is > 0f and < 2f) { npc.velocity.X = 2f; }
+                if (npc.direction == 1 && npc.velocity.X is < 0f and > -2f) { npc.velocity.X = -2f; }
+            }
+            if (npc.collideY)
+            {
+                npc.netUpdate = true;
+                npc.velocity.Y = npc.oldVelocity.Y * -bounceScalar;
+                if (npc.velocity.Y is > 0f and < 1.5f) { npc.velocity.Y = 2f; }
+                if (npc.velocity.Y is < 0f and > -1.5f) { npc.velocity.Y = -2f; }
+            }
+            if ((npc.velocity.X > 0f && npc.oldVelocity.X < 0f || npc.velocity.X < 0f && npc.oldVelocity.X > 0f || npc.velocity.Y > 0f && npc.oldVelocity.Y < 0f || npc.velocity.Y < 0f && npc.oldVelocity.Y > 0f) && !npc.justHit)
+                npc.netUpdate = true;
+            if (Main.netMode != NetmodeID.MultiplayerClient && transformType != -1)
+            {
+                int centerTileX = (int)npc.Center.X / 16;
+                int centerTileY = (int)npc.Center.Y / 16;
+                bool wallExists = false;
+                for (int x = centerTileX - 1; x <= centerTileX + 1; ++x)
+                {
+                    for (int y = centerTileY - 1; y <= centerTileY + 1; ++y)
+                    {
                         if (Main.tile[x, y].wall > 0) { wallExists = true; break; }
-				    }
-			    }
-			    if (!wallExists) npc.Transform(transformType);
+                    }
+                }
+                if (!wallExists) npc.Transform(transformType);
             }
         }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Skull AI. (Cursed Skull) (AIStyle 10)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -3486,59 +3600,65 @@ namespace Redemption.Base
 		 * increment : the amount to move per tick.
 		 * closeIncrement : the amount to move per tick when close to the player.
 		 */
-		public static void AISkull(NPC npc, ref float[] ai, bool tacklePlayer = true, float maxDistanceAmt = 4f, float maxDistance = 350f, float increment = 0.011f, float closeIncrement = 0.019f)
+        public static void AISkull(NPC npc, ref float[] ai, bool tacklePlayer = true, float maxDistanceAmt = 4f, float maxDistance = 350f, float increment = 0.011f, float closeIncrement = 0.019f)
         {
-		    float distanceAmt = 1f;
-		    npc.TargetClosest();
-		    float distX = Main.player[npc.target].Center.X - npc.Center.X;
-		    float distY = Main.player[npc.target].Center.Y - npc.Center.Y;
-		    float dist = (float)Math.Sqrt(distX * distX + distY * distY);
-		    ai[1] += 1f;
-		    if (ai[1] > 600f)
-		    {
+            float distanceAmt = 1f;
+            npc.TargetClosest();
+            float distX = Main.player[npc.target].Center.X - npc.Center.X;
+            float distY = Main.player[npc.target].Center.Y - npc.Center.Y;
+            float dist = (float)Math.Sqrt(distX * distX + distY * distY);
+            ai[1] += 1f;
+            if (ai[1] > 600f)
+            {
                 if (tacklePlayer)
                 {
                     increment *= 8f;
                     distanceAmt = 4f;
-                    if (ai[1] > 650f){ ai[1] = 0f; }
-                }else{ ai[1] = 0f; }
-		    }else
-			if (dist < 250f)
-			{
-				ai[0] += 0.9f;
-                if (ai[0] > 0f){ npc.velocity.Y += closeIncrement; }else{ npc.velocity.Y -= closeIncrement; }
-                if (ai[0] < -100f || ai[0] > 100f) { npc.velocity.X += closeIncrement; }else{ npc.velocity.X -= closeIncrement; }
-				if (ai[0] > 200f){ ai[0] = -200f; }
-			}
-		    if (dist > maxDistance)
-		    {
+                    if (ai[1] > 650f) { ai[1] = 0f; }
+                }
+                else { ai[1] = 0f; }
+            }
+            else
+            if (dist < 250f)
+            {
+                ai[0] += 0.9f;
+                if (ai[0] > 0f) { npc.velocity.Y += closeIncrement; } else { npc.velocity.Y -= closeIncrement; }
+                if (ai[0] < -100f || ai[0] > 100f) { npc.velocity.X += closeIncrement; } else { npc.velocity.X -= closeIncrement; }
+                if (ai[0] > 200f) { ai[0] = -200f; }
+            }
+            if (dist > maxDistance)
+            {
                 distanceAmt = maxDistanceAmt + maxDistanceAmt / 4f;
-			    increment = 0.3f;
-		    }else
-			if (dist > maxDistance - maxDistance / 7f)
-			{
+                increment = 0.3f;
+            }
+            else
+            if (dist > maxDistance - maxDistance / 7f)
+            {
                 distanceAmt = maxDistanceAmt - maxDistanceAmt / 4f;
-				increment = 0.2f;
-			}else
+                increment = 0.2f;
+            }
+            else
             if (dist > maxDistance - 2 * (maxDistance / 7f))
-			{
+            {
                 distanceAmt = maxDistanceAmt / 2.66f;
-				increment = 0.1f;
-			}
-		    dist = distanceAmt / dist;
-		    distX *= dist; distY *= dist;
-		    if (Main.player[npc.target].dead)
-		    {
-			    distX = npc.direction * distanceAmt / 2f;
-			    distY = -distanceAmt / 2f;
-		    }
-		    if (npc.velocity.X < distX){ npc.velocity.X += increment; }else
-			if (npc.velocity.X > distX){ npc.velocity.X -= increment; }
-		    if (npc.velocity.Y < distY){ npc.velocity.Y += increment; }else
-			if (npc.velocity.Y > distY){ npc.velocity.Y -= increment; }
-	    }
+                increment = 0.1f;
+            }
+            dist = distanceAmt / dist;
+            distX *= dist; distY *= dist;
+            if (Main.player[npc.target].dead)
+            {
+                distX = npc.direction * distanceAmt / 2f;
+                distY = -distanceAmt / 2f;
+            }
+            if (npc.velocity.X < distX) { npc.velocity.X += increment; }
+            else
+            if (npc.velocity.X > distX) { npc.velocity.X -= increment; }
+            if (npc.velocity.Y < distY) { npc.velocity.Y += increment; }
+            else
+            if (npc.velocity.Y > distY) { npc.velocity.Y -= increment; }
+        }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Floater AI. (Pixie, Gastropod, etc.) (AIStyle 22)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -3549,7 +3669,7 @@ namespace Redemption.Base
 		 * hoverMaxSpeed : the maximum speed to hover by.
 		 * hoverHeight : the amount of tiles below an npc before it needs ground to hover over.
 		 */
-		public static void AIFloater(NPC npc, ref float[] ai, bool ignoreWet = false, float moveInterval = 0.2f, float maxSpeedX = 2f, float maxSpeedY = 1.5f, float hoverInterval = 0.04f, float hoverMaxSpeed = 1.5f, int hoverHeight = 3)
+        public static void AIFloater(NPC npc, ref float[] ai, bool ignoreWet = false, float moveInterval = 0.2f, float maxSpeedX = 2f, float maxSpeedY = 1.5f, float hoverInterval = 0.04f, float hoverMaxSpeed = 1.5f, int hoverHeight = 3)
         {
             bool flyUpward = false;
             if (npc.justHit) { ai[2] = 0f; }
@@ -3658,13 +3778,13 @@ namespace Redemption.Base
             }
             else
                 if (npc.direction == 1 && npc.velocity.X < maxSpeedX)
-                {
-                    npc.velocity.X += moveInterval * 0.5f;
-                    if (npc.velocity.X < -maxSpeedX) { npc.velocity.X += 0.1f; }
-                    else
-                        if (npc.velocity.X < 0f) { npc.velocity.X -= 0.05f; }
-                    if (npc.velocity.X > maxSpeedX) { npc.velocity.X = maxSpeedX; }
-                }
+            {
+                npc.velocity.X += moveInterval * 0.5f;
+                if (npc.velocity.X < -maxSpeedX) { npc.velocity.X += 0.1f; }
+                else
+                    if (npc.velocity.X < 0f) { npc.velocity.X -= 0.05f; }
+                if (npc.velocity.X > maxSpeedX) { npc.velocity.X = maxSpeedX; }
+            }
             if (npc.directionY == -1 && (double)npc.velocity.Y > -hoverMaxSpeed)
             {
                 npc.velocity.Y -= hoverInterval;
@@ -3675,16 +3795,16 @@ namespace Redemption.Base
             }
             else
                 if (npc.directionY == 1 && (double)npc.velocity.Y < hoverMaxSpeed)
-                {
-                    npc.velocity.Y += hoverInterval;
-                    if ((double)npc.velocity.Y < -hoverMaxSpeed) { npc.velocity.Y += 0.05f; }
-                    else
-                        if (npc.velocity.Y < 0f) { npc.velocity.Y -= hoverInterval - 0.01f; }
-                    if ((double)npc.velocity.Y > hoverMaxSpeed) { npc.velocity.Y = hoverMaxSpeed; }
-                }
+            {
+                npc.velocity.Y += hoverInterval;
+                if ((double)npc.velocity.Y < -hoverMaxSpeed) { npc.velocity.Y += 0.05f; }
+                else
+                    if (npc.velocity.Y < 0f) { npc.velocity.Y -= hoverInterval - 0.01f; }
+                if ((double)npc.velocity.Y > hoverMaxSpeed) { npc.velocity.Y = hoverMaxSpeed; }
+            }
         }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Flier AI. (Bat, Demon, etc.) (AIStyle 14)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -3692,7 +3812,7 @@ namespace Redemption.Base
 		 * maxSpeedX/maxSpeedY : the max speed of the npc on the X and Y axis, respectively.
 		 * slowdownIncrementX/slowdownIncrementY : the slowdown increment on the X and Y axis, respectively.
 		 */
-		public static void AIFlier(NPC npc, ref float[] ai, bool sporadic = true, float moveIntervalX = 0.1f, float moveIntervalY = 0.04f, float maxSpeedX = 4f, float maxSpeedY = 1.5f, bool canBeBored = true, int timeUntilBoredom = 300)
+        public static void AIFlier(NPC npc, ref float[] ai, bool sporadic = true, float moveIntervalX = 0.1f, float moveIntervalY = 0.04f, float maxSpeedX = 4f, float maxSpeedY = 1.5f, bool canBeBored = true, int timeUntilBoredom = 300)
         {
             if (npc.collideX)
             {
@@ -3714,33 +3834,39 @@ namespace Redemption.Base
                 if (npc.direction == -1 && npc.velocity.X > -maxSpeedX)
                 {
                     npc.velocity.X -= moveIntervalX;
-                    if (npc.velocity.X > maxSpeedX) { npc.velocity.X -= moveIntervalX; }else
+                    if (npc.velocity.X > maxSpeedX) { npc.velocity.X -= moveIntervalX; }
+                    else
                     if (npc.velocity.X > 0f) { npc.velocity.X += moveIntervalX * 0.5f; }
                     if (npc.velocity.X < -maxSpeedX) { npc.velocity.X = -maxSpeedX; }
-                }else
+                }
+                else
                 if (npc.direction == 1 && npc.velocity.X < maxSpeedX)
                 {
                     npc.velocity.X += moveIntervalX;
-                    if (npc.velocity.X < -maxSpeedX) { npc.velocity.X += moveIntervalX; }else
+                    if (npc.velocity.X < -maxSpeedX) { npc.velocity.X += moveIntervalX; }
+                    else
                     if (npc.velocity.X < 0f) { npc.velocity.X -= moveIntervalX * 0.5f; }
                     if (npc.velocity.X > maxSpeedX) { npc.velocity.X = maxSpeedX; }
                 }
                 if (npc.directionY == -1 && (double)npc.velocity.Y > -maxSpeedY)
                 {
                     npc.velocity.Y -= moveIntervalY;
-                    if ((double)npc.velocity.Y > maxSpeedY) { npc.velocity.Y -= moveIntervalY; }else
+                    if ((double)npc.velocity.Y > maxSpeedY) { npc.velocity.Y -= moveIntervalY; }
+                    else
                     if (npc.velocity.Y > 0f) { npc.velocity.Y += moveIntervalY * 0.5f; }
                     if ((double)npc.velocity.Y < -maxSpeedY) { npc.velocity.Y = -maxSpeedY; }
-                }else
+                }
+                else
                 if (npc.directionY == 1 && (double)npc.velocity.Y < maxSpeedY)
                 {
                     npc.velocity.Y += moveIntervalY;
-                    if ((double)npc.velocity.Y < -maxSpeedY) { npc.velocity.Y += moveIntervalY; }else
+                    if ((double)npc.velocity.Y < -maxSpeedY) { npc.velocity.Y += moveIntervalY; }
+                    else
                     if (npc.velocity.Y < 0f) { npc.velocity.Y -= moveIntervalY * 0.5f; }
                     if ((double)npc.velocity.Y > maxSpeedY) { npc.velocity.Y = maxSpeedY; }
                 }
             };
-            if (canBeBored){ ai[0] += 1f; }
+            if (canBeBored) { ai[0] += 1f; }
             if (canBeBored && ai[0] > timeUntilBoredom)
             {
                 if (!Main.player[npc.target].wet && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height))
@@ -3751,7 +3877,8 @@ namespace Redemption.Base
                 npc.direction = Main.player[npc.target].Center.X < npc.Center.X ? 1 : -1;
                 npc.directionY = Main.player[npc.target].Center.Y < npc.Center.Y ? 1 : -1;
                 move();
-            }else
+            }
+            else
             {
                 move();
                 if (sporadic)
@@ -3768,7 +3895,7 @@ namespace Redemption.Base
             }
         }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Plant AI. (Man Eater, etc.) (AIStyle 13)
 		 * 
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
@@ -3782,7 +3909,7 @@ namespace Redemption.Base
 		 * speedMax : the max speed of the npc.
 		 * targetOffset : A vector2 representing an 'offset' from the target, allows for some variation and misaccuracy.
 		 */
-		public static void AIPlant(NPC npc, ref float[] ai, bool checkTilePoint = true, Vector2 endPoint = default, bool isTilePos = true, float vineLength = 150f, float vineLengthLong = 200f, int vineTimeExtend = 300, int vineTimeMax = 450, float moveInterval = 0.035f, float speedMax = 2f, Vector2 targetOffset = default)
+        public static void AIPlant(NPC npc, ref float[] ai, bool checkTilePoint = true, Vector2 endPoint = default, bool isTilePos = true, float vineLength = 150f, float vineLengthLong = 200f, int vineTimeExtend = 300, int vineTimeMax = 450, float moveInterval = 0.035f, float speedMax = 2f, Vector2 targetOffset = default)
         {
             if (endPoint != default)
             {
@@ -3796,7 +3923,7 @@ namespace Redemption.Base
                 if (Main.tile[tx, ty] == null) { Main.tile[tx, ty] = new Tile(); }
                 if (!Main.tile[tx, ty].IsActiveUnactuated || !Main.tileSolid[Main.tile[tx, ty].type] || Main.tileSolid[Main.tile[tx, ty].type] && Main.tileSolidTop[Main.tile[tx, ty].type])
                 {
-                    if(npc.DeathSound != null) SoundEngine.PlaySound(npc.DeathSound, (int)npc.Center.X, (int)npc.Center.Y);
+                    if (npc.DeathSound != null) SoundEngine.PlaySound(npc.DeathSound, (int)npc.Center.X, (int)npc.Center.Y);
                     npc.life = -1;
                     npc.HitEffect();
                     npc.active = false;
@@ -3811,7 +3938,7 @@ namespace Redemption.Base
                 if (ai[2] > vineTimeMax) { ai[2] = 0f; }
             }
             Vector2 endPointCenter = isTilePos ? new Vector2(ai[0] * 16f + 8f, ai[1] * 16f + 8f) : new Vector2(ai[0], ai[1]);
-			Vector2 playerCenter = Main.player[npc.target].Center + targetOffset;
+            Vector2 playerCenter = Main.player[npc.target].Center + targetOffset;
             float distPlayerX = playerCenter.X - npc.width / 2 - endPointCenter.X;
             float distPlayerY = playerCenter.Y - npc.height / 2 - endPointCenter.Y;
             float distPlayer = (float)Math.Sqrt(distPlayerX * distPlayerX + distPlayerY * distPlayerY);
@@ -3825,7 +3952,8 @@ namespace Redemption.Base
             {
                 npc.velocity.X += moveInterval;
                 if (npc.velocity.X < 0f && distPlayerX > 0f) { npc.velocity.X += moveInterval * 1.5f; }
-            }else
+            }
+            else
             if (npc.position.X > endPointCenter.X + distPlayerX)
             {
                 npc.velocity.X -= moveInterval;
@@ -3835,7 +3963,8 @@ namespace Redemption.Base
             {
                 npc.velocity.Y += moveInterval;
                 if (npc.velocity.Y < 0f && distPlayerY > 0f) { npc.velocity.Y += moveInterval * 1.5f; }
-            }else
+            }
+            else
             if (npc.position.Y > endPointCenter.Y + distPlayerY)
             {
                 npc.velocity.Y -= moveInterval;
@@ -3843,7 +3972,8 @@ namespace Redemption.Base
             }
             npc.velocity.X = MathHelper.Clamp(npc.velocity.X, -speedMax, speedMax);
             npc.velocity.Y = MathHelper.Clamp(npc.velocity.Y, -speedMax, speedMax);
-            if (distPlayerX > 0f) { npc.spriteDirection = 1; npc.rotation = (float)Math.Atan2(distPlayerY, distPlayerX); }else
+            if (distPlayerX > 0f) { npc.spriteDirection = 1; npc.rotation = (float)Math.Atan2(distPlayerY, distPlayerX); }
+            else
             if (distPlayerX < 0f) { npc.spriteDirection = -1; npc.rotation = (float)Math.Atan2(distPlayerY, distPlayerX) + 3.14f; }
             if (npc.collideX)
             {
@@ -3861,32 +3991,32 @@ namespace Redemption.Base
 
         public static void AIWorm(NPC npc, int[] wormTypes, int wormLength = 3, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
         {
-			bool diggingDummy = false;			
-			AIWorm(npc, ref diggingDummy, wormTypes, wormLength, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
-		}
-		
+            bool diggingDummy = false;
+            AIWorm(npc, ref diggingDummy, wormTypes, wormLength, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
+        }
+
         public static void AIWorm(NPC npc, ref bool isDigging, int[] wormTypes, int wormLength = 3, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
         {
             int[] wtypes = new int[wormTypes.Length == 1 ? 1 : wormLength];
             wtypes[0] = wormTypes[0];
-			if (wormTypes.Length > 1)
-			{
-				wtypes[^1] = wormTypes[2];
-				for (int m = 1; m < wtypes.Length - 1; m++)
-				{
-					wtypes[m] = wormTypes[1];
-				}
-			}
+            if (wormTypes.Length > 1)
+            {
+                wtypes[^1] = wormTypes[2];
+                for (int m = 1; m < wtypes.Length - 1; m++)
+                {
+                    wtypes[m] = wormTypes[1];
+                }
+            }
             AIWorm(npc, ref isDigging, wtypes, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
         }
-		
-		public static void AIWorm(NPC npc, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
-        {
-			bool diggingDummy = false;
-			AIWorm(npc, ref diggingDummy, wormTypes, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
-		}
 
-		/*
+        public static void AIWorm(NPC npc, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
+        {
+            bool diggingDummy = false;
+            AIWorm(npc, ref diggingDummy, wormTypes, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
+        }
+
+        /*
 		 * A cleaned up (and edited) copy of Worm AI. (Giant Worm, EoW, Wyvern, etc.) (AIStyle 6)
 		 * 
 		 * wormTypes: An array of the worm npc types. The first type is for the head, the last type is for the tail, and the rest are body types in the order they appear on the worm.
@@ -3902,107 +4032,112 @@ namespace Redemption.Base
 		 * rotateAverage : If true, takes the rotations of the the piece before and after this npc and averages them and adds to it to get a rotation. More accurate for some weirder shaped worms.
 		 * onChangeType : an Action<NPC, int, bool> which is called when the worm splits and the npc changes to a head or tail. (NPC npc, int oldType, bool isHead)
 		 */
-		public static void AIWorm(NPC npc, ref bool isDigging, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
+        public static void AIWorm(NPC npc, ref bool isDigging, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
         {
-			bool singlePiece = wormTypes.Length == 1;
-			bool isHead = npc.type == wormTypes[0];
-			bool isTail = npc.type == wormTypes[^1];
-			bool isBody = !isHead && !isTail;		
+            bool singlePiece = wormTypes.Length == 1;
+            bool isHead = npc.type == wormTypes[0];
+            bool isTail = npc.type == wormTypes[^1];
+            bool isBody = !isHead && !isTail;
             int wormLength = wormTypes.Length;
-			
+
             if (split)
             {
                 npc.realLife = -1;
-            }else
+            }
+            else
             if (npc.ai[3] > 0f)
-				npc.realLife = (int)npc.ai[3];
-			
-			if(npc.ai[0] == -1f)
-				npc.ai[0] = npc.whoAmI;
+                npc.realLife = (int)npc.ai[3];
+
+            if (npc.ai[0] == -1f)
+                npc.ai[0] = npc.whoAmI;
             if (npc.target is < 0 or 255 || Main.player[npc.target].dead)
-				npc.TargetClosest();
-			if(isHead)
-			{
-				if((npc.target is < 0 or 255 || Main.player[npc.target].dead) && npc.timeLeft > 300)
-					npc.timeLeft = 300;
-			}else
-			{
-				npc.timeLeft = 50;
-			}
+                npc.TargetClosest();
+            if (isHead)
+            {
+                if ((npc.target is < 0 or 255 || Main.player[npc.target].dead) && npc.timeLeft > 300)
+                    npc.timeLeft = 300;
+            }
+            else
+            {
+                npc.timeLeft = 50;
+            }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-				if (!singlePiece)
-				{
-					//spawn pieces (flying)
-					if (fly && isHead && npc.ai[0] == 0f)
-					{
-						npc.ai[3] = npc.whoAmI;
-						npc.realLife = npc.whoAmI;
-						int npcID = npc.whoAmI;
-						for (int m = 1; m < wormLength - 1; m++)
-						{
-							int npcType = wormTypes[m];
-							
-							float ai0 = 0;
-							float ai1 = npcID;
-							float ai2 = 0;
-							float ai3 = npc.ai[3];							
+                if (!singlePiece)
+                {
+                    //spawn pieces (flying)
+                    if (fly && isHead && npc.ai[0] == 0f)
+                    {
+                        npc.ai[3] = npc.whoAmI;
+                        npc.realLife = npc.whoAmI;
+                        int npcID = npc.whoAmI;
+                        for (int m = 1; m < wormLength - 1; m++)
+                        {
+                            int npcType = wormTypes[m];
 
-							int newnpcID = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
-							Main.npc[npcID].ai[0] = newnpcID;
-							Main.npc[npcID].netUpdate = true;
-							//Main.npc[newnpcID].ai[3] = (float)npc.whoAmI;
-							//Main.npc[newnpcID].realLife = npc.whoAmI;
-							//Main.npc[newnpcID].ai[1] = (float)npcID;
-							//Main.npc[npcID].ai[0] = (float)newnpcID;
-							//Main.npc[newnpcID].netUpdate = true;							
-							//NetMessage.SendData(23, -1, -1, NetworkText.FromLiteral(""), newnpcID, 0f, 0f, 0f, 0);
-							npcID = newnpcID;
-						}
-						npc.netUpdate = true;
-					}else //spawn pieces
-					if ((isHead || isBody) && npc.ai[0] == 0f)
-					{
-						if(isHead)
-						{
-							if (!split)
-							{
-								npc.ai[3] = npc.whoAmI;
-								npc.realLife = npc.whoAmI;
-							}
-							npc.ai[2] = wormLength - 1;							
-						}
-						float ai0 = 0;
-						float ai1 = npc.whoAmI;
-						float ai2 = npc.ai[2] - 1f;
-						float ai3 = npc.ai[3];
-						if(split)
-							npc.ai[3] = 0f;
-						
-						if (isHead)
-						{
-							npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
-						}else
-						if (isBody && npc.ai[2] > 0f)
-						{
-							npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
-						}else
-						{
-							npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
-						}
-						/*if (!split)
+                            float ai0 = 0;
+                            float ai1 = npcID;
+                            float ai2 = 0;
+                            float ai3 = npc.ai[3];
+
+                            int newnpcID = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
+                            Main.npc[npcID].ai[0] = newnpcID;
+                            Main.npc[npcID].netUpdate = true;
+                            //Main.npc[newnpcID].ai[3] = (float)npc.whoAmI;
+                            //Main.npc[newnpcID].realLife = npc.whoAmI;
+                            //Main.npc[newnpcID].ai[1] = (float)npcID;
+                            //Main.npc[npcID].ai[0] = (float)newnpcID;
+                            //Main.npc[newnpcID].netUpdate = true;							
+                            //NetMessage.SendData(23, -1, -1, NetworkText.FromLiteral(""), newnpcID, 0f, 0f, 0f, 0);
+                            npcID = newnpcID;
+                        }
+                        npc.netUpdate = true;
+                    }
+                    else //spawn pieces
+                    if ((isHead || isBody) && npc.ai[0] == 0f)
+                    {
+                        if (isHead)
+                        {
+                            if (!split)
+                            {
+                                npc.ai[3] = npc.whoAmI;
+                                npc.realLife = npc.whoAmI;
+                            }
+                            npc.ai[2] = wormLength - 1;
+                        }
+                        float ai0 = 0;
+                        float ai1 = npc.whoAmI;
+                        float ai2 = npc.ai[2] - 1f;
+                        float ai3 = npc.ai[3];
+                        if (split)
+                            npc.ai[3] = 0f;
+
+                        if (isHead)
+                        {
+                            npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                        }
+                        else
+                        if (isBody && npc.ai[2] > 0f)
+                        {
+                            npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
+                        }
+                        else
+                        {
+                            npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                        }
+                        /*if (!split)
 						{
 							Main.npc[(int)npc.ai[0]].ai[3] = npc.ai[3];
 							Main.npc[(int)npc.ai[0]].realLife = npc.realLife;
 						}
 						Main.npc[(int)npc.ai[0]].ai[1] = (float)npc.whoAmI;
 						Main.npc[(int)npc.ai[0]].ai[2] = npc.ai[2] - 1f;*/
-						Main.npc[(int)npc.ai[0]].netUpdate = true;				
-						npc.netUpdate = true;
-					}
-				}
-				//if npc can split, check if pieces are dead and if so split.
-				if (!singlePiece && split)
+                        Main.npc[(int)npc.ai[0]].netUpdate = true;
+                        npc.netUpdate = true;
+                    }
+                }
+                //if npc can split, check if pieces are dead and if so split.
+                if (!singlePiece && split)
                 {
                     if (!Main.npc[(int)npc.ai[1]].active && !Main.npc[(int)npc.ai[0]].active) //if this is in the middle and both parts are inactive, kill self
                     {
@@ -4024,7 +4159,7 @@ namespace Redemption.Base
                     }
                     if (isBody && !Main.npc[(int)npc.ai[1]].active) //if the body was just split, turn it into a head
                     {
-						int oldType = npc.type;
+                        int oldType = npc.type;
                         npc.type = wormTypes[0];
                         int npcID = npc.whoAmI;
                         float lifePercent = npc.life / (float)npc.lifeMax;
@@ -4035,27 +4170,27 @@ namespace Redemption.Base
                         npc.TargetClosest();
                         npc.netUpdate = true;
                         npc.whoAmI = npcID;
-						if(onChangeType != null) onChangeType(npc, oldType, true);
+                        if (onChangeType != null) onChangeType(npc, oldType, true);
                     }
                     else
-					if (isBody && !Main.npc[(int)npc.ai[0]].active) //if the body was just split, turn it into a tail
-					{
-						int oldType = npc.type;				
-						npc.type = wormTypes[^1];
-						int npcID = npc.whoAmI;
-						float lifePercent = npc.life / (float)npc.lifeMax;
-						float lastPiece = npc.ai[1];
-						npc.SetDefaults(npc.type);
-						npc.life = (int)(npc.lifeMax * lifePercent);
-						npc.ai[1] = lastPiece;
-						npc.TargetClosest();
-						npc.netUpdate = true;
-						npc.whoAmI = npcID;
+                    if (isBody && !Main.npc[(int)npc.ai[0]].active) //if the body was just split, turn it into a tail
+                    {
+                        int oldType = npc.type;
+                        npc.type = wormTypes[^1];
+                        int npcID = npc.whoAmI;
+                        float lifePercent = npc.life / (float)npc.lifeMax;
+                        float lastPiece = npc.ai[1];
+                        npc.SetDefaults(npc.type);
+                        npc.life = (int)(npc.lifeMax * lifePercent);
+                        npc.ai[1] = lastPiece;
+                        npc.TargetClosest();
+                        npc.netUpdate = true;
+                        npc.whoAmI = npcID;
                         onChangeType?.Invoke(npc, oldType, false);
                     }
                 }
                 else
-				if (!singlePiece)
+                if (!singlePiece)
                 {
                     if (npc.type != wormTypes[0] && (!Main.npc[(int)npc.ai[1]].active || Main.npc[(int)npc.ai[1]].aiStyle != npc.aiStyle))
                     {
@@ -4070,15 +4205,17 @@ namespace Redemption.Base
                         npc.active = false;
                     }
                 }
-                if (!npc.active && Main.netMode == NetmodeID.Server) 
-					NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, 0f, 0f, -1);
+                if (!npc.active && Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, 0f, 0f, -1);
             }
             int tileX = (int)(npc.position.X / 16f) - 1;
             int tileCenterX = (int)(npc.Center.X / 16f) + 2;
             int tileY = (int)(npc.position.Y / 16f) - 1;
             int tileCenterY = (int)(npc.Center.Y / 16f) + 2;
-            if (tileX < 0) { tileX = 0; } if (tileCenterX > Main.maxTilesX) { tileCenterX = Main.maxTilesX; }
-            if (tileY < 0) { tileY = 0; } if (tileCenterY > Main.maxTilesY) { tileCenterY = Main.maxTilesY; }
+            if (tileX < 0) { tileX = 0; }
+            if (tileCenterX > Main.maxTilesX) { tileCenterX = Main.maxTilesX; }
+            if (tileY < 0) { tileY = 0; }
+            if (tileCenterY > Main.maxTilesY) { tileCenterY = Main.maxTilesY; }
             bool canMove = false;
             if (fly || ignoreTiles) { canMove = true; }
             if (!canMove || spawnTileDust)
@@ -4087,7 +4224,7 @@ namespace Redemption.Base
                 {
                     for (int tY = tileY; tY < tileCenterY; tY++)
                     {
-						Tile checkTile = BaseWorldGen.GetTileSafely(tX, tY);						
+                        Tile checkTile = BaseWorldGen.GetTileSafely(tX, tY);
                         if (checkTile != null && (checkTile.IsActiveUnactuated && (Main.tileSolid[checkTile.type] || Main.tileSolidTop[checkTile.type] && checkTile.frameY == 0) || checkTile.LiquidAmount > 64))
                         {
                             Vector2 tPos;
@@ -4126,7 +4263,7 @@ namespace Redemption.Base
             }
             if (fly)
             {
-                if (npc.velocity.X < 0f) { npc.spriteDirection = 1; }else if (npc.velocity.X > 0f) { npc.spriteDirection = -1; }
+                if (npc.velocity.X < 0f) { npc.spriteDirection = 1; } else if (npc.velocity.X > 0f) { npc.spriteDirection = -1; }
             }
             Vector2 npcCenter = npc.Center;
             float playerCenterX = Main.player[npc.target].Center.X;
@@ -4135,7 +4272,7 @@ namespace Redemption.Base
             npcCenter.X = (int)(npcCenter.X / 16f) * 16; npcCenter.Y = (int)(npcCenter.Y / 16f) * 16;
             playerCenterX -= npcCenter.X; playerCenterY -= npcCenter.Y;
             float dist = (float)Math.Sqrt(playerCenterX * playerCenterX + playerCenterY * playerCenterY);
-			isDigging = canMove;
+            isDigging = canMove;
             if (npc.ai[1] > 0f && npc.ai[1] < Main.maxNPCs)
             {
                 try
@@ -4143,13 +4280,15 @@ namespace Redemption.Base
                     npcCenter = npc.Center;
                     playerCenterX = Main.npc[(int)npc.ai[1]].Center.X - npcCenter.X;
                     playerCenterY = Main.npc[(int)npc.ai[1]].Center.Y - npcCenter.Y;
-                }catch
+                }
+                catch
                 {
                 }
                 if (!rotateAverage || npc.type == wormTypes[0])
                 {
                     npc.rotation = (float)Math.Atan2(playerCenterY, playerCenterX) + 1.57f;
-                }else
+                }
+                else
                 {
                     NPC frontNPC = Main.npc[(int)npc.ai[1]];
                     Vector2 rotVec = BaseUtility.RotateVector(frontNPC.Center, frontNPC.Center + new Vector2(0f, 30f), frontNPC.rotation);
@@ -4164,12 +4303,18 @@ namespace Redemption.Base
                 npc.position.Y += playerCenterY;
                 if (fly)
                 {
-                    if (playerCenterX < 0f) { npc.spriteDirection = 1;
-                    }else
-                    if (playerCenterX > 0f) { npc.spriteDirection = -1;
+                    if (playerCenterX < 0f)
+                    {
+                        npc.spriteDirection = 1;
+                    }
+                    else
+                    if (playerCenterX > 0f)
+                    {
+                        npc.spriteDirection = -1;
                     }
                 }
-            }else
+            }
+            else
             {
                 if (!canMove)
                 {
@@ -4182,17 +4327,18 @@ namespace Redemption.Base
                     }
                     else
                         if (npc.velocity.Y == maxSpeed)
-                        {
-                            if (npc.velocity.X < playerCenterX) { npc.velocity.X += gravityResist; }
-                            else
-                                if (npc.velocity.X > playerCenterX) { npc.velocity.X -= gravityResist; }
-                        }
+                    {
+                        if (npc.velocity.X < playerCenterX) { npc.velocity.X += gravityResist; }
                         else
+                            if (npc.velocity.X > playerCenterX) { npc.velocity.X -= gravityResist; }
+                    }
+                    else
                             if (npc.velocity.Y > 4f)
-                            {
-                                if (npc.velocity.X < 0f) { npc.velocity.X += gravityResist * 0.9f; } else { npc.velocity.X -= gravityResist * 0.9f; }
-                            }
-                }else
+                    {
+                        if (npc.velocity.X < 0f) { npc.velocity.X += gravityResist * 0.9f; } else { npc.velocity.X -= gravityResist * 0.9f; }
+                    }
+                }
+                else
                 {
                     if (soundEffects && npc.soundDelay == 0)
                     {
@@ -4249,32 +4395,33 @@ namespace Redemption.Base
                         }
                         else
                             if (absPlayerCenterX > absPlayerCenterY)
-                            {
-                                if (npc.velocity.X < playerCenterX) { npc.velocity.X += gravityResist * 1.1f; }
-                                else
-                                    if (npc.velocity.X > playerCenterX) { npc.velocity.X -= gravityResist * 1.1f; }
-
-                                if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < maxSpeed * 0.5)
-                                {
-                                    if (npc.velocity.Y > 0f) { npc.velocity.Y += gravityResist; } else { npc.velocity.Y -= gravityResist; }
-                                }
-                            }
+                        {
+                            if (npc.velocity.X < playerCenterX) { npc.velocity.X += gravityResist * 1.1f; }
                             else
+                                if (npc.velocity.X > playerCenterX) { npc.velocity.X -= gravityResist * 1.1f; }
+
+                            if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < maxSpeed * 0.5)
                             {
-                                if (npc.velocity.Y < playerCenterY) { npc.velocity.Y += gravityResist * 1.1f; }
-                                else
-                                    if (npc.velocity.Y > playerCenterY) { npc.velocity.Y -= gravityResist * 1.1f; }
-                                if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < maxSpeed * 0.5)
-                                {
-                                    if (npc.velocity.X > 0f) { npc.velocity.X += gravityResist; } else { npc.velocity.X -= gravityResist; }
-                                }
+                                if (npc.velocity.Y > 0f) { npc.velocity.Y += gravityResist; } else { npc.velocity.Y -= gravityResist; }
                             }
+                        }
+                        else
+                        {
+                            if (npc.velocity.Y < playerCenterY) { npc.velocity.Y += gravityResist * 1.1f; }
+                            else
+                                if (npc.velocity.Y > playerCenterY) { npc.velocity.Y -= gravityResist * 1.1f; }
+                            if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < maxSpeed * 0.5)
+                            {
+                                if (npc.velocity.X > 0f) { npc.velocity.X += gravityResist; } else { npc.velocity.X -= gravityResist; }
+                            }
+                        }
                     }
                 }
                 if (!rotateAverage || npc.type == wormTypes[0])
                 {
                     npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
-                }else
+                }
+                else
                 {
                     NPC frontNPC = Main.npc[(int)npc.ai[1]];
                     Vector2 rotVec = BaseUtility.RotateVector(frontNPC.Center, frontNPC.Center + new Vector2(0f, 30f), frontNPC.rotation);
@@ -4300,7 +4447,7 @@ namespace Redemption.Base
             }
         }
 
-		/*
+        /*
 		 * A cleaned up (and edited) copy of Teleporter AI. (Fire Imps, Tim, Chaos Elementals, etc.) (AIStyle 8)
 		 * 
 		 * ai : A float array that stores AI data.
@@ -4314,7 +4461,7 @@ namespace Redemption.Base
 		 * CanTeleportTo<int, int> : Action that can be used to check if the npc can teleport to a specific place.
 		 * Attack : Action that can be used to have the npc periodically attack.
 		 */
-		public static void AITeleporter(NPC npc, ref float[] ai, bool checkGround = true, bool immobile = true, int distFromPlayer = 20, int teleportInterval = 650, int attackInterval = 100, int stopAttackInterval = 500, bool delayOnHit = true, Action<bool> teleportEffects = null, Func<int, int, bool> canTeleportTo = null, Action attack = null)
+        public static void AITeleporter(NPC npc, ref float[] ai, bool checkGround = true, bool immobile = true, int distFromPlayer = 20, int teleportInterval = 650, int attackInterval = 100, int stopAttackInterval = 500, bool delayOnHit = true, Action<bool> teleportEffects = null, Func<int, int, bool> canTeleportTo = null, Action attack = null)
         {
             npc.TargetClosest();
             if (immobile)
@@ -4332,13 +4479,14 @@ namespace Redemption.Base
                 ai[2] = 0f; ai[3] = 0f;
                 if (teleportEffects != null) { teleportEffects(false); }
             }
-			if (npc.justHit) { ai[0] = 0; }
-			ai[0]++;
+            if (npc.justHit) { ai[0] = 0; }
+            ai[0]++;
             if (attackInterval != -1 && ai[0] < stopAttackInterval && ai[0] % attackInterval == 0)
             {
                 ai[1] = 30f;
                 npc.netUpdate = true;
-            }else
+            }
+            else
             if (ai[0] >= teleportInterval && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 ai[0] = 1f;
@@ -4429,8 +4577,10 @@ namespace Redemption.Base
                     npc.TargetClosest();
                     npc.velocity.X += npc.direction * 0.1f;
                     npc.velocity.Y += npc.directionY * 0.1f;
-                    if (npc.velocity.X > velMaxX) { npc.velocity.X = velMaxX; } if (npc.velocity.X < -velMaxX) { npc.velocity.X = -velMaxX; }
-                    if (npc.velocity.Y > velMaxY) { npc.velocity.Y = velMaxY; } if (npc.velocity.Y < -velMaxY) { npc.velocity.Y = -velMaxY; }
+                    if (npc.velocity.X > velMaxX) { npc.velocity.X = velMaxX; }
+                    if (npc.velocity.X < -velMaxX) { npc.velocity.X = -velMaxX; }
+                    if (npc.velocity.Y > velMaxY) { npc.velocity.Y = velMaxY; }
+                    if (npc.velocity.Y < -velMaxY) { npc.velocity.Y = -velMaxY; }
                 }
                 else//otherwise, move horizontally, slowly bobbing up and down as well.
                 {
@@ -4476,7 +4626,8 @@ namespace Redemption.Base
                     npc.netUpdate = true;
                 }
                 npc.velocity.Y += 0.3f;
-                if (npc.velocity.Y > 10f) { npc.velocity.Y = 10f; } ai[0] = 1f;
+                if (npc.velocity.Y > 10f) { npc.velocity.Y = 10f; }
+                ai[0] = 1f;
             }
             npc.rotation = npc.velocity.Y * npc.direction * 0.1f;
             if (npc.rotation < -0.2) { npc.rotation = -0.2f; }
@@ -4509,7 +4660,8 @@ namespace Redemption.Base
             if (npc.position.X == npc.oldPosition.X || ai[3] >= ticksUntilBoredom || xVelocityChanged)
             {
                 ai[3] += 1f;
-            }else
+            }
+            else
             if (Math.Abs(npc.velocity.X) > 0.9 && ai[3] > 0f) { ai[3] -= 1f; }
             if (ai[3] > ticksUntilBoredom * 10) { ai[3] = 0f; }
             if (npc.justHit) { ai[3] = 0f; }
@@ -4520,7 +4672,8 @@ namespace Redemption.Base
             if (targetPlayers && (!fleeWhenDay || !Main.dayTime || npc.position.Y > Main.worldSurface * 16.0) && (fleeWhenDay && Main.dayTime ? notBored : !allowBoredom || notBored))
             {
                 npc.TargetClosest();
-            }else
+            }
+            else
             if (ai[2] <= 0f)//if 'bored'
             {
                 if (fleeWhenDay && Main.dayTime && npc.position.Y / 16f < Main.worldSurface && npc.timeLeft > 10)
@@ -4539,7 +4692,8 @@ namespace Redemption.Base
                             ai[0] = 0f;
                         }
                     }
-                }else { ai[0] = 0f; }
+                }
+                else { ai[0] = 0f; }
                 if (npc.direction == 0) { npc.direction = 1; }
             }
             //if velocity is less than -1 or greater than 1...
@@ -4547,24 +4701,27 @@ namespace Redemption.Base
             {
                 //...and npc is not falling or jumping, slow down x velocity.
                 if (npc.velocity.Y == 0f) { npc.velocity *= 0.8f; }
-            }else
+            }
+            else
             if (npc.velocity.X < velMax && npc.direction == 1) //handles movement to the right. Clamps at velMaxX.
             {
                 npc.velocity.X += moveInterval;
                 if (npc.velocity.X > velMax) { npc.velocity.X = velMax; }
-            }else
+            }
+            else
             if (npc.velocity.X > -velMax && npc.direction == -1) //handles movement to the left. Clamps at -velMaxX.
             {
                 npc.velocity.X -= moveInterval;
                 if (npc.velocity.X < -velMax) { npc.velocity.X = -velMax; }
             }
-			WalkupHalfBricks(npc);
+            WalkupHalfBricks(npc);
             //if allowed to open doors and is currently doing so, reduce npc velocity on the X axis to 0. (so it stops moving)
             if (openDoors != -1 && AttemptOpenDoor(npc, ref ai[1], ref ai[2], ref ai[3], ticksUntilBoredom, doorBeatCounterMax, doorCounterMax, openDoors))
             {
                 npc.velocity.X = 0;
-            }else //if no door to open, reset ai.
-            if (openDoors != -1){ ai[1] = 0f; ai[2] = 0f; }
+            }
+            else //if no door to open, reset ai.
+            if (openDoors != -1) { ai[1] = 0f; ai[2] = 0f; }
             //if there's a solid floor under us...
             if (HitTileOnSide(npc, 3))
             {
@@ -4573,14 +4730,14 @@ namespace Redemption.Base
                 {
                     //...attempt to jump if needed.
                     Vector2 newVec = AttemptJump(npc.position, npc.velocity, npc.width, npc.height, npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, velMax, jumpUpPlatforms, jumpUpPlatforms && notBored ? Main.player[npc.target] : null, ignoreJumpTiles);
-                    if(!npc.noTileCollide)
+                    if (!npc.noTileCollide)
                     {
                         newVec = Collision.TileCollision(npc.position, newVec, npc.width, npc.height);
-						Vector4 slopeVec = Collision.SlopeCollision(npc.position, newVec, npc.width, npc.height);
-						Vector2 slopeVel = new(slopeVec.Z, slopeVec.W);
-						if(onTileCollide != null && npc.velocity != slopeVel) onTileCollide(npc.velocity.X != slopeVel.X, npc.velocity.Y != slopeVel.Y, npc.velocity, slopeVel);					
-						npc.position = new Vector2(slopeVec.X, slopeVec.Y);
-						npc.velocity = slopeVel;
+                        Vector4 slopeVec = Collision.SlopeCollision(npc.position, newVec, npc.width, npc.height);
+                        Vector2 slopeVel = new(slopeVec.Z, slopeVec.W);
+                        if (onTileCollide != null && npc.velocity != slopeVel) onTileCollide(npc.velocity.X != slopeVel.X, npc.velocity.Y != slopeVel.Y, npc.velocity, slopeVel);
+                        npc.position = new Vector2(slopeVec.X, slopeVec.Y);
+                        npc.velocity = slopeVel;
                     }
                     if (npc.velocity != newVec) { npc.velocity = newVec; npc.netUpdate = true; }
                 }
@@ -4622,7 +4779,8 @@ namespace Redemption.Base
                 if (npc.velocity.Y > 0f) { npc.direction = 1; }
                 npc.direction = -1;
                 if (npc.velocity.X > 0f) { npc.direction = 1; }
-            }else
+            }
+            else
             {
                 npc.TargetClosest();
                 if (Main.player[npc.target].dead)
@@ -4645,14 +4803,14 @@ namespace Redemption.Base
             }
             else //controls momentum when going right on the x axis and clamps velocity at velMaxX.
                 if (npc.direction == 1 && npc.velocity.X < velMaxX)
-                {
-                    npc.velocity.X += moveIntervalX;
-                    if (npc.velocity.X < -velMaxX) { npc.velocity.X += 0.1f; }
-                    else
-                        if (npc.velocity.X < 0f) { npc.velocity.X -= 0.05f; }
+            {
+                npc.velocity.X += moveIntervalX;
+                if (npc.velocity.X < -velMaxX) { npc.velocity.X += 0.1f; }
+                else
+                    if (npc.velocity.X < 0f) { npc.velocity.X -= 0.05f; }
 
-                    if (npc.velocity.X > velMaxX) { npc.velocity.X = velMaxX; }
-                }
+                if (npc.velocity.X > velMaxX) { npc.velocity.X = velMaxX; }
+            }
             //controls momentum when going up on the Y axis and clamps velocity at -velMaxY.
             if (npc.directionY == -1 && (double)npc.velocity.Y > -velMaxY)
             {
@@ -4665,14 +4823,14 @@ namespace Redemption.Base
             }
             else //controls momentum when going down on the Y axis and clamps velocity at velMaxY.
                 if (npc.directionY == 1 && (double)npc.velocity.Y < velMaxY)
-                {
-                    npc.velocity.Y += moveIntervalY;
-                    if ((double)npc.velocity.Y < -velMaxY) { npc.velocity.Y += 0.05f; }
-                    else
-                        if (npc.velocity.Y < 0f) { npc.velocity.Y -= 0.03f; }
+            {
+                npc.velocity.Y += moveIntervalY;
+                if ((double)npc.velocity.Y < -velMaxY) { npc.velocity.Y += 0.05f; }
+                else
+                    if (npc.velocity.Y < 0f) { npc.velocity.Y -= 0.03f; }
 
-                    if ((double)npc.velocity.Y > velMaxY) { npc.velocity.Y = velMaxY; }
-                }
+                if ((double)npc.velocity.Y > velMaxY) { npc.velocity.Y = velMaxY; }
+            }
             if (!ignoreWet && npc.wet) //if don't ignore being wet and is wet, accelerate upwards to get out.
             {
                 if (npc.velocity.Y > 0f) { npc.velocity.Y *= 0.95f; }
@@ -4696,7 +4854,7 @@ namespace Redemption.Base
             //ai[3] is used to house the landing position of the npc for bigger jumps. This is used to make it turn around when it hits
             //      an impassible wall.
 
-			//if (jumpTime < 100) { jumpTime = 100; }
+            //if (jumpTime < 100) { jumpTime = 100; }
             bool getNewTarget = false; //getNewTarget is used to iterate the 'boredom' scale. If it's night, the npc is hurt, or it's
             //below a certain depth, it will attempt to find the nearest target to it.
             if (fleeWhenDay && !Main.dayTime || npc.life != npc.lifeMax || npc.position.Y > Main.worldSurface * 16.0)
@@ -4730,7 +4888,7 @@ namespace Redemption.Base
                 if (ai[3] == npc.position.X) { npc.direction *= -1; ai[2] = 200f; }
                 ai[3] = 0f;
                 npc.velocity.X *= 0.8f;
-                if (npc.velocity.X is > -0.1f and < 0.1f){ npc.velocity.X = 0f; }
+                if (npc.velocity.X is > -0.1f and < 0.1f) { npc.velocity.X = 0f; }
                 if (getNewTarget) { ai[0] += 1f; }
                 ai[0] += 1f;
                 if (ai[0] >= 0f)
@@ -4739,22 +4897,27 @@ namespace Redemption.Base
                     if (ai[2] == 1f && getNewTarget) { npc.TargetClosest(); }
                     if (ai[1] == 2f) //larger jump
                     {
-						npc.velocity.Y = jumpVelHighY;
+                        npc.velocity.Y = jumpVelHighY;
                         npc.velocity.X += jumpVelHighX * npc.direction;
                         ai[0] = -jumpTime;
                         ai[1] = 0f;
                         ai[3] = npc.position.X;
-                    }else //smaller jump
+                    }
+                    else //smaller jump
                     {
                         npc.velocity.Y = jumpVelY;
                         npc.velocity.X += jumpVelX * npc.direction;
                         ai[0] = -jumpTime - 80f;
                         ai[1] += 1f;
                     }
-                }else
-                if (ai[0] >= -30f) { npc.aiAction = 1;
                 }
-            }else //handle moving the npc while in air.
+                else
+                if (ai[0] >= -30f)
+                {
+                    npc.aiAction = 1;
+                }
+            }
+            else //handle moving the npc while in air.
             if (npc.target < 255 && (npc.direction == 1 && npc.velocity.X < 3f || npc.direction == -1 && npc.velocity.X > -3f))
             {
                 if (npc.direction == -1 && npc.velocity.X < 0.1 || npc.direction == 1 && npc.velocity.X > -0.1)
@@ -4771,64 +4934,67 @@ namespace Redemption.Base
         #region Vanilla NPC AI Code Excerpts
         //Code Excerpts are pieces of code from vanilla AI that were converted into standalone methods.
 
-		public static void WalkupHalfBricks(NPC npc)
-		{
-			WalkupHalfBricks(npc, ref npc.gfxOffY, ref npc.stepSpeed);
-		}
+        public static void WalkupHalfBricks(NPC npc)
+        {
+            WalkupHalfBricks(npc, ref npc.gfxOffY, ref npc.stepSpeed);
+        }
 
-		/*
+        /*
 		 *  Code based on vanilla halfbrick walkup code, checks for and attempts to walk over half tiles.
 		 */
-		public static void WalkupHalfBricks(Entity codable, ref float gfxOffY, ref float stepSpeed)
-		{
-			if(codable == null)
-				return;
-			if (codable.velocity.Y >= 0f)
-			{
-				int offset = 0;
-				if (codable.velocity.X < 0f) offset = -1;
-				if (codable.velocity.X > 0f) offset = 1;
-				Vector2 pos = codable.position;
-				pos.X += codable.velocity.X;
-				int tileX = (int)((pos.X + (double)(codable.width / 2) + (codable.width / 2 + 1) * offset) / 16.0);
-				int tileY = (int)((pos.Y + (double)codable.height - 1.0) / 16.0);
+        public static void WalkupHalfBricks(Entity codable, ref float gfxOffY, ref float stepSpeed)
+        {
+            if (codable == null)
+                return;
+            if (codable.velocity.Y >= 0f)
+            {
+                int offset = 0;
+                if (codable.velocity.X < 0f) offset = -1;
+                if (codable.velocity.X > 0f) offset = 1;
+                Vector2 pos = codable.position;
+                pos.X += codable.velocity.X;
+                int tileX = (int)((pos.X + (double)(codable.width / 2) + (codable.width / 2 + 1) * offset) / 16.0);
+                int tileY = (int)((pos.Y + (double)codable.height - 1.0) / 16.0);
 
-				if (Main.tile[tileX, tileY] == null) Main.tile[tileX, tileY] = new Tile();
-				if (Main.tile[tileX, tileY - 1] == null) Main.tile[tileX, tileY - 1] = new Tile();
-				if (Main.tile[tileX, tileY - 2] == null) Main.tile[tileX, tileY - 2] = new Tile();
-				if (Main.tile[tileX, tileY - 3] == null) Main.tile[tileX, tileY - 3] = new Tile();
-				if (Main.tile[tileX, tileY + 1] == null) Main.tile[tileX, tileY + 1] = new Tile();
-				if (Main.tile[tileX - offset, tileY - 3] == null) Main.tile[tileX - offset, tileY - 3] = new Tile();
-				if (tileX * 16 < pos.X + (double)codable.width && tileX * 16 + 16 > (double)pos.X && (Main.tile[tileX, tileY].IsActiveUnactuated && Main.tile[tileX, tileY].Slope == 0 && Main.tile[tileX, tileY - 1].Slope == 0 && Main.tileSolid[Main.tile[tileX, tileY].type] && !Main.tileSolidTop[Main.tile[tileX, tileY].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && Main.tile[tileX, tileY - 1].IsActiveUnactuated) && (!Main.tile[tileX, tileY - 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 1].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 1].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && (!Main.tile[tileX, tileY - 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 4].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 4].type])) && (!Main.tile[tileX, tileY - 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 2].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 2].type]) && (!Main.tile[tileX, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 3].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 3].type]) && (!Main.tile[tileX - offset, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX - offset, tileY - 3].type]))
-				{
-					float tileWorldY = tileY * 16;
-					if (Main.tile[tileX, tileY].IsHalfBlock)
-						tileWorldY += 8f;
-					if (Main.tile[tileX, tileY - 1].IsHalfBlock)
-						tileWorldY -= 8f;
-					if (tileWorldY < pos.Y + (double)codable.height)
-					{
-						float tileWorldYHeight = pos.Y + codable.height - tileWorldY;
-						float heightNeeded = 16.1f;
-						if (tileWorldYHeight <= (double)heightNeeded)
-						{
-							gfxOffY += codable.position.Y + codable.height - tileWorldY;
-							codable.position.Y = tileWorldY - codable.height;
-							stepSpeed = tileWorldYHeight >= 9.0 ? 2f : 1f;
-						}
-					}else
-					{
-						gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
-					}
-				}else
-				{
-					gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
-				}
-			}else
-			{
-				gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
-			}
-		}
+                if (Main.tile[tileX, tileY] == null) Main.tile[tileX, tileY] = new Tile();
+                if (Main.tile[tileX, tileY - 1] == null) Main.tile[tileX, tileY - 1] = new Tile();
+                if (Main.tile[tileX, tileY - 2] == null) Main.tile[tileX, tileY - 2] = new Tile();
+                if (Main.tile[tileX, tileY - 3] == null) Main.tile[tileX, tileY - 3] = new Tile();
+                if (Main.tile[tileX, tileY + 1] == null) Main.tile[tileX, tileY + 1] = new Tile();
+                if (Main.tile[tileX - offset, tileY - 3] == null) Main.tile[tileX - offset, tileY - 3] = new Tile();
+                if (tileX * 16 < pos.X + (double)codable.width && tileX * 16 + 16 > (double)pos.X && (Main.tile[tileX, tileY].IsActiveUnactuated && Main.tile[tileX, tileY].Slope == 0 && Main.tile[tileX, tileY - 1].Slope == 0 && Main.tileSolid[Main.tile[tileX, tileY].type] && !Main.tileSolidTop[Main.tile[tileX, tileY].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && Main.tile[tileX, tileY - 1].IsActiveUnactuated) && (!Main.tile[tileX, tileY - 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 1].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 1].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && (!Main.tile[tileX, tileY - 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 4].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 4].type])) && (!Main.tile[tileX, tileY - 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 2].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 2].type]) && (!Main.tile[tileX, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 3].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 3].type]) && (!Main.tile[tileX - offset, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX - offset, tileY - 3].type]))
+                {
+                    float tileWorldY = tileY * 16;
+                    if (Main.tile[tileX, tileY].IsHalfBlock)
+                        tileWorldY += 8f;
+                    if (Main.tile[tileX, tileY - 1].IsHalfBlock)
+                        tileWorldY -= 8f;
+                    if (tileWorldY < pos.Y + (double)codable.height)
+                    {
+                        float tileWorldYHeight = pos.Y + codable.height - tileWorldY;
+                        float heightNeeded = 16.1f;
+                        if (tileWorldYHeight <= (double)heightNeeded)
+                        {
+                            gfxOffY += codable.position.Y + codable.height - tileWorldY;
+                            codable.position.Y = tileWorldY - codable.height;
+                            stepSpeed = tileWorldYHeight >= 9.0 ? 2f : 1f;
+                        }
+                    }
+                    else
+                    {
+                        gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
+                    }
+                }
+                else
+                {
+                    gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
+                }
+            }
+            else
+            {
+                gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
+            }
+        }
 
         /*
          *  Code based on vanilla jumping code, checks for and attempts to jump over tiles and gaps when needed.
@@ -4854,83 +5020,86 @@ namespace Redemption.Base
                 Rectangle hitbox = new((int)position.X, (int)position.Y, width, height);
                 //attempt to jump over walls if possible.
 
-				if(ignoreTiles && target != null && Math.Abs(position.X + width * 0.5f - target.Center.X) < width + 120)
-				{
-					float dist = (int)Math.Abs(position.Y + height * 0.5f - target.Center.Y) / 16;
-					if (dist < tileDistY + 2){ newVelocity.Y = -8f + dist * -0.5f; } // dist +=2; newVelocity.Y = -(5f + dist * (dist > 3 ? 1f - ((dist - 2f) * 0.0525f) : 1f)); }
-				}
-				if(newVelocity.Y == velocity.Y)
-				{
-					for (int y = tileY; y >= tileItY; y--)
-					{
-						Tile tile = Main.tile[tileX, y];
-						Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
-						if (tile == null) { tile = Main.tile[tileX, y] = new Tile(); }
-						if (tileNear == null) { tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile(); }
-						if (tile.IsActiveUnactuated && (y != tileY || !tile.IsHalfBlock && tile.Slope == 0) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
-						{
-							if (!Main.tileSolidTop[tile.type])
-							{
-								Rectangle tileHitbox = new(tileX * 16, y * 16, 16, 16);
-								tileHitbox.Y = hitbox.Y;
-								if (tileHitbox.Intersects(hitbox)) { newVelocity = velocity; break; }
-							}			
-							if (tileNear.IsActiveUnactuated && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]){ newVelocity = velocity; break; }
-							if (target != null && y * 16 < target.Center.Y){ continue; }								
-							lastY = y;
-							newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - (tileY - y - 2) * 0.0525f : 1f));
-						}else
-						if (lastY - y >= tileHeight){ break; }
-					}
-				}
+                if (ignoreTiles && target != null && Math.Abs(position.X + width * 0.5f - target.Center.X) < width + 120)
+                {
+                    float dist = (int)Math.Abs(position.Y + height * 0.5f - target.Center.Y) / 16;
+                    if (dist < tileDistY + 2) { newVelocity.Y = -8f + dist * -0.5f; } // dist +=2; newVelocity.Y = -(5f + dist * (dist > 3 ? 1f - ((dist - 2f) * 0.0525f) : 1f)); }
+                }
+                if (newVelocity.Y == velocity.Y)
+                {
+                    for (int y = tileY; y >= tileItY; y--)
+                    {
+                        Tile tile = Main.tile[tileX, y];
+                        Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
+                        if (tile == null) { tile = Main.tile[tileX, y] = new Tile(); }
+                        if (tileNear == null) { tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile(); }
+                        if (tile.IsActiveUnactuated && (y != tileY || !tile.IsHalfBlock && tile.Slope == 0) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
+                        {
+                            if (!Main.tileSolidTop[tile.type])
+                            {
+                                Rectangle tileHitbox = new(tileX * 16, y * 16, 16, 16);
+                                tileHitbox.Y = hitbox.Y;
+                                if (tileHitbox.Intersects(hitbox)) { newVelocity = velocity; break; }
+                            }
+                            if (tileNear.IsActiveUnactuated && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]) { newVelocity = velocity; break; }
+                            if (target != null && y * 16 < target.Center.Y) { continue; }
+                            lastY = y;
+                            newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - (tileY - y - 2) * 0.0525f : 1f));
+                        }
+                        else
+                        if (lastY - y >= tileHeight) { break; }
+                    }
+                }
                 // if the npc isn't jumping already...
                 if (newVelocity.Y == velocity.Y)
                 {
                     if (Main.tile[tileX, tileY + 1] == null) { Main.tile[tileX, tileY + 1] = new Tile(); }
                     if (Main.tile[tileX + direction, tileY + 1] == null) { Main.tile[tileX, tileY + 1] = new Tile(); }
-					if (Main.tile[tileX + direction, tileY + 2] == null) { Main.tile[tileX, tileY + 2] = new Tile(); }
+                    if (Main.tile[tileX + direction, tileY + 2] == null) { Main.tile[tileX, tileY + 2] = new Tile(); }
                     //...and there's a gap in front of the npc, attempt to jump across it.
                     if (directionY < 0 && (!Main.tile[tileX, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].type]))
                     {
-						if (!Main.tile[tileX + direction, tileY + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || target == null || target.Center.Y + target.height * 0.25f < tileY * 16f)
-						{
-							newVelocity.Y = -8f;
-							newVelocity.X *= 1.5f * (1f / maxSpeedX);
-							if (tileX <= tileItX)
-							{
-								for (int x = tileX; x < tileItX; x++)
-								{
-									Tile tile = Main.tile[x, tileY + 1];
-									if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-									if (x != tileX && !tile.IsActiveUnactuated)
-									{
-										newVelocity.Y -= 0.0325f;
-										newVelocity.X += direction * 0.255f;
-									}
-								}
-							}else
-							if (tileX > tileItX)
-							{
-								for (int x = tileItX; x < tileX; x++)
-								{
-									Tile tile = Main.tile[x, tileY + 1];
-									if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-									if (x != tileItX && !tile.IsActiveUnactuated)
-									{
-										newVelocity.Y -= 0.0325f;
-										newVelocity.X += direction * 0.255f;
-									}
-								}
-							}
-						}
+                        if (!Main.tile[tileX + direction, tileY + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || target == null || target.Center.Y + target.height * 0.25f < tileY * 16f)
+                        {
+                            newVelocity.Y = -8f;
+                            newVelocity.X *= 1.5f * (1f / maxSpeedX);
+                            if (tileX <= tileItX)
+                            {
+                                for (int x = tileX; x < tileItX; x++)
+                                {
+                                    Tile tile = Main.tile[x, tileY + 1];
+                                    if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
+                                    if (x != tileX && !tile.IsActiveUnactuated)
+                                    {
+                                        newVelocity.Y -= 0.0325f;
+                                        newVelocity.X += direction * 0.255f;
+                                    }
+                                }
+                            }
+                            else
+                            if (tileX > tileItX)
+                            {
+                                for (int x = tileItX; x < tileX; x++)
+                                {
+                                    Tile tile = Main.tile[x, tileY + 1];
+                                    if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
+                                    if (x != tileItX && !tile.IsActiveUnactuated)
+                                    {
+                                        newVelocity.Y -= 0.0325f;
+                                        newVelocity.X += direction * 0.255f;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 return newVelocity;
-            }catch(Exception e)
-			{
-				BaseUtility.LogFancy("Redemption~ ATTEMPT JUMP ERROR:", e);
-				return velocity; 
-			}
+            }
+            catch (Exception e)
+            {
+                BaseUtility.LogFancy("Redemption~ ATTEMPT JUMP ERROR:", e);
+                return velocity;
+            }
         }
 
         /*
@@ -5011,23 +5180,23 @@ namespace Redemption.Base
         /*
          * Checks if a space is completely devoid of solid tiles.
          */
-		public static bool EmptyTiles(Rectangle rect)
-		{
-			int topX = rect.X / 16, topY = rect.Y / 16;
-			for(int x = topX; x < topX + rect.Width; x++)
-			{
-				for(int y = topY; x < topY + rect.Height; y++)
-				{
-					Tile tile = Main.tile[x, y];
-					if(tile is {IsActiveUnactuated: true} && Main.tileSolid[tile.type])
-					{
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-		
+        public static bool EmptyTiles(Rectangle rect)
+        {
+            int topX = rect.X / 16, topY = rect.Y / 16;
+            for (int x = topX; x < topX + rect.Width; x++)
+            {
+                for (int y = topY; x < topY + rect.Height; y++)
+                {
+                    Tile tile = Main.tile[x, y];
+                    if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         /*
          * Checks if a Entity object (Player, NPC, Item or Projectile) has hit a tile on it's sides.
          * 
@@ -5064,21 +5233,24 @@ namespace Redemption.Base
                 tilePosY = (int)position.Y / 16;
                 tilePosWidth = tilePosX + 1;
                 tilePosHeight = (int)(position.Y + height) / 16;
-            }else
+            }
+            else
             if (dir == 1) //right
             {
                 tilePosX = (int)(position.X + width + 8f) / 16;
                 tilePosY = (int)position.Y / 16;
                 tilePosWidth = tilePosX + 1;
                 tilePosHeight = (int)(position.Y + height) / 16;
-            }else
+            }
+            else
             if (dir == 2) //up, ie ceiling
             {
                 tilePosX = (int)position.X / 16;
                 tilePosY = (int)(position.Y - 8f) / 16;
                 tilePosWidth = (int)(position.X + width) / 16;
                 tilePosHeight = tilePosY + 1;
-            }else
+            }
+            else
             if (dir == 3) //down, ie floor
             {
                 tilePosX = (int)position.X / 16;
@@ -5108,18 +5280,18 @@ namespace Redemption.Base
          */
         public static int DropItemBossBag(Player player, Entity codable, int type, int amt, int maxStack, float chance, bool clusterItem = false)
         {
-            if(player != null)
-			{
-				if ((float)Main.rand.NextDouble() <= chance) player.QuickSpawnItem(type, amt);
-				return -2;
-			}
+            if (player != null)
+            {
+                if ((float)Main.rand.NextDouble() <= chance) player.QuickSpawnItem(type, amt);
+                return -2;
+            }
             return DropItem(codable, type, amt, maxStack, chance, clusterItem);
         }
 
-		public static int DropItem(Entity codable, int type, int amt, int maxStack, int chance, bool clusterItem = false)
-		{
-			return DropItem(codable, type, amt, maxStack, chance / 100f, clusterItem);
-		}
+        public static int DropItem(Entity codable, int type, int amt, int maxStack, int chance, bool clusterItem = false)
+        {
+            return DropItem(codable, type, amt, maxStack, chance / 100f, clusterItem);
+        }
 
         /*
          * Drops an item from a codable, and returns the item's whoAmI. Mostly convenience for mp support.
@@ -5145,18 +5317,19 @@ namespace Redemption.Base
                         if (stackCount == amt || stackCount2 == maxStack)
                         {
                             itemID = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type, stackCount2);
-							if(sync) NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemID);
+                            if (sync) NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemID);
                             stackCount2 = 0;
                         }
                     }
-                }else
+                }
+                else
                 {
                     int count = 0;
                     while (count < amt)
                     {
                         count++;
                         itemID = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type);
-						if(sync) NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemID);						
+                        if (sync) NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemID);
                     }
                 }
             }
@@ -5165,8 +5338,8 @@ namespace Redemption.Base
 
 
 
-		/* THESE TWO ARE WIP - BROKEN IN TMODLOADER */
-		/*public static LootRule AddLoot(object npcTypes, int type, int amtMin, int amtMax, int chance)
+        /* THESE TWO ARE WIP - BROKEN IN TMODLOADER */
+        /*public static LootRule AddLoot(object npcTypes, int type, int amtMin, int amtMax, int chance)
 		{
 			return AddLoot(npcTypes, type, amtMin, amtMax, (float)chance / 100f);
 		}
@@ -5203,84 +5376,44 @@ namespace Redemption.Base
          */
         public static void DamagePlayer(Player player, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, int critChance = 0, float critMult = 1f)
         {
-            if(hitThroughDefense){ dmgAmt += (int)(player.statDefense * 0.5f); }
+            float defIgnore = 0.5f;
+            if (Main.expertMode)
+                defIgnore = 0.75f;
+            else if (Main.masterMode)
+                defIgnore = 1;
+
+            if (!hitThroughDefense) { dmgAmt -= (int)(player.statDefense * defIgnore); }
             if (damager == null)
             {
-                int parsedDamage = dmgAmt; if (dmgVariation){ parsedDamage = Main.DamageVar(dmgAmt); }
-                int dmgDealt = (int)player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false, 0);
-            }else
-            if (damager is Player subPlayer)
+                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false, 0);
+            }
+            else if (damager is Player subPlayer)
             {
-                //bool crit = false;
-                //if (critChance > 0) { crit = Main.rand.Next(1, 101) <= critChance; }
-                //float mult = 2f;
-
-                //player.ItemDamagePVP(subPlayer, hitDirection, ref dmgAmt, ref crit, ref mult);
-                //BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DamagePVP(player, subPlayer, hitDirection, ref dmgAmt, ref crit, ref mult); });
-                //ItemDef.RunEquipMethod(player, (item) => { item.DamagePVP(player, subPlayer, hitDirection, ref dmgAmt, ref crit, ref mult); }, true, true, false, true);
-
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
 
-                int dmgDealt = (int)player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
-
-                //crit = false;
-                //player.ItemDealtPVP(subPlayer, hitDirection, dmgAmt, crit);
-                //BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DealtPVP(player, subPlayer, hitDirection, dmgAmt, crit); });
-                //ItemDef.RunEquipMethod(player, (item) => { item.DealtPVP(player, subPlayer, hitDirection, dmgAmt, crit); }, true, true, false, true);
+                player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
 
                 subPlayer.attackCD = (int)(subPlayer.itemAnimationMax * 0.33f);
             }
-            else
-            if (damager is Projectile)
+            else if (damager is Projectile p)
             {
-                Projectile p = (Projectile)damager;
                 if (p.friendly)
                 {
-                    //bool crit = false; float mult = 2f;
-
-                    //p.DamagePVP(player, hitDirection, ref dmgAmt, ref crit, ref mult);
-
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    int dmgDealt = (int)player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
-
-                    //crit = false;
-                    //p.DealtPVP(player, hitDirection, dmgDealt, crit);
+                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
                     p.playerImmune[player.whoAmI] = 40;
                 }
-                else
-                if (p.hostile)
+                else if (p.hostile)
                 {
-                    //bool crit = false; float mult = 2f;
-                    //p.DamagePlayer(player, hitDirection, ref dmgAmt, ref crit, ref mult);
-
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    int dmgDealt = (int)player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
-
-                    //crit = false;
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
                 }
             }
-            else
-            if (damager is NPC)
+            else if (damager is NPC npc)
             {
-                NPC npc = (NPC)damager;
-
-                //bool crit = false; float mult = 2f;
-
-                //npc.DamagePlayer(player, hitDirection, ref dmgAmt, ref crit, ref mult);
-                //BuffDef.RunBuffMethod(npc, (modbuff) => { modbuff.DamagePlayer(npc, player, hitDirection, ref dmgAmt, ref crit, ref mult); });
-                //player.NPCDamagePlayer(npc, hitDirection, ref dmgAmt, ref crit, ref mult);
-                //BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DamagePlayer(player, npc, hitDirection, ref dmgAmt, ref crit, ref mult); });
-                //ItemDef.RunEquipMethod(player, (item) => { item.DamagePlayer(npc, player, hitDirection, ref dmgAmt, ref crit, ref mult); }, true, true, false, true);
-
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                int dmgDealt = (int)player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
-
-                //npc.DealtPlayer(player, hitDirection, dmgDealt, crit);
-                //BuffDef.RunBuffMethod(npc, (modbuff) => { modbuff.DealtPlayer(npc, player, hitDirection, dmgAmt, crit); });
-                //player.NPCDealtPlayer(npc, hitDirection, dmgDealt, crit);
-                //BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DealtPlayer(player, npc, hitDirection, dmgAmt, crit); });
-                //ItemDef.RunEquipMethod(player, (item) => { item.DealtPlayer(npc, player, hitDirection, dmgAmt, crit); }, true, true, false, true);
-
+                player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
             }
         }
 
@@ -5305,64 +5438,41 @@ namespace Redemption.Base
          */
         public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
         {
-			if (npc.dontTakeDamage || npc.immortal)
-				return;
+            if (npc.dontTakeDamage || npc.immortal)
+                return;
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
-			if (damager == null || damager is NPC)
-			{
-				int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-				npc.StrikeNPC(parsedDamage, knockback, hitDirection);
+            if (damager == null || damager is NPC)
+            {
+                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                npc.StrikeNPC(parsedDamage, knockback, hitDirection);
 
-				if (damager is NPC)
-					npc.GetGlobalNPC<RedeNPC>().attacker = damager;
+                if (damager is NPC)
+                    npc.GetGlobalNPC<RedeNPC>().attacker = damager;
 
-				if (Main.netMode != NetmodeID.SinglePlayer)
+                if (Main.netMode != NetmodeID.SinglePlayer)
                 {
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
                 }
-            }else
-            if (damager is Projectile)
+            }
+            else if (damager is Projectile p)
             {
-                Projectile p = (Projectile)damager;
                 if (p.owner == Main.myPlayer)
                 {
-					//bool crit = false;
-					//float mult = 1f;
-					//p.DamageNPC(npc, hitDirection, ref dmgAmt, ref knockback, ref crit, ref mult);
+                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                    npc.StrikeNPC(parsedDamage, knockback, hitDirection);
 
-                    int parsedDamage = dmgAmt; if (dmgVariation){ parsedDamage = Main.DamageVar(dmgAmt); }
-                    int resultDmg = (int)npc.StrikeNPC(parsedDamage, knockback, hitDirection);
-
-					//p.DealtNPC(npc, hitDirection, resultDmg, knockback, false);
                     if (Main.netMode != NetmodeID.SinglePlayer)
-                    {
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
-                    }
-                    if (p.penetrate != 1){ npc.immune[p.owner] = 10; }
+
+                    if (p.penetrate != 1) { npc.immune[p.owner] = 10; }
                 }
-            }else
-            if (damager is Player)
+            }
+            else if (damager is Player player)
             {
-                Player player = (Player)damager;
                 if (player.whoAmI == Main.myPlayer)
                 {
-					//bool crit = false;
-					//float mult = 1f;
-					//npc.DamageNPC(player, hitDirection, ref dmgAmt, ref knockback, ref crit, ref mult);
-					//BuffDef.RunBuffMethod(npc, (modbuff) => { modbuff.DamageNPC(npc, player, hitDirection, ref dmgAmt, ref knockback, ref crit, ref mult); });
-					//player.ItemDamageNPC(npc, hitDirection, ref dmgAmt, ref knockback, ref crit, ref mult);
-					//BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DamageNPC(player, npc, hitDirection, ref dmgAmt, ref knockback, ref crit, ref mult); });
-					//ItemDef.RunEquipMethod(player, (item) => { item.DamageNPC(player, npc, hitDirection, ref dmgAmt, ref knockback, ref crit, ref mult); }, true, true, false, true);
-                    
-					int parsedDamage = dmgAmt; if (dmgVariation){ parsedDamage = Main.DamageVar(dmgAmt); }
-                    int dmgDealt = (int)npc.StrikeNPC(parsedDamage, knockback, hitDirection);
-
-					//crit = false;
-					//npc.DealtNPC(player, hitDirection, dmgDealt, knockback, crit);
-					//BuffDef.RunBuffMethod(npc, (modbuff) => { modbuff.DealtNPC(npc, player, hitDirection, dmgAmt, knockback, crit); });
-					//player.ItemDealtNPC(npc, hitDirection, dmgDealt, knockback, crit);
-					//BuffDef.RunBuffMethod(player, (modbuff) => { modbuff.DealtNPC(player, npc, hitDirection, dmgAmt, knockback, crit); });
-					//ItemDef.RunEquipMethod(player, (item) => { item.DealtNPC(player, npc, hitDirection, dmgAmt, knockback, crit); }, true, true, false, true);
+                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                    npc.StrikeNPC(parsedDamage, knockback, hitDirection);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                     {
@@ -5387,9 +5497,9 @@ namespace Redemption.Base
          */
         public static void KillNPC(NPC npc)
         {
-			if(Main.netMode == NetmodeID.MultiplayerClient) return;
-			npc.active = false;
-			int npcID = npc.whoAmI;
+            if (Main.netMode == NetmodeID.MultiplayerClient) return;
+            npc.active = false;
+            int npcID = npc.whoAmI;
             Main.npc[npcID] = new NPC();
             if (Main.netMode == NetmodeID.Server) NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npcID);
         }
@@ -5431,147 +5541,147 @@ namespace Redemption.Base
             }
         }
 
-		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, float distance = -1, Func<Projectile, bool> canAdd = null)
-		{
-			return GetProjectile(center, projType, owner, default, distance, canAdd);
-		}
-		/*
+        public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, float distance = -1, Func<Projectile, bool> canAdd = null)
+        {
+            return GetProjectile(center, projType, owner, default, distance, canAdd);
+        }
+        /*
 		 * Gets the closest Projectile with the given type within the given distance from the center. If distance is -1, it gets the closest Projectile.
 		 * 
 		 * projType : If -1, check for ANY projectiles in the area. If not, check for the projectiles who match the type given.
 		 * projsToExclude : An array of projectile whoAmIs to exclude from the search.
 		 * distance : The distance to check.
 		 */
-		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = -1, Func<Projectile, bool> canAdd = null)
-		{
-			int currentProj = -1;
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (proj is {active: true} && (projType == -1 || proj.type == projType) && (owner == -1f || proj.owner == owner) && (distance == -1f || proj.Distance(center) < distance))
-				{
-					bool add = true;
-					if (projsToExclude != default(int[]))
-					{
-						foreach (int m in projsToExclude)
-						{
-							if (m == proj.whoAmI) { add = false; break; }
-						}
-					}
-					if (add && canAdd != null && !canAdd(proj)) { continue; }
-					if (add)
-					{
-						distance = proj.Distance(center);
-						currentProj = i;
-					}
-				}
-			}
-			return currentProj;
-		}
+        public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = -1, Func<Projectile, bool> canAdd = null)
+        {
+            int currentProj = -1;
+            for (int i = 0; i < Main.projectile.Length; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj is { active: true } && (projType == -1 || proj.type == projType) && (owner == -1f || proj.owner == owner) && (distance == -1f || proj.Distance(center) < distance))
+                {
+                    bool add = true;
+                    if (projsToExclude != default(int[]))
+                    {
+                        foreach (int m in projsToExclude)
+                        {
+                            if (m == proj.whoAmI) { add = false; break; }
+                        }
+                    }
+                    if (add && canAdd != null && !canAdd(proj)) { continue; }
+                    if (add)
+                    {
+                        distance = proj.Distance(center);
+                        currentProj = i;
+                    }
+                }
+            }
+            return currentProj;
+        }
 
-		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, float distance = 500f, Func<Projectile, bool> canAdd = null)
-		{
-			return GetProjectiles(center, projType, owner, default, distance, canAdd);
-		}
-		/*
+        public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, float distance = 500f, Func<Projectile, bool> canAdd = null)
+        {
+            return GetProjectiles(center, projType, owner, default, distance, canAdd);
+        }
+        /*
 		 * Gets the all Projectiles with the given type within the given distance from the center.
 		 * 
          * projType : If -1, check for ANY projectiles in the area. If not, check for the projectiles who match the type given.
          * projsToExclude : An array of projectile whoAmIs to exclude from the search.
          * distance : The distance to check.
 		 */
-		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> canAdd = null)
-		{
-			List<int> allProjs = new();
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (proj is {active: true} && (projType == -1 || proj.type == projType) && (owner == -1 || proj.owner == owner) && (distance == -1 || proj.Distance(center) < distance))
-				{
-					bool add = true;
-					if (projsToExclude != default(int[]))
-					{
-						foreach (int m in projsToExclude)
-						{
-							if (m == proj.whoAmI) { add = false; break; }
-						}
-					}
-					if (add && canAdd != null && !canAdd(proj)) { continue; }
-					if (add) { allProjs.Add(i); }
-				}
-			}
-			return allProjs.ToArray();
-		}
+        public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> canAdd = null)
+        {
+            List<int> allProjs = new();
+            for (int i = 0; i < Main.projectile.Length; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj is { active: true } && (projType == -1 || proj.type == projType) && (owner == -1 || proj.owner == owner) && (distance == -1 || proj.Distance(center) < distance))
+                {
+                    bool add = true;
+                    if (projsToExclude != default(int[]))
+                    {
+                        foreach (int m in projsToExclude)
+                        {
+                            if (m == proj.whoAmI) { add = false; break; }
+                        }
+                    }
+                    if (add && canAdd != null && !canAdd(proj)) { continue; }
+                    if (add) { allProjs.Add(i); }
+                }
+            }
+            return allProjs.ToArray();
+        }
 
 
-		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, float distance = 500f, Func<Projectile, bool> canAdd = null)
-		{
-			return GetProjectiles(center, projTypes, owner, default, distance, canAdd);
-		}
+        public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, float distance = 500f, Func<Projectile, bool> canAdd = null)
+        {
+            return GetProjectiles(center, projTypes, owner, default, distance, canAdd);
+        }
 
-		/*
+        /*
 		 * Gets the all Projectiles with the given type within the given distance from the center.
 		 * 
          * projType : If -1, check for ANY projectiles in the area. If not, check for the projectiles who match the type given.
          * projsToExclude : An array of projectile whoAmIs to exclude from the search.
          * distance : The distance to check.
 		 */
-		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> canAdd = null)
-		{
-			List<int> allProjs = new();
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (proj is {active: true} && (owner == -1 || proj.owner == owner) && (distance == -1 || proj.Distance(center) < distance))
-				{
-					bool isType = false;
-					foreach (int type in projTypes) { if (proj.type == type) { isType = true; break; } }
-					if (!isType) { continue; }
-					bool add = true;
-					if (projsToExclude != default(int[]))
-					{
-						foreach (int m in projsToExclude)
-						{
-							if (m == proj.whoAmI) { add = false; break; }
-						}
-					}
-					if (add && canAdd != null && !canAdd(proj)) { continue; }
-					if (add) { allProjs.Add(i); }
-				}
-			}
-			return allProjs.ToArray();
-		}
+        public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, int[] projsToExclude = default, float distance = 500f, Func<Projectile, bool> canAdd = null)
+        {
+            List<int> allProjs = new();
+            for (int i = 0; i < Main.projectile.Length; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj is { active: true } && (owner == -1 || proj.owner == owner) && (distance == -1 || proj.Distance(center) < distance))
+                {
+                    bool isType = false;
+                    foreach (int type in projTypes) { if (proj.type == type) { isType = true; break; } }
+                    if (!isType) { continue; }
+                    bool add = true;
+                    if (projsToExclude != default(int[]))
+                    {
+                        foreach (int m in projsToExclude)
+                        {
+                            if (m == proj.whoAmI) { add = false; break; }
+                        }
+                    }
+                    if (add && canAdd != null && !canAdd(proj)) { continue; }
+                    if (add) { allProjs.Add(i); }
+                }
+            }
+            return allProjs.ToArray();
+        }
 
-		/*
+        /*
 		 * Gets all NPCs of the given type within the given rectangle.
 		 * 
 		 * rect : The box to check.
 		 * npcType : If -1, check for ANY npcs in the area. If not, check for the npcs who match the type given.
 		 * npcsToExclude : An array of npc whoAmIs to exclude from the search.
 		 */
-		public static int[] GetNPCsInBox(Rectangle rect, int npcType = -1, int[] npcsToExclude = default, Func<NPC, bool> canAdd = null)
-		{
-			List<int> allNPCs = new();
-			for (int i = 0; i < Main.maxNPCs; i++)
-			{
-				NPC npc = Main.npc[i];
-				if (npc is {active: true, life: > 0} && (npcType == -1 || npc.type == npcType) && npc.type != NPCID.TargetDummy)
-				{
-					if (!rect.Intersects(npc.Hitbox)) continue;
-					bool add = true;
-					if (npcsToExclude != default(int[]))
-					{
-						foreach (int m in npcsToExclude)
-						{
-							if (m == npc.whoAmI) { add = false; break; }
-						}
-					}
-					if (add && canAdd != null && !canAdd(npc)) continue;
-					if (add) { allNPCs.Add(i); }
-				}
-			}
-			return allNPCs.ToArray();
-		}
+        public static int[] GetNPCsInBox(Rectangle rect, int npcType = -1, int[] npcsToExclude = default, Func<NPC, bool> canAdd = null)
+        {
+            List<int> allNPCs = new();
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc is { active: true, life: > 0 } && (npcType == -1 || npc.type == npcType) && npc.type != NPCID.TargetDummy)
+                {
+                    if (!rect.Intersects(npc.Hitbox)) continue;
+                    bool add = true;
+                    if (npcsToExclude != default(int[]))
+                    {
+                        foreach (int m in npcsToExclude)
+                        {
+                            if (m == npc.whoAmI) { add = false; break; }
+                        }
+                    }
+                    if (add && canAdd != null && !canAdd(npc)) continue;
+                    if (add) { allNPCs.Add(i); }
+                }
+            }
+            return allNPCs.ToArray();
+        }
 
         public static int GetNPC(Vector2 center, int npcType = -1, float distance = -1, Func<NPC, bool> canAdd = null)
         {
@@ -5584,13 +5694,13 @@ namespace Redemption.Base
          * npcsToExclude : An array of npc whoAmIs to exclude from the search.
          * distance : The distance to check.
          */
-		public static int GetNPC(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = -1, Func<NPC, bool> canAdd = null)
+        public static int GetNPC(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = -1, Func<NPC, bool> canAdd = null)
         {
             int currentNPC = -1;
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
-                if (npc is {active: true, life: > 0} && (npcType == -1 || npc.type == npcType) && npc.type != NPCID.TargetDummy && (distance == -1f || npc.Distance(center) < distance))
+                if (npc is { active: true, life: > 0 } && (npcType == -1 || npc.type == npcType) && npc.type != NPCID.TargetDummy && (distance == -1f || npc.Distance(center) < distance))
                 {
                     bool add = true;
                     if (npcsToExclude != default(int[]))
@@ -5600,8 +5710,8 @@ namespace Redemption.Base
                             if (m == npc.whoAmI) { add = false; break; }
                         }
                     }
-					if (add && canAdd != null && !canAdd(npc)) { continue; }
-                    if (add) 
+                    if (add && canAdd != null && !canAdd(npc)) { continue; }
+                    if (add)
                     {
                         distance = npc.Distance(center);
                         currentNPC = i;
@@ -5611,7 +5721,7 @@ namespace Redemption.Base
             return currentNPC;
         }
 
-		public static int[] GetNPCs(Vector2 center, int npcType = -1, float distance = 500F, Func<NPC, bool> canAdd = null)
+        public static int[] GetNPCs(Vector2 center, int npcType = -1, float distance = 500F, Func<NPC, bool> canAdd = null)
         {
             return GetNPCs(center, npcType, Array.Empty<int>(), distance, canAdd);
         }
@@ -5622,13 +5732,13 @@ namespace Redemption.Base
          * npcsToExclude : an array of npc whoAmIs to exclude from the search.
          * distance : the distance to check.
          */
-		public static int[] GetNPCs(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = 500F, Func<NPC, bool> canAdd = null)
+        public static int[] GetNPCs(Vector2 center, int npcType = -1, int[] npcsToExclude = default, float distance = 500F, Func<NPC, bool> canAdd = null)
         {
             List<int> allNPCs = new();
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
-                if (npc is {active: true, life: > 0} && (npcType == -1 || npc.type == npcType) && npc.type != NPCID.TargetDummy && (distance == -1 || npc.Distance(center) < distance))
+                if (npc is { active: true, life: > 0 } && (npcType == -1 || npc.type == npcType) && npc.type != NPCID.TargetDummy && (distance == -1 || npc.Distance(center) < distance))
                 {
                     bool add = true;
                     if (npcsToExclude != default(int[]))
@@ -5638,7 +5748,7 @@ namespace Redemption.Base
                             if (m == npc.whoAmI) { add = false; break; }
                         }
                     }
-					if (add && canAdd != null && !canAdd(npc)) { continue; }
+                    if (add && canAdd != null && !canAdd(npc)) { continue; }
                     if (add) { allNPCs.Add(i); }
                 }
             }
@@ -5651,13 +5761,13 @@ namespace Redemption.Base
          * rect : The rectangle to search.
          * playersToExclude : An array of player whoAmis that will be excluded from the search.
          */
-		public static int[] GetPlayersInBox(Rectangle rect, int[] playersToExclude = default, Func<Player, bool> canAdd = null)
+        public static int[] GetPlayersInBox(Rectangle rect, int[] playersToExclude = default, Func<Player, bool> canAdd = null)
         {
             List<int> allPlayers = new();
             for (int i = 0; i < Main.player.Length; i++)
             {
                 Player plr = Main.player[i];
-                if (plr is {active: true, dead: false})
+                if (plr is { active: true, dead: false })
                 {
                     if (!rect.Intersects(plr.Hitbox)) { continue; }
                     bool add = true;
@@ -5668,7 +5778,7 @@ namespace Redemption.Base
                             if (m == plr.whoAmI) { add = false; break; }
                         }
                     }
-					if(add && canAdd != null && !canAdd(plr)){ continue; }
+                    if (add && canAdd != null && !canAdd(plr)) { continue; }
                     if (add) { allPlayers.Add(i); }
                 }
             }
@@ -5685,7 +5795,7 @@ namespace Redemption.Base
             for (int i = 0; i < Main.player.Length; i++)
             {
                 Player player = Main.player[i];
-                if (player is {active: true} && (!aliveOnly || !player.dead))
+                if (player is { active: true } && (!aliveOnly || !player.dead))
                 {
                     if (player.name == name) { return i; }
                 }
@@ -5693,7 +5803,7 @@ namespace Redemption.Base
             return -1;
         }
 
-		public static int GetPlayer(Vector2 center, float distance = -1, Func<Player, bool> canAdd = null)
+        public static int GetPlayer(Vector2 center, float distance = -1, Func<Player, bool> canAdd = null)
         {
             return GetPlayer(center, default, true, distance, canAdd);
         }
@@ -5704,7 +5814,7 @@ namespace Redemption.Base
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          * distance : The distance to search.
          */
-		public static int GetPlayer(Vector2 center, int[] playersToExclude = default, bool activeOnly = true, float distance = -1, Func<Player, bool> canAdd = null)
+        public static int GetPlayer(Vector2 center, int[] playersToExclude = default, bool activeOnly = true, float distance = -1, Func<Player, bool> canAdd = null)
         {
             int currentPlayer = -1;
             for (int i = 0; i < Main.player.Length; i++)
@@ -5720,8 +5830,8 @@ namespace Redemption.Base
                             if (m == player.whoAmI) { add = false; break; }
                         }
                     }
-					if (add && canAdd != null && !canAdd(player)) { continue; }
-                    if (add) 
+                    if (add && canAdd != null && !canAdd(player)) { continue; }
+                    if (add)
                     {
                         distance = player.Distance(center);
                         currentPlayer = i;
@@ -5731,7 +5841,7 @@ namespace Redemption.Base
             return currentPlayer;
         }
 
-		public static int[] GetPlayers(Vector2 center, float distance = 500F, Func<Player, bool> canAdd = null)
+        public static int[] GetPlayers(Vector2 center, float distance = 500F, Func<Player, bool> canAdd = null)
         {
             return GetPlayers(center, default, true, distance, canAdd);
         }
@@ -5741,13 +5851,13 @@ namespace Redemption.Base
          * playersToExclude is an array of player ids you do not want included in the array.
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          */
-		public static int[] GetPlayers(Vector2 center, int[] playersToExclude = default, bool aliveOnly = true, float distance = 500F, Func<Player, bool> canAdd = null)
+        public static int[] GetPlayers(Vector2 center, int[] playersToExclude = default, bool aliveOnly = true, float distance = 500F, Func<Player, bool> canAdd = null)
         {
             List<int> allPlayers = new();
             for (int i = 0; i < Main.player.Length; i++)
             {
                 Player player = Main.player[i];
-                if (player is {active: true} && (!aliveOnly || !player.dead) && player.Distance(center) < distance)
+                if (player is { active: true } && (!aliveOnly || !player.dead) && player.Distance(center) < distance)
                 {
                     bool add = true;
                     if (playersToExclude != default(int[]))
@@ -5757,7 +5867,7 @@ namespace Redemption.Base
                             if (m == player.whoAmI) { add = false; break; }
                         }
                     }
-					if(add && canAdd != null && !canAdd(player)){ continue; }
+                    if (add && canAdd != null && !canAdd(player)) { continue; }
                     if (add) { allPlayers.Add(i); }
                 }
             }
@@ -5828,7 +5938,8 @@ namespace Redemption.Base
             {
                 nPc2.spriteDirection = spriteDirection;
                 nPc2.rotation = rotation;
-            }else
+            }
+            else
             if (c is Projectile projectile2)
             {
                 projectile2.spriteDirection = spriteDirection;
@@ -5857,62 +5968,67 @@ namespace Redemption.Base
                 float rotY = lookTarget.Y - center.Y;
                 rotation = -((float)Math.Atan2(rotX, rotY) - 1.57f + rotAddon);
                 if (spriteDirection == 1) { rotation -= (float)Math.PI; }
-            }else
+            }
+            else
             if (lookType == 1)
             {
                 if (lookTarget.X > center.X) { spriteDirection = -1; } else { spriteDirection = 1; }
                 if (flipSpriteDir) { spriteDirection *= -1; }
-            }else
+            }
+            else
             if (lookType == 2)
             {
                 float rotX = lookTarget.X - center.X;
                 float rotY = lookTarget.Y - center.Y;
                 rotation = -((float)Math.Atan2(rotX, rotY) - 1.57f + rotAddon);
-            }else
-			if (lookType is 3 or 4)
-			{
-				int oldDirection = spriteDirection;
-				if (lookType == 3 && lookTarget.X > center.X) { spriteDirection = -1; } else { spriteDirection = 1; }
-				if (lookType == 3 && flipSpriteDir) { spriteDirection *= -1; }
-				if (oldDirection != spriteDirection)
-				{
-					rotation += (float)Math.PI * spriteDirection;
-				}
-				float pi2 = (float)Math.PI * 2f;
-				float rotX = lookTarget.X - center.X;
-				float rotY = lookTarget.Y - center.Y;
-				float rot = (float)Math.Atan2(rotY, rotX) + rotAddon;
-				if (spriteDirection == 1) { rot += (float)Math.PI; }
-				if (rot > pi2) { rot -= pi2; } else if (rot < 0) { rot += pi2; }
-				if (rotation > pi2) { rotation -= pi2; } else if (rotation < 0) { rotation += pi2; }
-				if (rotation < rot)
-				{
-					if ((double)(rot - rotation) > (float)Math.PI) { rotation -= rotAmount; } else { rotation += rotAmount; }
-				}else
-				if (rotation > rot)
-				{
-					if ((double)(rotation - rot) > (float)Math.PI) { rotation += rotAmount; } else { rotation -= rotAmount; }
-				}
-				if (rotation > rot - rotAmount && rotation < rot + rotAmount) { rotation = rot; }
-			}
+            }
+            else
+            if (lookType is 3 or 4)
+            {
+                int oldDirection = spriteDirection;
+                if (lookType == 3 && lookTarget.X > center.X) { spriteDirection = -1; } else { spriteDirection = 1; }
+                if (lookType == 3 && flipSpriteDir) { spriteDirection *= -1; }
+                if (oldDirection != spriteDirection)
+                {
+                    rotation += (float)Math.PI * spriteDirection;
+                }
+                float pi2 = (float)Math.PI * 2f;
+                float rotX = lookTarget.X - center.X;
+                float rotY = lookTarget.Y - center.Y;
+                float rot = (float)Math.Atan2(rotY, rotX) + rotAddon;
+                if (spriteDirection == 1) { rot += (float)Math.PI; }
+                if (rot > pi2) { rot -= pi2; } else if (rot < 0) { rot += pi2; }
+                if (rotation > pi2) { rotation -= pi2; } else if (rotation < 0) { rotation += pi2; }
+                if (rotation < rot)
+                {
+                    if ((double)(rot - rotation) > (float)Math.PI) { rotation -= rotAmount; } else { rotation += rotAmount; }
+                }
+                else
+                if (rotation > rot)
+                {
+                    if ((double)(rotation - rot) > (float)Math.PI) { rotation += rotAmount; } else { rotation -= rotAmount; }
+                }
+                if (rotation > rot - rotAmount && rotation < rot + rotAmount) { rotation = rot; }
+            }
         }
 
-		public static void RotateTo(ref float rotation, float rotDestination, float rotAmount = 0.075f)
-		{
-			float pi2 = (float)Math.PI * 2f;
-			float rot = rotDestination;
-			if (rot > pi2) { rot -= pi2; } else if (rot < 0) { rot += pi2; }
-			if (rotation > pi2) { rotation -= pi2; } else if (rotation < 0) { rotation += pi2; }
-			if (rotation < rot)
-			{
-				if ((double)(rot - rotation) > (float)Math.PI) { rotation -= rotAmount; } else { rotation += rotAmount; }
-			}else
-			if (rotation > rot)
-			{
-				if ((double)(rotation - rot) > (float)Math.PI) { rotation += rotAmount; } else { rotation -= rotAmount; }
-			}
-			if (rotation > rot - rotAmount && rotation < rot + rotAmount) { rotation = rot; }
-		}
+        public static void RotateTo(ref float rotation, float rotDestination, float rotAmount = 0.075f)
+        {
+            float pi2 = (float)Math.PI * 2f;
+            float rot = rotDestination;
+            if (rot > pi2) { rot -= pi2; } else if (rot < 0) { rot += pi2; }
+            if (rotation > pi2) { rotation -= pi2; } else if (rotation < 0) { rotation += pi2; }
+            if (rotation < rot)
+            {
+                if ((double)(rot - rotation) > (float)Math.PI) { rotation -= rotAmount; } else { rotation += rotAmount; }
+            }
+            else
+            if (rotation > rot)
+            {
+                if ((double)(rotation - rot) > (float)Math.PI) { rotation += rotAmount; } else { rotation -= rotAmount; }
+            }
+            if (rotation > rot - rotAmount && rotation < rot + rotAmount) { rotation = rot; }
+        }
 
         public static Vector2 TraceTile(Vector2 start, float distance, float rotation, Vector2 ignoreTile, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool ignorePlatforms = true)
         {
@@ -5956,78 +6072,83 @@ namespace Redemption.Base
          */
         public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, int[] tileTypesToIgnore = default, float jump = 1F)
         {
-			try
-			{
-            if (ignore == null) { return start; }
-            if (dim == null) { dim = new Rectangle(0, 0, 1, 1); }
-            if (start.X < 0) { start.X = 0; } if (start.X > Main.maxTilesX * 16) { start.X = Main.maxTilesX * 16; }
-            if (start.Y < 0) { start.Y = 0; } if (start.Y > Main.maxTilesY * 16) { start.Y = Main.maxTilesY * 16; }
-            if (end.X < 0) { end.X = 0; } if (end.X > Main.maxTilesX * 16) { end.X = Main.maxTilesX * 16; }
-            if (end.Y < 0) { end.Y = 0; } if (end.Y > Main.maxTilesY * 16) { end.Y = Main.maxTilesY * 16; }
-            Vector2 tc = new(1, 1);
-            Vector2 pstart = start;
-            Vector2 pend = end;
-            Vector2 dir = pend - pstart;
-            dir.Normalize();
-            float length = Vector2.Distance(pstart, pend);
-            float way = 0f;
-            while (way < length)
+            try
             {
-                Vector2 v = pstart + dir * way + tc;			
-                Rectangle dimensions = (Rectangle)dim;
-                Rectangle posRect = new((int)v.X - (dimensions.Width == 1 ? 0 : dimensions.Width / 2), (int)v.Y - (dimensions.Height == 1 ? 0 : dimensions.Height / 2), dimensions.Width, dimensions.Height);
-                if (tileCheck)
+                if (ignore == null) { return start; }
+                if (dim == null) { dim = new Rectangle(0, 0, 1, 1); }
+                if (start.X < 0) { start.X = 0; }
+                if (start.X > Main.maxTilesX * 16) { start.X = Main.maxTilesX * 16; }
+                if (start.Y < 0) { start.Y = 0; }
+                if (start.Y > Main.maxTilesY * 16) { start.Y = Main.maxTilesY * 16; }
+                if (end.X < 0) { end.X = 0; }
+                if (end.X > Main.maxTilesX * 16) { end.X = Main.maxTilesX * 16; }
+                if (end.Y < 0) { end.Y = 0; }
+                if (end.Y > Main.maxTilesY * 16) { end.Y = Main.maxTilesY * 16; }
+                Vector2 tc = new(1, 1);
+                Vector2 pstart = start;
+                Vector2 pend = end;
+                Vector2 dir = pend - pstart;
+                dir.Normalize();
+                float length = Vector2.Distance(pstart, pend);
+                float way = 0f;
+                while (way < length)
                 {
-                    int vecX = (int)v.X / 16;
-                    int vecY = (int)v.Y / 16;
-                    Rectangle rect = new((int)v.X, (int)v.Y, 16, 16);
-                    if (posRect.Intersects(rect))
+                    Vector2 v = pstart + dir * way + tc;
+                    Rectangle dimensions = (Rectangle)dim;
+                    Rectangle posRect = new((int)v.X - (dimensions.Width == 1 ? 0 : dimensions.Width / 2), (int)v.Y - (dimensions.Height == 1 ? 0 : dimensions.Height / 2), dimensions.Width, dimensions.Height);
+                    if (tileCheck)
                     {
-                        Vector2 vec = ignoreType == 1 ? (Vector2)ignore : new Vector2(-1, -1);
-                        if ((int)vec.X != vecX && (int)vec.Y != vecY)
+                        int vecX = (int)v.X / 16;
+                        int vecY = (int)v.Y / 16;
+                        Rectangle rect = new((int)v.X, (int)v.Y, 16, 16);
+                        if (posRect.Intersects(rect))
                         {
-                            Tile tile = Main.tile[vecX, vecY];
-                            if (tile is {IsActiveUnactuated: true})
+                            Vector2 vec = ignoreType == 1 ? (Vector2)ignore : new Vector2(-1, -1);
+                            if ((int)vec.X != vecX && (int)vec.Y != vecY)
                             {
-                                bool ignoreTile = tileTypesToIgnore is not {Length: > 0} ? false : BaseUtility.InArray(tileTypesToIgnore, tile.type);
-                                if (!ignoreTile && Main.tileSolid[tile.type])
+                                Tile tile = Main.tile[vecX, vecY];
+                                if (tile is { IsActiveUnactuated: true })
                                 {
-                                    return returnCenter ? new Vector2(vecX * 16 + 8, vecY * 16 + 8) : v;
+                                    bool ignoreTile = tileTypesToIgnore is not { Length: > 0 } ? false : BaseUtility.InArray(tileTypesToIgnore, tile.type);
+                                    if (!ignoreTile && Main.tileSolid[tile.type])
+                                    {
+                                        return returnCenter ? new Vector2(vecX * 16 + 8, vecY * 16 + 8) : v;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                if (npcCheck)
-                {
-                    int[] npcs = GetNPCs(v, -1, 5F);
-                    for (int i = 0; i < npcs.Length; i++)
+                    if (npcCheck)
                     {
-                        NPC npc = Main.npc[npcs[i]];
-                        if (!npc.active || npc.life <= 0) { continue; }
-                        if (ignoreType == 2 && npc.whoAmI == (int)ignore) { continue; }
-                        Rectangle npcRect = new((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
-                        if (posRect.Intersects(npcRect)) { return returnCenter ? npc.Center : v; }
+                        int[] npcs = GetNPCs(v, -1, 5F);
+                        for (int i = 0; i < npcs.Length; i++)
+                        {
+                            NPC npc = Main.npc[npcs[i]];
+                            if (!npc.active || npc.life <= 0) { continue; }
+                            if (ignoreType == 2 && npc.whoAmI == (int)ignore) { continue; }
+                            Rectangle npcRect = new((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
+                            if (posRect.Intersects(npcRect)) { return returnCenter ? npc.Center : v; }
+                        }
                     }
-                }
-                if (playerCheck)
-                {
-                    int[] players = GetPlayers(v, 5F);
-                    for (int i = 0; i < players.Length; i++)
+                    if (playerCheck)
                     {
-                        Player player = Main.player[players[i]];
-                        if (player.dead || !player.active) { continue; }
-                        if (ignoreType == 0 && player.whoAmI == (int)ignore) { continue; }
-                        Rectangle playerRect = new((int)player.position.X, (int)player.position.Y, player.width, player.height);
-                        if (posRect.Intersects(playerRect)) { return returnCenter ? player.Center : v; }
+                        int[] players = GetPlayers(v, 5F);
+                        for (int i = 0; i < players.Length; i++)
+                        {
+                            Player player = Main.player[players[i]];
+                            if (player.dead || !player.active) { continue; }
+                            if (ignoreType == 0 && player.whoAmI == (int)ignore) { continue; }
+                            Rectangle playerRect = new((int)player.position.X, (int)player.position.Y, player.width, player.height);
+                            if (posRect.Intersects(playerRect)) { return returnCenter ? player.Center : v; }
+                        }
                     }
+                    way += jump;
                 }
-                way += jump;
             }
-			}catch(Exception e)
-			{
-				BaseUtility.LogFancy("Redemption~ TRACE ERROR:", e);				
-			}
+            catch (Exception e)
+            {
+                BaseUtility.LogFancy("Redemption~ TRACE ERROR:", e);
+            }
             return end;
         }
 
