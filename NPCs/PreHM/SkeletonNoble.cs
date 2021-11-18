@@ -66,6 +66,7 @@ namespace Redemption.NPCs.PreHM
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SkeletonNobleBanner>();
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 15;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -120,6 +121,13 @@ namespace Redemption.NPCs.PreHM
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
+        }
+
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+            NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = false;
+            return true;
         }
 
         private Vector2 moveTo;
