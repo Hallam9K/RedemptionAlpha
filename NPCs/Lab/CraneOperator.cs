@@ -29,7 +29,7 @@ namespace Redemption.NPCs.Lab
             NPC.lifeMax = 250;
             NPC.aiStyle = -1;
             NPC.value = 0f;
-            NPC.knockBackResist = 0.0f;
+            NPC.knockBackResist = 0;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Lab
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "Did I arrive here before everyone else..?";
+            return "The janitor arrived after me... Guess he's never late for the job.";
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

@@ -40,6 +40,14 @@ namespace Redemption.Globals
             Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 14, (RedeGen.LabVector.Y + 42) * 16);
             if (RedeGen.LabVector.X != -1 && RedeGen.LabVector.Y != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<JustANormalToaster>()))
                 Terraria.NPC.NewNPC((int)ToasterPos.X, (int)ToasterPos.Y, ModContent.NPCType<JustANormalToaster>());
+
+            Vector2 JanitorPos = new((RedeGen.LabVector.X + 173) * 16, (RedeGen.LabVector.Y + 22) * 16);
+            if (RedeGen.LabVector.X != -1 && RedeGen.LabVector.Y != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<JanitorBot_Cleaning>()))
+                Terraria.NPC.NewNPC((int)JanitorPos.X, (int)JanitorPos.Y, ModContent.NPCType<JanitorBot_Cleaning>());
+
+            Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 167) * 16);
+            if (RedeGen.LabVector.X != -1 && RedeGen.LabVector.Y != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()))
+                Terraria.NPC.NewNPC((int)MacePos.X, (int)MacePos.Y, ModContent.NPCType<MACEProject_Off>());
         }
     }
 }

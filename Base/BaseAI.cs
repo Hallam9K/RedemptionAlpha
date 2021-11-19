@@ -5393,6 +5393,8 @@ namespace Redemption.Base
 
                 player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
                 PlayerLoader.OnHitPvp(subPlayer, subPlayer.HeldItem, player, parsedDamage, false);
+                bool crit = false;
+                PlayerLoader.ModifyHitPvp(subPlayer, subPlayer.HeldItem, player, ref parsedDamage, ref crit);
 
                 subPlayer.attackCD = (int)(subPlayer.itemAnimationMax * 0.33f);
             }
@@ -5404,12 +5406,16 @@ namespace Redemption.Base
                     player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
                     p.playerImmune[player.whoAmI] = 40;
                     PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
+                    bool crit = false;
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
                 }
                 else if (p.hostile)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
                     PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
+                    bool crit = false;
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
                 }
             }
             else if (damager is NPC npc)
@@ -5417,6 +5423,8 @@ namespace Redemption.Base
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                 player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
                 PlayerLoader.OnHitByNPC(player, npc, parsedDamage, false);
+                bool crit = false;
+                PlayerLoader.ModifyHitByNPC(player, npc, ref parsedDamage, ref crit);
             }
         }
 
