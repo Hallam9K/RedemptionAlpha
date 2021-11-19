@@ -56,14 +56,14 @@ namespace Redemption.NPCs.Lab
         }
         public override void SetDefaults()
         {
-            NPC.width = 32;
+            NPC.width = 34;
             NPC.height = 44;
             NPC.friendly = false;
             NPC.damage = 65;
             NPC.defense = 5;
             NPC.lifeMax = 560;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = SoundID.NPCHit18;
+            NPC.DeathSound = SoundID.NPCDeath21;
             NPC.value = 0f;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.3f;
@@ -151,7 +151,7 @@ namespace Redemption.NPCs.Lab
                 NPC.rotation = 0;
                 if (NPC.velocity.X == 0)
                 {
-                    if (NPC.frameCounter >= 10)
+                    if (NPC.frameCounter++ >= 10)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;

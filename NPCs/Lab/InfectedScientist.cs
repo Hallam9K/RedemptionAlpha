@@ -65,8 +65,8 @@ namespace Redemption.NPCs.Lab
             NPC.damage = 65;
             NPC.defense = 10;
             NPC.lifeMax = 600;
-            NPC.HitSound = SoundID.NPCHit18;
-            NPC.DeathSound = SoundID.NPCDeath21;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
             NPC.aiStyle = -1;
             NPC.value = 0f;
             NPC.knockBackResist = 0.5f;
