@@ -25,7 +25,7 @@ namespace Redemption.Tiles.Tiles
         public override void RandomUpdate(int i, int j)
         {
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(200))
+            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(600))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<BabyHiveTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
