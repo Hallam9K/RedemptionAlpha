@@ -185,6 +185,8 @@ namespace Redemption.Globals.Player
             Mod mod = Redemption.Instance;
             OnLegDraw leg = new(Request<Texture2D>("Redemption/Items/Armor/HM/HardlightBoots_Legs_Glow", immediate).Value, Request<Texture2D>("Redemption/Items/Armor/HM/HardlightBoots_Legs_Glow", immediate).Value);
             LegDictionary.Add(mod.GetEquipSlot("HardlightBoots", EquipType.Legs), leg);
+            leg = new(Request<Texture2D>("Redemption/Items/Armor/HM/XenomiteLeggings_Legs_Glow", immediate).Value, Request<Texture2D>("Redemption/Items/Armor/HM/XenomiteLeggings_Legs_Glow", immediate).Value);
+            LegDictionary.Add(mod.GetEquipSlot("XenomiteLeggings", EquipType.Legs), leg);
         }
     }
 }

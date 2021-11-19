@@ -211,6 +211,8 @@ namespace Redemption.Globals.Player
             Mod mod = Redemption.Instance;
             OnBodyDraw body = new(Request<Texture2D>("Redemption/Items/Armor/HM/HardlightPlate_Body_Glow", immediate).Value);
             BodyDictionary.Add(mod.GetEquipSlot("HardlightPlate", EquipType.Body), body);
+            body = new(Request<Texture2D>("Redemption/Items/Armor/HM/XenomitePlate_Body_Glow", immediate).Value);
+            BodyDictionary.Add(mod.GetEquipSlot("XenomitePlate", EquipType.Body), body);
         }
     }
 }
