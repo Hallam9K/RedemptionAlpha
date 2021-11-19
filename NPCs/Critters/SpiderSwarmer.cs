@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Critters
                     break;
 
                 case ActionState.Aggressive:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -195,15 +195,6 @@ namespace Redemption.NPCs.Critters
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.5f, 3f, 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
             }
-        }
-
-        public bool PlayerDead()
-        {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is Player && ((globalNPC.attacker as Player).dead || !(globalNPC.attacker as Player).active))
-                return true;
-
-            return false;
         }
 
         public int GetNearestNPC()

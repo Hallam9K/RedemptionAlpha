@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Main.dust[dustID].noGravity = true;
                 }
                 SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
-                if (ProjectileID.Sets.CountsAsHoming[target.type])
+                if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                 {
                     target.Kill();
                     continue;

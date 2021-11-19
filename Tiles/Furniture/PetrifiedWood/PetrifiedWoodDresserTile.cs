@@ -91,7 +91,8 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 				}
 				else
 				{
-					player.flyingPigChest = -1;
+					player.piggyBankProjTracker.Clear();
+					player.voidLensChest.Clear();
 					int num213 = Chest.FindChest(left, top);
 					if (num213 != -1)
 					{

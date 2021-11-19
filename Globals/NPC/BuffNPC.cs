@@ -121,7 +121,8 @@ namespace Redemption.Globals.NPC
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>() });
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>() });
                 }
 
             }

@@ -29,6 +29,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.GreenBlood;
             MinPick = 500;
             MineResist = 8f;
+            SoundStyle = 13;
+            SoundType = SoundID.NPCHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Hazmat Corpse");
             AddMapEntry(new Color(242, 183, 111), name);

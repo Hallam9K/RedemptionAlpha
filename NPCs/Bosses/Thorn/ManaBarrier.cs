@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                     if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.DamageType != DamageClass.Magic || ProjectileID.Sets.CountsAsHoming[target.type] || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.DamageType != DamageClass.Magic || ProjectileID.Sets.CultistIsResistantTo[target.type] || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);

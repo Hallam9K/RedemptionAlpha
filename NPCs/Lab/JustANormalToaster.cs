@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Redemption.Globals;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Lab
 {
@@ -34,8 +35,20 @@ namespace Redemption.NPCs.Lab
             NPC.noGravity = false;
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
+            NPC.hide = true;
         }
 
+        public override void DrawBehind(int index)
+        {
+            Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
+        }
         public override bool CanChat() => true;
         public override string GetChat()
         {

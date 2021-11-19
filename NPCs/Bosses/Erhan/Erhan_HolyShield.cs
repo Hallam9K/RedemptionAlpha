@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
-                    if (ProjectileID.Sets.CountsAsHoming[target.type])
+                    if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                     {
                         target.Kill();
                         continue;
@@ -144,7 +144,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
-                    if (ProjectileID.Sets.CountsAsHoming[target.type])
+                    if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                     {
                         target.Kill();
                         continue;

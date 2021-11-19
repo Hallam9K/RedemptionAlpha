@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Utilities;
+using Terraria.ModLoader;
 
 namespace Redemption.Base
 {
@@ -5371,10 +5372,8 @@ namespace Redemption.Base
          *  damager : The thing actually doing damage (Player, Projectile, NPC or null)
          *  dmgVariation : If true, the damage will vary based on Main.DamageVar().
          *  hitThroughDefense : If true, boosts damage to get around player defense.
-		 *  critChance: the chance to crit. (0 == no crits)
-		 *  critMult: the amount to multiply the crit by.
          */
-        public static void DamagePlayer(Player player, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, int critChance = 0, float critMult = 1f)
+        public static void DamagePlayer(Player player, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
         {
             float defIgnore = 0.5f;
             if (Main.expertMode)
@@ -5393,6 +5392,7 @@ namespace Redemption.Base
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
 
                 player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
+                PlayerLoader.OnHitPvp(subPlayer, subPlayer.HeldItem, player, parsedDamage, false);
 
                 subPlayer.attackCD = (int)(subPlayer.itemAnimationMax * 0.33f);
             }
@@ -5403,17 +5403,20 @@ namespace Redemption.Base
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
                     p.playerImmune[player.whoAmI] = 40;
+                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
                 }
                 else if (p.hostile)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
                 }
             }
             else if (damager is NPC npc)
             {
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                 player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                PlayerLoader.OnHitByNPC(player, npc, parsedDamage, false);
             }
         }
 

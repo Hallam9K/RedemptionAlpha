@@ -105,7 +105,7 @@ namespace Redemption.Items.Accessories.PreHM
                         Projectile.Kill();
                     }
 
-                    if (target.velocity.Length() <= 1 || ProjectileID.Sets.CountsAsHoming[target.type])
+                    if (target.velocity.Length() <= 1 || ProjectileID.Sets.CultistIsResistantTo[target.type])
                     {
                         target.Kill();
                         continue;

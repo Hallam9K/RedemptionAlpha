@@ -19,7 +19,7 @@ namespace Redemption.Projectiles.Hostile
         {
             DisplayName.SetDefault("Redemptive Spark");
             Main.projFrames[Projectile.type] = 5;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

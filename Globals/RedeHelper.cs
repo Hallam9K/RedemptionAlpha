@@ -600,6 +600,15 @@ namespace Redemption.Globals
             return false;
         }
 
+        public static bool PlayerDead(this Terraria.NPC npc)
+        {
+            RedeNPC globalNPC = npc.GetGlobalNPC<RedeNPC>();
+            if (globalNPC.attacker is Terraria.Player && ((globalNPC.attacker as Terraria.Player).dead || !(globalNPC.attacker as Terraria.Player).active))
+                return true;
+
+            return false;
+        }
+
         #region NPC Methods
 
         /// <summary>
