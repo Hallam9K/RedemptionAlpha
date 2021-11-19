@@ -1,23 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.Erhan;
-using Redemption.NPCs.Bosses.Keeper;
-using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
-using Redemption.Projectiles.Misc;
 using Redemption.WorldGeneration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.Chat;
-using Terraria.DataStructures;
-using Terraria.GameContent.Events;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.Utilities;
 
 namespace Redemption.Globals
 {
