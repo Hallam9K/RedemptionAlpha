@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Lab
         public override void SetDefaults()
         {
             NPC.width = 16;
-            NPC.height = 14;
+            NPC.height = 12;
             NPC.friendly = false;
             NPC.damage = 25;
             NPC.defense = 0;

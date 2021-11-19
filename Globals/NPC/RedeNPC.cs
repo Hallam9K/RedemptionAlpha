@@ -269,6 +269,7 @@ namespace Redemption.Globals.NPC
 
                 pool.Clear();
                 pool.Add(ModContent.NPCType<InfectedScientist>(), tileCheck ? 1 : 0);
+                pool.Add(ModContent.NPCType<SludgeScientist>(), tileCheck ? 0.7f : 0);
                 pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
             }
         }
