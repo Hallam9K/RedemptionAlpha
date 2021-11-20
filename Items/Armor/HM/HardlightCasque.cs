@@ -55,7 +55,13 @@ namespace Redemption.Items.Armor.HM
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "TBD"; // TODO: Hardlight set bonus
+            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+            {
+                player.setBonus = "Press " + key + " key to get support from the Ship of the Slayer\n" +
+                    "Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons";
+            }
+            player.GetModPlayer<BuffPlayer>().hardlightBonus = 1;
         }
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Redemption.Base;
 using Redemption.Effects;
 using Redemption.Globals;
@@ -36,6 +37,7 @@ namespace Redemption
         public const string Abbreviation = "MoR";
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
+        public static ModKeybind RedeSpecialAbility;
 
         private List<ILoadable> _loadCache;
 
@@ -96,6 +98,7 @@ namespace Redemption
 
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
 
+            RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
 

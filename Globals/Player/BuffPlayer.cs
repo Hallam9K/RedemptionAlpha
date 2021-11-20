@@ -15,6 +15,11 @@ using Redemption.DamageClasses;
 using Redemption.Buffs;
 using System.Collections.Generic;
 using Redemption.Biomes;
+using Terraria.GameInput;
+using Redemption.Buffs.Cooldowns;
+using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Melee;
+using Redemption.Projectiles.Minions;
 
 namespace Redemption.Globals.Player
 {
@@ -53,6 +58,7 @@ namespace Redemption.Globals.Player
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
+        public int hardlightBonus;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -102,6 +108,7 @@ namespace Redemption.Globals.Player
             hazmatSuit = false;
             HEVSuit = false;
             WastelandWaterImmune = false;
+            hardlightBonus = 0;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -138,6 +145,55 @@ namespace Redemption.Globals.Player
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
+        }
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (Redemption.RedeSpecialAbility.JustPressed)
+            {
+                if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2"), Player.position);
+
+                    Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 60 * 60);
+                    switch (hardlightBonus)
+                    {
+                        case 1: // Ritualist
+
+                            break;
+                        case 2: // Magic
+
+                            break;
+                        case 3: // Melee
+                            for (int i = 0; i < 2; i++)
+                            {
+                                Vector2 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
+                            }
+                            break;
+                        case 4: // Summoner
+                            Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
+
+                            for (int i = 0; i < 2; i++)
+                            {
+                                spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
+                            }
+                            break;
+                        case 5: // Druid
+
+                            break;
+                        case 6: // Ranger
+
+                            break;
+
+                    }
+                }
+            }
         }
 
         public override void PostUpdateBuffs()

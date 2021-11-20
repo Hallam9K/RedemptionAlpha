@@ -58,7 +58,8 @@ namespace Redemption.Projectiles.Magic
                     Projectile.spriteDirection = -1;
                 }
 
-                Projectile.rotation.SlowRotation((Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), (float)Math.PI / (Projectile.ai[0] >= 180 ? 300 : 80));
+                if (Main.myPlayer == Projectile.owner)
+                    Projectile.rotation.SlowRotation((Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), (float)Math.PI / (Projectile.ai[0] >= 180 ? 300 : 80));
                 if (Projectile.ai[0]++ == 0)
                 {
                     for (int i = 0; i < 20; i++)

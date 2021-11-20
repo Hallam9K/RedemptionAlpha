@@ -115,7 +115,7 @@ namespace Redemption.NPCs.Lab
                     }
 
                     bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 12);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 12, 8, NPC.Center.Y > player.Center.Y);
@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Lab
                     NPC.DamageHostileAttackers(0, 7);
 
                     jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 12);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 8f * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1f), 18, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);

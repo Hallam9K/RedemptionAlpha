@@ -54,7 +54,13 @@ namespace Redemption.Items.Armor.HM
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "TBD"; // TODO: Hardlight set bonus
+            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+            {
+                player.setBonus = "Press " + key + " key to get support from the Ship of the Slayer\n" +
+                    "Summons 2 missile drones and a magnet drone";
+            }
+            player.GetModPlayer<BuffPlayer>().hardlightBonus = 4;
         }
     }
 }
