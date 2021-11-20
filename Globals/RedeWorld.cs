@@ -305,7 +305,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; ++i)
             {
                 Terraria.NPC npc = Main.npc[i];
-                if (!npc.active)
+                if (!npc.active || npc.dontTakeDamage || npc.immortal)
                     continue;
 
                 Terraria.Player player = Main.LocalPlayer;

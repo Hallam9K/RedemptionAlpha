@@ -30,6 +30,7 @@ using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Tiles.Tiles;
 using Redemption.NPCs.Lab;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.HM.Ranged;
 
 namespace Redemption.Globals
 {
@@ -514,7 +515,7 @@ namespace Redemption.Globals
             Water.SetMultiple(ItemID.Muramasa);
             Ice.SetMultiple(ItemID.IceBlade, ItemID.IceSickle, ItemID.Frostbrand, ModContent.ItemType<PureIronSword>(), ModContent.ItemType<BladeOfTheMountain>());
             Earth.SetMultiple(ItemID.Seedler, ItemID.FossilPickaxe, ItemID.Picksaw);
-            Thunder.SetMultiple(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex);
+            Thunder.SetMultiple(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex, ModContent.ItemType<SlayerGun>());
             Holy.SetMultiple(ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer, ModContent.ItemType<Bindeklinge>());
             Shadow.SetMultiple(ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker);
             Nature.SetMultiple(ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer, ModContent.ItemType<CursedGrassBlade>());
@@ -570,7 +571,7 @@ namespace Redemption.Globals
             #region Undead
 
             Undead.PopulateFromSets(NPCID.Sets.Zombies);
-            Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<RaggedZombie>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>(), ModContent.NPCType<InfectedScientist>());
+            Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<RaggedZombie>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>(), ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<OozingScientist>());
 
             #endregion
 
@@ -668,7 +669,7 @@ namespace Redemption.Globals
 
             #region Thunder
 
-            Thunder.SetMultiple(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill, ModContent.ProjectileType<KS3_BeamCell>(), ModContent.ProjectileType<KS3_MagnetBeam>(), ModContent.ProjectileType<Electronade_TeslaField>());
+            Thunder.SetMultiple(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill, ModContent.ProjectileType<KS3_BeamCell>(), ModContent.ProjectileType<KS3_MagnetBeam>(), ModContent.ProjectileType<Electronade_TeslaField>(), ModContent.ProjectileType<Electronade_Proj>());
 
             #endregion
 

@@ -21,6 +21,8 @@ namespace Redemption.Globals.Player
 
         public override void ResetEffects()
         {
+            hitTarget = -1;
+            hitTarget2 = -1;
         }
         public override void Initialize()
         {

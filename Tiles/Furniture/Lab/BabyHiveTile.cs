@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if (!WorldGen.gen && Main.netMode != NetmodeID.MultiplayerClient)
+            if (!WorldGen.gen && !fail && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int k = 0; k < Main.rand.Next(1, 3); k++)
                     NPC.NewNPC(i * 16 + 8, j * 16 + 8, ModContent.NPCType<SludgeBlob>());

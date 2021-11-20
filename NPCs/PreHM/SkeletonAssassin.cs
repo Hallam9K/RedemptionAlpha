@@ -276,7 +276,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Hiding;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -456,7 +456,7 @@ namespace Redemption.NPCs.PreHM
                 new int[] { ModContent.NPCType<LostSoulNPC>() }) : default);
             if (Personality != PersonalityState.Calm)
             {
-                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false, !HasEyes))
                 {
                     globalNPC.attacker = player;
                     moveTo = NPC.FindGround(20);
@@ -479,7 +479,7 @@ namespace Redemption.NPCs.PreHM
                 if (player.GetModPlayer<BuffPlayer>().skeletonFriendly)
                     gotNPC = GetNearestNPC(friendly: true);
 
-                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false, !HasEyes))
                 {
                     globalNPC.attacker = Main.npc[gotNPC];
                     moveTo = NPC.FindGround(20);

@@ -20,6 +20,7 @@ using Redemption.Buffs.Cooldowns;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
+using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Globals.Player
 {
@@ -157,29 +158,29 @@ namespace Redemption.Globals.Player
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2"), Player.position);
 
                     Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 60 * 60);
+                    Vector2 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
                     switch (hardlightBonus)
                     {
                         case 1: // Ritualist
 
                             break;
                         case 2: // Magic
-
+                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_ManaDrone>(), 0, 0, Main.myPlayer);
                             break;
                         case 3: // Melee
                             for (int i = 0; i < 2; i++)
                             {
-                                Vector2 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+                                Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
 
-                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
                             }
                             break;
                         case 4: // Summoner
-                            Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
-                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
+                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
 
                             for (int i = 0; i < 2; i++)
                             {
-                                spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+                                Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
 
                                 Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
                             }
@@ -188,7 +189,8 @@ namespace Redemption.Globals.Player
 
                             break;
                         case 6: // Ranger
-
+                            if (Player.whoAmI == Main.myPlayer)
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 100, 8, Main.myPlayer);
                             break;
 
                     }

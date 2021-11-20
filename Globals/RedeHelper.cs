@@ -869,12 +869,16 @@ namespace Redemption.Globals
         }
 
         /// <summary>
-        /// Checks if the npc is facing the player.
+        /// Sight method for NPCs.
         /// </summary>
-        /// <param name="range">Sets how close the player would need to be before the Sight is true.</param>
-        /// <param name="lineOfSight">Sets if Sight can be blocked by the player standing behind tiles.</param>
+        /// <param name="range">Sets how close the target would need to be before the Sight is true.</param>
+        /// <param name="lineOfSight">Sets if Sight can be blocked by the target standing behind tiles.</param>
+        /// <param name="facingTarget">Sets if Sight requires the NPC to face the target's direction.</param>
+        /// <param name="canSeeHiding">Sets if the enemy can't see invisible players or enemies.</param>
+        /// <param name="blind">Sets if the enemy can't see the target if they don't move much.</param>
+        /// <param name="moveThreshold">Sets how much velocity is needed before being detectable, use if 'blind' is true.</param>
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
-            bool lineOfSight = false, bool canSeeHiding = false)
+            bool lineOfSight = false, bool canSeeHiding = false, bool blind = false, float moveThreshold = 2)
         {
             if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
                 return false;
@@ -882,6 +886,8 @@ namespace Redemption.Globals
             if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)
                 return false;
             if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
+                return false;
+            if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
             if (lineOfSight)

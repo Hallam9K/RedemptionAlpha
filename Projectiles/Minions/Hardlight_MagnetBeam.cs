@@ -63,9 +63,9 @@ namespace Redemption.Projectiles.Minions
             #region Beginning And End Effects
             if (AITimer == 0)
             {
-                if (Projectile.damage >= 10 * 5)
+                if (Projectile.damage >= 10 * 8)
                 {
-                    float loudness = Projectile.damage / (15 * 5);
+                    float loudness = Projectile.damage / (15 * 8);
                     loudness = MathHelper.Clamp(loudness, 1, 2);
                     SoundEngine.PlaySound(SoundID.Zombie, (int)Projectile.position.X, (int)Projectile.position.Y, 104, loudness);
                 }
@@ -78,11 +78,11 @@ namespace Redemption.Projectiles.Minions
 
             Projectile.Center = proj.Center;
 
-            if (AITimer < Projectile.damage / (2 * 5))
+            if (AITimer < Projectile.damage / (2 * 8))
                 LaserScale += 0.09f;
 
-            if (Projectile.damage > 5 * 5)
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = Projectile.damage / (5 * 5);
+            if (Projectile.damage > 5 * 8)
+                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = Projectile.damage / (5 * 8);
 
             if (Projectile.timeLeft < 30 || !proj.active)
             {
