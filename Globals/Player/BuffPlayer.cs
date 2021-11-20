@@ -190,7 +190,7 @@ namespace Redemption.Globals.Player
                             break;
                         case 6: // Ranger
                             if (Player.whoAmI == Main.myPlayer)
-                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 100, 8, Main.myPlayer);
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
                             break;
 
                     }
