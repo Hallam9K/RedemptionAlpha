@@ -69,12 +69,14 @@ namespace Redemption.NPCs.Lab
             NPC.knockBackResist = 0.4f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
-        public override bool CheckActive() => !LabArea.Active;
 
         private Vector2 moveTo;
         private int runCooldown;
         public override void AI()
         {
+            if (LabArea.Active)
+                NPC.DiscourageDespawn(60);
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             NPC.TargetClosest();

@@ -73,12 +73,13 @@ namespace Redemption.NPCs.Lab
                 new FlavorTextBestiaryInfoElement("An amorphous blob of foul-smelling ooze. Below its icky slime is something organic, excreting its fluid almost endlessly... God, what a mess.")
             });
         }
-        public override bool CheckActive() => !LabArea.Active;
-
         public int Xvel;
         public int consumed;
         public override void AI()
         {
+            if (LabArea.Active)
+                NPC.DiscourageDespawn(60);
+
             NPC.height = (int)(16 * NPC.scale);
             NPC.width = (int)(16 * NPC.scale);
             switch (AIState)

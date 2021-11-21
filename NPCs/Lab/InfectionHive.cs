@@ -43,8 +43,6 @@ namespace Redemption.NPCs.Lab
             NPC.aiStyle = -1;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
-        public override bool CheckActive() => !LabArea.Active;
-
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
