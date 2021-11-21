@@ -270,6 +270,7 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
                 pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
+                pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
                 pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
             }
         }

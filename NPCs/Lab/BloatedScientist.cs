@@ -4,6 +4,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Projectiles.Hostile;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -15,14 +16,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab
 {
-    public class OozingScientist : ModNPC
+    public class BloatedScientist : ModNPC
     {
         public enum ActionState
         {
             Begin,
             Idle,
             Wander,
-            Alert
+            Alert,
+            Puke
         }
 
         public ActionState AIState
@@ -37,7 +39,7 @@ namespace Redemption.NPCs.Lab
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 10;
+            Main.npcFrameCount[NPC.type] = 22;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -57,16 +59,16 @@ namespace Redemption.NPCs.Lab
         public override void SetDefaults()
         {
             NPC.width = 32;
-            NPC.height = 44;
+            NPC.height = 48;
             NPC.friendly = false;
-            NPC.damage = 65;
-            NPC.defense = 5;
-            NPC.lifeMax = 560;
-            NPC.HitSound = SoundID.NPCHit18;
-            NPC.DeathSound = SoundID.NPCDeath21;
-            NPC.value = 0f;
+            NPC.damage = 85;
+            NPC.defense = 34;
+            NPC.lifeMax = 1800;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
             NPC.aiStyle = -1;
-            NPC.knockBackResist = 0.3f;
+            NPC.value = 0f;
+            NPC.knockBackResist = 0.01f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
         public override bool CheckActive() => !LabArea.Active;
@@ -78,10 +80,11 @@ namespace Redemption.NPCs.Lab
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             NPC.TargetClosest();
-            NPC.LookByVelocity();
+            if (AIState is not ActionState.Puke)
+                NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(600))
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, Main.rand.NextBool() ? 21 : 23);
+            if (Main.rand.NextBool(1000))
+                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, Main.rand.NextBool() ? 1 : 3);
 
             switch (AIState)
             {
@@ -117,37 +120,89 @@ namespace Redemption.NPCs.Lab
                     }
 
                     bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 12);
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 12, 8, NPC.Center.Y > player.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.7f, 6, 6, NPC.Center.Y > player.Center.Y);
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 380)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, 600, true, true))
+                    if (!NPC.Sight(globalNPC.attacker, 600, false, true, blind: true))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    NPC.DamageHostileAttackers(0, 7);
+                    if (NPC.velocity.Y == 0 && Main.rand.NextBool(100) && NPC.DistanceSQ(globalNPC.attacker.Center) < 180 * 180)
+                    {
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        AITimer = 0;
+                        NPC.frameCounter = 0;
+                        NPC.velocity.Y = 0;
+                        NPC.velocity.X = 2 * NPC.spriteDirection;
+                        AIState = ActionState.Puke;
+                    }
+                    angle = 0;
+                    NPC.DamageHostileAttackers(0, 5);
 
                     jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 12);
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 8f * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1f), 18, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.4f * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
+                    break;
+                case ActionState.Puke:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 380)
+                    {
+                        angle = 0;
+                        runCooldown = 0;
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = ActionState.Wander;
+                    }
+
+                    if (NPC.velocity.Y < 0)
+                        NPC.velocity.Y = 0;
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.9f;
                     break;
             }
         }
+        float angle;
         public override void FindFrame(int frameHeight)
         {
+            if (AIState is ActionState.Puke)
+            {
+                NPC.rotation = 0;
+                if (NPC.frame.Y < 10 * frameHeight)
+                    NPC.frame.Y = 10 * frameHeight;
+
+                if (NPC.frameCounter++ >= 7)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y == 16 * frameHeight && !Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/VomitAttack").WithPitchVariance(0.1f), NPC.position);
+
+                    if (NPC.frame.Y > 21 * frameHeight)
+                    {
+                        NPC.frame.Y = 0;
+                        AIState = ActionState.Alert;
+                    }
+                }
+                if (NPC.frame.Y >= 16 * frameHeight && NPC.frame.Y <= 19 * frameHeight && NPC.frameCounter % 3 == 0)
+                {
+                    NPC.Shoot(NPC.Center + RedeHelper.PolarVector(10, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.PolarVector(11, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                    angle += 0.12f;
+                }
+                return;
+            }
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
@@ -157,33 +212,33 @@ namespace Redemption.NPCs.Lab
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 5 * frameHeight)
+                        if (NPC.frame.Y > 3 * frameHeight)
                             NPC.frame.Y = 0;
                     }
                 }
                 else
                 {
-                    if (NPC.frame.Y < 6 * frameHeight)
-                        NPC.frame.Y = 6 * frameHeight;
+                    if (NPC.frame.Y < 4 * frameHeight)
+                        NPC.frame.Y = 4 * frameHeight;
 
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 4 or <= -4)
+                    if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
                         if (NPC.frame.Y > 9 * frameHeight)
-                            NPC.frame.Y = 6 * frameHeight;
+                            NPC.frame.Y = 4 * frameHeight;
                     }
                 }
             }
             else
             {
                 NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 9 * frameHeight;
+                NPC.frame.Y = 4 * frameHeight;
             }
         }
 
-        public int GetNearestNPC()
+        public int GetNearestNPC(bool grr = false)
         {
             float nearestNPCDist = -1;
             int nearestNPC = -1;
@@ -193,8 +248,16 @@ namespace Redemption.NPCs.Lab
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
-                if (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
-                    continue;
+                if (grr)
+                {
+                    if (target.lifeMax <= 5 || target.boss)
+                        continue;
+                }
+                else
+                {
+                    if (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                        continue;
+                }
 
                 if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
                     continue;
@@ -209,18 +272,27 @@ namespace Redemption.NPCs.Lab
         {
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            int gotNPC = GetNearestNPC();
-            if (NPC.Sight(player, 600, true, true))
+            int gotNPC = GetNearestNPC(true);
+            if (NPC.Sight(player, 300, false, true, blind: true))
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 22);
+                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 2);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, true, true))
+            if (Main.rand.NextBool(600) && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 300, false, true, blind: true))
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 22);
+                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                globalNPC.attacker = Main.npc[gotNPC];
+                moveTo = NPC.FindGround(15);
+                AITimer = 0;
+                AIState = ActionState.Alert;
+            }
+            gotNPC = GetNearestNPC();
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 300, false, true, blind: true))
+            {
+                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
                 globalNPC.attacker = Main.npc[gotNPC];
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
@@ -233,13 +305,13 @@ namespace Redemption.NPCs.Lab
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 6, 12));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 8, 16));
         }
 
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(400, 1600));
+                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(800, 3000));
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -251,13 +323,14 @@ namespace Redemption.NPCs.Lab
                     Main.dust[dustIndex].velocity *= 2f;
                 }
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SludgeScientistGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/BlisterScientistGore" + (i + 1)).Type, 1);
+                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SludgeScientistGore1").Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 22);
+                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 2);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -267,7 +340,7 @@ namespace Redemption.NPCs.Lab
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This strain is very aggressive and leaks a strange liquidy substance... God, does it smell awful.")
+                    "An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This strain is mildly aggressive, and has bloated their gastric track to monstrous sizes... God, that must feel vile...")
             });
         }
     }

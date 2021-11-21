@@ -73,6 +73,8 @@ namespace Redemption.NPCs.Lab
                 new FlavorTextBestiaryInfoElement("An amorphous blob of foul-smelling ooze. Below its icky slime is something organic, excreting its fluid almost endlessly... God, what a mess.")
             });
         }
+        public override bool CheckActive() => !LabArea.Active;
+
         public int Xvel;
         public int consumed;
         public override void AI()
@@ -124,15 +126,7 @@ namespace Redemption.NPCs.Lab
 
                         SoundEngine.PlaySound(SoundID.Item2, NPC.position);
                         BaseAI.DamageNPC(ooze, ooze.lifeMax + 10, 0, NPC, false, true);
-                        NPC.scale += 0.1f;
-                        NPC.position.Y -= 6;
-                        NPC.HealEffect(50);
-                        NPC.lifeMax += 50;
-                        NPC.life += 50;
-                        NPC.damage += 5;
-                        NPC.knockBackResist -= 0.05f;
-                        NPC.knockBackResist = MathHelper.Clamp(NPC.knockBackResist, 0, 1);
-                        consumed++;
+                        Consumption();
                     }
                 }
                 foreach (NPC target in Main.npc.Take(Main.maxNPCs))
@@ -144,17 +138,21 @@ namespace Redemption.NPCs.Lab
 
                     SoundEngine.PlaySound(SoundID.Item2, NPC.position);
                     BaseAI.DamageNPC(target, NPC.damage + 10, 0, NPC, false, true);
-                    NPC.scale += 0.1f;
-                    NPC.position.Y -= 6;
-                    NPC.HealEffect(50);
-                    NPC.lifeMax += 50;
-                    NPC.life += 50;
-                    NPC.damage += 5;
-                    NPC.knockBackResist -= 0.05f;
-                    NPC.knockBackResist = MathHelper.Clamp(NPC.knockBackResist, 0, 1);
-                    consumed++;
+                    Consumption();
                 }
             }
+        }
+        public void Consumption()
+        {
+            NPC.scale += 0.1f;
+            NPC.position.Y -= 6;
+            NPC.HealEffect(50);
+            NPC.lifeMax += 50;
+            NPC.life += 50;
+            NPC.damage += 5;
+            NPC.knockBackResist -= 0.05f;
+            NPC.knockBackResist = MathHelper.Clamp(NPC.knockBackResist, 0, 1);
+            consumed++;
         }
         public override void FindFrame(int frameHeight)
         {
@@ -202,7 +200,7 @@ namespace Redemption.NPCs.Lab
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(60, 240));
+                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), (int)(Main.rand.Next(60, 300) * (NPC.scale * 2)));
         }
     }
 }

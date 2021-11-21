@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Lab
         }
         public override void SetDefaults()
         {
-            NPC.width = 44;
+            NPC.width = 32;
             NPC.height = 48;
             NPC.friendly = false;
             NPC.damage = 65;
@@ -69,6 +69,8 @@ namespace Redemption.NPCs.Lab
             NPC.knockBackResist = 0.4f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
+        public override bool CheckActive() => !LabArea.Active;
+
         private Vector2 moveTo;
         private int runCooldown;
         public override void AI()
