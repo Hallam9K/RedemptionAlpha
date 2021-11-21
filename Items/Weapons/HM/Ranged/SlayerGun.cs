@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 130;
+            Item.damage = 78;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 62;
             Item.height = 26;
@@ -121,7 +121,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         for (int i = 0; i < numberProjectiles; i++)
                         {
                             Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                            int proj3 = Projectile.NewProjectile(source, position, perturbedSpeed, ProjectileID.MartianTurretBolt, damage, knockback, player.whoAmI);
+                            int proj3 = Projectile.NewProjectile(source, position, perturbedSpeed, ProjectileID.MartianTurretBolt, (int)(damage / 1.5f), knockback, player.whoAmI);
                             Main.projectile[proj3].hostile = false;
                             Main.projectile[proj3].friendly = true;
                             Main.projectile[proj3].DamageType = DamageClass.Ranged;
@@ -136,6 +136,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         Main.projectile[proj2].netUpdate2 = true;
                         break;
                     case 2:
+                        damage = (int)(damage * 1.4f);
                         player.itemAnimationMax = Item.useTime * 2;
                         player.itemTime = Item.useTime * 2;
                         player.itemAnimation = Item.useTime * 2;
