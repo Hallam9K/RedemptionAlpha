@@ -21,8 +21,8 @@ namespace Redemption.Projectiles.Ranged
 
         public override void SetDefaults()
         {
-            Projectile.width = 28;
-            Projectile.height = 28;
+            Projectile.width = 30;
+            Projectile.height = 92;
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
             Projectile.hostile = false;
