@@ -59,8 +59,8 @@ namespace Redemption.Items.Armor.HM
             player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " key to get support from the Ship of the Slayer\n" +
-                    "Summons a drone that gives a continuous feed of mana for 5 seconds";
+                player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
+                    "Summons a drone that gives a continuous feed of mana for 10 seconds";
             }
             player.GetModPlayer<BuffPlayer>().hardlightBonus = 2;
         }

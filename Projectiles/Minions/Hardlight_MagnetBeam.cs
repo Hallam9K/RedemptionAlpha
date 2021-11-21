@@ -89,7 +89,7 @@ namespace Redemption.Projectiles.Minions
                 Projectile.alpha += 4;
             }
             else
-                LaserScale = MathHelper.Clamp(LaserScale, 0.2f, 4);
+                LaserScale = MathHelper.Clamp(LaserScale, 0.2f, 6);
             #endregion
 
             #region Length Setting

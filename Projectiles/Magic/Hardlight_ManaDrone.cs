@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Magic
                 {
                     Projectile.Move(new Vector2(player.Center.X + 100, player.Center.Y - 80), 14, 20);
 
-                    if (Projectile.localAI[1]++ >= 60 && Projectile.localAI[1] <= 360)
+                    if (Projectile.localAI[1]++ >= 60 && Projectile.localAI[1] <= 720)
                     {
                         if (++Projectile.ai[1] >= 5)
                         {
@@ -88,14 +88,14 @@ namespace Redemption.Projectiles.Magic
                                     }
                                 }
                                 SoundEngine.PlaySound(SoundID.Item15, Projectile.Center);
-                                player.ManaEffect(20);
-                                player.statMana += 20;
+                                player.ManaEffect(25);
+                                player.statMana += 25;
                             }
                             if (++Projectile.ai[0] >= 8)
                                 Projectile.ai[0] = 0;
                         }
                     }
-                    else if (Projectile.localAI[1] > 360)
+                    else if (Projectile.localAI[1] > 720)
                         Projectile.timeLeft = 120;
                 }
             }

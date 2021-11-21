@@ -115,7 +115,7 @@ namespace Redemption.Projectiles.Minions
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire"), Projectile.position);
 
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_MagnetBeam>(), (int)MathHelper.Clamp(damageStored, 10, 400), 4, player.whoAmI, Projectile.whoAmI);
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_MagnetBeam>(), (int)MathHelper.Clamp(damageStored, 10, 800), 4, player.whoAmI, Projectile.whoAmI);
             }
             if (Projectile.localAI[0] >= 400)
             {

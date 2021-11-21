@@ -57,7 +57,7 @@ namespace Redemption.Items.Armor.HM
             player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " key to get support from the Ship of the Slayer\n" +
+                player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon";
             }
             player.GetModPlayer<BuffPlayer>().hardlightBonus = 3;

@@ -57,8 +57,8 @@ namespace Redemption.Items.Armor.HM
             player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight ritualist bonus
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " key to get support from the Ship of the Slayer\n" +
-                    "Summons a bomb containing a fungus bio-weapon to poison the enemy";
+                player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
+                    "Summons a drone containing a fungus bio-weapon to poison the enemy";
             }
             player.GetModPlayer<BuffPlayer>().hardlightBonus = 5;
         }
