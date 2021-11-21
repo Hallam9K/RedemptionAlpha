@@ -1,10 +1,13 @@
+using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -14,7 +17,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab
 {
-    public class SludgeBlob : ModNPC
+    public class OozeBlob : ModNPC
     {
         public enum ActionState
         {
@@ -35,8 +38,7 @@ namespace Redemption.NPCs.Lab
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sludge Blob");
-            Main.npcFrameCount[NPC.type] = 2;
+            Main.npcFrameCount[NPC.type] = 5;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -52,27 +54,31 @@ namespace Redemption.NPCs.Lab
         public override void SetDefaults()
         {
             NPC.width = 16;
-            NPC.height = 12;
+            NPC.height = 16;
             NPC.friendly = false;
-            NPC.damage = 25;
+            NPC.damage = 20;
             NPC.defense = 0;
             NPC.lifeMax = 100;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath19;
             NPC.value = 0f;
             NPC.knockBackResist = 0.6f;
+            NPC.scale = 0.8f;
             NPC.aiStyle = -1;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Blob blob blob.")
+                new FlavorTextBestiaryInfoElement("An amorphous blob of foul-smelling ooze. Below its icky slime is something organic, excreting its fluid almost endlessly... God, what a mess.")
             });
         }
         public int Xvel;
+        public int consumed;
         public override void AI()
         {
+            NPC.height = (int)(16 * NPC.scale);
+            NPC.width = (int)(16 * NPC.scale);
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -104,24 +110,69 @@ namespace Redemption.NPCs.Lab
                         AIState = ActionState.Idle;
                     break;
             }
+
+            NPC.DamageHostileAttackers(0, 1);
+
+            if (NPC.scale < 10)
+            {
+                if (Main.rand.NextBool(100))
+                {
+                    foreach (NPC ooze in Main.npc.Take(Main.maxNPCs))
+                    {
+                        if (!ooze.active || NPC.whoAmI == ooze.whoAmI || NPC.scale < ooze.scale || ooze.type != Type || !NPC.Hitbox.Intersects(ooze.Hitbox))
+                            continue;
+
+                        SoundEngine.PlaySound(SoundID.Item2, NPC.position);
+                        BaseAI.DamageNPC(ooze, ooze.lifeMax + 10, 0, NPC, false, true);
+                        NPC.scale += 0.1f;
+                        NPC.position.Y -= 6;
+                        NPC.HealEffect(50);
+                        NPC.lifeMax += 50;
+                        NPC.life += 50;
+                        NPC.damage += 5;
+                        NPC.knockBackResist -= 0.05f;
+                        NPC.knockBackResist = MathHelper.Clamp(NPC.knockBackResist, 0, 1);
+                        consumed++;
+                    }
+                }
+                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                {
+                    if (!target.active || target.dontTakeDamage || target.immortal || NPC.whoAmI == target.whoAmI || target.type == Type || target.life >= NPC.damage ||
+                        NPC.height < target.height - 8 || NPC.width < target.width - 8 || target.boss || NPCTags.Inorganic.Has(target.type) ||
+                        NPCTags.Spirit.Has(target.type) || !NPC.Hitbox.Intersects(target.Hitbox))
+                        continue;
+
+                    SoundEngine.PlaySound(SoundID.Item2, NPC.position);
+                    BaseAI.DamageNPC(target, NPC.damage + 10, 0, NPC, false, true);
+                    NPC.scale += 0.1f;
+                    NPC.position.Y -= 6;
+                    NPC.HealEffect(50);
+                    NPC.lifeMax += 50;
+                    NPC.life += 50;
+                    NPC.damage += 5;
+                    NPC.knockBackResist -= 0.05f;
+                    NPC.knockBackResist = MathHelper.Clamp(NPC.knockBackResist, 0, 1);
+                    consumed++;
+                }
+            }
         }
         public override void FindFrame(int frameHeight)
         {
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
-                if (NPC.frameCounter++ >= 8)
+                if (NPC.frameCounter++ >= 5)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > frameHeight)
+                    if (NPC.frame.Y > 3 * frameHeight)
                         NPC.frame.Y = 0;
                 }
             }
             else
             {
                 NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 0;
+                NPC.frame.Y = 4 * frameHeight;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -140,10 +191,18 @@ namespace Redemption.NPCs.Lab
             }
             Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<SludgeDust>());
         }
+        public override void OnKill()
+        {
+            if (consumed > 2)
+            {
+                for (int i = 0; i < consumed / 2; i++)
+                    RedeHelper.SpawnNPC((int)NPC.position.X + Main.rand.Next(0, NPC.width), (int)NPC.position.Y + Main.rand.Next(0, NPC.height), ModContent.NPCType<OozeBlob>());
+            }
+        }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(60, 120));
+                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(60, 240));
         }
     }
 }

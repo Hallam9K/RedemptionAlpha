@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetDefaults()
         {
             Projectile.width = 30;
-            Projectile.height = 92;
+            Projectile.height = 30;
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
             Projectile.hostile = false;
@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.localAI[0]++;
 
             if (Projectile.localAI[0] > 20)
-                Projectile.Move(projAim.Center, 20, 10);
+                Projectile.Move(projAim.Center, 30, 10);
 
             var list = Main.projectile.Where(x => x.Hitbox.Intersects(Projectile.Hitbox));
             foreach (var proj in list)
@@ -80,7 +80,9 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion").WithPitchVariance(0.1f), Projectile.position);
+
             for (int i = 0; i < 25; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Frost, Scale: 2f);
@@ -187,7 +189,7 @@ namespace Redemption.Projectiles.Ranged
             if (!BoomGlow)
             {
                 Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, Projectile.rotation, origin2, 3f, SpriteEffects.None, 0);
-                Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.3f, Projectile.rotation, origin2, 5f, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.3f, Projectile.rotation, origin2, 8f, SpriteEffects.None, 0);
             }
 
             Main.spriteBatch.End();

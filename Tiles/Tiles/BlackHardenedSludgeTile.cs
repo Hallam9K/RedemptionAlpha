@@ -28,7 +28,7 @@ namespace Redemption.Tiles.Tiles
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (Main.rand.NextBool(4) && !fail && Main.netMode != NetmodeID.MultiplayerClient)
-                NPC.NewNPC(i * 16 + 8, j * 16 + 8, ModContent.NPCType<SludgeBlob>());
+                NPC.NewNPC(i * 16 + 8, j * 16 + 8, ModContent.NPCType<OozeBlob>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;

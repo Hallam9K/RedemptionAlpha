@@ -39,6 +39,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Petrified Wood Dresser");
 			AddMapEntry(new Color(100, 100, 100), name);
+			ContainerName.SetDefault("Petrified Wood Dresser");
 			AdjTiles = new int[] { TileID.Dressers };
 			DresserDrop = ModContent.ItemType<PetrifiedWoodDresser>();
 			DustType = DustID.Ash;
@@ -137,8 +138,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             return true;
 		}
 
-		// TODO: dresser mouse over weird
-		/*
 		public override void MouseOverFar(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
@@ -164,9 +163,9 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 				}
 				else
 				{
-					player.cursorItemIconText = chest;
+					player.cursorItemIconText = "Petrified Wood Dresser";
 				}
-				if (player.cursorItemIconText == chest)
+				if (player.cursorItemIconText == "Petrified Wood Dresser")
 				{
 					player.cursorItemIconID = ModContent.ItemType<PetrifiedWoodDresser>();
 					player.cursorItemIconText = "";
@@ -206,9 +205,9 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 				}
 				else
 				{
-					player.cursorItemIconText = chest;
+					player.cursorItemIconText = "Petrified Wood Dresser";
 				}
-				if (player.cursorItemIconText == chest)
+				if (player.cursorItemIconText == "Petrified Wood Dresser")
 				{
 					player.cursorItemIconID = ModContent.ItemType<PetrifiedWoodDresser>();
 					player.cursorItemIconText = "";
@@ -220,7 +219,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			{
 				player.cursorItemIconID = ItemID.FamiliarShirt;
 			}
-		}*/
+		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 

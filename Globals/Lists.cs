@@ -321,7 +321,7 @@ namespace Redemption.Globals
             NPCID.QueenSlimeMinionPurple,
             NPCID.HoppinJack,
             ModContent.NPCType<Blobble>(),
-            ModContent.NPCType<SludgeBlob>(),
+            ModContent.NPCType<OozeBlob>(),
             ModContent.NPCType<InfectionHive>()
         };
 
@@ -576,7 +576,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Spirit
-            Spirit.SetMultiple(NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>());
+            Spirit.SetMultiple(NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>());
             #endregion
 
             #region Plantlike

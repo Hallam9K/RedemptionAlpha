@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Lab
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, 800, true, true))
+                    if (!NPC.Sight(globalNPC.attacker, 600, true, true))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -208,7 +208,7 @@ namespace Redemption.NPCs.Lab
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC();
-            if (NPC.Sight(player, 800, true, true))
+            if (NPC.Sight(player, 600, true, true))
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 22);
                 globalNPC.attacker = player;
@@ -216,7 +216,7 @@ namespace Redemption.NPCs.Lab
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 800, true, true))
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, true, true))
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 22);
                 globalNPC.attacker = Main.npc[gotNPC];
