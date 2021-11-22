@@ -49,14 +49,7 @@ namespace Redemption.NPCs.PreHM
                 }
             });
         }
-        public bool PlayerDead()
-        {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is Player && ((globalNPC.attacker as Player).dead || !(globalNPC.attacker as Player).active))
-                return true;
 
-            return false;
-        }
         public bool AttackerIsUndead()
         {
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();

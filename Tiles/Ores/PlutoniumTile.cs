@@ -36,8 +36,9 @@ namespace Redemption.Tiles.Ores
         {
             Player player = Main.LocalPlayer;
             Radiation modPlayer = player.GetModPlayer<Radiation>();
+            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
             var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
-            if (dist <= 30 && dist > 18) //&& !modPlayer.hazmatPower && !modPlayer.HEVPower)
+            if (dist <= 30 && dist > 18 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
@@ -45,7 +46,7 @@ namespace Redemption.Tiles.Ores
                 if (Main.rand.NextBool(80000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
             }
-            else if (dist <= 18 && dist > 10) //&& !modPlayer.hazmatPower && !modPlayer.HEVPower)
+            else if (dist <= 18 && dist > 10 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller2").WithVolume(.9f).WithPitchVariance(.1f), player.position);
@@ -53,7 +54,7 @@ namespace Redemption.Tiles.Ores
                 if (Main.rand.NextBool(40000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;
             }
-            else if (dist <= 10 && dist > 4) //&& !modPlayer.HEVPower)
+            else if (dist <= 10 && dist > 4 && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller3").WithVolume(.9f).WithPitchVariance(.1f), player.position);

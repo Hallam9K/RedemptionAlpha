@@ -20,18 +20,30 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            Main.tileMerge[Type][TileID.Crimstone] = true;
+            Main.tileMerge[TileID.Crimstone][Type] = true;
+            Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[TileID.Stone][Type] = true;
+            Main.tileMerge[Type][TileID.Ebonstone] = true;
+            Main.tileMerge[TileID.Ebonstone][Type] = true;
+            Main.tileMerge[Type][TileID.Pearlstone] = true;
+            Main.tileMerge[TileID.Pearlstone][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<StarliteGemOreTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
             ItemDrop = ModContent.ItemType<IrradiatedCrimstone>();
-            TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
-            DustType = ModContent.DustType<IrradiatedStoneDust>();
+            TileID.Sets.Stone[Type] = true;
+            TileID.Sets.GeneralPlacementTiles[Type] = true;
+            TileID.Sets.Crimson[Type] = true;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+            DustType = DustID.Ash;
             MinPick = 100;
             MineResist = 2.5f;
             SoundType = SoundID.Tink;
-            AddMapEntry(new Color(48, 63, 73));
-            SetModTree(new IrradiatedPurityTree());
+            AddMapEntry(new Color(88, 65, 65));
         }
         public override void RandomUpdate(int i, int j)
         {
@@ -76,11 +88,6 @@ namespace Redemption.Tiles.Tiles
             r = 0.04f;
             g = 0.01f;
             b = 0.0f;
-        }
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return ModContent.TileType<DeadSapling>();
         }
     }
 }

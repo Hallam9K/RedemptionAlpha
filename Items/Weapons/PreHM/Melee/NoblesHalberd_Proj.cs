@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Spear);
-			Projectile.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee = true;
+			Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
 		}
 
 		public override bool PreAI()

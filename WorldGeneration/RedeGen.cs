@@ -48,6 +48,7 @@ namespace Redemption.WorldGeneration
         public static Vector2 gathicPortalVector = new Vector2(-1, -1);
         public static Vector2 slayerShipVector = new Vector2(-1, -1);
         public static Vector2 HallOfHeroesVector = new Vector2(-1, -1);
+        public static Vector2 LabVector = new Vector2(-1, -1);
 
         public override void OnWorldLoad()
         {
@@ -60,6 +61,7 @@ namespace Redemption.WorldGeneration
             gathicPortalVector = new Vector2(-1, -1);
             slayerShipVector = new Vector2(-1, -1);
             HallOfHeroesVector = new Vector2(-1, -1);
+            LabVector = new Vector2(-1, -1);
         }
 
         public override void OnWorldUnload()
@@ -69,6 +71,7 @@ namespace Redemption.WorldGeneration
             gathicPortalVector = new Vector2(-1, -1);
             slayerShipVector = new Vector2(-1, -1);
             HallOfHeroesVector = new Vector2(-1, -1);
+            LabVector = new Vector2(-1, -1);
         }
 
         public override void PostUpdateWorld()
@@ -393,15 +396,6 @@ namespace Redemption.WorldGeneration
                         Tile tile = Main.tile[placeX, placeY];
                         if (tile.type != TileID.Grass)
                             continue;
-                        for (int i = -40; i <= 40; i++)
-                        {
-                            for (int j = -40; j <= 40; j++)
-                            {
-                                int type = Main.tile[placeX + i, placeY + j].type;
-                                if (type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>())
-                                    continue;
-                            }
-                        }
                         if (!CheckFlat(placeX, placeY, 14, 2))
                             continue;
 
@@ -410,15 +404,24 @@ namespace Redemption.WorldGeneration
                         Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveClear", AssetRequestMode.ImmediateLoad).Value;
 
                         Point origin = new(placeX - 34, placeY - 11);
+
+                        bool whitelist = false;
                         for (int i = 0; i <= 60; i++)
                         {
                             for (int j = 0; j <= 82; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
-                                if (TileLists.BlacklistTiles.Contains(type))
-                                    continue;
+                                if (TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand ||
+                                type == ModContent.TileType<HeartOfThornsTile>())
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
                             }
                         }
+                        if (whitelist)
+                            continue;
+
                         Main.QueueMainThreadAction(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
@@ -534,15 +537,22 @@ namespace Redemption.WorldGeneration
 
                         Point origin = new(placeX - 46, placeY - 23);
 
+                        bool whitelist = false;
                         for (int i = 0; i <= 88; i++)
                         {
                             for (int j = 0; j <= 47; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
-                                    continue;
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
                             }
                         }
+                        if (whitelist)
+                            continue;
+
                         WorldUtils.Gen(origin, new Shapes.Rectangle(88, 47), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
@@ -651,15 +661,22 @@ namespace Redemption.WorldGeneration
 
                         origin = new(placeX - 15, placeY - 11);
 
+                        bool whitelist = false;
                         for (int i = 0; i <= 29; i++)
                         {
                             for (int j = 0; j <= 21; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
-                                    continue;
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
                             }
                         }
+                        if (whitelist)
+                            continue;
+
                         WorldUtils.Gen(origin, new Shapes.Rectangle(29, 21), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
@@ -769,15 +786,22 @@ namespace Redemption.WorldGeneration
 
                         Point origin2 = new(placeX2 - 40, placeY2 - 27);
 
+                        bool whitelist = false;
                         for (int i = 0; i <= 88; i++)
                         {
                             for (int j = 0; j <= 47; j++)
                             {
                                 int type = Main.tile[origin2.X + i, origin2.Y + j].type;
                                 if (TileLists.BlacklistTiles.Contains(type))
-                                    continue;
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
                             }
                         }
+                        if (whitelist)
+                            continue;
+
                         WorldUtils.Gen(origin2, new Shapes.Rectangle(84, 43), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
@@ -891,15 +915,22 @@ namespace Redemption.WorldGeneration
 
                         origin = new(placeX - 10, placeY - 11);
 
+                        bool whitelist = false;
                         for (int i = 0; i <= 19; i++)
                         {
                             for (int j = 0; j <= 16; j++)
                             {
                                 int type = Main.tile[origin.X + i, origin.Y + j].type;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
-                                    continue;
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
                             }
                         }
+                        if (whitelist)
+                            continue;
+
                         WorldUtils.Gen(origin, new Shapes.Rectangle(19, 16), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
@@ -949,6 +980,21 @@ namespace Redemption.WorldGeneration
                     SlayerShipDeco deco = new();
                     deco.Place(origin, WorldGen.structures);
                 }));
+                tasks.Insert(ShiniesIndex2, new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    progress.Message = "Placing the Abandoned Lab in the island which is not\nactually canonically meant to be there but that'll change in 0.9";
+                    Point origin = new((int)(Main.maxTilesX * 0.55f), (int)(Main.maxTilesY * 0.65f));
+                    WorldUtils.Gen(origin, new Shapes.Rectangle(289, 217), Actions.Chain(new GenAction[]
+                    {
+                        new Actions.SetLiquid(0, 0)
+                    }));
+                    LabVector = origin.ToVector2();
+
+                    AbandonedLab biome = new();
+                    LabClear delete = new();
+                    delete.Place(origin, WorldGen.structures);
+                    biome.Place(origin, WorldGen.structures);
+                }));
             }
         }
         public static void AncientWoodChest(int x, int y, int ID = 0)
@@ -982,42 +1028,42 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
 
-                if (RedeHelper.Chance(.6f))
+                if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<GraveSteelAlloy>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(4, 10);
                 }
-                if (RedeHelper.Chance(.6f))
+                if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<AncientWood>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(5, 15);
                 }
-                if (RedeHelper.Chance(.6f))
+                if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<AncientGoldCoin>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(3, 16);
                 }
-                if (RedeHelper.Chance(.2f))
+                if (RedeHelper.GenChance(.2f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<Archcloth>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
                 }
-                if (RedeHelper.Chance(.1f))
+                if (RedeHelper.GenChance(.1f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
                     chest.item[slot++].stack = 1;
                 }
-                if (RedeHelper.Chance(.02f))
+                if (RedeHelper.GenChance(.02f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<JollyHelm>());
                     chest.item[slot++].stack = 1;
                 }
-                if (RedeHelper.Chance(.66f))
+                if (RedeHelper.GenChance(.66f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot3));
                     chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
                 }
-                if (RedeHelper.Chance(.33f))
+                if (RedeHelper.GenChance(.33f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot4));
                     chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
@@ -1059,6 +1105,8 @@ namespace Redemption.WorldGeneration
             tag["slayerShipVectorY"] = slayerShipVector.Y;
             tag["HallOfHeroesVectorX"] = HallOfHeroesVector.X;
             tag["HallOfHeroesVectorY"] = HallOfHeroesVector.Y;
+            tag["LabVectorX"] = LabVector.X;
+            tag["LabVectorY"] = LabVector.Y;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -1071,6 +1119,8 @@ namespace Redemption.WorldGeneration
             slayerShipVector.Y = tag.GetFloat("slayerShipVectorY");
             HallOfHeroesVector.X = tag.GetFloat("HallOfHeroesVectorX");
             HallOfHeroesVector.Y = tag.GetFloat("HallOfHeroesVectorY");
+            LabVector.X = tag.GetFloat("LabVectorX");
+            LabVector.Y = tag.GetFloat("LabVectorY");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -1079,6 +1129,7 @@ namespace Redemption.WorldGeneration
             writer.WritePackedVector2(gathicPortalVector);
             writer.WritePackedVector2(slayerShipVector);
             writer.WritePackedVector2(HallOfHeroesVector);
+            writer.WritePackedVector2(LabVector);
         }
         public override void NetReceive(BinaryReader reader)
         {
@@ -1086,6 +1137,7 @@ namespace Redemption.WorldGeneration
             gathicPortalVector = reader.ReadPackedVector2();
             slayerShipVector = reader.ReadPackedVector2();
             HallOfHeroesVector = reader.ReadPackedVector2();
+            LabVector = reader.ReadPackedVector2();
         }
     }
     public class GenUtils

@@ -12,7 +12,7 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 namespace Redemption.Biomes
 {
-    public class WastelandBiome : ModBiome
+    public class WastelandPurityBiome : ModBiome
     {
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
 
@@ -21,19 +21,21 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Redemption/Textures/Bestiary/Wasteland";
-        public override string BackgroundPath => base.BackgroundPath;
+        public override string BestiaryIcon => "Textures/Bestiary/Wasteland";
+        public override string BackgroundPath => "Textures/MapBackgrounds/PurityWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
         public override bool IsPrimaryBiome => true;
         public override void SpecialVisuals(Player player)
         {
-            bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false); //|| BasePlayer.HasAccessory(player, ModContent.ItemType<HEVSuit>(), true, false);
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome(ModContent.GetInstance<WastelandBiome>()), player.Center);
+            bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
+                player.GetModPlayer<BuffPlayer>().HEVSuit;
+
+            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()), player.Center);
 
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(fogSafe ? 0.25f : 0.3f).UseIntensity(fogSafe ? 0.6f : 1f)
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome(ModContent.GetInstance<WastelandBiome>()));
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()));
         }
         public override void OnLeave(Player player)
         {
@@ -52,7 +54,7 @@ namespace Redemption.Biomes
                 else
                     player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);
 
-                if (Main.rand.Next(80000) == 0 && player.GetModPlayer<Radiation>().irradiatedLevel == 0) //&& !HEVPower && !hazmatPower)
+                if (Main.rand.Next(80000) == 0 && player.GetModPlayer<Radiation>().irradiatedLevel == 0 && !player.GetModPlayer<BuffPlayer>().HEVSuit && !player.GetModPlayer<BuffPlayer>().hazmatSuit)
                     player.GetModPlayer<Radiation>().irradiatedLevel++;
             }
             else
@@ -64,11 +66,118 @@ namespace Redemption.Biomes
             DisplayName.SetDefault("Wasteland");
         }
 
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
+
+        public override bool IsBiomeActive(Player player)
+        {
+            return ModContent.GetInstance<RedeTileCount>().WastelandTileCount >= 200;
+        }
+    }
+    public class WastelandSnowBiome : ModBiome
+    {
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
+
+        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandSnowUndergroundBackgroundStyle");
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandSnowBackgroundStyle");
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
+
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandSnow";
+        public override string BackgroundPath => "Textures/MapBackgrounds/SnowWastelandMap1";
+        public override Color? BackgroundColor => base.BackgroundColor;
+
+        public override bool IsPrimaryBiome => false;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Snow Wasteland");
+        }
+
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandTileCount >= 100;
+            return ModContent.GetInstance<RedeTileCount>().WastelandSnowTileCount >= 200;
+        }
+    }
+    public class WastelandDesertBiome : ModBiome
+    {
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
+
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandDesertBackgroundStyle");
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
+
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandDesert";
+        public override string BackgroundPath => "Textures/MapBackgrounds/DesertWastelandMap1";
+        public override Color? BackgroundColor => base.BackgroundColor;
+
+        public override bool IsPrimaryBiome => false;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Desert Wasteland");
+        }
+
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
+        public override bool IsBiomeActive(Player player)
+        {
+            return ModContent.GetInstance<RedeTileCount>().WastelandDesertTileCount >= 200;
+        }
+    }
+    public class WastelandCorruptionBiome : ModBiome
+    {
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
+
+        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandCorruptUndergroundBackgroundStyle");
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandCorruptBackgroundStyle");
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
+
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandCorrupt";
+        public override string BackgroundPath => "Textures/MapBackgrounds/CorruptionWastelandMap1";
+        public override Color? BackgroundColor => base.BackgroundColor;
+
+        public override bool IsPrimaryBiome => false;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Corrupt Wasteland");
+        }
+
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
+        public override bool IsBiomeActive(Player player)
+        {
+            return ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 200;
+        }
+    }
+    public class WastelandCrimsonBiome : ModBiome
+    {
+        public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
+
+        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandCrimsonUndergroundBackgroundStyle");
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("Redemption/WastelandCrimsonBackgroundStyle");
+
+        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
+
+        public override string BestiaryIcon => "Textures/Bestiary/WastelandCrimson";
+        public override string BackgroundPath => "Textures/MapBackgrounds/CrimsonWastelandMap1";
+        public override Color? BackgroundColor => base.BackgroundColor;
+
+        public override bool IsPrimaryBiome => false;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Crimson Wasteland");
+        }
+
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+
+        public override bool IsBiomeActive(Player player)
+        {
+            return ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 200;
         }
     }
 }

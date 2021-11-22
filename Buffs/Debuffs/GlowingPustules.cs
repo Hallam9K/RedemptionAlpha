@@ -22,5 +22,9 @@ namespace Redemption.Buffs.Debuffs
             player.moveSpeed *= 0.80f;
             Lighting.AddLight(player.Center, Color.LimeGreen.ToVector3() * 0.55f);
         }
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            npc.lifeRegen = -20;
+        }
     }
 }

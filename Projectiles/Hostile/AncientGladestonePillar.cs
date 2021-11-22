@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
             Projectile.hide = true;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

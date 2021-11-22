@@ -20,6 +20,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -87,6 +88,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.npcSlots = 10f;
             BossBag = ModContent.ItemType<SoIBag>();
             NPC.netAlways = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossXeno1");
         }
@@ -108,7 +110,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
                 new FlavorTextBestiaryInfoElement("A blistering pocket of the Xenomite infection.")

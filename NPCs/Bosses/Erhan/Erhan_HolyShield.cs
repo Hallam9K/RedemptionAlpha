@@ -67,12 +67,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
-                    if (ProjectileID.Sets.CountsAsHoming[target.type])
+                    if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                     {
                         target.Kill();
                         continue;
@@ -139,12 +139,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
-                    if (ProjectileID.Sets.CountsAsHoming[target.type])
+                    if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                     {
                         target.Kill();
                         continue;

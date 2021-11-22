@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.penetrate = -1;
             Projectile.timeLeft = 300;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void AI()
         {

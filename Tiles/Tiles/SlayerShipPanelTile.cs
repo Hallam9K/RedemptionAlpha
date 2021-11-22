@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -13,7 +14,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
-            DustType = DustID.Electric;
+            DustType = ModContent.DustType<LabPlatingDust>();
             ItemDrop = ModContent.ItemType<SlayerShipPanel>();
             MinPick = 500;
             MineResist = 7f;

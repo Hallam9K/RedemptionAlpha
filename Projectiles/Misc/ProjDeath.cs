@@ -29,7 +29,7 @@ namespace Redemption.Projectiles.Misc
         {
             foreach (Projectile target in Main.projectile)
             {
-                if (Projectile == target || !target.active || target.damage <= 0 || target.hostile || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
+                if (Projectile == target || !target.active || target.damage <= 0 || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                     continue;
 
                 target.Kill();

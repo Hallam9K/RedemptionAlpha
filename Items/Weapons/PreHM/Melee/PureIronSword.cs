@@ -56,5 +56,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .AddTile(TileID.Anvils)
                 .Register();
         }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Sharp Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            tooltips.Add(axeLine);
+        }
     }
 }

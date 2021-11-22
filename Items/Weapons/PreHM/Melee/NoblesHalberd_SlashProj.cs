@@ -112,16 +112,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (crit)
                 damage += damage / 2;
 
-            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
-            {
-                if (Main.rand.NextBool(80))
-                {
-                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
-                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
-                    damage = damage < target.life ? target.life : damage;
-                    crit = true;
-                }
-            }
+            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit, 80);
         }
 
         public override bool PreDraw(ref Color lightColor)

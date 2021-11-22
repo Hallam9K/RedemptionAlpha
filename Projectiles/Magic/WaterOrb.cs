@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 240;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -114,6 +115,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (target.knockBackResist > 0)
                 target.velocity.Y = -10 * target.knockBackResist;
+
+            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit);
         }
 
         public override bool PreDraw(ref Color lightColor)

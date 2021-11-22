@@ -21,7 +21,7 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 

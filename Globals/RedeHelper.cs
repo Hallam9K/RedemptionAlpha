@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
@@ -33,6 +34,26 @@ namespace Redemption.Globals
 
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
+
+        public static object GetFieldValue(this Type type, string fieldName, object obj = null, BindingFlags? flags = null)
+        {
+            if (flags == null)
+            {
+                flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public;
+            }
+            FieldInfo field = type.GetField(fieldName, flags.Value);
+            return field.GetValue(obj);
+        }
+
+        public static T GetFieldValue<T>(this Type type, string fieldName, object obj = null, BindingFlags? flags = null)
+        {
+            if (flags == null)
+            {
+                flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public;
+            }
+            FieldInfo field = type.GetField(fieldName, flags.Value);
+            return (T)field.GetValue(obj);
+        }
 
         public delegate bool SpecialCondition(Terraria.NPC possibleTarget);
 
@@ -290,6 +311,18 @@ namespace Redemption.Globals
             //spriteBatch.Draw(mod.GetTexture(glowMaskTexture), new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, Color.White, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
         }
 
+        public static bool BossActive()
+        {
+            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            {
+                if (!npc.active || !npc.boss)
+                    continue;
+
+                return true;
+            }
+            return false;
+        }
+
         public static float GradToRad(float grad) => grad * (float)Math.PI / 180.0f;
 
         public static Vector2 RandomPosition(Vector2 pos1, Vector2 pos2) =>
@@ -427,6 +460,7 @@ namespace Redemption.Globals
         }
 
         public static bool Chance(float chance) => Main.rand.NextFloat() <= chance;
+        public static bool GenChance(float chance) => WorldGen.genRand.NextFloat() <= chance;
 
         public static Vector2 SmoothFromTo(Vector2 from, Vector2 to, float smooth = 60f) => from + (to - from) / smooth;
 
@@ -563,6 +597,15 @@ namespace Redemption.Globals
             {
                 return npc.active && npc.life > 0 && !npc.friendly && !npc.dontTakeDamage && npc.lifeMax > 5 && Vector2.Distance(startPos, npc.Center) < maxDistToAttack && Math.Abs(npc.Center.Y - startPos.Y) < (16f * (5 - 1)) && (BaseUtility.CanHit(proj.Hitbox, npc.Hitbox) || BaseUtility.CanHit(Main.player[proj.owner].Hitbox, npc.Hitbox));
             }
+            return false;
+        }
+
+        public static bool PlayerDead(this Terraria.NPC npc)
+        {
+            RedeNPC globalNPC = npc.GetGlobalNPC<RedeNPC>();
+            if (globalNPC.attacker is Terraria.Player && ((globalNPC.attacker as Terraria.Player).dead || !(globalNPC.attacker as Terraria.Player).active))
+                return true;
+
             return false;
         }
 
@@ -826,12 +869,16 @@ namespace Redemption.Globals
         }
 
         /// <summary>
-        /// Checks if the npc is facing the player.
+        /// Sight method for NPCs.
         /// </summary>
-        /// <param name="range">Sets how close the player would need to be before the Sight is true.</param>
-        /// <param name="lineOfSight">Sets if Sight can be blocked by the player standing behind tiles.</param>
+        /// <param name="range">Sets how close the target would need to be before the Sight is true.</param>
+        /// <param name="lineOfSight">Sets if Sight can be blocked by the target standing behind tiles.</param>
+        /// <param name="facingTarget">Sets if Sight requires the NPC to face the target's direction.</param>
+        /// <param name="canSeeHiding">Sets if the enemy can't see invisible players or enemies.</param>
+        /// <param name="blind">Sets if the enemy can't see the target if they don't move much.</param>
+        /// <param name="moveThreshold">Sets how much velocity is needed before being detectable, use if 'blind' is true.</param>
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
-            bool lineOfSight = false, bool canSeeHiding = false)
+            bool lineOfSight = false, bool canSeeHiding = false, bool blind = false, float moveThreshold = 2)
         {
             if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
                 return false;
@@ -839,6 +886,8 @@ namespace Redemption.Globals
             if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)
                 return false;
             if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
+                return false;
+            if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
             if (lineOfSight)
@@ -992,10 +1041,12 @@ namespace Redemption.Globals
                         npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
                     if (!npc.noTileCollide)
                     {
-                        Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed,
-                            ref npc.gfxOffY);
+                        newVec = Collision.TileCollision(npc.position, newVec, npc.width, npc.height);
+                        Vector4 slopeVec = Collision.SlopeCollision(npc.position, newVec, npc.width, npc.height);
+                        Vector2 slopeVel = new(slopeVec.Z, slopeVec.W);
+                        npc.position = new Vector2(slopeVec.X, slopeVec.Y);
+                        npc.velocity = slopeVel;
                     }
-
                     if (npc.velocity != newVec)
                     {
                         npc.velocity = newVec;

@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Soul Charge");
             Main.projFrames[Projectile.type] = 4;
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
         public override void SetDefaults()
         {
@@ -30,7 +30,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.ignoreWater = true;
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

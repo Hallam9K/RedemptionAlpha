@@ -174,20 +174,20 @@ namespace Redemption.NPCs.PreHM
 
                 case ActionState.Retreat:
                     SightCheck();
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                     }
-                    if (globalNPC.attacker is Player && (PlayerDead() || (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly))
+                    if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -207,7 +207,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -373,7 +373,7 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Retreat && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes))
+            if (AIState != ActionState.Retreat && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false, !HasEyes))
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);
@@ -382,7 +382,7 @@ namespace Redemption.NPCs.PreHM
                 AITimer = 0;
                 AIState = ActionState.Retreat;
             }
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes))
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false, !HasEyes))
             {
                 globalNPC.attacker = Main.npc[gotNPC];
                 AITimer = 0;

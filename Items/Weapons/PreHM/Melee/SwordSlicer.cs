@@ -68,6 +68,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
+
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Sharp Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            tooltips.Add(axeLine);
         }
     }
 }

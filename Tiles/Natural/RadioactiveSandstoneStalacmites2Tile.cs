@@ -2,6 +2,7 @@
 using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorBottom = default;
             TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedSandstoneTile>() };
             TileObjectData.addTile(Type);
-            DustType = ModContent.DustType<IrradiatedStoneDust>();
+            DustType = DustID.Ash;
         }
 
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)

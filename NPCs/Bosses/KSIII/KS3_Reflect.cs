@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             foreach (Projectile target in Main.projectile)
             {
-                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee)
+                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))
@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     Main.dust[dustID].noGravity = true;
                 }
                 SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
-                if (ProjectileID.Sets.CountsAsHoming[target.type])
+                if (ProjectileID.Sets.CultistIsResistantTo[target.type])
                 {
                     target.Kill();
                     continue;

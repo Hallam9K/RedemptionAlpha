@@ -88,7 +88,7 @@ namespace Redemption.Items.Accessories.PreHM
                     if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeGlobalProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     Projectile.ai[1] = 10;
@@ -105,7 +105,7 @@ namespace Redemption.Items.Accessories.PreHM
                         Projectile.Kill();
                     }
 
-                    if (target.velocity.Length() <= 1 || ProjectileID.Sets.CountsAsHoming[target.type])
+                    if (target.velocity.Length() <= 1 || ProjectileID.Sets.CultistIsResistantTo[target.type])
                     {
                         target.Kill();
                         continue;

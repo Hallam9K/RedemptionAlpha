@@ -10,8 +10,8 @@ namespace Redemption.Walls
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
-            DustType = DustID.Ice;
-            AddMapEntry(new Color(92, 118, 47));
+            DustType = DustID.Ash;
+            AddMapEntry(new Color(65, 97, 66));
 		}
 	}
     public class IrradiatedIceWall : PlaceholderTile

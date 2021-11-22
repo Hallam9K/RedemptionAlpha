@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightmass");
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
         public override void SetDefaults()
         {
@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.penetrate = 1;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

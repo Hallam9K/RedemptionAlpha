@@ -37,8 +37,9 @@ namespace Redemption.Tiles.Ores
 
             Player player = Main.LocalPlayer;
             Radiation modPlayer = player.GetModPlayer<Radiation>();
+            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
             var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
-            if (dist <= 15 && dist > 8) //&& !modPlayer.hazmatPower && !modPlayer.HEVPower)
+            if (dist <= 15 && dist > 8 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
@@ -46,7 +47,7 @@ namespace Redemption.Tiles.Ores
                 if (Main.rand.NextBool(80000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
             }
-            else if (dist <= 8 && dist > 2) //&& !modPlayer.hazmatPower && !modPlayer.HEVPower)
+            else if (dist <= 8 && dist > 2 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller2").WithVolume(.9f).WithPitchVariance(.1f), player.position);
@@ -54,7 +55,7 @@ namespace Redemption.Tiles.Ores
                 if (Main.rand.NextBool(40000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
             }
-            else if (dist <= 2) //&& !modPlayer.HEVPower)
+            else if (dist <= 2 && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller3").WithVolume(.9f).WithPitchVariance(.1f), player.position);

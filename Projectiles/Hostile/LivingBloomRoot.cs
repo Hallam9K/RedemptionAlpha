@@ -25,7 +25,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
             Projectile.hide = true;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

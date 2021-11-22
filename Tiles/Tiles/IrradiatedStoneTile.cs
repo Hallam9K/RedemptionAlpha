@@ -16,12 +16,21 @@ namespace Redemption.Tiles.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileSpelunker[Type] = false;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<StarliteGemOreTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimstoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
+            Main.tileMerge[Type][TileID.Crimstone] = true;
+            Main.tileMerge[TileID.Crimstone][Type] = true;
+            Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[TileID.Stone][Type] = true;
+            Main.tileMerge[Type][TileID.Ebonstone] = true;
+            Main.tileMerge[TileID.Ebonstone][Type] = true;
+            Main.tileMerge[Type][TileID.Pearlstone] = true;
+            Main.tileMerge[TileID.Pearlstone][Type] = true;
             ItemDrop = ModContent.ItemType<IrradiatedStone>();
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
@@ -29,7 +38,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 100;
             MineResist = 2.5f;
             SoundType = SoundID.Tink;
-            AddMapEntry(new Color(48, 63, 73));
+            AddMapEntry(new Color(87, 87, 87));
         }
         public override void RandomUpdate(int i, int j)
         {
@@ -68,12 +77,6 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
-        }
-
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return ModContent.TileType<DeadSapling>();
         }
     }
 }

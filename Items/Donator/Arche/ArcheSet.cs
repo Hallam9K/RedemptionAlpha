@@ -77,8 +77,8 @@ namespace Redemption.Items.Donator.Arche
         }
         public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
         {
-            if (!male)
-                equipSlot = Mod.GetEquipSlot("Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs);
+            if (male) equipSlot = Redemption.archeMaleLegID;
+            if (!male) equipSlot = Redemption.archeFemLegID;
         }
         public override void AddRecipes()
         {

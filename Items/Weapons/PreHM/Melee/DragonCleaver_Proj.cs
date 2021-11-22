@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.Globals.NPC;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -145,7 +146,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (NPCTags.Dragonlike.Has(target.type))
                 damage *= 4;
+
+            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit);
         }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];

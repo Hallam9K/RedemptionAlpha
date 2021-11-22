@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.alpha = 255;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()

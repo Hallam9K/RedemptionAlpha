@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Projectile.friendly = false;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 600;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         private float glowRot;

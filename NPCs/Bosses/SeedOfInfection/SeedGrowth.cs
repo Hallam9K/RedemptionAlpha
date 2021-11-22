@@ -7,6 +7,7 @@ using Redemption.Dusts;
 using Redemption.Globals;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -40,6 +41,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.alpha = 225;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath19;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
         }
 
         public override Color? GetAlpha(Color drawColor)
@@ -96,7 +98,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
                 new FlavorTextBestiaryInfoElement("Absolute BEBE")

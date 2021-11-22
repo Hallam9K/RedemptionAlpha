@@ -83,6 +83,7 @@ namespace Redemption.NPCs.PreHM
             NPC.rarity = 1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<JollyMadmanBanner>();
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 25;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -109,15 +110,10 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
-        private bool ignoreArmor;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!ignoreArmor && !NPC.HasBuff(BuffID.BrokenArmor) && NPC.life >= NPC.lifeMax - 25)
-            {
-                damage = (int)(damage * 0.25f);
-                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
-            }
-            ignoreArmor = false;
+            NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+            NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = false;
             return true;
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -142,8 +138,8 @@ namespace Redemption.NPCs.PreHM
                 }
             }
 
-            if (item.hammer > 0 || ItemTags.Psychic.Has(item.type) || crit)
-                ignoreArmor = true;
+            if (ItemTags.Psychic.Has(item.type))
+                NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = true;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -167,8 +163,8 @@ namespace Redemption.NPCs.PreHM
                 }
             }
 
-            if (crit || ProjectileTags.Psychic.Has(projectile.type))
-                ignoreArmor = true;
+            if (ProjectileTags.Psychic.Has(projectile.type))
+                NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = true;
         }
 
         private Vector2 moveTo;
@@ -236,7 +232,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 320)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 320)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -266,7 +262,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Slash:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 320)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 320)
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -436,15 +432,6 @@ namespace Redemption.NPCs.PreHM
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
-        }
-
-        public bool PlayerDead()
-        {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is Player && ((globalNPC.attacker as Player).dead || !(globalNPC.attacker as Player).active))
-                return true;
-
-            return false;
         }
 
         private float Opacity { get => FlareTimer; set => FlareTimer = value; }

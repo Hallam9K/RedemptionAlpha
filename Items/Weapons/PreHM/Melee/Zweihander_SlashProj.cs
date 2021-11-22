@@ -79,7 +79,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     continue;
 
                                 if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) ||
-                                    target.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type))
+                                    target.GetGlobalProjectile<RedeProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -117,16 +117,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             damage += (int)tipBonus;
 
-            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
-            {
-                if (Main.rand.NextBool(200))
-                {
-                    CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
-                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
-                    damage = damage < target.life ? target.life : damage;
-                    crit = true;
-                }
-            }
+            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit);
         }
 
         public override bool PreDraw(ref Color lightColor)

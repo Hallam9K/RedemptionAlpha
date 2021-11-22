@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         {
             DisplayName.SetDefault("Dread Coil");
 
-            ProjectileID.Sets.CountsAsHoming[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()
@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

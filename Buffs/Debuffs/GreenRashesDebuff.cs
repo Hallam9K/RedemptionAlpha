@@ -20,5 +20,9 @@ namespace Redemption.Buffs.Debuffs
             player.GetModPlayer<BuffPlayer>().greenRashes = true;
             player.statDefense -= 7;
         }
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            npc.lifeRegen = -10;
+        }
     }
 }

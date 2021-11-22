@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Critters
                     if (Main.rand.NextBool(50))
                         SightCheck();
 
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 ||
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 ||
                         runCooldown > 180)
                     {
                         runCooldown = 0;
@@ -277,15 +277,6 @@ namespace Redemption.NPCs.Critters
                 NPC.rotation = NPC.velocity.X * 0.05f;
                 NPC.frame.Y = 2 * frameHeight;
             }
-        }
-
-        public bool PlayerDead()
-        {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is Player && ((globalNPC.attacker as Player).dead || !(globalNPC.attacker as Player).active))
-                return true;
-
-            return false;
         }
 
         public void SightCheck()

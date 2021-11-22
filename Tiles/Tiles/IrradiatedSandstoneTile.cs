@@ -15,18 +15,31 @@ namespace Redemption.Tiles.Tiles
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
+            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedSandTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedSandTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedHardenedSandTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedHardenedSandTile>()][Type] = true;
+            Main.tileMerge[Type][TileID.Sandstone] = true;
+            Main.tileMerge[TileID.Sandstone][Type] = true;
+            Main.tileMerge[Type][TileID.CorruptSandstone] = true;
+            Main.tileMerge[TileID.CorruptSandstone][Type] = true;
+            Main.tileMerge[Type][TileID.CrimsonSandstone] = true;
+            Main.tileMerge[TileID.CrimsonSandstone][Type] = true;
+            Main.tileMerge[Type][TileID.HallowSandstone] = true;
+            Main.tileMerge[TileID.HallowSandstone][Type] = true;
             TileID.Sets.Conversion.Sandstone[Type] = true;
+            TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
             TileID.Sets.isDesertBiomeSand[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+            TileID.Sets.ChecksForMerge[Type] = true;
             Main.tileBlendAll[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			AddMapEntry(new Color(62, 88, 90));
+			AddMapEntry(new Color(137, 120, 112));
             MineResist = 2.5f;
-            DustType = ModContent.DustType<IrradiatedStoneDust>();
+            DustType = DustID.Ash;
             ItemDrop = ModContent.ItemType<IrradiatedSandstone>();
 		}
         public override void RandomUpdate(int i, int j)

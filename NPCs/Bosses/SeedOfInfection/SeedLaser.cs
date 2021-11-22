@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.alpha = 255;
             Projectile.timeLeft = 3600;
             Projectile.tileCollide = false;
-            Projectile.GetGlobalProjectile<RedeGlobalProjectile>().Unparryable = true;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         internal const float charge = 40f;
         public float LaserLength { get { return Projectile.localAI[1]; } set { Projectile.localAI[1] = value; } }

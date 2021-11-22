@@ -14,6 +14,13 @@ using Terraria.ModLoader;
 using Redemption.DamageClasses;
 using Redemption.Buffs;
 using System.Collections.Generic;
+using Redemption.Biomes;
+using Terraria.GameInput;
+using Redemption.Buffs.Cooldowns;
+using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Melee;
+using Redemption.Projectiles.Minions;
+using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Globals.Player
 {
@@ -46,11 +53,16 @@ namespace Redemption.Globals.Player
         public bool lantardPet;
         public bool erhanCross;
         public bool hairLoss;
+        public bool bileDebuff;
+        public bool hazmatSuit;
+        public bool HEVSuit;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
+        public int hardlightBonus;
 
         public bool MetalSet;
+        public bool WastelandWaterImmune;
 
         public int MeleeDamageFlat;
         public int DruidDamageFlat;
@@ -93,6 +105,11 @@ namespace Redemption.Globals.Player
             lantardPet = false;
             erhanCross = false;
             hairLoss = false;
+            bileDebuff = false;
+            hazmatSuit = false;
+            HEVSuit = false;
+            WastelandWaterImmune = false;
+            hardlightBonus = 0;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -111,6 +128,73 @@ namespace Redemption.Globals.Player
             {
                 dirtyWound = false;
                 dirtyWoundTime = 0;
+            }
+        }
+
+        public override void UpdateDead()
+        {
+            devilScented = false;
+            spiderSwarmed = false;
+            greenRashes = false;
+            glowingPustules = false;
+            fleshCrystals = false;
+            hemorrhageDebuff = false;
+            necrosisDebuff = false;
+            shockDebuff = false;
+            antibodiesBuff = false;
+            antiXenomiteBuff = false;
+            ensnared = false;
+            hairLoss = false;
+            bileDebuff = false;
+        }
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (Redemption.RedeSpecialAbility.JustPressed)
+            {
+                if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2"), Player.position);
+
+                    Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 60 * 60);
+                    Vector2 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+                    switch (hardlightBonus)
+                    {
+                        case 1: // Ritualist
+
+                            break;
+                        case 2: // Magic
+                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_ManaDrone>(), 0, 0, Main.myPlayer);
+                            break;
+                        case 3: // Melee
+                            for (int i = 0; i < 2; i++)
+                            {
+                                Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
+                            }
+                            break;
+                        case 4: // Summoner
+                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
+
+                            for (int i = 0; i < 2; i++)
+                            {
+                                Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
+
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
+                            }
+                            break;
+                        case 5: // Druid
+
+                            break;
+                        case 6: // Ranger
+                            if (Player.whoAmI == Main.myPlayer)
+                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
+                            break;
+
+                    }
+                }
             }
         }
 
@@ -354,6 +438,23 @@ namespace Redemption.Globals.Player
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= (int)(Player.velocity.Length() * 20);
             }
+            if (bileDebuff)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 5;
+                Player.statDefense -= 30;
+            }
+            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.GetModPlayer<BuffPlayer>().WastelandWaterImmune)
+            {
+                if (Player.lifeRegen > 10)
+                    Player.lifeRegen = 10;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 60;
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -383,6 +484,17 @@ namespace Redemption.Globals.Player
                 if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
                 {
                     int dust = Dust.NewDust(drawInfo.Position, Player.width, Player.height, DustID.Electric, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 1.8f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
+            if (bileDebuff)
+            {
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.GreenFairy, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 1.2f);
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity *= 1.8f;
                     Main.dust[dust].velocity.Y -= 0.5f;
@@ -425,6 +537,9 @@ namespace Redemption.Globals.Player
 
             if ((fleshCrystals || shockDebuff) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was turned into a crystal");
+
+            if (Player.FindBuffIndex(ModContent.BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was irradiated");
 
             return true;
         }

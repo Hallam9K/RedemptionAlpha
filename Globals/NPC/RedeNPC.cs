@@ -1,11 +1,15 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Lab;
 using Redemption.NPCs.PreHM;
+using Redemption.Tiles.Tiles;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -103,7 +107,7 @@ namespace Redemption.Globals.NPC
             }
 
             // Decapitation
-            if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCTags.SkeletonHumanoid.Has(npc.type))
+            if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCTags.SkeletonHumanoid.Has(npc.type))
             {
                 if (Main.rand.NextBool(200) && !ItemTags.BluntSwing.Has(item.type))
                 {
@@ -257,6 +261,17 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
+            }
+            if (spawnInfo.player.InModBiome(ModContent.GetInstance<LabBiome>()))
+            {
+                int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
+                bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
+
+                pool.Clear();
+                pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
+                pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
+                pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
+                pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
             }
         }
     }

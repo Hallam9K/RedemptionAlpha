@@ -175,7 +175,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Threatened:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -209,14 +209,14 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.PillarAttack:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
                         AIState = ActionState.Wander;
 
                     NPC.velocity.X = 0;
                     break;
 
                 case ActionState.PillarJump:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
                         AIState = ActionState.Wander;
                     break;
             }
@@ -308,14 +308,7 @@ namespace Redemption.NPCs.PreHM
                 }
             }
         }
-        public bool PlayerDead()
-        {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is Player && ((globalNPC.attacker as Player).dead || !(globalNPC.attacker as Player).active))
-                return true;
 
-            return false;
-        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

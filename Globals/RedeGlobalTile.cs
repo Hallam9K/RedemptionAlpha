@@ -20,7 +20,7 @@ namespace Redemption.Globals
         {
             Tile topperTile = Framing.GetTileSafely(i, --j);
 
-            if (closer && (Main.LocalPlayer.InModBiome(ModContent.GetInstance<WastelandBiome>()) || Main.LocalPlayer.InModBiome(ModContent.GetInstance<LabBiome>())) &&
+            if (closer && (Main.LocalPlayer.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Main.LocalPlayer.InModBiome(ModContent.GetInstance<LabBiome>())) &&
                 topperTile.LiquidAmount > 0 && topperTile.LiquidType == LiquidID.Water)
             {
                 for (; j > 0 && Main.tile[i, j - 1] != null && Main.tile[i, j - 1].LiquidAmount > 0 && Main.tile[i, j - 1].LiquidType == LiquidID.Water; --j);
@@ -48,7 +48,7 @@ namespace Redemption.Globals
             if ((type == TileID.LeafBlock || type == TileID.LivingMahoganyLeaves) && Main.rand.NextBool(4))
                 Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<LivingTwig>());
 
-            if (type == TileID.Dirt && TileID.Sets.BreakableWhenPlacing[TileID.Dirt])
+            if (type == ModContent.TileType<IrradiatedDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()])
                 return false;
 
             return base.Drop(i, j, type);
@@ -75,7 +75,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            if (type == ModContent.TileType<IrradiatedCorruptGrass>() || type == ModContent.TileType<IrradiatedEbonstoneTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedCrimstoneTile>())
+            if (type == ModContent.TileType<IrradiatedCorruptGrassTile>() || type == ModContent.TileType<IrradiatedEbonstoneTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedCrimstoneTile>())
             {
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0)
                 {

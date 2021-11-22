@@ -237,11 +237,11 @@ namespace Redemption.Base
             if (Main.tile[x, y] == null) Main.tile[x, y] = new Tile();
             liquidHeight = (int)MathHelper.Clamp(liquidHeight, 0, 255);
             Main.tile[x, y].LiquidAmount = (byte)liquidHeight;
-            if (liquidType == 0) { Main.tile[x, y].LiquidType = 1; }
+            if (liquidType == 0) { Main.tile[x, y].LiquidType = LiquidID.Water; }
             else
-            if (liquidType == 1) { Main.tile[x, y].LiquidType = 2; }
+            if (liquidType == 1) { Main.tile[x, y].LiquidType = LiquidID.Lava; }
             else
-            if (liquidType == 2) { Main.tile[x, y].LiquidType = 3; }
+            if (liquidType == 2) { Main.tile[x, y].LiquidType = LiquidID.Honey; }
             if (updateFlow) { Liquid.AddWater(x, y); }
             if (sync && Main.netMode != NetmodeID.SinglePlayer) { NetMessage.SendTileSquare(-1, x, y, 1); }
         }
