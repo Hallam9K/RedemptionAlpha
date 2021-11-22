@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using System;
 using System.Linq;
 using Terraria;
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
-        readonly double dist = 60; //Radius of orbit
+        readonly double dist = 60;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -41,20 +42,22 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.timeLeft = 50;
             Player player = Main.player[Projectile.owner];
             Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
-            if (Projectile.alpha <= 0) { Projectile.alpha = 0; }
-            else { Projectile.alpha -= 3; }
-            double deg = Projectile.ai[1]; //Degrees of orbit
+            if (Projectile.alpha <= 0)
+                Projectile.alpha = 0;
+            else
+                Projectile.alpha -= 3;
+
+            double deg = Projectile.ai[1];
             double rad = deg * (Math.PI / 180);
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Projectile.position.X = host.Center.X - (int)(Math.Cos(rad) * dist) - Projectile.width / 2;
             Projectile.position.Y = host.Center.Y - (int)(Math.Sin(rad) * dist) - Projectile.height / 2;
             Projectile.ai[1] += 5f; //Orbit Speed
             if (host.life <= 0 || !host.active || host.type != ModContent.NPCType<Wielder>())
-            {
                 Projectile.Kill();
-            }
+
             float num = 8f;
-            Vector2 vector = new Vector2(Projectile.position.X + Projectile.width * 0.5f, Projectile.position.Y + Projectile.height * 0.5f);
+            Vector2 vector = new(Projectile.position.X + Projectile.width * 0.5f, Projectile.position.Y + Projectile.height * 0.5f);
             float hostX = host.position.X + (host.width / 2);
             float hostY = host.position.Y + (host.height / 2);
             hostX = (int)(hostX / 8f) * 8;
@@ -78,19 +81,18 @@ namespace Redemption.NPCs.Bosses.Cleaver
             var list = Main.projectile.Where(x => x.Hitbox.Intersects(Projectile.Hitbox));
             foreach (var proj in list)
             {
-                if (Projectile != proj && proj.minionSlots == 0 && proj.friendly && proj.damage > 5)
+                if (!proj.active || Projectile == proj || proj.minionSlots != 0 || !proj.friendly || proj.damage <= 5 || proj.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+                    continue;
+
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithPitchVariance(.1f), Projectile.position);
+
+                for (int i = 0; i < 2; i++)
                 {
-                    if (!Main.dedServ)
-                    {
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithPitchVariance(.9f), Projectile.position);
-                    }
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain, 0f, 0f, 100, default, 1f);
-                        dust.velocity = -Projectile.DirectionTo(dust.position) * 2f;
-                    }
-                    proj.Kill();
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain, 0f, 0f, 100, default, 1f);
+                    dust.velocity = -Projectile.DirectionTo(dust.position) * 2f;
                 }
+                proj.Kill();
             }
         }
     }

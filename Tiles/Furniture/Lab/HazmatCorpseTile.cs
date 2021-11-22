@@ -19,7 +19,7 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 2;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+            TileObjectData.newTile.CoordinateHeights = new int[] { 20, 16 };
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
@@ -50,7 +50,7 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 Player player = Main.LocalPlayer; // TODO: crowbar and hazmat corpse drop
                 //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
-                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit>());
+                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
             }
             for (int x = left; x < left + 3; x++)
             {
@@ -70,7 +70,7 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 Player player = Main.LocalPlayer;
                 //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
-                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit>());
+                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
             }
         }
         public override bool CanExplode(int i, int j) => false;

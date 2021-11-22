@@ -45,13 +45,9 @@ namespace Redemption.Items.Usable.Summons
                 int type = ModContent.NPCType<Wielder>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
                     NPC.NewNPC((int)player.position.X + 200, (int)player.position.Y + 500, type);
-                }
                 else
-                {
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-                }
             }
             return true;
         }
