@@ -1,4 +1,5 @@
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.PostML;
@@ -46,7 +47,7 @@ namespace Redemption.Items.Accessories.PostML
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<HazmatSuit>())
+                .AddRecipeGroup(RedeRecipe.HazmatSuitRecipeGroup)
                 .AddIngredient(ModContent.ItemType<GasMask>())
                 .AddIngredient(ModContent.ItemType<CrystalSerum>(), 4)
                 .AddIngredient(ModContent.ItemType<RawXenium>(), 4)

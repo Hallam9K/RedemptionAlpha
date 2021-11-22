@@ -1,3 +1,4 @@
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
@@ -17,6 +18,7 @@ namespace Redemption.Globals
         public static RecipeGroup CopperRecipeGroup;
         public static RecipeGroup GathicStoneRecipeGroup;
         public static RecipeGroup BioweaponBileRecipeGroup;
+        public static RecipeGroup HazmatSuitRecipeGroup;
 
         public override void Unload()
         {
@@ -26,6 +28,7 @@ namespace Redemption.Globals
             CopperRecipeGroup = null;
             GathicStoneRecipeGroup = null;
             BioweaponBileRecipeGroup = null;
+            HazmatSuitRecipeGroup = null;
         }
 
         public override void AddRecipeGroups()
@@ -47,6 +50,9 @@ namespace Redemption.Globals
 
             BioweaponBileRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<Bioweapon>())}", ModContent.ItemType<Bioweapon>(), ModContent.ItemType<ToxicBile>());
             RecipeGroup.RegisterGroup("Redemption:BioweaponBile", BioweaponBileRecipeGroup);
+
+            HazmatSuitRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<HazmatSuit>())}", ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<HazmatSuit2>(), ModContent.ItemType<HazmatSuit3>());
+            RecipeGroup.RegisterGroup("Redemption:HazmatSuits", HazmatSuitRecipeGroup);
         }
 
         public override void AddRecipes()
