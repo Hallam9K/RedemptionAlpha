@@ -40,7 +40,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 }
             }
             Projectile.timeLeft = 50;
-            Player player = Main.player[Projectile.owner];
             Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
             if (Projectile.alpha <= 0)
                 Projectile.alpha = 0;
@@ -56,32 +55,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (host.life <= 0 || !host.active || host.type != ModContent.NPCType<Wielder>())
                 Projectile.Kill();
 
-            float num = 8f;
-            Vector2 vector = new(Projectile.position.X + Projectile.width * 0.5f, Projectile.position.Y + Projectile.height * 0.5f);
-            float hostX = host.position.X + (host.width / 2);
-            float hostY = host.position.Y + (host.height / 2);
-            hostX = (int)(hostX / 8f) * 8;
-            hostY = (int)(hostY / 8f) * 8;
-            vector.X = (int)(vector.X / 8f) * 8;
-            vector.Y = (int)(vector.Y / 8f) * 8;
-            hostX -= vector.X;
-            hostY -= vector.Y;
-            float rootXY = (float)Math.Sqrt(hostX * hostX + hostY * hostY);
-            if (rootXY == 0f)
+            foreach (Projectile target in Main.projectile)
             {
-                hostX = Projectile.velocity.X;
-                hostY = Projectile.velocity.Y;
-            }
-            else
-            {
-                rootXY = num / rootXY;
-                hostX *= rootXY;
-                hostY *= rootXY;
-            }
-            var list = Main.projectile.Where(x => x.Hitbox.Intersects(Projectile.Hitbox));
-            foreach (var proj in list)
-            {
-                if (!proj.active || Projectile == proj || proj.minionSlots != 0 || !proj.friendly || proj.damage <= 5 || proj.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+                if (!target.active || Projectile.whoAmI == target.whoAmI || target.minion || !target.friendly || target.hostile || target.damage <= 5 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                     continue;
 
                 if (!Main.dedServ)
@@ -92,7 +68,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain, 0f, 0f, 100, default, 1f);
                     dust.velocity = -Projectile.DirectionTo(dust.position) * 2f;
                 }
-                proj.Kill();
+                target.Kill();
             }
         }
     }
