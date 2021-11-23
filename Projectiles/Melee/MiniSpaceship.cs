@@ -22,8 +22,8 @@ namespace Redemption.Projectiles.Melee
         }
         public override void SetDefaults()
         {
-            Projectile.width = 24;
-            Projectile.height = 24;
+            Projectile.width = 32;
+            Projectile.height = 34;
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
@@ -67,6 +67,8 @@ namespace Redemption.Projectiles.Melee
             int getNPC = RedeHelper.GetNearestNPC(Projectile.Center);
             if (getNPC != -1 && Main.myPlayer == Projectile.owner)
                 Projectile.rotation = (Main.npc[getNPC].Center - Projectile.Center).ToRotation();
+            else
+                Projectile.rotation = (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2;
 
             if (Projectile.timeLeft >= 120)
             {
