@@ -52,6 +52,7 @@ namespace Redemption.Items.Accessories.PostML
             Item.value = Item.buyPrice(1, 0, 0, 0);
             Item.rare = ItemRarityID.Purple;
             Item.accessory = true;
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
