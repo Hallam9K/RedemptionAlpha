@@ -774,13 +774,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y >= 4 * frameHeight)
-                    {
-                        NPC.frameCounter = 0;
+                    if (NPC.frame.Y >= 5 * frameHeight)
                         NPC.frame.Y = frameHeight;
-                    }
                 }
             }
+            else
+                NPC.frame.Y = 0;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
