@@ -5034,7 +5034,7 @@ namespace Redemption.Base
                         Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
                         if (tile == null) { tile = Main.tile[tileX, y] = new Tile(); }
                         if (tileNear == null) { tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile(); }
-                        if (tile.IsActiveUnactuated && (y != tileY || !tile.IsHalfBlock && tile.Slope == 0) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
+                        if (tile.IsActiveUnactuated && (y != tileY || tile.Slope == 0) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
                         {
                             if (!Main.tileSolidTop[tile.type])
                             {

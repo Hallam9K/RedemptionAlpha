@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                     Projectile.frame = 0;
                 }
             }
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, 0f, 0f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)

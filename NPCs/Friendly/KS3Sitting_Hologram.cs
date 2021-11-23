@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Friendly
                         Projectile.Kill();
                 }
             }
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 0.3f / 255f, (255 - Projectile.alpha) * 0.6f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.2f, Projectile.Opacity * 0.3f, Projectile.Opacity * 0.6f);
         }
         public override bool PreDraw(ref Color lightColor)
         {

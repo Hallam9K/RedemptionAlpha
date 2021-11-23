@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
-        readonly double dist = 60;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -40,18 +39,16 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 }
             }
             Projectile.timeLeft = 50;
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, 0f, 0f);
             if (Projectile.alpha <= 0)
                 Projectile.alpha = 0;
             else
                 Projectile.alpha -= 3;
 
-            double deg = Projectile.ai[1];
-            double rad = deg * (Math.PI / 180);
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            Projectile.position.X = host.Center.X - (int)(Math.Cos(rad) * dist) - Projectile.width / 2;
-            Projectile.position.Y = host.Center.Y - (int)(Math.Sin(rad) * dist) - Projectile.height / 2;
-            Projectile.ai[1] += 5f; //Orbit Speed
+            Projectile.localAI[0] += 0.08f;
+            Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1]) + Projectile.localAI[0]) * 50;
+
             if (host.life <= 0 || !host.active || host.type != ModContent.NPCType<Wielder>())
                 Projectile.Kill();
 

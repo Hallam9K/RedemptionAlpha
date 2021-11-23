@@ -13,8 +13,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
 		public override void SetDefaults()
 		{
-            Item.width = 14;
-            Item.height = 18;
+            Item.width = 16;
+            Item.height = 20;
             Item.damage = 250;
             Item.maxStack = 999;
             Item.value = 150;

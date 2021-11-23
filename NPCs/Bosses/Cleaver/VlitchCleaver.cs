@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -36,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             set => NPC.ai[0] = (int)value;
         }
 
-        public int AITimer;
+        public ref float AITimer => ref NPC.ai[2];
 
         public override void SetStaticDefaults()
         {
@@ -130,9 +131,27 @@ namespace Redemption.NPCs.Bosses.Cleaver
             potionType = ItemID.GreaterHealingPotion;
         }
 
-        public int floatTimer;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(rot);
+                writer.Write(repeat);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                rot = (float)reader.ReadDouble();
+                repeat = reader.ReadInt32();
+            }
+        }
+
         public float rot;
-        public float dist;
         public int repeat;
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -779,7 +798,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 value4 = NPC.oldPos[i];
-                    Main.EntitySpriteDraw(trail, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rectangle), Color.Red * 0.5f, oldrot[i], origin2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(trail, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rectangle), RedeColor.VlitchGlowColour * 0.5f, oldrot[i], origin2, NPC.scale, effects, 0);
                 }
 
                 spriteBatch.End();
@@ -787,10 +806,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             }
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, default);
             return false;
         }
 

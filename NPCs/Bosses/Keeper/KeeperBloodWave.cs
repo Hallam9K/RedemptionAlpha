@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0.2f / 255f, (255 - Projectile.alpha) * 0.2f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, Projectile.Opacity * 0.2f, Projectile.Opacity * 0.2f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.alpha += 5;
             if (Projectile.alpha >= 255)

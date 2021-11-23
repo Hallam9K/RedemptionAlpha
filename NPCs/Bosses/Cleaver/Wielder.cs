@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.DataStructures;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -113,6 +114,30 @@ namespace Redemption.NPCs.Bosses.Cleaver
             return !player.active || player.dead || Main.dayTime || AIState == ActionState.Death2;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(ID);
+                writer.Write(AttackNumber);
+                writer.Write(cooldown);
+                writer.Write(barrierSpawn);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ID = reader.ReadInt32();
+                AttackNumber = reader.ReadInt32();
+                cooldown = reader.ReadInt32();
+                barrierSpawn = reader.ReadBoolean();
+            }
+        }
+
         public int aniType;
         public int boosterFrame;
         public int cooldown;
@@ -147,7 +172,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             DespawnHandler();
             Player player = Main.player[NPC.target];
-            if (AIState >= ActionState.Idle && AIState != ActionState.Death)
+            if (AIState >= ActionState.Idle && AIState != ActionState.Death && AIState != ActionState.Death2)
                 NPC.dontTakeDamage = false;
             else
                 NPC.dontTakeDamage = true;
@@ -159,20 +184,16 @@ namespace Redemption.NPCs.Bosses.Cleaver
             {
                 if (!barrierSpawn)
                 {
-                    int degrees = 0;
                     for (int i = 0; i < 36; i++)
-                    {
-                        degrees += 10;
-                        int N2 = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WielderShield>());
-                        Main.npc[N2].ai[0] = NPC.whoAmI;
-                        Main.npc[N2].ai[1] = degrees;
-                    }
+                        RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WielderShield>(), NPC.whoAmI, i * 10);
                     barrierSpawn = true;
+                    NPC.netUpdate = true;
                 }
-                if (Vector2.Distance(NPC.Center, player.Center) > 1500 && NPC.ai[0] != 11)
+                if (NPC.Distance(Main.LocalPlayer.Center) > 1500 && AIState != ActionState.Death2)
                     player.AddBuff(BuffID.Electrified, 10);
             }
-            if (cooldown < 0) { cooldown = 0; }
+            if (cooldown < 0)
+                cooldown = 0;
             Vector2 SwingPos = new(NPC.Center.X > player.Center.X ? 150 : -150, -20);
             Vector2 AwayPos = new(NPC.Center.X > player.Center.X ? 500 : -500, -40);
 
@@ -256,14 +277,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int degrees = 0;
                                 for (int i = 0; i < 4; i++)
-                                {
-                                    degrees += 90;
-                                    int p = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<WielderOrb>(), 100 / 3, 0, Main.myPlayer);
-                                    Main.projectile[p].ai[0] = NPC.whoAmI;
-                                    Main.projectile[p].ai[1] = degrees;
-                                }
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<WielderOrb>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, i * 90);
                             }
                             AIHost = 0;
                             AIState = ActionState.Idle;
@@ -375,7 +390,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                 NPC.LookAtEntity(player);
                                 if (AITimer < 80)
                                 {
-                                    AIHost = 3; 
+                                    AIHost = 3;
                                     NPC.Move(SwingPos, 6, 10, true);
                                 }
                                 NPC.ai[2]++;
@@ -743,11 +758,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int num214 = boosterAni.Height / 4;
             int y6 = num214 * boosterFrame;
-            Main.EntitySpriteDraw(boosterAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
-            Main.EntitySpriteDraw(boosterGlow, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), Color.White, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterGlow, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), RedeColor.RedPulse, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
 
-            Main.EntitySpriteDraw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            Main.EntitySpriteDraw(glowMask, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         private float Opacity { get => NPC.ai[2]; set => NPC.ai[2] = value; }

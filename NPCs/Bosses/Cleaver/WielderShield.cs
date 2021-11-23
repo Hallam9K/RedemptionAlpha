@@ -43,7 +43,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.dontTakeDamage = true;
         }
 
-        readonly double dist = 1500; //Radius of orbit
         public override void AI()
         {
             NPC.frameCounter++;
@@ -54,13 +53,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 if (NPC.frame.Y > 150)
                     NPC.frame.Y = 0;
             }
-            Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 1f / 255f, (255 - NPC.alpha) * 1f / 255f, (255 - NPC.alpha) * 1f / 255f);
-            double deg = NPC.ai[1]; //Degrees of orbit
-            double rad = deg * (Math.PI / 180); //Math nonsense
+            Lighting.AddLight(NPC.Center, NPC.Opacity, NPC.Opacity, NPC.Opacity);
             NPC host = Main.npc[(int)NPC.ai[0]];
-            NPC.position.X = host.Center.X - (int)(Math.Cos(rad) * dist) - NPC.width / 2;
-            NPC.position.Y = host.Center.Y - (int)(Math.Sin(rad) * dist) - NPC.height / 2;
-            NPC.ai[1] += 0.8f; //Orbit Speed
+            NPC.localAI[0] += 0.02f;
+            NPC.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[1]) + NPC.localAI[0]) * 1000;
+            NPC.rotation = (host.Center - NPC.Center).ToRotation();
+
             if (host.life <= 0 || !host.active || host.type != ModContent.NPCType<Wielder>())
             {
                 NPC.active = false;
@@ -68,35 +66,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 NPC.checkDead();
                 NPC.HitEffect();
             }
-
-            float num = 8f;
-            Vector2 vector = new(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
-            float hostX = host.position.X + (host.width / 2);
-            float hostY = host.position.Y + (host.height / 2);
-            hostX = (int)(hostX / 8f) * 8;
-            hostY = (int)(hostY / 8f) * 8;
-            vector.X = (int)(vector.X / 8f) * 8;
-            vector.Y = (int)(vector.Y / 8f) * 8;
-            hostX -= vector.X;
-            hostY -= vector.Y;
-            float rootXY = (float)Math.Sqrt(hostX * hostX + hostY * hostY);
-            if (rootXY == 0f)
-            {
-                hostX = NPC.velocity.X;
-                hostY = NPC.velocity.Y;
-            }
-            else
-            {
-                rootXY = num / rootXY;
-                hostX *= rootXY;
-                hostY *= rootXY;
-            }
-            NPC.rotation = (float)Math.Atan2(hostY, hostX) + 3.14f + MathHelper.ToRadians(-90f);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             NPC host = Main.npc[(int)NPC.ai[0]];
-            return host.ai[0] != 11;
+            return host.ai[0] != 6;
         }
         public override void HitEffect(int hitDirection, double damage)
         {

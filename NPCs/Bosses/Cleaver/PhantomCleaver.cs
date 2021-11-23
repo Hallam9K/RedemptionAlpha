@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantom Cleaver");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, 0f, 0f);
             switch (Projectile.localAI[0])
             {
                 case 0:
@@ -51,7 +51,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 case 1:
                     Projectile.hostile = true;
                     Projectile.rotation = rot;
-                    rot.SlowRotation((float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f, (float)Math.PI / 30f);
+                    rot.SlowRotation(Projectile.velocity.ToRotation() + 1.57f, (float)Math.PI / 30f);
                     if (Projectile.localAI[1] == 0)
                     {
                         Projectile.velocity = Projectile.DirectionTo(player.Center) * 30;
@@ -59,9 +59,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     Projectile.alpha += 3;
                     if (Projectile.alpha >= 255)
-                    {
                         Projectile.Kill();
-                    }
                     break;
             }
         }
@@ -81,10 +79,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-                Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(RedeColor.RedPulse) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.RedPulse), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }
@@ -94,7 +92,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantom Cleaver");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
@@ -113,7 +111,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public float rot;
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, 0f, 0f);
             switch (Projectile.localAI[0])
             {
                 case 0:
@@ -130,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 case 1:
                     Projectile.friendly = true;
                     Projectile.rotation = rot;
-                    rot.SlowRotation((float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f, (float)Math.PI / 30f);
+                    rot.SlowRotation(Projectile.velocity.ToRotation() + 1.57f, (float)Math.PI / 30f);
                     if (Projectile.localAI[1] == 0)
                     {
                         Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 30;
@@ -138,9 +136,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     Projectile.alpha += 3;
                     if (Projectile.alpha >= 255)
-                    {
                         Projectile.Kill();
-                    }
                     break;
             }
         }
@@ -157,10 +153,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-                Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(RedeColor.RedPulse) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.RedPulse), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }
@@ -200,7 +196,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantom Cleaver");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
@@ -218,7 +214,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public float rot;
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.5f / 255f, (255 - Projectile.alpha) * 0f / 255f, (255 - Projectile.alpha) * 0f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, 0f, 0f);
             Projectile.rotation = (float)Math.PI;
             switch (Projectile.localAI[0])
             {
@@ -240,9 +236,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     Projectile.alpha += 3;
                     if (Projectile.alpha >= 255)
-                    {
                         Projectile.Kill();
-                    }
                     break;
             }
         }
@@ -262,10 +256,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-                Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(RedeColor.RedPulse) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.RedPulse), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

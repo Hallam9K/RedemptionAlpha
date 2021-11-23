@@ -66,8 +66,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
                 Projectile.velocity.Y = -oldVelocity.Y;
             }
-            Projectile.velocity.Y *= 0.6f;
-            Projectile.velocity.X *= 0.8f;
+            Projectile.velocity.Y *= 0.3f;
+            Projectile.velocity.X *= 0.7f;
             return false;
         }
     }
