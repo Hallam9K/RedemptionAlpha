@@ -8,8 +8,8 @@ using Redemption.Rarities;
 namespace Redemption.Items.Donator.Sneaklone
 {
     [AutoloadEquip(EquipType.Body)]
-	class SneakloneSuit : ModItem
-	{
+    class SneakloneSuit : ModItem
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Facility Guard Vest");
@@ -18,7 +18,7 @@ namespace Redemption.Items.Donator.Sneaklone
             ArmorIDs.Body.Sets.HidesArms[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
         }
         public override void SetDefaults()
-		{
+        {
             Item.width = 28;
             Item.height = 18;
             Item.value = Item.buyPrice(0, 0, 5, 0);
