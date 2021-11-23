@@ -1,12 +1,16 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Usable;
+using Redemption.NPCs.Friendly;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -40,24 +44,51 @@ namespace Redemption.Tiles.Furniture.Lab
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<HintIcon>();
+            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+                player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
+            else
+                player.cursorItemIconID = ModContent.ItemType<HintIcon>();
         }
         public override bool RightClick(int i, int j)
         {
+            Player player = Main.LocalPlayer;
             int left = i - Main.tile[i, j].frameX / 18 % 3;
             int top = j - Main.tile[i, j].frameY / 18 % 2;
-            if (Main.tile[left, top].frameX == 0)
+            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
             {
-                Player player = Main.LocalPlayer; // TODO: crowbar and hazmat corpse drop
-                //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
-                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
-            }
-            for (int x = left; x < left + 3; x++)
-            {
-                for (int y = top; y < top + 2; y++)
+                if (!NPC.AnyNPCs(ModContent.NPCType<HazmatCorpse_Ghost>()))
                 {
-                    if (Main.tile[x, y].frameX < 54)
-                        Main.tile[x, y].frameX += 54;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int index1 = NPC.NewNPC(i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());
+                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
+                        Main.npc[index1].velocity.Y -= 4;
+                        Main.npc[index1].netUpdate2 = true;
+                    }
+                    else
+                    {
+                        if (Main.netMode == NetmodeID.SinglePlayer)
+                            return false;
+
+                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, (byte)player.whoAmI, ModContent.NPCType<HazmatCorpse_Ghost>(), i * 16, (j + 1) * 16).Send(-1);
+                    }
+                }
+            }
+            else
+            {
+                if (Main.tile[left, top].frameX == 0)
+                {
+                    // TODO: crowbar and hazmat corpse drop
+                    //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
+                    player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
+                }
+                for (int x = left; x < left + 3; x++)
+                {
+                    for (int y = top; y < top + 2; y++)
+                    {
+                        if (Main.tile[x, y].frameX < 54)
+                            Main.tile[x, y].frameX += 54;
+                    }
                 }
             }
             return true;
