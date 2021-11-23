@@ -122,25 +122,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void OnKill()
         {
-            if (!RedeBossDowned.downedVlitch1)
-            {
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, "+0", true, false);
-
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
-                        continue;
-
-                    if (!Main.dedServ)
-                    {
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("The first Vlitch Overlord is gone, only... 2 more to go? Maybe?", 240, 30, 0, Color.DarkGoldenrod);
-                    }
-                }
-            }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
         }
 
