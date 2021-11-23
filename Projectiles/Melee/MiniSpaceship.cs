@@ -68,7 +68,7 @@ namespace Redemption.Projectiles.Melee
             if (getNPC != -1 && Main.myPlayer == Projectile.owner)
                 Projectile.rotation = (Main.npc[getNPC].Center - Projectile.Center).ToRotation();
             else
-                Projectile.rotation = (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = (player.Center - Projectile.Center).ToRotation() - MathHelper.PiOver2;
 
             if (Projectile.timeLeft >= 120)
             {

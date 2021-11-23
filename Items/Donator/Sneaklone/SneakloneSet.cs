@@ -5,7 +5,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 
-namespace Redemption.Items.Donator.Arche
+namespace Redemption.Items.Donator.Sneaklone
 {
     [AutoloadEquip(EquipType.Body)]
 	class SneakloneSuit : ModItem
@@ -14,6 +14,8 @@ namespace Redemption.Items.Donator.Arche
         {
             DisplayName.SetDefault("Facility Guard Vest");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Body.Sets.HidesTopSkin[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
+            ArmorIDs.Body.Sets.HidesArms[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
         }
         public override void SetDefaults()
 		{
@@ -69,6 +71,7 @@ namespace Redemption.Items.Donator.Arche
         {
             DisplayName.SetDefault("Facility Guard Leggings");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Legs.Sets.HidesBottomSkin[Mod.GetEquipSlot(Name, EquipType.Legs)] = true;
         }
         public override void SetDefaults()
         {
