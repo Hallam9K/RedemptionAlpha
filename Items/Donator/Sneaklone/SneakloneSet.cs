@@ -12,7 +12,7 @@ namespace Redemption.Items.Donator.Arche
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Facility Guard Suit");
+            DisplayName.SetDefault("Facility Guard Vest");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
