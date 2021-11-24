@@ -181,7 +181,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -301,7 +301,7 @@ namespace Redemption.NPCs.PreHM
                 new int[] { ModContent.NPCType<LostSoulNPC>() }) : default);
             if (Personality != PersonalityState.Calm)
             {
-                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);
@@ -328,7 +328,7 @@ namespace Redemption.NPCs.PreHM
                 if (player.GetModPlayer<BuffPlayer>().skeletonFriendly)
                     gotNPC = GetNearestNPC(friendly: true);
 
-                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);

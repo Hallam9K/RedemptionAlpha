@@ -187,7 +187,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -207,7 +207,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -373,7 +373,7 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Retreat && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+            if (AIState != ActionState.Retreat && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);
@@ -382,7 +382,7 @@ namespace Redemption.NPCs.PreHM
                 AITimer = 0;
                 AIState = ActionState.Retreat;
             }
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false, !HasEyes))
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false))
             {
                 globalNPC.attacker = Main.npc[gotNPC];
                 AITimer = 0;

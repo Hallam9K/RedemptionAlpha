@@ -125,8 +125,13 @@ namespace Redemption.NPCs.PreHM
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
-            NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = false;
+            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            {
+                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.HitEffect();
+                return false;
+            }
+            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Web, SoundID.NPCHit4);
             return true;
         }
 
@@ -207,7 +212,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
@@ -441,7 +446,7 @@ namespace Redemption.NPCs.PreHM
                 new int[] { ModContent.NPCType<LostSoulNPC>() }) : default);
             if (Personality != PersonalityState.Calm)
             {
-                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                if (!player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);
@@ -468,7 +473,7 @@ namespace Redemption.NPCs.PreHM
                 if (player.GetModPlayer<BuffPlayer>().skeletonFriendly)
                     gotNPC = GetNearestNPC(friendly: true);
 
-                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false, !HasEyes))
+                if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);

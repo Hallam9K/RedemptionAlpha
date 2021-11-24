@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Single;
@@ -114,8 +115,13 @@ namespace Redemption.NPCs.PreHM
         private bool PsychicHit;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
-            NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = false;
+            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            {
+                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.HitEffect();
+                return false;
+            }
+            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, ModContent.DustType<VoidFlame>(), SoundID.NPCHit4, 10, 2);
 
             if (PsychicHit)
             {
@@ -144,9 +150,6 @@ namespace Redemption.NPCs.PreHM
                 if (ItemTags.Psychic.Has(item.type))
                     PsychicHit = true;
             }
-
-            if (ItemTags.Psychic.Has(item.type))
-                NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = true;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -158,9 +161,6 @@ namespace Redemption.NPCs.PreHM
                 if (ProjectileTags.Psychic.Has(projectile.type))
                     PsychicHit = true;
             }
-
-            if (ProjectileTags.Psychic.Has(projectile.type))
-                NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = true;
         }
 
         private Vector2 moveTo;
@@ -434,7 +434,7 @@ namespace Redemption.NPCs.PreHM
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.VoidDye);
-            if (!NPC.IsABestiaryIconDummy && NPC.GetGlobalNPC<GuardNPC>().GuardPoints > 0)
+            if (!NPC.IsABestiaryIconDummy && !NPC.GetGlobalNPC<GuardNPC>().GuardBroken)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

@@ -62,7 +62,7 @@ namespace Redemption.Globals
             }
             if (item.hammer > 0)
             {
-                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Ignores enemy Guard Points") { overrideColor = Colors.RarityOrange };
+                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals triple damage to Guard Points") { overrideColor = Colors.RarityOrange };
                 tooltips.Add(axeLine);
             }
 
@@ -115,7 +115,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Psychic.Has(item.type) || ProjectileTags.Psychic.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Psychic") { overrideColor = Color.LightPink };
+                    TooltipLine line = new(Mod, "Element", "Psychic Bonus: Ignores enemy Guard Points") { overrideColor = Color.LightPink };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Shadow.Has(item.type) || ProjectileTags.Shadow.Has(item.shoot))
