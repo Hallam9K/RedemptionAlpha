@@ -114,8 +114,8 @@ namespace Redemption.Projectiles.Magic
             int height = texture.Height / 2;
             int y = height * Projectile.frame;
             Vector2 position = Projectile.Center - Main.screenPosition;
-            Rectangle rect = new Rectangle(0, y, texture.Width, height);
-            Vector2 origin = new Vector2(texture.Width / 2f, height / 2f);
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 origin = new(texture.Width / 2f, height / 2f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -123,16 +123,16 @@ namespace Redemption.Projectiles.Magic
             {
                 Vector2 drawPos = Projectile.oldPos[k];
                 Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.spriteBatch.Draw(texture, drawPos + Projectile.Size / 2f - Main.screenPosition, new Rectangle?(rect), color * ((255 - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos + Projectile.Size / 2f - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(color), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             }
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.spriteBatch.Draw(texture, position, new Rectangle?(rect), lightColor * ((255 - Projectile.alpha) / 255f), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
             for (int i = 0; i < 5; i++)
             {
                 int height2 = masks.Height / 5;
-                Vector2 origin2 = new Vector2(masks.Width / 2, height2 / 2);
+                Vector2 origin2 = new(masks.Width / 2, height2 / 2);
                 maskFrame[i] = i;
                 Main.spriteBatch.Draw(masks, maskPos[i] - Main.screenPosition, new Rectangle?(new Rectangle(0, height2 * maskFrame[i], masks.Width, height2)), lightColor * ((255 - maskAlpha) / 255f), Projectile.rotation, origin2, 1, SpriteEffects.None, 0);
             }

@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.4f / 255f, (255 - Projectile.alpha) * 0.4f / 255f, (255 - Projectile.alpha) * 1f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.4f, Projectile.Opacity * 0.4f, Projectile.Opacity);
             if (++Projectile.frameCounter >= 5)
             {
                 Projectile.frameCounter = 0;

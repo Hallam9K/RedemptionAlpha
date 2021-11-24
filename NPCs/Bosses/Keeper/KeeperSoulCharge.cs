@@ -45,7 +45,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     Projectile.frame = 0;
                 }
             }
-            Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1f / 255f, (255 - Projectile.alpha) * 1f / 255f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
             Projectile.velocity = Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f));

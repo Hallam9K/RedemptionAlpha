@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Wasteland)");
-			Tooltip.SetDefault("MsDeviless - Wasteland");
+			Tooltip.SetDefault("Musearys - The Wastelands");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 

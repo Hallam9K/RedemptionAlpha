@@ -7,6 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Redemption.Globals;
 using Terraria.GameContent;
+using Terraria.DataStructures;
+using Redemption.Biomes;
+using Terraria.GameContent.Bestiary;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -21,6 +25,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Idle,
             Attacks,
             Death,
+            Death2
         }
 
         public ActionState AIState
@@ -33,13 +38,28 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public ref float AIHost => ref NPC.ai[3];
 
-
         public float[] oldrot = new float[5];
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wielder Bot");
             Main.npcFrameCount[NPC.type] = 19;
+
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+
+            NPCDebuffImmunityData debuffData = new()
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Confused,
+                    BuffID.Poisoned,
+                    BuffID.Venom
+                }
+            };
+            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
         public override void SetDefaults()
@@ -50,6 +70,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.damage = 0;
             NPC.defense = 2;
             NPC.lifeMax = 35000;
+            NPC.npcSlots = 10f;
+            NPC.SpawnWithHigherTime(30);
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0;
@@ -57,6 +79,17 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.chaseable = false;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandSnowBiome>().Type };
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            int associatedNPCType = ModContent.NPCType<VlitchCleaver>();
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
+
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new FlavorTextBestiaryInfoElement("")
+            });
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -78,7 +111,31 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override bool CheckActive()
         {
             Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime || NPC.ai[0] == 11;
+            return !player.active || player.dead || Main.dayTime || AIState == ActionState.Death2;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(ID);
+                writer.Write(AttackNumber);
+                writer.Write(cooldown);
+                writer.Write(barrierSpawn);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ID = reader.ReadInt32();
+                AttackNumber = reader.ReadInt32();
+                cooldown = reader.ReadInt32();
+                barrierSpawn = reader.ReadBoolean();
+            }
         }
 
         public int aniType;
@@ -86,6 +143,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public int cooldown;
         private int AttackNumber;
         private bool Funny;
+        private bool barrierSpawn;
 
         void AttackChoice()
         {
@@ -106,7 +164,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             }
         }
 
-        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7};
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
 
@@ -114,22 +172,33 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             DespawnHandler();
             Player player = Main.player[NPC.target];
-            if (AIState >= ActionState.Idle && AIState != ActionState.Death)
-            {
+            if (AIState >= ActionState.Idle && AIState != ActionState.Death && AIState != ActionState.Death2)
                 NPC.dontTakeDamage = false;
-            }
             else
-            {
                 NPC.dontTakeDamage = true;
+
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
+
+            if (AIState > ActionState.Intro2)
+            {
+                if (!barrierSpawn)
+                {
+                    for (int i = 0; i < 36; i++)
+                        RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WielderShield>(), NPC.whoAmI, i * 10);
+                    barrierSpawn = true;
+                    NPC.netUpdate = true;
+                }
+                if (NPC.Distance(Main.LocalPlayer.Center) > 1500 && AIState != ActionState.Death2)
+                    player.AddBuff(BuffID.Electrified, 10);
             }
+            if (cooldown < 0)
+                cooldown = 0;
+            Vector2 SwingPos = new(NPC.Center.X > player.Center.X ? 150 : -150, -20);
+            Vector2 AwayPos = new(NPC.Center.X > player.Center.X ? 500 : -500, -40);
 
-            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
-                NPC.TargetClosest(true);
-
-            if (cooldown < 0) { cooldown = 0; }
-            Vector2 SwingPos = new Vector2(NPC.Center.X > player.Center.X ? 150 : -150, -20);
-            Vector2 AwayPos = new Vector2(NPC.Center.X > player.Center.X ? 500 : -500, -40);
-
+            if (!player.active || player.dead)
+                return;
 
             player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
             switch (AIState)
@@ -164,69 +233,52 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 case ActionState.Intro:
                     AITimer++;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                    if (Funny)
+                    if (Funny && !Main.dedServ)
                     {
                         if (AITimer == 60)
-                        {
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I came here to kick gum", 100, 1, 0.6f, "Wielder Bot:", 1f, Color.Red, null, null, NPC.Center, sound: true);
-                        }
 
                         if (AITimer == 161)
-                        {
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("and chew ass...", 100, 1, 0.6f, "Wielder Bot:", 1f, Color.Red, null, null, NPC.Center, sound: true);
-                        }
 
                         if (AITimer > 261)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
-                            {
                                 NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<VlitchCleaver>(), ai3: NPC.whoAmI);
-                            }
                             aniType = 4;
                             AITimer = 0;
                             AIState = ActionState.Intro2;
                             NPC.netUpdate = true;
                         }
                     }
-
                     else
                     {
                         if (AITimer > 60)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
-                            {
                                 NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<VlitchCleaver>(), ai3: NPC.whoAmI);
-                            }
+
                             aniType = 4;
                             AITimer = 0;
                             AIState = ActionState.Intro2;
                             NPC.netUpdate = true;
                         }
                     }
-
-
                     break;
                 case ActionState.Intro2:
                     if (AIHost == 1)
                     {
                         AITimer++;
-                        if (Funny && AITimer == 60)
+                        if (Funny && AITimer == 60 && !Main.dedServ)
                         {
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...And I'm all out of ass.", 100, 1, 0.6f, "Wielder Bot:", 1f, Color.Red, null, null, NPC.Center, sound: true);
                         }
-
                         if (AITimer > 60)
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int degrees = 0;
                                 for (int i = 0; i < 4; i++)
-                                {
-                                    degrees += 90;
-                                    //int p = Projectile.NewProjectile(NPC.Center, Vector2.Zero, ModContent.ProjectileType<WielderOrb>(), 100 / 3, 0, Main.myPlayer);
-                                    //Main.projectile[p].ai[0] = NPC.whoAmI;
-                                   // Main.projectile[p].ai[1] = degrees;
-                                }
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<WielderOrb>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, i * 90);
                             }
                             AIHost = 0;
                             AIState = ActionState.Idle;
@@ -236,6 +288,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     break;
                 case ActionState.Idle:
+                    if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
+                    {
+                        AIState = ActionState.Death;
+                        NPC.netUpdate = true;
+                        break;
+                    }
                     NPC.LookAtEntity(player);
                     aniType = 0;
                     NPC.velocity *= .98f;
@@ -244,7 +302,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         AITimer++;
                         if (AITimer == 5)
                         {
-                            if (cooldown > 0) { cooldown--; }
+                            if (cooldown > 0)
+                                cooldown--;
                         }
                         if (AITimer > 60)
                         {
@@ -258,6 +317,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     break;
 
                 case ActionState.Attacks:
+                    if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
+                    {
+                        AIState = ActionState.Death;
+                        NPC.netUpdate = true;
+                        break;
+                    }
                     switch (ID)
                     {
                         #region Overhead Swing
@@ -266,9 +331,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (AITimer < 120) { AIHost = 3; }
                             AITimer++;
                             if (AITimer < 80)
-                            {
                                 NPC.Move(SwingPos, 16, 10, true);
-                            }
                             else
                             {
                                 NPC.velocity *= .94f;
@@ -278,7 +341,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     AIHost = 4;
                                     NPC.netUpdate = true;
                                 }
-                                if (AITimer == 125) { NPC.Dash(7, false, SoundID.Item1.WithVolume(0), player.Center); }
+                                if (AITimer == 125)
+                                    NPC.Dash(7, false, SoundID.Item1.WithVolume(0), player.Center);
                                 if (AITimer > 150)
                                 {
                                     AIHost = 0;
@@ -292,7 +356,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         #region Stab
                         case 1:
                             NPC.LookAtEntity(player);
-                            if (AITimer < 80) { AIHost = 3; NPC.Move(AwayPos, 16, 10, true); }
+                            if (AITimer < 80)
+                                AIHost = 3; NPC.Move(AwayPos, 16, 10, true);
+
                             AITimer++;
                             NPC.velocity *= .94f;
                             if (AITimer == 80)
@@ -301,7 +367,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                 AIHost = 5;
                                 NPC.netUpdate = true;
                             }
-                            if (AITimer == 90) { NPC.Dash(12, false, SoundID.Item1.WithVolume(0), player.Center); }
+                            if (AITimer == 90)
+                                NPC.Dash(12, false, SoundID.Item1.WithVolume(0), player.Center);
                             if (AITimer > 200)
                             {
                                 AIHost = 0;
@@ -321,7 +388,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (AITimer != 0)
                             {
                                 NPC.LookAtEntity(player);
-                                if (AITimer < 80) { AIHost = 3; NPC.Move(SwingPos, 6, 10, true); }
+                                if (AITimer < 80)
+                                {
+                                    AIHost = 3;
+                                    NPC.Move(SwingPos, 6, 10, true);
+                                }
                                 NPC.ai[2]++;
                                 if (NPC.ai[2] == 80)
                                 {
@@ -354,12 +425,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         #region Overhead Swing Spin
                         case 3:
                             NPC.LookAtEntity(player);
-                            if (AITimer < 120) { AIHost = 3; }
+                            if (AITimer < 120)
+                                AIHost = 3;
+
                             AITimer++;
                             if (AITimer < 80)
-                            {
                                 NPC.Move(SwingPos, 16, 10, true);
-                            }
                             else
                             {
                                 NPC.velocity *= .94f;
@@ -369,7 +440,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     AIHost = 7;
                                     NPC.netUpdate = true;
                                 }
-                                if (AITimer == 125) { NPC.Dash(7, false, SoundID.Item1.WithVolume(0), player.Center); }
+                                if (AITimer == 125)
+                                    NPC.Dash(7, false, SoundID.Item1.WithVolume(0), player.Center);
                                 if (AITimer > 180)
                                 {
                                     AIHost = 0;
@@ -385,16 +457,17 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (AITimer == 0)
                             {
                                 if (cooldown == 0)
-                                {
                                     AIHost = 20;
-                                }
-                                else { AITimer = -1; }
+                                else
+                                    AITimer = -1;
                                 NPC.netUpdate = true;
                             }
                             else if (AITimer > 0)
                             {
                                 NPC.LookAtEntity(player);
-                                if (AITimer < 81) { AIHost = 3; }
+                                if (AITimer < 81)
+                                    AIHost = 3;
+
                                 AITimer++;
                                 NPC.Move(AwayPos, 9, 10, true);
                                 if (AITimer == 81)
@@ -408,7 +481,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     cooldown = 2;
                                     AIHost = 0;
                                     AIState = ActionState.Idle;
-
                                     AITimer = 0;
                                     NPC.netUpdate = true;
                                 }
@@ -425,16 +497,17 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (AITimer == 0)
                             {
                                 if (cooldown == 0)
-                                {
                                     AIHost = 21;
-                                }
-                                else { AITimer = -1; }
+                                else
+                                    AITimer = -1;
                                 NPC.netUpdate = true;
                             }
                             else if (AITimer > 0)
                             {
                                 NPC.LookAtEntity(player);
-                                if (AITimer < 81) { AIHost = 3; NPC.Move(AwayPos, 8, 10, true); }
+                                if (AITimer < 81)
+                                    AIHost = 3; NPC.Move(AwayPos, 8, 10, true);
+
                                 AITimer++;
                                 if (AITimer == 81)
                                 {
@@ -470,16 +543,17 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (AITimer == 0)
                             {
                                 if (cooldown == 0)
-                                {
                                     AIHost = 22;
-                                }
-                                else { AITimer = -1; }
+                                else
+                                    AITimer = -1;
                                 NPC.netUpdate = true;
                             }
                             else if (AITimer > 0)
                             {
                                 NPC.LookAtEntity(player);
-                                if (AITimer < 81) { AIHost = 3; }
+                                if (AITimer < 81)
+                                    AIHost = 3;
+
                                 AITimer++;
                                 NPC.Move(AwayPos, 13, 10, true);
                                 if (AITimer == 81)
@@ -510,7 +584,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             NPC.Move(AwayPos, 13, 10, true);
                             if (AITimer < 100)
                             {
-                                if (AITimer < 40) { AIHost = 3; }
+                                if (AITimer < 40)
+                                    AIHost = 3;
                                 AITimer++;
                                 if (AITimer == 40)
                                 {
@@ -543,6 +618,34 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             #endregion
                     }
                     break;
+                case ActionState.Death:
+                    NPC.LookAtEntity(player);
+                    aniType = 0;
+                    NPC.velocity *= .96f;
+                    NPC.rotation = 0;
+                    AITimer = 0;
+                    AIState = ActionState.Death2;
+                    AIHost = 0;
+                    NPC.ai[1] = 0;
+                    NPC.netUpdate = true;
+                    break;
+                case ActionState.Death2:
+                    NPC.LookAtEntity(player);
+                    if (NPC.ai[2] < 260)
+                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+
+                    NPC.velocity *= .96f;
+                    AITimer++;
+                    if (AITimer == 180)
+                        CombatText.NewText(NPC.getRect(), Colors.RarityRed, "...Nah.", true, false);
+                    if (AITimer > 260)
+                    {
+                        aniType = 3;
+                        NPC.velocity.Y -= 1;
+                        if (NPC.timeLeft > 10)
+                            NPC.timeLeft = 10;
+                    }
+                    break;
             }
         }
 
@@ -551,84 +654,78 @@ namespace Redemption.NPCs.Bosses.Cleaver
             switch (aniType)
             {
                 case 0:
+                    NPC.frameCounter++;
                     if (NPC.velocity.Length() == 0)
-                    {
                         NPC.frame.Y = 0;
-                    }
                     else
-                    {
-                        NPC.frame.Y = 42;
-                    }
+                        NPC.frame.Y = frameHeight;
                     break;
                 case 1: // Swing
-                    if (NPC.frame.Y < 84) { NPC.frame.Y = 84; }
+                    if (NPC.frame.Y < 2 * frameHeight)
+                        NPC.frame.Y = 2 * frameHeight;
+
                     NPC.frameCounter++;
                     if (NPC.frameCounter >= 5)
                     {
                         NPC.frameCounter = 0;
-                        NPC.frame.Y += 42;
-                        if (NPC.frame.Y > 210)
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 4 * frameHeight)
                         {
-                            NPC.frameCounter = 0;
                             NPC.frame.Y = 0;
                             aniType = 0;
                         }
                     }
                     break;
                 case 2: // Stab
-                    if (NPC.frame.Y < 252) { NPC.frame.Y = 252; }
+                    if (NPC.frame.Y < 5 * frameHeight)
+                        NPC.frame.Y = 5 * frameHeight;
+
                     NPC.frameCounter++;
                     if (NPC.frameCounter >= 5)
                     {
                         NPC.frameCounter = 0;
-                        NPC.frame.Y += 42;
-                        if (NPC.frame.Y > 420)
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 9 * frameHeight)
                         {
-                            NPC.frameCounter = 0;
                             NPC.frame.Y = 0;
                             aniType = 0;
                         }
                     }
                     break;
                 case 3: // Speen
-                    if (NPC.frame.Y < 462) { NPC.frame.Y = 462; }
+                    if (NPC.frame.Y < 10 * frameHeight)
+                        NPC.frame.Y = 10 * frameHeight;
+
                     NPC.frameCounter++;
                     if (NPC.frameCounter >= 5)
                     {
                         NPC.frameCounter = 0;
-                        NPC.frame.Y += 42;
-                        if (NPC.frame.Y >= 798)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y = 462;
-                        }
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y >= 18 * frameHeight)
+                            NPC.frame.Y = 11 * frameHeight;
                     }
                     break;
                 case 4: // Dramatic Entrance
-                    if (NPC.frame.Y < 210) { NPC.frame.Y = 210; }
+                    if (NPC.frame.Y < 4 * frameHeight)
+                        NPC.frame.Y = 4 * frameHeight;
+
                     NPC.frameCounter++;
                     if (NPC.frameCounter >= 5)
                     {
                         NPC.frameCounter = 0;
-                        NPC.frame.Y += 42;
-                        if (NPC.frame.Y > 294)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y = 294;
-                        }
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 6 * frameHeight)
+                            NPC.frame.Y = 6 * frameHeight;
                     }
                     break;
             }
-            NPC.frameCounter++;
-            if (NPC.frameCounter > 5)
+            if (NPC.frameCounter % 5 == 0)
             {
                 boosterFrame++;
-                NPC.frameCounter = 0;
             }
             if (boosterFrame >= 4)
-            {
                 boosterFrame = 0;
-            }
+
             if (NPC.ai[1] != 2)
             {
                 int dustIndex = Dust.NewDust(new Vector2(NPC.position.X + 3, NPC.position.Y + 16), 10, 2, DustID.LifeDrain, 0, 0, 0, default, 1f);
@@ -647,9 +744,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 NPC.velocity *= 0.96f;
                 NPC.velocity.Y -= 1;
                 if (NPC.timeLeft > 10)
-                {
                     NPC.timeLeft = 10;
-                }
                 return;
             }
         }
@@ -663,24 +758,24 @@ namespace Redemption.NPCs.Bosses.Cleaver
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int num214 = boosterAni.Height / 4;
             int y6 = num214 * boosterFrame;
-            Main.EntitySpriteDraw(boosterAni, NPC.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
-            Main.EntitySpriteDraw(boosterGlow, NPC.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), Color.White, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterGlow, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), RedeColor.RedPulse, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
 
-            Main.EntitySpriteDraw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            Main.EntitySpriteDraw(glowMask, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
-        private float opacity { get => NPC.ai[2]; set => NPC.ai[2] = value; }
+        private float Opacity { get => NPC.ai[2]; set => NPC.ai[2] = value; }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/RedEyeFlare").Value;
-            Rectangle rect = new Rectangle(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new Vector2(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - Main.screenPosition + new Vector2(NPC.spriteDirection == 1 ? 5 : -5, -10);
-            Color colour = Color.Lerp(Color.Red, Color.White, (1f / opacity * 10f)) * (1f / opacity * 10f);
+            Rectangle rect = new(0, 0, flare.Width, flare.Height);
+            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
+            Vector2 position = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 5 : -5, -10);
+            Color colour = Color.Lerp(Color.Red, Color.White, 1f / Opacity * 10f) * (1f / Opacity * 10f);
             if (AIState == ActionState.Intro2 && AIHost == 1 && AITimer < 60)
             {
                 spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);

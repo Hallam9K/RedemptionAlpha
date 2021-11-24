@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public float LaserLength = 0;
         public float LaserScale = 1;
-        public int shoot;
         public int LaserSegmentLength = 30;
         public int LaserWidth = 46;
         public int LaserEndSegmentLength = 40;
@@ -41,10 +40,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = false;
         // >
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Red Prism");
-        }
 
         public override void SetDefaults()
         {
@@ -62,22 +57,32 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
-     
+            if (AITimer == 0)
+            {
+                LaserScale = 0.1f;
+                SoundEngine.PlaySound(SoundID.Zombie, (int)Projectile.position.X, (int)Projectile.position.Y, 104);
+            }
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active)
                 Projectile.Kill();
 
-            Vector2 BeamPos = new Vector2(npc.Center.X, npc.Center.Y) + RedeHelper.PolarVector(134, npc.rotation + (float)-Math.PI / 2);
+            Vector2 BeamPos = npc.Center + RedeHelper.PolarVector(134, npc.rotation + (float)-Math.PI / 2);
             Projectile.Center = BeamPos;
 
             Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation + (float)-Math.PI / 2);
-            if (npc.ai[1] == 0)
+
+            if (AITimer <= 10)
+                LaserScale += 0.09f;
+            else if (Projectile.timeLeft < 10 || !npc.active || npc.ai[1] == 0)
             {
-                Projectile.Kill();
+                if (Projectile.timeLeft > 10)
+                    Projectile.timeLeft = 10;
+
+                LaserScale -= 0.1f;
             }
-        
-            Projectile.rotation = Projectile.velocity.ToRotation() - 1.57079637f;
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.velocity = Vector2.Normalize(Projectile.velocity);        
 
             #endregion
@@ -147,7 +152,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(RedeColor.RedPulse), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

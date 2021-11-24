@@ -241,6 +241,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         private float move;
         private float speed = 6;
         private bool SoulCharging;
+        private bool Reap;
         private Vector2 origin;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
@@ -301,6 +302,8 @@ namespace Redemption.NPCs.Bosses.Keeper
                         move = NPC.Center.X;
                         speed = 6;
                     }
+                    Reap = false;
+
                     NPC.Move(new Vector2(move, player.Center.Y - 50), speed, 20, false);
                     MoveClamp();
                     if (NPC.DistanceSQ(player.Center) > (NPC.dontTakeDamage ? (800 * 800) : (400 * 400)))
@@ -361,6 +364,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 }
                                 if (NPC.alpha >= 255)
                                 {
+                                    Reap = true;
                                     NPC.velocity *= 0f;
                                     NPC.position = new Vector2(player.Center.X + (player.velocity.X > 0 ? 200 : -200) + (player.velocity.X * 20), player.Center.Y - 70);
                                     AITimer = 100;
@@ -419,6 +423,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     NPC.velocity *= 0f;
                                     if (TimerRand >= (Main.expertMode ? 2 : 1) + (Unveiled ? 1 : 0))
                                     {
+                                        Reap = false;
                                         TimerRand = 0;
                                         AITimer = 0;
                                         AIState = ActionState.Idle;
@@ -627,6 +632,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
 
                     Unveiled = true;
+                    Reap = false;
 
                     if (AITimer++ == 1)
                     {
@@ -653,6 +659,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     NPC.dontTakeDamage = true;
+                    Reap = false;
 
                     if (AITimer++ == 0)
                         RedeHelper.SpawnNPC((int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>(), ai3: NPC.whoAmI);
@@ -772,6 +779,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
                     player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
                     NPC.velocity *= 0;
+                    Reap = false;
 
                     if (AITimer++ == 0)
                     {
@@ -985,6 +993,13 @@ namespace Redemption.NPCs.Bosses.Keeper
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
 
+            int reapShader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.VoidDye);
+            if (Reap)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(reapShader, Main.player[Main.myPlayer], null);
+            }
             if (AIState is ActionState.Teddy && TimerRand == 3)
                 spriteBatch.Draw(closureTex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             else
@@ -1002,6 +1017,8 @@ namespace Redemption.NPCs.Bosses.Keeper
             if (!Unveiled && NPC.life > NPC.lifeMax / 2)
                 Main.spriteBatch.Draw(veilTex, VeilPos - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, default);
             return false;
         }
 

@@ -56,6 +56,7 @@ namespace Redemption.Globals.Player
         public bool bileDebuff;
         public bool hazmatSuit;
         public bool HEVSuit;
+        public bool snipped;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -110,6 +111,7 @@ namespace Redemption.Globals.Player
             HEVSuit = false;
             WastelandWaterImmune = false;
             hardlightBonus = 0;
+            snipped = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -195,6 +197,21 @@ namespace Redemption.Globals.Player
 
                     }
                 }
+            }
+        }
+
+        public override void UpdateEquips()
+        {
+            if (snipped)
+            {
+                if (Player.mount.CanFly())
+                {
+                    Player.mount.Dismount(Player);
+                }
+
+                Player.wingTimeMax /= 2;
+                if (Player.wingTime > Player.wingTimeMax)
+                    Player.wingTime = Player.wingTimeMax;
             }
         }
 

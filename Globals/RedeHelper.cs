@@ -1041,6 +1041,8 @@ namespace Redemption.Globals
                         npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
                     if (!npc.noTileCollide)
                     {
+                        Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed,
+                            ref npc.gfxOffY);
                         newVec = Collision.TileCollision(npc.position, newVec, npc.width, npc.height);
                         Vector4 slopeVec = Collision.SlopeCollision(npc.position, newVec, npc.width, npc.height);
                         Vector2 slopeVel = new(slopeVec.Z, slopeVec.W);
