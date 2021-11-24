@@ -32,6 +32,7 @@ using Redemption.NPCs.Lab;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.Cleaver;
+using Redemption.NPCs.Wasteland;
 
 namespace Redemption.Globals
 {
@@ -572,7 +573,7 @@ namespace Redemption.Globals
             #region Undead
 
             Undead.PopulateFromSets(NPCID.Sets.Zombies);
-            Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<RaggedZombie>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>(), ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<BloatedScientist>());
+            Undead.SetMultiple(NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<RaggedZombie>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>(), ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<HazmatZombie>());
 
             #endregion
 

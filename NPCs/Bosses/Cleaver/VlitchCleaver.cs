@@ -61,8 +61,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Position = new Vector2(0, 36),
-                PortraitPositionYOverride = 8
+                CustomTexturePath = "Redemption/Textures/Bestiary/VlitchCleaver_Bestiary",
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
