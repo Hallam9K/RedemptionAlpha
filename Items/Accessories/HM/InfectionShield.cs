@@ -40,8 +40,8 @@ namespace Redemption.Items.Accessories.HM
         {
             CreateRecipe()
                 .AddIngredient(ItemID.EoCShield)
-                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
-                .AddIngredient(ModContent.ItemType<Starlite>(), 6)
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ModContent.ItemType<StarliteBar>(), 6)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

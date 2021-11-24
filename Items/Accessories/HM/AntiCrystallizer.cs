@@ -29,7 +29,7 @@ namespace Redemption.Items.Accessories.HM
 		{
 			CreateRecipe()
 			.AddIngredient(ModContent.ItemType<CrystalSerum>(), 8)
-			.AddIngredient(ModContent.ItemType<Xenomite>(), 4)
+			.AddIngredient(ModContent.ItemType<XenomiteItem>(), 4)
 			.AddIngredient(ModContent.ItemType<StarliteBar>(), 6)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();

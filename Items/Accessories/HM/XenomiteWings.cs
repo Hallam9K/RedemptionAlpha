@@ -43,7 +43,7 @@ namespace Redemption.Items.Accessories.HM
 		public override void AddRecipes()
 		{
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Xenomite>(), 20)
+			.AddIngredient(ModContent.ItemType<XenomiteItem>(), 20)
 			.AddIngredient(ModContent.ItemType<StarliteBar>(), 5)
 			.AddIngredient(ItemID.SoulofFlight, 20)
 			.AddTile(TileID.MythrilAnvil)

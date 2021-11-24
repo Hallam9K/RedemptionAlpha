@@ -34,7 +34,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
 				.AddIngredient(ModContent.ItemType<LabPlating>(), 20)
-				.AddIngredient(ModContent.ItemType<Xenomite>(), 8)
+				.AddIngredient(ModContent.ItemType<XenomiteItem>(), 8)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
         }

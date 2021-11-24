@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 
-namespace Redemption.Items.Armor.HM
+namespace Redemption.Items.Armor.HM.Hardlight
 {
     [AutoloadEquip(EquipType.Legs)]
     public class HardlightBoots : ModItem

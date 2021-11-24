@@ -1,9 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Redemption.Base;
 using Redemption.Effects;
 using Redemption.Globals;
+using Redemption.Globals.Player;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PreHM.DragonLead;
+using Redemption.Items.Donator.Arche;
 using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
@@ -34,11 +38,14 @@ namespace Redemption
         public const string Abbreviation = "MoR";
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
+        public static ModKeybind RedeSpecialAbility;
 
         private List<ILoadable> _loadCache;
 
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
+        public static int archeFemLegID;
+        public static int archeMaleLegID;
 
         public Redemption()
         {
@@ -52,11 +59,73 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back");
+                archeMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs");
+                archeFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref bubbleTex);
+                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref portalTex);
+                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref holyGlowTex);
+                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref whiteFlareTex);
+                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref whiteOrbTex);
+                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref whiteLightBeamTex);
+                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref transitionTex);
+                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall",
+                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref staticBallTex);
+                    Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref purityWastelandBG3Tex);
+                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref wastelandCrimsonBG3Tex);
+                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref wastelandCorruptionBG3Tex);
+                });
             }
 
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
 
+            RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
+        }
+
+        public override void PostSetupContent()
+        {
+            if (!Main.dedServ)
+            {
+                Main.QueueMainThreadAction(() =>
+                {
+                    OnHeadDraw.RegisterHeads();
+                    OnLegDraw.RegisterLegs();
+                    OnBodyDraw.ReigsterBodies();
+                });
+            }
+        }
+
+        public static void PremultiplyTexture(ref Texture2D texture)
+        {
+            Color[] buffer = new Color[texture.Width * texture.Height];
+            texture.GetData(buffer);
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = Color.FromNonPremultiplied(
+                        buffer[i].R, buffer[i].G, buffer[i].B, buffer[i].A);
+            }
+            texture.SetData(buffer);
         }
 
         private void LoadCache()
@@ -174,21 +243,7 @@ namespace Redemption
                         trailproj.DoTrailCreation(RedeSystem.TrailManager);
 
                     break;
-                    /*case ModMessageType.Dash:
-                        player = bb.ReadByte();
-                        DashType dash = (DashType)bb.ReadByte();
-                        sbyte dir = bb.ReadSByte();
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            ModPacket packet = GetPacket(ModMessageType.Dash, 3);
-                            packet.Write(player);
-                            packet.Write((byte)dash);
-                            packet.Write(dir);
-                            packet.Send(-1, whoAmI);
-                        }
-                        Main.player[player].GetModPlayer<DashPlayer>().PerformDash(dash, dir, false);
-                        break;
-                    case ModMessageType.StartChickArmy:
+                    /*case ModMessageType.StartChickArmy:
                         ChickWorld.chickArmy = true;
                         ChickWorld.ChickArmyStart();
                         break;
@@ -230,6 +285,9 @@ namespace Redemption
         public UserInterface NukeUILayer;
         public NukeDetonationUI NukeUIElement;
 
+        public UserInterface AMemoryUILayer;
+        public AMemoryUIState AMemoryUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -255,6 +313,10 @@ namespace Redemption
                 NukeUILayer = new UserInterface();
                 NukeUIElement = new NukeDetonationUI();
                 NukeUILayer.SetState(NukeUIElement);
+
+                AMemoryUILayer = new UserInterface();
+                AMemoryUIElement = new AMemoryUIState();
+                AMemoryUILayer.SetState(AMemoryUIElement);
 
                 GeneratorMenuUI = new UserInterface();
                 GeneratorMenu = new ManualGeneratorMenu();
@@ -284,6 +346,33 @@ namespace Redemption
             On.Terraria.Main.Update -= LoadTrailManager;
         }
 
+        public override void ModifyLightingBrightness(ref float scale)
+        {
+            if (ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50 || ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50)
+                scale = 0.9f;
+        }
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        {
+            RedeTileCount tileCount = ModContent.GetInstance<RedeTileCount>();
+            if (tileCount.WastelandTileCount > 0)
+            {
+                float Strength = tileCount.WastelandTileCount / 200f;
+                Strength = Math.Min(Strength, 1f);
+
+                int sunR = backgroundColor.R;
+                int sunG = backgroundColor.G;
+                int sunB = backgroundColor.B;
+                sunR -= (int)(200 * Strength * (backgroundColor.R / 255f));
+                sunB -= (int)(200f * Strength * (backgroundColor.B / 255f));
+                sunG -= (int)(170f * Strength * (backgroundColor.G / 255f));
+                sunR = Utils.Clamp(sunR, 15, 255);
+                sunG = Utils.Clamp(sunG, 15, 255);
+                sunB = Utils.Clamp(sunB, 15, 255);
+                backgroundColor.R = (byte)sunR;
+                backgroundColor.G = (byte)sunG;
+                backgroundColor.B = (byte)sunB;
+            }
+        }
         public override void PreUpdateProjectiles()
         {
             if (Main.netMode != NetmodeID.Server)
@@ -298,7 +387,7 @@ namespace Redemption
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
                 if (index >= 0)
                 {
-                    LegacyGameInterfaceLayer SkeleUI = new("Redemption: SkeleInvasion",
+                    LegacyGameInterfaceLayer SkeleUI = new ("Redemption: SkeleInvasion",
                         delegate
                         {
                             DrawSkeletonInvasionUI(Main.spriteBatch);
@@ -328,10 +417,11 @@ namespace Redemption
             int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
             if (MouseTextIndex != -1)
             {
-                AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex, ChaliceAlignmentUI.Visible, "Chalice");
-                AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 1, MoRDialogueUI.Visible, "Dialogue");
-                AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 2, TitleCard.Showing, "Title Card");
-                AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 3, NukeDetonationUI.Visible, "Nuke UI");
+                AddInterfaceLayer(layers, AMemoryUILayer, AMemoryUIElement, MouseTextIndex, AMemoryUIState.Visible, "Lab Photo");
+                AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex + 1, ChaliceAlignmentUI.Visible, "Chalice");
+                AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
+                AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
+                AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
             }
         }
 
@@ -368,8 +458,8 @@ namespace Redemption
                 Texture2D progressColor = TextureAssets.ColorBar.Value;
                 Texture2D InvIcon = ModContent.Request<Texture2D>("Redemption/Items/Armor/Vanity/EpidotrianSkull").Value;
                 float scmp = 0.5f + 0.75f * 0.5f;
-                Color descColor = new(77, 39, 135);
-                Color waveColor = new(255, 241, 51);
+                Color descColor = new (77, 39, 135);
+                Color waveColor = new (255, 241, 51);
                 const int offsetX = 20;
                 const int offsetY = 20;
                 int width = (int)(200f * scmp);
@@ -380,8 +470,8 @@ namespace Redemption
                 string waveText = "Cleared " + Math.Round(100 * cleared) + "%";
                 Utils.DrawBorderString(spriteBatch, waveText, new Vector2(waveBackground.X + waveBackground.Width / 2, waveBackground.Y + 5), Color.White, scmp * 0.8f, 0.5f, -0.1f);
                 Rectangle waveProgressBar = Utils.CenteredRectangle(new Vector2(waveBackground.X + waveBackground.Width * 0.5f, waveBackground.Y + waveBackground.Height * 0.75f), new Vector2(progressColor.Width, progressColor.Height));
-                Rectangle waveProgressAmount = new(0, 0, (int)(progressColor.Width * MathHelper.Clamp(cleared, 0f, 1f)), progressColor.Height);
-                Vector2 offset = new((waveProgressBar.Width - (int)(waveProgressBar.Width * scmp)) * 0.5f, (waveProgressBar.Height - (int)(waveProgressBar.Height * scmp)) * 0.5f);
+                Rectangle waveProgressAmount = new (0, 0, (int)(progressColor.Width * MathHelper.Clamp(cleared, 0f, 1f)), progressColor.Height);
+                Vector2 offset = new ((waveProgressBar.Width - (int)(waveProgressBar.Width * scmp)) *0.5f, (waveProgressBar.Height - (int)(waveProgressBar.Height * scmp)) * 0.5f);
                 spriteBatch.Draw(backGround1, waveProgressBar.Location.ToVector2() + offset, null, Color.White * alpha, 0f, new Vector2(0f), scmp, SpriteEffects.None, 0f);
                 spriteBatch.Draw(backGround1, waveProgressBar.Location.ToVector2() + offset, waveProgressAmount, waveColor, 0f, new Vector2(0f), scmp, SpriteEffects.None, 0f);
                 const int internalOffset = 6;
@@ -390,7 +480,7 @@ namespace Redemption
                 Rectangle descBackground = Utils.CenteredRectangle(new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), descSize * .8f);
                 Utils.DrawInvBG(spriteBatch, descBackground, descColor * alpha);
                 int descOffset = (descBackground.Height - (int)(32f * scmp)) / 2;
-                Rectangle icon = new(descBackground.X + descOffset + 7, descBackground.Y + descOffset, (int)(32 * scmp), (int)(32 * scmp));
+                Rectangle icon = new (descBackground.X + descOffset + 7, descBackground.Y + descOffset, (int)(32 * scmp), (int)(32 * scmp));
                 spriteBatch.Draw(InvIcon, icon, Color.White);
                 Utils.DrawBorderString(spriteBatch, "Raveyard", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, 0.8f, 0.3f, 0.4f);
             }

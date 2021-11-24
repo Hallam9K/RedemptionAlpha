@@ -9,7 +9,7 @@ using System;
 using Redemption.Items.Materials.HM;
 using Redemption.DamageClasses;
 
-namespace Redemption.Items.Armor.HM
+namespace Redemption.Items.Armor.HM.Hardlight
 {
     [AutoloadEquip(EquipType.Head)]
     public class HardlightRegalia : ModItem

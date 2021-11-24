@@ -8,7 +8,7 @@ using Redemption.Globals.Player;
 using System;
 using Redemption.Items.Materials.HM;
 
-namespace Redemption.Items.Armor.HM
+namespace Redemption.Items.Armor.HM.Xenomite
 {
     [AutoloadEquip(EquipType.Head)]
     public class XenomiteHelmet : ModItem
@@ -52,7 +52,7 @@ namespace Redemption.Items.Armor.HM
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<StarliteBar>(), 5)
-                .AddIngredient(ModContent.ItemType<Xenomite>(), 15)
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

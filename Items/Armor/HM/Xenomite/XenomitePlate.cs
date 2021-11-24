@@ -6,7 +6,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Armor.HM
+namespace Redemption.Items.Armor.HM.Xenomite
 {
     [AutoloadEquip(EquipType.Body)]
     public class XenomitePlate : ModItem
@@ -38,7 +38,7 @@ namespace Redemption.Items.Armor.HM
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<StarliteBar>(), 8)
-                .AddIngredient(ModContent.ItemType<Xenomite>(), 20)
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 20)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
