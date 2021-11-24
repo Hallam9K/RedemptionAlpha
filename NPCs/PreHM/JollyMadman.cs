@@ -118,10 +118,9 @@ namespace Redemption.NPCs.PreHM
             if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
             {
                 NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
-                NPC.HitEffect();
                 return false;
             }
-            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, ModContent.DustType<VoidFlame>(), SoundID.NPCHit4, 10, 2);
+            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, ModContent.DustType<VoidFlame>(), SoundID.Item37, 10, 2);
 
             if (PsychicHit)
             {
