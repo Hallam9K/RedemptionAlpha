@@ -111,10 +111,27 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
+        private bool PsychicHit;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
             NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour = false;
+
+            if (PsychicHit)
+            {
+                SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
+                if (NPC.life < NPC.lifeMax)
+                {
+                    NPC.life += (int)(damage / 10);
+                    NPC.HealEffect((int)(damage / 10));
+                }
+                if (NPC.life > NPC.lifeMax)
+                    NPC.life = NPC.lifeMax;
+
+                damage = 0;
+                PsychicHit = false;
+                return false;
+            }
             return true;
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -122,21 +139,10 @@ namespace Redemption.NPCs.PreHM
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemTags.Holy.Has(item.type))
-                    damage = (int)(damage * 3f);
+                    damage = (int)(damage * 2f);
 
                 if (ItemTags.Psychic.Has(item.type))
-                {
-                    SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
-                    if (NPC.life < NPC.lifeMax)
-                    {
-                        NPC.life += (damage / 10) + 1;
-                        NPC.HealEffect((damage / 10) + 1);
-                    }
-                    if (NPC.life > NPC.lifeMax)
-                        NPC.life = NPC.lifeMax;
-
-                    damage = 1;
-                }
+                    PsychicHit = true;
             }
 
             if (ItemTags.Psychic.Has(item.type))
@@ -147,21 +153,10 @@ namespace Redemption.NPCs.PreHM
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileTags.Holy.Has(projectile.type))
-                    damage = (int)(damage * 3f);
+                    damage = (int)(damage * 2f);
 
                 if (ProjectileTags.Psychic.Has(projectile.type))
-                {
-                    SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
-                    if (NPC.life < NPC.lifeMax)
-                    {
-                        NPC.life += (damage / 10) + 1;
-                        NPC.HealEffect((damage / 10) + 1);
-                    }
-                    if (NPC.life > NPC.lifeMax)
-                        NPC.life = NPC.lifeMax;
-
-                    damage = 1;
-                }
+                    PsychicHit = true;
             }
 
             if (ProjectileTags.Psychic.Has(projectile.type))
