@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Biomes;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
@@ -12,6 +13,7 @@ using Redemption.Tiles.Tiles;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -104,6 +106,20 @@ namespace Redemption.Globals.NPC
                     if (ItemTags.Thunder.Has(item.type))
                         damage = (int)(damage * 1.1f);
                 }
+                if (NPCTags.Infected.Has(npc.type))
+                {
+                    if (ItemTags.Fire.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ItemTags.Ice.Has(item.type))
+                        damage = (int)(damage * 0.7f);
+
+                    if (ItemTags.Blood.Has(item.type))
+                        damage = (int)(damage * 2f);
+
+                    if (ItemTags.Poison.Has(item.type))
+                        damage = (int)(damage * 0.1f);
+                }
                 #endregion
             }
 
@@ -188,6 +204,20 @@ namespace Redemption.Globals.NPC
                     if (ProjectileTags.Thunder.Has(projectile.type))
                         damage = (int)(damage * 1.1f);
                 }
+                if (NPCTags.Infected.Has(npc.type))
+                {
+                    if (ProjectileTags.Fire.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ProjectileTags.Ice.Has(projectile.type))
+                        damage = (int)(damage * 0.7f);
+
+                    if (ProjectileTags.Blood.Has(projectile.type))
+                        damage = (int)(damage * 2f);
+
+                    if (ProjectileTags.Poison.Has(projectile.type))
+                        damage = (int)(damage * 0.1f);
+                }
                 #endregion
             }
         }
@@ -197,10 +227,58 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
         {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Attributes
+                if (NPCTags.Infected.Has(npc.type))
+                {
+                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && ItemTags.Ice.Has(item.type))
+                        npc.AddBuff(ModContent.BuffType<PureChillDebuff>(), 600);
+                }
+                if (NPCLists.IsSlime.Contains(npc.type))
+                {
+                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.GetGlobalNPC<BuffNPC>().iceFrozen && ItemTags.Ice.Has(item.type))
+                    {
+                        SoundEngine.PlaySound(SoundID.Item30, npc.position);
+                        npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
+                    }
+                }
+                if (NPCTags.Plantlike.Has(npc.type) || NPCTags.Cold.Has(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+                {
+                    if (Main.rand.NextBool(4) && ItemTags.Fire.Has(item.type))
+                        npc.AddBuff(BuffID.OnFire, 180);
+                }
+                #endregion
+            }
+
             attacker = player;
         }
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Attributes
+                if (NPCTags.Infected.Has(npc.type))
+                {
+                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && ProjectileTags.Ice.Has(projectile.type))
+                        npc.AddBuff(ModContent.BuffType<PureChillDebuff>(), 600);
+                }
+                if (NPCLists.IsSlime.Contains(npc.type))
+                {
+                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.GetGlobalNPC<BuffNPC>().iceFrozen && ProjectileTags.Ice.Has(projectile.type))
+                    {
+                        SoundEngine.PlaySound(SoundID.Item30, npc.position);
+                        npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
+                    }
+                }
+                if (NPCTags.Plantlike.Has(npc.type) || NPCTags.Cold.Has(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+                {
+                    if (Main.rand.NextBool(4) && ProjectileTags.Fire.Has(projectile.type))
+                        npc.AddBuff(BuffID.OnFire, 180);
+                }
+                #endregion
+            }
+
             Terraria.Player player = Main.player[npc.GetNearestAlivePlayer()];
             if (projectile.friendly && !projectile.hostile)
                 attacker = player;
