@@ -17,7 +17,6 @@ namespace Redemption.Items.Materials.HM
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
-
         public override void SetDefaults()
 		{
 			Item.width = 14;
