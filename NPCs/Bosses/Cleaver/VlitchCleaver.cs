@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                CustomTexturePath = "Redemption/Textures/Bestiary/VlitchCleaver_Bestiary",
+                CustomTexturePath = "Redemption/Textures/Bestiary/VlitchCleaver_Bestiary"
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

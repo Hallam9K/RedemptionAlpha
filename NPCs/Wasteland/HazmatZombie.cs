@@ -51,7 +51,10 @@ namespace Redemption.NPCs.Wasteland
                 }
             });
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Velocity = 1f
+            };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -152,9 +155,7 @@ namespace Redemption.NPCs.Wasteland
             {
                 NPC.rotation = 0;
                 if (NPC.velocity.X == 0)
-                {
-                    NPC.frame.Y += 3 * frameHeight;
-                }
+                    NPC.frame.Y = 3 * frameHeight;
                 else
                 {
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
