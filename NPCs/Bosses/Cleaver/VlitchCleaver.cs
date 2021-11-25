@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;
             NPC.SpawnWithHigherTime(30);
-            NPC.value = 600f;
+            NPC.value = Item.buyPrice(0, 15, 0, 0);
             NPC.boss = true;
             NPC.knockBackResist = 0.0f;
             NPC.aiStyle = -1;

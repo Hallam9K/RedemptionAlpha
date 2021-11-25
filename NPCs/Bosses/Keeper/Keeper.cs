@@ -106,6 +106,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             NPC.width = 52;
             NPC.height = 128;
             NPC.npcSlots = 10f;
+            NPC.value = Item.buyPrice(0, 3, 50, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.alpha = 255;
             NPC.boss = true;

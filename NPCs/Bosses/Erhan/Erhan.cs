@@ -75,6 +75,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.width = 34;
             NPC.height = 60;
             NPC.npcSlots = 10f;
+            NPC.value = Item.buyPrice(0, 1, 25, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.boss = true;
             NPC.lavaImmune = true;

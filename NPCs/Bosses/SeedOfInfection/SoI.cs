@@ -84,6 +84,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
+            NPC.value = Item.buyPrice(0, 4, 0, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             BossBag = ModContent.ItemType<SoIBag>();

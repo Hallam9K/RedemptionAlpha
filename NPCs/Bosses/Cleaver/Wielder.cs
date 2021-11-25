@@ -82,17 +82,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.chaseable = false;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandSnowBiome>().Type };
-        }
-
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            int associatedNPCType = ModContent.NPCType<VlitchCleaver>();
-            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
-
-            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
-            });
         }
 
         private bool strongHit;

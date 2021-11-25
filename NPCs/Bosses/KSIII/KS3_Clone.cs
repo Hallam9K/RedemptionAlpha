@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.npcSlots = 10f;
             NPC.SpawnWithHigherTime(30);
             NPC.knockBackResist = 0f;
-            NPC.value = Item.buyPrice(0, 10, 0, 0);
+            NPC.value = Item.buyPrice(0, 15, 0, 0);
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.boss = true;
