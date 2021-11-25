@@ -355,7 +355,10 @@ namespace Redemption.Globals.NPC
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {
                 pool.Clear();
-                pool.Add(ModContent.NPCType<HazmatZombie>(), 0.1f);
+                pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
+                pool.Add(ModContent.NPCType<BobTheBlob>(), 0.05f);
+                pool.Add(ModContent.NPCType<RadioactiveSlime>(), 0.9f);
+                pool.Add(ModContent.NPCType<NuclearSlime>(), 0.3f);
             }
         }
     }

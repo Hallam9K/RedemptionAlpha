@@ -117,6 +117,14 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
                 }
+                if (NPCTags.Infected.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>() });
+                }
                 if (NPCLists.IsSlime.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {

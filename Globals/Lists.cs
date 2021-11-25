@@ -323,8 +323,12 @@ namespace Redemption.Globals
             NPCID.QueenSlimeMinionPurple,
             NPCID.HoppinJack,
             ModContent.NPCType<Blobble>(),
+            ModContent.NPCType<SeedGrowth>(),
             ModContent.NPCType<OozeBlob>(),
-            ModContent.NPCType<InfectionHive>()
+            ModContent.NPCType<InfectionHive>(),
+            ModContent.NPCType<BobTheBlob>(),
+            ModContent.NPCType<RadioactiveSlime>(),
+            ModContent.NPCType<NuclearSlime>()
         };
 
         public static List<int> IsBunny = new()
@@ -334,117 +338,6 @@ namespace Redemption.Globals
             NPCID.BunnySlimed,
             NPCID.BunnyXmas,
             NPCID.PartyBunny
-        };
-
-        /*public static List<int> IsInfected = new()
-        {
-            ModContent.NPCType<HazmatSkeleton>(),
-            ModContent.NPCType<HazmatZombie>(),
-            ModContent.NPCType<InfectedCaveBat>(),
-            ModContent.NPCType<InfectedDemonEye>(),
-            ModContent.NPCType<InfectedDiggerHead>(),
-            ModContent.NPCType<InfectedDiggerBody>(),
-            ModContent.NPCType<InfectedDiggerTail>(),
-            ModContent.NPCType<InfectedGiantBat>(),
-            ModContent.NPCType<InfectedGiantWormBody>(),
-            ModContent.NPCType<InfectedGiantWormHead>(),
-            ModContent.NPCType<InfectedGiantWormTail>(),
-            ModContent.NPCType<InfectedGiantWormTail>(),
-            ModContent.NPCType<InfectedZombie>(),
-            ModContent.NPCType<SludgyBoi>(),
-            ModContent.NPCType<XenoChomper>(),
-            ModContent.NPCType<XenomiteGargantuan>(),
-            ModContent.NPCType<XenomiteGolem>(),
-            ModContent.NPCType<XenonRoller>(),
-            ModContent.NPCType<RadiumDiggerBody>(),
-            ModContent.NPCType<RadiumDiggerTail>(),
-            ModContent.NPCType<RadiumDiggerHead>(),
-            ModContent.NPCType<Blisterling>(),
-            ModContent.NPCType<Blisterling2>(),
-            ModContent.NPCType<InfectionHive>(),
-            ModContent.NPCType<SludgyBlob>(),
-            ModContent.NPCType<SludgyBoi2>(),
-            ModContent.NPCType<Stage2Scientist>(),
-            ModContent.NPCType<WalterInfected>(),
-            ModContent.NPCType<XenoChomper2>(),
-            ModContent.NPCType<XenomiteBeast>(),
-            ModContent.NPCType<SpikyRadioactiveSlime>(),
-            ModContent.NPCType<SneezyInfectedFlinx>(),
-            ModContent.NPCType<RadiumRampager>(),
-            ModContent.NPCType<RadiumDigger2Tail>(),
-            ModContent.NPCType<RadiumDigger2Head>(),
-            ModContent.NPCType<RadiumDigger2Body>(),
-            ModContent.NPCType<RadioactiveSlime>(),
-            ModContent.NPCType<NuclearSlime>(),
-            ModContent.NPCType<InfectedSwarmer>(),
-            ModContent.NPCType<InfectedSnowFlinx>(),
-            ModContent.NPCType<InfectedChicken>(),
-            ModContent.NPCType<GreenPigron>(),
-            ModContent.NPCType<DecayedGhoul>(),
-            ModContent.NPCType<BobTheBlob>(),
-            ModContent.NPCType<Injector>(),
-            ModContent.NPCType<BileBoomer>(),
-            ModContent.NPCType<Injector>(),
-            ModContent.NPCType<IrradiatedSpear>(),
-            ModContent.NPCType<VirusJelly>(),
-            ModContent.NPCType<Superbug>(),
-            ModContent.NPCType<BloatedFaceMonster>(),
-            ModContent.NPCType<BloatedGoldfish>(),
-            ModContent.NPCType<IrradiatedWorldFeederTail>(),
-            ModContent.NPCType<IrradiatedWorldFeederHead>(),
-            ModContent.NPCType<IrradiatedWorldFeederBody>(),
-            ModContent.NPCType<NerveParasite>(),
-            ModContent.NPCType<RadioactiveSlimer>(),
-            ModContent.NPCType<Xenoling>(),
-            ModContent.NPCType<Superbug2>(),
-            ModContent.NPCType<Blisterface2>(),
-            ModContent.NPCType<IrradiatedBehemoth2>(),
-            ModContent.NPCType<PZ2BodyCover>(),
-            ModContent.NPCType<PZ2Fight>(),
-            ModContent.NPCType<Stage3Scientist2>(),
-            ModContent.NPCType<SeedGrowth>(),
-            ModContent.NPCType<SoI>()
-        };*/
-        public static List<int> IsGhostly = new()
-        {
-            NPCID.EnchantedSword,
-            NPCID.CrimsonAxe,
-            NPCID.CursedHammer,
-            NPCID.DesertDjinn,
-            NPCID.DungeonSpirit,
-            NPCID.FloatyGross,
-            NPCID.Ghost,
-            NPCID.PossessedArmor,
-            NPCID.Wraith,
-            NPCID.Reaper,
-            NPCID.Poltergeist,
-            /*ModContent.NPCType<TheKeeper>(),
-            ModContent.NPCType<AAAA>(),
-            ModContent.NPCType<DarkSoul>(),
-            ModContent.NPCType<DarkSoul2>(),
-            ModContent.NPCType<DarkSoul3>(),
-            ModContent.NPCType<SkullDigger>(),
-            ModContent.NPCType<WanderingSoul>(),
-            ModContent.NPCType<IrradiatedSpear>(),
-            ModContent.NPCType<SoullessAssassin>(),
-            ModContent.NPCType<SoullessDueller>(),
-            ModContent.NPCType<SoullessWanderer>(),
-            ModContent.NPCType<TheKeeper_Soulless>(),
-            ModContent.NPCType<BileBoomer>(),
-            ModContent.NPCType<Shadebug>(),
-            ModContent.NPCType<LaughingMaskBig>(),
-            ModContent.NPCType<LaughingMaskMedium>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<MansionWraith>(),
-            ModContent.NPCType<MansionWraith2>(),
-            ModContent.NPCType<WardenIdle>(),
-            ModContent.NPCType<SoullessMarionette_Doll>(),
-            ModContent.NPCType<SoullessMarionette_Cross>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>()*/
         };
 
         /*public static List<int> IsSoulless = new()
@@ -605,7 +498,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Infected
-            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>());
+            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>());
             #endregion
 
             #region Armed
