@@ -12,7 +12,7 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabMusic");
 
-        public override string BestiaryIcon => "Textures/Bestiary/Laboratory";
+        public override string BestiaryIcon => "Textures/Bestiary/TeochromeIcon";
 		public override string BackgroundPath => "Textures/MapBackgrounds/LabMapBackground";
 		public override Color? BackgroundColor => base.BackgroundColor;
 

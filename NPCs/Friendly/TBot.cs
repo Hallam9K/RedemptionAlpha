@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Friendly
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0.5f;
             AnimationType = NPCID.Guide;
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<LidenBiome>().Type };
+            SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeAlpha>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

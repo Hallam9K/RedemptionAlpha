@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noTileCollide = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1");
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<LidenBiome>().Type };
+            SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
