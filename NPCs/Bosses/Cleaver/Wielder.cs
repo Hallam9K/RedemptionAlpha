@@ -58,7 +58,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -92,9 +95,25 @@ namespace Redemption.NPCs.Bosses.Cleaver
             });
         }
 
+        private bool strongHit;
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        {
+            if (item.DamageType == DamageClass.Melee)
+                strongHit = true;
+        }
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            if (projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+                strongHit = true;
+        }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.5;
+            if (strongHit)
+                damage *= 2;
+            else 
+                damage *= 0.5;
+
+            strongHit = false;
             return true;
         }
 
