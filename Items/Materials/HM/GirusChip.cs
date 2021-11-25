@@ -2,7 +2,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameConent.Creative;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,7 +30,7 @@ namespace Redemption.Items.Materials.HM
 			CreateRecipe()
 			.AddIngredient(ModContent.ItemType<AIChip>(), 1)
 			.AddIngredient(ItemID.Ectoplasm, 5)
-			.AddTile(ModContent.TileType<CorruptorTile>())
+			.AddTile(ModContent.TileType<GirusCorruptorTile>())
 			.Register();
 		}
 	}

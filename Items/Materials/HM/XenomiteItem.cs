@@ -14,7 +14,6 @@ namespace Redemption.Items.Materials.HM
 		{
             Tooltip.SetDefault("'Infects living things'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 7));
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults()

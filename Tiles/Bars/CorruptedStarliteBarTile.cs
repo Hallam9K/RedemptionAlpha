@@ -9,7 +9,7 @@ namespace Redemption.Tiles.Bars
 {
 	public class CorruptedStarliteBarTile : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
             SoundType = SoundID.Tink;
 
@@ -20,8 +20,8 @@ namespace Redemption.Tiles.Bars
             TileID.Sets.IgnoredByNpcStepUp[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-			TileObjectData.newTile.set_StyleHorizontal(true);
-			TileObjectData.newTile.set_LavaDeath(false);
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 
 			ItemDrop = ModContent.ItemType<CorruptedStarliteBar>();
