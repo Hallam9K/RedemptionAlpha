@@ -37,12 +37,16 @@ namespace Redemption.Globals.NPC
             damage = 0;
             IgnoreArmour = false;
         }
-        public void GuardBreakCheck(Terraria.NPC npc, int dustType, LegacySoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
+        public void GuardBreakCheck(Terraria.NPC npc, int dustType, LegacySoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0, bool customSound = true, string soundString = "GuardBreak")
         {
             if (GuardPoints > 0 || GuardBroken)
                 return;
 
-            SoundEngine.PlaySound(sound, npc.position);
+            if (customSound && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + soundString), npc.position);
+            else
+                SoundEngine.PlaySound(sound, npc.position);
+
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, "Guard Broken!", false, true);
             for (int i = 0; i < dustAmount; i++)
                 Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, dustType, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, Scale: dustScale);
@@ -144,7 +148,7 @@ namespace Redemption.Globals.NPC
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.2f);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.GoldCoin, SoundID.Item37, damage: 1000);
+                GuardBreakCheck(npc, DustID.GoldCoin, SoundID.Item37, damage: npc.lifeMax / 3);
             }
             return true;
         }

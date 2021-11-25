@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.value = 200f;
-            NPC.knockBackResist = 0f;
+            NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 1;
             NPC.alpha = 80;
             AIType = NPCID.IlluminantSlime;

@@ -340,35 +340,6 @@ namespace Redemption.Globals
             NPCID.PartyBunny
         };
 
-        /*public static List<int> IsSoulless = new()
-        {
-            ModContent.NPCType<SoullessAssassin>(),
-            ModContent.NPCType<SoullessDueller>(),
-            ModContent.NPCType<SoullessWanderer>(),
-            ModContent.NPCType<ShadesoulNPC>(),
-            ModContent.NPCType<SmallShadesoulNPC>(),
-            ModContent.NPCType<TheSoulless2>(),
-            ModContent.NPCType<TheSoulless>(),
-            ModContent.NPCType<Shadebug>(),
-            ModContent.NPCType<SoullessMarionette_Cross>(),
-            ModContent.NPCType<SoullessMarionette_Doll>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskMedium>(),
-            ModContent.NPCType<LaughingMaskBig>(),
-            ModContent.NPCType<TheKeeper_Soulless>(),
-            ModContent.NPCType<MansionWraith>(),
-            ModContent.NPCType<MansionWraith2>(),
-            ModContent.NPCType<WardenIdle>()
-        };
-        public static List<int> IsBloodskull = new()
-        {
-            ModContent.NPCType<BloodSkeleton>(),
-            ModContent.NPCType<BloodskullGhost>(),
-            ModContent.NPCType<BloodSkullMonster>(),
-            ModContent.NPCType<SpineTentacle_Large>(),
-            ModContent.NPCType<SpineTentacle_Small>()
-        };*/
-
         #endregion
     }
 
