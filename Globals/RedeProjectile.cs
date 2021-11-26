@@ -17,7 +17,7 @@ namespace Redemption.Globals
                 TechnicallyMelee = true;
         }
 
-        public void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
+        public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
             if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
             {
