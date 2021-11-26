@@ -19,6 +19,9 @@ namespace Redemption.Globals
                         npc.buffTime[buffIndex] -= 1;
                     }
                     break;
+                case BuffID.Wet:
+                    npc.wet = true;
+                    break;
             }
         }
     }
