@@ -71,12 +71,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .Register();
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips) // TODO: lore
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "''")
+                    "'Once a normal greatsword wielded by a well-known warrior of the Iron Realm, her final battle being against\n" +
+                    "a great bear in the mountains. The bear was slain, but the warrior's injuries sealed her death shortly after.\n" +
+                    "The icy blood of the bear fused with the blade, chilling it with an enchanting glow.\n" +
+                    "The blade laid to rest besides it's owner, until another warrior discovered it many years later.'")
                 {
                     overrideColor = Color.LightGray
                 };
