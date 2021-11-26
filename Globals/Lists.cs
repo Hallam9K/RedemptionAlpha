@@ -528,7 +528,7 @@ namespace Redemption.Globals
 
             #region Earth
 
-            Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ModContent.ProjectileType<AncientGladestonePillar>());
+            Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ModContent.ProjectileType<AncientGladestonePillar>(), ModContent.ProjectileType<EaglecrestSling_Throw>(), ModContent.ProjectileType<EaglecrestJavelin_Proj>());
 
             #endregion
 

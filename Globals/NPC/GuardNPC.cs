@@ -71,6 +71,8 @@ namespace Redemption.Globals.NPC
 
             if (ProjectileTags.Psychic.Has(projectile.type))
                 IgnoreArmour = true;
+            if (projectile.type == ProjectileID.PaladinsHammerFriendly)
+                damage *= 3;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

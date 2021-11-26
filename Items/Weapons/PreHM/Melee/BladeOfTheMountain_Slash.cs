@@ -112,7 +112,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit);
+            RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

@@ -60,7 +60,7 @@ namespace Redemption.Globals
                     tooltips.Add(axeLine);
                 }
             }
-            if (item.hammer > 0)
+            if (item.hammer > 0 || item.type == ItemID.PaladinsHammer)
             {
                 TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals triple damage to Guard Points") { overrideColor = Colors.RarityOrange };
                 tooltips.Add(axeLine);
@@ -85,7 +85,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Earth.Has(item.type) || ProjectileTags.Earth.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Earth") { overrideColor = Color.SandyBrown };
+                    TooltipLine line = new(Mod, "Element", "Earth Bonus: Deals extra damage and has a chance to stun grounded enemies") { overrideColor = Color.SandyBrown };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Fire.Has(item.type) || ProjectileTags.Fire.Has(item.shoot))

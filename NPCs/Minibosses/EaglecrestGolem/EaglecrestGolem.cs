@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Summon;
 using System;
@@ -141,7 +142,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientPebble>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestJavelin>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestSling>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }

@@ -39,6 +39,7 @@ namespace Redemption.Globals.NPC
         public bool blackHeart;
         public bool bileDebuff;
         public bool electrified;
+        public bool stunned;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -55,6 +56,7 @@ namespace Redemption.Globals.NPC
             blackHeart = false;
             bileDebuff = false;
             electrified = false;
+            stunned = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -402,6 +404,21 @@ namespace Redemption.Globals.NPC
                         BaseAI.DamageNPC(npc, (int)(npc.oldVelocity.Y * 20), 0, Main.LocalPlayer, true, true);
                     frozenFallen = true;
                 }
+                return false;
+            }
+            if (stunned)
+            {
+                if (npc.noGravity && !npc.noTileCollide)
+                    npc.velocity.Y += 0.5f;
+                npc.position.X = npc.oldPosition.X;
+                if (npc.noTileCollide)
+                {
+                    npc.position.Y = npc.oldPosition.Y;
+                    npc.velocity.Y = 0;
+                }
+                npc.velocity.X = 0;
+
+                npc.frameCounter = 0;
                 return false;
             }
             return true;
