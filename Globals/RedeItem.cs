@@ -125,7 +125,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Thunder.Has(item.type) || ProjectileTags.Thunder.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Thunder") { overrideColor = Color.LightYellow };
+                    TooltipLine line = new(Mod, "Element", "Thunder Bonus: Electrifies and deals extra damage if the target is in water") { overrideColor = Color.LightYellow };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Water.Has(item.type) || ProjectileTags.Water.Has(item.shoot))

@@ -218,6 +218,8 @@ namespace Redemption.Globals.NPC
                     if (ProjectileTags.Poison.Has(projectile.type))
                         damage = (int)(damage * 0.1f);
                 }
+                if (npc.wet && !npc.lavaWet && ProjectileTags.Thunder.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
                 #endregion
             }
         }
@@ -248,6 +250,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(4) && ItemTags.Fire.Has(item.type))
                         npc.AddBuff(BuffID.OnFire, 180);
                 }
+                if (npc.wet && !npc.lavaWet)
+                {
+                    if (Main.rand.NextBool(2) && ItemTags.Thunder.Has(item.type))
+                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+                }
                 #endregion
             }
 
@@ -275,6 +282,11 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(4) && ProjectileTags.Fire.Has(projectile.type))
                         npc.AddBuff(BuffID.OnFire, 180);
+                }
+                if (npc.wet && !npc.lavaWet)
+                {
+                    if (Main.rand.NextBool(2) && ProjectileTags.Thunder.Has(projectile.type))
+                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
                 #endregion
             }

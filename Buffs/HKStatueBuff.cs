@@ -8,7 +8,7 @@ namespace Redemption.Buffs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("...");
-            Description.SetDefault("\"You feel like you're being watched...\"");
+            Description.SetDefault("You feel like you're being watched...");
             Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
             CanBeCleared = false;

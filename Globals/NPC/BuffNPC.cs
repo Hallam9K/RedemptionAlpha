@@ -241,8 +241,8 @@ namespace Redemption.Globals.NPC
 
                 npc.lifeRegen -= (int)(npc.velocity.Length() * 20);
 
-                if (damage < 2)
-                    damage = 2;
+                if (damage < 6)
+                    damage = 6;
             }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -373,11 +373,9 @@ namespace Redemption.Globals.NPC
             }
             if (electrified)
             {
-                if (Main.rand.NextBool(4))
+                if (Main.rand.NextBool(5))
                 {
-                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Electric, Scale: 2);
-                    Main.dust[sparkle].velocity *= 0.3f;
-                    Main.dust[sparkle].noGravity = true;
+                    DustHelper.DrawElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), DustID.Electric, 0.5f, 10, default, 0.2f);
                 }
             }
         }
