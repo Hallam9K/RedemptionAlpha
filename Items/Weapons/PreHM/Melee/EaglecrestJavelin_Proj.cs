@@ -14,6 +14,7 @@ using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.Globals.NPC;
+using System.Linq;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -36,6 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
+            Projectile.usesLocalNPCImmunity = true;
         }
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1;
@@ -80,7 +82,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             Projectile.velocity = RedeHelper.PolarVector(22, (Main.MouseWorld - player.Center).ToRotation());
                         }
                         else
+                        {
+                            player.itemTime = 2;
+                            player.itemAnimation = 2;
                             Projectile.Kill();
+                        }
                     }
                 }
                 if (Projectile.ai[0] >= 1)
@@ -105,15 +111,20 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Player player = Main.player[Projectile.owner];
                 if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 15;
 
                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
                 for (int i = 0; i < 10; i++)
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,
                         -Projectile.velocity.X * 0.01f, -Projectile.velocity.Y * 0.6f, Scale: 2);
-                for (int i = 0; i < 10; i++)
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Sandnado,
-                        -Projectile.velocity.X * 0.01f, -Projectile.velocity.Y, Scale: 2);
+                for (int i = 0; i < 3; i++)
+                    DustHelper.DrawElectricity(Projectile.Center, Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 2, 30, default, 0.1f);
+                DustHelper.DrawCircle(Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
+
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Thunderstrike").WithVolume(0.7f).WithPitchVariance(0.1f), Projectile.position);
+                if (Projectile.owner == Main.myPlayer)
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -121,6 +132,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             return true;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 30;
+            target.immune[Projectile.owner] = 0;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -147,6 +163,37 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
+        }
+    }
+    public class EaglecrestJavelin_Thunder : ModProjectile
+    {
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Lightning");
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 80;
+            Projectile.height = 80;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.extraUpdates = 100;
+            Projectile.timeLeft = 800;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = true;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 30;
+            target.immune[Projectile.owner] = 0;
+            target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
         }
     }
 }
