@@ -13,7 +13,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Javelin");
             Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +
                 "Strikes the ground with lightning wherever it lands, dealing Thunder damage");
 

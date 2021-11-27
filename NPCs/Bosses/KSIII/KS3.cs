@@ -338,7 +338,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little chicken nugget.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, null, NPC.Center, 0);
                                             }*/
                                             else
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little fleshbag.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little fleshbag.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
                                         }
                                         else
                                         {
@@ -351,7 +351,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little chicken nugget decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, 0);
                                             }*/
                                             else
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little fleshbag decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little fleshbag decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
                                         }
                                     }
                                 }
@@ -399,7 +399,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                             }
                             if (AITimer == 1150)
                             {
-                                BodyState = (int)BodyAnim.Crossed;
+                                ArmsFrameY = 1;
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Gun;
                                 HeadType = 0;
                                 NPC.netUpdate = true;
                             }
@@ -466,7 +468,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                             }
                             if (AITimer == 180)
                             {
-                                BodyState = (int)BodyAnim.Crossed;
+                                ArmsFrameY = 1;
+                                ArmsFrameX = 0;
+                                BodyState = (int)BodyAnim.Gun;
                                 NPC.netUpdate = true;
                             }
                             if (AITimer >= 240)
@@ -876,7 +880,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case ActionState.SpecialAttacks:
                     NPC.LookAtEntity(player);
                     if (AttackChoice == 0)
-                        AttackChoice = Main.rand.Next(1, 9); chance = Main.rand.NextFloat(0.5f, 1f);
+                    {
+                        AttackChoice = Main.rand.Next(1, 10);
+                        chance = Main.rand.NextFloat(0.5f, 1f);
+                        NPC.netUpdate = true;
+                    }
 
                     NPC.rotation = NPC.velocity.X * 0.01f;
                     switch ((int)AttackChoice)
@@ -884,7 +892,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         case -1:
                             if (RedeHelper.Chance(chance) && AITimer == 0)
                             {
-                                AttackChoice = Main.rand.Next(1, 9);
+                                AttackChoice = Main.rand.Next(1, 10);
                                 NPC.netUpdate = true;
                             }
                             else
@@ -975,7 +983,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1023,7 +1031,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1084,7 +1092,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1147,7 +1155,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1195,7 +1203,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1234,7 +1242,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1275,7 +1283,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -1295,6 +1303,41 @@ namespace Redemption.NPCs.Bosses.KSIII
                                                 ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                         }
                                     }
+                                }
+                                if (AITimer > 91)
+                                {
+                                    chance -= Main.rand.NextFloat(0.7f, 1f);
+                                    BodyState = (int)BodyAnim.Idle;
+                                    AITimer = 0;
+                                    AttackChoice = -1;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Missile Barrage
+                        case 9:
+                            if (AITimer == 0)
+                            {
+                                if (phase > 2 && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()) && Main.rand.NextBool(4))
+                                    AITimer = 1;
+                                else
+                                {
+                                    AttackChoice = Main.rand.Next(1, 10);
+                                    AITimer = 0;
+                                }
+                                NPC.netUpdate = true;
+                            }
+                            else
+                            {
+                                AITimer++;
+                                NPC.velocity *= 0.98f;
+                                if (AITimer == 16)
+                                {
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", NPC.whoAmI);
+                                    if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
+                                        NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                                 }
                                 if (AITimer > 91)
                                 {
@@ -1856,7 +1899,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The concept of losing to a chicken does not bode well with me...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, 0);
                             }*/
                             else
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You pack more of a punch than I thought for such a small fleshbag...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You pack more of a punch than I thought for such a small fleshbag...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
                         }
                         if (AITimer == 300 && !Main.dedServ)
                         {
@@ -1914,6 +1957,13 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                     if (RedeConfigClient.Instance.NoLoreElements || RedeBossDowned.slayerDeath >= 6)
                     {
+                        if (AITimer == 30)
+                        {
+                            HeadType = 0;
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", NPC.whoAmI);
+                            if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                        }
                         if (AITimer > 80)
                         {
                             NPC.dontTakeDamage = false;
@@ -1942,6 +1992,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             HeadType = 2;
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But you better realise I'm hardly trying. I ain't bluffing either.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                        }
+                        if (AITimer == 820)
+                        {
+                            HeadType = 0;
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", NPC.whoAmI);
+                            if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                         }
                         if (AITimer > 840)
                         {
@@ -2176,7 +2233,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for what? A bloody chicken!?", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, 0);
                             }*/
                             else
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for an annoying brat no less.", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for an annoying brat no less.", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
                         }
                     }
                     if (AITimer == 430 && !Main.dedServ)
