@@ -159,10 +159,9 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         private bool Flare;
         public override void AI()
         {
-            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
-                NPC.TargetClosest();
-
             Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
 
             DespawnHandler();
 
