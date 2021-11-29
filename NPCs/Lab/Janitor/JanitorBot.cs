@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (AIState is not ActionState.Slip && !NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            if (AIState is not ActionState.Slip && !NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
             {
                 NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
                 return false;

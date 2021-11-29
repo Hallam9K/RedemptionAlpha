@@ -23,6 +23,8 @@ namespace Redemption.Tiles.Natural
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Xenomite Crystals");
             AddMapEntry(new Color(50, 220, 50), name);
+            SoundStyle = 27;
+            SoundType = SoundID.Item;
             DustType = DustID.GreenTorch;
             Main.tileLighted[Type] = true;
         }

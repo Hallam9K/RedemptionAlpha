@@ -62,7 +62,7 @@ namespace Redemption.Globals
             }
             if (item.hammer > 0 || item.type == ItemID.PaladinsHammer)
             {
-                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals triple damage to Guard Points") { overrideColor = Colors.RarityOrange };
+                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { overrideColor = Colors.RarityOrange };
                 tooltips.Add(axeLine);
             }
 

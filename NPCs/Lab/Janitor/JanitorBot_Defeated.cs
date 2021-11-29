@@ -15,6 +15,7 @@ namespace Redemption.NPCs.Lab.Janitor
 
         public ref float State => ref NPC.ai[0];
         public ref float AITimer => ref NPC.ai[1];
+        public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Janitor");
@@ -73,15 +74,26 @@ namespace Redemption.NPCs.Lab.Janitor
                         }
                         else
                         {
+                            if (NPC.velocity.X < 1)
+                                TimerRand++;
+                            if (TimerRand >= 120)
+                            {
+                                NPC.velocity.X = 0;
+                                AITimer = 0;
+                                TimerRand = 4;
+                                State = 3;
+                                NPC.netUpdate = true;
+                            }
                             bool jumpDownPlatforms = false;
                             NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                             if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                             else { NPC.noTileCollide = false; }
-                            RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1, 12, 8, NPC.Center.Y > moveTo.Y);
+                            RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                         }
                     }
                     break;
                 case 1:
+                    AITimer++;
                     if (NPC.DistanceSQ(moveTo) < 16 * 16)
                     {
                         AITimer = 0;
@@ -91,11 +103,21 @@ namespace Redemption.NPCs.Lab.Janitor
                     }
                     else
                     {
+                        if (NPC.velocity.X < 1)
+                            TimerRand++;
+                        if (TimerRand >= 120)
+                        {
+                            NPC.velocity.X = 0;
+                            AITimer = 0;
+                            TimerRand = 4;
+                            State = 3;
+                            NPC.netUpdate = true;
+                        }
                         bool jumpDownPlatforms = false;
                         NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                         if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                         else { NPC.noTileCollide = false; }
-                        RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1, 12, 8, NPC.Center.Y > moveTo.Y);
+                        RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
                 case 2:
@@ -111,11 +133,38 @@ namespace Redemption.NPCs.Lab.Janitor
                         NPC.active = false;
                     }
                     break;
+                case 3:
+                    if (AITimer++ == 40)
+                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Ey...", true, false);
+                    if (AITimer == 180)
+                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Did you just... block my way?", true, false);
+                    if (AITimer == 340)
+                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Well screw you too!", true, false);
+                    if (AITimer > 420)
+                    {
+                        NPC.noGravity = true;
+                        NPC.noTileCollide = true;
+                        TimerRand *= 1.03f;
+                        NPC.Move(moveTo, TimerRand, 1);
+                        if (NPC.DistanceSQ(moveTo) < 16 * 16)
+                        {
+                            AITimer = 0;
+                            NPC.velocity *= 0;
+                            State = 2;
+                            NPC.netUpdate = true;
+                        }
+                    }
+                    break;
             }
         }
         private int WalkFrame;
         public override void FindFrame(int frameHeight)
         {
+            if (NPC.noTileCollide)
+            {
+                NPC.frame.Y = 4 * frameHeight;
+                return;
+            }
             if (NPC.velocity.X == 0)
             {
                 if (NPC.frameCounter++ >= 6)

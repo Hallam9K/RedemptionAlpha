@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
-    public class WideLabConsoleTile : ModTile
+    public class Stage3CorpseTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -18,55 +18,45 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
             TileObjectData.newTile.Width = 3;
-            TileObjectData.newTile.Height = 2;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+            TileObjectData.newTile.Height = 3;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.Origin = new Point16(1, 1);
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.Origin = new Point16(1, 2);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            DustType = DustID.Electric;
+            DustType = DustID.GreenTorch;
+            SoundStyle = 27;
+            SoundType = SoundID.Item;
             MinPick = 500;
-            MineResist = 3f;
+            MineResist = 7f;
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Wide Laboratory Console");
-            AddMapEntry(new Color(0, 187, 240));
-            AnimationFrameHeight = 36;
+            name.SetDefault("Crystallized Corpse");
+            AddMapEntry(new Color(54, 193, 59));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 0.0f;
-            g = 0.3f;
-            b = 0.4f;
-        }
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
-        public override void AnimateTile(ref int frame, ref int frameCounter)
-        {
-            frameCounter++;
-            if (frameCounter > 4)
-            {
-                frameCounter = 0;
-                frame++;
-                if (frame > 1)
-                    frame = 0;
-            }
+            r = 0.3f;
+            g = 1f;
+            b = 0.3f;
         }
         public override bool CanExplode(int i, int j) => false;
     }
-    public class WideLabConsole : PlaceholderTile
+    public class Stage3Corpse : PlaceholderTile
     {
         public override string Texture => "Redemption/Placeholder";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wide Laboratory Console");
+            DisplayName.SetDefault("Crystallized Corpse");
             Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.createTile = ModContent.TileType<WideLabConsoleTile>();
+            Item.createTile = ModContent.TileType<Stage3CorpseTile>();
         }
     }
 }

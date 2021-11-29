@@ -132,6 +132,8 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 143, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 169, origin.Y + 35, (ushort)ModContent.TileType<LabDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 109, origin.Y + 35, (ushort)ModContent.TileType<LabDoorClosed>());
+            GenUtils.ObjectPlace(origin.X + 62, origin.Y + 72, (ushort)ModContent.TileType<LabDoorClosed>());
+            GenUtils.ObjectPlace(origin.X + 62, origin.Y + 84, (ushort)ModContent.TileType<LabDoorClosed>());
             // Keycard Doors
             GenUtils.ObjectPlace(origin.X + 143, origin.Y + 34, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 196, origin.Y + 28, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
@@ -141,7 +143,6 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 194, origin.Y + 130, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
 
             GenUtils.ObjectPlace(origin.X + 156, origin.Y + 7, (ushort)ModContent.TileType<LabBossDoorTileH>());
-            GenUtils.ObjectPlace(origin.X + 62, origin.Y + 72, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 223, origin.Y + 179, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 128, origin.Y + 103, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 104, origin.Y + 165, (ushort)ModContent.TileType<LabBossDoorTile>());
@@ -251,6 +252,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 80, origin.Y + 67, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
             GenUtils.ObjectPlace(origin.X + 103, origin.Y + 64, (ushort)ModContent.TileType<LabCeilingMonitorTile>(), 0, 1);
             // Stage 3 Infected Scientist Arena/Side Room
+            GenUtils.ObjectPlace(origin.X + 37, origin.Y + 82, (ushort)ModContent.TileType<Stage3CorpseTile>());
             GenUtils.ObjectPlace(origin.X + 67, origin.Y + 86, (ushort)ModContent.TileType<XeniumRefineryTile>());
             GenUtils.ObjectPlace(origin.X + 74, origin.Y + 86, (ushort)ModContent.TileType<XeniumRefineryTile>());
             GenUtils.ObjectPlace(origin.X + 81, origin.Y + 86, (ushort)ModContent.TileType<XeniumRefineryTile>());
