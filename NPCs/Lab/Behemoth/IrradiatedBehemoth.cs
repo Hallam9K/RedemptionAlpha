@@ -23,7 +23,8 @@ namespace Redemption.NPCs.Lab.Behemoth
         {
             Begin,
             Crawl,
-            Attack
+            Gas,
+            Sludge
         }
 
         public ActionState AIState
@@ -35,6 +36,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public ref float AITimer => ref NPC.ai[1];
 
         public ref float TimerRand => ref NPC.ai[2];
+        public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Irradiated Behemoth");
@@ -148,9 +150,47 @@ namespace Redemption.NPCs.Lab.Behemoth
                         NPC.netUpdate = true;
                     }
                     break;
-                case ActionState.Attack:
+                case ActionState.Gas:
+                    if (AITimer == 60 || AITimer == 140)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int rot = 25 * i;
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<GreenGas_Proj>(), 60, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), false, SoundID.NPCDeath13);
+                        }
+                    }
+                    if (AITimer == 100)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int rot = 20 * i;
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<GreenGas_Proj>(), 60, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), false, SoundID.NPCDeath13);
+                        }
+                    }
+                    if (AITimer++ >= 180)
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.Crawl;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.Sludge:
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/VomitAttack").WithPitchVariance(0.1f), NPC.position);
+                    if (AITimer++ == 0)
+                        TimerRand = Main.rand.NextBool() ? MathHelper.PiOver2 : MathHelper.Pi;
+                    if (TimerRand == MathHelper.PiOver2)
+                        TimerRand2 = 1;
+
+                    if (AITimer <= 80 && NPC.frameCounter % 3 == 0)
+                    {
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<OozeBall_Proj>(), 60, RedeHelper.PolarVector(4, TimerRand), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                        TimerRand += TimerRand2 == 1 ? -0.12f : 0.12f;
+                    }
                     if (AITimer++ >= 120)
                     {
+                        TimerRand = 0;
+                        TimerRand2 = 0;
                         AITimer = 0;
                         AIState = ActionState.Crawl;
                         NPC.netUpdate = true;
@@ -176,7 +216,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         AITimer = 0;
                         HandVector.Y = 0;
                         NPC.velocity.Y = 0;
-                        AIState = ActionState.Attack;
+                        AIState = (ActionState)Main.rand.Next(2, 4);
                     }
                 }
             }
