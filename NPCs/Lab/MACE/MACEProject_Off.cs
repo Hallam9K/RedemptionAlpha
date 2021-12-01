@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 
-namespace Redemption.NPCs.Lab
+namespace Redemption.NPCs.Lab.MACE
 {
     public class MACEProject_Off : ModNPC
     {

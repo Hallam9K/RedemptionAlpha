@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.NPCs.Lab;
+using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Janitor;
+using Redemption.NPCs.Lab.MACE;
 using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +41,10 @@ namespace Redemption.Globals
             Vector2 JanitorNPCPos = new((RedeGen.LabVector.X + 181) * 16, (RedeGen.LabVector.Y + 102) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<JanitorBot_NPC>()) && RedeBossDowned.downedJanitor)
                 Terraria.NPC.NewNPC((int)JanitorNPCPos.X, (int)JanitorNPCPos.Y, ModContent.NPCType<JanitorBot_NPC>());
+
+            Vector2 BehemothPos = new(((RedeGen.LabVector.X + 214) * 16) - 2, (RedeGen.LabVector.Y + 45) * 16);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth_Inactive>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth>()) && !RedeBossDowned.downedBehemoth)
+                Terraria.NPC.NewNPC((int)BehemothPos.X, (int)BehemothPos.Y, ModContent.NPCType<IrradiatedBehemoth_Inactive>());
 
             Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 167) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()))
