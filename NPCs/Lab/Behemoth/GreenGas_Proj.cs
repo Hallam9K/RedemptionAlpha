@@ -32,6 +32,8 @@ namespace Redemption.NPCs.Lab.Behemoth
         public override void AI()
         {
             Projectile.rotation += Projectile.velocity.Length() / 40 * Projectile.spriteDirection;
+            if (Projectile.timeLeft < 60)
+                Projectile.alpha = (int)MathHelper.Lerp(255f, 200f, Projectile.timeLeft / 60f);
         }
         public override bool PreDraw(ref Color lightColor)
         {
