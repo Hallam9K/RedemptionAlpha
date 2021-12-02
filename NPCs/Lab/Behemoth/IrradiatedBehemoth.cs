@@ -217,7 +217,13 @@ namespace Redemption.NPCs.Lab.Behemoth
                         NPC.netUpdate = true;
                     }
                     break;
-
+            }
+            if (Main.LocalPlayer.Center.Y < NPC.Center.Y)
+            {
+                if (Main.rand.NextBool(5))
+                {
+                    NPC.Shoot(new Vector2(NPC.Center.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)), false, SoundID.Item1.WithVolume(0));
+                }
             }
         }
         private int AniFrameY;
