@@ -82,6 +82,7 @@ namespace Redemption.NPCs.PreHM
             NPC.lavaImmune = true;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<AncientGladestoneGolemBanner>();
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 4;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -102,6 +103,19 @@ namespace Redemption.NPCs.PreHM
                 AITimer = 0;
                 AIState = ActionState.Threatened;
             }
+        }
+
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            {
+                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.DD2_WitherBeastCrystalImpact);
+                return false;
+            }
+            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Stone, SoundID.Item37, 20, 2, 10);
+
+            damage *= 2;
+            return true;
         }
 
         public NPC npcTarget;

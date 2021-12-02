@@ -1,9 +1,12 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals.Player;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Trees;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -43,6 +46,21 @@ namespace Redemption.Tiles.Tiles
             AddMapEntry(new Color(204, 215, 191));
             ItemDrop = ModContent.ItemType<IrradiatedSnow>();
             SetModTree(new IrradiatedBorealTree());
+        }
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            Player player = Main.LocalPlayer;
+            Radiation modPlayer = player.GetModPlayer<Radiation>();
+            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
+            float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 0.5f, j + 0.5f));
+            if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
+            {
+                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(6) && !Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+
+                if (Main.rand.NextBool(100) && modPlayer.irradiatedLevel < 2)
+                    modPlayer.irradiatedLevel++;
+            }
         }
         public override void RandomUpdate(int i, int j)
         {

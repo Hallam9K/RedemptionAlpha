@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -50,8 +51,7 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.velocity = Vector2.Zero;
-            npc.position = npc.oldPosition;
+            npc.GetGlobalNPC<BuffNPC>().stunned = true;
         }
     }
 }

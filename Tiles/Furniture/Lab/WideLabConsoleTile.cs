@@ -26,7 +26,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.Origin = new Point16(1, 1);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            DustType = 7;
+            DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 3f;
             ModTranslation name = CreateMapEntryName();

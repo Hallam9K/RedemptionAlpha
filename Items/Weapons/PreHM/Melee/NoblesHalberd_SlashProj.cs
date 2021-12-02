@@ -112,7 +112,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (crit)
                 damage += damage / 2;
 
-            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit, 80);
+            RedeProjectile.Decapitation(target, ref damage, ref crit, 80);
         }
 
         public override bool PreDraw(ref Color lightColor)

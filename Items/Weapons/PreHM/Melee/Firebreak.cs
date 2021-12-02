@@ -47,7 +47,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
                 Projectile.NewProjectile(player.GetProjectileSource_Item(Item), spawn,
                     RedeHelper.PolarVector(30, (target.Center + target.velocity * 20f - spawn).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)),
-                    ModContent.ProjectileType<Firebreak_Proj>(), damage / 2, knockBack, Main.myPlayer);
+                    ModContent.ProjectileType<Firebreak_Proj>(), 13, knockBack, Main.myPlayer);
             }
         }
         public override void AddRecipes()

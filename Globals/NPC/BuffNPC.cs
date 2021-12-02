@@ -39,6 +39,7 @@ namespace Redemption.Globals.NPC
         public bool blackHeart;
         public bool bileDebuff;
         public bool electrified;
+        public bool stunned;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -55,6 +56,7 @@ namespace Redemption.Globals.NPC
             blackHeart = false;
             bileDebuff = false;
             electrified = false;
+            stunned = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -116,6 +118,14 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
+                }
+                if (NPCTags.Infected.Has(i))
+                {
+                    AddDebuffImmunity(i, new int[] {
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>() });
                 }
                 if (NPCLists.IsSlime.Contains(i))
                 {
@@ -233,8 +243,8 @@ namespace Redemption.Globals.NPC
 
                 npc.lifeRegen -= (int)(npc.velocity.Length() * 20);
 
-                if (damage < 2)
-                    damage = 2;
+                if (damage < 6)
+                    damage = 6;
             }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -365,11 +375,9 @@ namespace Redemption.Globals.NPC
             }
             if (electrified)
             {
-                if (Main.rand.NextBool(4))
+                if (Main.rand.NextBool(5))
                 {
-                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Electric, Scale: 2);
-                    Main.dust[sparkle].velocity *= 0.3f;
-                    Main.dust[sparkle].noGravity = true;
+                    DustHelper.DrawElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), DustID.Electric, 0.5f, 10, default, 0.2f);
                 }
             }
         }
@@ -396,6 +404,21 @@ namespace Redemption.Globals.NPC
                         BaseAI.DamageNPC(npc, (int)(npc.oldVelocity.Y * 20), 0, Main.LocalPlayer, true, true);
                     frozenFallen = true;
                 }
+                return false;
+            }
+            if (stunned)
+            {
+                if (npc.noGravity && !npc.noTileCollide)
+                    npc.velocity.Y += 0.5f;
+                npc.position.X = npc.oldPosition.X;
+                if (npc.noTileCollide)
+                {
+                    npc.position.Y = npc.oldPosition.Y;
+                    npc.velocity.Y = 0;
+                }
+                npc.velocity.X = 0;
+
+                npc.frameCounter = 0;
                 return false;
             }
             return true;

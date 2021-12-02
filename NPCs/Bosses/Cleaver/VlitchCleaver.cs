@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;
             NPC.SpawnWithHigherTime(30);
-            NPC.value = 600f;
+            NPC.value = Item.buyPrice(0, 15, 0, 0);
             NPC.boss = true;
             NPC.knockBackResist = 0.0f;
             NPC.aiStyle = -1;
@@ -86,13 +86,13 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noTileCollide = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1");
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandSnowBiome>().Type };
+            SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.")
             });
         }
 

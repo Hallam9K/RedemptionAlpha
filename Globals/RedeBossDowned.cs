@@ -26,6 +26,11 @@ namespace Redemption.Globals
         public static int erhanDeath;
         public static int slayerDeath;
         public static bool nukeDropped;
+        public static bool downedJanitor;
+        public static bool downedBehemoth;
+        public static bool downedBlisterface;
+        public static bool downedVolt;
+        public static bool downedMACE;
 
         public override void OnWorldLoad()
         {
@@ -46,7 +51,11 @@ namespace Redemption.Globals
             erhanDeath = 0;
             slayerDeath = 0;
             nukeDropped = false;
-            //downedOtherBoss = false;
+            downedJanitor = false;
+            downedBehemoth = false;
+            downedBlisterface = false;
+            downedVolt = false;
+            downedMACE = false;
         }
 
         public override void OnWorldUnload()
@@ -68,7 +77,11 @@ namespace Redemption.Globals
             erhanDeath = 0;
             slayerDeath = 0;
             nukeDropped = false;
-            //downedOtherBoss = false;
+            downedJanitor = false;
+            downedBehemoth = false;
+            downedBlisterface = false;
+            downedVolt = false;
+            downedMACE = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -105,6 +118,16 @@ namespace Redemption.Globals
                 downed.Add("downedErhan");
             if (nukeDropped)
                 downed.Add("nukeDropped");
+            if (downedJanitor)
+                downed.Add("downedJanitor");
+            if (downedBehemoth)
+                downed.Add("downedBehemoth");
+            if (downedBlisterface)
+                downed.Add("downedBlisterface");
+            if (downedVolt)
+                downed.Add("downedVolt");
+            if (downedMACE)
+                downed.Add("downedMACE");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -132,7 +155,11 @@ namespace Redemption.Globals
             erhanDeath = tag.GetInt("erhanDeath");
             slayerDeath = tag.GetInt("slayerDeath");
             nukeDropped = downed.Contains("nukeDropped");
-            //downedOtherBoss = downed.Contains("downedOtherBoss");
+            downedJanitor = downed.Contains("downedJanitor");
+            downedBehemoth = downed.Contains("downedBehemoth");
+            downedBlisterface = downed.Contains("downedBlisterface");
+            downedVolt = downed.Contains("downedVolt");
+            downedMACE = downed.Contains("downedMACE");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -148,14 +175,21 @@ namespace Redemption.Globals
             flags[7] = downedEaglecrestGolem;
             writer.Write(flags);
             var flags2 = new BitsByte();
-            flags[0] = foundNewb;
-            flags[1] = downedSlayer;
-            flags[2] = downedVlitch1;
-            flags[3] = downedVlitch2;
-            flags[4] = downedVlitch3;
-            flags[5] = downedErhan;
-            flags[6] = nukeDropped;
-            writer.Write(flags2);
+            flags2[0] = foundNewb;
+            flags2[1] = downedSlayer;
+            flags2[2] = downedVlitch1;
+            flags2[3] = downedVlitch2;
+            flags2[4] = downedVlitch3;
+            flags2[5] = downedErhan;
+            flags2[6] = nukeDropped;
+            flags2[7] = downedJanitor;
+            writer.Write(flags2); 
+            var flags3 = new BitsByte();
+            flags3[0] = downedBehemoth;
+            flags3[1] = downedBlisterface;
+            flags3[2] = downedVolt;
+            flags3[3] = downedMACE;
+            writer.Write(flags3);
 
             writer.Write(erhanDeath);
             writer.Write(slayerDeath);
@@ -180,6 +214,12 @@ namespace Redemption.Globals
             downedVlitch3 = flags2[4];
             downedErhan = flags2[5];
             nukeDropped = flags2[6];
+            downedJanitor = flags2[7];
+            BitsByte flags3 = reader.ReadByte();
+            downedBehemoth = flags3[0];
+            downedBlisterface = flags3[1];
+            downedVolt = flags3[2];
+            downedMACE = flags3[3];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

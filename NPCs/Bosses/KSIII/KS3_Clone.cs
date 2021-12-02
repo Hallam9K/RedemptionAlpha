@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.npcSlots = 10f;
             NPC.SpawnWithHigherTime(30);
             NPC.knockBackResist = 0f;
-            NPC.value = Item.buyPrice(0, 10, 0, 0);
+            NPC.value = Item.buyPrice(0, 15, 0, 0);
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.boss = true;
@@ -571,7 +571,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case ActionState.SpecialAttacks:
                     NPC.LookAtEntity(player);
                     if (AttackChoice == 0)
-                        AttackChoice = Main.rand.Next(1, 9); chance = Main.rand.NextFloat(0.5f, 1f);
+                    {
+                        AttackChoice = Main.rand.Next(1, 10);
+                        chance = Main.rand.NextFloat(0.5f, 1f);
+                        NPC.netUpdate = true;
+                    }
 
                     NPC.rotation = NPC.velocity.X * 0.01f;
                     switch ((int)AttackChoice)
@@ -579,7 +583,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         case -1:
                             if (RedeHelper.Chance(chance) && AITimer == 0)
                             {
-                                AttackChoice = Main.rand.Next(1, 9);
+                                AttackChoice = Main.rand.Next(1, 10);
                                 NPC.netUpdate = true;
                             }
                             else
@@ -668,7 +672,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -716,7 +720,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -777,7 +781,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -840,7 +844,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -888,7 +892,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -927,7 +931,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -968,7 +972,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 1;
                                 else
                                 {
-                                    AttackChoice = Main.rand.Next(1, 9);
+                                    AttackChoice = Main.rand.Next(1, 10);
                                     AITimer = 0;
                                 }
                                 NPC.netUpdate = true;
@@ -988,6 +992,41 @@ namespace Redemption.NPCs.Bosses.KSIII
                                                 ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                         }
                                     }
+                                }
+                                if (AITimer > 91)
+                                {
+                                    chance -= Main.rand.NextFloat(0.7f, 1f);
+                                    BodyState = (int)BodyAnim.Idle;
+                                    AITimer = 0;
+                                    AttackChoice = -1;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Missile Barrage
+                        case 9:
+                            if (AITimer == 0)
+                            {
+                                if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()) && Main.rand.NextBool(4))
+                                    AITimer = 1;
+                                else
+                                {
+                                    AttackChoice = Main.rand.Next(1, 10);
+                                    AITimer = 0;
+                                }
+                                NPC.netUpdate = true;
+                            }
+                            else
+                            {
+                                AITimer++;
+                                NPC.velocity *= 0.98f;
+                                if (AITimer == 16)
+                                {
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", NPC.whoAmI);
+                                    if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
+                                        NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                                 }
                                 if (AITimer > 91)
                                 {

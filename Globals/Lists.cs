@@ -33,6 +33,7 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Wasteland;
+using Redemption.NPCs.Lab.Janitor;
 
 namespace Redemption.Globals
 {
@@ -323,8 +324,12 @@ namespace Redemption.Globals
             NPCID.QueenSlimeMinionPurple,
             NPCID.HoppinJack,
             ModContent.NPCType<Blobble>(),
+            ModContent.NPCType<SeedGrowth>(),
             ModContent.NPCType<OozeBlob>(),
-            ModContent.NPCType<InfectionHive>()
+            ModContent.NPCType<InfectionHive>(),
+            ModContent.NPCType<BobTheBlob>(),
+            ModContent.NPCType<RadioactiveSlime>(),
+            ModContent.NPCType<NuclearSlime>()
         };
 
         public static List<int> IsBunny = new()
@@ -335,146 +340,6 @@ namespace Redemption.Globals
             NPCID.BunnyXmas,
             NPCID.PartyBunny
         };
-
-        /*public static List<int> IsInfected = new()
-        {
-            ModContent.NPCType<HazmatSkeleton>(),
-            ModContent.NPCType<HazmatZombie>(),
-            ModContent.NPCType<InfectedCaveBat>(),
-            ModContent.NPCType<InfectedDemonEye>(),
-            ModContent.NPCType<InfectedDiggerHead>(),
-            ModContent.NPCType<InfectedDiggerBody>(),
-            ModContent.NPCType<InfectedDiggerTail>(),
-            ModContent.NPCType<InfectedGiantBat>(),
-            ModContent.NPCType<InfectedGiantWormBody>(),
-            ModContent.NPCType<InfectedGiantWormHead>(),
-            ModContent.NPCType<InfectedGiantWormTail>(),
-            ModContent.NPCType<InfectedGiantWormTail>(),
-            ModContent.NPCType<InfectedZombie>(),
-            ModContent.NPCType<SludgyBoi>(),
-            ModContent.NPCType<XenoChomper>(),
-            ModContent.NPCType<XenomiteGargantuan>(),
-            ModContent.NPCType<XenomiteGolem>(),
-            ModContent.NPCType<XenonRoller>(),
-            ModContent.NPCType<RadiumDiggerBody>(),
-            ModContent.NPCType<RadiumDiggerTail>(),
-            ModContent.NPCType<RadiumDiggerHead>(),
-            ModContent.NPCType<Blisterling>(),
-            ModContent.NPCType<Blisterling2>(),
-            ModContent.NPCType<InfectionHive>(),
-            ModContent.NPCType<SludgyBlob>(),
-            ModContent.NPCType<SludgyBoi2>(),
-            ModContent.NPCType<Stage2Scientist>(),
-            ModContent.NPCType<WalterInfected>(),
-            ModContent.NPCType<XenoChomper2>(),
-            ModContent.NPCType<XenomiteBeast>(),
-            ModContent.NPCType<SpikyRadioactiveSlime>(),
-            ModContent.NPCType<SneezyInfectedFlinx>(),
-            ModContent.NPCType<RadiumRampager>(),
-            ModContent.NPCType<RadiumDigger2Tail>(),
-            ModContent.NPCType<RadiumDigger2Head>(),
-            ModContent.NPCType<RadiumDigger2Body>(),
-            ModContent.NPCType<RadioactiveSlime>(),
-            ModContent.NPCType<NuclearSlime>(),
-            ModContent.NPCType<InfectedSwarmer>(),
-            ModContent.NPCType<InfectedSnowFlinx>(),
-            ModContent.NPCType<InfectedChicken>(),
-            ModContent.NPCType<GreenPigron>(),
-            ModContent.NPCType<DecayedGhoul>(),
-            ModContent.NPCType<BobTheBlob>(),
-            ModContent.NPCType<Injector>(),
-            ModContent.NPCType<BileBoomer>(),
-            ModContent.NPCType<Injector>(),
-            ModContent.NPCType<IrradiatedSpear>(),
-            ModContent.NPCType<VirusJelly>(),
-            ModContent.NPCType<Superbug>(),
-            ModContent.NPCType<BloatedFaceMonster>(),
-            ModContent.NPCType<BloatedGoldfish>(),
-            ModContent.NPCType<IrradiatedWorldFeederTail>(),
-            ModContent.NPCType<IrradiatedWorldFeederHead>(),
-            ModContent.NPCType<IrradiatedWorldFeederBody>(),
-            ModContent.NPCType<NerveParasite>(),
-            ModContent.NPCType<RadioactiveSlimer>(),
-            ModContent.NPCType<Xenoling>(),
-            ModContent.NPCType<Superbug2>(),
-            ModContent.NPCType<Blisterface2>(),
-            ModContent.NPCType<IrradiatedBehemoth2>(),
-            ModContent.NPCType<PZ2BodyCover>(),
-            ModContent.NPCType<PZ2Fight>(),
-            ModContent.NPCType<Stage3Scientist2>(),
-            ModContent.NPCType<SeedGrowth>(),
-            ModContent.NPCType<SoI>()
-        };*/
-        public static List<int> IsGhostly = new()
-        {
-            NPCID.EnchantedSword,
-            NPCID.CrimsonAxe,
-            NPCID.CursedHammer,
-            NPCID.DesertDjinn,
-            NPCID.DungeonSpirit,
-            NPCID.FloatyGross,
-            NPCID.Ghost,
-            NPCID.PossessedArmor,
-            NPCID.Wraith,
-            NPCID.Reaper,
-            NPCID.Poltergeist,
-            /*ModContent.NPCType<TheKeeper>(),
-            ModContent.NPCType<AAAA>(),
-            ModContent.NPCType<DarkSoul>(),
-            ModContent.NPCType<DarkSoul2>(),
-            ModContent.NPCType<DarkSoul3>(),
-            ModContent.NPCType<SkullDigger>(),
-            ModContent.NPCType<WanderingSoul>(),
-            ModContent.NPCType<IrradiatedSpear>(),
-            ModContent.NPCType<SoullessAssassin>(),
-            ModContent.NPCType<SoullessDueller>(),
-            ModContent.NPCType<SoullessWanderer>(),
-            ModContent.NPCType<TheKeeper_Soulless>(),
-            ModContent.NPCType<BileBoomer>(),
-            ModContent.NPCType<Shadebug>(),
-            ModContent.NPCType<LaughingMaskBig>(),
-            ModContent.NPCType<LaughingMaskMedium>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<MansionWraith>(),
-            ModContent.NPCType<MansionWraith2>(),
-            ModContent.NPCType<WardenIdle>(),
-            ModContent.NPCType<SoullessMarionette_Doll>(),
-            ModContent.NPCType<SoullessMarionette_Cross>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskSmall>()*/
-        };
-
-        /*public static List<int> IsSoulless = new()
-        {
-            ModContent.NPCType<SoullessAssassin>(),
-            ModContent.NPCType<SoullessDueller>(),
-            ModContent.NPCType<SoullessWanderer>(),
-            ModContent.NPCType<ShadesoulNPC>(),
-            ModContent.NPCType<SmallShadesoulNPC>(),
-            ModContent.NPCType<TheSoulless2>(),
-            ModContent.NPCType<TheSoulless>(),
-            ModContent.NPCType<Shadebug>(),
-            ModContent.NPCType<SoullessMarionette_Cross>(),
-            ModContent.NPCType<SoullessMarionette_Doll>(),
-            ModContent.NPCType<LaughingMaskSmall>(),
-            ModContent.NPCType<LaughingMaskMedium>(),
-            ModContent.NPCType<LaughingMaskBig>(),
-            ModContent.NPCType<TheKeeper_Soulless>(),
-            ModContent.NPCType<MansionWraith>(),
-            ModContent.NPCType<MansionWraith2>(),
-            ModContent.NPCType<WardenIdle>()
-        };
-        public static List<int> IsBloodskull = new()
-        {
-            ModContent.NPCType<BloodSkeleton>(),
-            ModContent.NPCType<BloodskullGhost>(),
-            ModContent.NPCType<BloodSkullMonster>(),
-            ModContent.NPCType<SpineTentacle_Large>(),
-            ModContent.NPCType<SpineTentacle_Small>()
-        };*/
 
         #endregion
     }
@@ -601,11 +466,11 @@ namespace Redemption.Globals
             #endregion
 
             #region Inorganic
-            Inorganic.SetMultiple(NPCID.GraniteFlyer, NPCID.GraniteGolem, NPCID.MeteorHead, NPCID.Mimic, NPCID.BigMimicCorruption, NPCID.BigMimicCrimson, NPCID.BigMimicHallow, NPCID.BigMimicJungle, NPCID.IceMimic, NPCID.PresentMimic, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.EnchantedSword, NPCID.IceElemental, NPCID.MartianProbe, NPCID.PossessedArmor, NPCID.Pixie, NPCID.Paladin, NPCID.RockGolem, NPCID.ChatteringTeethBomb, NPCID.AngryNimbus, NPCID.IceGolem, NPCID.Tumbleweed, NPCID.MisterStabby, NPCID.SnowmanGangsta, NPCID.SnowBalla, NPCID.DeadlySphere, NPCID.MartianDrone, NPCID.MartianWalker, NPCID.MartianTurret, NPCID.Flocko, NPCID.GingerbreadMan, NPCID.Nutcracker, NPCID.NutcrackerSpinning, NPCID.SolarCorite, NPCID.Golem, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead, NPCID.GolemHeadFree, NPCID.SkeletronPrime, NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.TheDestroyer, NPCID.TheDestroyerBody, NPCID.TheDestroyerTail, NPCID.Spazmatism, NPCID.Retinazer, NPCID.PirateShipCannon, NPCID.IceQueen, NPCID.SantaNK1, NPCID.MartianSaucer, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore, NPCID.MartianSaucerTurret, NPCID.Probe, ModContent.NPCType<AncientGladestoneGolem>(), ModContent.NPCType<EaglecrestGolem>(), ModContent.NPCType<EaglecrestGolem_Sleep>(), ModContent.NPCType<EaglecrestRockPile>(), ModContent.NPCType<KS3>(), ModContent.NPCType<KS3_Clone>(), ModContent.NPCType<KS3_Magnet>(), ModContent.NPCType<KS3_MissileDrone>(), ModContent.NPCType<KS3_ScannerDrone>(), ModContent.NPCType<SpaceKeeper>(), ModContent.NPCType<Wielder>(), ModContent.NPCType<VlitchCleaver>());
+            Inorganic.SetMultiple(NPCID.GraniteFlyer, NPCID.GraniteGolem, NPCID.MeteorHead, NPCID.Mimic, NPCID.BigMimicCorruption, NPCID.BigMimicCrimson, NPCID.BigMimicHallow, NPCID.BigMimicJungle, NPCID.IceMimic, NPCID.PresentMimic, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.EnchantedSword, NPCID.IceElemental, NPCID.MartianProbe, NPCID.PossessedArmor, NPCID.Pixie, NPCID.Paladin, NPCID.RockGolem, NPCID.ChatteringTeethBomb, NPCID.AngryNimbus, NPCID.IceGolem, NPCID.Tumbleweed, NPCID.MisterStabby, NPCID.SnowmanGangsta, NPCID.SnowBalla, NPCID.DeadlySphere, NPCID.MartianDrone, NPCID.MartianWalker, NPCID.MartianTurret, NPCID.Flocko, NPCID.GingerbreadMan, NPCID.Nutcracker, NPCID.NutcrackerSpinning, NPCID.SolarCorite, NPCID.Golem, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.GolemHead, NPCID.GolemHeadFree, NPCID.SkeletronPrime, NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.TheDestroyer, NPCID.TheDestroyerBody, NPCID.TheDestroyerTail, NPCID.Spazmatism, NPCID.Retinazer, NPCID.PirateShipCannon, NPCID.IceQueen, NPCID.SantaNK1, NPCID.MartianSaucer, NPCID.MartianSaucerCannon, NPCID.MartianSaucerCore, NPCID.MartianSaucerTurret, NPCID.Probe, ModContent.NPCType<AncientGladestoneGolem>(), ModContent.NPCType<EaglecrestGolem>(), ModContent.NPCType<EaglecrestGolem_Sleep>(), ModContent.NPCType<EaglecrestRockPile>(), ModContent.NPCType<KS3>(), ModContent.NPCType<KS3_Clone>(), ModContent.NPCType<KS3_Magnet>(), ModContent.NPCType<KS3_MissileDrone>(), ModContent.NPCType<KS3_ScannerDrone>(), ModContent.NPCType<SpaceKeeper>(), ModContent.NPCType<Wielder>(), ModContent.NPCType<VlitchCleaver>(), ModContent.NPCType<JanitorBot>());
             #endregion
 
             #region Infected
-            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>());
+            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>());
             #endregion
 
             #region Armed
@@ -652,7 +517,7 @@ namespace Redemption.Globals
 
             #region Water
 
-            Water.SetMultiple(ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.BlueMoon, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ModContent.ProjectileType<WaterOrb>(), ModContent.ProjectileType<WaterOrbS>());
+            Water.SetMultiple(ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.BlueMoon, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ModContent.ProjectileType<WaterOrb>(), ModContent.ProjectileType<WaterOrbS>(), ModContent.ProjectileType<BucketSplash>());
 
             #endregion
 
@@ -664,7 +529,7 @@ namespace Redemption.Globals
 
             #region Earth
 
-            Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ModContent.ProjectileType<AncientGladestonePillar>());
+            Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ModContent.ProjectileType<AncientGladestonePillar>(), ModContent.ProjectileType<EaglecrestSling_Throw>(), ModContent.ProjectileType<EaglecrestJavelin_Proj>());
 
             #endregion
 
@@ -676,7 +541,7 @@ namespace Redemption.Globals
 
             #region Thunder
 
-            Thunder.SetMultiple(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill, ModContent.ProjectileType<KS3_BeamCell>(), ModContent.ProjectileType<KS3_MagnetBeam>(), ModContent.ProjectileType<Electronade_TeslaField>(), ModContent.ProjectileType<Electronade_Proj>());
+            Thunder.SetMultiple(ProjectileID.RuneBlast, ProjectileID.MagnetSphereBall, ProjectileID.MagnetSphereBolt, ProjectileID.UFOLaser, ProjectileID.ScutlixLaser, ProjectileID.ScutlixLaserFriendly, ProjectileID.MartianTurretBolt, ProjectileID.BrainScramblerBolt, ProjectileID.GigaZapperSpear, ProjectileID.RayGunnerLaser, ProjectileID.LaserMachinegunLaser, ProjectileID.Electrosphere, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerDeathray, ProjectileID.SaucerLaser, ProjectileID.InfluxWaver, ProjectileID.ChargedBlasterLaser, ProjectileID.ChargedBlasterOrb, ProjectileID.PhantasmalBolt, ProjectileID.CultistBossLightningOrb, ProjectileID.CultistBossLightningOrbArc, ProjectileID.DeadlySphere, ProjectileID.VortexVortexLightning, ProjectileID.VortexLightning, ProjectileID.MartianWalkerLaser, ProjectileID.VortexBeaterRocket, ProjectileID.DD2LightningBugZap, ProjectileID.DD2LightningAuraT1, ProjectileID.DD2LightningAuraT2, ProjectileID.DD2LightningAuraT3, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.MonkStaffT3_AltShot, ProjectileID.ThunderSpear, ProjectileID.ThunderStaffShot, ProjectileID.ThunderSpearShot, ProjectileID.ZapinatorLaser, ProjectileID.VortexDrill, ModContent.ProjectileType<KS3_BeamCell>(), ModContent.ProjectileType<KS3_MagnetBeam>(), ModContent.ProjectileType<Electronade_TeslaField>(), ModContent.ProjectileType<Electronade_Proj>(), ModContent.ProjectileType<EaglecrestJavelin_Thunder>());
 
             #endregion
 

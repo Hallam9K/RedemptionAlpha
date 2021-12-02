@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Biomes;
+using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.PreHM;
@@ -120,6 +121,10 @@ namespace Redemption.Globals.NPC
                     if (ItemTags.Poison.Has(item.type))
                         damage = (int)(damage * 0.1f);
                 }
+                if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ItemTags.Thunder.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+                if (!npc.noTileCollide && npc.collideY && ItemTags.Earth.Has(item.type))
+                    damage = (int)(damage * 1.25f);
                 #endregion
             }
 
@@ -218,6 +223,10 @@ namespace Redemption.Globals.NPC
                     if (ProjectileTags.Poison.Has(projectile.type))
                         damage = (int)(damage * 0.1f);
                 }
+                if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ProjectileTags.Thunder.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+                if (!npc.noTileCollide && npc.collideY && ProjectileTags.Earth.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
                 #endregion
             }
         }
@@ -248,6 +257,16 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(4) && ItemTags.Fire.Has(item.type))
                         npc.AddBuff(BuffID.OnFire, 180);
                 }
+                if ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet))
+                {
+                    if (Main.rand.NextBool(2) && ItemTags.Thunder.Has(item.type))
+                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+                }
+                if (!npc.noTileCollide && npc.collideY && npc.knockBackResist > 0)
+                {
+                    if (Main.rand.NextBool(8) && ItemTags.Earth.Has(item.type))
+                        npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
+                }
                 #endregion
             }
 
@@ -275,6 +294,16 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(4) && ProjectileTags.Fire.Has(projectile.type))
                         npc.AddBuff(BuffID.OnFire, 180);
+                }
+                if ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet))
+                {
+                    if (Main.rand.NextBool(2) && ProjectileTags.Thunder.Has(projectile.type))
+                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+                }
+                if (!npc.noTileCollide && npc.collideY && npc.knockBackResist > 0)
+                {
+                    if (Main.rand.NextBool(8) && ProjectileTags.Earth.Has(projectile.type))
+                        npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
                 }
                 #endregion
             }
@@ -355,7 +384,10 @@ namespace Redemption.Globals.NPC
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {
                 pool.Clear();
-                pool.Add(ModContent.NPCType<HazmatZombie>(), 0.1f);
+                pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
+                pool.Add(ModContent.NPCType<BobTheBlob>(), 0.05f);
+                pool.Add(ModContent.NPCType<RadioactiveSlime>(), 0.9f);
+                pool.Add(ModContent.NPCType<NuclearSlime>(), 0.3f);
             }
         }
     }

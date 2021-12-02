@@ -25,7 +25,8 @@ namespace Redemption.Tiles.Ores
             ItemDrop = ModContent.ItemType<XenomiteShard>();
             MinPick = 100;
             MineResist = 4f;
-            SoundType = SoundID.Tink;
+            SoundStyle = 27;
+            SoundType = SoundID.Item;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Xenomite Shard");
             AddMapEntry(new Color(54, 193, 59), name);

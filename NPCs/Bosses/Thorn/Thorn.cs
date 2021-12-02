@@ -89,6 +89,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPC.boss = true;
             NPC.netAlways = true;
             NPC.noTileCollide = false;
+            NPC.value = Item.buyPrice(0, 1, 0, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             BossBag = ModContent.ItemType<ThornBag>();

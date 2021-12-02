@@ -105,10 +105,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             if (Projectile.ai[0] == 0)
             {
-                player.itemRotation = MathHelper.ToRadians(-90f);
+                player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
             }
             else
-                player.itemRotation = (player.Center - Projectile.Center).ToRotation() + (player.direction == 1 ? MathHelper.Pi : 0);
+                player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -116,7 +116,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (target.knockBackResist > 0)
                 target.velocity.Y = -10 * target.knockBackResist;
 
-            Projectile.GetGlobalProjectile<RedeProjectile>().Decapitation(target, ref damage, ref crit);
+            RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
 
         public override bool PreDraw(ref Color lightColor)
