@@ -34,6 +34,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Wasteland;
 using Redemption.NPCs.Lab.Janitor;
+using Redemption.NPCs.Lab.Behemoth;
 
 namespace Redemption.Globals
 {
@@ -329,7 +330,8 @@ namespace Redemption.Globals
             ModContent.NPCType<InfectionHive>(),
             ModContent.NPCType<BobTheBlob>(),
             ModContent.NPCType<RadioactiveSlime>(),
-            ModContent.NPCType<NuclearSlime>()
+            ModContent.NPCType<NuclearSlime>(),
+            ModContent.NPCType<IrradiatedBehemoth>()
         };
 
         public static List<int> IsBunny = new()
@@ -470,7 +472,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Infected
-            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>());
+            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>());
             #endregion
 
             #region Armed
@@ -535,7 +537,7 @@ namespace Redemption.Globals
 
             #region Wind
 
-            Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.WeatherPainShot, ModContent.ProjectileType<FireSlash_Proj>(), ModContent.ProjectileType<RockSlash_Proj>(), ModContent.ProjectileType<KS3_Wave>());
+            Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.WeatherPainShot, ModContent.ProjectileType<FireSlash_Proj>(), ModContent.ProjectileType<RockSlash_Proj>(), ModContent.ProjectileType<KS3_Wave>(), ModContent.ProjectileType<GreenGas_Proj>());
 
             #endregion
 
@@ -565,7 +567,7 @@ namespace Redemption.Globals
 
             #region Poison
 
-            Poison.SetMultiple(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike, ModContent.ProjectileType<DevilsTongueCloud>(), ModContent.ProjectileType<StingerFriendly>(), ModContent.ProjectileType<StingerFriendlyMelee>(), ModContent.ProjectileType<FanOShivsPoison_Proj>(), ModContent.ProjectileType<Cystling>(), ModContent.ProjectileType<XenomiteGlaive_Proj>(), ModContent.ProjectileType<SeedLaser>(), ModContent.ProjectileType<SoI_ShardShot>(), ModContent.ProjectileType<SoI_ToxicSludge>(), ModContent.ProjectileType<SoI_XenomiteShot>(), ModContent.ProjectileType<OozeBall_Proj>());
+            Poison.SetMultiple(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike, ModContent.ProjectileType<DevilsTongueCloud>(), ModContent.ProjectileType<StingerFriendly>(), ModContent.ProjectileType<StingerFriendlyMelee>(), ModContent.ProjectileType<FanOShivsPoison_Proj>(), ModContent.ProjectileType<Cystling>(), ModContent.ProjectileType<XenomiteGlaive_Proj>(), ModContent.ProjectileType<SeedLaser>(), ModContent.ProjectileType<SoI_ShardShot>(), ModContent.ProjectileType<SoI_ToxicSludge>(), ModContent.ProjectileType<SoI_XenomiteShot>(), ModContent.ProjectileType<OozeBall_Proj>(), ModContent.ProjectileType<GreenGas_Proj>(), ModContent.ProjectileType<GreenGloop_Proj>());
 
             #endregion
 
