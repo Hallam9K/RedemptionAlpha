@@ -372,14 +372,22 @@ namespace Redemption.Globals.NPC
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<LabBiome>()))
             {
-                int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
-                bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
+                if (!RedeWorld.labSafe)
+                {
+                    pool.Clear();
+                    pool.Add(ModContent.NPCType<LabSentryDrone>(), 10);
+                }
+                else
+                {
+                    int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
+                    bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
 
-                pool.Clear();
-                pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
-                pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
-                pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
-                pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
+                    pool.Clear();
+                    pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
+                    pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
+                    pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
+                    pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
+                }
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {

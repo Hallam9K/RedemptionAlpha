@@ -35,6 +35,8 @@ namespace Redemption.Globals
         public static bool spawnWayfarer;
         public static float RotTime;
         public static int slayerRep;
+        public static bool labSafe;
+        public static int labSafeMessageTimer;
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -183,6 +185,26 @@ namespace Redemption.Globals
             }
             #endregion
 
+            if (Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3 && !labSafe)
+            {
+                if (labSafeMessageTimer++ >= 300)
+                {
+                    labSafe = true;
+
+                    string status = "The laboratory's defence systems have malfunctioned...";
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), Color.Cyan);
+
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/LabSafeS").WithVolume(.6f));
+
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+            }
+
             int PalebatImpID = Terraria.NPC.FindFirstNPC(ModContent.NPCType<PalebatImp>());
             if (PalebatImpID >= 0 && (Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer > 0)
             {
@@ -327,6 +349,7 @@ namespace Redemption.Globals
             zephosDownedTimer = 0;
             spawnWayfarer = false;
             slayerRep = 0;
+            labSafe = false;
         }
 
         public override void OnWorldUnload()
@@ -341,6 +364,7 @@ namespace Redemption.Globals
             zephosDownedTimer = 0;
             spawnWayfarer = false;
             slayerRep = 0;
+            labSafe = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -349,6 +373,8 @@ namespace Redemption.Globals
 
             if (SkeletonInvasion)
                 lists.Add("SkeletonInvasion");
+            if (labSafe)
+                lists.Add("labSafe");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -370,12 +396,14 @@ namespace Redemption.Globals
             daerelDownedTimer = tag.GetInt("daerelDownedTimer");
             zephosDownedTimer = tag.GetInt("zephosDownedTimer");
             slayerRep = tag.GetInt("slayerRep");
+            labSafe = lists.Contains("labSafe");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
             var flags = new BitsByte();
             flags[0] = SkeletonInvasion;
+            flags[1] = labSafe;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -390,6 +418,7 @@ namespace Redemption.Globals
         {
             BitsByte flags = reader.ReadByte();
             SkeletonInvasion = flags[0];
+            labSafe = flags[1];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

@@ -13,6 +13,7 @@ using Redemption.Items.Usable;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Audio;
+using Redemption.WorldGeneration;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -219,7 +220,14 @@ namespace Redemption.NPCs.Lab.Behemoth
                     break;
             }
             if (Main.LocalPlayer.Center.Y < NPC.Center.Y && Main.rand.NextBool(5))
-                NPC.Shoot(new Vector2(NPC.Center.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)), false, SoundID.Item1.WithVolume(0));
+                NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)), false, SoundID.Item1.WithVolume(0));
+
+            if (NPC.Center.Y > (RedeGen.LabVector.Y + 119) * 16)
+            {
+                NPC.alpha += 2;
+                if (NPC.alpha >= 255)
+                    NPC.active = false;
+            }
         }
         private int AniFrameY;
         private Vector2 HandVector;
