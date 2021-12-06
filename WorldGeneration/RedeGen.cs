@@ -583,7 +583,7 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(originPoint.X + 78, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
                     GenUtils.ObjectPlace(originPoint.X + 71, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodClockTile>());
 
-                    AncientWoodChest(originPoint.X + 73, originPoint.Y + 22);
+                    AncientWoodChest(originPoint.X + 73, originPoint.Y + 22, 2);
                     AncientWoodChest(originPoint.X + 62, originPoint.Y + 36);
 
                     for (int i = originPoint.X; i < originPoint.X + 88; i++)
@@ -1024,6 +1024,8 @@ namespace Redemption.WorldGeneration
 
                 if (ID == 1)
                     chest.item[slot].SetDefaults(ModContent.ItemType<ForgottenSword>());
+                else if (ID == 2)
+                    chest.item[slot].SetDefaults(ModContent.ItemType<DeadRinger>());
                 else
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
