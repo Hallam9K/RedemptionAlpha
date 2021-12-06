@@ -8,6 +8,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PreHM;
 using Redemption.Items.Donator.Arche;
+using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
@@ -46,6 +47,10 @@ namespace Redemption
         public static int dragonLeadCapeID;
         public static int archeFemLegID;
         public static int archeMaleLegID;
+        public static int unconFemLegID;
+        public static int unconMaleLegID;
+        public static int unconFemLeg2ID;
+        public static int unconMaleLeg2ID;
 
         public Redemption()
         {
@@ -61,6 +66,10 @@ namespace Redemption
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLeadRibplate_Back");
                 archeMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs");
                 archeFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
+                unconMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs_Legs");
+                unconFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs");
+                unconMaleLeg2ID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs");
+                unconFemLeg2ID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs");
 
                 Main.QueueMainThreadAction(() =>
                 {

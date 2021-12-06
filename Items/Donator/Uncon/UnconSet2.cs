@@ -5,20 +5,20 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 
-namespace Redemption.Items.Donator.Arche
+namespace Redemption.Items.Donator.Uncon
 {
     [AutoloadEquip(EquipType.Body)]
-	public class ArchePatreonVanityBody : ModItem
+	public class UnconBody2 : ModItem
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Iridescent Outfit");
+            DisplayName.SetDefault("Dominator Suit (Skinless)");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
 		{
-            Item.width = 30;
-            Item.height = 22;
+            Item.width = 26;
+            Item.height = 20;
             Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
@@ -26,26 +26,24 @@ namespace Redemption.Items.Donator.Arche
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 7)
-                .AddIngredient(ModContent.ItemType<MoonflareFragment>(), 4)
-                .AddTile(TileID.Loom)
+                .AddIngredient(ModContent.ItemType<UnconBody>())
                 .Register();
         }
     }
     [AutoloadEquip(EquipType.Head)]
-    public class ArchePatreonVanityHead : ModItem
+    public class UnconHead2 : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Iridescent Hat");
+            DisplayName.SetDefault("Dominator Visage (Skinless)");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawHatHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 28;
-            Item.height = 16;
+            Item.width = 30;
+            Item.height = 34;
             Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
@@ -53,39 +51,35 @@ namespace Redemption.Items.Donator.Arche
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 5)
-                .AddIngredient(ModContent.ItemType<MoonflareFragment>(), 2)
-                .AddTile(TileID.Loom)
+                .AddIngredient(ModContent.ItemType<UnconHead>())
                 .Register();
         }
     }
     [AutoloadEquip(EquipType.Legs)]
-    public class ArchePatreonVanityLegs : ModItem
+    public class UnconLegs2 : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Iridescent Leggings");
+            DisplayName.SetDefault("Dominator Boots (Skinless)");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
         {
             Item.width = 18;
-            Item.height = 18;
+            Item.height = 16;
             Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
         }
         public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
         {
-            if (male) equipSlot = Redemption.archeMaleLegID;
-            if (!male) equipSlot = Redemption.archeFemLegID;
+            if (male) equipSlot = Redemption.unconMaleLeg2ID;
+            if (!male) equipSlot = Redemption.unconFemLeg2ID;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 6)
-                .AddIngredient(ModContent.ItemType<MoonflareFragment>(), 2)
-                .AddTile(TileID.Loom)
+                .AddIngredient(ModContent.ItemType<UnconLegs>())
                 .Register();
         }
     }
