@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Cooldowns
@@ -12,7 +13,7 @@ namespace Redemption.Buffs.Cooldowns
 			Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = false;
-            CanBeCleared = false;
-        }
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+		}
 	}
 }

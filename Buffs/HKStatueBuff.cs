@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs
@@ -11,7 +12,7 @@ namespace Redemption.Buffs
             Description.SetDefault("You feel like you're being watched...");
             Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
-            CanBeCleared = false;
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
     }
 }
