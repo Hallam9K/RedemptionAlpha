@@ -28,7 +28,8 @@ namespace Redemption.Items.Donator.Uncon
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 5)
+                .AddIngredient(ModContent.ItemType<Archcloth>(), 2)
+                .AddIngredient(ItemID.BlackThread, 3)
                 .AddTile(TileID.Loom)
                 .Register();
             CreateRecipe()
@@ -57,7 +58,8 @@ namespace Redemption.Items.Donator.Uncon
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 3)
+                .AddIngredient(ModContent.ItemType<Archcloth>(), 2)
+                .AddIngredient(ItemID.BlackThread, 3)
                 .AddTile(TileID.Loom)
                 .Register();
             CreateRecipe()
@@ -91,7 +93,8 @@ namespace Redemption.Items.Donator.Uncon
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 3)
+                .AddIngredient(ModContent.ItemType<Archcloth>(), 2)
+                .AddIngredient(ItemID.BlackThread, 3)
                 .AddTile(TileID.Loom)
                 .Register();
             CreateRecipe()

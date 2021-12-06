@@ -27,7 +27,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Archcloth>(), 4)
+                .AddIngredient(ModContent.ItemType<Archcloth>(), 3)
                 .AddTile(TileID.Loom)
                 .Register();
         }
