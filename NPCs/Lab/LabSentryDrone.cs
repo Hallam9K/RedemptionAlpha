@@ -131,7 +131,6 @@ namespace Redemption.NPCs.Lab
             if (!player.active || player.dead || !LabArea.Active || RedeWorld.labSafe)
             {
                 NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
                 NPC.velocity = new Vector2(0f, -10f);
                 if (NPC.timeLeft > 10)
                     NPC.timeLeft = 10;
