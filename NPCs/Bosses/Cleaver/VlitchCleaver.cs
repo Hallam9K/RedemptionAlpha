@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -123,6 +125,16 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void OnKill()
         {
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
+
+            npcLoot.Add(notExpertRule);
         }
 
         public override void BossLoot(ref string name, ref int potionType)

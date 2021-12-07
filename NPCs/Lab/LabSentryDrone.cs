@@ -18,6 +18,9 @@ namespace Redemption.NPCs.Lab
         {
             DisplayName.SetDefault("Laboratory Drone");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
@@ -58,6 +61,9 @@ namespace Redemption.NPCs.Lab
             }
             Player player = Main.player[NPC.target];
             DespawnHandler();
+            if (!player.active || player.dead || !LabArea.Active || RedeWorld.labSafe)
+                return;
+
             NPC.Move(new Vector2(movX, movY), 15, 30, true);
             NPC.rotation = NPC.velocity.X * 0.05f;
 
@@ -126,13 +132,9 @@ namespace Redemption.NPCs.Lab
             {
                 NPC.TargetClosest(false);
                 player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity = new Vector2(0f, -10f);
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
+                NPC.velocity = new Vector2(0f, -10f);
+                if (NPC.timeLeft > 10)
+                    NPC.timeLeft = 10;
             }
         }
     }
