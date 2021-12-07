@@ -13,7 +13,8 @@ namespace Redemption.Items.Donator.Lizzy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lizard Cookie");
-            Tooltip.SetDefault("Summons a chibi Lizzy");
+            Tooltip.SetDefault("Summons a chibi Lizzy\n" +
+                "'\"Baked\" with love'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -30,6 +31,14 @@ namespace Redemption.Items.Donator.Lizzy
         {
             player.AddBuff(Item.buffType, 2);
             return false;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Hay, 40)
+                .AddIngredient(ItemID.LifeCrystal)
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
 }

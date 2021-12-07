@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
+using Redemption.Items.Donator.Lizzy;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
@@ -60,6 +61,17 @@ namespace Redemption.Globals.Player
                 else
                     TextureAssets.Rain = rain;
             }
+        }
+
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+        {
+            if (!mediumCoreDeath && (Player.name.Contains("Liz") || Player.name.Contains("Lizzy") || Player.name.Contains("Elizabeth")))
+            {
+                return new[] {
+                    new Item(ModContent.ItemType<LizzyCookie>())
+                };
+            }
+            return base.AddStartingItems(mediumCoreDeath);
         }
 
         public override void SaveData(TagCompound tag)

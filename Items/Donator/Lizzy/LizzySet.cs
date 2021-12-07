@@ -26,6 +26,21 @@ namespace Redemption.Items.Donator.Lizzy
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.BeeShirt)
+                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.BeeShirt)
+                .AddIngredient(ItemID.TissueSample, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
+        }
     }
     [AutoloadEquip(EquipType.Head)]
     public class LizzyHead : ModItem
@@ -44,6 +59,21 @@ namespace Redemption.Items.Donator.Lizzy
             Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.BeeHat)
+                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.BeeHat)
+                .AddIngredient(ItemID.TissueSample, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
         }
     }
     [AutoloadEquip(EquipType.Legs)]
@@ -64,6 +94,21 @@ namespace Redemption.Items.Donator.Lizzy
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.BeePants)
+                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.BeePants)
+                .AddIngredient(ItemID.TissueSample, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
+        }
     }
     [AutoloadEquip(EquipType.Back)]
     public class LizzyTail : ModItem
@@ -82,6 +127,21 @@ namespace Redemption.Items.Donator.Lizzy
             Item.accessory = true;
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Stinger)
+                .AddIngredient(ItemID.ShadowScale, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.Stinger)
+                .AddIngredient(ItemID.TissueSample, 10)
+                .AddIngredient(ItemID.GreenThread)
+                .AddTile(TileID.Loom)
+                .Register();
         }
     }
 }
