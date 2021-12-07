@@ -351,6 +351,11 @@ namespace Redemption.Globals.NPC
                 spawnRate = 18;
                 maxSpawns = 12;
             }
+            if (player.InModBiome(ModContent.GetInstance<LabBiome>()))
+            {
+                spawnRate = 20;
+                maxSpawns = 12;
+            }
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -387,6 +392,8 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
                     pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
                     pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
+                    if (spawnInfo.water)
+                        pool.Add(ModContent.NPCType<XenoChomper>(), 0.4f);
                 }
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))

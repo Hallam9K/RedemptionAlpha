@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.WorldGeneration;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Lore;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -112,6 +114,11 @@ namespace Redemption.NPCs.Lab.Behemoth
                 Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBehemoth, -1);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk2>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk2_1>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
