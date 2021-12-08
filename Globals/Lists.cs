@@ -35,6 +35,7 @@ using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Wasteland;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.Lab.Behemoth;
+using Redemption.NPCs.Lab.Blisterface;
 
 namespace Redemption.Globals
 {
@@ -472,7 +473,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Infected
-            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>());
+            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>(), ModContent.NPCType<XenoChomper>(), ModContent.NPCType<Blisterface>(), ModContent.NPCType<Blisterling>(), ModContent.NPCType<Blisterling2>());
             #endregion
 
             #region Armed
@@ -519,7 +520,7 @@ namespace Redemption.Globals
 
             #region Water
 
-            Water.SetMultiple(ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.BlueMoon, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ModContent.ProjectileType<WaterOrb>(), ModContent.ProjectileType<WaterOrbS>(), ModContent.ProjectileType<BucketSplash>());
+            Water.SetMultiple(ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.BlueMoon, ProjectileID.HolyWater, ProjectileID.UnholyWater, ProjectileID.IcewaterSpit, ProjectileID.RainFriendly, ProjectileID.BloodRain, ProjectileID.RainNimbus, ProjectileID.WaterGun, ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.FlaironBubble, ProjectileID.SlimeGun, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.Bubble, ProjectileID.Xenopopper, ProjectileID.ToxicBubble, ProjectileID.Kraken, ProjectileID.BloodWater, ProjectileID.Ale, ProjectileID.DD2OgreSpit, ProjectileID.QueenSlimeGelAttack, ProjectileID.GelBalloon, ProjectileID.VolatileGelatinBall, ModContent.ProjectileType<WaterOrb>(), ModContent.ProjectileType<WaterOrbS>(), ModContent.ProjectileType<BucketSplash>(), ModContent.ProjectileType<Blisterface_Bubble>());
 
             #endregion
 
@@ -567,7 +568,7 @@ namespace Redemption.Globals
 
             #region Poison
 
-            Poison.SetMultiple(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike, ModContent.ProjectileType<DevilsTongueCloud>(), ModContent.ProjectileType<StingerFriendly>(), ModContent.ProjectileType<StingerFriendlyMelee>(), ModContent.ProjectileType<FanOShivsPoison_Proj>(), ModContent.ProjectileType<Cystling>(), ModContent.ProjectileType<XenomiteGlaive_Proj>(), ModContent.ProjectileType<SeedLaser>(), ModContent.ProjectileType<SoI_ShardShot>(), ModContent.ProjectileType<SoI_ToxicSludge>(), ModContent.ProjectileType<SoI_XenomiteShot>(), ModContent.ProjectileType<OozeBall_Proj>(), ModContent.ProjectileType<GreenGas_Proj>(), ModContent.ProjectileType<GreenGloop_Proj>());
+            Poison.SetMultiple(ProjectileID.ThornChakram, ProjectileID.PoisonedKnife, ProjectileID.Stinger, ProjectileID.PoisonDart, ProjectileID.JungleSpike, ProjectileID.PoisonDartTrap, ProjectileID.PygmySpear, ProjectileID.PoisonFang, ProjectileID.PoisonDartBlowgun, ProjectileID.PoisonSeedPlantera, ProjectileID.VenomArrow, ProjectileID.VenomBullet, ProjectileID.VenomFang, ProjectileID.HornetStinger, ProjectileID.VenomSpider, ProjectileID.ToxicFlask, ProjectileID.ToxicCloud, ProjectileID.ToxicCloud2, ProjectileID.ToxicCloud3, ProjectileID.ToxicBubble, ProjectileID.SalamanderSpit, ProjectileID.VortexAcid, ProjectileID.DD2OgreSpit, ProjectileID.QueenBeeStinger, ProjectileID.RollingCactusSpike, ModContent.ProjectileType<DevilsTongueCloud>(), ModContent.ProjectileType<StingerFriendly>(), ModContent.ProjectileType<StingerFriendlyMelee>(), ModContent.ProjectileType<FanOShivsPoison_Proj>(), ModContent.ProjectileType<Cystling>(), ModContent.ProjectileType<XenomiteGlaive_Proj>(), ModContent.ProjectileType<SeedLaser>(), ModContent.ProjectileType<SoI_ShardShot>(), ModContent.ProjectileType<SoI_ToxicSludge>(), ModContent.ProjectileType<SoI_XenomiteShot>(), ModContent.ProjectileType<OozeBall_Proj>(), ModContent.ProjectileType<GreenGas_Proj>(), ModContent.ProjectileType<GreenGloop_Proj>(), ModContent.ProjectileType<Blisterface_Bubble>());
 
             #endregion
 

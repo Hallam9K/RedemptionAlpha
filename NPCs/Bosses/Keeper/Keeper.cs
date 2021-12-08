@@ -327,6 +327,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                         AITimer = 0;
                         AIState = ActionState.Attacks;
                         NPC.netUpdate = true;
+
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
                 case ActionState.Attacks:
@@ -627,7 +630,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                     break;
                 case ActionState.Unveiled:
                     NPC.alpha = 0;
-                    NPC.dontTakeDamage = true;
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
@@ -641,6 +643,10 @@ namespace Redemption.NPCs.Bosses.Keeper
                             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Shriek").WithVolume(0.4f), NPC.position);
 
                         NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
 
                     if (AITimer >= 220)
@@ -652,6 +658,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                         {
                             NPC.dontTakeDamage = false;
                             AIState = ActionState.Idle;
+
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                         NPC.netUpdate = true;
                     }
@@ -659,11 +668,16 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.SkullDiggerSummon:
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                    NPC.dontTakeDamage = true;
                     Reap = false;
 
                     if (AITimer++ == 0)
+                    {
                         RedeHelper.SpawnNPC((int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>(), ai3: NPC.whoAmI);
+
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
 
                     if (AITimer >= (RedeConfigClient.Instance.NoLoreElements ? 200 : 660))
                     {
@@ -675,7 +689,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.Teddy:
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                    NPC.dontTakeDamage = true;
                     Unveiled = true;
 
                     if (!Main.dedServ)
@@ -683,6 +696,10 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                     if (AITimer++ == 0)
                     {
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+
                         NPC.alpha = 0;
                         NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                     }
@@ -772,7 +789,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
                     break;
                 case ActionState.Death:
-                    NPC.dontTakeDamage = true;
                     if (!NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()))
                     {
                         player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
@@ -786,6 +802,10 @@ namespace Redemption.NPCs.Bosses.Keeper
                     {
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Shriek").WithVolume(0.4f), NPC.position);
+
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
 
                         NPC.alpha = 0;
                     }
@@ -813,6 +833,8 @@ namespace Redemption.NPCs.Bosses.Keeper
                     {
                         NPC.dontTakeDamage = false;
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
             }
@@ -866,6 +888,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                 NPC.life = 1;
                 AITimer = 0;
                 AIState = ActionState.Death;
+
+                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                 return false;
             }
         }

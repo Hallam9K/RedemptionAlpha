@@ -95,7 +95,7 @@ namespace Redemption.NPCs.Lab
                     if (!player.dead && player.active)
                     {
                         NPC.ai[2]++;
-                        if (NPC.ai[2] % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                        if (NPC.ai[2] % 30 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int proj = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, RedeHelper.PolarVector(20, (player.Center - NPC.Center).ToRotation()), ProjectileID.MartianTurretBolt, 100, 0, Main.myPlayer);
                             SoundEngine.PlaySound(SoundID.Item91, NPC.position);

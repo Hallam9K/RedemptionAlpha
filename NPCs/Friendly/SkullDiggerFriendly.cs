@@ -39,6 +39,7 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {

@@ -31,6 +31,7 @@ namespace Redemption.Globals
         public static bool downedBlisterface;
         public static bool downedVolt;
         public static bool downedMACE;
+        public static bool voltBegin;
 
         public override void OnWorldLoad()
         {
@@ -56,6 +57,7 @@ namespace Redemption.Globals
             downedBlisterface = false;
             downedVolt = false;
             downedMACE = false;
+            voltBegin = false;
         }
 
         public override void OnWorldUnload()
@@ -82,6 +84,7 @@ namespace Redemption.Globals
             downedBlisterface = false;
             downedVolt = false;
             downedMACE = false;
+            voltBegin = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -128,6 +131,8 @@ namespace Redemption.Globals
                 downed.Add("downedVolt");
             if (downedMACE)
                 downed.Add("downedMACE");
+            if (voltBegin)
+                downed.Add("voltBegin");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -160,6 +165,7 @@ namespace Redemption.Globals
             downedBlisterface = downed.Contains("downedBlisterface");
             downedVolt = downed.Contains("downedVolt");
             downedMACE = downed.Contains("downedMACE");
+            voltBegin = downed.Contains("voltBegin");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -189,6 +195,7 @@ namespace Redemption.Globals
             flags3[1] = downedBlisterface;
             flags3[2] = downedVolt;
             flags3[3] = downedMACE;
+            flags3[4] = voltBegin;
             writer.Write(flags3);
 
             writer.Write(erhanDeath);
@@ -220,6 +227,7 @@ namespace Redemption.Globals
             downedBlisterface = flags3[1];
             downedVolt = flags3[2];
             downedMACE = flags3[3];
+            voltBegin = flags3[4];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

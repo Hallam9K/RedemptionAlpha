@@ -4,6 +4,7 @@ using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.Lab.MACE;
+using Redemption.NPCs.Lab.Volt;
 using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using System.IO;
@@ -50,6 +51,13 @@ namespace Redemption.Globals
             Vector2 BlisterfacePos = new(((RedeGen.LabVector.X + 209) * 16) - 4, (RedeGen.LabVector.Y + 191) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Blisterface_Inactive>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Blisterface>()) && !RedeBossDowned.downedBlisterface)
                 Terraria.NPC.NewNPC((int)BlisterfacePos.X, (int)BlisterfacePos.Y, ModContent.NPCType<Blisterface_Inactive>());
+
+            Vector2 VoltPos = new((RedeGen.LabVector.X + 49) * 16, (RedeGen.LabVector.Y + 122) * 16);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_Start>()) && !RedeBossDowned.downedVolt)
+                Terraria.NPC.NewNPC((int)VoltPos.X, (int)VoltPos.Y, ModContent.NPCType<ProtectorVolt_Start>());
+
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_NPC>()) && RedeBossDowned.downedVolt)
+                Terraria.NPC.NewNPC((int)VoltPos.X, (int)VoltPos.Y, ModContent.NPCType<ProtectorVolt_NPC>());
 
             Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 167) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()))

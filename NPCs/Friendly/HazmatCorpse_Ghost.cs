@@ -20,6 +20,7 @@ namespace Redemption.NPCs.Friendly
         {
             DisplayName.SetDefault("Hazmat Corpse");
             Main.npcFrameCount[NPC.type] = 8;
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
