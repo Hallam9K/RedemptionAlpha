@@ -39,8 +39,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (npc.ai[3] != 6 || npc.ai[0] != 3)
                 Projectile.Kill();
 
-            foreach (Projectile target in Main.projectile)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
+                Projectile target = Main.projectile[i];
                 if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                     continue;
 

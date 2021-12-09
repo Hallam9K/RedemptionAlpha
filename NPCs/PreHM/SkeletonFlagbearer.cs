@@ -252,8 +252,9 @@ namespace Redemption.NPCs.PreHM
                     if (AITimer % 60 == 0)
                     {
                         DustHelper.DrawCircle(NPC.Center, DustID.ViciousPowder, 16, 2, 2, nogravity: true);
-                        foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                        for (int i = 0; i < Main.maxNPCs; i++)
                         {
+                            NPC target = Main.npc[i];
                             if (!target.active || target.whoAmI == NPC.whoAmI)
                                 continue;
 
@@ -348,8 +349,9 @@ namespace Redemption.NPCs.PreHM
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<SkeletonFlagbearer>() || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 

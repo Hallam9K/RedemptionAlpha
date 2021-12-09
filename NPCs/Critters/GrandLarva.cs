@@ -116,8 +116,9 @@ namespace Redemption.NPCs.Critters
 
                 case ActionState.Hop:
                     hitCooldown--;
-                    foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
+                    for (int i = 0; i < Main.maxNPCs; i++)
                     {
+                        NPC possibleTarget = Main.npc[i];
                         if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
                             !NPCTags.Undead.Has(possibleTarget.type) &&
                             !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
@@ -155,8 +156,9 @@ namespace Redemption.NPCs.Critters
                 AIState = ActionState.Hop;
             }
 
-            foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC possibleTarget = Main.npc[i];
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
                     !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
                     continue;

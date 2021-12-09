@@ -75,8 +75,9 @@ namespace Redemption.Projectiles.Hostile
 
                 target.velocity.Y = Projectile.velocity.Y * 1.5f;
             }
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (target.knockBackResist <= 0 || Projectile.velocity.Length() == 0 ||
                     !Projectile.Hitbox.Intersects(target.Hitbox))
                     continue;

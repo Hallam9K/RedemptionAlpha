@@ -394,8 +394,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 }
                                 if (AITimer >= 200 && NPC.frame.Y >= 4 * 142 && NPC.frame.Y <= 6 * 142)
                                 {
-                                    foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                                    for (int i = 0; i < Main.maxNPCs; i++)
                                     {
+                                        NPC target = Main.npc[i];
                                         if (!target.active || target.whoAmI == NPC.whoAmI || (!target.friendly &&
                                             !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
                                             continue;

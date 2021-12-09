@@ -74,8 +74,9 @@ namespace Redemption.Projectiles.Ranged
                     -Projectile.velocity.X * 0.6f, -Projectile.velocity.Y * 0.6f, Scale: 2);
 
             Rectangle boom = new((int)Projectile.Center.X - 50, (int)Projectile.Center.Y - 50, 100, 100);
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active || target.friendly)
                     continue;
 

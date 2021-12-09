@@ -133,8 +133,9 @@ namespace Redemption.NPCs.Critters
                         if (player.GetModPlayer<BuffPlayer>().devilScented)
                             Aggressive = 1;
                         float nearestNPCDist = -1;
-                        foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
+                        for (int i = 0; i < Main.maxNPCs; i++)
                         {
+                            NPC possibleTarget = Main.npc[i];
                             if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                                 continue;
 
@@ -208,8 +209,9 @@ namespace Redemption.NPCs.Critters
 
         public void CheckNPCHit()
         {
-            foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC possibleTarget = Main.npc[i];
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                     continue;
 

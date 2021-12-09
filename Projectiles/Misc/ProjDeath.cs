@@ -27,8 +27,9 @@ namespace Redemption.Projectiles.Misc
         }
         public override void AI()
         {
-            foreach (Projectile target in Main.projectile)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
+                Projectile target = Main.projectile[i];
                 if (Projectile == target || !target.active || target.damage <= 0 || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                     continue;
 

@@ -68,8 +68,9 @@ namespace Redemption.Projectiles.Magic
                 Vector2 move = Vector2.Zero;
                 float distance = 70f;
                 bool targetted = false;
-                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    NPC target = Main.npc[i];
                     if (!target.CanBeChasedBy() || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0) || target.GetGlobalNPC<RedeNPC>().invisible)
                         continue;
 
@@ -109,8 +110,9 @@ namespace Redemption.Projectiles.Magic
 
                 Projectile.Kill();
             }
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active)
                     continue;
 
