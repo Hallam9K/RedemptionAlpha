@@ -79,8 +79,6 @@ namespace Redemption.NPCs.Lab.Volt
                             AITimer++;
                             if (AITimer >= 60)
                             {
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Protector Volt", 60, 90, 0.8f, 0, Color.Yellow, "Omega Division Commander");
                                 NPC.Transform(ModContent.NPCType<ProtectorVolt>());
                                 NPC.netUpdate = true;
                             }
@@ -155,9 +153,6 @@ namespace Redemption.NPCs.Lab.Volt
                         AITimer++;
                         if (AITimer >= 60)
                         {
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Protector Volt", 60, 90, 0.8f, 0, Color.Yellow, "Omega Division Commander");
-
                             RedeBossDowned.voltBegin = true;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
