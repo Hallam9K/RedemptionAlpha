@@ -139,6 +139,10 @@ namespace Redemption.NPCs.Lab.Volt
                             if (!LabArea.labAccess[3])
                                 Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
 
+                            NPC nPC = new();
+                            nPC.SetDefaults(ModContent.NPCType<ProtectorVolt>());
+                            Main.BestiaryTracker.Kills.RegisterKill(nPC);
+
                             RedeBossDowned.downedVolt = true;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);

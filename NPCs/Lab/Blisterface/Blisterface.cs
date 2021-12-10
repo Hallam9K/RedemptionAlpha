@@ -60,7 +60,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPC.noTileCollide = false;
             NPC.aiStyle = 16;
             AIType = NPCID.Piranha;
-            AnimationType = NPCID.Piranha;
             NPC.boss = true;
             NPC.netAlways = true;
             if (!Main.dedServ)

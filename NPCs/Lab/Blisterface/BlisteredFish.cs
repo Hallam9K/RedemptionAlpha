@@ -42,7 +42,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPC.knockBackResist = 0.1f;
             NPC.aiStyle = 16;
             AIType = NPCID.Piranha;
-            AnimationType = NPCID.Piranha;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
         public override void HitEffect(int hitDirection, double damage)

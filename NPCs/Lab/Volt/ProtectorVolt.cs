@@ -63,7 +63,11 @@ namespace Redemption.NPCs.Lab.Volt
                     BuffID.Venom
                 }
             });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Position = new Vector2(0, 16),
+                PortraitPositionYOverride = 0
+            };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -460,6 +464,8 @@ namespace Redemption.NPCs.Lab.Volt
                             if (!LabArea.labAccess[3])
                                 Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
 
+                            Main.BestiaryTracker.Kills.RegisterKill(NPC);
+
                             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVolt, -1);
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -555,7 +561,10 @@ namespace Redemption.NPCs.Lab.Volt
 
             Vector2 gunCenter = new(NPC.Center.X, NPC.Center.Y + 6);
             int height = GunTex.Height / 4;
-            spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), (AIState is ActionState.SweepingBeam ? 0 : NPC.rotation) + gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+            if (NPC.IsABestiaryIconDummy)
+                spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+            else
+                spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), (AIState is ActionState.SweepingBeam ? 0 : NPC.rotation) + gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
             return false;
         }
         private void DespawnHandler()
