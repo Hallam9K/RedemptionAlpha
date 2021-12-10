@@ -56,8 +56,8 @@ namespace Redemption.Globals
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_Start>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_NPC>()))
                 Terraria.NPC.NewNPC((int)VoltPos.X, (int)VoltPos.Y, ModContent.NPCType<ProtectorVolt_Start>());
 
-            Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 167) * 16);
-            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()))
+            Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 169) * 16);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject>()))
                 Terraria.NPC.NewNPC((int)MacePos.X, (int)MacePos.Y, ModContent.NPCType<MACEProject_Off>());
         }
         public override void OnWorldLoad()

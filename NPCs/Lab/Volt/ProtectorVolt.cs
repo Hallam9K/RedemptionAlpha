@@ -424,16 +424,14 @@ namespace Redemption.NPCs.Lab.Volt
                             else
                             {
                                 if (AITimer == 10)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Wait.", true, false);
-                                if (AITimer == 100)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "I am recieving a transmission.", true, false);
-                                if (AITimer == 290)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "...", true, false);
-                                if (AITimer == 450)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "This appears to have been a misunderstanding, you're allowed through.", true, false);
-                                if (AITimer == 600)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "My apologies. Move along.", true, false);
-                                if (AITimer >= 720)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "... Are you allowed through? Let me check.", true, false);
+                                if (AITimer == 120)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "... Oh?", true, false);
+                                if (AITimer == 260)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "... You're allowed through?", true, false);
+                                if (AITimer == 420)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "This was mildly embarrassing. Apologies.", true, false);
+                                if (AITimer >= 620)
                                 {
                                     AITimer = 0;
                                     TimerRand = 2;

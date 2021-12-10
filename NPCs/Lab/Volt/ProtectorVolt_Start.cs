@@ -87,16 +87,14 @@ namespace Redemption.NPCs.Lab.Volt
                         {
                             AITimer++;
                             if (AITimer == 40)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Leave.", true, false);
+                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Halt!", true, false);
                             if (AITimer == 120)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Deeper sectors are life-threatening for your kind.", true, false);
+                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "You aren't supposed to be here!", true, false);
                             if (AITimer == 260)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "If you wish to enter, prove your strength to me.", true, false);
-                            if (AITimer == 320)
                             {
                                 NPC.velocity.Y = -8;
                             }
-                            if ((NPC.collideY || NPC.velocity.Y == 0) && AITimer >= 330)
+                            if ((NPC.collideY || NPC.velocity.Y == 0) && AITimer >= 270)
                             {
                                 Mod mod = Redemption.Instance;
 

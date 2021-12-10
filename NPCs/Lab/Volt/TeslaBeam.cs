@@ -54,6 +54,10 @@ namespace Redemption.NPCs.Lab.Volt
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
+            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric);
+            Main.dust[dust].velocity = RedeHelper.PolarVector(6, Projectile.rotation);
+            Main.dust[dust].noGravity = true;
+
             #region Beginning And End Effects
             if (AITimer == 0)
             {

@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void SetDefaults()
         {
-            NPC.width = 118;
+            NPC.width = 92;
             NPC.height = 164;
             NPC.damage = 0;
             NPC.lifeMax = 250;
@@ -49,16 +49,17 @@ namespace Redemption.NPCs.Lab.MACE
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Texture2D trolleyTex = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/MACE/CraneTrolley").Value;
             Texture2D jawTex = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/MACE/MACEProject_Jaw").Value;
+            Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y - 19);
 
-            Vector2 drawCenterTrolley = new(NPC.Center.X, NPC.Center.Y + 10);
+            Vector2 drawCenterTrolley = new(drawCenter.X, drawCenter.Y + 11);
             Rectangle rect = new(0, 0, trolleyTex.Width, trolleyTex.Height);
             Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            Vector2 drawCenterJaw = new(NPC.Center.X - 1, NPC.Center.Y + 60);
+            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y + 60);
             Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
             Main.spriteBatch.Draw(jawTex, drawCenterJaw - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

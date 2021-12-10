@@ -15,6 +15,7 @@ using Terraria.Audio;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using System;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -35,6 +36,7 @@ namespace Redemption.NPCs.Lab.MACE
         public ref float AITimer => ref NPC.ai[1];
 
         public ref float TimerRand => ref NPC.ai[2];
+        public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("MACE Project");
@@ -58,7 +60,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void SetDefaults()
         {
-            NPC.width = 118;
+            NPC.width = 92;
             NPC.height = 164;
             NPC.damage = 100;
             NPC.lifeMax = 125000;
@@ -125,6 +127,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
 
         private Vector2 JawCenter;
+
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -133,20 +136,119 @@ namespace Redemption.NPCs.Lab.MACE
             if (!player.active || player.dead)
                 return;
 
+            Vector2 MouthOrigin = new(NPC.Center.X, NPC.Center.Y + 62);
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (!Main.dedServ)
+                    if (AITimer++ == 0)
                     {
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SpookyNoise"), NPC.position);
+                        if (!Main.dedServ)
+                        {
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SpookyNoise"), NPC.position);
+                        }
+                        GlowActive = true;
                     }
-                    AIState = ActionState.JawPhase1;
-                    NPC.netUpdate = true;
+                    if (AITimer >= 80)
+                    {
+                        AITimer = 0;
+                        JawOpen = true;
+                        AIState = ActionState.JawPhase1;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.JawPhase1:
+                    switch (TimerRand2)
+                    {
+                        case 0:
+                            AITimer++;
+                            if (!Main.dedServ)
+                            {
+                                if (AITimer == 1)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/DistortedRoar").WithVolume(.5f), NPC.position);
+                                if (AITimer < 60)
+                                {
+                                    TimerRand += (float)Math.PI / 120;
+                                    if (TimerRand >= Math.PI) TimerRand = 0;
+                                    float timer = TimerRand;
+                                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(1, 1, 6).UseTargetPosition(MouthOrigin);
+                                }
+                                else
+                                    Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
+                            }
+                            if (AITimer == 35)
+                            {
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int dustIndex = Dust.NewDust(MouthOrigin, 2, 2, DustID.OrangeTorch, Scale: 2f);
+                                    Main.dust[dustIndex].velocity *= 10f;
+                                }
+                                for (int i = 0; i < 5; i++)
+                                    NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(72) * i), false, SoundID.Item73);
+                            }
+                            if (AITimer == 40)
+                            {
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int dustIndex = Dust.NewDust(MouthOrigin, 2, 2, DustID.OrangeTorch, Scale: 2f);
+                                    Main.dust[dustIndex].velocity *= 10f;
+                                }
+                                for (int i = 0; i < 10; i++)
+                                    NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(36) * i), false, SoundID.Item73);
+                            }
+                            if (AITimer == 80)
+                                JawOpen = false;
+                            if (AITimer > 160)
+                            {
+                                AITimer = 0;
+                                TimerRand = 0;
+                                TimerRand2++;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 1:
+                            if (AITimer++ == 0)
+                                JawOpen = true;
+                            if (AITimer == 50 || AITimer == 70 || AITimer == 90)
+                            {
+                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<BigElectronade>(), NPC.damage, new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)), false, SoundID.Item61);
+                            }
+                            if (AITimer == 100)
+                                JawOpen = false;
+                            if (AITimer > 160)
+                            {
+                                AITimer = 0;
+                                TimerRand = 0;
+                                TimerRand2++;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                    }
                     break;
             }
         }
+        private bool GlowActive;
+        private int GlowTimer;
+        private bool JawOpen;
         public override void FindFrame(int frameHeight)
         {
+            if (GlowActive)
+            {
+                if (GlowTimer++ > 60)
+                {
+                    GlowActive = false;
+                    GlowTimer = 0;
+                }
+            }
+            if (JawOpen)
+            {
+                if (JawCenter.Y < 12)
+                    JawCenter.Y += 1f;
+            }
+            else
+            {
+                if (JawCenter.Y >= 0)
+                    JawCenter.Y -= 1f;
+            }
             NPC.frameCounter++;
             if (NPC.frameCounter >= 10)
             {
@@ -159,19 +261,40 @@ namespace Redemption.NPCs.Lab.MACE
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Texture2D glowTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D trolleyTex = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/MACE/CraneTrolley").Value;
             Texture2D jawTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Jaw").Value;
+            Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y - 18);
 
-            Vector2 drawCenterTrolley = new(NPC.Center.X, NPC.Center.Y + 10);
+            Vector2 drawCenterTrolley = new(drawCenter.X, drawCenter.Y + 10);
             Rectangle rect = new(0, 0, trolleyTex.Width, trolleyTex.Height);
-            Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            Vector2 drawCenterJaw = new(NPC.Center.X - 1, NPC.Center.Y + 60);
+            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y + 60);
             Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
-            Main.spriteBatch.Draw(jawTex, drawCenterJaw - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            spriteBatch.Draw(texture, NPC.Center + JawCenter - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(glowTex, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             return false;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/MACEEyeFlare").Value;
+            Rectangle rect = new(0, 0, flare.Width, flare.Height);
+            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
+            Vector2 position = NPC.Center - screenPos + new Vector2(-22, 4);
+            Color colour = Color.Lerp(Color.DarkGreen, Color.White, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
+            if (GlowActive)
+            {
+                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 2f, SpriteEffects.None, 0);
+            }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, default);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         private void DespawnHandler()

@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D fish = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/Blisterface/Blisterling").Value;
+            Texture2D fish = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/Blisterface/BlisteredFish").Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             int height = fish.Height / 6;

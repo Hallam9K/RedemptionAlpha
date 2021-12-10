@@ -25,6 +25,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 120;
+            Projectile.alpha = 255;
         }
         public override void AI()
         {
@@ -32,11 +33,13 @@ namespace Redemption.NPCs.Lab.MACE
             {
                 Projectile.frameCounter = 0;
                 if (++Projectile.frame >= 3)
-                    Projectile.frame = 0;
+                    Projectile.frame = 2;
             }
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
-            Projectile.velocity.Y += 0.2f;
+            Projectile.velocity.Y += 0.15f;
+            if (Projectile.alpha > 0)
+                Projectile.alpha -= 15;
         }
         public override void Kill(int timeLeft)
         {
@@ -69,7 +72,7 @@ namespace Redemption.NPCs.Lab.MACE
 
                 Projectile.velocity.Y = -oldVelocity.Y;
             }
-            Projectile.velocity.Y *= 0.4f;
+            Projectile.velocity.Y *= 0.7f;
             Projectile.velocity.X *= 0.7f;
             return false;
         }
