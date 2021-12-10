@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
+using Redemption.WorldGeneration;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -24,7 +25,7 @@ namespace Redemption.NPCs.Lab.MACE
         public override void SetDefaults()
         {
             NPC.width = 118;
-            NPC.height = 140;
+            NPC.height = 164;
             NPC.damage = 0;
             NPC.lifeMax = 250;
             NPC.knockBackResist = 0;
@@ -33,7 +34,16 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
         }
-
+        public override void AI()
+        {
+            Player player = Main.player[Main.myPlayer];
+            Rectangle activeZone = new((int)(RedeGen.LabVector.X + 65) * 16, (int)(RedeGen.LabVector.Y + 167) * 16, 15 * 16, 18 * 16);
+            if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
+            {
+                NPC.SetDefaults(ModContent.NPCType<MACEProject>());
+                NPC.netUpdate = true;
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
