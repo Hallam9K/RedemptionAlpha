@@ -95,7 +95,7 @@ namespace Redemption.NPCs.Lab.Volt
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("") // TODO: Volt bestiary
+                new FlavorTextBestiaryInfoElement("A gentle giant who keeps his sentences short and acts as a Guard inside the Laboratory. Volt used to be part of the Bear Unit on the surface, but retired after a violent altercation.")
             });
         }
         public override void OnKill()

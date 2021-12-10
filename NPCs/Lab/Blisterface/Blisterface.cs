@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("") // TODO: Blisterface bestiary
+                new FlavorTextBestiaryInfoElement("An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...")
             });
         }
         public override bool CheckActive()
@@ -159,10 +159,10 @@ namespace Redemption.NPCs.Lab.Blisterface
                     {
                         NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.position.Y + Main.rand.Next(0, NPC.height)), ModContent.ProjectileType<Blisterface_Bubble>(), 80, Vector2.Zero, false, SoundID.Item111);
                     }
-                    if (NPC.CountNPCS(ModContent.NPCType<Blisterling2>()) <= 5)
+                    if (NPC.CountNPCS(ModContent.NPCType<BlisteredFish2>()) <= 5)
                     {
                         if (Main.rand.NextBool(250))
-                            RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Blisterling2>());
+                            RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BlisteredFish2>());
                     }
                     break;
                 case 1:

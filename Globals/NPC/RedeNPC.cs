@@ -8,6 +8,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
+using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Wasteland;
 using Redemption.Tiles.Tiles;
@@ -393,7 +394,7 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
                     pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
                     if (spawnInfo.water)
-                        pool.Add(ModContent.NPCType<XenoChomper>(), 0.4f);
+                        pool.Add(ModContent.NPCType<BlisteredFish>(), 0.4f);
                 }
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))

@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
-    public class Blisterling : ModNPC
+    public class BlisteredFish : ModNPC
     {
         public static int BodyType() => ModContent.NPCType<Blisterface>();
         public override void SetStaticDefaults()
@@ -19,10 +19,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                Velocity = 1
-            }; 
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -63,7 +59,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("Absolute BEBE")
+                new FlavorTextBestiaryInfoElement("An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite Infection. This strain's teeth are crystallized.")
             });
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
@@ -72,13 +68,13 @@ namespace Redemption.NPCs.Lab.Blisterface
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 600));
         }
     }
-    public class Blisterling2 : Blisterling
+    public class BlisteredFish2 : BlisteredFish
     {
-        public override string Texture => "Redemption/NPCs/Lab/Blisterface/Blisterling";
+        public override string Texture => "Redemption/NPCs/Lab/Blisterface/BlisteredFish";
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Blisterling");
+            DisplayName.SetDefault("Blistered Fish");
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -117,7 +113,6 @@ namespace Redemption.NPCs.Lab.Blisterface
                 }
             }
         }
-        private float Opacity;
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
