@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("That's a bigass fish.")
+                new FlavorTextBestiaryInfoElement("An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...")
             });
         }
         public override bool CheckActive()
