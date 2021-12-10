@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,6 +27,7 @@ namespace Redemption.NPCs.Lab.Volt
             Projectile.ignoreWater = true;
             Projectile.alpha = 255;
             Projectile.timeLeft = 200;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()
@@ -51,7 +53,7 @@ namespace Redemption.NPCs.Lab.Volt
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 60);
+            target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 30);
         }
         public override void Kill(int timeLeft)
         {
@@ -60,14 +62,17 @@ namespace Redemption.NPCs.Lab.Volt
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, 0f, 0f, 100, default, 1.5f);
                 Main.dust[dustIndex].velocity *= 2;
             }
-            Vector2 vel = Vector2.Normalize(Projectile.velocity);
-            for (int i = 0; i < 8; ++i)
+            if (Main.myPlayer == Projectile.owner)
             {
-                vel = vel.RotatedBy(Math.PI / 4);
-                int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, vel * 3, ProjectileID.MartianTurretBolt, Projectile.damage / 2, 0f, Main.myPlayer);
-                Main.projectile[p].timeLeft = 60;
-                Main.projectile[p].tileCollide = false;
-                Main.projectile[p].netUpdate2 = true;
+                Vector2 vel = Vector2.Normalize(Projectile.velocity);
+                for (int i = 0; i < 8; ++i)
+                {
+                    vel = vel.RotatedBy(Math.PI / 4);
+                    int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, vel * 3, ProjectileID.MartianTurretBolt, Projectile.damage / 2, 0f, Main.myPlayer);
+                    Main.projectile[p].timeLeft = 60;
+                    Main.projectile[p].tileCollide = false;
+                    Main.projectile[p].netUpdate2 = true;
+                }
             }
         }
     }

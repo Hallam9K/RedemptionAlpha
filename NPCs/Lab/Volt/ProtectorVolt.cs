@@ -28,7 +28,10 @@ namespace Redemption.NPCs.Lab.Volt
             Fly,
             Bolts,
             Orbs,
-            Laser
+            TeslaBeam,
+            ZapBeam,
+            SweepingBeam,
+            Defeat
         }
 
         public ActionState AIState
@@ -70,7 +73,7 @@ namespace Redemption.NPCs.Lab.Volt
             NPC.friendly = false;
             NPC.damage = 120;
             NPC.defense = 90;
-            NPC.lifeMax = 160000;
+            NPC.lifeMax = 100000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath3;
             NPC.SpawnWithHigherTime(30);
@@ -87,7 +90,7 @@ namespace Redemption.NPCs.Lab.Volt
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
         }
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.SweepingBeam;
         public override bool? CanHitNPC(NPC target) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -115,7 +118,6 @@ namespace Redemption.NPCs.Lab.Volt
         {
             Player player = Main.player[NPC.target];
             DespawnHandler();
-            NPC.LookAtEntity(player);
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
@@ -140,6 +142,7 @@ namespace Redemption.NPCs.Lab.Volt
                 return;
 
             Vector2 GunOrigin = NPC.Center + RedeHelper.PolarVector(60, gunRot) + RedeHelper.PolarVector(-4 * NPC.spriteDirection, gunRot - (float)Math.PI / 2);
+
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -151,13 +154,29 @@ namespace Redemption.NPCs.Lab.Volt
                     break;
 
                 case ActionState.Fly:
+                    if (NPC.life <= (int)(NPC.lifeMax * 0.01f))
+                    {
+                        Pos = (RedeGen.LabVector + new Vector2(86, 119)) * 16;
+                        NPC.dontTakeDamage = true;
+                        NPC.noGravity = true;
+                        NPC.noTileCollide = true;
+                        AITimer = 0;
+                        TimerRand = 0;
+                        AIState = ActionState.Defeat;
+                        NPC.netUpdate = true;
+
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                        return;
+                    }
+                    NPC.LookAtEntity(player);
                     gunRot.SlowRotation(NPC.spriteDirection == 1 ? 0f : (float)Math.PI, (float)Math.PI / 60f);
                     NPC.noGravity = true;
                     NPC.noTileCollide = true;
                     switch (TimerRand)
                     {
                         case 0:
-                            if (!Main.rand.NextBool(3))
+                            if (!Main.rand.NextBool(5))
                             {
                                 Pos = PickRandPos();
                                 TimerRand = 1;
@@ -180,7 +199,7 @@ namespace Redemption.NPCs.Lab.Volt
                                 NPC.velocity *= 0f;
                                 AITimer = 0;
                                 TimerRand = 0;
-                                AIState = (ActionState)Main.rand.Next(2, 4);
+                                AIState = (ActionState)Main.rand.Next(2, 6);
                                 NPC.netUpdate = true;
                             }
                             else
@@ -197,7 +216,7 @@ namespace Redemption.NPCs.Lab.Volt
                                 NPC.velocity *= 0f;
                                 AITimer = 0;
                                 TimerRand = 0;
-                                AIState = (ActionState)Main.rand.Next(2, 4);
+                                AIState = ActionState.SweepingBeam;
                                 NPC.netUpdate = true;
                             }
                             else
@@ -206,6 +225,7 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     break;
                 case ActionState.Bolts:
+                    NPC.LookAtEntity(player);
                     gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 60f);
                     if (AITimer++ == 0)
                         TimerRand = Main.rand.NextBool() ? 1 : 0;
@@ -213,7 +233,6 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int proj = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
-                        //SoundEngine.PlaySound(SoundID.Item91, NPC.position);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
                         Main.projectile[proj].netUpdate2 = true;
@@ -226,6 +245,7 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     break;
                 case ActionState.Orbs:
+                    NPC.LookAtEntity(player);
                     if (NPC.spriteDirection == 1)
                         gunRot.SlowRotation(5.76f, (float)Math.PI / 30f);
                     else
@@ -241,6 +261,214 @@ namespace Redemption.NPCs.Lab.Volt
                         AITimer = 0;
                         TimerRand = 0;
                         AIState = ActionState.Fly;
+                    }
+                    break;
+                case ActionState.TeslaBeam:
+                    if (AITimer++ < 40)
+                    {
+                        NPC.LookAtEntity(player);
+                        for (int k = 0; k < 2; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 30);
+                            vector.Y = (float)(Math.Cos(angle) * 30);
+                            Dust dust2 = Main.dust[Dust.NewDust(GunOrigin + vector, 2, 2, DustID.Electric)];
+                            dust2.noGravity = true;
+                            dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
+                        }
+                        gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() - 0.4f, (float)Math.PI / 40f);
+                    }
+                    if (AITimer == 60)
+                    {
+                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item73, "", NPC.whoAmI);
+                    }
+                    if (AITimer > 60)
+                        gunRot += 0.01f;
+                    if (AITimer >= 180)
+                    {
+                        AITimer = 0;
+                        TimerRand = 0;
+                        AIState = ActionState.Fly;
+                    }
+                    break;
+                case ActionState.ZapBeam:
+                    if (AITimer++ < 40)
+                    {
+                        NPC.LookAtEntity(player);
+                        for (int k = 0; k < 2; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 30);
+                            vector.Y = (float)(Math.Cos(angle) * 30);
+                            Dust dust2 = Main.dust[Dust.NewDust(GunOrigin + vector, 2, 2, DustID.Electric)];
+                            dust2.noGravity = true;
+                            dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
+                        }
+                        if (AITimer % 10 == 0)
+                        {
+                            for (int i = 0; i < 12; ++i)
+                            {
+                                Dust dust = Dust.NewDustDirect(GunOrigin, 2, 2, DustID.Electric);
+                                dust.velocity = RedeHelper.PolarVector(20, gunRot - 0.6f);
+                                dust.noGravity = true;
+                                Dust dust2 = Dust.NewDustDirect(GunOrigin, 2, 2, DustID.Electric);
+                                dust2.velocity = RedeHelper.PolarVector(20, gunRot + 0.6f);
+                                dust2.noGravity = true;
+                            }
+                        }
+                        gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 40f);
+                    }
+                    if (AITimer == 60)
+                    {
+                        for (int i = 0; i < 2; i++)
+                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), true, SoundID.Item1, "Sounds/Custom/BallFire", NPC.whoAmI, i);
+                    }
+                    if (AITimer >= 160)
+                    {
+                        AITimer = 0;
+                        TimerRand = 0;
+                        AIState = ActionState.Fly;
+                    }
+                    break;
+                case ActionState.SweepingBeam:
+                    if (AITimer++ < 40)
+                    {
+                        NPC.LookAtEntity(player);
+                        for (int k = 0; k < 2; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 30);
+                            vector.Y = (float)(Math.Cos(angle) * 30);
+                            Dust dust2 = Main.dust[Dust.NewDust(GunOrigin + vector, 2, 2, DustID.Electric)];
+                            dust2.noGravity = true;
+                            dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
+                        }
+
+                        if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
+                            gunRot.SlowRotation(-MathHelper.PiOver2, (float)Math.PI / 30f);
+                        else
+                            gunRot.SlowRotation(MathHelper.PiOver2, (float)Math.PI / 30f);
+                    }
+                    if (AITimer == 40)
+                    {
+                        NPC.noGravity = true;
+                        NPC.noTileCollide = true;
+                        if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
+                            gunRot = -MathHelper.PiOver2;
+                        else
+                        {
+                            NPC.velocity.Y -= 4;
+                            gunRot = MathHelper.PiOver2;
+                        }
+                    }
+                    if (AITimer == 60)
+                    {
+                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item73, "", NPC.whoAmI);
+                        if (NPC.Center.X > (RedeGen.LabVector.X + 86) * 16)
+                            TimerRand = 1;
+                    }
+                    if (TimerRand < 2 && AITimer >= 60)
+                    {
+                        Vector2 v = new(TimerRand == 0 ? (RedeGen.LabVector.X + 125) * 16 : (RedeGen.LabVector.X + 48) * 16, Pos.Y - 30);
+                        if (NPC.DistanceSQ(v) < 10 * 10)
+                        {
+                            NPC.noGravity = false;
+                            NPC.noTileCollide = false;
+                            NPC.velocity *= 0f;
+                            AITimer = 180;
+                            TimerRand = 2;
+                            NPC.netUpdate = true;
+                        }
+                        else
+                            NPC.Move(v, 12, 30);
+                    }
+                    if (TimerRand == 2 && AITimer >= 200)
+                    {
+                        AITimer = 0;
+                        TimerRand = 0;
+                        AIState = ActionState.Fly;
+                    }
+                    break;
+                case ActionState.Defeat:
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            if (NPC.DistanceSQ(Pos) < 10 * 10)
+                            {
+                                NPC.noGravity = false;
+                                NPC.noTileCollide = false;
+                                NPC.velocity *= 0f;
+                                AITimer = 0;
+                                TimerRand = 1;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                                NPC.Move(Pos, 14, 20);
+                            break;
+                        case 1:
+                            AITimer++;
+                            if (RedeBossDowned.downedVolt)
+                            {
+                                if (AITimer == 10)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Enough.", true, false);
+                                if (AITimer >= 30)
+                                {
+                                    AITimer = 0;
+                                    TimerRand = 2;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            else
+                            {
+                                if (AITimer == 10)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Wait.", true, false);
+                                if (AITimer == 100)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "I am recieving a transmission.", true, false);
+                                if (AITimer == 290)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "...", true, false);
+                                if (AITimer == 450)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "This appears to have been a misunderstanding, you're allowed through.", true, false);
+                                if (AITimer == 600)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "My apologies. Move along.", true, false);
+                                if (AITimer >= 720)
+                                {
+                                    AITimer = 0;
+                                    TimerRand = 2;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        case 2:
+                            Vector2 VoltPos = new((RedeGen.LabVector.X + 49) * 16, (RedeGen.LabVector.Y + 120) * 16);
+                            if (NPC.DistanceSQ(VoltPos) < 10 * 10)
+                            {
+                                NPC.noGravity = false;
+                                NPC.noTileCollide = false;
+                                NPC.velocity *= 0f;
+                                TimerRand = 3;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                            {
+                                NPC.Move(VoltPos, 14, 20);
+                                NPC.noGravity = true;
+                                NPC.noTileCollide = true;
+                            }
+                            break;
+                        case 3:
+                            if (!LabArea.labAccess[3])
+                                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
+
+                            NPC.SetEventFlagCleared(ref RedeBossDowned.downedVolt, -1);
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+
+                            NPC.position.Y -= 30;
+                            NPC.SetDefaults(ModContent.NPCType<ProtectorVolt_NPC>());
+                            break;
                     }
                     break;
             }
@@ -267,7 +495,7 @@ namespace Redemption.NPCs.Lab.Volt
 
             return (RedeGen.LabVector + selection) * 16;
         }
-        public static Vector2 PickSidePos()
+        public Vector2 PickSidePos()
         {
             WeightedRandom<Vector2> choice = new(Main.rand);
             choice.Add(new Vector2(52, 119));
@@ -275,6 +503,7 @@ namespace Redemption.NPCs.Lab.Volt
             choice.Add(new Vector2(47, 103));
             choice.Add(new Vector2(126, 103));
 
+            FloatPos = false;
             return (RedeGen.LabVector + choice) * 16;
         }
         public override bool CheckDead()
@@ -328,7 +557,7 @@ namespace Redemption.NPCs.Lab.Volt
 
             Vector2 gunCenter = new(NPC.Center.X, NPC.Center.Y + 6);
             int height = GunTex.Height / 4;
-            spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation + gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+            spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), (AIState is ActionState.SweepingBeam ? 0 : NPC.rotation) + gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
             return false;
         }
         private void DespawnHandler()

@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("") // TODO: Blisterface bestiary
             });
         }
         public override bool CheckActive()
