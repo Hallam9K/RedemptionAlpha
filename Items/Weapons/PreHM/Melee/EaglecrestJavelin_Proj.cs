@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;
 
         private float glow;
         public override void AI()

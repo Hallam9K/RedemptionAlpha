@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Containers
 {
-    public class LabChestTile : ModTile
+    public class StandardLabLockerTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -31,13 +31,13 @@ namespace Redemption.Tiles.Containers
 
             DustType = ModContent.DustType<LabPlatingDust>();
             AdjTiles = new int[] { TileID.Containers };
-            ChestDrop = ModContent.ItemType<LabChest>();
+            ChestDrop = ModContent.ItemType<StandardLabLocker>();
 
             // Names
-            ContainerName.SetDefault("Laboratory Chest");
+            ContainerName.SetDefault("Standard Security Locker");
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Chest");
+            name.SetDefault("Standard Security Locker");
             AddMapEntry(new Color(109, 87, 78), name, MapChestName);
 
             // Placement
@@ -197,10 +197,10 @@ namespace Redemption.Tiles.Containers
             }
             else
             {
-                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Laboratory Chest";
-                if (player.cursorItemIconText == "Laboratory Chest")
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Standard Security Locker";
+                if (player.cursorItemIconText == "Standard Security Locker")
                 {
-                    player.cursorItemIconID = ModContent.ItemType<LabChest>();
+                    player.cursorItemIconID = ModContent.ItemType<StandardLabLocker>();
 
                     player.cursorItemIconText = "";
                 }

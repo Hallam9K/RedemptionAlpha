@@ -217,7 +217,7 @@ namespace Redemption.NPCs.Wasteland
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert;
+        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

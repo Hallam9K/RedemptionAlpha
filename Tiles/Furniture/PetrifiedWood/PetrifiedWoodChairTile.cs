@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.CanBeSatOnForNPCs[Type] = true;
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 
@@ -29,8 +30,8 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			AddMapEntry(new Color(100, 100, 100), name);
 
 			// Placement
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
-			TileObjectData.newTile.CoordinateHeights = new[] { 16 };
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.newTile.StyleWrapLimit = 2;
 			TileObjectData.newTile.StyleMultiplier = 2;

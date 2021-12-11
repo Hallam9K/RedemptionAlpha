@@ -33,7 +33,7 @@ namespace Redemption.Projectiles.Hostile
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return target.type != ModContent.NPCType<LivingBloom>();
+            return target.type != ModContent.NPCType<LivingBloom>() ? null : false;
         }
         public override void AI()
         {

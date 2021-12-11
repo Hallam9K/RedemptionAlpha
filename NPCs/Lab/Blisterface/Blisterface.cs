@@ -132,6 +132,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         private readonly int[] AITimer = new int[2];
         public override void PostAI()
         {
+            NPC.LookByVelocity();
             if (AITimer[0] < 1)
             {
                 if (NPC.Center.Y < (RedeGen.LabVector.Y + 186) * 16)
@@ -206,7 +207,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                 }
             }
             NPC.frameCounter++;
-            if (NPC.frameCounter >= 30)
+            if (NPC.frameCounter >= 10)
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y += frameHeight;

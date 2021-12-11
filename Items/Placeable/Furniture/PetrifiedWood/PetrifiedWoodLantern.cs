@@ -15,8 +15,8 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodLanternTile>());
-			Item.width = 16;
-			Item.height = 26;
+			Item.width = 14;
+			Item.height = 32;
 			Item.maxStack = 999;
 			Item.value = 30;
 		}

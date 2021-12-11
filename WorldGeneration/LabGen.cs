@@ -143,7 +143,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 194, origin.Y + 130, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
 
             GenUtils.ObjectPlace(origin.X + 156, origin.Y + 7, (ushort)ModContent.TileType<LabBossDoorTileH>());
-            GenUtils.ObjectPlace(origin.X + 200, origin.Y + 56, (ushort)ModContent.TileType<LabBossDoorTileH>());
+            GenUtils.ObjectPlace(origin.X + 200, origin.Y + 56, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 223, origin.Y + 179, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 128, origin.Y + 103, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 104, origin.Y + 165, (ushort)ModContent.TileType<LabBossDoorTile>());
@@ -401,15 +401,15 @@ namespace Redemption.WorldGeneration
 
             SpecialLabChest(origin.X + 151, origin.Y + 154);
 
-            DeadWoodChest(origin.X + 130, origin.Y + 37);
-            DeadWoodChest(origin.X + 27, origin.Y + 49);
-            DeadWoodChest(origin.X + 91, origin.Y + 86);
-            DeadWoodChest(origin.X + 100, origin.Y + 86);
-            DeadWoodChest(origin.X + 122, origin.Y + 86);
-            DeadWoodChest(origin.X + 122, origin.Y + 74);
-            DeadWoodChest(origin.X + 167, origin.Y + 87);
-            DeadWoodChest(origin.X + 198, origin.Y + 86);
-            DeadWoodChest(origin.X + 202, origin.Y + 87);
+            LabLocker(origin.X + 130, origin.Y + 37);
+            LabLocker(origin.X + 27, origin.Y + 49);
+            LabLocker(origin.X + 91, origin.Y + 86);
+            LabLocker(origin.X + 100, origin.Y + 86);
+            LabLocker(origin.X + 122, origin.Y + 86);
+            LabLocker(origin.X + 122, origin.Y + 74);
+            LabLocker(origin.X + 167, origin.Y + 87);
+            LabLocker(origin.X + 198, origin.Y + 86);
+            LabLocker(origin.X + 202, origin.Y + 87);
             return true;
         }
 
@@ -493,9 +493,9 @@ namespace Redemption.WorldGeneration
                 }*/
             }
         }
-        public static void DeadWoodChest(int x, int y)
+        public static void LabLocker(int x, int y)
         {
-            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<PetrifiedWoodChestTile>(), false);
+            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<StandardLabLockerTile>(), false);
 
             int[] LabChestLoot = new int[]
             {

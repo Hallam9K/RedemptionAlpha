@@ -86,7 +86,7 @@ namespace Redemption.Projectiles.Minions
 
         public override bool? CanHitNPC(NPC target)
         {
-            return target == target2;
+            return target == target2 ? null : false;
         }
 
         private bool CheckActive(Player owner)

@@ -19,8 +19,8 @@ namespace Redemption.Items.Placeable.Containers
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<LabChestTileLocked2>(), 0);
-			Item.width = 32;
-			Item.height = 30;
+			Item.width = 30;
+			Item.height = 28;
 			Item.maxStack = 99;
 			Item.value = 5000;
 			Item.rare = ItemRarityID.LightPurple;

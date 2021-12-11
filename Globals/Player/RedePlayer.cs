@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Items.Donator.Lizzy;
+using Redemption.Items.Donator.Uncon;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
@@ -69,6 +70,16 @@ namespace Redemption.Globals.Player
             {
                 return new[] {
                     new Item(ModContent.ItemType<LizzyCookie>())
+                };
+            }
+            if (!mediumCoreDeath && (Player.name == "Uncon" || Player.name == "Dahlia"))
+            {
+                return new[] {
+                    new Item(ModContent.ItemType<UnconHead>()),
+                    new Item(ModContent.ItemType<UnconBody>()),
+                    new Item(ModContent.ItemType<UnconLegs>()),
+                    new Item(ModContent.ItemType<UnconPatreon_CapeAcc>()),
+                    new Item(ModContent.ItemType<UnconPetItem>())
                 };
             }
             return base.AddStartingItems(mediumCoreDeath);

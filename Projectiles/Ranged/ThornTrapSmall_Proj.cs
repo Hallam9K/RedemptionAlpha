@@ -44,7 +44,7 @@ namespace Redemption.Projectiles.Ranged
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
-        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame >= 3;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame >= 3 ? null : false;
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80;
+        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80 ? null : false;
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

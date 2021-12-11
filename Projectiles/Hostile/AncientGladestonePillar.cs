@@ -26,7 +26,7 @@ namespace Redemption.Projectiles.Hostile
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return Projectile.velocity.Length() != 0 && target.type != ModContent.NPCType<AncientGladestoneGolem>();
+            return Projectile.velocity.Length() != 0 && target.type != ModContent.NPCType<AncientGladestoneGolem>() ? null : false;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

@@ -15,7 +15,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodClockTile>(), 0);
-			Item.width = 16;
+			Item.width = 20;
 			Item.height = 28;
 			Item.maxStack = 99;
 			Item.value = 500;

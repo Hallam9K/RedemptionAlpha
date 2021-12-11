@@ -35,7 +35,7 @@ namespace Redemption.NPCs.PreHM
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return target == host.GetGlobalNPC<RedeNPC>().attacker;
+            return target == host.GetGlobalNPC<RedeNPC>().attacker ? null : false;
         }
         public override bool CanHitPlayer(Player target)
         {

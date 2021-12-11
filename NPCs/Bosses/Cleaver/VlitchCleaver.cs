@@ -4,6 +4,7 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Items.Donator.Gonk;
+using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
@@ -124,6 +125,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void OnKill()
         {
+            if (!RedeBossDowned.downedVlitch1)
+                Item.NewItem(NPC.getRect(), ModContent.ItemType<UnconPetItem>());
+
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
         }
 
@@ -820,7 +824,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, default);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
 

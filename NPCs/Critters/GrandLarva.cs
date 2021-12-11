@@ -249,7 +249,7 @@ namespace Redemption.NPCs.Critters
                 RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
-        public override bool? CanHitNPC(NPC target) => target.lifeMax > 5;
+        public override bool? CanHitNPC(NPC target) => target.lifeMax > 5 ? null : false;
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));

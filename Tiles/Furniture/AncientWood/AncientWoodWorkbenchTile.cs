@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 
 			// Etc
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Ancient Wood Workbench");
+			name.SetDefault("Ancient Wood Work Bench");
 			AddMapEntry(new Color(109, 87, 78), name);
 		}
 

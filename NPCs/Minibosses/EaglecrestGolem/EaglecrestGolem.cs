@@ -100,7 +100,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Roll;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AIState is ActionState.Roll;
+        public override bool? CanHitNPC(NPC target) => target.friendly && AIState is ActionState.Roll ? null : false;
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
