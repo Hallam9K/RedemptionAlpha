@@ -49,7 +49,6 @@ namespace Redemption.NPCs.Friendly
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
-            NPCID.Sets.SpawnsWithCustomName[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -93,48 +92,46 @@ namespace Redemption.NPCs.Friendly
             if (TimerRand == 0)
             {
                 shopItems = CreateNewShop();
+
+                int SakuraScore = 0;
+                int WillowScore = 0;
+                for (int x = -40; x <= 40; x++)
+                {
+                    for (int y = -40; y <= 40; y++)
+                    {
+                        Point tileToNPC = NPC.Center.ToTileCoordinates();
+                        int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].type;
+                        if (type == TileID.VanityTreeSakura)
+                            SakuraScore++;
+                        if (type == TileID.VanityTreeYellowWillow)
+                            WillowScore++;
+                    }
+                }
+
+                WeightedRandom<int> choice = new(Main.rand);
+                choice.Add(0, 100);
+                choice.Add(1, WillowScore);
+                choice.Add(2, SakuraScore);
+
+                WoodType = choice;
+
+                WeightedRandom<string> name = new(Main.rand);
+                name.Add("Gentlewood");
+                name.Add("Blandwood");
+                name.Add("Elmshade");
+                name.Add("Vinewood");
+                name.Add("Bitterthorn");
+                name.Add("Irontwig");
+                if (WoodType == 1)
+                    name.Add("Willowbark", 3);
+                if (WoodType == 2)
+                {
+                    name.Add("Cherrysplinter", 3);
+                    name.Add("Blossomwood", 3);
+                }
+                NPC.GivenName = name + " the Treebark Dryad";
                 TimerRand = 1;
             }
-        }
-        public override string TownNPCName()
-        {
-            int SakuraScore = 0;
-            int WillowScore = 0;
-            for (int x = -40; x <= 40; x++)
-            {
-                for (int y = -40; y <= 40; y++)
-                {
-                    Point tileToNPC = NPC.Center.ToTileCoordinates();
-                    int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].type;
-                    if (type == TileID.VanityTreeSakura)
-                        SakuraScore++;
-                    if (type == TileID.VanityTreeYellowWillow)
-                        WillowScore++;
-                }
-            }
-
-            WeightedRandom<int> choice = new(Main.rand);
-            choice.Add(0, 100);
-            choice.Add(1, WillowScore);
-            choice.Add(2, SakuraScore);
-
-            WoodType = choice;
-
-            WeightedRandom<string> name = new(Main.rand);
-            name.Add("Gentlewood");
-            name.Add("Blandwood");
-            name.Add("Elmshade");
-            name.Add("Vinewood");
-            name.Add("Bitterthorn");
-            name.Add("Irontwig");
-            if (WoodType == 1)
-                name.Add("Willowbark", 3);
-            if (WoodType == 2)
-            {
-                name.Add("Cherrysplinter", 3);
-                name.Add("Blossomwood", 3);
-            }
-            return name;
         }
         public override bool CanChat() => true;
         public override void SetChatButtons(ref string button, ref string button2)
