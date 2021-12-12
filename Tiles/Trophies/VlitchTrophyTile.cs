@@ -18,9 +18,9 @@ namespace Redemption.Tiles.Trophies
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
 			DustType = DustID.WoodFurniture;
-			ModTranslation name = ((ModTile)this).CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Vlitch Overlord Trophy");
-			AddMapEntry(new Color(120, 85, 60), val);
+			AddMapEntry(new Color(120, 85, 60), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{

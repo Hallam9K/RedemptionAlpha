@@ -3,7 +3,6 @@ using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.HM.Melee;
 using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -59,7 +58,7 @@ namespace Redemption.Items.Usable
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}*/
-			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomite>(), Main.rand.Next(12, 24));
+			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomiteItem>(), Main.rand.Next(12, 24));
 			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(1, 3));
 			//player.QuickSpawnItem(ModContent.ItemType<BrokenBlade>(), 1);
 		}
