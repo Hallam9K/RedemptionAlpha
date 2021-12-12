@@ -51,8 +51,9 @@ namespace Redemption.Projectiles.Melee
                 Vector2 move = Vector2.Zero;
                 float distance = 900f;
                 bool targetted = false;
-                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    NPC target = Main.npc[i];
                     if (!target.CanBeChasedBy() || target.GetGlobalNPC<RedeNPC>().invisible)
                         continue;
 

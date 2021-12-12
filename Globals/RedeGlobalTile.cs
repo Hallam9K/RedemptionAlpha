@@ -60,9 +60,7 @@ namespace Redemption.Globals
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
                 {
                     if (Main.rand.NextBool(300))
-                    {
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<NightshadeTile>(), true);
-                    }
                 }
             }
             if (type == TileID.Grass && Main.dayTime && RedeBossDowned.downedThorn)
@@ -70,19 +68,15 @@ namespace Redemption.Globals
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && !Framing.GetTileSafely(i + 1, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i + 1, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
                 {
                     if (Main.rand.NextBool(6000))
-                    {
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
-                    }
                 }
             }
-            if (type == ModContent.TileType<IrradiatedCorruptGrassTile>() || type == ModContent.TileType<IrradiatedEbonstoneTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedCrimstoneTile>())
+            if (type == ModContent.TileType<IrradiatedCorruptGrassTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedGrassTile>())
             {
                 if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0)
                 {
                     if (Main.rand.NextBool(300))
-                    {
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
-                    }
                 }
             }
             if (Terraria.NPC.downedBoss3 && (type == TileID.SnowBlock || TileID.Sets.Conversion.Ice[type]))

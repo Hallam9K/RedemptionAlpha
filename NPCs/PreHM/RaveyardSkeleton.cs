@@ -198,8 +198,9 @@ namespace Redemption.NPCs.PreHM
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.type != NPC.type || target.frame.Y >= 60)
                     continue;
 

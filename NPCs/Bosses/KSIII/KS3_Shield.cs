@@ -45,8 +45,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.scale -= 0.02f;
             Projectile.scale = (int)MathHelper.Clamp(Projectile.scale, 1, 2);
 
-            foreach (Projectile target in Main.projectile)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
+                Projectile target = Main.projectile[i];
                 if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                     continue;
 

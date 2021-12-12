@@ -21,6 +21,7 @@ namespace Redemption.NPCs.Lab.Janitor
         {
             DisplayName.SetDefault("The Janitor");
             Main.npcFrameCount[NPC.type] = 5;
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true

@@ -78,8 +78,9 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                     Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
                 }
                 Rectangle boom = new((int)Projectile.Center.X - 150, (int)Projectile.Center.Y - 150, 300, 300);
-                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    NPC target = Main.npc[i];
                     if (!target.active || target.friendly)
                         continue;
 

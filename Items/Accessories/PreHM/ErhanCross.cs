@@ -83,8 +83,9 @@ namespace Redemption.Items.Accessories.PreHM
 
             if (Projectile.alpha < 100 && Projectile.ai[1] <= 0)
             {
-                foreach (Projectile target in Main.projectile)
+                for (int i = 0; i < Main.maxProjectiles; i++)
                 {
+                    Projectile target = Main.projectile[i];
                     if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                         continue;
 

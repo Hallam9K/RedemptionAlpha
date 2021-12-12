@@ -8,7 +8,7 @@ using Redemption.Rarities;
 namespace Redemption.Items.Donator.Arche
 {
     [AutoloadEquip(EquipType.Body)]
-	class ArchePatreonVanityBody : ModItem
+	public class ArchePatreonVanityBody : ModItem
 	{
         public override void SetStaticDefaults()
         {

@@ -33,7 +33,7 @@ namespace Redemption.NPCs.Friendly
         {
             DisplayName.SetDefault("King Slayer III");
             Main.npcFrameCount[NPC.type] = 7;
-
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -45,7 +45,6 @@ namespace Redemption.NPCs.Friendly
         public override void SetDefaults()
         {
             NPC.friendly = true;
-            NPC.townNPC = true;
             NPC.dontTakeDamage = true;
             NPC.noGravity = true;
             NPC.width = 56;
@@ -59,6 +58,7 @@ namespace Redemption.NPCs.Friendly
         public override bool CanGoToStatue(bool toKingStatue) => true;
         public override bool UsesPartyHat() => false;
         public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
+        public override bool CanChat() => true;
 
         public override void AI()
         {

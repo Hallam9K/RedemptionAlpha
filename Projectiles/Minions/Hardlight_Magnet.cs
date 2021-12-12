@@ -85,8 +85,9 @@ namespace Redemption.Projectiles.Minions
                     dust2.noGravity = true;
                     dust2.velocity *= 0f;
                 }
-                foreach (Projectile target in Main.projectile)
+                for (int i = 0; i < Main.maxProjectiles; i++)
                 {
+                    Projectile target = Main.projectile[i];
                     if (!target.active || target.width >= 40 || target.height >= 40 || Projectile.DistanceSQ(target.Center) >= 200 * 200 || !target.hostile || target.damage <= 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
                         continue;
 

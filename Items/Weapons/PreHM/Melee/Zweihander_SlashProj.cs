@@ -73,8 +73,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Projectile.frame >= 4 && Projectile.frame <= 5)
                         {
-                            foreach (Projectile target in Main.projectile)
+                            for (int i = 0; i < Main.maxProjectiles; i++)
                             {
+                                Projectile target = Main.projectile[i];
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 

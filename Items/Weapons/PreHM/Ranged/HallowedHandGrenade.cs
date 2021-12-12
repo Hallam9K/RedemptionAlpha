@@ -18,18 +18,18 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             Item.width = 26;
             Item.height = 36;
-            Item.damage = 30;
+            Item.damage = 36;
             Item.knockBack = 8;
             Item.value = Item.sellPrice(0, 0, 54, 0);
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = 60;
-            Item.useTime = 60;
+            Item.useAnimation = 58;
+            Item.useTime = 58;
             Item.UseSound = SoundID.Item1;
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.DamageType = DamageClass.Ranged;
-            Item.shootSpeed = 6f;
+            Item.shootSpeed = 8f;
             Item.shoot = ModContent.ProjectileType<HallowedHandGrenade_Proj>();
         }
     }

@@ -265,10 +265,10 @@ namespace Redemption.Globals.Player
             #endregion
         }
 
-        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
+        public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
             if (hairLoss)
-                drawInfo.hideHair = true;
+                PlayerDrawLayers.HairBack.Hide();
         }
 
         public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

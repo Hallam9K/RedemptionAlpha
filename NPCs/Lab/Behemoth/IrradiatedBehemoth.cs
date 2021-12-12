@@ -13,6 +13,9 @@ using Redemption.Items.Usable;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Audio;
+using Redemption.WorldGeneration;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Lore;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -84,7 +87,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -111,6 +114,11 @@ namespace Redemption.NPCs.Lab.Behemoth
                 Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBehemoth, -1);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk2>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk2_1>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
@@ -172,7 +180,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 3; i++)
                         {
                             int rot = 25 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 60, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), false, SoundID.NPCDeath13);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), false, SoundID.NPCDeath13);
                         }
                     }
                     if (AITimer == 100)
@@ -180,7 +188,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 5; i++)
                         {
                             int rot = 20 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 60, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), false, SoundID.NPCDeath13);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), false, SoundID.NPCDeath13);
                         }
                     }
                     if (AITimer++ >= 180)
@@ -205,7 +213,7 @@ namespace Redemption.NPCs.Lab.Behemoth
 
                     if (AITimer >= 60 && AITimer <= 100 && NPC.frameCounter % 3 == 0)
                     {
-                        NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGloop_Proj>(), 60, RedeHelper.PolarVector(12, TimerRand), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                        NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGloop_Proj>(), 90, RedeHelper.PolarVector(12, TimerRand), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                         TimerRand += TimerRand2 == 1 ? 0.2f : -0.2f;
                     }
                     if (AITimer >= 180)
@@ -217,7 +225,15 @@ namespace Redemption.NPCs.Lab.Behemoth
                         NPC.netUpdate = true;
                     }
                     break;
+            }
+            if (Main.LocalPlayer.Center.Y < NPC.Center.Y && Main.rand.NextBool(5))
+                NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)), false, SoundID.Item1.WithVolume(0));
 
+            if (NPC.Center.Y > (RedeGen.LabVector.Y + 119) * 16)
+            {
+                NPC.alpha += 2;
+                if (NPC.alpha >= 255)
+                    NPC.active = false;
             }
         }
         private int AniFrameY;

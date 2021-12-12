@@ -120,8 +120,9 @@ namespace Redemption.NPCs.Lab
             {
                 if (Main.rand.NextBool(100))
                 {
-                    foreach (NPC ooze in Main.npc.Take(Main.maxNPCs))
+                    for (int i = 0; i < Main.maxNPCs; i++)
                     {
+                        NPC ooze = Main.npc[i];
                         if (!ooze.active || NPC.whoAmI == ooze.whoAmI || NPC.scale < ooze.scale || ooze.type != Type || !NPC.Hitbox.Intersects(ooze.Hitbox))
                             continue;
 
@@ -130,8 +131,9 @@ namespace Redemption.NPCs.Lab
                         Consumption();
                     }
                 }
-                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    NPC target = Main.npc[i];
                     if (!target.active || target.dontTakeDamage || target.immortal || NPC.whoAmI == target.whoAmI || target.type == Type || target.life >= NPC.damage ||
                         NPC.height < target.height - 8 || NPC.width < target.width - 8 || target.boss || NPCTags.Inorganic.Has(target.type) ||
                         NPCTags.Spirit.Has(target.type) || !NPC.Hitbox.Intersects(target.Hitbox))

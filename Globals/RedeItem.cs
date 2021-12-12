@@ -3,6 +3,7 @@ using Redemption.Buffs;
 using Redemption.Globals.Player;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -138,6 +139,11 @@ namespace Redemption.Globals
                     TooltipLine line = new(Mod, "Element", "Wind") { overrideColor = Color.LightGray };
                     tooltips.Add(line);
                 }
+            }
+            if (item.rare == ModContent.RarityType<DonatorRarity>())
+            {
+                TooltipLine donatorLine = new(Mod, "DonatorLine", "-Donator Item-") { overrideColor = Color.SpringGreen };
+                tooltips.Add(donatorLine);
             }
         }
     }

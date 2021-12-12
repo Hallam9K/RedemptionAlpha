@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Lab
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "The janitor arrived after me... Guess he's never late for the job.";
+            return "Volt is here too? Looks like everyone's here now.";
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

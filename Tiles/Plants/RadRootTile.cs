@@ -41,11 +41,10 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.AnchorValidTiles = new int[]
             {
+                ModContent.TileType<IrradiatedGrassTile>(),
                 ModContent.TileType<IrradiatedCorruptGrassTile>(),
-				ModContent.TileType<IrradiatedCrimsonGrassTile>(),
-				ModContent.TileType<IrradiatedEbonstoneTile>(),
-				ModContent.TileType<IrradiatedCrimstoneTile>(),
-			};
+				ModContent.TileType<IrradiatedCrimsonGrassTile>()
+            };
             TileObjectData.newTile.AnchorAlternateTiles = new int[]
             {
                 TileID.ClayPot,

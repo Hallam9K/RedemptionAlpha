@@ -1,5 +1,6 @@
 using Redemption.Globals.Player;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Debuffs
@@ -12,7 +13,7 @@ namespace Redemption.Buffs.Debuffs
 			Description.SetDefault("Your hair is gone!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
-            CanBeCleared = false;
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {

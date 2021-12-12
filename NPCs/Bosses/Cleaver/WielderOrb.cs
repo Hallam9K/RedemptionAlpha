@@ -52,15 +52,16 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (host.life <= 0 || !host.active || host.type != ModContent.NPCType<Wielder>())
                 Projectile.Kill();
 
-            foreach (Projectile target in Main.projectile)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
+                Projectile target = Main.projectile[i];
                 if (!target.active || Projectile.whoAmI == target.whoAmI || target.minion || !target.friendly || target.hostile || target.damage <= 5 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                     continue;
 
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithPitchVariance(.1f), Projectile.position);
 
-                for (int i = 0; i < 2; i++)
+                for (int j = 0; j < 2; j++)
                 {
                     Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain, 0f, 0f, 100, default, 1f);
                     dust.velocity = -Projectile.DirectionTo(dust.position) * 2f;

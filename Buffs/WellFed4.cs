@@ -1,5 +1,6 @@
 using Redemption.Globals.Player;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs
@@ -11,6 +12,8 @@ namespace Redemption.Buffs
             DisplayName.SetDefault("Delightfully Indulged");
             Description.SetDefault("Massive improvements to all stats");
             Main.buffNoTimeDisplay[Type] = false;
+            BuffID.Sets.IsWellFed[Type] = true;
+            BuffID.Sets.IsFedState[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

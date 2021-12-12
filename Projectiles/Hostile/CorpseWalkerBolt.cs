@@ -91,8 +91,9 @@ namespace Redemption.Projectiles.Hostile
                         targetted = true;
                     }
                 }
-                foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    NPC target = Main.npc[i];
                     if (Projectile.ai[1] != -1)
                     {
                         NPC NPCtarget = Main.npc[(int)Projectile.ai[1]];
@@ -117,8 +118,9 @@ namespace Redemption.Projectiles.Hostile
                 }
             }
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == host.whoAmI)
                     continue;
 

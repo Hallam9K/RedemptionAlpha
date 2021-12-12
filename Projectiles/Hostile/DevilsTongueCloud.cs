@@ -54,8 +54,9 @@ namespace Redemption.Projectiles.Hostile
                 target.AddBuff(ModContent.BuffType<DevilScentedDebuff>(), 360);
                 target.AddBuff(BuffID.Confused, 40);
             }
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active)
                     continue;
 

@@ -1,5 +1,6 @@
 using Redemption.Globals.NPC;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Debuffs
@@ -13,7 +14,7 @@ namespace Redemption.Buffs.Debuffs
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
-            LongerExpertDebuff = false;
+            BuffID.Sets.LongerExpertDebuff[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {

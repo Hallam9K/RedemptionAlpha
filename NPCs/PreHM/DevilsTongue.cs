@@ -91,8 +91,9 @@ namespace Redemption.NPCs.PreHM
                     }
                     break;
             }
-            foreach (NPC possibleTarget in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC possibleTarget = Main.npc[i];
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
                     possibleTarget.lifeMax > 5 || !NPCID.Sets.CountsAsCritter[possibleTarget.type])
                     continue;

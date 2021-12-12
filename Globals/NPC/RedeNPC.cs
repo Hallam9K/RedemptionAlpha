@@ -8,6 +8,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
+using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Wasteland;
 using Redemption.Tiles.Tiles;
@@ -351,6 +352,11 @@ namespace Redemption.Globals.NPC
                 spawnRate = 18;
                 maxSpawns = 12;
             }
+            if (player.InModBiome(ModContent.GetInstance<LabBiome>()))
+            {
+                spawnRate = 20;
+                maxSpawns = 12;
+            }
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -372,14 +378,24 @@ namespace Redemption.Globals.NPC
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<LabBiome>()))
             {
-                int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
-                bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
+                if (!RedeWorld.labSafe)
+                {
+                    pool.Clear();
+                    pool.Add(ModContent.NPCType<LabSentryDrone>(), 10);
+                }
+                else
+                {
+                    int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
+                    bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
 
-                pool.Clear();
-                pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
-                pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
-                pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
-                pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
+                    pool.Clear();
+                    pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
+                    pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
+                    pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
+                    pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
+                    if (spawnInfo.water)
+                        pool.Add(ModContent.NPCType<BlisteredFish>(), 0.4f);
+                }
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {

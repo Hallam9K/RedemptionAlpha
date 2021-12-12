@@ -128,8 +128,9 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
             Rectangle ShieldRaisedHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
-            foreach (Projectile projectile in Main.projectile)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
+                Projectile projectile = Main.projectile[i];
                 if (!projectile.active || !projectile.friendly || projectile.penetrate == -1 || projectile.damage > 60 || ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
                     continue;
 
@@ -414,8 +415,9 @@ namespace Redemption.NPCs.PreHM
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<SkeletonWarden>() || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 

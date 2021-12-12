@@ -1,5 +1,6 @@
 ﻿using Redemption.Globals.NPC;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.NPCBuffs
@@ -13,7 +14,7 @@ namespace Redemption.Buffs.NPCBuffs
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            CanBeCleared = false;
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

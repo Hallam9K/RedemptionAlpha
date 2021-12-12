@@ -45,6 +45,7 @@ namespace Redemption.Items
             RedeBossDowned.downedVlitch1 = false;
             RedeBossDowned.downedVlitch2 = false;
             RedeBossDowned.downedVlitch3 = false;
+            RedeBossDowned.voltBegin = false;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);

@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Debuffs
@@ -11,7 +12,7 @@ namespace Redemption.Buffs.Debuffs
 			Description.SetDefault("You are dying of radiation!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
-            CanBeCleared = false;
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

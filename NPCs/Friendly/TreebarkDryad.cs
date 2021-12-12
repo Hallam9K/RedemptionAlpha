@@ -48,6 +48,7 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 9;
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {

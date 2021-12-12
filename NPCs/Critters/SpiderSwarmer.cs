@@ -169,8 +169,9 @@ namespace Redemption.NPCs.Critters
                         hopCooldown = 80;
                     }
 
-                    foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+                    for (int i = 0; i < Main.maxNPCs; i++)
                     {
+                        NPC target = Main.npc[i];
                         if (!target.active || target.whoAmI == NPC.whoAmI || target != NPC.GetGlobalNPC<RedeNPC>().attacker)
                             continue;
 
@@ -202,8 +203,9 @@ namespace Redemption.NPCs.Critters
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
@@ -256,8 +258,9 @@ namespace Redemption.NPCs.Critters
         public int CountCheck()
         {
             int count = 0;
-            foreach (NPC spider in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                NPC spider = Main.npc[i];
                 if (!spider.active || spider.whoAmI == NPC.whoAmI || spider.type != NPC.type)
                     continue;
 
