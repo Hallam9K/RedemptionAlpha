@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.NPCBuffs
@@ -15,13 +16,11 @@ namespace Redemption.Buffs.NPCBuffs
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
-			LongerExpertDebuff = true;
-		}
-
+            BuffID.Sets.LongerExpertDebuff[Type] = true;
+        }
 		public override void Update(NPC npc, ref int buffIndex)
 		{
 			Dust val = Main.dust[Dust.NewDust(((Entity)npc).position, ((Entity)npc).width, ((Entity)npc).height, 261, 0f, 0f, 0, default(Color), 1f)];
-			//val.shader = GameShaders.Armor.GetSecondaryShader(77, Main.get_LocalPlayer());
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace Redemption.Items.Accessories.HM
 			DisplayName.SetDefault("Xenomite Wings");
 		    Tooltip.SetDefault("Allows flight and slow fall");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(100, 7f, 2.5f);
         }
 		public override void SetDefaults()
 		{
@@ -23,10 +24,6 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;
 		}
-		public override void UpdateAccessory(Player player, bool hideVisual)
-		{
-			player.wingTimeMax = 100;
-		}
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
 		{
 			ascentWhenFalling = 0.85f;
@@ -34,11 +31,6 @@ namespace Redemption.Items.Accessories.HM
 			maxCanAscendMultiplier = 1f;
 			maxAscentMultiplier = 1.7f;
 			constantAscend = 0.135f;
-		}
-		public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
-		{
-			speed = 7f;
-			acceleration *= 2.5f;
 		}
 		public override void AddRecipes()
 		{
