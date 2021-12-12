@@ -124,9 +124,6 @@ namespace Redemption.WorldGeneration
                 placed = true;
             }
 
-            //Turrets
-            //GenUtils.ObjectPlace(origin.X + 125, origin.Y + 14, (ushort)ModContent.TileType<TurretTile>());
-            //NetMessage.SendObjectPlacment(-1, origin.X + 125, origin.Y + 14, (ushort)ModContent.TileType<TurretTile>(), 0, 0, -1, -1);
             // Doors
             GenUtils.ObjectPlace(origin.X + 135, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 143, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());
@@ -347,8 +344,8 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 113, origin.Y + 175, (ushort)ModContent.TileType<LabTableTile>());
             GenUtils.ObjectPlace(origin.X + 112, origin.Y + 173, (ushort)ModContent.TileType<RadiationPillTile>());
             GenUtils.ObjectPlace(origin.X + 113, origin.Y + 173, (ushort)ModContent.TileType<LabComputerTile>());
-            GenUtils.ObjectPlace(origin.X + 44, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>(), 0, 1);
-            GenUtils.ObjectPlace(origin.X + 102, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>());
+            GenUtils.ObjectPlace(origin.X + 43, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>(), 0, 1);
+            GenUtils.ObjectPlace(origin.X + 103, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>());
 
             GenUtils.ObjectPlace(origin.X + 106, origin.Y + 156, (ushort)ModContent.TileType<LabReceptionDeskTile>());
             GenUtils.ObjectPlace(origin.X + 109, origin.Y + 156, (ushort)ModContent.TileType<LabChairTile>());

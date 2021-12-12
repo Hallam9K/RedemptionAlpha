@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Lab;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -17,14 +18,14 @@ namespace Redemption.Tiles.Furniture.Lab
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
-            TileObjectData.newTile.Width = 3;
-            TileObjectData.newTile.Height = 5;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16 };
+            TileObjectData.newTile.Width = 1;
+            TileObjectData.newTile.Height = 4;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.Origin = new Point16(1, 2);
+            TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.AnchorLeft = AnchorData.Empty;
@@ -42,6 +43,32 @@ namespace Redemption.Tiles.Furniture.Lab
 			AddMapEntry(new Color(110, 106, 120), name);
 		}
         public override bool CanExplode(int i, int j) => false;
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Tile tile = Main.tile[i, j];
+            if (tile.frameX == 0 && tile.frameY == 0)
+            {
+                if (!Main.projectile.Any(projectile => projectile.type == ModContent.ProjectileType<BigMaceTurret_NPC>() && (projectile.ModProjectile as BigMaceTurret_NPC).Parent == tile && projectile.active))
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int turret = Projectile.NewProjectile(Wiring.GetProjectileSource(i, j), new Vector2(i * 16, j * 16 + 32), Vector2.Zero, ModContent.ProjectileType<BigMaceTurret_NPC>(), 0, 0, Main.myPlayer);
+                        (Main.projectile[turret].ModProjectile as BigMaceTurret_NPC).Parent = tile;
+                    }
+                }
+            }
+            if (tile.frameX == 18 && tile.frameY == 0)
+            {
+                if (!Main.projectile.Any(projectile => projectile.type == ModContent.ProjectileType<BigMaceTurret_NPC>() && (projectile.ModProjectile as BigMaceTurret_NPC).Parent == tile && projectile.active))
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int turret = Projectile.NewProjectile(Wiring.GetProjectileSource(i, j), new Vector2(i * 16 + 16, j * 16 + 32), Vector2.Zero, ModContent.ProjectileType<BigMaceTurret_NPC>(), 0, 0, Main.myPlayer);
+                        (Main.projectile[turret].ModProjectile as BigMaceTurret_NPC).Parent = tile;
+                    }
+                }
+            }
+        }
     }
     public class BigMaceTurret : PlaceholderTile
     {

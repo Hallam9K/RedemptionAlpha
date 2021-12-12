@@ -40,7 +40,6 @@ namespace Redemption.NPCs.Lab.MACE
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("MACE Project");
-            Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.TrailCacheLength[NPC.type] = 3;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
 
@@ -248,14 +247,6 @@ namespace Redemption.NPCs.Lab.MACE
             {
                 if (JawCenter.Y >= 0)
                     JawCenter.Y -= 1f;
-            }
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 10)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > frameHeight)
-                    NPC.frame.Y = 0;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
