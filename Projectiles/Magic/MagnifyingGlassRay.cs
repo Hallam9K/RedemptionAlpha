@@ -58,7 +58,7 @@ namespace Redemption.Projectiles.Magic
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
-        public override bool? CanHitNPC(NPC target) => !target.friendly && AITimer >= 80;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && AITimer >= 80 ? null : false;
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanCutTiles() => false;
 

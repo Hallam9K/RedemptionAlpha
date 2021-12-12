@@ -15,8 +15,8 @@ namespace Redemption.Items.Placeable.Furniture.AncientWood
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<AncientWoodTableTile>());
-			Item.width = 30;
-			Item.height = 22;
+			Item.width = 38;
+			Item.height = 24;
 			Item.maxStack = 99;
 			Item.value = 500;
 		}

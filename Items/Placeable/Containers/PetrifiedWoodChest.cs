@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Containers
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodChestTile>(), 0);
 			Item.width = 32;
-			Item.height = 28;
+			Item.height = 30;
 			Item.maxStack = 99;
 			Item.value = 500;
 		}

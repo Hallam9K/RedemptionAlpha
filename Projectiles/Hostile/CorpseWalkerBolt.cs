@@ -40,7 +40,7 @@ namespace Redemption.Projectiles.Hostile
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return target == host.GetGlobalNPC<RedeNPC>().attacker && !NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type);
+            return target == host.GetGlobalNPC<RedeNPC>().attacker && !NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type) ? null : false;
         }
         public override bool CanHitPlayer(Player target)
         {

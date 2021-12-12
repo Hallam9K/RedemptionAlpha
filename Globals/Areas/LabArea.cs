@@ -27,10 +27,6 @@ namespace Redemption.Globals
             if (!Active || RedeGen.LabVector.X == -1 || RedeGen.LabVector.Y == -1)
                 return;
 
-            Vector2 CraneOperatorPos = new(((RedeGen.LabVector.X + 107) * 16) + 8, (RedeGen.LabVector.Y + 157) * 16);
-            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<CraneOperator>()))
-                Terraria.NPC.NewNPC((int)CraneOperatorPos.X, (int)CraneOperatorPos.Y, ModContent.NPCType<CraneOperator>());
-
             Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 14, (RedeGen.LabVector.Y + 42) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<JustANormalToaster>()))
                 Terraria.NPC.NewNPC((int)ToasterPos.X, (int)ToasterPos.Y, ModContent.NPCType<JustANormalToaster>());
@@ -56,8 +52,12 @@ namespace Redemption.Globals
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_Start>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_NPC>()))
                 Terraria.NPC.NewNPC((int)VoltPos.X, (int)VoltPos.Y, ModContent.NPCType<ProtectorVolt_Start>());
 
+            Vector2 CraneOperatorPos = new(((RedeGen.LabVector.X + 107) * 16) + 8, (RedeGen.LabVector.Y + 157) * 16);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<CraneOperator>()) && !RedeBossDowned.downedMACE)
+                Terraria.NPC.NewNPC((int)CraneOperatorPos.X, (int)CraneOperatorPos.Y, ModContent.NPCType<CraneOperator>());
+
             Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 169) * 16);
-            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject>()))
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject>()) && !RedeBossDowned.downedMACE)
                 Terraria.NPC.NewNPC((int)MacePos.X, (int)MacePos.Y, ModContent.NPCType<MACEProject_Off>());
         }
         public override void OnWorldLoad()

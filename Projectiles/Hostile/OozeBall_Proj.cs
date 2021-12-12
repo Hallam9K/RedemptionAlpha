@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 160;
             Projectile.timeLeft = 200;
         }
-        public override bool? CanHitNPC(NPC target) => target.whoAmI != Projectile.ai[0];
+        public override bool? CanHitNPC(NPC target) => target.whoAmI != Projectile.ai[0] ? null : false;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)

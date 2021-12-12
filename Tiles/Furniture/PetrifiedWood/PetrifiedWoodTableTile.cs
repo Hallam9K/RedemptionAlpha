@@ -15,11 +15,12 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		{
 			// Properties
 			Main.tileTable[Type] = true;
-			Main.tileSolidTop[Type] = false;
+			Main.tileSolidTop[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.IgnoredByNpcStepUp[Type] = true;
 
 			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.Tables };

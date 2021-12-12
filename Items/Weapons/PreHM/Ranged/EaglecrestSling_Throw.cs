@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Projectile.penetrate = -1;
         }
 
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool? CanHitNPC(NPC target) => false ? null : false;
 
         float oldRotation = 0f;
         int directionLock = 0;

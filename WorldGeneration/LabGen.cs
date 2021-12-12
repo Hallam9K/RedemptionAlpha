@@ -124,9 +124,6 @@ namespace Redemption.WorldGeneration
                 placed = true;
             }
 
-            //Turrets
-            //GenUtils.ObjectPlace(origin.X + 125, origin.Y + 14, (ushort)ModContent.TileType<TurretTile>());
-            //NetMessage.SendObjectPlacment(-1, origin.X + 125, origin.Y + 14, (ushort)ModContent.TileType<TurretTile>(), 0, 0, -1, -1);
             // Doors
             GenUtils.ObjectPlace(origin.X + 135, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());
             GenUtils.ObjectPlace(origin.X + 143, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());
@@ -143,7 +140,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 194, origin.Y + 130, (ushort)ModContent.TileType<LabKeycardDoorClosed>());
 
             GenUtils.ObjectPlace(origin.X + 156, origin.Y + 7, (ushort)ModContent.TileType<LabBossDoorTileH>());
-            GenUtils.ObjectPlace(origin.X + 200, origin.Y + 56, (ushort)ModContent.TileType<LabBossDoorTileH>());
+            GenUtils.ObjectPlace(origin.X + 200, origin.Y + 56, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 223, origin.Y + 179, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 128, origin.Y + 103, (ushort)ModContent.TileType<LabBossDoorTile>());
             GenUtils.ObjectPlace(origin.X + 104, origin.Y + 165, (ushort)ModContent.TileType<LabBossDoorTile>());
@@ -347,8 +344,8 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 113, origin.Y + 175, (ushort)ModContent.TileType<LabTableTile>());
             GenUtils.ObjectPlace(origin.X + 112, origin.Y + 173, (ushort)ModContent.TileType<RadiationPillTile>());
             GenUtils.ObjectPlace(origin.X + 113, origin.Y + 173, (ushort)ModContent.TileType<LabComputerTile>());
-            GenUtils.ObjectPlace(origin.X + 44, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>(), 0, 1);
-            GenUtils.ObjectPlace(origin.X + 102, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>());
+            GenUtils.ObjectPlace(origin.X + 43, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>(), 0, 1);
+            GenUtils.ObjectPlace(origin.X + 103, origin.Y + 161, (ushort)ModContent.TileType<BigMaceTurretTile>());
 
             GenUtils.ObjectPlace(origin.X + 106, origin.Y + 156, (ushort)ModContent.TileType<LabReceptionDeskTile>());
             GenUtils.ObjectPlace(origin.X + 109, origin.Y + 156, (ushort)ModContent.TileType<LabChairTile>());
@@ -401,15 +398,15 @@ namespace Redemption.WorldGeneration
 
             SpecialLabChest(origin.X + 151, origin.Y + 154);
 
-            DeadWoodChest(origin.X + 130, origin.Y + 37);
-            DeadWoodChest(origin.X + 27, origin.Y + 49);
-            DeadWoodChest(origin.X + 91, origin.Y + 86);
-            DeadWoodChest(origin.X + 100, origin.Y + 86);
-            DeadWoodChest(origin.X + 122, origin.Y + 86);
-            DeadWoodChest(origin.X + 122, origin.Y + 74);
-            DeadWoodChest(origin.X + 167, origin.Y + 87);
-            DeadWoodChest(origin.X + 198, origin.Y + 86);
-            DeadWoodChest(origin.X + 202, origin.Y + 87);
+            LabLocker(origin.X + 130, origin.Y + 37);
+            LabLocker(origin.X + 27, origin.Y + 49);
+            LabLocker(origin.X + 91, origin.Y + 86);
+            LabLocker(origin.X + 100, origin.Y + 86);
+            LabLocker(origin.X + 122, origin.Y + 86);
+            LabLocker(origin.X + 122, origin.Y + 74);
+            LabLocker(origin.X + 167, origin.Y + 87);
+            LabLocker(origin.X + 198, origin.Y + 86);
+            LabLocker(origin.X + 202, origin.Y + 87);
             return true;
         }
 
@@ -493,9 +490,9 @@ namespace Redemption.WorldGeneration
                 }*/
             }
         }
-        public static void DeadWoodChest(int x, int y)
+        public static void LabLocker(int x, int y)
         {
-            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<PetrifiedWoodChestTile>(), false);
+            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<StandardLabLockerTile>(), false);
 
             int[] LabChestLoot = new int[]
             {

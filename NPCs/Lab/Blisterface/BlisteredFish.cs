@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -19,13 +20,21 @@ namespace Redemption.NPCs.Lab.Blisterface
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned
                 }
             });
+            if (NPC.type == ModContent.NPCType<BlisteredFish>())
+            {
+                NPCID.Sets.BossBestiaryPriority.Add(Type);
+                NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+                {
+                    Velocity = 1
+                };
+                NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            }
         }
         public override void SetDefaults()
         {
@@ -52,6 +61,10 @@ namespace Redemption.NPCs.Lab.Blisterface
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, Scale: 1.5f);
             }
         }
+        public override void PostAI()
+        {
+            NPC.LookByVelocity();
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             int associatedNPCType = BodyType();
@@ -60,6 +73,17 @@ namespace Redemption.NPCs.Lab.Blisterface
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 new FlavorTextBestiaryInfoElement("An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite Infection. This strain's teeth are crystallized.")
             });
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.frameCounter++;
+            if (NPC.frameCounter >= 10)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 5 * frameHeight)
+                    NPC.frame.Y = 0;
+            }
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {

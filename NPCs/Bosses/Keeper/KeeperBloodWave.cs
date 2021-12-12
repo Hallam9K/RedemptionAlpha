@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Projectile.Kill();
         }
         public override bool CanHitPlayer(Player target) => Projectile.alpha < 200;
-        public override bool? CanHitNPC(NPC target) => target.friendly && Projectile.alpha < 200;
+        public override bool? CanHitNPC(NPC target) => target.friendly && Projectile.alpha < 200 ? null : false;
 
         public override bool PreDraw(ref Color lightColor)
         {

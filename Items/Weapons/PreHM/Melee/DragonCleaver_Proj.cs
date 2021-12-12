@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.penetrate = -1;
         }
 
-        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;
 
         float oldRotation = 0f;
         int directionLock = 0;

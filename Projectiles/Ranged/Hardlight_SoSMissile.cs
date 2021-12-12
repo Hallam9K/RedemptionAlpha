@@ -153,7 +153,7 @@ namespace Redemption.Projectiles.Ranged
             }
             Projectile.scale += 0.02f;
         }
-        public override bool? CanHitNPC(NPC target) => Projectile.frame > 2;
+        public override bool? CanHitNPC(NPC target) => Projectile.frame > 2 ? null : false;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 60;

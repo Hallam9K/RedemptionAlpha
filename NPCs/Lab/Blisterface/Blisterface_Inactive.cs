@@ -88,6 +88,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool? CanHitNPC(NPC target) => false ? null : false;
     }
 }

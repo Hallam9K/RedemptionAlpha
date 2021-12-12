@@ -83,7 +83,6 @@ namespace Redemption.NPCs.Friendly
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
 
-
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
@@ -130,13 +129,10 @@ namespace Redemption.NPCs.Friendly
                     name.Add("Cherrysplinter", 3);
                     name.Add("Blossomwood", 3);
                 }
-
                 NPC.GivenName = name + " the Treebark Dryad";
-
                 TimerRand = 1;
             }
         }
-
         public override bool CanChat() => true;
         public override void SetChatButtons(ref string button, ref string button2)
         {
