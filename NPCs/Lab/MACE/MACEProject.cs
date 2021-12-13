@@ -20,6 +20,7 @@ using Redemption.WorldGeneration;
 
 namespace Redemption.NPCs.Lab.MACE
 {
+    [AutoloadBossHead]
     public class MACEProject : ModNPC
     {
         public enum ActionState
