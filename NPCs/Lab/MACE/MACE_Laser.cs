@@ -32,6 +32,7 @@ namespace Redemption.NPCs.Lab.MACE
             }
             Lighting.AddLight(Projectile.Center, 0f, Projectile.Opacity * 0.1f, 0f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
+            Projectile.velocity *= 1.01f;
         }
 
         public override Color? GetAlpha(Color lightColor) => Color.White;

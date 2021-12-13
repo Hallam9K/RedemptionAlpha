@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void OnHitPlayer(Player player, int damage, bool crit)
         {
-            player.AddBuff(BuffID.OnFire, 320);
+            player.AddBuff(BuffID.OnFire, 900);
         }
         public override bool PreDraw(ref Color lightColor)
         {

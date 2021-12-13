@@ -131,7 +131,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Water.Has(item.type) || ProjectileTags.Water.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Water Bonus: Increased damage to demons") { overrideColor = Color.SkyBlue };
+                    TooltipLine line = new(Mod, "Element", "Water Bonus: Increased damage to demons and can electrify robotic targets") { overrideColor = Color.SkyBlue };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Wind.Has(item.type) || ProjectileTags.Wind.Has(item.shoot))

@@ -12,8 +12,6 @@ namespace Redemption.NPCs.Lab.MACE
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flaming Blast");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
         public override void SetDefaults()
 		{
@@ -25,6 +23,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 160;
+            Projectile.alpha = 255;
         }
         public override void AI()
         {
@@ -35,13 +34,23 @@ namespace Redemption.NPCs.Lab.MACE
             }
             Lighting.AddLight(Projectile.Center, Projectile.Opacity * 1f, Projectile.Opacity * 1f, Projectile.Opacity * 1f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
+            Projectile.velocity.Y += 0.1f;
+            if (Projectile.alpha > 0)
+                Projectile.alpha -= 20;
+        }
+        public override void OnHitPlayer(Player player, int damage, bool crit)
+        {
+            player.AddBuff(BuffID.OnFire, 240);
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             Projectile.Kill();
         }
-
-        public override Color? GetAlpha(Color lightColor) => Color.White;
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return Projectile.timeLeft < 140;
+        }
+        public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14.WithVolume(.2f), Projectile.position);

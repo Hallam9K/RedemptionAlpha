@@ -180,6 +180,8 @@ namespace Redemption.NPCs.Lab
                                 NPC.frame.Y = 0 * frameHeight;
                             }
                         }
+                        else if (Main.rand.NextBool(20))
+                            TimerRand = 1;
                     }
                     break;
                 case ActionState.Typing:
