@@ -4,6 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -12,6 +15,8 @@ namespace Redemption.NPCs.Lab.MACE
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flaming Blast");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
 		{
@@ -24,6 +29,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.tileCollide = true;
             Projectile.timeLeft = 160;
             Projectile.alpha = 255;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void AI()
         {
@@ -32,7 +38,7 @@ namespace Redemption.NPCs.Lab.MACE
                 int dust1 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.OrangeTorch, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
                 Main.dust[dust1].noGravity = true;
             }
-            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 1f, Projectile.Opacity * 1f, Projectile.Opacity * 1f);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.7f, Projectile.Opacity * 0.3f, Projectile.Opacity * 0.3f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.velocity.Y += 0.1f;
             if (Projectile.alpha > 0)
@@ -50,7 +56,27 @@ namespace Redemption.NPCs.Lab.MACE
         {
             return Projectile.timeLeft < 140;
         }
-        public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            }
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
+        }
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14.WithVolume(.2f), Projectile.position);
