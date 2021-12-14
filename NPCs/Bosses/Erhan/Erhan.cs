@@ -1095,7 +1095,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
+            if (!player.active || player.dead && AIState != ActionState.Death)
             {
                 NPC.TargetClosest(false);
                 player = Main.player[NPC.target];

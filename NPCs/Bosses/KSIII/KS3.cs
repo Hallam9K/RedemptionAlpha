@@ -2780,7 +2780,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
+            if (!player.active || player.dead && AIState != ActionState.SpareCountdown)
             {
                 NPC.velocity *= 0.96f;
                 NPC.velocity.Y -= 1;
