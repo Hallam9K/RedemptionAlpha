@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -9,6 +10,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -35,7 +37,7 @@ namespace Redemption.NPCs.Wasteland
         public ref float AITimer => ref NPC.ai[1];
 
         public ref float TimerRand => ref NPC.ai[2];
-
+        public ref float Variant => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 9;
@@ -85,6 +87,7 @@ namespace Redemption.NPCs.Wasteland
             switch (AIState)
             {
                 case ActionState.Begin:
+                    Variant = Main.rand.Next(2);
                     TimerRand = Main.rand.Next(80, 120);
                     AIState = ActionState.Idle;
                     break;
@@ -147,27 +150,33 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void FindFrame(int frameHeight)
         {
-            if (NPC.collideY || NPC.velocity.Y == 0)
+            if (Main.netMode != NetmodeID.Server)
             {
-                NPC.rotation = 0;
-                if (NPC.velocity.X == 0)
-                    NPC.frame.Y = 3 * frameHeight;
-                else
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
+                NPC.frame.X = (int)(NPC.frame.Width * (Variant + 1));
+
+                if (NPC.collideY || NPC.velocity.Y == 0)
                 {
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
+                    NPC.rotation = 0;
+                    if (NPC.velocity.X == 0)
+                        NPC.frame.Y = 3 * frameHeight;
+                    else
                     {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 8 * frameHeight)
-                            NPC.frame.Y = 0;
+                        NPC.frameCounter += NPC.velocity.X * 0.5f;
+                        if (NPC.frameCounter is >= 3 or <= -3)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y += frameHeight;
+                            if (NPC.frame.Y > 8 * frameHeight)
+                                NPC.frame.Y = 0;
+                        }
                     }
                 }
-            }
-            else
-            {
-                NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 2 * frameHeight;
+                else
+                {
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.Y = 2 * frameHeight;
+                }
             }
         }
 
@@ -215,6 +224,12 @@ namespace Redemption.NPCs.Wasteland
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
         }
 
         public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
