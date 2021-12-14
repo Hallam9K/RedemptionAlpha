@@ -95,6 +95,9 @@ namespace Redemption.NPCs.Lab.MACE
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 20; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 2f);
@@ -454,7 +457,9 @@ namespace Redemption.NPCs.Lab.MACE
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/DistortedRoar").WithVolume(.5f), NPC.position);
 
-                            Gore.NewGore(new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
+                            if (Main.netMode != NetmodeID.Server)
+                                Gore.NewGore(new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
+
                             for (int i = 0; i < 20; i++)
                             {
                                 int dustIndex = Dust.NewDust(NPC.position + new Vector2(0, 110) + NPC.velocity, NPC.width, 54, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 2f);

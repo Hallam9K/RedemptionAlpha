@@ -575,8 +575,11 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectionDust>(), 0, 10 * Vector2.UnitX.RotatedBy(Math.PI / 32 * i), false, SoundID.Item1.WithVolume(0));
                         }
 
-                        for (int i = 0; i < 7; i++)
-                            Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SoIGore" + (i + 1)).Type, 1);
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            for (int i = 0; i < 7; i++)
+                                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SoIGore" + (i + 1)).Type, 1);
+                        }
 
                         for (int i = 0; i < 20; i++)
                         {

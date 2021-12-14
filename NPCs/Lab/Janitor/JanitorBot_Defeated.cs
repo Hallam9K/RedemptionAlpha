@@ -123,11 +123,14 @@ namespace Redemption.NPCs.Lab.Janitor
                 case 2:
                     if (AITimer++ >= 60)
                     {
-                        for (int g = 0; g < 4; g++)
+                        if (Main.netMode != NetmodeID.Server)
                         {
-                            int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64), 2f);
-                            Main.gore[goreIndex].velocity.X += 1.5f;
-                            Main.gore[goreIndex].velocity.Y += 1.5f;
+                            for (int g = 0; g < 4; g++)
+                            {
+                                int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64), 2f);
+                                Main.gore[goreIndex].velocity.X += 1.5f;
+                                Main.gore[goreIndex].velocity.Y += 1.5f;
+                            }
                         }
                         NPC.alpha = 255;
                         NPC.active = false;
