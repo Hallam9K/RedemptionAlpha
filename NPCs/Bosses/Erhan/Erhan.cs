@@ -92,7 +92,10 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false ? null : false;
-
+        public override bool CheckActive()
+        {
+            return AIState != ActionState.Death;
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0 && !Spared)
@@ -1095,7 +1098,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead && AIState != ActionState.Death)
+            if (!player.active || player.dead)
             {
                 NPC.TargetClosest(false);
                 player = Main.player[NPC.target];

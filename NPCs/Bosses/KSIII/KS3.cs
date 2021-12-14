@@ -189,7 +189,10 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-
+        public override bool CheckActive()
+        {
+            return AIState != ActionState.SpareCountdown;
+        }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (phase >= 5)
@@ -2780,7 +2783,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead && AIState != ActionState.SpareCountdown)
+            if (!player.active || player.dead)
             {
                 NPC.velocity *= 0.96f;
                 NPC.velocity.Y -= 1;
