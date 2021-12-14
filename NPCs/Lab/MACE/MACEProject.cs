@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.lavaImmune = true;
             NPC.boss = true;
             NPC.netAlways = true;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 6;
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 4;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusicMP");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
@@ -156,6 +156,11 @@ namespace Redemption.NPCs.Lab.MACE
             Vector2 EyeOrigin = NPC.Center + new Vector2(-22, 4);
 
             if (Phase == 0 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= GuardPointMax / 2)
+            {
+                AIState = ActionState.PhaseChange;
+                NPC.netUpdate = true;
+            }
+            if (Phase == 1 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= 0)
             {
                 AIState = ActionState.PhaseChange;
                 NPC.netUpdate = true;
@@ -395,6 +400,25 @@ namespace Redemption.NPCs.Lab.MACE
                             break;
                     }
                     break;
+                case ActionState.HeadPhase:
+                    switch (TimerRand2)
+                    {
+                        case 0:
+                            NPC.MoveToVector2(CraneOrigin, 10);
+                            if (NPC.DistanceSQ(CraneOrigin) < 6 * 6)
+                            {
+                                NPC.velocity *= 0;
+                                TimerRand = 0;
+                                AITimer = 0;
+                                TimerRand2++;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 1:
+
+                            break;
+                    }
+                    break;
                 case ActionState.PhaseChange:
                     switch (Phase)
                     {
@@ -414,6 +438,28 @@ namespace Redemption.NPCs.Lab.MACE
                                 NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1.WithVolume(0));
 
                             AIState = ActionState.JawPhase;
+                            NPC.netUpdate = true;
+                            break;
+                        case 1:
+                            JawOpen = false;
+                            AITimer = 0;
+                            TimerRand = 0;
+                            TimerRand2 = 0;
+                            Phase = 2;
+                            SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/DistortedRoar").WithVolume(.5f), NPC.position);
+
+                            Gore.NewGore(new Vector2(NPC.Center.X, NPC.Center.Y - 56), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
+                            for (int i = 0; i < 20; i++)
+                            {
+                                int dustIndex = Dust.NewDust(NPC.position + new Vector2(0, 110) + NPC.velocity, NPC.width, 54, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 2f);
+                                Main.dust[dustIndex].velocity *= 3f;
+                            }
+                            for (int k = 0; k < 6; k++)
+                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(110, 164))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1.WithVolume(0));
+
+                            AIState = ActionState.HeadPhase;
                             NPC.netUpdate = true;
                             break;
                     }
@@ -467,9 +513,12 @@ namespace Redemption.NPCs.Lab.MACE
             Rectangle rect = new(0, 0, trolleyTex.Width, trolleyTex.Height);
             Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), 0, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y - 1);
-            Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
-            Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
+            if (Phase < 2)
+            {
+                Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y - 1);
+                Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
+                Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
+            }
 
             spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             spriteBatch.Draw(glowTex, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
