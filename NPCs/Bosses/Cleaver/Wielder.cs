@@ -292,6 +292,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             AIState = ActionState.Idle;
                             AITimer = 0;
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     break;

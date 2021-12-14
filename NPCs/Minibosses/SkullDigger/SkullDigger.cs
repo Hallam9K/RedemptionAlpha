@@ -223,7 +223,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             switch (AIState)
             {
                 case ActionState.Begin:
-                    NPC.dontTakeDamage = true;
                     switch (TimerRand)
                     {
                         case 0:
@@ -242,6 +241,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                     Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper");
 
                                 NPC.velocity.Y = -6;
+                                NPC.dontTakeDamage = true;
+                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                             if (AITimer > 2)
                                 NPC.alpha -= 2;
@@ -270,6 +272,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                     TimerRand = 0;
                                     AIState = ActionState.Idle;
                                     NPC.netUpdate = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
                             else
@@ -293,6 +297,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                         TimerRand = 0;
                                         AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
+                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                                 else
@@ -311,6 +317,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                         TimerRand = 0;
                                         AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
+                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                             }
@@ -459,6 +467,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             {
                                 NPC.dontTakeDamage = false;
                                 player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                         }
                         else
@@ -497,6 +507,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 {
                     host.dontTakeDamage = false;
                     host.netUpdate = true;
+                    if (Main.netMode == NetmodeID.Server && host.whoAmI < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: host.whoAmI);
                 }
 
                 SoundEngine.PlaySound(SoundID.NPCDeath51, NPC.position);

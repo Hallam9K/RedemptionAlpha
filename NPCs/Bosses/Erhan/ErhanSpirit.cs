@@ -263,6 +263,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             NPC.dontTakeDamage = false;
                                             AIState = ActionState.Idle;
                                             NPC.netUpdate = true;
+                                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                         }
                                     }
                                     else
@@ -284,6 +286,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             NPC.dontTakeDamage = false;
                                             AIState = ActionState.Idle;
                                             NPC.netUpdate = true;
+                                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                         }
                                     }
                                 }
@@ -302,6 +306,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         NPC.dontTakeDamage = false;
                                         AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
+                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                             }

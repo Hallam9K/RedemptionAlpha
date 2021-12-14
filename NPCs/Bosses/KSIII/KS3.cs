@@ -314,6 +314,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = ActionState.GunAttacks;
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     else
@@ -424,6 +426,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 AITimer = 0;
                                 AIState = ActionState.GunAttacks;
                                 NPC.netUpdate = true;
+                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                         }
                         else
@@ -489,6 +493,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 AITimer = 0;
                                 AIState = ActionState.GunAttacks;
                                 NPC.netUpdate = true;
+                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                         }
                     }
@@ -533,6 +539,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     NPC.dontTakeDamage = true;
                     NPC.netUpdate = true;
+                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     break;
                 case ActionState.GunAttacks:
                     NPC.LookAtEntity(player);
@@ -1799,6 +1807,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     else
@@ -1852,6 +1862,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     #endregion
@@ -1887,6 +1899,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     else
@@ -1948,6 +1962,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     #endregion
@@ -1978,6 +1994,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     else
@@ -2017,6 +2035,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     #endregion
@@ -2096,11 +2116,15 @@ namespace Redemption.NPCs.Bosses.KSIII
                     break;
                 case ActionState.SpareCountdown:
                     NPC.LookAtEntity(player);
-                    NPC.chaseable = false;
-                    NPC.dontTakeDamage = false;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.chaseable = false;
+                        NPC.dontTakeDamage = false;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     NPC.LockMoveRadius(player);
-                    AITimer++;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
@@ -2121,19 +2145,26 @@ namespace Redemption.NPCs.Bosses.KSIII
                         AITimer = 0;
                         AIState = ActionState.Spared;
                         NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
                 case ActionState.Attacked:
                     #region Attacked
                     NPC.LookAtEntity(player);
-                    NPC.chaseable = true;
-                    NPC.dontTakeDamage = true;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.chaseable = true;
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    if (AITimer++ == 5)
+                    if (AITimer == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
                     if (AITimer == 30 && !Main.dedServ)
@@ -2172,6 +2203,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AIState = ActionState.Overclock;
                             NPC.life = 10000;
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     #endregion
@@ -2181,8 +2214,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     NPC.LockMoveRadius(player);
-                    NPC.dontTakeDamage = true;
-                    AITimer++;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
@@ -2204,15 +2241,21 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
                         NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     #endregion
                     break;
                 case ActionState.Overclock:
                     NPC.LookAtEntity(player);
-                    NPC.dontTakeDamage = true;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     NPC.LockMoveRadius(player);
-                    AITimer++;
                     if (AITimer < 30 && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     else
@@ -2263,6 +2306,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                         AITimer = 0;
                         AIState = ActionState.GunAttacks;
                         NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
             }

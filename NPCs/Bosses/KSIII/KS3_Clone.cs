@@ -268,6 +268,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.dontTakeDamage = false;
                             AIState = ActionState.GunAttacks;
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     else
@@ -298,6 +300,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.dontTakeDamage = false;
                             AIState = ActionState.GunAttacks;
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     #endregion
