@@ -244,6 +244,9 @@ namespace Redemption.NPCs.Lab
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 30; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GreenBlood, Scale: 1.2f);

@@ -70,12 +70,15 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                     Main.dust[dust].velocity *= 20;
                     Main.dust[dust].noGravity = true;
                 }
-                for (int g = 0; g < 6; g++)
+                if (Main.netMode != NetmodeID.Server)
                 {
-                    int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
-                    Main.gore[goreIndex].scale = 1.5f;
-                    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
-                    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+                    for (int g = 0; g < 6; g++)
+                    {
+                        int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
+                        Main.gore[goreIndex].scale = 1.5f;
+                        Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+                        Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+                    }
                 }
                 Rectangle boom = new((int)Projectile.Center.X - 150, (int)Projectile.Center.Y - 150, 300, 300);
                 for (int i = 0; i < Main.maxNPCs; i++)

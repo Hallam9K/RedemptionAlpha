@@ -118,6 +118,8 @@ namespace Redemption.Items.Usable
                 dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Scale: 2f);
                 Main.dust[dustIndex].velocity *= 3f;
             }
+            if (Main.netMode == NetmodeID.Server)
+                return;
             for (int g = 0; g < 18; g++)
             {
                 int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64), 1f);

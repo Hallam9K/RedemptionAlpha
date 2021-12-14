@@ -92,15 +92,28 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false ? null : false;
-
+        public override bool CheckActive()
+        {
+            return AIState != ActionState.Death;
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (NPC.life <= 0 && !Spared)
+            if (NPC.life <= 0 && !Spared && AIState == ActionState.Death)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 30; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GoldFlame, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
                 for (int i = 0; i < 30; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ErhanGore1").Type, 1);
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ErhanGore2").Type, 1);
+                for (int i = 0; i < 10; i++)
+                    Gore.NewGore(NPC.position, RedeHelper.SpreadUp(8), ModContent.Find<ModGore>("Redemption/ErhanGore3").Type, 1);
+
             }
         }
 
@@ -285,6 +298,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                                         player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                                        NPC.LockMoveRadius(player);
                                     }
                                     if (AITimer == 120)
                                     {
@@ -321,6 +335,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         NPC.dontTakeDamage = false;
                                         AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
+                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                                 else
@@ -341,6 +357,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         NPC.dontTakeDamage = false;
                                         AIState = ActionState.Idle;
                                         NPC.netUpdate = true;
+                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                             }
@@ -692,6 +710,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                             Spared = true;
                             NPC.dontTakeDamage = false;
                             player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     else
@@ -702,8 +722,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 NPC.noGravity = true;
                                 NPC.noTileCollide = true;
 
-                                NPC.dontTakeDamage = true;
-                                if (AITimer++ < 120)
+                                if (AITimer++ == 0)
+                                {
+                                    NPC.dontTakeDamage = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                }
+                                if (AITimer < 120)
                                     NPC.Move(new Vector2(player.Center.X - 250 * NPC.spriteDirection, player.Center.Y - 250), 7, 30);
                                 else
                                     NPC.velocity *= 0.9f;
@@ -720,6 +745,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             case 1:
                                 player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                                 player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                                NPC.LockMoveRadius(player);
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer++ == 10)
@@ -793,9 +819,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 }
                                 break;
                             case 3:
-                                NPC.dontTakeDamage = false;
-                                NPC.chaseable = false;
-                                if (AITimer++ == 60)
+                                if (AITimer++ == 0)
+                                {
+                                    NPC.dontTakeDamage = false;
+                                    NPC.chaseable = false;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                }
+                                if (AITimer == 60)
                                 {
                                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It would appear'eth, I hath lost.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                 }
@@ -807,8 +838,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Send master Hallowed Knight my regards.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                 }
-                                if (AITimer >= 1200)
+                                if (AITimer == 1200)
+                                {
                                     NPC.dontTakeDamage = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                }
 
                                 if (AITimer == 1200)
                                 {
@@ -827,6 +862,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     Spared = true;
                                     NPC.dontTakeDamage = false;
                                     player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                                 break;
                         }
@@ -871,6 +908,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 AITimer = 0;
                 TimerRand = 0;
                 AIState = ActionState.Death;
+                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                 return false;
             }
         }

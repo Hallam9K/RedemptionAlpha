@@ -456,11 +456,17 @@ namespace Redemption.NPCs.Bosses.Thorn
                     }
                     break;
                 case ActionState.BarrierSpawn:
-                    NPC.dontTakeDamage = true;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
 
-                    if (++AITimer >= 60)
+                    if (AITimer >= 60)
                     {
                         if (AITimer < 180)
                         {
@@ -498,16 +504,25 @@ namespace Redemption.NPCs.Bosses.Thorn
                         TimerRand = 0;
                         AIState = ActionState.Idle;
                         NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
                 case ActionState.Death:
-                    NPC.dontTakeDamage = true;
-                    if (++AITimer >= 24)
+                    if (AITimer++ == 0)
+                    {
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
+                    if (AITimer >= 24)
                         NPC.alpha += 5;
                     if (NPC.alpha >= 255)
                     {
                         NPC.dontTakeDamage = false;
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
             }

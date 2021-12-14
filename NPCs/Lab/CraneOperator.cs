@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Lab
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("A timid android with ambitious goals. She does small, odd jobs around the Laboratory. Usually ones that required an operator.")
             });
         }
         private Vector2 moveTo;
@@ -139,11 +139,14 @@ namespace Redemption.NPCs.Lab
                 case ActionState.WalkAway:
                     if (NPC.DistanceSQ(moveTo) < 16 * 16)
                     {
-                        for (int g = 0; g < 4; g++)
+                        if (Main.netMode != NetmodeID.Server)
                         {
-                            int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64), 2f);
-                            Main.gore[goreIndex].velocity.X += 1.5f;
-                            Main.gore[goreIndex].velocity.Y += 1.5f;
+                            for (int g = 0; g < 4; g++)
+                            {
+                                int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64), 2f);
+                                Main.gore[goreIndex].velocity.X += 1.5f;
+                                Main.gore[goreIndex].velocity.Y += 1.5f;
+                            }
                         }
                         NPC.alpha = 255;
                         NPC.active = false;

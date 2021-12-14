@@ -232,16 +232,29 @@ namespace Redemption.NPCs.Lab.Volt
                     NPC.LookAtEntity(player);
                     gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 60f);
                     if (AITimer++ == 0)
+                    {
+                        for (int k = 0; k < 20; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 30);
+                            vector.Y = (float)(Math.Cos(angle) * 30);
+                            Dust dust2 = Main.dust[Dust.NewDust(GunOrigin + vector, 2, 2, DustID.Electric)];
+                            dust2.noGravity = true;
+                            dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
+                        }
                         TimerRand = Main.rand.NextBool() ? 1 : 0;
+                    }
+                    
 
-                    if (AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    if (AITimer >= 40 && AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int proj = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
                         Main.projectile[proj].netUpdate2 = true;
                     }
-                    if (AITimer >= (TimerRand == 0 ? 60 : 80))
+                    if (AITimer >= (TimerRand == 0 ? 100 : 120))
                     {
                         AITimer = 0;
                         TimerRand = 0;

@@ -239,6 +239,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 TimerRand = 0;
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
+                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                             break;
                     }
@@ -554,7 +556,12 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     }
                     break;
                 case ActionState.Death:
-                    NPC.dontTakeDamage = true;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.dontTakeDamage = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
 
                     FreakOut = true;
                     TimerRand += 0.1f;
@@ -568,8 +575,11 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectionDust>(), 0, 10 * Vector2.UnitX.RotatedBy(Math.PI / 32 * i), false, SoundID.Item1.WithVolume(0));
                         }
 
-                        for (int i = 0; i < 7; i++)
-                            Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SoIGore" + (i + 1)).Type, 1);
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            for (int i = 0; i < 7; i++)
+                                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SoIGore" + (i + 1)).Type, 1);
+                        }
 
                         for (int i = 0; i < 20; i++)
                         {
@@ -580,6 +590,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
                         NPC.dontTakeDamage = false;
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
             }
@@ -666,6 +678,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 NPC.life = 1;
                 AITimer = 0;
                 AIState = ActionState.Death;
+                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                 return false;
             }
         }

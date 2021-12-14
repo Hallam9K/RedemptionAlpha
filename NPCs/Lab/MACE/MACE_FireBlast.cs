@@ -14,7 +14,6 @@ namespace Redemption.NPCs.Lab.MACE
 {
     public class MACE_FireBlast : ModProjectile
     {
-        public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_EnergyBall";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fire Blast");
@@ -46,7 +45,7 @@ namespace Redemption.NPCs.Lab.MACE
                     break;
                 case 1:
                     int mace = (int)Projectile.ai[0];
-                    if (mace < 0 || mace >= 200 || !Main.npc[mace].active || Main.npc[mace].type != ModContent.NPCType<MACEProject>())
+                    if (mace < 0 || mace >= 200 || !npc.active || npc.type != ModContent.NPCType<MACEProject>() || npc.ai[0] == 2)
                         Projectile.Kill();
 
                     Vector2 MouthPos = new(npc.Center.X, npc.Center.Y + 54);

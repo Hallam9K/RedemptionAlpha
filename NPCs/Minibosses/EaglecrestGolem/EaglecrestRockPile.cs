@@ -121,11 +121,16 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 25; i++)
                 {
                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone);
                     Main.dust[dustIndex2].velocity *= 4f;
                 }
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestRockpileGore" + (i + 1)).Type, 1);
             }
             int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone);
             Main.dust[dustIndex].velocity *= 1f;

@@ -94,6 +94,9 @@ namespace Redemption.NPCs.Lab.Behemoth
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 50; i++)
                 {
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, default, 4f);
