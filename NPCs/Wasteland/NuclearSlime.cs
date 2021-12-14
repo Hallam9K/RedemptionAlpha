@@ -104,6 +104,9 @@ namespace Redemption.NPCs.Wasteland
                     Main.dust[dustIndex4].velocity *= 3f;
                 }
                 // Large Smoke Gore spawn
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int g = 0; g < 8; g++)
                 {
                     int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64));

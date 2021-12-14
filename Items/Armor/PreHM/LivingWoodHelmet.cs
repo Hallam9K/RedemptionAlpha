@@ -47,6 +47,9 @@ namespace Redemption.Items.Armor.PreHM
 
             if (Main.rand.NextBool(25) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 Gore.NewGore(new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
             }
         }

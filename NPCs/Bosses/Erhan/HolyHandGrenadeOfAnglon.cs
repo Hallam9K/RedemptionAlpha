@@ -56,8 +56,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 SoundEngine.PlaySound(SoundID.Tink);
                 Projectile.frame = 1;
-                Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
-                    ModContent.Find<ModGore>("Redemption/HolyGrenadePin").Type);
+                if (Main.netMode != NetmodeID.Server)
+                    Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
+                        ModContent.Find<ModGore>("Redemption/HolyGrenadePin").Type);
             }
             if (Projectile.localAI[0] == 320)
             {
@@ -77,12 +78,15 @@ namespace Redemption.NPCs.Bosses.Erhan
                     Main.dust[dust].velocity *= 20;
                     Main.dust[dust].noGravity = true;
                 }
-                for (int g = 0; g < 6; g++)
+                if (Main.netMode != NetmodeID.Server)
                 {
-                    int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
-                    Main.gore[goreIndex].scale = 1.5f;
-                    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
-                    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+                    for (int g = 0; g < 6; g++)
+                    {
+                        int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
+                        Main.gore[goreIndex].scale = 1.5f;
+                        Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+                        Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+                    }
                 }
             }
             if (Projectile.localAI[0] >= 380)
