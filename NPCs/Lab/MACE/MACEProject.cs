@@ -524,8 +524,8 @@ namespace Redemption.NPCs.Lab.MACE
                 Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
                 Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
 
-                float cleared = (float)NPC.GetGlobalNPC<GuardNPC>().GuardPoints / GuardPointMax;
-                Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(heat) * MathHelper.Lerp(2, 0, cleared), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
+                float heatOpacity = (float)NPC.GetGlobalNPC<GuardNPC>().GuardPoints / GuardPointMax;
+                Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(heat) * MathHelper.Lerp(2, 0, heatOpacity), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
             }
 
             spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
