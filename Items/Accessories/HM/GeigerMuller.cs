@@ -24,7 +24,6 @@ namespace Redemption.Items.Accessories.HM
             Item.height = 28;
             Item.accessory = true;
         }
-
         public override void UpdateInventory(Player player)
         {
             player.GetModPlayer<MullerEffect>().effect = true;

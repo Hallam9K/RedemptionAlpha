@@ -1,4 +1,5 @@
 using Redemption.Buffs;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,8 +12,8 @@ namespace Redemption.Items.Usable.Potions
             DisplayName.SetDefault("Anti-Crystallizer Serum");
             Tooltip.SetDefault("Makes you immune to Xenomite for a while"
                 + "\n'Label says 'Do not swallow.' Why would you do that?'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
-
         public override void SetDefaults()
         {
             Item.UseSound = SoundID.Item3;           

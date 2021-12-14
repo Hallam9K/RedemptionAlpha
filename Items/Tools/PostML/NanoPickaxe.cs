@@ -1,0 +1,39 @@
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Terraria;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.Items.Tools.PostML
+{
+    public class NanoPickaxe : ModItem
+	{
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Can mine Black Hardened Sludge");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			Item.damage = 150;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 52;
+			Item.height = 58;
+			Item.useTime = 4;
+			Item.useAnimation = 11;
+			Item.pick = 300;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.knockBack = 4;
+			Item.value = Item.buyPrice(2, 0, 0, 0);
+			Item.rare = ItemRarityID.Purple;
+			Item.UseSound = SoundID.Item15;
+			Item.autoReuse = true;
+			Item.useTurn = true;
+			Item.tileBoost += 3;
+			if (!Main.dedServ)
+				Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+		}
+	}
+}

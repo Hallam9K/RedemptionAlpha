@@ -2,6 +2,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -19,6 +20,7 @@ namespace Redemption.Globals
         public static RecipeGroup GathicStoneRecipeGroup;
         public static RecipeGroup BioweaponBileRecipeGroup;
         public static RecipeGroup HazmatSuitRecipeGroup;
+        public static RecipeGroup PlantRecipeGroup;
 
         public override void Unload()
         {
@@ -29,6 +31,7 @@ namespace Redemption.Globals
             GathicStoneRecipeGroup = null;
             BioweaponBileRecipeGroup = null;
             HazmatSuitRecipeGroup = null;
+            PlantRecipeGroup = null;
         }
 
         public override void AddRecipeGroups()
@@ -53,6 +56,9 @@ namespace Redemption.Globals
 
             HazmatSuitRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<HazmatSuit>())}", ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<HazmatSuit2>(), ModContent.ItemType<HazmatSuit3>());
             RecipeGroup.RegisterGroup("Redemption:HazmatSuits", HazmatSuitRecipeGroup);
+
+            PlantRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Daybloom)}", ItemID.Daybloom, ItemID.Waterleaf, ItemID.Blinkroot, ItemID.Deathweed, ItemID.Fireblossom, ItemID.Moonglow, ItemID.Shiverthorn, ModContent.ItemType<Nightshade>());
+            RecipeGroup.RegisterGroup("Redemption:Plants", PlantRecipeGroup);
         }
 
         public override void AddRecipes()

@@ -1,9 +1,12 @@
+using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.HM;
+using Redemption.NPCs.Bosses.Cleaver;
+using Redemption.Tiles.Furniture.Lab;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.Cleaver;
-using Terraria.Audio;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -16,8 +19,8 @@ namespace Redemption.Items.Usable.Summons
                 + "\nOnly usable at night"
                 + "\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-
         public override void SetDefaults()
         {
             Item.width = 34;
@@ -30,12 +33,10 @@ namespace Redemption.Items.Usable.Summons
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = false;
         }
-
         public override bool CanUseItem(Player player)
         {
             return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>());
         }
-
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
@@ -50,6 +51,14 @@ namespace Redemption.Items.Usable.Summons
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
             }
             return true;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<CorruptedStarliteBar>(), 5)
+                .AddIngredient(ModContent.ItemType<GirusChip>(), 1)
+                .AddTile(ModContent.TileType<GirusCorruptorTile>())
+                .Register();
         }
     }
 }

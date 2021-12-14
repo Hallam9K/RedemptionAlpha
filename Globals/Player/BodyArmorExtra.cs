@@ -209,9 +209,9 @@ namespace Redemption.Globals.Player
         {
             var immediate = AssetRequestMode.ImmediateLoad;
             Mod mod = Redemption.Instance;
-            OnBodyDraw body = new(Request<Texture2D>("Redemption/Items/Armor/HM/HardlightPlate_Body_Glow", immediate).Value);
+            OnBodyDraw body = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightPlate_Body_Glow", immediate).Value);
             BodyDictionary.Add(mod.GetEquipSlot("HardlightPlate", EquipType.Body), body);
-            body = new(Request<Texture2D>("Redemption/Items/Armor/HM/XenomitePlate_Body_Glow", immediate).Value);
+            body = new(Request<Texture2D>("Redemption/Items/Armor/HM/Xenomite/XenomitePlate_Body_Glow", immediate).Value);
             BodyDictionary.Add(mod.GetEquipSlot("XenomitePlate", EquipType.Body), body);
         }
     }

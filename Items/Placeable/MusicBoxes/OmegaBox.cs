@@ -1,4 +1,5 @@
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -32,8 +33,9 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
-				.AddIngredient(ModContent.ItemType<Xenomite>(), 2)
-				.AddTile(TileID.MythrilAnvil)
+				.AddIngredient(ModContent.ItemType<VlitchBattery>(), 2)
+                .AddIngredient(ModContent.ItemType<VlitchScale>(), 2)
+                .AddTile(TileID.MythrilAnvil)
 				.Register();
 		}
 	}
@@ -65,7 +67,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
-				.AddIngredient(ModContent.ItemType<Xenomite>(), 2)
+				.AddIngredient(ModContent.ItemType<OblitBrain>(), 2)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
 		}

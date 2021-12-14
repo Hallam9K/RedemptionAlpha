@@ -15,9 +15,10 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Usable.Summons;
+using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Accessories.PreHM;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Armor.PreHM;
+using Redemption.Items.Armor.Single;
 
 namespace Redemption.NPCs.Friendly
 {

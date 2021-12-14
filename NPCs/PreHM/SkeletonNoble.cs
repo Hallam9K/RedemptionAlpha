@@ -5,7 +5,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
-using Redemption.Items.Armor.PreHM;
+using Redemption.Items.Armor.PreHM.CommonGuard;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;

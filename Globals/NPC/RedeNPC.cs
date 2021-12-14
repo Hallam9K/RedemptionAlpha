@@ -5,6 +5,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
