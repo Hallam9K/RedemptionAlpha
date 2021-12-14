@@ -3,6 +3,7 @@ using Terraria;
 using System;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -21,6 +22,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 100;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void AI()
         {
@@ -32,6 +34,7 @@ namespace Redemption.NPCs.Lab.MACE
             }
             Lighting.AddLight(Projectile.Center, 0f, Projectile.Opacity * 0.1f, 0f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
+            Projectile.velocity *= 1.01f;
         }
 
         public override Color? GetAlpha(Color lightColor) => Color.White;

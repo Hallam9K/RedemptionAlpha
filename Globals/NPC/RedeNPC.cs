@@ -127,6 +127,20 @@ namespace Redemption.Globals.NPC
                     damage = (int)(damage * 1.25f);
                 if (!npc.noTileCollide && npc.collideY && ItemTags.Earth.Has(item.type))
                     damage = (int)(damage * 1.25f);
+                if (NPCTags.Robotic.Has(npc.type))
+                {
+                    if (ItemTags.Blood.Has(item.type))
+                        damage = (int)(damage * 0.25f);
+
+                    if (ItemTags.Poison.Has(item.type))
+                        damage = (int)(damage * 0.25f);
+
+                    if (ItemTags.Thunder.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ItemTags.Water.Has(item.type))
+                        damage = (int)(damage * 1.5f);
+                }
                 #endregion
             }
 
@@ -229,6 +243,17 @@ namespace Redemption.Globals.NPC
                     damage = (int)(damage * 1.25f);
                 if (!npc.noTileCollide && npc.collideY && ProjectileTags.Earth.Has(projectile.type))
                     damage = (int)(damage * 1.25f);
+                if (NPCTags.Robotic.Has(npc.type))
+                {
+                    if (ProjectileTags.Blood.Has(projectile.type) || ProjectileTags.Poison.Has(projectile.type))
+                        damage = (int)(damage * 0.25f);
+
+                    if (ProjectileTags.Thunder.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ProjectileTags.Water.Has(projectile.type))
+                        damage = (int)(damage * 1.5f);
+                }
                 #endregion
             }
         }
@@ -269,6 +294,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(8) && ItemTags.Earth.Has(item.type))
                         npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
                 }
+                if (NPCTags.Robotic.Has(npc.type))
+                {
+                    if (Main.rand.NextBool(4) && ItemTags.Water.Has(item.type))
+                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+                }
                 #endregion
             }
 
@@ -306,6 +336,11 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(8) && ProjectileTags.Earth.Has(projectile.type))
                         npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
+                }
+                if (NPCTags.Robotic.Has(npc.type))
+                {
+                    if (Main.rand.NextBool(4) && ProjectileTags.Water.Has(projectile.type))
+                        npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
                 #endregion
             }

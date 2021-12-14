@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Lab.MACE
             Rectangle rect = new(0, 0, trolleyTex.Width, trolleyTex.Height);
             Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y + 60);
+            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y + 58);
             Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
             Main.spriteBatch.Draw(jawTex, drawCenterJaw - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 

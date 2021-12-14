@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
-            Projectile.timeLeft = 120;
+            Projectile.timeLeft = 100;
             Projectile.alpha = 255;
         }
         public override void AI()
@@ -41,6 +41,7 @@ namespace Redemption.NPCs.Lab.MACE
             if (Projectile.alpha > 0)
                 Projectile.alpha -= 15;
         }
+        public override bool CanHitPlayer(Player target) => false;
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
@@ -116,6 +117,7 @@ namespace Redemption.NPCs.Lab.MACE
             if (Projectile.timeLeft <= 60)
                 Projectile.alpha += 5;
         }
+        public override bool CanHitPlayer(Player target) => Projectile.alpha < 100;
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Electrified, 360);

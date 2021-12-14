@@ -16,15 +16,19 @@ using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using System;
+using Redemption.WorldGeneration;
 
 namespace Redemption.NPCs.Lab.MACE
 {
+    [AutoloadBossHead]
     public class MACEProject : ModNPC
     {
         public enum ActionState
         {
             Begin,
-            JawPhase1
+            JawPhase,
+            HeadPhase,
+            PhaseChange
         }
 
         public ActionState AIState
@@ -75,7 +79,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.lavaImmune = true;
             NPC.boss = true;
             NPC.netAlways = true;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 4;
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 6;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusicMP");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
@@ -124,9 +128,22 @@ namespace Redemption.NPCs.Lab.MACE
         {
             potionType = ItemID.Heart;
         }
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            {
+                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                return false;
+            }
+            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 4000);
+            return true;
+        }
 
         private Vector2 JawCenter;
-
+        private Vector2 CraneOrigin;
+        private int GuardPointMax;
+        private int Phase;
+        private int LaserTimer;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -135,7 +152,14 @@ namespace Redemption.NPCs.Lab.MACE
             if (!player.active || player.dead)
                 return;
 
-            Vector2 MouthOrigin = new(NPC.Center.X, NPC.Center.Y + 62);
+            Vector2 MouthOrigin = new(NPC.Center.X, NPC.Center.Y + 54);
+            Vector2 EyeOrigin = NPC.Center + new Vector2(-22, 4);
+
+            if (Phase == 0 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= GuardPointMax / 2)
+            {
+                AIState = ActionState.PhaseChange;
+                NPC.netUpdate = true;
+            }
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -145,19 +169,39 @@ namespace Redemption.NPCs.Lab.MACE
                         {
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SpookyNoise"), NPC.position);
                         }
+                        GuardPointMax = NPC.GetGlobalNPC<GuardNPC>().GuardPoints;
+                        CraneOrigin = NPC.Center;
                         GlowActive = true;
                     }
                     if (AITimer >= 80)
                     {
                         AITimer = 0;
                         JawOpen = true;
-                        AIState = ActionState.JawPhase1;
+                        AIState = ActionState.JawPhase;
                         NPC.netUpdate = true;
                     }
                     break;
-                case ActionState.JawPhase1:
+                case ActionState.JawPhase:
+                    if (TimerRand2 != 3 && LaserTimer++ % 160 == 0)
+                    {
+                        GlowActive = true;
+                        GlowTimer = 0;
+                        NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125);
+                    }
                     switch (TimerRand2)
                     {
+                        case -1:
+                            NPC.MoveToVector2(CraneOrigin, 10);
+                            if (NPC.DistanceSQ(CraneOrigin) < 6 * 6)
+                            {
+                                JawOpen = true;
+                                NPC.velocity *= 0;
+                                TimerRand = 0;
+                                AITimer = 0;
+                                TimerRand2++;
+                                NPC.netUpdate = true;
+                            }
+                            break;
                         case 0:
                             AITimer++;
                             if (!Main.dedServ)
@@ -176,6 +220,8 @@ namespace Redemption.NPCs.Lab.MACE
                             }
                             if (AITimer == 35)
                             {
+                                GlowActive2 = true;
+                                GlowTimer2 = 0;
                                 for (int i = 0; i < 20; i++)
                                 {
                                     int dustIndex = Dust.NewDust(MouthOrigin, 2, 2, DustID.OrangeTorch, Scale: 2f);
@@ -186,6 +232,8 @@ namespace Redemption.NPCs.Lab.MACE
                             }
                             if (AITimer == 40)
                             {
+                                GlowActive2 = true;
+                                GlowTimer2 = 0;
                                 for (int i = 0; i < 20; i++)
                                 {
                                     int dustIndex = Dust.NewDust(MouthOrigin, 2, 2, DustID.OrangeTorch, Scale: 2f);
@@ -207,7 +255,7 @@ namespace Redemption.NPCs.Lab.MACE
                         case 1:
                             if (AITimer++ == 0)
                                 JawOpen = true;
-                            if (AITimer == 50 || AITimer == 70 || AITimer == 90)
+                            if (AITimer >= 50 && AITimer % (Phase == 0 ? 20 : 12) == 0 && AITimer <= 100)
                             {
                                 NPC.Shoot(MouthOrigin, ModContent.ProjectileType<BigElectronade>(), NPC.damage, new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)), false, SoundID.Item61);
                             }
@@ -221,12 +269,161 @@ namespace Redemption.NPCs.Lab.MACE
                                 NPC.netUpdate = true;
                             }
                             break;
+                        case 2:
+                            switch (TimerRand)
+                            {
+                                case 0:
+                                    if (AITimer++ == 0)
+                                        JawOpen = true;
+                                    Vector2 v = new((RedeGen.LabVector.X + 48) * 16, NPC.Center.Y);
+                                    if (NPC.DistanceSQ(v) < 10 * 10)
+                                    {
+                                        TimerRand++;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                    else
+                                        NPC.Move(v, 7, 30);
+                                    break;
+                                case 1:
+                                    Vector2 v2 = new((RedeGen.LabVector.X + 98) * 16, NPC.Center.Y);
+                                    if (NPC.DistanceSQ(v2) < 10 * 10)
+                                    {
+                                        JawOpen = false;
+                                        TimerRand++;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                    else
+                                    {
+                                        NPC.Move(v2, 5, 30);
+                                        if (AITimer++ % (Phase == 0 ? 20 : 15) == 0)
+                                        {
+                                            GlowActive2 = true;
+                                            GlowTimer2 = 0;
+                                            for (int i = 0; i < 2; i++)
+                                                NPC.Shoot(MouthOrigin - new Vector2(0, 24), ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-7, -4)), false, SoundID.Item73);
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    if (AITimer++ < 30)
+                                        NPC.velocity.X *= 0.9f;
+                                    else
+                                    {
+                                        NPC.MoveToVector2(CraneOrigin, 10);
+                                        if (NPC.DistanceSQ(CraneOrigin) < 6 * 6)
+                                        {
+                                            NPC.velocity *= 0;
+                                            TimerRand = 20;
+                                            AITimer = 0;
+                                            TimerRand2++;
+                                            NPC.netUpdate = true;
+                                        }
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            GlowTimer++;
+                            if (AITimer++ >= TimerRand)
+                            {
+                                TimerRand -= 2;
+                                GlowActive = true;
+                                GlowTimer = 0;
+                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), false, SoundID.Item125);
+                                AITimer = 0;
+                            }
+                            TimerRand = MathHelper.Clamp(TimerRand, 2, 20);
+                            if (TimerRand <= (Phase == 0 ? 2 : 4))
+                            {
+                                AITimer = 0;
+                                TimerRand = 0;
+                                if (Phase == 0)
+                                    TimerRand2 = 1;
+                                else
+                                    TimerRand2++;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 4:
+                            GlowTimer++;
+                            if (AITimer++ % 4 == 0)
+                            {
+                                GlowActive = true;
+                                GlowTimer = 0;
+                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), false, SoundID.Item125);
+                            }
+                            if (AITimer >= 30)
+                            {
+                                AITimer = 0;
+                                TimerRand = 0;
+                                TimerRand2++;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 5:
+                            if (AITimer++ == 60)
+                                JawOpen = true;
+
+                            if (AITimer == 100)
+                            {
+                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/EnergyChargeSound", NPC.whoAmI);
+                            }
+                            if (AITimer >= 100 && AITimer <= 290)
+                            {
+                                TimerRand += (float)Math.PI / 120;
+                                if (TimerRand >= MathHelper.PiOver2) TimerRand = 0;
+                                float timer = TimerRand;
+                                Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(1, 1, 6).UseTargetPosition(MouthOrigin);
+                            }
+                            else
+                                Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
+                            if (AITimer == 290)
+                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 30;
+
+                            if (AITimer == 320)
+                                JawOpen = false;
+
+                            if (AITimer >= 380)
+                            {
+                                AITimer = 0;
+                                TimerRand = 0;
+                                TimerRand2 = 1;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                    }
+                    break;
+                case ActionState.PhaseChange:
+                    switch (Phase)
+                    {
+                        case 0:
+                            JawOpen = false;
+                            AITimer = 0;
+                            TimerRand = 0;
+                            TimerRand2 = -1;
+                            Phase = 1;
+                            SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
+                            for (int i = 0; i < 10; i++)
+                            {
+                                int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 2f);
+                                Main.dust[dustIndex].velocity *= 3f;
+                            }
+                            for (int k = 0; k < 6; k++)
+                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1.WithVolume(0));
+
+                            AIState = ActionState.JawPhase;
+                            NPC.netUpdate = true;
+                            break;
                     }
                     break;
             }
         }
         private bool GlowActive;
         private int GlowTimer;
+        private bool GlowActive2;
+        private int GlowTimer2;
         private bool JawOpen;
         public override void FindFrame(int frameHeight)
         {
@@ -238,9 +435,18 @@ namespace Redemption.NPCs.Lab.MACE
                     GlowTimer = 0;
                 }
             }
+            if (GlowActive2)
+            {
+                if (GlowTimer2++ > 60)
+                {
+                    GlowActive2 = false;
+                    GlowTimer2 = 0;
+                }
+            }
+            NPC.rotation = NPC.velocity.X * 0.05f;
             if (JawOpen)
             {
-                if (JawCenter.Y < 12)
+                if (JawCenter.Y < 18)
                     JawCenter.Y += 1f;
             }
             else
@@ -257,13 +463,13 @@ namespace Redemption.NPCs.Lab.MACE
             Texture2D jawTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Jaw").Value;
             Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y - 18);
 
-            Vector2 drawCenterTrolley = new(drawCenter.X, drawCenter.Y + 10);
+            Vector2 drawCenterTrolley = new(drawCenter.X, CraneOrigin.Y - 8);
             Rectangle rect = new(0, 0, trolleyTex.Width, trolleyTex.Height);
-            Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(trolleyTex, drawCenterTrolley - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), 0, new Vector2(trolleyTex.Width / 2f, trolleyTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
 
-            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y + 60);
+            Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y - 1);
             Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
-            Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f), NPC.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
 
             spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             spriteBatch.Draw(glowTex, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
@@ -283,6 +489,15 @@ namespace Redemption.NPCs.Lab.MACE
             {
                 spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                 spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 2f, SpriteEffects.None, 0);
+            }
+            Texture2D mouthGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Rectangle rect2 = new(0, 0, mouthGlow.Width, mouthGlow.Height);
+            Vector2 origin2 = new(mouthGlow.Width / 2, mouthGlow.Height / 2);
+            Vector2 position2 = new Vector2(NPC.Center.X - 1, NPC.Center.Y + 38) - screenPos;
+            Color colour2 = Color.Lerp(Color.Orange, Color.Orange, 1f / GlowTimer2 * 10f) * (1f / GlowTimer2 * 10f);
+            if (GlowActive2)
+            {
+                spriteBatch.Draw(mouthGlow, position2, new Rectangle?(rect2), colour2 * 0.8f, NPC.rotation, origin2, 1f, SpriteEffects.None, 0);
             }
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

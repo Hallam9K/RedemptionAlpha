@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Lab.MACE
 {
     public class MACE_FireBlast : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/EnergyBall";
+        public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_EnergyBall";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fire Blast");
@@ -33,6 +33,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.scale = 1;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void AI()
         {
@@ -48,7 +49,7 @@ namespace Redemption.NPCs.Lab.MACE
                     if (mace < 0 || mace >= 200 || !Main.npc[mace].active || Main.npc[mace].type != ModContent.NPCType<MACEProject>())
                         Projectile.Kill();
 
-                    Vector2 MouthPos = new(npc.Center.X, npc.Center.Y + 70);
+                    Vector2 MouthPos = new(npc.Center.X, npc.Center.Y + 54);
                     Projectile.Center = MouthPos;
 
                     Projectile.scale += 0.01f;
@@ -58,7 +59,7 @@ namespace Redemption.NPCs.Lab.MACE
                     {
                         SoundEngine.PlaySound(SoundID.Zombie, Projectile.Center, 104);
                         Projectile.localAI[0] = 2;
-                        Projectile.velocity = RedeHelper.PolarVector(-11, (Main.player[npc.target].Center - npc.Center).ToRotation());
+                        Projectile.velocity = RedeHelper.PolarVector(20, (Main.player[npc.target].Center - npc.Center).ToRotation());
                         int pieCut = 32;
                         for (int m = 0; m < pieCut; m++)
                         {
@@ -67,6 +68,7 @@ namespace Redemption.NPCs.Lab.MACE
                             Main.dust[dustID].noLight = false;
                             Main.dust[dustID].noGravity = true;
                         }
+                        Projectile.timeLeft = 120;
                     }
                     break;
                 case 2:
@@ -78,7 +80,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void OnHitPlayer(Player player, int damage, bool crit)
         {
-            player.AddBuff(BuffID.OnFire, 320);
+            player.AddBuff(BuffID.OnFire, 900);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -92,10 +94,10 @@ namespace Redemption.NPCs.Lab.MACE
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Projectile.GetAlpha(Color.Orange) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.Orange), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
