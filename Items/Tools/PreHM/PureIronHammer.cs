@@ -6,7 +6,7 @@ using Terraria;
 using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 
-namespace Redemption.Items.Weapons.PreHM.Melee
+namespace Redemption.Items.Tools.PreHM
 {
 	public class PureIronHammer : ModItem
 	{

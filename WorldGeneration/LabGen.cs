@@ -20,8 +20,8 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.Utilities;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.WorldGeneration

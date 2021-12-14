@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PostML.Melee
+namespace Redemption.Items.Tools.PostML
 {
     public class NanoAxe2 : ModItem
     {
@@ -13,10 +13,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             DisplayName.SetDefault("CREATIVE PICKAXE OF RECOLOURED DOOOOOOOM!!!!");
             Tooltip.SetDefault("Developer/builder tool.");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-
         public override void SetDefaults()
         {
             Item.damage = 555;

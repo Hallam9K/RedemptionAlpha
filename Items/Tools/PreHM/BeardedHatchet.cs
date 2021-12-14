@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals.NPC;
 using Terraria.GameContent.Creative;
 
-namespace Redemption.Items.Weapons.PreHM.Melee
+namespace Redemption.Items.Tools.PreHM
 {
     public class BeardedHatchet : ModItem
     {

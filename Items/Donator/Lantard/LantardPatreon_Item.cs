@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Donator.Lantard
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Silk, 15)
+                .AddIngredient(ModContent.ItemType<Archcloth>(), 15)
                 .AddIngredient(ItemID.PinkDye)
                 .AddTile(TileID.Loom)
                 .Register();

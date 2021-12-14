@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PostML.Melee
+namespace Redemption.Items.Tools.PostML
 {
     public class NanoPickaxe : ModItem
 	{

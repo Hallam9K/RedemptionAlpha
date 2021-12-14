@@ -1,5 +1,6 @@
 using Redemption.Items.Materials.PostML;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,8 +13,8 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Ranger's Mutagen");
             Tooltip.SetDefault("15% increased ranged damage"
                 + "\n10% increased ranged critical strike chance");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-
         public override void SetDefaults()
         {
             Item.width = 28;
@@ -22,13 +23,11 @@ namespace Redemption.Items.Accessories.PostML
             Item.rare = ItemRarityID.Purple;
             Item.accessory = true;
         }
-
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Ranged) *= 1.15f;
             player.GetCritChance(DamageClass.Ranged) += 10;
         }
-
         public override void AddRecipes()
         {
             CreateRecipe()

@@ -1,34 +1,34 @@
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
-using Terraria;
-using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals.Player;
+using Redemption.Items.Materials.PreHM;
+using Terraria;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Melee
+namespace Redemption.Items.Tools.PreHM
 {
-    public class PureIronPickaxe : ModItem
+    public class PureIronBattleaxe : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Pickaxe");
+            DisplayName.SetDefault("Pure-Iron Battleaxe");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 9;
+            Item.damage = 38;
             Item.DamageType = DamageClass.Melee;
-            Item.width = 42;
-            Item.height = 42;
+            Item.width = 50;
+            Item.height = 50;
             Item.useTime = 18;
-            Item.useAnimation = 22;
-            Item.pick = 100;
+            Item.axe = 15;
+            Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 3;
-            Item.value = 1200;
+            Item.value = 1100;
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
@@ -43,9 +43,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 14)
-                .AddTile(TileID.Anvils)
-                .Register();
+            .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 14)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 }
