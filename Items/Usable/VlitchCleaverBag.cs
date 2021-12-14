@@ -30,9 +30,7 @@ namespace Redemption.Items.Usable
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
             if (!Main.dedServ)
-            {
                 Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
-            }
         }
 		public override bool CanRightClick()
 		{
@@ -46,7 +44,7 @@ namespace Redemption.Items.Usable
 				player.QuickSpawnItem(ModContent.ItemType<IntruderArmour>(), 1);
 				player.QuickSpawnItem(ModContent.ItemType<IntruderPants>(), 1);
 			}*/
-			if (Main.rand.Next(14) == 0)
+			if (Main.rand.NextBool(14))
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusMask>(), 1);
 			}
@@ -58,8 +56,8 @@ namespace Redemption.Items.Usable
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}*/
-			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomiteItem>(), Main.rand.Next(12, 24));
-			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(1, 3));
+			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomiteItem>(), Main.rand.Next(12, 25));
+			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(1, 4));
 			//player.QuickSpawnItem(ModContent.ItemType<BrokenBlade>(), 1);
 		}
 	}

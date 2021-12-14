@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable.Potions
 		public override void SetDefaults()
 		{
 			Item.UseSound = SoundID.Item3;
-			Item.useStyle = 2;
+			Item.useStyle = ItemUseStyleID.DrinkLiquid;
 			Item.useTurn = true;
 			Item.useAnimation = 17;
 			Item.useTime = 17;

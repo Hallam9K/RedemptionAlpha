@@ -8,11 +8,10 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Summons
 {
-	public class KingSummon : ModItem
+	public class CyberTech : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cyber Tech");
 			Tooltip.SetDefault("Summons King Slayer III\nOnly usable at day\nNot consumable");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
@@ -26,7 +25,7 @@ namespace Redemption.Items.Usable.Summons
 			Item.value = Item.sellPrice(0, 25, 0, 0);
 			Item.useAnimation = 45;
 			Item.useTime = 45;
-			Item.useStyle = 4;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.UseSound = SoundID.Item44;
 			Item.consumable = false;
 		}
