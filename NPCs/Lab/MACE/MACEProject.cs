@@ -17,6 +17,7 @@ using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using System;
 using Redemption.WorldGeneration;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -87,7 +88,7 @@ namespace Redemption.NPCs.Lab.MACE
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("An old, unfinished war machine that went haywire. Looks like it never saw the light of day, as it's in progress of being scrapped for parts and components.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -108,7 +109,7 @@ namespace Redemption.NPCs.Lab.MACE
                 for (int i = 0; i < 2; i++)
                     Gore.NewGore(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreWinglet").Type);
                 Gore.NewGore(new Vector2(NPC.Center.X, NPC.Center.Y - 16), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreForeheadGem").Type);
-                Gore.NewGore(NPC.Center, NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreHead").Type);
+                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreHead").Type);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<LabPlatingDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
@@ -160,8 +161,9 @@ namespace Redemption.NPCs.Lab.MACE
                 AIState = ActionState.PhaseChange;
                 NPC.netUpdate = true;
             }
-            if (Phase == 1 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= 0)
+            if ((Phase == 1 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= 0) || (Phase < 2 && NPC.life <= (int)(NPC.lifeMax * 0.75f)))
             {
+                NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 0;
                 AIState = ActionState.PhaseChange;
                 NPC.netUpdate = true;
             }
@@ -377,8 +379,8 @@ namespace Redemption.NPCs.Lab.MACE
                             }
                             if (AITimer >= 100 && AITimer <= 290)
                             {
-                                TimerRand += (float)Math.PI / 120;
-                                if (TimerRand >= MathHelper.PiOver2) TimerRand = 0;
+                                TimerRand -= (float)Math.PI / 120;
+                                if (TimerRand <= 0) TimerRand = MathHelper.PiOver2;
                                 float timer = TimerRand;
                                 Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(1, 1, 6).UseTargetPosition(MouthOrigin);
                             }
@@ -423,6 +425,7 @@ namespace Redemption.NPCs.Lab.MACE
                     switch (Phase)
                     {
                         case 0:
+                            Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
                             JawOpen = false;
                             AITimer = 0;
                             TimerRand = 0;
@@ -441,6 +444,7 @@ namespace Redemption.NPCs.Lab.MACE
                             NPC.netUpdate = true;
                             break;
                         case 1:
+                            Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
                             JawOpen = false;
                             AITimer = 0;
                             TimerRand = 0;
@@ -450,7 +454,7 @@ namespace Redemption.NPCs.Lab.MACE
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/DistortedRoar").WithVolume(.5f), NPC.position);
 
-                            Gore.NewGore(new Vector2(NPC.Center.X, NPC.Center.Y - 56), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
+                            Gore.NewGore(new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
                             for (int i = 0; i < 20; i++)
                             {
                                 int dustIndex = Dust.NewDust(NPC.position + new Vector2(0, 110) + NPC.velocity, NPC.width, 54, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 2f);
@@ -508,6 +512,7 @@ namespace Redemption.NPCs.Lab.MACE
             Texture2D trolleyTex = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/MACE/CraneTrolley").Value;
             Texture2D jawTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Jaw").Value;
             Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y - 18);
+            Color heat = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(255, 100, 0), Color.Transparent, new Color(255, 100, 0));
 
             Vector2 drawCenterTrolley = new(drawCenter.X, CraneOrigin.Y - 8);
             Rectangle rect = new(0, 0, trolleyTex.Width, trolleyTex.Height);
@@ -518,6 +523,9 @@ namespace Redemption.NPCs.Lab.MACE
                 Vector2 drawCenterJaw = new(drawCenter.X - 1, drawCenter.Y - 1);
                 Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
                 Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
+
+                float cleared = (float)NPC.GetGlobalNPC<GuardNPC>().GuardPoints / GuardPointMax;
+                Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(heat) * MathHelper.Lerp(2, 0, cleared), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
             }
 
             spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);

@@ -634,6 +634,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                     player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                    NPC.LockMoveRadius(player);
 
                     Unveiled = true;
                     Reap = false;
@@ -669,6 +670,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.SkullDiggerSummon:
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     Reap = false;
 
                     if (AITimer++ == 0)
@@ -690,6 +692,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.Teddy:
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     Unveiled = true;
 
                     if (!Main.dedServ)
@@ -794,6 +797,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     {
                         player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                         player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        NPC.LockMoveRadius(player);
                     }
                     player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
                     NPC.velocity *= 0;

@@ -288,6 +288,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                                         player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                                        NPC.LockMoveRadius(player);
                                     }
                                     if (AITimer == 120)
                                     {
@@ -723,6 +724,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             case 1:
                                 player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                                 player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                                NPC.LockMoveRadius(player);
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer++ == 10)

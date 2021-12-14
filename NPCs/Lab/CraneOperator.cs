@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Lab
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("A timid android with ambitious goals. She does small, odd jobs around the Laboratory. Usually ones that required an operator.")
             });
         }
         private Vector2 moveTo;

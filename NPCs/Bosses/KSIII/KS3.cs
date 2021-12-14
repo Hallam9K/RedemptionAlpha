@@ -319,6 +319,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     else
                     {
                         player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        NPC.LockMoveRadius(player);
                         if (RedeBossDowned.slayerDeath < 3)
                         {
                             if (AITimer == 30)
@@ -2028,6 +2029,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     if (AITimer++ == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
@@ -2097,6 +2099,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.chaseable = false;
                     NPC.dontTakeDamage = false;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     AITimer++;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2126,6 +2129,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.chaseable = true;
                     NPC.dontTakeDamage = true;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
@@ -2176,6 +2180,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     #region Spared
                     NPC.LookAtEntity(player);
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     NPC.dontTakeDamage = true;
                     AITimer++;
                     if (!Main.dedServ)
@@ -2206,6 +2211,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     NPC.dontTakeDamage = true;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
                     AITimer++;
                     if (AITimer < 30 && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");

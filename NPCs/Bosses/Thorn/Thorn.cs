@@ -459,6 +459,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                     NPC.dontTakeDamage = true;
                     player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    NPC.LockMoveRadius(player);
 
                     if (++AITimer >= 60)
                     {

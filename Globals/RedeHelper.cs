@@ -1159,7 +1159,17 @@ namespace Redemption.Globals
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }
-
+        public static void LockMoveRadius(this Terraria.NPC npc, Terraria.Player player, int radius = 1000)
+        {
+            if (npc.Distance(player.Center) > radius)
+            {
+                Vector2 movement = npc.Center - player.Center;
+                float difference = movement.Length() - radius;
+                movement.Normalize();
+                movement *= difference < 17f ? difference : 17f;
+                player.position += movement;
+            }
+        }
         #endregion
     }
 }
