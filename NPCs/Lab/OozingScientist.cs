@@ -4,6 +4,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -64,6 +65,8 @@ namespace Redemption.NPCs.Lab
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.3f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<OozingScientistBanner>();
         }
 
         private Vector2 moveTo;

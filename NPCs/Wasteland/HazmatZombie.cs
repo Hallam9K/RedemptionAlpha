@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -70,6 +71,8 @@ namespace Redemption.NPCs.Wasteland
             NPC.value = 100f;
             NPC.knockBackResist = 0.4f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<HazmatZombieBanner>();
         }
 
         private Vector2 moveTo;

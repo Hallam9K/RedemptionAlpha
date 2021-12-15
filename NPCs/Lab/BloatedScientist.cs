@@ -4,6 +4,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Redemption.Projectiles.Hostile;
 using System.Linq;
 using Terraria;
@@ -66,6 +67,8 @@ namespace Redemption.NPCs.Lab
             NPC.value = 0f;
             NPC.knockBackResist = 0.01f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BloatedScientistBanner>();
         }
         private Vector2 moveTo;
         private int runCooldown;

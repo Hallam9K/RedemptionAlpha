@@ -14,6 +14,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.Lab
 {
@@ -66,6 +67,8 @@ namespace Redemption.NPCs.Lab
             NPC.scale = 0.8f;
             NPC.aiStyle = -1;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<OozeBlobBanner>();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
