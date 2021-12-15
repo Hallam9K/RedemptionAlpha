@@ -44,15 +44,17 @@ namespace Redemption.NPCs.Lab.MACE
 
             if (Projectile.localAI[0] >= 60 && Projectile.localAI[0] % 4 == 0 && Projectile.localAI[0] <= 80 && Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 77), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser_Tele>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 97), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser_Tele>(), 0, 0, Main.myPlayer);
             }
         }
 
         public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap1").WithVolume(.5f).WithPitchVariance(0.1f), Projectile.position);
-            Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 47), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser>(), 34, 3, Main.myPlayer);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap1").WithVolume(.5f).WithPitchVariance(0.1f), Projectile.position);
+            if (Main.myPlayer == Projectile.owner)
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 67), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser>(), 34, 3, Main.myPlayer);
         }
     }
 }

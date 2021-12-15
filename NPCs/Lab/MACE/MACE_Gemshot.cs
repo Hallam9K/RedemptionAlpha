@@ -5,8 +5,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.Globals;
 
-namespace Redemption.Projectiles.Hostile
+namespace Redemption.NPCs.Lab.MACE
 {
     public class MACE_Gemshot : ModProjectile
     {
@@ -26,9 +27,10 @@ namespace Redemption.Projectiles.Hostile
             Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 400;
             Projectile.extraUpdates = 1;
             Projectile.scale = 0.2f;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public override void AI()
@@ -71,9 +73,13 @@ namespace Redemption.Projectiles.Hostile
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             for (int i = 0; i < 20; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy, Scale: 2f);
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenTorch, Scale: 2f);
                 Main.dust[dustIndex].velocity *= 3f;
             }
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
         }
         public override bool PreDraw(ref Color lightColor)
         {
