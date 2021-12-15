@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
-using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.Tiles.Ores;
 using Redemption.Tiles.Tiles;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;

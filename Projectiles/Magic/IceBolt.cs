@@ -5,7 +5,6 @@ using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using ReLogic.Content;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

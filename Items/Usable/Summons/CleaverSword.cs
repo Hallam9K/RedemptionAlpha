@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.Tiles.Furniture.Lab;

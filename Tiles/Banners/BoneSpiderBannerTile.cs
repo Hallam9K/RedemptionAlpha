@@ -1,14 +1,13 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Banners;
-using Redemption.NPCs.Lab;
-using Redemption.NPCs.PreHM;
+using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Banners
 {
-    public class HazmatScientistBannerTile : ModTile
+    public class BoneSpiderBannerTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -21,12 +20,12 @@ namespace Redemption.Tiles.Banners
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 111;
             TileObjectData.addTile(Type);
-            AddMapEntry(Color.SandyBrown);
+            AddMapEntry(Color.SeaGreen);
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<BloatedScientistBanner>());
+            Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<BoneSpiderBanner>());
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
@@ -34,7 +33,7 @@ namespace Redemption.Tiles.Banners
             if (closer)
             {
                 Main.SceneMetrics.hasBanner = true;
-                Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<BloatedScientist>()] = true;
+                Main.SceneMetrics.NPCBannerBuff[ModContent.NPCType<BoneSpider>()] = true;
             }
         }
     }

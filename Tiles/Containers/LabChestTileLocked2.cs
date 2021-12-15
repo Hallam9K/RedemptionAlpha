@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Usable;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

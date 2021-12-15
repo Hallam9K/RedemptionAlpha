@@ -1,10 +1,8 @@
-using Redemption.Globals.Player;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Backgrounds
 {
-	public class WastelandCorruptUndergroundBackgroundStyle : ModUndergroundBackgroundStyle
+    public class WastelandCorruptUndergroundBackgroundStyle : ModUndergroundBackgroundStyle
 	{
 		public override void FillTextureArray(int[] textureSlots)
 		{

@@ -2,7 +2,6 @@ using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;

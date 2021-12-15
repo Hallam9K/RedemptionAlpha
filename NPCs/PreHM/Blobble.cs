@@ -2,20 +2,15 @@ using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.DataStructures;
-using Redemption.Buffs.Debuffs;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Utilities;
-using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
-using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.PreHM
 {

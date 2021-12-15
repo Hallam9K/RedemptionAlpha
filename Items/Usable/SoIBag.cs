@@ -7,8 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;

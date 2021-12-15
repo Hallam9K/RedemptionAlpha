@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using Redemption.Projectiles.Hostile;
 using Redemption.Buffs.Debuffs;
 using Terraria.DataStructures;
 using Redemption.Biomes;

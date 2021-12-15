@@ -2,12 +2,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
-using System;
 using Redemption.Items.Materials.HM;
-using Redemption.DamageClasses;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {

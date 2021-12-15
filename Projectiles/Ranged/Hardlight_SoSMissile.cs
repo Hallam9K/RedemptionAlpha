@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;

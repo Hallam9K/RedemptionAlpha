@@ -1,11 +1,10 @@
 using Redemption.DamageClasses;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs
 {
-	public class DruidEssenceBuff : ModBuff
+    public class DruidEssenceBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{

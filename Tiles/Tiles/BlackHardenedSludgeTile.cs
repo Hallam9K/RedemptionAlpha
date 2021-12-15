@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.Dusts;
-using Redemption.Buffs.Debuffs;
 using Terraria.ID;
 using Redemption.NPCs.Lab;
 

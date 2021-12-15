@@ -1,15 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Projectiles.Magic;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 

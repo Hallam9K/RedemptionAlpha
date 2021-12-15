@@ -1,7 +1,6 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Misc

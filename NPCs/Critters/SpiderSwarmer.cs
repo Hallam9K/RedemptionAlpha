@@ -3,13 +3,10 @@ using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Critters;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.Critters
 {

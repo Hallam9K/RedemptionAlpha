@@ -5,8 +5,6 @@ using Terraria.ModLoader;
 using System;
 using Redemption.Tiles.Trees;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Buffs.Debuffs;
-using Redemption.Dusts.Tiles;
 using Terraria.DataStructures;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;

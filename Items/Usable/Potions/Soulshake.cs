@@ -1,5 +1,3 @@
-using Redemption.Buffs;
-using Redemption.Rarities;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

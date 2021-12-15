@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -7,7 +6,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Effects;
 using Redemption.Globals.Player;
-using System;
 using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Projectiles.Melee

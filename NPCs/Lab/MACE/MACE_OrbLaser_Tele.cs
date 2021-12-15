@@ -1,4 +1,3 @@
-using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;

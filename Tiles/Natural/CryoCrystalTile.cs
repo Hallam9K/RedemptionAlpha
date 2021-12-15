@@ -1,7 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Materials.HM;
-using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;

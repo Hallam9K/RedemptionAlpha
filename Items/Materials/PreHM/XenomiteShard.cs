@@ -2,7 +2,6 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-using Redemption.Buffs.Debuffs;
 using Terraria.GameContent.Creative;
 using Redemption.Tiles.Ores;
 

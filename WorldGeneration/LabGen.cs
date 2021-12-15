@@ -17,7 +17,6 @@ using Redemption.Items.Usable;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.PreHM;
-using Terraria.Utilities;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Tools.PostML;

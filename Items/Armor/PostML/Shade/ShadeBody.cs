@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;

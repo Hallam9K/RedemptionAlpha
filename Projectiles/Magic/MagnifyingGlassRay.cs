@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;

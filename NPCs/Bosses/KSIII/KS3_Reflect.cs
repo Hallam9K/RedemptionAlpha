@@ -1,4 +1,3 @@
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;

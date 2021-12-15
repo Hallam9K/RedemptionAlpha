@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
-using Redemption.NPCs.PreHM;
-using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

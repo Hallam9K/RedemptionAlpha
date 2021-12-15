@@ -6,10 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader.Utilities;
 using Terraria.DataStructures;
 using Redemption.Globals;
-using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
 using Terraria.Utilities;
-using Redemption.Items.Usable.Summons;
 using Redemption.Buffs.Debuffs;
 using Redemption.Base;
 using Terraria.Localization;
@@ -17,7 +15,6 @@ using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
-using Terraria.ModLoader.IO;
 using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Friendly

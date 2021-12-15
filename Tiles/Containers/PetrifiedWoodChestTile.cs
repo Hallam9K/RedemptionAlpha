@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Containers;
 using Terraria;

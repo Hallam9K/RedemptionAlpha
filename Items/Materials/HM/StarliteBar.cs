@@ -1,4 +1,3 @@
-using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Bars;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.HM
 {
-	public class StarliteBar : ModItem
+    public class StarliteBar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -26,7 +25,7 @@ namespace Redemption.Items.Materials.HM
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<StarliteBarTile>();
 		}

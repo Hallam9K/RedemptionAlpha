@@ -1,4 +1,3 @@
-using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Containers;

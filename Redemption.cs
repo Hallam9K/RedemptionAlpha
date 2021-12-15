@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Redemption.Base;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.Player;
-using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;

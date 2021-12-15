@@ -1,15 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
-using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using ReLogic.Content;
 using System;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;

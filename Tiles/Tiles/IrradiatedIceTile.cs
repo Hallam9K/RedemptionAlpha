@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Tiles;

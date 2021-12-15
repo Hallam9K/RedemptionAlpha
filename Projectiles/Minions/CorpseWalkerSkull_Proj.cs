@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

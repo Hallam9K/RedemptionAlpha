@@ -1,8 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

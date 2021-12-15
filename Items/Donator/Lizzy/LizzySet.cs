@@ -1,10 +1,8 @@
 ﻿using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
-using Redemption.Items.Materials.HM;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
-using Redemption.Globals;
 
 namespace Redemption.Items.Donator.Lizzy
 {

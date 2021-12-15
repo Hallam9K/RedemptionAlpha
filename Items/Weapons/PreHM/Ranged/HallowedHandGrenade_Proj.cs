@@ -2,8 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.NPCs.Critters;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

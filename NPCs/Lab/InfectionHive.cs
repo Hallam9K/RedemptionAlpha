@@ -2,12 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Dusts;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria.DataStructures;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
-using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Lab
 {

@@ -10,7 +10,6 @@ using Redemption.Items.Placeable.Tiles;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Magic;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;

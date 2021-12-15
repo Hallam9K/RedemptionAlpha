@@ -7,7 +7,6 @@ using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Projectiles.Hostile;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

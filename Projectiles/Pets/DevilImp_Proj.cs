@@ -1,16 +1,12 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
-using ReLogic.Content;
-using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
 {
-	public class DevilImp_Proj : ModProjectile
+    public class DevilImp_Proj : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{

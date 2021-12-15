@@ -1,6 +1,3 @@
-using Microsoft.Xna.Framework;
-using Redemption.Buffs.NPCBuffs;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 

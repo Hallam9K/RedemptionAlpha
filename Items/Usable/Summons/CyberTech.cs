@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.KSIII;
 using Terraria;
@@ -8,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Summons
 {
-	public class CyberTech : ModItem
+    public class CyberTech : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

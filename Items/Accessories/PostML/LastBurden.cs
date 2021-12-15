@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
-using Redemption.DamageClasses;
 using Redemption.Globals.Player;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria;
@@ -12,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PostML
 {
-	public class LastBurden : ModItem
+    public class LastBurden : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

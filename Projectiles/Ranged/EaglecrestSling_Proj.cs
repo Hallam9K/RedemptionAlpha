@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Effects;
-using Redemption.Globals.NPC;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;

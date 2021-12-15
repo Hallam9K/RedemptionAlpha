@@ -1,19 +1,15 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Bosses.KSIII;
-using ReLogic.Content;
-using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
 {
-	public class KS3Pet_Proj : ModProjectile
+    public class KS3Pet_Proj : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{

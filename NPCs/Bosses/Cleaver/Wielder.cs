@@ -1,5 +1,4 @@
 using Terraria;
-using System;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
@@ -8,8 +7,6 @@ using System.Collections.Generic;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.DataStructures;
-using Redemption.Biomes;
-using Terraria.GameContent.Bestiary;
 using System.IO;
 
 namespace Redemption.NPCs.Bosses.Cleaver

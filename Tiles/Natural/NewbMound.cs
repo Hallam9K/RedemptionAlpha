@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
 using Terraria;

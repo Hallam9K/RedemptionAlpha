@@ -4,14 +4,10 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Projectiles.Minions;
 using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Base;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Redemption.Projectiles.Minions
 {

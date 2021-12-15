@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Natural;
-using Redemption.Buffs.Debuffs;
 using Redemption.Tiles.Tiles;
 using Redemption.Items.Materials.HM;
 

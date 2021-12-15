@@ -7,7 +7,6 @@ using Redemption.NPCs.Lab.MACE;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Terraria.GameContent;
-using Terraria.Utilities;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
 using Redemption.Biomes;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,7 +7,6 @@ using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Audio;
 using Redemption.Globals;
-using Redemption.Base;
 using Terraria.Localization;
 using Terraria.Chat;
 

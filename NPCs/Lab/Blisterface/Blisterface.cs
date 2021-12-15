@@ -1,19 +1,15 @@
 using Terraria;
-using System;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using System.IO;
-using Redemption.Projectiles.Hostile;
 using Redemption.Items.Usable;
 using Redemption.Buffs.Debuffs;
-using Terraria.Audio;
 using Redemption.Globals;
 using Terraria.DataStructures;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
-using Terraria.GameContent.ItemDropRules;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.WorldGeneration;
 

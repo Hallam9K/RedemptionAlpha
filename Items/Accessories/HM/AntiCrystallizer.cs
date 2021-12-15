@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
@@ -9,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.HM
 {
-	public class AntiCrystallizer : ModItem
+    public class AntiCrystallizer : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

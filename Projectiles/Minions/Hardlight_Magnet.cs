@@ -8,8 +8,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Base;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
 
 namespace Redemption.Projectiles.Minions
 {

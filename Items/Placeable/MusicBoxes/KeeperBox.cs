@@ -1,5 +1,4 @@
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.MusicBoxes
 {
-	public class KeeperBox : ModItem
+    public class KeeperBox : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

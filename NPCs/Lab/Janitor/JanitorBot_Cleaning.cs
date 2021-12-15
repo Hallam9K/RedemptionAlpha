@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Redemption.Globals;
+﻿using Redemption.Globals;
 using Redemption.Items.Usable;
 using Terraria;
 using Terraria.ID;

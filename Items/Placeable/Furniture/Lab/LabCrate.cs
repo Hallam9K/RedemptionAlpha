@@ -1,10 +1,3 @@
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Lore;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PostML;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Usable;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.GameContent.Creative;

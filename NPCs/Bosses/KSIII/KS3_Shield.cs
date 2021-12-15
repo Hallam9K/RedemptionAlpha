@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Linq;
 using Terraria.Audio;
 using Redemption.Globals;
 using Terraria.GameContent;

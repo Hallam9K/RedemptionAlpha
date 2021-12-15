@@ -2,13 +2,12 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Bars
 {
-	public class StarliteBarTile : ModTile
+    public class StarliteBarTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{

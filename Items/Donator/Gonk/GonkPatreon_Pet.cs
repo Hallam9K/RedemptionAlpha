@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Biomes;
 using Redemption.Globals;
-using Redemption.Globals.Player;
-using Redemption.NPCs.Friendly;
 using System;
 using Terraria;
 using Terraria.GameContent;

@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
-using Redemption.DamageClasses;
 using Redemption.Items.Materials.HM;
-using Redemption.Projectiles.Misc;
 using System;
 using Terraria;
 using Terraria.Audio;

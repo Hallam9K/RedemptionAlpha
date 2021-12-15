@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using Terraria.DataStructures;
 using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Globals;

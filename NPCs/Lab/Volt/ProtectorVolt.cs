@@ -4,8 +4,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using Redemption.Projectiles.Hostile;
 using Redemption.Items.Usable;
 using Terraria.DataStructures;
 using Redemption.Biomes;
@@ -15,7 +13,6 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.WorldGeneration;
-using Terraria.Audio;
 
 namespace Redemption.NPCs.Lab.Volt
 {

@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Rarities
 {
-	public class DonatorRarity : ModRarity
+    public class DonatorRarity : ModRarity
 	{
 		public override Color RarityColor => Color.SpringGreen;
 

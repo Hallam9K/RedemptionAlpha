@@ -1,12 +1,9 @@
 using Redemption.Buffs.Debuffs;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
-using Redemption.Biomes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Globals.Player
 {

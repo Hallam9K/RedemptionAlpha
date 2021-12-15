@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Walls
 {
-	public class IrradiatedSandstoneWallTile : ModWall
+    public class IrradiatedSandstoneWallTile : ModWall
 	{
 		public override void SetStaticDefaults()
 		{

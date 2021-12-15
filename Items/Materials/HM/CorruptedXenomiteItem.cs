@@ -1,4 +1,3 @@
-using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.HM
 {
-	public class CorruptedXenomiteItem : ModItem
+    public class CorruptedXenomiteItem : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

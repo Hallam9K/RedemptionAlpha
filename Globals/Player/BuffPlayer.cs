@@ -13,7 +13,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
 using Redemption.Buffs;
-using System.Collections.Generic;
 using Redemption.Biomes;
 using Terraria.GameInput;
 using Redemption.Buffs.Cooldowns;

@@ -3,15 +3,13 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Armor.PreHM.PureIron;
-using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
-using System;
 
 namespace Redemption.Items.Armor.Single
 {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class AntiquePureIronHelmet : ModItem
 	{
 		public override void SetStaticDefaults()

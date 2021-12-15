@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.WorldGeneration;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

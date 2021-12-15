@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

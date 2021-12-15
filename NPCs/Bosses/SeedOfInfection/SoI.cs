@@ -11,7 +11,6 @@ using Redemption.Items.Usable;
 using System.IO;
 using Terraria.DataStructures;
 using Terraria.Audio;
-using Redemption.Base;
 using System;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;

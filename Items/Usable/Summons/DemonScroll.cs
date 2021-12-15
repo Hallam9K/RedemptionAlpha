@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.NPCs.Minibosses.EaglecrestGolem;
-using Microsoft.Xna.Framework;
 using Terraria.GameContent.Creative;
 using Redemption.NPCs.Bosses.Erhan;
 

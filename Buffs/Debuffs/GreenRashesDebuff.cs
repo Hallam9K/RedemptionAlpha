@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;

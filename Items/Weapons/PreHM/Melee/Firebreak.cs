@@ -2,11 +2,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using System;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Melee;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Redemption.Globals;
 

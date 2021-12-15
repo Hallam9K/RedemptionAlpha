@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.AncientWood;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.ID;
@@ -8,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
-	public class PetrifiedWoodWorkBenchTile : ModTile
+    public class PetrifiedWoodWorkBenchTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{

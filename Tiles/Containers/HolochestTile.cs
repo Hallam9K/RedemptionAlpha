@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Usable;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

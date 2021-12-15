@@ -6,7 +6,6 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
-using System;
 
 namespace Redemption.Items.Armor.PreHM.DragonLead
 {

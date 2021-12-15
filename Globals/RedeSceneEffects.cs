@@ -1,8 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals.Player;
-using ReLogic.Content;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Globals

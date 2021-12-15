@@ -1,15 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
-using Redemption.Globals.Player;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.NPCs.Friendly;
-using Redemption.NPCs.PreHM;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 

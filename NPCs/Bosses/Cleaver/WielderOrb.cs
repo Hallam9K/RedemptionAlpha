@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

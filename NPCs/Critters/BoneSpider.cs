@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Critters;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -57,6 +58,8 @@ namespace Redemption.NPCs.Critters
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
             NPC.catchItem = (short) ModContent.ItemType<BoneSpiderItem>();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BoneSpiderBanner>();
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

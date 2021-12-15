@@ -17,7 +17,6 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Weapons.PreHM;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;

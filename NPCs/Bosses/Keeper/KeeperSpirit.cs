@@ -5,15 +5,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.IO;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
@@ -21,7 +18,6 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
-using System.Linq;
 using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.NPCs.Bosses.Keeper

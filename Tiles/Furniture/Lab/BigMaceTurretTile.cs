@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Lab;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;

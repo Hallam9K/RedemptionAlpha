@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.NPC;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 

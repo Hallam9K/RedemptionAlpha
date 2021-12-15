@@ -26,7 +26,7 @@ namespace Redemption.Items.Tools.HM
 			Item.useAnimation = 27;
 			Item.axe = 37;
 			Item.hammer = 100;
-			Item.useStyle = ItemUseStyleID.SwingThrow;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 7f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.rare = ItemRarityID.Red;

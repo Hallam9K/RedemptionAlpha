@@ -21,7 +21,6 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
-using System.Linq;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Dusts;

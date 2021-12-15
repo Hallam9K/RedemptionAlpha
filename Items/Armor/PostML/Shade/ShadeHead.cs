@@ -2,11 +2,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
-using System;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
 

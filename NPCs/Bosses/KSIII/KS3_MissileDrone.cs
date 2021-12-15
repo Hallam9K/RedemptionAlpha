@@ -4,7 +4,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Projectiles.Minions;
 using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Base;

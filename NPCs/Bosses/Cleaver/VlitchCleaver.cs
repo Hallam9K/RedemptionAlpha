@@ -5,7 +5,6 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Donator.Uncon;
-using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
 using System.IO;

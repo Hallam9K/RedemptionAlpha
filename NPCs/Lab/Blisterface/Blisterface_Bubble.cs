@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.NPCs.Lab;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -47,7 +46,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             {
                 if (skrongle == 0)
                 {
-                    if (Main.rand.NextBool(3))
+                    if (Main.rand.NextBool(5))
                         skrongle = 2;
                     else
                         skrongle = 1;

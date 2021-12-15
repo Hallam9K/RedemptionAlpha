@@ -1,5 +1,4 @@
-﻿using Redemption.Buffs.Debuffs;
-using Redemption.Items.Placeable.Plants;
+﻿using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

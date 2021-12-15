@@ -3,7 +3,6 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;

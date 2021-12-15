@@ -3,7 +3,6 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

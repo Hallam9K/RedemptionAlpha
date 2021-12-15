@@ -3,8 +3,6 @@ using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.Creative;
-using Terraria.DataStructures;
-using Redemption.NPCs.Bosses.Thorn;
 using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged

@@ -10,7 +10,6 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
-using Redemption.Base;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

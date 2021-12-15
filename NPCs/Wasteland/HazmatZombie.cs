@@ -7,7 +7,6 @@ using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -156,7 +155,7 @@ namespace Redemption.NPCs.Wasteland
             if (Main.netMode != NetmodeID.Server)
             {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
-                NPC.frame.X = (int)(NPC.frame.Width * (Variant + 1));
+                NPC.frame.X = (int)(NPC.frame.Width * Variant);
 
                 if (NPC.collideY || NPC.velocity.Y == 0)
                 {

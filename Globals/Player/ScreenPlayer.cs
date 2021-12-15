@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 

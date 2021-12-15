@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Cleaver;
@@ -11,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
-	public class VlitchCleaverBag : ModItem
+    public class VlitchCleaverBag : ModItem
 	{
 		public override int BossBagNPC => ModContent.NPCType<VlitchCleaver>();
 

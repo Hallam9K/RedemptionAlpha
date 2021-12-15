@@ -3,8 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Redemption.Dusts;
-using Terraria.Utilities;
 using Terraria.GameContent;
 using Redemption.Globals;
 using System;

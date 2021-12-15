@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.Cooldowns;
 using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;

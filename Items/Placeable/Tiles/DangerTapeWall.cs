@@ -1,4 +1,3 @@
-using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using Terraria;
 using Terraria.GameContent.Creative;

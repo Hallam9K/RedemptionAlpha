@@ -1,15 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
-using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
-using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -17,7 +12,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {

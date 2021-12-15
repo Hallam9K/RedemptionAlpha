@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using System;
 using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection

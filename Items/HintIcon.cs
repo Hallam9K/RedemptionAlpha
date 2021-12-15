@@ -1,9 +1,8 @@
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
-	public class HintIcon : ModItem
+    public class HintIcon : ModItem
 	{
 		public override void SetDefaults()
 		{

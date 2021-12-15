@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Buffs.Debuffs;
 using Redemption.Tiles.Plants;
 using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Furniture.Lab;

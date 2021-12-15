@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Tiles.Tiles
 {

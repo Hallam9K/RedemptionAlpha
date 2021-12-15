@@ -1,16 +1,10 @@
-using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;

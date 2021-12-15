@@ -5,7 +5,6 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

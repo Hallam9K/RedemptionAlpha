@@ -2,12 +2,11 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
 {
-	public class XenomiteElementalPet : ModProjectile
+    public class XenomiteElementalPet : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{

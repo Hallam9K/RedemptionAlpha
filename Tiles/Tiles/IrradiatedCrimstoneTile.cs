@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
-using Redemption.Buffs.Debuffs;
-using Redemption.Dusts.Tiles;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Ores;
-using Redemption.Tiles.Trees;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

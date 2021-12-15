@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;

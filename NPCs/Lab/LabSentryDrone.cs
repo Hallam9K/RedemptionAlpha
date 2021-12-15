@@ -1,11 +1,9 @@
 using Terraria;
-using System;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Walls;
-using Redemption.Projectiles.Hostile;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;

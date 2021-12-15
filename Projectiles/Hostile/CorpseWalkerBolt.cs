@@ -5,7 +5,6 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

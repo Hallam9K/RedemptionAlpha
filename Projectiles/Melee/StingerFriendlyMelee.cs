@@ -1,9 +1,5 @@
-using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Redemption.Projectiles.Misc;
-using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee

@@ -5,10 +5,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.Effects;
-using Redemption.Globals.Player;
-using System;
-using Redemption.Projectiles.Ranged;
 using Terraria.GameContent;
 
 namespace Redemption.Projectiles.Magic

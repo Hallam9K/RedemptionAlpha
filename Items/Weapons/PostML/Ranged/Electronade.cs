@@ -1,4 +1,3 @@
-using Redemption.Projectiles.Ranged;
 using Terraria.ID;
 using Terraria.ModLoader;
 
