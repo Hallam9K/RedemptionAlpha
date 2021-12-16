@@ -562,7 +562,7 @@ namespace Redemption.NPCs.Lab.MACE
                                     for (int i = 0; i < 15; i++)
                                     {
                                         int proj = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), new Vector2(NPC.position.X, NPC.Center.Y),
-                                            RedeHelper.PolarVector(6, MathHelper.ToRadians(24) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                                            RedeHelper.PolarVector(8, MathHelper.ToRadians(24) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
                                         Main.projectile[proj].netUpdate2 = true;
@@ -570,7 +570,7 @@ namespace Redemption.NPCs.Lab.MACE
                                     for (int i = 0; i < 20; i++)
                                     {
                                         int proj = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), new Vector2(NPC.position.X, NPC.Center.Y),
-                                            RedeHelper.PolarVector(5, MathHelper.ToRadians(18) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                                            RedeHelper.PolarVector(7, MathHelper.ToRadians(18) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
                                         Main.projectile[proj].netUpdate2 = true;

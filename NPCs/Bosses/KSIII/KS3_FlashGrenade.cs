@@ -72,8 +72,8 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void SetDefaults()
         {
-            Projectile.width = 1000;
-            Projectile.height = 1000;
+            Projectile.width = 500;
+            Projectile.height = 500;
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.ignoreWater = true;
@@ -81,6 +81,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.penetrate = -1;
             Projectile.timeLeft = 300;
             Projectile.alpha = 255;
+            Projectile.scale = 2;
             Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void AI()
@@ -125,7 +126,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
