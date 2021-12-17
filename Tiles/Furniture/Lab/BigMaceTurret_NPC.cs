@@ -4,7 +4,9 @@ using Redemption.Globals;
 using Redemption.NPCs.Lab.MACE;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Furniture.Lab
@@ -38,12 +40,47 @@ namespace Redemption.Tiles.Furniture.Lab
             else
                 Projectile.spriteDirection = 1;
 
+            if (Projectile.frame > 0)
+            {
+                if (Projectile.frameCounter++ >= 5)
+                {
+                    Projectile.frameCounter = 0;
+                    Projectile.frame = 0;
+                }
+            }
             Projectile.velocity *= 0;
             int Mace = NPC.FindFirstNPC(ModContent.NPCType<MACEProject>());
+
             if (Mace >= 0)
             {
-                Player target = Main.player[Main.npc[Mace].target];
-                Projectile.rotation.SlowRotation(Projectile.DirectionTo(target.Center).ToRotation() - MathHelper.Pi, (float)Math.PI / 120f);
+                NPC npc = Main.npc[Mace];
+                switch (Projectile.localAI[0])
+                {
+                    case 0:
+                        Projectile.rotation.SlowRotation(-MathHelper.PiOver2, (float)Math.PI / 180f);
+                        if (npc.ai[0] == 2 && npc.ai[3] == 5)
+                        {
+                            Projectile.localAI[0] = 1;
+                            Projectile.netUpdate = true;
+                        }
+                        break;
+                    case 1:
+                        Projectile.localAI[1]++;
+                        Vector2 ShootPos = Projectile.Center + RedeHelper.PolarVector(16 * Projectile.spriteDirection, Projectile.rotation - MathHelper.PiOver2) - RedeHelper.PolarVector(28, Projectile.rotation);
+                        Projectile.rotation.SlowRotation(Projectile.spriteDirection == -1 ? (float)Math.PI - 1 : 1, (float)Math.PI / 210f);
+                        if (Projectile.localAI[1] % 15 == 0 && Main.myPlayer == Projectile.owner)
+                        {
+                            Projectile.frame = 1;
+                            SoundEngine.PlaySound(SoundID.Item40, Projectile.position);
+                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), ShootPos, RedeHelper.PolarVector(18, Projectile.rotation + -MathHelper.Pi), ModContent.ProjectileType<MACE_FlakBullet>(), npc.damage / 4, 0, Main.myPlayer);
+                        }
+                        if (npc.ai[3] != 5)
+                        {
+                            Projectile.localAI[0] = 0;
+                            Projectile.netUpdate = true;
+                        }
+                        break;
+                }
             }
             else
             {

@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Lab.MACE
                 if (++Projectile.frame >= 6)
                     Projectile.Kill();
             }
-            if (Projectile.frame >= 1 && Projectile.frame <= 4)
+            if (Projectile.frame >= 1 && Projectile.frame <= 3)
                 Projectile.hostile = true;
 
             switch (Projectile.ai[0])
