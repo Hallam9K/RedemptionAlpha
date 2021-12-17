@@ -10,8 +10,6 @@ namespace Redemption.NPCs.Lab.Behemoth
 {
     public class IrradiatedBehemoth_Inactive : ModNPC
     {
-        public ref float State => ref NPC.ai[0];
-        public ref float AITimer => ref NPC.ai[1];
         public override string Texture => "Redemption/NPCs/Lab/Behemoth/IrradiatedBehemoth";
         public override void SetStaticDefaults()
         {

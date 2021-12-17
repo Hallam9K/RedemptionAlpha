@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Blisterface;
@@ -59,6 +60,10 @@ namespace Redemption.Globals
             Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 169) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject>()) && !RedeBossDowned.downedMACE)
                 Terraria.NPC.NewNPC((int)MacePos.X, (int)MacePos.Y, ModContent.NPCType<MACEProject_Off>());
+
+            Vector2 KariPos = new((RedeGen.LabVector.X + 144) * 16, ((RedeGen.LabVector.Y + 193) * 16) + 1);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<PZ>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<PZ_Inactive>()) && !RedeBossDowned.downedPZ)
+                Terraria.NPC.NewNPC((int)KariPos.X, (int)KariPos.Y, ModContent.NPCType<PZ_Inactive>());
         }
         public override void OnWorldLoad()
         {

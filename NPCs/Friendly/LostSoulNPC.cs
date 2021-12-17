@@ -65,6 +65,16 @@ namespace Redemption.NPCs.Friendly
                 }
             }
         }
+        public override bool? CanBeHitByItem(Player player, Item item)
+        {
+            return ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) ||
+                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable;
+        }
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            return ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) ||
+                ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
+        }
         public override void AI()
         {
             int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
@@ -84,11 +94,6 @@ namespace Redemption.NPCs.Friendly
 
                 NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f));
             }
-
-            if (AITimer < 30)
-                NPC.dontTakeDamage = true;
-            else
-                NPC.dontTakeDamage = false;
 
             if (++AITimer > 600)
             {
