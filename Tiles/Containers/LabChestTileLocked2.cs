@@ -35,14 +35,14 @@ namespace Redemption.Tiles.Containers
             ChestDrop = ModContent.ItemType<LabChest2>();
 
             // Names
-            ContainerName.SetDefault("Laboratory Chest");
+            ContainerName.SetDefault("High Security Crate");
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Chest");
+            name.SetDefault("High Security Crate");
             AddMapEntry(new Color(0, 242, 170), name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked");
-            name.SetDefault("Locked Laboratory Chest");
+            name.SetDefault("Locked High Security Crate");
             AddMapEntry(new Color(0, 242, 170), name, MapChestName);
 
             // Placement
