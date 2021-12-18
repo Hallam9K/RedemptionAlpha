@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable.Plants
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Grows in the Corrupted or Crimson Wasteland");
+            Tooltip.SetDefault("Grows in the Wasteland");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults()

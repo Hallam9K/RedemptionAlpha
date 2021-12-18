@@ -7,6 +7,7 @@ using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -39,7 +40,7 @@ namespace Redemption.NPCs.Wasteland
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bob the Blob");
-            Main.npcFrameCount[NPC.type] = 2;
+            Main.npcFrameCount[NPC.type] = 5;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -54,31 +55,39 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SetDefaults()
         {
-            NPC.width = 38;
-            NPC.height = 32;
+            NPC.width = 42;
+            NPC.height = 46;
             NPC.friendly = false;
             NPC.damage = 140;
             NPC.defense = 0;
             NPC.takenDamageMultiplier = 5f;
-            NPC.lifeMax = 50000;
+            NPC.lifeMax = 25000;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath19;
             NPC.value = Item.buyPrice(0, 2, 0, 0);
             NPC.knockBackResist = 0;
-            NPC.alpha = 80;
             NPC.rarity = 1;
             NPC.aiStyle = -1;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BobTheBlobBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 40; i++)
                 {
                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<SludgeDust>(), Scale: 3f);
                     Main.dust[dustIndex2].velocity *= 5f;
                 }
+                for (int i = 0; i < 4; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
+
+                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
             }
             int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<SludgeDust>(), Scale: 2f);
             Main.dust[dustIndex].velocity *= 2f;
@@ -137,23 +146,23 @@ namespace Redemption.NPCs.Wasteland
 
         public override void FindFrame(int frameHeight)
         {
-                if (NPC.collideY || NPC.velocity.Y == 0)
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 6)
                 {
-                    NPC.rotation = 0;
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter >= 6)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > frameHeight)
-                            NPC.frame.Y = 0;
-                    }
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 3 * frameHeight)
+                        NPC.frame.Y = 0;
                 }
-                else
-                {
-                    NPC.rotation = NPC.velocity.X * 0.03f;
-                    NPC.frame.Y = 0;
-                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.03f;
+                NPC.frame.Y = 4 * frameHeight;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -174,7 +183,7 @@ namespace Redemption.NPCs.Wasteland
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "")
+                    "A mess of radioactive sludge coating some poor skeleton. They don't look happy about their situation.")
             });
         }
     }

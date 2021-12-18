@@ -2,6 +2,7 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -15,7 +16,7 @@ namespace Redemption.NPCs.Wasteland
     {
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 2;
+            Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -29,21 +30,22 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SetDefaults()
         {
-            NPC.width = 46;
-            NPC.height = 30;
+            NPC.width = 50;
+            NPC.height = 26;
             NPC.friendly = false;
             NPC.damage = 60;
             NPC.defense = 0;
             NPC.lifeMax = 225;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = SoundID.NPCHit13;
+            NPC.DeathSound = SoundID.NPCDeath19;
             NPC.value = 200f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 1;
             NPC.alpha = 80;
             AIType = NPCID.IlluminantSlime;
-            AnimationType = NPCID.SlimeMasked;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<RadioactiveSlimeBanner>();
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
@@ -54,12 +56,31 @@ namespace Redemption.NPCs.Wasteland
         {
             Lighting.AddLight(NPC.Center, NPC.Opacity * 0.1f, NPC.Opacity, NPC.Opacity * 0.1f);
         }
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.frameCounter++ >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 3 * frameHeight)
+                        NPC.frame.Y = 0;
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
+            }
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "")
+                    "An irradiated gelatinous creature whose membrane has been highly contaminated by radioactive materials from the fallout.")
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

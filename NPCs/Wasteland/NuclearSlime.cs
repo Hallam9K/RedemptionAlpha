@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -15,9 +18,10 @@ namespace Redemption.NPCs.Wasteland
 {
     public class NuclearSlime : ModNPC
     {
+        public override string Texture => "Redemption/NPCs/Wasteland/RadioactiveSlime";
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 2;
+            Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -44,8 +48,9 @@ namespace Redemption.NPCs.Wasteland
             NPC.aiStyle = 1;
             NPC.alpha = 80;
             AIType = NPCID.IlluminantSlime;
-            AnimationType = NPCID.SlimeMasked;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<NuclearSlimeBanner>();
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
@@ -67,8 +72,39 @@ namespace Redemption.NPCs.Wasteland
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "")
+                    "An irradiated gelatinous creature whose membrane has been highly contaminated by radioactive materials from the fallout. Would not recommend hitting it too much.")
             });
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.frameCounter++ >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 3 * frameHeight)
+                        NPC.frame.Y = 0;
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
+            }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D NukeTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Overlay").Value;
+            int Height = NukeTex.Height / 5;
+            int y = Height * (NPC.frame.Y / 42);
+            Rectangle rect = new(0, y, NukeTex.Width, Height);
+            Vector2 origin = new(NukeTex.Width / 2f, Height / 2f);
+            spriteBatch.Draw(NukeTex, NPC.Center - screenPos + new Vector2(14, -12), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, 0, 0);
+
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos - new Vector2(0, 2), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, 0, 0);
+            return false;
         }
         public override void HitEffect(int hitDirection, double damage)
         {

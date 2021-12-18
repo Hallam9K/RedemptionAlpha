@@ -119,6 +119,7 @@ namespace Redemption.NPCs.Friendly
                 name.Add("Vinewood");
                 name.Add("Bitterthorn");
                 name.Add("Irontwig");
+                name.Add("Tapio");
                 if (WoodType == 1)
                     name.Add("Willowbark", 3);
                 if (WoodType == 2)
