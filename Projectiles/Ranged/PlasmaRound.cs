@@ -60,15 +60,11 @@ namespace Redemption.Projectiles.Ranged
             if (Projectile.DistanceSQ(player.Center) < 600 * 600)
                 player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
         }
-        private Vector2 originPos;
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             if (Projectile.localAI[0]++ == 0)
-            {
-                originPos = Projectile.Center + Projectile.velocity;
                 Projectile.velocity *= 3;
-            }
         }
         public override void PostDraw(Color lightColor)
         {
