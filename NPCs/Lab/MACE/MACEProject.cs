@@ -380,7 +380,7 @@ namespace Redemption.NPCs.Lab.MACE
 
                             if (AITimer == 100)
                             {
-                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/EnergyChargeSound", NPC.whoAmI);
+                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/EnergyChargeSound2", NPC.whoAmI);
                             }
                             if (AITimer >= 100 && AITimer <= 290)
                             {

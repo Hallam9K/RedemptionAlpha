@@ -114,7 +114,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         player.itemAnimationMax = Item.useTime * 3;
                         player.itemTime = Item.useTime * 3;
                         player.itemAnimation = Item.useTime * 3;
-                        damage = (int)(damage * 1.4f);
+                        damage = (int)(damage * 1.5f);
 
                         float numberProjectiles = 3;
                         float rotation = MathHelper.ToRadians(15);

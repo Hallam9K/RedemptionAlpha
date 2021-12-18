@@ -14,12 +14,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Replaces normal bullets with plasma rounds");
+            Tooltip.SetDefault("Replaces normal bullets with Plasma Rounds");
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 108;
+            Item.damage = 68;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 64;
             Item.height = 30;
@@ -64,6 +64,29 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Main.projectile[proj].tileCollide = true;
             Main.projectile[proj].netUpdate2 = true;
             return false;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A Teochrome experimental weapon, it was created after a board meeting, in which military contractors wanted a\n" +
+                    "nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype\n" +
+                    "created, and the death toll from radiation exposure has been suprisingly miniscule.'")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
     }
 }
