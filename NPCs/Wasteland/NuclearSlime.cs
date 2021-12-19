@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Wasteland
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "An irradiated gelatinous creature whose membrane has been highly contaminated by radioactive materials from the fallout. Would not recommend hitting it too much.")
+                    "F is for the Fire that burns down the whole town, U is for Uranium bombs! N is for No Survivors-")
             });
         }
         public override void FindFrame(int frameHeight)

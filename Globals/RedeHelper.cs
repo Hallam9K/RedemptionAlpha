@@ -323,6 +323,11 @@ namespace Redemption.Globals
             return false;
         }
 
+        public static Vector2 RandAreaInEntity(this Entity entity)
+        {
+            return entity.position + new Vector2(Main.rand.Next(0, entity.width), Main.rand.Next(0, entity.height));
+        }
+
         public static float GradToRad(float grad) => grad * (float)Math.PI / 180.0f;
 
         public static Vector2 RandomPosition(Vector2 pos1, Vector2 pos2) =>

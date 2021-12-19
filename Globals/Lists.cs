@@ -533,7 +533,7 @@ namespace Redemption.Globals
 
             #region Ice
 
-            Ice.SetMultiple(ProjectileID.IceBlock, ProjectileID.IceBoomerang, ProjectileID.IceBolt, ProjectileID.FrostBoltSword, ProjectileID.FrostArrow, ProjectileID.FrostBlastHostile, ProjectileID.SnowBallFriendly, ProjectileID.FrostburnArrow, ProjectileID.IceSpike, ProjectileID.IcewaterSpit, ProjectileID.BallofFrost, ProjectileID.FrostBeam, ProjectileID.IceSickle, ProjectileID.FrostBlastFriendly, ProjectileID.Blizzard, ProjectileID.NorthPoleWeapon, ProjectileID.NorthPoleSpear, ProjectileID.NorthPoleSnowflake, ProjectileID.FrostWave, ProjectileID.FrostShard, ProjectileID.FrostBoltStaff, ProjectileID.CultistBossIceMist, ProjectileID.FrostDaggerfish, ProjectileID.Amarok, ProjectileID.CoolWhip, ProjectileID.CoolWhipProj, ProjectileID.DeerclopsIceSpike, ProjectileID.DeerclopsRangedProjectile, ModContent.ProjectileType<IceBolt>(), ModContent.ProjectileType<PureIronSword_Proj>(), ModContent.ProjectileType<BladeOfTheMountain_Slash>());
+            Ice.SetMultiple(ProjectileID.IceBlock, ProjectileID.IceBoomerang, ProjectileID.IceBolt, ProjectileID.FrostBoltSword, ProjectileID.FrostArrow, ProjectileID.FrostBlastHostile, ProjectileID.SnowBallFriendly, ProjectileID.FrostburnArrow, ProjectileID.IceSpike, ProjectileID.IcewaterSpit, ProjectileID.BallofFrost, ProjectileID.FrostBeam, ProjectileID.IceSickle, ProjectileID.FrostBlastFriendly, ProjectileID.Blizzard, ProjectileID.NorthPoleWeapon, ProjectileID.NorthPoleSpear, ProjectileID.NorthPoleSnowflake, ProjectileID.FrostWave, ProjectileID.FrostShard, ProjectileID.FrostBoltStaff, ProjectileID.CultistBossIceMist, ProjectileID.FrostDaggerfish, ProjectileID.Amarok, ProjectileID.CoolWhip, ProjectileID.CoolWhipProj, ProjectileID.DeerclopsIceSpike, ProjectileID.DeerclopsRangedProjectile, ModContent.ProjectileType<IceBolt>(), ModContent.ProjectileType<PureIronSword_Proj>(), ModContent.ProjectileType<BladeOfTheMountain_Slash>(), ModContent.ProjectileType<Icefall_Mist>(), ModContent.ProjectileType<Icefall_Proj>());
 
             #endregion
 
@@ -545,7 +545,7 @@ namespace Redemption.Globals
 
             #region Wind
 
-            Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.WeatherPainShot, ModContent.ProjectileType<FireSlash_Proj>(), ModContent.ProjectileType<RockSlash_Proj>(), ModContent.ProjectileType<KS3_Wave>(), ModContent.ProjectileType<GreenGas_Proj>());
+            Wind.SetMultiple(ProjectileID.Sharknado, ProjectileID.SharknadoBolt, ProjectileID.Cthulunado, ProjectileID.Tempest, ProjectileID.Typhoon, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2SquireSonicBoom, ProjectileID.DD2ApprenticeStorm, ProjectileID.BookStaffShot, ProjectileID.WeatherPainShot, ModContent.ProjectileType<FireSlash_Proj>(), ModContent.ProjectileType<RockSlash_Proj>(), ModContent.ProjectileType<KS3_Wave>(), ModContent.ProjectileType<GreenGas_Proj>(), ModContent.ProjectileType<Icefall_Mist>());
 
             #endregion
 

@@ -42,6 +42,8 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.HallowedIce][Type] = true;
             Main.tileMerge[Type][TileID.HallowedIce] = true;
             DustType = DustID.Ash;
+            SoundStyle = 126;
+            SoundType = SoundID.Item;
             AddMapEntry(new Color(204, 215, 191));
             ItemDrop = ModContent.ItemType<IrradiatedSnow>();
             SetModTree(new IrradiatedBorealTree());

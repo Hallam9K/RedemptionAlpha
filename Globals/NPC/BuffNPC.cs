@@ -496,8 +496,8 @@ namespace Redemption.Globals.NPC
                 SoundEngine.PlaySound(SoundID.Item27, npc.position);
                 for (int i = 0; i < 30; i++)
                 {
-                    int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Ice, Scale: 1);
-                    Main.dust[dustIndex4].velocity *= 3f;
+                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Ice);
+                    Main.dust[dust].velocity *= 3f;
                 }
             }
             return true;

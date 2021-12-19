@@ -12,6 +12,10 @@ namespace Redemption.Projectiles.Magic
 {
     public class DragonSkull_Proj : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Dragon Skull");
+        }
         public override void SetDefaults()
         {
             Projectile.width = 36;

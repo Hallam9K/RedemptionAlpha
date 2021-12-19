@@ -11,6 +11,7 @@ using Redemption.Items.Usable;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
 using Redemption.UI;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -71,35 +72,30 @@ namespace Redemption
 
                 Main.QueueMainThreadAction(() =>
                 {
-                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref bubbleTex);
-                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref portalTex);
-                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
-                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref whiteFlareTex);
-                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref whiteOrbTex);
-                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref whiteLightBeamTex);
-                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref transitionTex);
-                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall",
-                        ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref staticBallTex);
-                    Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref iceMistTex);
+
+                    Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
-                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref wastelandCrimsonBG3Tex);
-                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref wastelandCorruptionBG3Tex);
                 });
             }
