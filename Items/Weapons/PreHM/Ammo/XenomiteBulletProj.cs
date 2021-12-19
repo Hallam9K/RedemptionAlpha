@@ -7,9 +7,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Donator.Nechrom
+namespace Redemption.Items.Weapons.PreHM.Ammo
 {
-	public class XenomiteBulletProj : ModProjectile
+    public class XenomiteBulletProj : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{

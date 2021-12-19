@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Donator.Nechrom
+namespace Redemption.Items.Weapons.PreHM.Ammo
 {
 	public class XenomiteBullet : ModItem
 	{
@@ -23,7 +23,7 @@ namespace Redemption.Items.Donator.Nechrom
 			Item.consumable = true;
 			Item.knockBack = 2f;
 			Item.value = 1;
-            Item.rare = ModContent.RarityType<DonatorRarity>();
+			Item.rare = ItemRarityID.Lime;
 			Item.shoot = ModContent.ProjectileType<XenomiteBulletProj>();
 			Item.shootSpeed = 4f;
 			Item.ammo = AmmoID.Bullet;
