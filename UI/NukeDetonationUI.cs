@@ -89,9 +89,35 @@ namespace Redemption.UI
         }
         private void NukeButtonClicked(UIMouseEvent evt, UIElement listeningElement)
         {
+            Main.isMouseLeftConsumedByUI = true;
             SoundEngine.PlaySound(SoundID.MenuTick);
             if (Switch1State && Switch2State)
             {
+                bool fail = false;
+                for (int x = -44; x <= 44; x++)
+                {
+                    for (int y = -44; y <= 44; y++)
+                    {
+                        Point tileToWarhead = RedeWorld.nukeGroundZero.ToTileCoordinates();
+                        int type = Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].type;
+                        if (Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y] != null && Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].IsActive)
+                        {
+                            if (Main.tileDungeon[type] || type == 88 || type == 21 || type == 26 || type == 107 || type == 108 || type == 111 || type == 226 || type == 237 || type == 221 || type == 222 || type == 223 || type == 211 || type == 404)
+                                fail = true; 
+                            if (!TileLoader.CanExplode(tileToWarhead.X + x, tileToWarhead.Y + y))
+                                fail = true;
+                        }
+                    }
+                }
+                if (fail)
+                {
+                    string status = "The bomb is too close to unexplodable tiles";
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.White);
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), Color.White);
+                    return;
+                }
                 if (ButtonState < 2 && Vector2.Distance(RedeWorld.nukeGroundZero, new Vector2(Main.spawnTileX * 16, Main.spawnTileY * 16)) > (Main.maxTilesX / 8 * 16) && RedeWorld.nukeGroundZero.Y < (Main.worldSurface * 16f))
                 {
                     ++ButtonState;
@@ -105,7 +131,6 @@ namespace Redemption.UI
                         Main.NewText(Language.GetTextValue(status), Color.White);
                 }
             }
-            Main.isMouseLeftConsumedByUI = true;
         }
         private void CloseMenu(UIMouseEvent evt, UIElement listeningElement)
         {

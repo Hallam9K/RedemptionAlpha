@@ -64,7 +64,7 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override bool CanExplode(int i, int j)
         {
-            return false;
+            return true;
         }
         public override bool RightClick(int i, int j)
         {

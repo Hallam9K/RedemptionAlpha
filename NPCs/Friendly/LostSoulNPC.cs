@@ -44,7 +44,6 @@ namespace Redemption.NPCs.Friendly
             NPC.alpha = 200;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            NPC.dontTakeDamage = true;
             NPC.catchItem = (short)ModContent.ItemType<LostSoul>();
         }
         public override void OnCatchNPC(Player player, Item item)

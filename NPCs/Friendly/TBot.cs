@@ -326,7 +326,7 @@ namespace Redemption.NPCs.Friendly
             }
             if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
             {
-                //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniNuke>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniWarhead>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IOLocator>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());

@@ -496,7 +496,7 @@ namespace Redemption.WorldGeneration
 
             int[] LabChestLoot = new int[]
             {
-                ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), //, ModContent.ItemType<MiniNuke>(), ModContent.ItemType<PlasmaSaber>(), ModContent.ItemType<RadioactiveLauncher>(), ModContent.ItemType<SludgeSpoon>()
+                ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), //ModContent.ItemType<PlasmaSaber>(), ModContent.ItemType<RadioactiveLauncher>(), ModContent.ItemType<SludgeSpoon>()
             };
             int[] FloppyDiskLoot = new int[]
             {
