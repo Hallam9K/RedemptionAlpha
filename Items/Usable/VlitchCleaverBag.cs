@@ -55,7 +55,6 @@ namespace Redemption.Items.Usable
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}*/
-			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomiteItem>(), Main.rand.Next(12, 25));
 			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(1, 4));
 			//player.QuickSpawnItem(ModContent.ItemType<BrokenBlade>(), 1);
 		}

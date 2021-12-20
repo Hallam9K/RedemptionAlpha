@@ -51,13 +51,5 @@ namespace Redemption.Items.Usable.Summons
             }
             return true;
         }
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<CorruptedStarliteBar>(), 5)
-                .AddIngredient(ModContent.ItemType<GirusChip>(), 1)
-                .AddTile(ModContent.TileType<GirusCorruptorTile>())
-                .Register();
-        }
     }
 }

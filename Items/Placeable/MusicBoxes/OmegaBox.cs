@@ -34,7 +34,6 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
 				.AddIngredient(ModContent.ItemType<VlitchBattery>(), 2)
-                .AddIngredient(ModContent.ItemType<VlitchScale>(), 2)
                 .AddTile(TileID.MythrilAnvil)
 				.Register();
 		}
@@ -67,7 +66,6 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
-				.AddIngredient(ModContent.ItemType<OblitBrain>(), 2)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();
 		}
