@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System;
 using Redemption.WorldGeneration;
 using Redemption.Base;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -127,6 +128,7 @@ namespace Redemption.NPCs.Lab.MACE
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk6>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk6_1>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Electronade>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {

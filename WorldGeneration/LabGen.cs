@@ -468,13 +468,7 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot4));
                     chest.item[slot++].stack = WorldGen.genRand.Next(3, 12);
                 }
-
-                if (WorldGen.genRand.NextBool(2))
-                {
-                    chest.item[slot].SetDefaults(ModContent.ItemType<Electronade>());
-                    chest.item[slot++].stack = WorldGen.genRand.Next(10, 30);
-                }
-
+            
                 if (WorldGen.genRand.NextBool(2))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<CrystalSerum>());

@@ -14,15 +14,14 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 		{
             Item.width = 16;
             Item.height = 20;
-            Item.damage = 250;
-            Item.maxStack = 999;
+            Item.damage = 200;
+            Item.maxStack = 1;
             Item.value = 150;
             Item.rare = ItemRarityID.Purple;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.UseSound = SoundID.Item7;
-            Item.consumable = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.DamageType = DamageClass.Ranged;
