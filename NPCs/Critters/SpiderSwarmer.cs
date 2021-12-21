@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Items.Critters;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -60,6 +61,7 @@ namespace Redemption.NPCs.Critters
             NPC.knockBackResist = 0.5f;
             NPC.scale = 0.7f;
             NPC.aiStyle = -1;
+            NPC.catchItem = (short)ModContent.ItemType<SpiderSwarmerItem>();
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive;

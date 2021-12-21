@@ -153,7 +153,7 @@ namespace Redemption.Globals.NPC
                     damage = damage < npc.life ? npc.life : damage;
                     crit = true;
                 }
-                else if (Main.rand.NextBool(80) && item.axe > 0 && item.type != ModContent.ItemType<BeardedHatchet>())
+                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.GetGlobalItem<RedeItem>().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;

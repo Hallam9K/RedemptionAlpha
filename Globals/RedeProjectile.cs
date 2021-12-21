@@ -10,13 +10,19 @@ namespace Redemption.Globals
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
         public bool TechnicallyMelee;
+        public bool IsHammer;
+        public bool IsAxe;
         public bool Unparryable;
         public override void SetDefaults(Projectile projectile)
         {
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
                 TechnicallyMelee = true;
         }
-
+        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (IsAxe && crit)
+                damage += damage / 2;
+        }
         public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
             if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))

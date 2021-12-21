@@ -5,6 +5,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -45,6 +46,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 3.7f;
             Item.shoot = ModContent.ProjectileType<NoblesHalberd_SlashProj>();
+            Item.GetGlobalItem<RedeItem>().TechnicallyAxe = true;
         }
 
         public override bool AltFunctionUse(Player player) => true;
@@ -61,12 +63,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 type = ModContent.ProjectileType<NoblesHalberd_SlashProj>();
             }
-        }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { overrideColor = Colors.RarityOrange };
-            tooltips.Add(axeLine);
         }
 
         public override void AddRecipes()

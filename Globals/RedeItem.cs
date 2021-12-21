@@ -12,10 +12,18 @@ namespace Redemption.Globals
 {
     public class RedeItem : GlobalItem
     {
+        public override bool InstancePerEntity => true;
+        public override GlobalItem Clone(Item item, Item itemClone)
+        {
+            return base.Clone(item, itemClone);
+        }
+        public bool TechnicallyHammer;
+        public bool TechnicallyAxe;
+
         public override void ModifyHitNPC(Item item, Terraria.Player player, Terraria.NPC target, ref int damage,
             ref float knockBack, ref bool crit)
         {
-            if (item.axe > 0 && crit)
+            if ((item.axe > 0 || TechnicallyAxe) && crit)
                 damage += damage / 2;
         }
         public override bool OnPickup(Item item, Terraria.Player player)
@@ -47,23 +55,26 @@ namespace Redemption.Globals
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic)
+            TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { overrideColor = Colors.RarityOrange };
+
+            if ((item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {
                 if (item.axe > 0)
-                {
-                    TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { overrideColor = Colors.RarityOrange };
                     tooltips.Add(axeLine);
-                }
+
                 else if (!ItemTags.BluntSwing.Has(item.type) && item.hammer == 0 && item.pick == 0)
                 {
-                    TooltipLine axeLine = new(Mod, "SlashBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
-                    tooltips.Add(axeLine);
+                    TooltipLine slashLine = new(Mod, "SlashBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+                    tooltips.Add(slashLine);
                 }
             }
-            if (item.hammer > 0 || item.type == ItemID.PaladinsHammer)
-            {
-                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { overrideColor = Colors.RarityOrange };
+            if (TechnicallyAxe)
                 tooltips.Add(axeLine);
+
+            if (item.hammer > 0 || item.type == ItemID.PaladinsHammer || TechnicallyHammer)
+            {
+                TooltipLine hammerLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { overrideColor = Colors.RarityOrange };
+                tooltips.Add(hammerLine);
             }
 
             if (!RedeConfigClient.Instance.ElementDisable)

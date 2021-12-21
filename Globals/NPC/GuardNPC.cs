@@ -52,7 +52,7 @@ namespace Redemption.Globals.NPC
 
             if (ItemTags.Psychic.Has(item.type))
                 IgnoreArmour = true;
-            if (item.hammer > 0)
+            if (item.hammer > 0 || item.GetGlobalItem<RedeItem>().TechnicallyHammer)
                 damage *= 4;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -62,7 +62,7 @@ namespace Redemption.Globals.NPC
 
             if (ProjectileTags.Psychic.Has(projectile.type))
                 IgnoreArmour = true;
-            if (projectile.type == ProjectileID.PaladinsHammerFriendly)
+            if (projectile.GetGlobalProjectile<RedeProjectile>().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
                 damage *= 4;
         }
         public override void SetDefaults(Terraria.NPC npc)

@@ -1,0 +1,49 @@
+using Terraria.ModLoader;
+using Terraria.ID;
+using Terraria;
+using Redemption.Items.Materials.PreHM;
+using Terraria.GameContent.Creative;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Redemption.Globals;
+
+namespace Redemption.Items.Weapons.HM.Melee
+{
+    public class GravityHammer : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Slamming the ground pushes all enemies away from the location of the impact");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            // Common Properties
+            Item.width = 72;
+            Item.height = 66;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(gold: 20);
+
+            // Use Properties
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = 40;
+            Item.useTime = 40;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = false;	
+
+            // Weapon Properties
+            Item.damage = 135;
+            Item.knockBack = 14;
+            Item.noUseGraphic = true;
+            Item.DamageType = DamageClass.Melee;
+            Item.noMelee = true;
+            Item.channel = true;
+
+            // Projectile Properties
+            Item.shootSpeed = 3.7f;
+            Item.shoot = ModContent.ProjectileType<GravityHammer_Proj>();
+            Item.GetGlobalItem<RedeItem>().TechnicallyHammer = true;
+        }
+    }
+}

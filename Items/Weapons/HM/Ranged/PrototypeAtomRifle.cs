@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.noMelee = true;
             Item.knockBack = 0.5f;
             Item.value = Item.sellPrice(0, 20, 0, 0);
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PlasmaShot");
 
             Item.autoReuse = true;
