@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Slamming the ground pushes all enemies away from the location of the impact");
+            Tooltip.SetDefault("Slamming the ground creates a shockwave");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

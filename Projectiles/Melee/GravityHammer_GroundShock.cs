@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
 using System.Collections.Generic;
@@ -7,10 +8,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Lab.MACE
+namespace Redemption.Projectiles.Melee
 {
-    public class MACE_GroundShock : ModProjectile
+    public class GravityHammer_GroundShock : ModProjectile
     {
+        public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_GroundShock";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Electric Eruption");
@@ -34,10 +36,18 @@ namespace Redemption.NPCs.Lab.MACE
         {
             behindNPCsAndTiles.Add(index);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.Electrified, 60);
-            target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60);
+            if (target.knockBackResist != 0)
+                target.velocity.Y -= 8 * target.knockBackResist;
+            if (Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 60);
+            if (Main.rand.NextBool(5) && target.knockBackResist > 0)
+                target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60);
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            hitDirection = Projectile.ai[0] > target.Center.X ? -1 : 1;
         }
         public override void AI()
         {
@@ -47,21 +57,9 @@ namespace Redemption.NPCs.Lab.MACE
                 if (++Projectile.frame >= 6)
                     Projectile.Kill();
             }
-            Projectile.hostile = false;
+            Projectile.friendly = false;
             if (Projectile.frame >= 1 && Projectile.frame <= 3)
-                Projectile.hostile = true;
-
-            switch (Projectile.ai[0])
-            {
-                case 0:
-                    if (Projectile.localAI[0]++ == 1 && Projectile.Center.X < (RedeGen.LabVector.X + 103) * 16 && Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center + new Vector2(Projectile.width, 0), Vector2.Zero, Type, Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
-                    break;
-                case 1:
-                    if (Projectile.localAI[0]++ == 1 && Projectile.Center.X > (RedeGen.LabVector.X + 43) * 16 && Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center - new Vector2(Projectile.width, 0), Vector2.Zero, Type, Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
-                    break;
-            }
+                Projectile.friendly = true;
         }
         public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
     }
