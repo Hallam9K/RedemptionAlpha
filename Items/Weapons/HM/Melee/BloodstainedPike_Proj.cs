@@ -27,7 +27,12 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.CloneDefaults(ProjectileID.Spear);
             Projectile.width = 40;
             Projectile.height = 40;
+            Projectile.hide = true;
             Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCs.Add(index);
         }
 
         private readonly List<int> skewered = new();
