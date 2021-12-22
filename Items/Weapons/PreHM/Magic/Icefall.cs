@@ -36,9 +36,10 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 3, 50, 0);
             Item.rare = ItemRarityID.Orange;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/IceMist").WithPitchVariance(0.1f);
             Item.shootSpeed = 0;
             Item.shoot = ModContent.ProjectileType<Icefall_Mist>();
+            if (Main.netMode != NetmodeID.Server)
+                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/IceMist").WithPitchVariance(0.1f);
         }
         public override bool CanUseItem(Player player)
         {
