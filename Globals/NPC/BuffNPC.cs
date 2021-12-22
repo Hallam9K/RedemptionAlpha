@@ -408,7 +408,7 @@ namespace Redemption.Globals.NPC
             if (stunned)
             {
                 if (npc.noGravity && !npc.noTileCollide)
-                    npc.velocity.Y += 0.5f;
+                    npc.velocity.Y += 0.3f;
                 npc.position.X = npc.oldPosition.X;
                 if (npc.noTileCollide)
                 {
