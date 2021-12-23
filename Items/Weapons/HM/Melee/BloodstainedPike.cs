@@ -1,11 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
-using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -14,7 +10,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Holding out the pike and charging into weak enemies skewers them\n" +
-                "Once 5 are put onto the skewer, the spear digests them, allowing for it to shoot a long ranged stream of highly damaging spores for 10 seconds");
+                "Once 5 are skewered at a time, the pike takes their life and becomes enchanted for 10 seconds");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -45,6 +41,10 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 3.7f;
             Item.shoot = ModContent.ProjectileType<BloodstainedPike_Proj>();
+        }
+        public override bool CanUseItem(Player player)
+        {
+            return player.ownedProjectileCounts[ModContent.ProjectileType<BloodstainedPike_Proj2>()] < 1;
         }
         public override void AddRecipes()
         {
