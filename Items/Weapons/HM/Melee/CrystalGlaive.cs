@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 90;
+            Item.damage = 125;
             Item.knockBack = 7f;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
