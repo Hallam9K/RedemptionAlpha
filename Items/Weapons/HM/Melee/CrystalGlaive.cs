@@ -62,7 +62,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (player.altFunctionUse == 2)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swoosh1").WithPitchVariance(0.1f), player.position);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swoosh1").WithPitchVariance(0.1f).WithVolume(0.4f), player.position);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 3, sp ? 1 : 0);
                 ShotCount--;
             }
@@ -74,13 +74,13 @@ namespace Redemption.Items.Weapons.HM.Melee
                     {
                         case 0:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swing1").WithPitchVariance(0.1f).WithVolume(0.6f), player.position);
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swing1").WithPitchVariance(0.1f).WithVolume(0.4f), player.position);
                             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 1, sp ? 1 : 0);
                             Level++;
                             break;
                         case 1:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swoosh1").WithPitchVariance(0.1f), player.position);
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swoosh1").WithPitchVariance(0.1f).WithVolume(0.4f), player.position);
                             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 2, sp ? 1 : 0);
                             if (ShotCount <= 0)
                             {
@@ -96,7 +96,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 else
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swing1").WithPitchVariance(0.1f).WithVolume(0.6f), player.position);
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swing1").WithPitchVariance(0.1f).WithVolume(0.4f), player.position);
                     Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 0, sp ? 1 : 0);
                     Level = 0;
                 }

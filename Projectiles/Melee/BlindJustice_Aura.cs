@@ -51,6 +51,10 @@ namespace Redemption.Projectiles.Melee
                     dust.rotation = dustRotation.ToRotation();
                 }
             }
+            if (Projectile.timeLeft % 3 == 0 && Projectile.owner == Main.myPlayer)
+            {
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, RedeHelper.PolarVector(10, Projectile.rotation * 8), ModContent.ProjectileType<Lightmass>(), Projectile.damage / 4, 0, Projectile.owner);
+            }
 
             if (Projectile.timeLeft >= 40)
                 Projectile.alpha -= 10;
