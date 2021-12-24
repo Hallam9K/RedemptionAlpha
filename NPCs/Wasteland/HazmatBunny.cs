@@ -41,6 +41,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.aiStyle = 7;
             AIType = NPCID.Bunny;
             AnimationType = NPCID.Bunny;
+            NPC.rarity = 1;
             NPC.catchItem = (short)ModContent.ItemType<HazmatBunnyItem>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = Item.NPCtoBanner(NPCID.Bunny);
