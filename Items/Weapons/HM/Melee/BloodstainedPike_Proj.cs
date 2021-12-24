@@ -40,6 +40,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         private readonly List<int> skewered = new();
         private bool killSkewered;
+
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
@@ -61,17 +62,18 @@ namespace Redemption.Items.Weapons.HM.Melee
                     player.itemAnimation = player.itemAnimationMax / 2;
                     Projectile.timeLeft = (int)halfDuration;
                     for (int i = 0; i < Main.maxNPCs; i++)
-                    {
+                    { 
                         if (skewered.Contains(i))
                         {
                             NPC npc = Main.npc[i];
+                            Projectile.localAI[0]++;
                             if (npc.life <= 0 || !npc.active)
                                 skewered.Remove(i);
                             npc.Center = Projectile.Center;
                             int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, Scale: 2f);
                             Main.dust[dust].noGravity = true;
-                            if (skewered.Count >= 5)
-                                killSkewered = true;
+                            if (skewered.Count >= 5 || (skewered.Count >= 1 && Projectile.localAI[0] >= 300))
+                                killSkewered = true;        
                             if (killSkewered)
                             {
                                 for (int k = 0; k < 20; k++)
@@ -130,6 +132,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void Kill(int timeLeft)
         {
+            Projectile.localAI[0] = 0;
             skewered.Clear();
         }
         public override bool? CanHitNPC(NPC target)
