@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Wasteland
         public override void SetDefaults()
         {
             NPC.width = 36;
-            NPC.height = 44;
+            NPC.height = 42;
             NPC.friendly = false;
             NPC.damage = 90;
             NPC.defense = 30;

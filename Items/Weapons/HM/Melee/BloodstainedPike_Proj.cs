@@ -132,7 +132,6 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void Kill(int timeLeft)
         {
-            Projectile.localAI[0] = 0;
             skewered.Clear();
         }
         public override bool? CanHitNPC(NPC target)

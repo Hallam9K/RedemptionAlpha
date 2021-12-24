@@ -194,7 +194,7 @@ namespace Redemption.NPCs.PreHM
         public override bool? CanBeHitByItem(Player player, Item item)
         {
             return ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) ||
-                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable;
+                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {

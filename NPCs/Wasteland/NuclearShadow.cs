@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Wasteland
         public override void SetDefaults()
         {
             NPC.width = 24;
-            NPC.height = 42;
+            NPC.height = 38;
             NPC.friendly = false;
             NPC.damage = 0;
             NPC.defense = 0;
@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.DeathSound = SoundID.NPCHit54;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0f;
-            NPC.alpha = 100;
+            NPC.alpha = 150;
             NPC.rarity = 1;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
@@ -77,7 +77,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.LookByVelocity();
 
             NPC.alpha += Main.rand.Next(-10, 11);
-            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 100, 200);
+            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 150, 230);
 
             switch (AIState)
             {
@@ -121,7 +121,10 @@ namespace Redemption.NPCs.Wasteland
             Point point = NPC.Center.ToTileCoordinates();
             if (Main.tile[point.X, point.Y].wall == 0)
             {
-                NPC.frame.Y = 0;
+                if (NPC.collideY || NPC.velocity.Y == 0)
+                    NPC.frame.Y = 0;
+                else
+                    NPC.frame.Y = 17 * frameHeight;
                 return;
             }
             if (NPC.collideY || NPC.velocity.Y == 0)
@@ -146,10 +149,16 @@ namespace Redemption.NPCs.Wasteland
             else
                 NPC.frame.Y = 2 * frameHeight;
         }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + new Vector2(0, 2), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
+        }
         public override bool? CanBeHitByItem(Player player, Item item)
         {
             return ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) ||
-                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable;
+                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
