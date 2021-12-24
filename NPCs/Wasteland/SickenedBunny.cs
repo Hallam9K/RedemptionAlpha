@@ -1,0 +1,313 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.Biomes;
+using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.NPCs.Wasteland
+{
+    public class SickenedBunny : ModNPC
+    {
+        public enum ActionState
+        {
+            FakeDead,
+            Idle,
+            Wander,
+            Alert
+        }
+
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
+
+        public ref float AITimer => ref NPC.ai[1];
+
+        public ref float TimerRand => ref NPC.ai[2];
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[NPC.type] = 10;
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Poisoned
+                }
+            });
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Velocity = 1f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+        public override void SetDefaults()
+        {
+            NPC.width = 30;
+            NPC.height = 26;
+            NPC.friendly = false;
+            NPC.damage = 30;
+            NPC.defense = 4;
+            NPC.lifeMax = 70;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.aiStyle = -1;
+            NPC.value = 500f;
+            NPC.knockBackResist = 0.4f;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<SickenedBunnyBanner>();
+        }
+
+        private Vector2 moveTo;
+        private int runCooldown;
+        public int hopCooldown;
+        public override void AI()
+        {
+            Player player = Main.player[NPC.target];
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            NPC.TargetClosest();
+            NPC.LookByVelocity();
+            if (hopCooldown > 0)
+                hopCooldown--;
+
+            switch (AIState)
+            {
+                case ActionState.FakeDead:
+                    int gotNPC = GetNearestNPC();
+                    if (NPC.Sight(player, 80, false, true))
+                    {
+                        globalNPC.attacker = player;
+                        moveTo = NPC.FindGround(20);
+                        AITimer = 1;
+                    }
+                    if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 80, false, true))
+                    {
+                        globalNPC.attacker = Main.npc[gotNPC];
+                        moveTo = NPC.FindGround(20);
+                        AITimer = 1;
+                    }
+                    break;
+
+                case ActionState.Idle:
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X = 0;
+                    AITimer++;
+                    if (AITimer >= TimerRand)
+                    {
+                        moveTo = NPC.FindGround(20);
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = ActionState.Wander;
+                    }
+                    if (Main.rand.NextBool(500))
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.FakeDead;
+                    }
+                    SightCheck();
+                    break;
+
+                case ActionState.Wander:
+                    SightCheck();
+
+                    AITimer++;
+                    if (AITimer >= TimerRand || NPC.Center.X + 20 > moveTo.X * 16 && NPC.Center.X - 20 < moveTo.X * 16)
+                    {
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(80, 120);
+                        AIState = ActionState.Idle;
+                    }
+
+                    bool jumpDownPlatforms = false;
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
+                    else { NPC.noTileCollide = false; }
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.4f, 12, 12, NPC.Center.Y > player.Center.Y);
+                    break;
+
+                case ActionState.Alert:
+                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 380)
+                    {
+                        runCooldown = 0;
+                        AIState = ActionState.Wander;
+                    }
+
+                    if (!NPC.Sight(globalNPC.attacker, 800, true, true))
+                        runCooldown++;
+                    else if (runCooldown > 0)
+                        runCooldown--;
+
+                    if (hopCooldown == 0 && BaseAI.HitTileOnSide(NPC, 3) && NPC.Sight(globalNPC.attacker, 80, false, true))
+                    {
+                        NPC.velocity.X *= 2f;
+                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
+                        hopCooldown = 80;
+                    }
+                    NPC.DamageHostileAttackers(0, 3);
+
+                    jumpDownPlatforms = false;
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
+                    else { NPC.noTileCollide = false; }
+                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 3f, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    break;
+            }
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            if (AIState is ActionState.FakeDead)
+            {
+                if (AITimer > 0)
+                {
+                    if (NPC.frameCounter++ >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 2 * frameHeight)
+                        {
+                            AITimer = 0;
+                            AIState = ActionState.Alert;
+                            NPC.netUpdate = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (NPC.frameCounter++ >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y -= frameHeight;
+                        if (NPC.frame.Y < 0)
+                            NPC.frame.Y = 0;
+                    }
+                }
+                return;
+            }
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 3 * frameHeight;
+                else
+                {
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 9 * frameHeight)
+                            NPC.frame.Y = 3 * frameHeight;
+                    }
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 9 * frameHeight;
+            }
+        }
+
+        public int GetNearestNPC()
+        {
+            float nearestNPCDist = -1;
+            int nearestNPC = -1;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC target = Main.npc[i];
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+                    continue;
+
+                if (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                    continue;
+
+                if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
+                    continue;
+
+                nearestNPCDist = target.Distance(NPC.Center);
+                nearestNPC = target.whoAmI;
+            }
+
+            return nearestNPC;
+        }
+        public void SightCheck()
+        {
+            Player player = Main.player[NPC.target];
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            int gotNPC = GetNearestNPC();
+            if (NPC.Sight(player, 800, true, true))
+            {
+                globalNPC.attacker = player;
+                moveTo = NPC.FindGround(20);
+                AITimer = 0;
+                AIState = ActionState.Alert;
+            }
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 800, true, true))
+            {
+                globalNPC.attacker = Main.npc[gotNPC];
+                moveTo = NPC.FindGround(20);
+                AITimer = 0;
+                AIState = ActionState.Alert;
+            }
+        }
+
+        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 2, 4));
+        }
+
+        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        {
+            if (Main.rand.NextBool(2) || Main.expertMode)
+                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(100, 400));
+        }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                for (int i = 0; i < 30; i++)
+                {
+                    int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood);
+                    Main.dust[dustIndex].velocity *= 2f;
+                }
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SickenedBunnyGore" + (i + 1)).Type, 1);
+            }
+            Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+
+            if (AIState is ActionState.Idle or ActionState.Wander or ActionState.FakeDead)
+            {
+                AITimer = 0;
+                AIState = ActionState.Alert;
+            }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                new FlavorTextBestiaryInfoElement(
+                    "This poor bunny has developed painful tumors from the radioactivity in the area, and seems very angry.")
+            });
+        }
+    }
+}

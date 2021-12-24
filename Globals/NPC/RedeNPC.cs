@@ -434,11 +434,19 @@ namespace Redemption.Globals.NPC
             }
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {
+                int[] GrassTileArray = { ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>(), ModContent.TileType<IrradiatedGrassTile>() };
+                bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
+
                 pool.Clear();
                 pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
                 pool.Add(ModContent.NPCType<BobTheBlob>(), 0.05f);
                 pool.Add(ModContent.NPCType<RadioactiveSlime>(), 0.9f);
                 pool.Add(ModContent.NPCType<NuclearSlime>(), 0.3f);
+                pool.Add(ModContent.NPCType<HazmatBunny>(), Main.dayTime ? 0.1f : 0);
+                pool.Add(ModContent.NPCType<SickenedBunny>(), Main.dayTime ? 0.6f : 0);
+                pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
+                pool.Add(ModContent.NPCType<NuclearShadow>(), 0.2f);
+                pool.Add(ModContent.NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
             }
         }
     }

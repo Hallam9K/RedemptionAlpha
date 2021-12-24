@@ -1,0 +1,179 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Biomes;
+using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.NPCs.Wasteland
+{
+    public class NuclearShadow : ModNPC
+    {
+        public enum ActionState
+        {
+            Begin,
+            Idle,
+            Wander
+        }
+
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
+
+        public ref float AITimer => ref NPC.ai[1];
+
+        public ref float TimerRand => ref NPC.ai[2];
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[NPC.type] = 17;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Velocity = 1f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+        public override void SetDefaults()
+        {
+            NPC.width = 24;
+            NPC.height = 42;
+            NPC.friendly = false;
+            NPC.damage = 0;
+            NPC.defense = 0;
+            NPC.lifeMax = 1;
+            NPC.HitSound = SoundID.NPCHit54;
+            NPC.DeathSound = SoundID.NPCHit54;
+            NPC.aiStyle = -1;
+            NPC.knockBackResist = 0f;
+            NPC.alpha = 100;
+            NPC.rarity = 1;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<NuclearShadowBanner>();
+        }
+        private Vector2 moveTo;
+        public override void AI()
+        {
+            Player player = Main.player[NPC.target];
+            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            NPC.TargetClosest();
+            NPC.LookByVelocity();
+
+            NPC.alpha += Main.rand.Next(-10, 11);
+            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 100, 200);
+
+            switch (AIState)
+            {
+                case ActionState.Begin:
+                    TimerRand = Main.rand.Next(80, 120);
+                    AIState = ActionState.Idle;
+                    break;
+
+                case ActionState.Idle:
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X = 0;
+                    AITimer++;
+                    if (AITimer >= TimerRand)
+                    {
+                        moveTo = NPC.FindGround(20);
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = ActionState.Wander;
+                    }
+                    break;
+
+                case ActionState.Wander:
+                    AITimer++;
+                    if (AITimer >= TimerRand || NPC.Center.X + 20 > moveTo.X * 16 && NPC.Center.X - 20 < moveTo.X * 16)
+                    {
+                        AITimer = 0;
+                        TimerRand = Main.rand.Next(80, 120);
+                        AIState = ActionState.Idle;
+                    }
+
+                    bool jumpDownPlatforms = false;
+                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
+                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
+                    else { NPC.noTileCollide = false; }
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 8, 8, NPC.Center.Y > player.Center.Y);
+                    break;
+            }
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            Point point = NPC.Center.ToTileCoordinates();
+            if (Main.tile[point.X, point.Y].wall == 0)
+            {
+                NPC.frame.Y = 0;
+                return;
+            }
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = frameHeight;
+                else
+                {
+                    if (NPC.frame.Y < 3 * frameHeight)
+                        NPC.frame.Y = 3 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 15 * frameHeight)
+                            NPC.frame.Y = 3 * frameHeight;
+                    }
+                }
+            }
+            else
+                NPC.frame.Y = 2 * frameHeight;
+        }
+        public override bool? CanBeHitByItem(Player player, Item item)
+        {
+            return ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) ||
+                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable;
+        }
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            return ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) ||
+                ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
+        }
+        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 30; i++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke);
+            }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+            {
+                new FlavorTextBestiaryInfoElement(
+                    "A Human Shadow Etched in Stone, all that remains of someone who was vaporized by a nuclear blast. Also known as a Human Shadow of Death.")
+            });
+        }
+    }
+}
