@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            behindNPCsAndTiles.Add(index);
+            behindNPCs.Add(index);
         }
 
         private readonly List<int> skewered = new();
@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             npc.Center = Projectile.Center;
                             int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, Scale: 2f);
                             Main.dust[dust].noGravity = true;
-                            if (skewered.Count >= 5 || (skewered.Count >= 1 && Projectile.localAI[0] >= 300))
+                            if (skewered.Count >= 5 || (skewered.Count >= 1 && Projectile.localAI[0] >= 600))
                                 killSkewered = true;        
                             if (killSkewered)
                             {
