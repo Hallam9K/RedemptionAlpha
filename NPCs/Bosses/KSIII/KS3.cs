@@ -90,8 +90,8 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 42000;
-            NPC.defense = 35;
+            NPC.lifeMax = 36500;
+            NPC.defense = 30;
             NPC.damage = 120;
             NPC.width = 42;
             NPC.height = 106;
@@ -195,9 +195,9 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (phase >= 5)
-                damage *= 0.6;
+                damage *= 0.7;
             else
-                damage *= 0.75;
+                damage *= 0.8;
             return true;
         }
 
