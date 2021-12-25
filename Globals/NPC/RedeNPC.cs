@@ -447,6 +447,8 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
                 pool.Add(ModContent.NPCType<NuclearShadow>(), 0.2f);
                 pool.Add(ModContent.NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
+                if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandSnowBiome>()))
+                    pool.Add(ModContent.NPCType<SneezyFlinx>(), 0.5f);
             }
         }
     }
