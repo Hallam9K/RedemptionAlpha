@@ -35,6 +35,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
+            Projectile.usesLocalNPCImmunity = true;
             Projectile.GetGlobalProjectile<RedeProjectile>().IsHammer = true;
         }
 
@@ -75,6 +76,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     player.direction = directionLock;
 
                     Projectile.ai[0]++;
+                    Projectile.ai[0] *= 1.08f;
 
                     float timer = Projectile.ai[0] - 1;
                     if (Projectile.ai[0] > 5)
@@ -82,10 +84,10 @@ namespace Redemption.Items.Weapons.HM.Melee
 
                     if (Projectile.ai[1] == 0)
                     {
-                        if (Projectile.ai[0] < 29 * SwingSpeed)
-                            swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 90f), timer / 30f / SwingSpeed);
+                        if (Projectile.ai[0] < 129 * SwingSpeed)
+                            swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 90f), timer / 140f / SwingSpeed);
 
-                        if (Projectile.ai[0] >= 26 * SwingSpeed)
+                        if (Projectile.ai[0] >= 126 * SwingSpeed)
                         {
                             player.velocity.Y += 1;
                             Point tileBelow = new Vector2(Projectile.Center.X, Projectile.Bottom.Y).ToTileCoordinates();
@@ -104,7 +106,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                 player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 2 * player.velocity.Y;
                                 Projectile.ai[1] = 1;
                             }
-                            if ((!player.channel || player.velocity.Y <= 0) && Projectile.ai[0] >= 34 && Projectile.ai[1] == 0)
+                            if ((!player.channel || player.velocity.Y <= 0) && Projectile.ai[0] >= 148 && Projectile.ai[1] == 0)
                                 Projectile.Kill();
                         }
                     }
@@ -151,6 +153,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             Player player = Main.player[Projectile.owner];
             if (player.velocity.Y >= 20 && target.knockBackResist > 0)
                 target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 180);
+
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
         }
 
         public override bool PreDraw(ref Color lightColor)
