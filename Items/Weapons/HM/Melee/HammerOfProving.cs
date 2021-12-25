@@ -16,7 +16,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Hammer of Proving");
             Tooltip.SetDefault("Hold left-click while in the air to keep the hammer out\n" +
                 "Increases the user's fall speed while held\n" +
-                "Increased damage based on how fast the player is falling");
+                "Increased damage based on how fast the player is falling\n" +
+                "Stuns enemies if falling above a certain speed");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
