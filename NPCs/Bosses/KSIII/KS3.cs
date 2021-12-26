@@ -192,12 +192,30 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             return AIState != ActionState.SpareCountdown;
         }
+
+        private bool strongHit;
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        {
+            if (item.DamageType == DamageClass.Melee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
+                strongHit = true;
+        }
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            if (projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
+                strongHit = true;
+        }
+
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            if (strongHit && AIState == ActionState.PhysicalAttacks)
+                damage *= 1.65;
+            if (strongHit && AIState == ActionState.SpecialAttacks)
+                damage *= 1.25;
             if (phase >= 5)
-                damage *= 0.7;
+                damage *= 0.75;
             else
-                damage *= 0.8;
+                damage *= 0.85;
+            strongHit = false;
             return true;
         }
 
