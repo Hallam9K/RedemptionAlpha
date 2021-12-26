@@ -332,7 +332,6 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
             }
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XenomiteShard>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Starlite>());
             if (RedeBossDowned.downedSeed)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AnomalyDetector>());
             /*if (NPC.downedMoonlord)

@@ -39,7 +39,7 @@ namespace Redemption.Items.Accessories.HM
             CreateRecipe()
                 .AddIngredient(ItemID.EoCShield)
                 .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
-                .AddIngredient(ModContent.ItemType<StarliteBar>(), 6)
+                .AddIngredient(ItemID.TitaniumBar, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

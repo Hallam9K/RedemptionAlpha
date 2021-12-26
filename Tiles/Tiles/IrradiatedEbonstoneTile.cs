@@ -30,7 +30,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Pearlstone][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<StarliteGemOreTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimstoneTile>()] = true;
             ItemDrop = ModContent.ItemType<IrradiatedEbonstone>();
@@ -67,11 +66,6 @@ namespace Redemption.Tiles.Tiles
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             Tile tileAbove2 = Framing.GetTileSafely(i, j - 2);
 
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(100))
-            {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<StarliteGemTile>(), true);
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<StarliteGemTile>(), 0, 0, -1, -1);
-            }
             if (!tileAbove.IsActive && !tileAbove2.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(400))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<DeadRockStalagmitesTile>(), true);

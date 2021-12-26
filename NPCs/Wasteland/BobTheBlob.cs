@@ -96,7 +96,6 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 26, 48));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Starlite>(), 1, 26, 38));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit>(), 2));
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 20, 40));
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 1000));

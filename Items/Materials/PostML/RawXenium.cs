@@ -28,7 +28,6 @@ namespace Redemption.Items.Materials.PostML
         {
             CreateRecipe(2)
                 .AddIngredient(ModContent.ItemType<XenomiteShard>(), 2)
-                .AddIngredient(ModContent.ItemType<Starlite>(), 2)
                 .AddIngredient(ItemID.LunarOre)
                 .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .Register();

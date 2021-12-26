@@ -35,7 +35,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<StarliteBar>(), 8)
+                .AddIngredient(ItemID.TitaniumBar, 8)
                 .AddIngredient(ModContent.ItemType<XenomiteItem>(), 20)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

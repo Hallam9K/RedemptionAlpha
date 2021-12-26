@@ -64,12 +64,7 @@ namespace Redemption.Tiles.Tiles
             Tile tileBelow2 = Framing.GetTileSafely(i, j + 2);
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             Tile tileAbove2 = Framing.GetTileSafely(i, j - 2);
-
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(100))
-            {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<StarliteGemTile>(), true);
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<StarliteGemTile>(), 0, 0, -1, -1);
-            }
+            
             if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<GrubNestTile>());

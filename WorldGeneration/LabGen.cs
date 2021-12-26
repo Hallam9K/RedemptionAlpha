@@ -436,7 +436,6 @@ namespace Redemption.WorldGeneration
             };
             int[] LabChestLoot3 = new int[]
             {
-                ModContent.ItemType<Starlite>(),
                 ModContent.ItemType<XenomiteShard>(),
                 ItemID.LunarOre
             }; 
@@ -510,7 +509,6 @@ namespace Redemption.WorldGeneration
             {
                 ModContent.ItemType<CrystalSerum>(),
                 ModContent.ItemType<CarbonMyofibre>(),
-                ModContent.ItemType<Starlite>(),
                 ModContent.ItemType<XenomiteShard>()
             }; 
             if (PlacementSuccess >= 0)
@@ -549,7 +547,6 @@ namespace Redemption.WorldGeneration
                 chest.item[slot].SetDefaults(ModContent.ItemType<RawXenium>());
                 chest.item[slot++].stack = WorldGen.genRand.Next(68, 92);
 
-                chest.item[slot].SetDefaults(ModContent.ItemType<Starlite>());
                 chest.item[slot++].stack = WorldGen.genRand.Next(20, 40);
             }
         }

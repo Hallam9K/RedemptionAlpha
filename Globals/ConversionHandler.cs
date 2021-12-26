@@ -144,10 +144,7 @@ namespace Redemption
                         else if (tile.type == TileID.LivingWood)
                             ConvertTile(x1, y1, (ushort)ModContent.TileType<IrradiatedLivingWoodTile>());
                         else if (tile.type == TileID.WoodBlock)
-                            ConvertTile(x1, y1, (ushort)ModContent.TileType<PetrifiedWoodTile>());
-                        else if (tile.type == TileID.Amethyst || tile.type == TileID.Topaz || tile.type == TileID.Sapphire || tile.type == TileID.Emerald ||
-                            tile.type == TileID.Ruby || tile.type == TileID.Diamond)
-                            ConvertTile(x1, y1, (ushort)ModContent.TileType<StarliteGemOreTile>());
+                            ConvertTile(x1, y1, (ushort)ModContent.TileType<PetrifiedWoodTile>());                
 
                         if (WallID.Sets.Conversion.Stone[tile.wall] && tile.wall != WallID.EbonstoneUnsafe && tile.wall != WallID.CrimstoneUnsafe)
                             ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedStoneWallTile>());

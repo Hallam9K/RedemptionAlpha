@@ -112,10 +112,7 @@ namespace Redemption.Projectiles.Misc
                         else if (type == TileID.LivingWood)
                             ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<IrradiatedLivingWoodTile>());
                         else if (type == TileID.WoodBlock)
-                            ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<PetrifiedWoodTile>());
-                        else if (type == TileID.Amethyst || type == TileID.Topaz || type == TileID.Sapphire || type == TileID.Emerald ||
-                            type == TileID.Ruby || type == TileID.Diamond)
-                            ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<StarliteGemOreTile>());
+                            ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<PetrifiedWoodTile>());         
 
                         if (WallID.Sets.Conversion.Stone[wall] && wall != WallID.EbonstoneUnsafe && wall != WallID.CrimstoneUnsafe &&
                             wall != ModContent.WallType<IrradiatedEbonstoneWallTile>() && wall != ModContent.WallType<IrradiatedCrimstoneWallTile>())
