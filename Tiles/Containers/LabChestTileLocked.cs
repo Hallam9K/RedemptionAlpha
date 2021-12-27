@@ -35,14 +35,14 @@ namespace Redemption.Tiles.Containers
             ChestDrop = ModContent.ItemType<LabChest>();
 
             // Names
-            ContainerName.SetDefault("Laboratory Chest");
+            ContainerName.SetDefault("High Security Crate");
 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Chest");
+            name.SetDefault("High Security Crate");
             AddMapEntry(new Color(0, 242, 170), name, MapChestName);
 
             name = CreateMapEntryName(Name + "_Locked");
-            name.SetDefault("Locked Laboratory Chest");
+            name.SetDefault("Locked High Security Crate");
             AddMapEntry(new Color(0, 242, 170), name, MapChestName);
 
             // Placement
@@ -225,8 +225,8 @@ namespace Redemption.Tiles.Containers
             }
             else
             {
-                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Laboratory Chest";
-                if (player.cursorItemIconText == "Laboratory Chest")
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "High Security Crate";
+                if (player.cursorItemIconText == "High Security Crate")
                 {
                     player.cursorItemIconID = ModContent.ItemType<LabChest>();
                     if (Main.tile[left, top].frameX / 36 == 1)
