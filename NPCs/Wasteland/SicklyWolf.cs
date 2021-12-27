@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Wasteland
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Velocity = 1f
+                Velocity = 3f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

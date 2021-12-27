@@ -5467,10 +5467,13 @@ namespace Redemption.Base
             }
             else if (damager is Projectile p)
             {
-                if (p.owner == Main.myPlayer)
+                if (p.owner == Main.myPlayer && NPCLoader.CanBeHitByProjectile(npc, p) != false)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection);
+                    bool crit = false;
+                    NPCLoader.ModifyHitByProjectile(npc, p, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
+                    NPCLoader.OnHitByProjectile(npc, p, parsedDamage, knockback, false);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);

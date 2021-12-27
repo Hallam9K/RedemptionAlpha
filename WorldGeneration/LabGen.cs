@@ -24,6 +24,8 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Items.Weapons.HM.Magic;
 
 namespace Redemption.WorldGeneration
 {
@@ -490,7 +492,7 @@ namespace Redemption.WorldGeneration
 
             int[] LabChestLoot = new int[]
             {
-                ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), ModContent.ItemType<GravityHammer>()
+                ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), ModContent.ItemType<GravityHammer>(), ModContent.ItemType<TeslaGenerator>(), ModContent.ItemType<LightningRod>()
             };
             int[] FloppyDiskLoot = new int[]
             {
