@@ -248,8 +248,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
                         if (AITimer > 261)
                         {
-                            if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
-                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<VlitchCleaver>(), ai3: NPC.whoAmI);
+                            if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
+                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
                             aniType = 4;
                             AITimer = 0;
                             AIState = ActionState.Intro2;
@@ -260,8 +260,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     {
                         if (AITimer > 60)
                         {
-                            if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
-                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<VlitchCleaver>(), ai3: NPC.whoAmI);
+                            if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
+                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
 
                             aniType = 4;
                             AITimer = 0;
@@ -295,7 +295,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     break;
                 case ActionState.Idle:
-                    if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
+                    if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
                     {
                         AIState = ActionState.Death;
                         NPC.netUpdate = true;
@@ -324,7 +324,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     break;
 
                 case ActionState.Attacks:
-                    if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()))
+                    if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
                     {
                         AIState = ActionState.Death;
                         NPC.netUpdate = true;

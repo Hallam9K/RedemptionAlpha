@@ -6,16 +6,16 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Trophies
 {
-	public class VlitchTrophy : ModItem
+	public class OmegaTrophy : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vlitch Overlord Trophy");
+			DisplayName.SetDefault("Omega Prototype Trophy");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults()
 		{
-			Item.DefaultToPlaceableTile(ModContent.TileType<VlitchTrophyTile>(), 0);
+			Item.DefaultToPlaceableTile(ModContent.TileType<OmegaTrophyTile>(), 0);
 			Item.width = 32;
 			Item.height = 32;
 			Item.maxStack = 99;

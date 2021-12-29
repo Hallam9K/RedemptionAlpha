@@ -7,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Trophies
 {
-	public class VlitchTrophyTile : ModTile
+	public class OmegaTrophyTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -19,12 +19,12 @@ namespace Redemption.Tiles.Trophies
 			TileObjectData.addTile(Type);
 			DustType = DustID.WoodFurniture;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Vlitch Overlord Trophy");
+			name.SetDefault("Omega Prototype Trophy");
 			AddMapEntry(new Color(120, 85, 60), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<VlitchTrophy>());
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<OmegaTrophy>());
 		}
 	}
 }

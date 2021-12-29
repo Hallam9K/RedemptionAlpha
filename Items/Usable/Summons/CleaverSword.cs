@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Summon For Cleaver");
-            Tooltip.SetDefault("Summons one of Vlitch's Overlords"
+            Tooltip.SetDefault("Summons Omega Cleaver"
                 + "\nOnly usable at night"
                 + "\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
@@ -34,7 +34,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>());
+            return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>());
         }
         public override bool? UseItem(Player player)
         {
