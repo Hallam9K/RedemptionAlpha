@@ -20,7 +20,7 @@ using Terraria.ModLoader;
 namespace Redemption.NPCs.Bosses.Cleaver
 {
     [AutoloadBossHead]
-    public class VlitchCleaver : ModNPC
+    public class OmegaCleaver : ModNPC
     {
         public float[] oldrot = new float[6];
 
@@ -43,7 +43,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Cleaver");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -63,7 +62,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                CustomTexturePath = "Redemption/Textures/Bestiary/VlitchCleaver_Bestiary"
+                CustomTexturePath = "Redemption/Textures/Bestiary/OmegaCleaver_Bestiary"
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -852,7 +851,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vlitch Cleaver");
+            DisplayName.SetDefault("Omega Cleaver");
         }
         public override void SetDefaults()
         {
@@ -869,7 +868,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void AI()
         {
             int boss = (int)Projectile.ai[0];
-            if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<VlitchCleaver>())
+            if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<OmegaCleaver>())
                 Projectile.Kill();
 
             NPC host = Main.npc[(int)Projectile.ai[0]];

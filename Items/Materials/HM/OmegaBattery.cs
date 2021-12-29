@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.HM
 {
-	public class VlitchBattery : ModItem
+	public class OmegaBattery : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vlitch Battery");
+			DisplayName.SetDefault("Omega Battery");
 			Main.RegisterItemAnimation(Item.type, (DrawAnimation)new DrawAnimationVertical(4, 3));
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }

@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
-    public class VlitchCleaverBag : ModItem
+    public class OmegaCleaverBag : ModItem
 	{
-		public override int BossBagNPC => ModContent.NPCType<VlitchCleaver>();
+		public override int BossBagNPC => ModContent.NPCType<OmegaCleaver>();
 
 		public override void SetStaticDefaults()
 		{
@@ -42,11 +42,7 @@ namespace Redemption.Items.Usable
 				player.QuickSpawnItem(ModContent.ItemType<IntruderMask>(), 1);
 				player.QuickSpawnItem(ModContent.ItemType<IntruderArmour>(), 1);
 				player.QuickSpawnItem(ModContent.ItemType<IntruderPants>(), 1);
-			}*/
-			if (Main.rand.NextBool(14))
-			{
-				player.QuickSpawnItem(ModContent.ItemType<GirusMask>(), 1);
-			}
+			}*/		
 			/*if (Main.rand.Next(3) == 0)
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusDagger>(), 1);
@@ -55,7 +51,7 @@ namespace Redemption.Items.Usable
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}*/
-			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(1, 4));
+			player.QuickSpawnItem(ModContent.ItemType<OmegaBattery>(), Main.rand.Next(1, 4));
 			//player.QuickSpawnItem(ModContent.ItemType<BrokenBlade>(), 1);
 		}
 	}
