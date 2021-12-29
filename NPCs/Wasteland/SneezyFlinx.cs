@@ -5,6 +5,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -62,16 +63,20 @@ namespace Redemption.NPCs.Wasteland
             NPC.aiStyle = 3;
             AIType = NPCID.SnowFlinx;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandSnowBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<SneezyFlinxBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
                 for (int i = 0; i < 25; i++)
-                {
-                    int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, Scale: 3f);
-                    Main.dust[dustIndex2].velocity *= 3f;
-                }
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood);
+
+                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SneezyFlinxGore").Type, 1);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

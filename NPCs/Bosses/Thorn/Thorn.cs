@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Thorn, Bane of the Forest");
-            Main.npcFrameCount[NPC.type] = 11;
+            Main.npcFrameCount[NPC.type] = 10;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Position = new Vector2(0, 44),
+                Position = new Vector2(0, 40),
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPC.defense = 6;
             NPC.damage = 21;
             NPC.width = 58;
-            NPC.height = 96;
+            NPC.height = 88;
             NPC.aiStyle = -1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath6;
@@ -562,9 +562,9 @@ namespace Redemption.NPCs.Bosses.Thorn
                         {
                             NPC.alpha += 25;
                         }
-                        if (NPC.frame.Y > 10 * frameHeight)
+                        if (NPC.frame.Y > 9 * frameHeight)
                         {
-                            NPC.frame.Y = 10 * frameHeight;
+                            NPC.frame.Y = 9 * frameHeight;
                             NPC.frameCounter = 0;
                             NPC.position = NPC.FindGroundPlayer(15) - new Vector2(0, NPC.height);
                             AIState = ActionState.TeleportEnd;
@@ -602,8 +602,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 10 * frameHeight)
-                            NPC.frame.Y = 10 * frameHeight;
+                        if (NPC.frame.Y > 9 * frameHeight)
+                            NPC.frame.Y = 9 * frameHeight;
                     }
                     return;
             }
@@ -622,7 +622,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + new Vector2(16 * NPC.spriteDirection, 0), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
 

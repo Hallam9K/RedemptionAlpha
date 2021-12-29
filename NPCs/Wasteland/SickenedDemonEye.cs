@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Wasteland
             AnimationType = NPCID.DemonEye;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
-            BannerItem = ModContent.ItemType<RadioactiveSlimeBanner>();
+            BannerItem = ModContent.ItemType<SickenedDemonEyeBanner>();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
