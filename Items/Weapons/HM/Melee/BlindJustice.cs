@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 82;
-            Item.height = 82;
+            Item.width = 72;
+            Item.height = 72;
             Item.rare = ItemRarityID.Pink;
             Item.value = Item.sellPrice(0, 3, 50);
 

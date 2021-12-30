@@ -78,10 +78,10 @@ namespace Redemption.Projectiles.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 1.7f, effects, 0);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), -Projectile.rotation, drawOrigin, Projectile.scale * 1.7f, effects, 0);
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.LightYellow) * 2f, Projectile.rotation, flareOrigin, Projectile.scale * 1.7f, effects, 0);
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.LightYellow) * 2f, -Projectile.rotation, flareOrigin, Projectile.scale * 1.7f, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 1.6f, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), -Projectile.rotation, drawOrigin, Projectile.scale * 1.6f, effects, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.LightYellow) * 2f, Projectile.rotation, flareOrigin, Projectile.scale * 1.6f, effects, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.LightYellow) * 2f, -Projectile.rotation, flareOrigin, Projectile.scale * 1.6f, effects, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
