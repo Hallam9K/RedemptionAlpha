@@ -88,6 +88,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            // TODO: blind justice lore
         }
     }
 }
