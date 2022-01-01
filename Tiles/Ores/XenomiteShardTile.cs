@@ -16,6 +16,7 @@ namespace Redemption.Tiles.Ores
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileSpelunker[Type] = true;
+            TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 300;
             DustType = DustID.GreenTorch;
             ItemDrop = ModContent.ItemType<XenomiteShard>();

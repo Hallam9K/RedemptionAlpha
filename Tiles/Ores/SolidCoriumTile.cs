@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Ores
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 900;
             DustType = DustID.FlameBurst;
             ItemDrop = ModContent.ItemType<Corium>();

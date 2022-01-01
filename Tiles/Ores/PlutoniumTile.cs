@@ -17,6 +17,8 @@ namespace Redemption.Tiles.Ores
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            TileID.Sets.Ore[Type] = true;
+            Main.tileOreFinderPriority[Type] = 680;
             DustType = DustID.Electric;
             ItemDrop = ModContent.ItemType<Plutonium>();
             MinPick = 220;

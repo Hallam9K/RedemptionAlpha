@@ -16,6 +16,7 @@ namespace Redemption.Tiles.Ores
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileOreFinderPriority[Type] = 320;
+            TileID.Sets.Ore[Type] = true;
             DustType = DustID.Torch;
 			ItemDrop = ModContent.ItemType<DragonLeadOre>();
             MinPick = 100;
