@@ -5381,7 +5381,7 @@ namespace Redemption.Base
             else if (Main.masterMode)
                 defIgnore = 1;
 
-            if (!hitThroughDefense) { dmgAmt -= (int)(player.statDefense * defIgnore); }
+            if (hitThroughDefense) { dmgAmt += (int)(player.statDefense * defIgnore); }
             if (damager == null)
             {
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }

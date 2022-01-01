@@ -291,7 +291,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     NPC.frameCounter = 0;
                                     NPC.frame.Y = 0;
                                 }
-                                if (AITimer >= 200 && NPC.frame.Y >= 4 * 142 && NPC.frame.Y <= 6 * 142)
+                                if (AITimer >= 200 && NPC.frame.Y >= 4 * 71 && NPC.frame.Y <= 6 * 71)
                                 {
                                     for (int i = 0; i < Main.maxNPCs; i++)
                                     {

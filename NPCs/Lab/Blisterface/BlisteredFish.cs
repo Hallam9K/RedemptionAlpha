@@ -106,6 +106,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         private int GlowTimer;
         public override void PostAI()
         {
+            NPC.LookByVelocity();
             if (GlowActive)
             {
                 if (GlowTimer++ > 60)
