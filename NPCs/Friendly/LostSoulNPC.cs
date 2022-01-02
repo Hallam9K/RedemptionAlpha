@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -21,7 +22,10 @@ namespace Redemption.NPCs.Friendly
         {
             DisplayName.SetDefault("Lost Soul");
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f

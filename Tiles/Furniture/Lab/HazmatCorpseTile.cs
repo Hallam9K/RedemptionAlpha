@@ -78,8 +78,6 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 if (Main.tile[left, top].frameX == 0)
                 {
-                    // TODO: crowbar and hazmat corpse drop
-                    //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
                     player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
                 }
                 for (int x = left; x < left + 3; x++)

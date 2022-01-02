@@ -57,6 +57,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ShootChange");
             else
                 Item.UseSound = SoundID.Item23;
+            if (AttackMode == 2)
+                Item.axe = 35;
+            else
+                Item.axe = 0;
             return true;
         }
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -114,7 +118,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     shotType = "Attack Mode 2: Revves up the blade, causing it to overheat and firing a powerful heat blast";
                     break;
                 case 2:
-                    shotType = "Attack Mode 3: Holds like a normal chainsaw, doing increasing damage over the time spent damaging a target";
+                    shotType = "Attack Mode 3: Acts like a normal chainsaw, doing increasing damage over the time spent damaging a target";
                     break;
             }
             TooltipLine line = new(Mod, "ShotName", shotType)

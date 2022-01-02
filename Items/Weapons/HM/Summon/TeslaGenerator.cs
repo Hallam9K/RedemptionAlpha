@@ -23,6 +23,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 
 		public override void SetDefaults()
 		{
+			Item.damage = 95;
 			Item.DamageType = DamageClass.Summon;
 			Item.sentry = true;
 			Item.width = 30;
