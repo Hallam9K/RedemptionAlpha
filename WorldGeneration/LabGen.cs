@@ -26,6 +26,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.WorldGeneration
 {
@@ -419,7 +420,7 @@ namespace Redemption.WorldGeneration
 
             int[] LabChestLoot = new int[]
             {
-                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>() // ModContent.ItemType<Petridish>(), ModContent.ItemType<DNAgger>(), ModContent.ItemType<TeslaManipulatorPrototype>()
+                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>()
             };
             int[] FloppyDiskLoot = new int[]
             {

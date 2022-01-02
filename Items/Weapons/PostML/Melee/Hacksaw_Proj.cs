@@ -10,6 +10,8 @@ using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using System;
+using Terraria.Graphics.Shaders;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -41,7 +43,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         int directionLock = 0;
         private float SwingSpeed;
         private int spinFrame;
-
+        private float glowAmount;
+        private float damageIncrease;
         public override void AI()
         {
             if (Projectile.frameCounter++ % 5 == 0)
@@ -93,6 +96,61 @@ namespace Redemption.Items.Weapons.PostML.Melee
                                 Projectile.Kill();
                         }
                         break;
+                    case 1:
+                        Projectile.idStaticNPCHitCooldown = 6;
+
+                        if (Projectile.ai[1]++ % (30 - (int)(Projectile.ai[1] / 4)) == 0)
+                            SoundEngine.PlaySound(SoundID.Item22, Projectile.position);
+
+                        if (Projectile.ai[1] >= 30)
+                        {
+                            int d1 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0, 0);
+                            Main.dust[d1].position -= Projectile.velocity * 7;
+                            Main.dust[d1].velocity = Projectile.velocity * 3;
+                            Main.dust[d1].noGravity = true;
+                        }
+
+                        player.ChangeDir(Projectile.direction);
+                        swordRotation = (Main.MouseWorld - player.Center).ToRotation();
+                        glowAmount += 0.01f;
+                        if (!player.channel)
+                            Projectile.Kill();
+                        if (glowAmount >= 0.9f)
+                        {
+                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 10;
+                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
+                            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
+                            for (int i = 0; i < 15; i++)
+                            {
+                                int d2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Wraith, 0, 0, Scale: 3);
+                                Main.dust[d2].velocity = Projectile.velocity * 9;
+                                Main.dust[d2].noGravity = true;
+                            }
+                            for (int i = 0; i < 15; i++)
+                            {
+                                int d2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 3);
+                                Main.dust[d2].velocity = Projectile.velocity * 12;
+                                Main.dust[d2].noGravity = true;
+                            }
+                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity * 25, ModContent.ProjectileType<Hacksaw_Heat_Proj>(), Projectile.damage * 4, Projectile.knockBack, Projectile.owner);
+                            Projectile.Kill();
+                        }
+                        break;
+                    case 2:
+                        Projectile.idStaticNPCHitCooldown = 6;
+
+                        if (Projectile.ai[1]++ % 30 == 0)
+                            SoundEngine.PlaySound(SoundID.Item22, Projectile.position);
+
+                        player.ChangeDir(Projectile.direction);
+                        swordRotation = (Main.MouseWorld - player.Center).ToRotation();
+
+                        if (Projectile.localAI[0]-- <= 0 && damageIncrease > 0)
+                            damageIncrease -= 0.02f;
+
+                        if (!player.channel)
+                            Projectile.Kill();
+                        break;
                 }
             }
             Projectile.velocity = swordRotation.ToRotationVector2();
@@ -105,12 +163,24 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             Projectile.Center = playerCenter + Projectile.velocity * 40f;
 
+            Vector2 rand = Projectile.position + new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
+            Projectile.position = rand;
+
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
-            player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+            player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * Projectile.direction, Projectile.velocity.X * Projectile.direction);
         }
-
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (Projectile.ai[0] == 2)
+            {
+                Projectile.localAI[0] = 20;
+                damageIncrease += 0.01f;
+                damageIncrease = MathHelper.Clamp(damageIncrease, 0, 4);
+                damage = (int)(damage * (damageIncrease + 1));
+            }
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
@@ -138,13 +208,24 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Color color = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * 0.5f, oldrot[k], drawOrigin, Projectile.scale, spriteEffects, 0);
             }
-            Main.EntitySpriteDraw(spinTex, player.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(spinRect), Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, spinOrigin, Projectile.scale + 0.2f, spriteEffects2, 0);
+            if (Projectile.ai[0] == 0)
+                Main.EntitySpriteDraw(spinTex, player.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(spinRect), Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, spinOrigin, Projectile.scale + 0.2f, spriteEffects2, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
             Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
+
+            int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(Color.Orange) * glowAmount, Projectile.rotation, drawOrigin, Projectile.scale, spriteEffects, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
     }

@@ -92,8 +92,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0);
                         break;
                     case 1:
+                        Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
                         break;
                     case 2:
+                        Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 2);
                         break;
 
                 }
