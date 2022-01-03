@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Automated Hacksaw");
-            Main.projFrames[Projectile.type] = 2;
+            Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -29,8 +29,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
-            Projectile.width = 64;
-            Projectile.height = 64;
+            Projectile.width = 70;
+            Projectile.height = 70;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
@@ -157,11 +157,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
+                Projectile.rotation = Projectile.velocity.ToRotation();
             else
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
 
-            Projectile.Center = playerCenter + Projectile.velocity * 40f;
+            Projectile.Center = playerCenter + Projectile.velocity * 36f;
 
             Vector2 rand = Projectile.position + new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
             Projectile.position = rand;
@@ -189,7 +189,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
             Texture2D spinTex = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Effect").Value;
-            int height = texture.Height / 2;
+            int height = texture.Height / 3;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, height / 2);
@@ -204,7 +204,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY) + new Vector2(-8, 23);
                 Color color = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * 0.5f, oldrot[k], drawOrigin, Projectile.scale, spriteEffects, 0);
             }
