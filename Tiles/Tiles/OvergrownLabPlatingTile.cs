@@ -17,6 +17,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
             ItemDrop = ModContent.ItemType<LabPlatingUnsafe>();
             MinPick = 500;
