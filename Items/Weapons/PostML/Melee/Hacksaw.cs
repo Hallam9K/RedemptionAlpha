@@ -16,7 +16,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Automated Hacksaw");
-            Tooltip.SetDefault("Right-click to change attack modes");
+            Tooltip.SetDefault("Right-click to change attack modes\n" +
+                "'A sticky note on the weapon reads - \"Alright, who's dumb enough to confuse a chainsaw and a hacksaw, seriously guys.\"'");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
