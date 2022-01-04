@@ -122,7 +122,7 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().WastelandDesertTileCount >= 200;
+            return ModContent.GetInstance<RedeTileCount>().WastelandDesertTileCount >= 300;
         }
     }
     public class WastelandCorruptionBiome : ModBiome
