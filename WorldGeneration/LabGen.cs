@@ -128,24 +128,6 @@ namespace Redemption.WorldGeneration
 
                 placed = true;
             }
-            int[] TileArray = { ModContent.TileType<HardenedSludgeTile>(),
-                ModContent.TileType<BlackHardenedSludgeTile>(),
-                TileID.Stone,
-                TileID.Silt,
-                TileID.Asphalt,
-                ModContent.TileType<XenomiteShardTile>(),
-                ModContent.TileType<UraniumTile>(),
-                ModContent.TileType<PlutoniumTile>(),
-                ModContent.TileType<SolidCoriumTile>(),
-                ModContent.TileType<SolidCoriumTile>() };
-            for (int i = origin.X; i < origin.X + 289; i++)
-            {
-                for (int j = origin.Y; j < origin.Y + 217; j++)
-                {
-                    if (TileArray.Contains(Framing.GetTileSafely(i, j).type) && WorldGen.InWorld(i, j))
-                        BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
-                }
-            }
 
             // Doors
             GenUtils.ObjectPlace(origin.X + 135, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());
@@ -430,6 +412,25 @@ namespace Redemption.WorldGeneration
             LabLocker(origin.X + 167, origin.Y + 87);
             LabLocker(origin.X + 198, origin.Y + 86);
             LabLocker(origin.X + 202, origin.Y + 87);
+
+            int[] TileArray = { ModContent.TileType<HardenedSludgeTile>(),
+                ModContent.TileType<BlackHardenedSludgeTile>(),
+                TileID.Stone,
+                TileID.Silt,
+                TileID.Asphalt,
+                ModContent.TileType<XenomiteShardTile>(),
+                ModContent.TileType<UraniumTile>(),
+                ModContent.TileType<PlutoniumTile>(),
+                ModContent.TileType<SolidCoriumTile>(),
+                ModContent.TileType<SolidCoriumTile>() };
+            for (int i = origin.X; i < origin.X + 289; i++)
+            {
+                for (int j = origin.Y; j < origin.Y + 217; j++)
+                {
+                    if (TileArray.Contains(Framing.GetTileSafely(i, j).type) && WorldGen.InWorld(i, j))
+                        BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
+                }
+            }
             return true;
         }
 
