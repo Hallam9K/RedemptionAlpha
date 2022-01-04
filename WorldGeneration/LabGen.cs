@@ -129,7 +129,15 @@ namespace Redemption.WorldGeneration
                 placed = true;
             }
             int[] TileArray = { ModContent.TileType<HardenedSludgeTile>(),
-                ModContent.TileType<BlackHardenedSludgeTile>() };
+                ModContent.TileType<BlackHardenedSludgeTile>(),
+                TileID.Stone,
+                TileID.Silt,
+                TileID.Asphalt,
+                ModContent.TileType<XenomiteShardTile>(),
+                ModContent.TileType<UraniumTile>(),
+                ModContent.TileType<PlutoniumTile>(),
+                ModContent.TileType<SolidCoriumTile>(),
+                ModContent.TileType<SolidCoriumTile>() };
             for (int i = origin.X; i < origin.X + 289; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 217; j++)
@@ -452,7 +460,7 @@ namespace Redemption.WorldGeneration
             {
                 ModContent.ItemType<XenomiteShard>(),
                 ItemID.LunarOre
-            }; 
+            };
             int[] LabChestLoot4 = new int[]
             {
                 ModContent.ItemType<Uranium>(),
@@ -482,7 +490,7 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot4));
                     chest.item[slot++].stack = WorldGen.genRand.Next(3, 12);
                 }
-            
+
                 if (WorldGen.genRand.NextBool(2))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<CrystalSerum>());
@@ -524,7 +532,7 @@ namespace Redemption.WorldGeneration
                 ModContent.ItemType<CrystalSerum>(),
                 ModContent.ItemType<CarbonMyofibre>(),
                 ModContent.ItemType<XenomiteShard>()
-            }; 
+            };
             if (PlacementSuccess >= 0)
             {
                 int slot = 0;
