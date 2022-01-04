@@ -27,6 +27,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
+using System.Linq;
 
 namespace Redemption.WorldGeneration
 {
@@ -126,6 +127,16 @@ namespace Redemption.WorldGeneration
                 });
 
                 placed = true;
+            }
+            int[] TileArray = { ModContent.TileType<HardenedSludgeTile>(),
+                ModContent.TileType<BlackHardenedSludgeTile>() };
+            for (int i = origin.X; i < origin.X + 289; i++)
+            {
+                for (int j = origin.Y; j < origin.Y + 217; j++)
+                {
+                    if (TileArray.Contains(Framing.GetTileSafely(i, j).type) && WorldGen.InWorld(i, j))
+                        BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
+                }
             }
 
             // Doors
