@@ -90,7 +90,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 
                     target.immune[Projectile.whoAmI] = 20;
                     int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
-                    BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
+                    BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                 }
             }
             if (Projectile.localAI[0] == 182)

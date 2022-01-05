@@ -29,6 +29,7 @@ namespace Redemption.Items.Materials.HM
             Item.value = 2000;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<UraniumTile>();
+            Item.ammo = Item.type;
         }
     }
 }

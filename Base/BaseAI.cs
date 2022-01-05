@@ -5447,15 +5447,15 @@ namespace Redemption.Base
          *  dmgVariation : If true, the damage will vary based on Main.DamageVar().
          *  hitThroughDefense : If true, boosts damage to get around npc defense.
          */
-        public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
+        public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, bool crit = false)
         {
-            if (npc.dontTakeDamage || npc.immortal)
+            if (npc.dontTakeDamage || (npc.immortal && npc.type != NPCID.TargetDummy))
                 return;
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
             if (damager == null || damager is NPC)
             {
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                npc.StrikeNPC(parsedDamage, knockback, hitDirection);
+                npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
 
                 if (damager is NPC)
                     npc.GetGlobalNPC<RedeNPC>().attacker = damager;
@@ -5470,10 +5470,9 @@ namespace Redemption.Base
                 if (p.owner == Main.myPlayer && NPCLoader.CanBeHitByProjectile(npc, p) != false)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    npc.StrikeNPC(parsedDamage, knockback, hitDirection);
-                    bool crit = false;
+                    npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     NPCLoader.ModifyHitByProjectile(npc, p, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
-                    NPCLoader.OnHitByProjectile(npc, p, parsedDamage, knockback, false);
+                    NPCLoader.OnHitByProjectile(npc, p, parsedDamage, knockback, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
@@ -5486,7 +5485,7 @@ namespace Redemption.Base
                 if (player.whoAmI == Main.myPlayer)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    npc.StrikeNPC(parsedDamage, knockback, hitDirection);
+                    npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                     {

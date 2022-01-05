@@ -440,7 +440,7 @@ namespace Redemption.WorldGeneration
 
             int[] LabChestLoot = new int[]
             {
-                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>()
+                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>()
             };
             int[] FloppyDiskLoot = new int[]
             {

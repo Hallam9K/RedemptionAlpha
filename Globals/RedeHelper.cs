@@ -322,7 +322,16 @@ namespace Redemption.Globals
             }
             return false;
         }
-
+        public static bool HeldItemCrit(this Projectile projectile)
+        {
+            Terraria.Player player = Main.player[projectile.owner];
+            int critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
+            ItemLoader.ModifyWeaponCrit(player.HeldItem, player, ref critChance);
+            PlayerLoader.ModifyWeaponCrit(player, player.HeldItem, ref critChance);
+            if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
+                return true;
+            return false;
+        }
         public static Vector2 RandAreaInEntity(this Entity entity)
         {
             return entity.position + new Vector2(Main.rand.Next(0, entity.width), Main.rand.Next(0, entity.height));

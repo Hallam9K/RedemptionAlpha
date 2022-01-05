@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Effects;
+using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
@@ -81,7 +82,7 @@ namespace Redemption.Projectiles.Ranged
 
                 target.immune[Projectile.whoAmI] = 20;
                 int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
-                BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
+                BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
             }
         }
 

@@ -176,7 +176,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (Projectile.ai[0] == 2)
             {
                 Projectile.localAI[0] = 20;
-                damageIncrease += 0.01f;
+                damageIncrease += 0.04f;
                 damageIncrease = MathHelper.Clamp(damageIncrease, 0, 4);
                 damage = (int)(damage * (damageIncrease + 1));
             }
