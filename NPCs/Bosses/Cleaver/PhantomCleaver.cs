@@ -242,7 +242,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-           target.AddBuff(ModContent.BuffType<SnippedDebuff>(), Main.expertMode ? 400 : 200);
+            target.AddBuff(ModContent.BuffType<SnippedDebuff>(), Main.expertMode ? 400 : 200);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

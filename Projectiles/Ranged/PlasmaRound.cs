@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 2;
             Projectile.timeLeft = 600;
+            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
