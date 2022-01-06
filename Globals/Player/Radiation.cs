@@ -332,6 +332,7 @@ namespace Redemption.Globals.Player
         public override void PreUpdate()
         {
             Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
+            Player.ManageSpecialBiomeVisuals("MoR:IslandEffect", false);
         }
         public override void UpdateDead()
         {

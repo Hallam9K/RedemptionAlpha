@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals.Player;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
@@ -214,7 +215,14 @@ namespace Redemption.Globals
                 }
                 Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity((Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer);
             }
-
+            if (Main.player[Main.myPlayer].GetModPlayer<BuffPlayer>().island)
+            {
+                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
+                {
+                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position);
+                }
+                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.5f);
+            }
             if (blobbleSwarm)
             {
                 blobbleSwarmTimer++;

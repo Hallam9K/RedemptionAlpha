@@ -127,7 +127,7 @@ namespace Redemption.NPCs.PreHM
         }
         public enum SpawnType
         {
-            Normal, Wanderer, Assassin, Duelist, SmallGroup, Group, LargeGroup
+            Normal, Wanderer, Assassin, Duelist, SmallGroup, Group, LargeGroup, Dance
         }
         public override bool PreAI()
         {
@@ -139,6 +139,8 @@ namespace Redemption.NPCs.PreHM
             choice.Add(SpawnType.SmallGroup, 6);
             choice.Add(SpawnType.Group, 3);
             choice.Add(SpawnType.LargeGroup, 1);
+            if (Main.player[RedeHelper.GetNearestAlivePlayer(NPC)].ZoneRockLayerHeight)
+                choice.Add(SpawnType.Dance, 0.001);
 
             WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
@@ -183,6 +185,10 @@ namespace Redemption.NPCs.PreHM
                         RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
+                    break;
+                case SpawnType.Dance:
+                    NPC.SetDefaults(ModContent.NPCType<DancingSkeleton>());
+                    NPC.ai[3] = 1;
                     break;
             }
             return true;
