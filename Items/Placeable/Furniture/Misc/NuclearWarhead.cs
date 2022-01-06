@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,9 +12,10 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		{
             Tooltip.SetDefault("Right-click the placed warhead to view the side panel" +
                 "\nDetonation will create a wasteland");
-        }
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
 
-        public override void SetDefaults()
+		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<NuclearWarheadTile>(), 0);
 			Item.width = 26;
