@@ -176,11 +176,6 @@ namespace Redemption.NPCs.PreHM
                 }
             }
         }
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            float baseChance = SpawnCondition.Cavern.Chance * 0.0003f;
-            return baseChance;
-        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
