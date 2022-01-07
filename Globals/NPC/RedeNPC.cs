@@ -129,10 +129,7 @@ namespace Redemption.Globals.NPC
                     damage = (int)(damage * 1.25f);
                 if (NPCTags.Robotic.Has(npc.type))
                 {
-                    if (ItemTags.Blood.Has(item.type))
-                        damage = (int)(damage * 0.5f);
-
-                    if (ItemTags.Poison.Has(item.type))
+                    if (ItemTags.Blood.Has(item.type) || ItemTags.Poison.Has(item.type))
                         damage = (int)(damage * 0.5f);
 
                     if (ItemTags.Thunder.Has(item.type))
@@ -151,6 +148,8 @@ namespace Redemption.Globals.NPC
                 }
                 if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
                     damage = (int)(damage * 1.15f);
+                if (ItemTags.Wind.Has(item.type) && (npc.noGravity || !npc.collideY))
+                    knockback = (int)((knockback * 1.1f) + 2);
                 #endregion
             }
 
@@ -256,7 +255,7 @@ namespace Redemption.Globals.NPC
                 if (NPCTags.Robotic.Has(npc.type))
                 {
                     if (ProjectileTags.Blood.Has(projectile.type) || ProjectileTags.Poison.Has(projectile.type))
-                        damage = (int)(damage * 0.25f);
+                        damage = (int)(damage * 0.5f);
 
                     if (ProjectileTags.Thunder.Has(projectile.type))
                         damage = (int)(damage * 1.25f);
@@ -266,6 +265,8 @@ namespace Redemption.Globals.NPC
                 }
                 if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
                     damage = (int)(damage * 1.15f);
+                if (ProjectileTags.Wind.Has(projectile.type) && (npc.noGravity || !npc.collideY))
+                    knockback = (int)((knockback * 1.1f) + 2);
                 #endregion
             }
         }

@@ -121,7 +121,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Poison.Has(item.type) || ProjectileTags.Poison.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned or venomed enemies") { overrideColor = Color.MediumPurple };
+                    TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned enemies") { overrideColor = Color.MediumPurple };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Psychic.Has(item.type) || ProjectileTags.Psychic.Has(item.shoot))
@@ -146,7 +146,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Wind.Has(item.type) || ProjectileTags.Wind.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Wind") { overrideColor = Color.LightGray };
+                    TooltipLine line = new(Mod, "Element", "Wind Bonus: Deals extra knockback to airborne targets") { overrideColor = Color.LightGray };
                     tooltips.Add(line);
                 }
             }
