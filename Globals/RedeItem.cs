@@ -86,7 +86,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Blood.Has(item.type) || ProjectileTags.Blood.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Blood") { overrideColor = Color.IndianRed };
+                    TooltipLine line = new(Mod, "Element", "Blood Bonus: Increased damage to organic enemies, but decreased to robotic") { overrideColor = Color.IndianRed };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Celestial.Has(item.type) || ProjectileTags.Celestial.Has(item.shoot))
@@ -121,7 +121,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Poison.Has(item.type) || ProjectileTags.Poison.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Poison") { overrideColor = Color.MediumPurple };
+                    TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned or venomed enemies") { overrideColor = Color.MediumPurple };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Psychic.Has(item.type) || ProjectileTags.Psychic.Has(item.shoot))
@@ -131,7 +131,7 @@ namespace Redemption.Globals
                 }
                 if (ItemTags.Shadow.Has(item.type) || ProjectileTags.Shadow.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Shadow") { overrideColor = Color.MediumSlateBlue };
+                    TooltipLine line = new(Mod, "Element", "Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage") { overrideColor = Color.MediumSlateBlue };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Thunder.Has(item.type) || ProjectileTags.Thunder.Has(item.shoot))

@@ -6,6 +6,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Tools.PreHM;
+using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Blisterface;
@@ -129,10 +130,10 @@ namespace Redemption.Globals.NPC
                 if (NPCTags.Robotic.Has(npc.type))
                 {
                     if (ItemTags.Blood.Has(item.type))
-                        damage = (int)(damage * 0.25f);
+                        damage = (int)(damage * 0.5f);
 
                     if (ItemTags.Poison.Has(item.type))
-                        damage = (int)(damage * 0.25f);
+                        damage = (int)(damage * 0.5f);
 
                     if (ItemTags.Thunder.Has(item.type))
                         damage = (int)(damage * 1.25f);
@@ -140,6 +141,16 @@ namespace Redemption.Globals.NPC
                     if (ItemTags.Water.Has(item.type))
                         damage = (int)(damage * 1.5f);
                 }
+                if (!NPCTags.Inorganic.Has(npc.type))
+                {
+                    if (ItemTags.Blood.Has(item.type))
+                        damage = (int)(damage * 1.15f);
+
+                    if (ItemTags.Poison.Has(item.type))
+                        damage = (int)(damage * 1.15f);
+                }
+                if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
+                    damage = (int)(damage * 1.15f);
                 #endregion
             }
 
@@ -253,6 +264,8 @@ namespace Redemption.Globals.NPC
                     if (ProjectileTags.Water.Has(projectile.type))
                         damage = (int)(damage * 1.5f);
                 }
+                if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
+                    damage = (int)(damage * 1.15f);
                 #endregion
             }
         }
@@ -298,6 +311,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(4) && ItemTags.Water.Has(item.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
+                if (ItemTags.Shadow.Has(item.type))
+                {
+                    if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
+                        Item.NewItem(npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                }
                 #endregion
             }
 
@@ -340,6 +358,11 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(4) && ProjectileTags.Water.Has(projectile.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+                }
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                {
+                    if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
+                        Item.NewItem(npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
