@@ -7,11 +7,15 @@ using System.IO;
 using Redemption.Items.Lore;
 using Redemption.Dusts;
 using Terraria.DataStructures;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
     public class PZ_Kari : ModNPC
     {
+        public ref float AITimer => ref NPC.ai[1];
+        public ref float TimerRand => ref NPC.ai[2];
+        public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Kari Johansson");
@@ -35,7 +39,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 52;
             NPC.height = 66;
             NPC.friendly = false;
-            NPC.damage = 110;
+            NPC.damage = 100;
             NPC.defense = 10;
             NPC.lifeMax = 200000;
             NPC.HitSound = SoundID.NPCHit13;
@@ -64,10 +68,174 @@ namespace Redemption.NPCs.Bosses.PatientZero
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<SludgeDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 1f);
         }
+        public override bool CheckDead()
+        {
+            NPC.life = 1;
+            NPC host = Main.npc[(int)NPC.ai[0]];
+            if (host.ai[0] != 4)
+            {
+                host.ai[0] = 4;
+                host.ai[1] = 0;
+                host.ai[2] = 0;
+                host.ai[3] = 0;
+                host.netUpdate = true;
+            }
+            return false;
+        }
         private bool Exposed;
         public override void AI()
         {
+            NPC host = Main.npc[(int)NPC.ai[0]];
+            Player player = Main.player[host.target];
+            if (!host.active || host.type != ModContent.NPCType<PZ>())
+                NPC.active = false;
 
+            if (host.ai[0] == 3)
+            {
+                if (!Exposed)
+                {
+                    Exposed = true;
+                    NPC.dontTakeDamage = false;
+                    NPC.netUpdate = true;
+                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                }
+                int hostPhase;
+                if (host.life > host.lifeMax / 2)
+                    hostPhase = 1;
+                else if (host.life <= host.lifeMax / 2 && host.life > (int)(host.lifeMax * 0.35f))
+                    hostPhase = 2;
+                else if (host.life > (int)(host.lifeMax * 0.1f) && host.life <= (int)(host.lifeMax * 0.35f))
+                    hostPhase = 3;
+                else
+                    hostPhase = 4;
+
+                if (hostPhase <= 1 && NPC.life <= (int)(NPC.lifeMax * 0.75f))
+                {
+                    host.ai[1] = -1;
+                    host.netUpdate = true;
+                }
+                else if (hostPhase == 2 && NPC.life <= NPC.lifeMax / 2)
+                {
+                    host.ai[1] = -1;
+                    host.netUpdate = true;
+                }
+                else if (hostPhase == 3 && NPC.life <= (int)(NPC.lifeMax * 0.25f))
+                {
+                    host.ai[1] = -1;
+                    host.netUpdate = true;
+                }
+
+                switch (TimerRand2)
+                {
+                    case 0:
+                        AITimer++;
+                        if (AITimer % 5 == 0 && AITimer >= 120)
+                        {
+                            switch (hostPhase)
+                            {
+                                case 1:
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfInfectionBall>(), (int)(NPC.damage * 0.9f), RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item20);
+                                    break;
+                                case 2:
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<CausticTearBall>(), (int)(NPC.damage * 0.95f), RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item20);
+                                    break;
+                                case 3:
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPainBall>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item20);
+                                    break;
+                                case 4:
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPainBall>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item20);
+                                    break;
+                            }
+                        }
+                        if (AITimer >= 138)
+                        {
+                            TimerRand2++;
+                            AITimer = 0;
+                            NPC.netUpdate = true;
+                        }
+                        break;
+                    case 1:
+                        AITimer++;
+                        switch (hostPhase)
+                        {
+                            case 1:
+                                if (AITimer % 100 == 0)
+                                {
+                                    for (int i = 0; i < 6; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PoisonBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                }
+                                break;
+                            case 2:
+                                if (AITimer % 90 == 0)
+                                {
+                                    for (int i = 0; i < 6; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PoisonBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                    for (int i = 0; i < 4; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectiousBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                }
+                                break;
+                            case 3:
+                                if (AITimer % 80 == 0)
+                                {
+                                    for (int i = 0; i < 8; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PoisonBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                    for (int i = 0; i < 4; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectiousBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                }
+                                break;
+                            case 4:
+                                if (AITimer % 70 == 0)
+                                {
+                                    for (int i = 0; i < 8; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PoisonBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                    for (int i = 0; i < 4; i++)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectiousBeat>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-16, -4)), false, SoundID.Item72);
+                                }
+                                break;
+                        }
+                        if (AITimer >= 460)
+                        {
+                            TimerRand2++;
+                            AITimer = 0;
+                            NPC.netUpdate = true;
+                        }
+                        break;
+                    case 2:
+                        if (host.life > host.lifeMax / 2)
+                        {
+                            AITimer = 0;
+                            TimerRand2 = 0;
+                        }
+                        else
+                        {
+                            AITimer++;
+                            if (AITimer % (hostPhase >= 3 ? 30 : 60) == 0 && AITimer >= 120)
+                            {
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Kari_Laser>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item103, "", NPC.whoAmI);
+                            }
+                            if (AITimer >= 340)
+                            {
+                                TimerRand2 = 0;
+                                AITimer = 0;
+                                NPC.netUpdate = true;
+                            }
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                if (Exposed)
+                {
+                    AITimer = 0;
+                    Exposed = false;
+                    NPC.dontTakeDamage = true;
+                    NPC.netUpdate = true;
+                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                }
+            }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)

@@ -46,7 +46,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
+            SoundEngine.PlaySound(SoundID.NPCDeath1.WithVolume(0.3f), Projectile.position);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<SludgeDust>(), Scale: 2);
@@ -68,6 +68,30 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void PostAI()
         {
+            if (Projectile.localAI[0] == 1 && Main.myPlayer == Projectile.owner)
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PoisonBeat_Tele>(), 0, 0, Main.myPlayer);
+
+            Projectile.velocity.Y += 0.1f;
+        }
+    }
+    public class PoisonBeat_Tele : TearOfInfection
+    {
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Poison Beat");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.extraUpdates = 1000;
+        }
+
+        public override void PostAI()
+        {
+            Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GreenTorch, Vector2.Zero);
+            dust.velocity *= 0;
+            dust.noGravity = true;
             Projectile.velocity.Y += 0.1f;
         }
     }

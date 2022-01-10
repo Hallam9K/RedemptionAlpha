@@ -45,7 +45,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
+            SoundEngine.PlaySound(SoundID.NPCDeath1.WithVolume(0.3f), Projectile.position);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<SludgeDust>(), Scale: 2);

@@ -11,7 +11,7 @@ using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
-    public class PZ_Laser : ModProjectile
+    public class PZ_Kari_Laser : ModProjectile
     {
         public float AITimer
         {
@@ -25,12 +25,12 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public float LaserLength = 0;
         public float LaserScale = 1f;
-        public int LaserSegmentLength = 30;
-        public int LaserWidth = 40;
-        public int LaserEndSegmentLength = 30;
+        public int LaserSegmentLength = 28;
+        public int LaserWidth = 32;
+        public int LaserEndSegmentLength = 28;
 
         //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 15;
+        private const float FirstSegmentDrawDist = 14;
 
         public int MaxLaserLength = 600;
         public int maxLaserFrames = 3;
@@ -40,17 +40,17 @@ namespace Redemption.NPCs.Bosses.PatientZero
 
         public override void SetDefaults()
         {
-            Projectile.width = 36;
-            Projectile.height = 36;
+            Projectile.width = 24;
+            Projectile.height = 24;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 3600;
+            Projectile.timeLeft = 180;
             Projectile.alpha = 255;
         }
-        public override bool CanHitPlayer(Player target) => AITimer >= 85;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 85 ? null : false;
+        public override bool CanHitPlayer(Player target) => AITimer >= 20;
+        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 20 ? null : false;
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -59,9 +59,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Main.dust[dust].noGravity = true;
 
             #region Beginning And End Effects
-            if (AITimer >= 85)
+            if (AITimer >= 20)
             {
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 2;
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             }
@@ -70,44 +69,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 200, 255);
             }
-
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active)
-                Projectile.Kill();
-
-            if (npc.active && npc.type == ModContent.NPCType<PZ>())
-            {
-                Projectile.Center = npc.Center;
-                switch (Projectile.ai[1])
-                {
-                    case 0:
-                        Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation);
-                        break;
-                    case 1:
-                        Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation + MathHelper.Pi);
-                        break;
-                    case 2:
-                        Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation + MathHelper.PiOver2);
-                        break;
-                    case 3:
-                        Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation - MathHelper.PiOver2);
-                        break;
-                    case 4:
-                        Projectile.velocity = Projectile.velocity.RotatedBy(0.01f);
-                        break;
-                    case 5:
-                        Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f);
-                        break;
-                    case 6:
-                        Projectile.velocity = RedeHelper.PolarVector(10, -npc.rotation);
-                        break;
-                    case 7:
-                        Projectile.velocity = RedeHelper.PolarVector(10, -npc.rotation + MathHelper.Pi);
-                        break;
-                }
-            }
-
-            if (Projectile.timeLeft < 10 || !npc.active || npc.ai[0] != 1)
+            Projectile.Center = npc.Center;
+            if (Projectile.timeLeft < 10 || !npc.active)
             {
                 Projectile.hostile = false;
                 if (Projectile.timeLeft > 10)
@@ -194,7 +158,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(AITimer >= 85 ? Color.White : Color.Red), (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(AITimer >= 20 ? Color.White : Color.Red), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
