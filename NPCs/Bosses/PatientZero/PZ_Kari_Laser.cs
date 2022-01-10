@@ -24,20 +24,20 @@ namespace Redemption.NPCs.Bosses.PatientZero
             set => Projectile.localAI[1] = value;
         }
         public float LaserLength = 0;
-        public float LaserScale = 1f;
-        public int LaserSegmentLength = 28;
+        public float LaserScale = 0.1f;
+        public int LaserSegmentLength = 46;
         public int LaserWidth = 32;
-        public int LaserEndSegmentLength = 28;
+        public int LaserEndSegmentLength = 46;
 
         //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 14;
+        private readonly float FirstSegmentDrawDist = 23;
 
-        public int MaxLaserLength = 600;
+        public int MaxLaserLength = 1840;
         public int maxLaserFrames = 3;
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = true;
         // >
-
+        public override void SetStaticDefaults() => DisplayName.SetDefault("Xenium Laser");
         public override void SetDefaults()
         {
             Projectile.width = 24;
@@ -59,6 +59,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Main.dust[dust].noGravity = true;
 
             #region Beginning And End Effects
+            if (AITimer == 0)
+                LaserScale = 0.1f;
+
             if (AITimer >= 20)
             {
                 Projectile.alpha -= 10;
@@ -67,8 +70,10 @@ namespace Redemption.NPCs.Bosses.PatientZero
             else
             {
                 Projectile.alpha -= 10;
-                Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 200, 255);
+                Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 180, 255);
             }
+            if (AITimer <= 10)
+                LaserScale += 0.09f;
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             Projectile.Center = npc.Center;
             if (Projectile.timeLeft < 10 || !npc.active)

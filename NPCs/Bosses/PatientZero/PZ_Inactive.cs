@@ -6,18 +6,21 @@ using Terraria.ID;
 using Redemption.WorldGeneration;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
     public class PZ_Inactive : ModNPC
     {
-        public override string Texture => "Redemption/NPCs/Bosses/PatientZero/PZ_Eyelid";
+        public override string Texture => "Redemption/NPCs/Bosses/PatientZero/PZ_Eyelid_Glooped";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("");
-            Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -28,7 +31,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             NPC.width = 98;
             NPC.height = 80;
-            NPC.lifeMax = 250;
+            NPC.lifeMax = 1;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.noGravity = true;
@@ -38,13 +41,17 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void AI()
         {
             Player player = Main.player[Main.myPlayer];
-            Rectangle activeZone = new((int)(RedeGen.LabVector.X + 130) * 16, (int)(RedeGen.LabVector.Y + 202) * 16, 24 * 16, 9 * 16);
-            if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
-            {
-                NPC.SetDefaults(ModContent.NPCType<PZ>());
-                NPC.frame.Y = 164;
-                NPC.netUpdate = true;
-            }
+            if (player.DistanceSQ(NPC.Center) < 600 * 600 && Collision.CanHit(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height))
+                NPC.dontTakeDamage = false;
+            else
+                NPC.dontTakeDamage = true;
+        }
+        public override bool CheckDead()
+        {
+            NPC.SetDefaults(ModContent.NPCType<PZ>());
+            NPC.frame.Y = 164;
+            NPC.netUpdate = true;
+            return false;
         }
         private int BodyFrame;
         private int KariFrame;
@@ -63,7 +70,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 if (KariFrame > 3)
                     KariFrame = 0;
             }
-            NPC.frame.Y = 2 * frameHeight;
         }
         public override bool CheckActive() => !LabArea.Active;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
