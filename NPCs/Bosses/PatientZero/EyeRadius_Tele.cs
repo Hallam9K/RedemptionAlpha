@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.scale += 0.16f;
+            Projectile.scale += 0.2f;
             Projectile.scale *= 0.9f;
             if (Projectile.localAI[0] < 10)
                 Projectile.alpha = (int)MathHelper.Lerp(255f, 0f, Projectile.timeLeft / 10f);
@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             }
             if (Projectile.localAI[0]-- >= 0)
             {
-                Projectile.scale += 0.16f;
+                Projectile.scale += 0.2f;
                 Projectile.scale *= 0.9f;
                 if (Projectile.localAI[0] < 10)
                     Projectile.alpha = (int)MathHelper.Lerp(255f, 0f, Projectile.localAI[0] / 10f);
