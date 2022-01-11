@@ -169,6 +169,65 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public bool Randomize;
         public int Phase;
         public int ID;
+        public List<int> LaserAttackList = new() { 0, 1, 2, 3, 4, 5, 6 };
+        public List<int> MiscAttackList = new() { 0, 1, 2, 3, 4, 5, 6 };
+        public List<int> CopyLaserList = null;
+        public List<int> CopyMiscList = null;
+
+        public List<float> EyeTeleList = new()
+        {
+            MathHelper.ToRadians(22.5f),
+            MathHelper.ToRadians(67.5f),
+            MathHelper.ToRadians(112.5f),
+            MathHelper.ToRadians(157.5f),
+            MathHelper.ToRadians(202.5f),
+            MathHelper.ToRadians(247.5f),
+            MathHelper.ToRadians(292.5f),
+            MathHelper.ToRadians(337.5f)
+        };
+        public List<float> CopyEyeList = null;
+        void EyeChoice()
+        {
+            int attempts = 0;
+            while (attempts == 0)
+            {
+                if (CopyEyeList == null || CopyEyeList.Count == 0)
+                    CopyEyeList = new List<float>(EyeTeleList);
+                TimerRand = CopyEyeList[Main.rand.Next(0, CopyEyeList.Count)];
+                CopyEyeList.Remove(TimerRand);
+                NPC.netUpdate = true;
+                attempts++;
+            }
+        }
+        void AttackChoice(bool Misc = false)
+        {
+            int attempts = 0;
+            while (attempts == 0)
+            {
+                if (CopyLaserList == null || CopyLaserList.Count == 0)
+                    CopyLaserList = new List<int>(LaserAttackList);
+                if (CopyMiscList == null || CopyMiscList.Count == 0)
+                    CopyMiscList = new List<int>(MiscAttackList);
+                if (Misc)
+                {
+                    ID = CopyMiscList[Main.rand.Next(0, CopyMiscList.Count)];
+                    CopyMiscList.Remove(ID);
+                }
+                else
+                {
+                    ID = CopyLaserList[Main.rand.Next(0, CopyLaserList.Count)];
+                    CopyLaserList.Remove(ID);
+                }
+                NPC.netUpdate = true;
+
+                if (ID >= 3 && Phase < 1)
+                    continue;
+                if (ID >= 6 && Phase < 2)
+                    continue;
+
+                attempts++;
+            }
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -210,7 +269,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     {
                         #region Phase 1
                         case 0:
-                            NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             if (AITimer++ >= 60)
                                 NPC.alpha += 10;
                             if (AITimer == 60)
@@ -237,7 +296,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             }
                             break;
                         case 1:
-                            NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             if (AITimer++ >= 60)
                                 NPC.alpha += 10;
                             if (AITimer == 60)
@@ -307,12 +366,12 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             if (AITimer++ >= 60)
                                 NPC.alpha += 10;
                             else
-                                NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                                NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             if (AITimer == 60)
                             {
                                 TimerRand2 = 0.005f;
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaserL"), NPC.position);
                                 for (int i = 0; i < 4; i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, i);
                             }
@@ -347,42 +406,42 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             if (AITimer++ >= 60)
                                 NPC.alpha += 10;
                             else
-                                NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                                NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             if (AITimer == 60)
                             {
                                 TimerRand = Main.rand.Next(2);
                                 TimerRand2 = 0.005f;
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaserL"), NPC.position);
                                 for (int i = 0; i < 2; i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, i);
                             }
-                            if (AITimer >= 140 && AITimer <= 600)
+                            if (AITimer >= 140 && AITimer <= 380)
                             {
-                                TimerRand2 *= 1.02f;
+                                TimerRand2 += 0.0002f;
                                 if (TimerRand == 0)
                                     NPC.rotation += TimerRand2;
                                 else
                                     NPC.rotation -= TimerRand2;
                             }
-                            else if (AITimer > 600)
+                            else if (AITimer > 380)
                             {
-                                TimerRand2 *= 0.98f;
+                                TimerRand2 -= 0.0002f;
                                 if (TimerRand == 0)
                                     NPC.rotation += TimerRand2;
                                 else
                                     NPC.rotation -= TimerRand2;
                             }
-                            TimerRand2 = MathHelper.Clamp(TimerRand2, 0, 0.026f);
-                            if (AITimer >= 200 && AITimer % 10 == 0 && AITimer <= 660)
+                            TimerRand2 = MathHelper.Clamp(TimerRand2, -0.007f, 0.007f);
+                            if (AITimer >= 200 && AITimer % 15 == 0 && AITimer <= 660)
                             {
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Tele>(), 0, RedeHelper.PolarVector(8, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation()), false, SoundID.Item1.WithVolume(0));
 
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPain>(), (int)(NPC.damage * 0.95f), RedeHelper.PolarVector(15, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation()), false, SoundID.Item42);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPain>(), (int)(NPC.damage * 0.95f), RedeHelper.PolarVector(13, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation()), false, SoundID.Item42);
 
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Tele>(), 0, RedeHelper.PolarVector(-8, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation()), false, SoundID.Item1.WithVolume(0));
 
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPain>(), (int)(NPC.damage * 0.95f), RedeHelper.PolarVector(-15, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation()), false, SoundID.Item42);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPain>(), (int)(NPC.damage * 0.95f), RedeHelper.PolarVector(-13, NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation()), false, SoundID.Item42);
                             }
                             if (AITimer > 680)
                             {
@@ -390,10 +449,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             }
                             break;
                         case 5:
-                            if (AITimer++ >= 60)
-                                NPC.alpha += 10;
-                            else
-                                NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            NPC.alpha += 10;
+                            if (AITimer++ < 60)
+                                NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             if (AITimer == 60)
                             {
                                 NPC.rotation = MathHelper.PiOver4;
@@ -416,15 +474,47 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 NPC.rotation += TimerRand2;
                             }
                             TimerRand2 = MathHelper.Clamp(TimerRand2, 0, 0.02f);
-                            if (AITimer == 144)
+                            if (AITimer == 104)
                             {
                                 for (int i = 0; i < 4; i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Tele>(), 0, RedeHelper.PolarVector(9, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0));
-
+                            }
+                            if (AITimer == 144)
+                            {
                                 for (int i = 0; i < 4; i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<TearOfPainBall>(), NPC.damage, RedeHelper.PolarVector(13, MathHelper.ToRadians(90) * i), false, SoundID.Item42);
                             }
                             if (AITimer > 260)
+                            {
+                                NextAttack();
+                            }
+                            break;
+                        #endregion
+                        #region Phase 3
+                        case 6:
+                            if (AITimer < 140)
+                                NPC.alpha -= 10;
+                            else
+                                NPC.alpha += 10;
+                            if (AITimer++ == 0)
+                                CopyEyeList = null;
+                            if (AITimer >= 20 && AITimer % 20 == 0 && AITimer <= 100)
+                            {
+                                EyeChoice();
+                            }
+                            if (AITimer >= 40 && AITimer % 20 == 0 && AITimer <= 120)
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<EyeRadius_Tele2>(), 0, RedeHelper.PolarVector(2, NPC.rotation), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                            if (AITimer >= 20 && AITimer <= 120)
+                                NPC.rotation.SlowRotation(TimerRand, (float)Math.PI / 20);
+
+                            if (AITimer == 140)
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaserL"), NPC.position);
+                                for (int i = 0; i < 8; i++)
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(45) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                            }
+                            if (AITimer > 480)
                             {
                                 NextAttack();
                             }
@@ -438,7 +528,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     {
                         #region Phase 1
                         case 0:
-                            NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            if (AITimer > 20)
+                                NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             NPC.alpha -= 10;
                             if (AITimer++ >= 60 && AITimer % 30 == 0 && AITimer <= 160)
                             {
@@ -469,7 +560,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             }
                             break;
                         case 2:
-                            if (AITimer++ > 10)
+                            if (AITimer++ > 20)
                                 NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             NPC.alpha -= 10;
                             if (AITimer == 60)
@@ -488,8 +579,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                         #endregion
                         #region Phase 2
                         case 3:
-                            if (AITimer > 10)
-                                NPC.rotation = NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation();
+                            if (AITimer > 20)
+                                NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             NPC.alpha -= 10;
                             if (AITimer++ >= 60 && AITimer % 20 == 0 && AITimer <= 160)
                             {
@@ -501,13 +592,13 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             }
                             break;
                         case 4:
-                            if (AITimer++ > 10)
+                            if (AITimer++ > 20)
                                 NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
                             NPC.alpha -= 10;
                             if (AITimer == 60 || AITimer == 140)
                             {
                                 for (int i = 0; i < 3; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Blast>(), NPC.damage, RedeHelper.PolarVector(7, NPC.rotation + ((MathHelper.ToRadians(45) * i) - MathHelper.ToRadians(45))), true, SoundID.Item1, "Sounds/Custom/MACEProjectLaunch");
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Blast>(), NPC.damage, RedeHelper.PolarVector(7, NPC.rotation + ((MathHelper.ToRadians(30) * i) - MathHelper.ToRadians(30))), true, SoundID.Item1, "Sounds/Custom/MACEProjectLaunch");
                             }
                             if (AITimer == 100)
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Blast>(), NPC.damage, RedeHelper.PolarVector(7, NPC.rotation), true, SoundID.Item1, "Sounds/Custom/MACEProjectLaunch");
@@ -521,7 +612,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 TimerRand = 0.01f;
                             NPC.rotation -= TimerRand;
                             NPC.alpha -= 10;
-                            if (AITimer >= 60 && AITimer % 22 == 0 && AITimer <= 200)
+                            if (AITimer >= 60 && AITimer % 22 == 0 && AITimer <= 170)
                             {
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Blast>(), NPC.damage, RedeHelper.PolarVector(7, NPC.rotation), true, SoundID.Item1, "Sounds/Custom/MACEProjectLaunch");
                             }
@@ -532,7 +623,27 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             TimerRand = MathHelper.Clamp(TimerRand, 0, 0.1f);
                             if (AITimer > 220)
                             {
-                                ID = 2;
+                                Randomize = true;
+                                NextAttack();
+                            }
+                            break;
+                        #endregion
+                        #region Phase 3
+                        case 6:
+                            if (AITimer++ > 20)
+                                NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 30);
+                            NPC.alpha -= 10;
+                            if (AITimer >= 60 && AITimer % 10 == 0 && AITimer <= 90)
+                            {
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Blast>(), NPC.damage, RedeHelper.PolarVector(7, NPC.rotation + Main.rand.NextFloat(-0.1f, 0.1f)), true, SoundID.Item1, "Sounds/Custom/MACEProjectLaunch");
+                            }
+                            if (AITimer >= 140 && AITimer % 10 == 0 && AITimer <= 170)
+                            {
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Blast>(), NPC.damage, RedeHelper.PolarVector(7, NPC.rotation + Main.rand.NextFloat(-0.1f, 0.1f)), true, SoundID.Item1, "Sounds/Custom/MACEProjectLaunch");
+                            }
+                            if (AITimer > 220)
+                            {
+                                Randomize = true;
                                 NextAttack();
                             }
                             break;
@@ -546,6 +657,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     ID = 0;
                     if (AITimer == -1)
                     {
+                        CopyLaserList = null;
+                        CopyMiscList = null;
                         AIState = ActionState.LaserAttacks;
                         AITimer = 0;
                         Phase++;
@@ -553,6 +666,14 @@ namespace Redemption.NPCs.Bosses.PatientZero
                         {
                             case 1:
                                 ID = 3;
+                                Randomize = false;
+                                break;
+                            case 2:
+                                ID = 6;
+                                Randomize = false;
+                                break;
+                            case 3:
+                                ID = 6;
                                 break;
 
                         }
@@ -607,11 +728,19 @@ namespace Redemption.NPCs.Bosses.PatientZero
             TimerRand = 0;
             TimerRand2 = 0;
             if (AIState is ActionState.LaserAttacks)
+            {
+                if (Randomize)
+                    AttackChoice(true);
                 AIState = ActionState.MiscAttacks;
+            }
             else if (AIState is ActionState.MiscAttacks)
             {
+                if (Randomize)
+                    AttackChoice();
+                else
+                    ID++;
+
                 AIState = ActionState.LaserAttacks;
-                ID++;
             }
             NPC.netUpdate = true;
         }
@@ -723,7 +852,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             int widthB = BodyAni.Height / 8;
             int yB = widthB * BodyFrame;
             spriteBatch.Draw(BodyAni, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Width, widthB)), drawColor, 0, new Vector2(BodyAni.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
-            spriteBatch.Draw(BodyGlowAni, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Width, widthB)), Color.White, 0, new Vector2(BodyAni.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BodyGlowAni, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Width, widthB)), new Color(255, 255, 255, NPC.Opacity), 0, new Vector2(BodyAni.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
 
             if (AIState != ActionState.PhaseChange)
             {

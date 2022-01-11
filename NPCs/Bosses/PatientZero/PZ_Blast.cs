@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 Main.dust[dustIndex].velocity *= 3f;
             }
             for (int i = 0; i < 4; i++)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), ModContent.ProjectileType<PZ_Miniblast>(), Projectile.damage / 2, 3, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), ModContent.ProjectileType<PZ_Miniblast>(), (int)(Projectile.damage * 0.85f), 3, Main.myPlayer);
         }
     }
 }

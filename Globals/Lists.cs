@@ -338,8 +338,6 @@ namespace Redemption.Globals
             ModContent.NPCType<RadioactiveSlime>(),
             ModContent.NPCType<NuclearSlime>(),
             ModContent.NPCType<IrradiatedBehemoth>(),
-            ModContent.NPCType<HiveGrowth>(),
-            ModContent.NPCType<HiveGrowth2>()
         };
 
         public static List<int> IsBunny = new()
@@ -485,7 +483,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Infected
-            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>(), ModContent.NPCType<Blisterface>(), ModContent.NPCType<BlisteredFish>(), ModContent.NPCType<BlisteredFish2>(), ModContent.NPCType<SickenedDemonEye>(), ModContent.NPCType<SickenedBunny>(), ModContent.NPCType<MutatedLivingBloom>(), ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>(), ModContent.NPCType<PZ>(), ModContent.NPCType<PZ_Kari>(), ModContent.NPCType<HiveGrowth>(), ModContent.NPCType<HiveGrowth2>());
+            Infected.SetMultiple(ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>(), ModContent.NPCType<Blisterface>(), ModContent.NPCType<BlisteredFish>(), ModContent.NPCType<BlisteredFish2>(), ModContent.NPCType<SickenedDemonEye>(), ModContent.NPCType<SickenedBunny>(), ModContent.NPCType<MutatedLivingBloom>(), ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>(), ModContent.NPCType<PZ>(), ModContent.NPCType<PZ_Kari>());
             #endregion
 
             #region Armed

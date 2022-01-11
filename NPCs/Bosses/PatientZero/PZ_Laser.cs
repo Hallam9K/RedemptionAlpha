@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.WorldGeneration;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -159,7 +160,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
             for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
             {
                 Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
+                Rectangle box = new((int)(RedeGen.LabVector.X + 109) * 16, (int)(RedeGen.LabVector.Y + 170) * 16, 69 * 16, 41 * 16);
+                if (!box.Intersects(new Rectangle((int)start.X, (int)start.Y, 1, 1)))
                 {
                     LaserLength -= LaserSegmentLength;
                     break;

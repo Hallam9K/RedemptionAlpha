@@ -28,6 +28,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 160;
+            Projectile.alpha = 255;
             Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
         public override void AI()
@@ -37,6 +38,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 int dust1 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.GreenTorch, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
                 Main.dust[dust1].noGravity = true;
             }
+            Projectile.alpha -= 10;
+            Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             Lighting.AddLight(Projectile.Center, 0, Projectile.Opacity * 0.2f, 0);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             if (Projectile.localAI[0]++ > 10)
