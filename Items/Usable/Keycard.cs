@@ -12,12 +12,21 @@ namespace Redemption.Items.Usable
                 + "\nOnly one is needed");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
+
         public override void SetDefaults()
         {
             Item.width = 36;
             Item.height = 22;
             Item.rare = ItemRarityID.Cyan;
             Item.maxStack = 1;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.LunarBar, 5)
+                .AddTile(TileID.LunarCraftingStation)
+                .Register();
         }
     }
 }
