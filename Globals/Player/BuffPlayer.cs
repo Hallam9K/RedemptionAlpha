@@ -58,6 +58,7 @@ namespace Redemption.Globals.Player
         public bool snipped;
 
         public bool pureIronBonus;
+        public bool xeniumBonus;
         public bool dragonLeadBonus;
         public int hardlightBonus;
 
@@ -111,6 +112,7 @@ namespace Redemption.Globals.Player
             WastelandWaterImmune = false;
             hardlightBonus = 0;
             snipped = false;
+            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
