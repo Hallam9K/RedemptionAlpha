@@ -49,6 +49,7 @@ namespace Redemption.WorldGeneration
         public static Vector2 HallOfHeroesVector = new Vector2(-1, -1);
         public static Vector2 LabVector = new Vector2(-1, -1);
         public static Vector2 BastionVector = new Vector2(-1, -1);
+        public static Vector2 GoldenGatewayVector = new Vector2(-1, -1);
 
         public override void OnWorldLoad()
         {
@@ -63,6 +64,7 @@ namespace Redemption.WorldGeneration
             HallOfHeroesVector = new Vector2(-1, -1);
             LabVector = new Vector2(-1, -1);
             BastionVector = new Vector2(-1, -1);
+            GoldenGatewayVector = new Vector2(-1, -1);
         }
 
         public override void OnWorldUnload()
@@ -74,6 +76,7 @@ namespace Redemption.WorldGeneration
             HallOfHeroesVector = new Vector2(-1, -1);
             LabVector = new Vector2(-1, -1);
             BastionVector = new Vector2(-1, -1);
+            GoldenGatewayVector = new Vector2(-1, -1);
         }
 
         public override void PostUpdateWorld()
@@ -383,7 +386,7 @@ namespace Redemption.WorldGeneration
 
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
-                        int placeY = (int)Main.worldSurface - 180;
+                        int placeY = (int)Main.worldSurface - 170;
 
                         if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
                             continue;
@@ -995,7 +998,44 @@ namespace Redemption.WorldGeneration
                         new Actions.SetLiquid(0, 0)
                     }));
                 }));
-                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Slayer's Crashed Spaceship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Golden Gateway", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    progress.Message = "Thinking harder with portals";
+                    bool placed = false;
+                    while (!placed)
+                    {
+                        int placeX = WorldGen.genRand.Next(145, Main.maxTilesX - 145);
+                        int placeY = WorldGen.genRand.Next(50, 80);
+                        if (!WorldGen.InWorld(placeX, placeY))
+                            continue;
+
+                        bool whitelist = false;
+                        for (int i = 0; i <= 144; i++)
+                        {
+                            for (int j = 0; j <= 80; j++)
+                            {
+                                if (Main.tile[placeX + i, placeY + j].IsActive)
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (whitelist)
+                            continue;
+
+                        Point origin = new(placeX, placeY);
+
+                        GatewayIsland biome = new();
+                        GatewayIslandClear delete = new();
+                        delete.Place(origin, WorldGen.structures);
+                        biome.Place(origin, WorldGen.structures);
+
+                        GoldenGatewayVector = origin.ToVector2();
+                        placed = true;
+                    }
+                }));
+                tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Slayer's Crashed Spaceship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     Point origin = slayerShipVector.ToPoint();
                     SlayerShipDeco deco = new();
@@ -1132,6 +1172,8 @@ namespace Redemption.WorldGeneration
             tag["LabVectorY"] = LabVector.Y;
             tag["BastionVectorX"] = BastionVector.X;
             tag["BastionVectorY"] = BastionVector.Y;
+            tag["GoldenGatewayVectorX"] = GoldenGatewayVector.X;
+            tag["GoldenGatewayVectorY"] = GoldenGatewayVector.Y;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -1148,6 +1190,8 @@ namespace Redemption.WorldGeneration
             LabVector.Y = tag.GetFloat("LabVectorY");
             BastionVector.X = tag.GetFloat("BastionVectorX");
             BastionVector.Y = tag.GetFloat("BastionVectorY");
+            GoldenGatewayVector.X = tag.GetFloat("GoldenGatewayVectorX");
+            GoldenGatewayVector.Y = tag.GetFloat("GoldenGatewayVectorY");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -1158,6 +1202,7 @@ namespace Redemption.WorldGeneration
             writer.WritePackedVector2(HallOfHeroesVector);
             writer.WritePackedVector2(LabVector);
             writer.WritePackedVector2(BastionVector);
+            writer.WritePackedVector2(GoldenGatewayVector);
         }
         public override void NetReceive(BinaryReader reader)
         {
@@ -1167,6 +1212,7 @@ namespace Redemption.WorldGeneration
             HallOfHeroesVector = reader.ReadPackedVector2();
             LabVector = reader.ReadPackedVector2();
             BastionVector = reader.ReadPackedVector2();
+            GoldenGatewayVector = reader.ReadPackedVector2();
         }
     }
     public class GenUtils
