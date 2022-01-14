@@ -149,6 +149,7 @@ namespace Redemption.Globals.Player
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
+            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
