@@ -33,13 +33,6 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(56, 78, 210));
         }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
-        public override void MouseOver(int i, int j)
-        {
-            Player player = Main.LocalPlayer;
-            player.noThrow = 2;
-            player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<HintIcon>();
-        }
         public override bool CanExplode(int i, int j) => false;
     }
     public class KariBed : PlaceholderTile
