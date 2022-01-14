@@ -15,8 +15,8 @@ namespace Redemption.Tiles.Furniture.Misc
 {
 	public class GoldenGatewayTile : ModTile
 	{
-		public const int FrameWidth = 16 * 10;
-		public const int FrameHeight = 16 * 2;
+		public const int FrameWidth = 16 * 12;
+		public const int FrameHeight = 16 * 3;
 		public const int HorizontalFrames = 1;
 		public const int VerticalFrames = 2;
 
@@ -40,14 +40,14 @@ namespace Redemption.Tiles.Furniture.Misc
 			Main.tileShine[Type] = 400;
 			Main.tileFrameImportant[Type] = true;
 
-			TileObjectData.newTile.Width = 10;
-			TileObjectData.newTile.Height = 2;
-			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
+			TileObjectData.newTile.Width = 12;
+			TileObjectData.newTile.Height = 3;
+			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
 			TileObjectData.newTile.UsesCustomCanPlace = true;
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 0;
 			TileObjectData.newTile.DrawYOffset = 2;
-			TileObjectData.newTile.Origin = new Point16(4, 1);
+			TileObjectData.newTile.Origin = new Point16(5, 2);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
@@ -94,7 +94,7 @@ namespace Redemption.Tiles.Furniture.Misc
 
 			const float TwoPi = (float)Math.PI * 2f;
 			float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-			Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(56f, -208f) + new Vector2(0f, offset * 4f);
+			Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(72f, -208f) + new Vector2(0f, offset * 4f);
 
 			spriteBatch.Draw(texture, drawPos, frame, color, Main.GlobalTimeWrappedHourly / 30f, origin, 1f, effects, 0f);
 
