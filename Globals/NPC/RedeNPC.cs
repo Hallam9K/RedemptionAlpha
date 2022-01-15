@@ -49,7 +49,7 @@ namespace Redemption.Globals.NPC
 
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Plantlike.Has(npc.type))
@@ -174,7 +174,7 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileTags.NoElement.Has(projectile.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Plantlike.Has(npc.type))
@@ -276,7 +276,7 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Infected.Has(npc.type))
@@ -324,7 +324,7 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileTags.NoElement.Has(projectile.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Infected.Has(npc.type))
