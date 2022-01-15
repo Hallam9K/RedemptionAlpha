@@ -20,6 +20,7 @@ namespace Redemption.Projectiles.Minions
             DisplayName.SetDefault("Tesla Field Generator");
             Main.projPet[Projectile.type] = true;
 
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
