@@ -5,6 +5,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
+using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Ranged;
 using System.Linq;
 using Terraria;
@@ -39,6 +40,8 @@ namespace Redemption.Globals.NPC
         public bool bileDebuff;
         public bool electrified;
         public bool stunned;
+        public bool infected;
+        public int infectedTime;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -56,6 +59,7 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
+            infected = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -66,6 +70,11 @@ namespace Redemption.Globals.NPC
             {
                 dirtyWound = false;
                 dirtyWoundTime = 0;
+            }
+            if (!npc.HasBuff(ModContent.BuffType<VirulityDebuff>()))
+            {
+                infected = false;
+                infectedTime = 0;
             }
         }
 
@@ -116,6 +125,7 @@ namespace Redemption.Globals.NPC
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<VirulityDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
                 }
                 if (NPCTags.Infected.Has(i))
@@ -133,7 +143,6 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
                 }
-
             }
         }
         #endregion
@@ -146,6 +155,17 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= infestedTime / 120;
+            }
+            if (infected)
+            {
+                infectedTime++;
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 500;
+
+                if (damage < 100)
+                    damage = 100;
             }
             if (dirtyWound)
             {
@@ -405,6 +425,13 @@ namespace Redemption.Globals.NPC
                 }
                 return false;
             }
+            if (infected)
+            {
+                if (infectedTime >= 360 && npc.lifeMax < 7500)
+                {
+                    BaseAI.DamageNPC(npc, 5000, 0, Main.LocalPlayer, true, true);
+                }
+            }
             if (stunned)
             {
                 if (npc.noGravity && !npc.noTileCollide)
@@ -489,6 +516,14 @@ namespace Redemption.Globals.NPC
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
                         Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                }
+            }
+            if (infected && infectedTime >= 360 && npc.lifeMax > 5)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
                 }
             }
             if (iceFrozen)
