@@ -161,7 +161,7 @@ namespace Redemption.Globals.Player
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GrenadeLauncher"), Player.position);
-                    Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 25 * 25);
+                    Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
                     Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);              

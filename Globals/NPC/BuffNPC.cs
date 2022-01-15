@@ -59,7 +59,6 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
-            infected = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -314,8 +313,8 @@ namespace Redemption.Globals.NPC
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
-            if (infected)         
-                drawColor = new Color(32, 158, 88);           
+            if (infected)
+                drawColor = new Color(32, 158, 88);
             if (infested)
                 drawColor = new Color(197, 219, 171);
             if (rallied)
@@ -435,7 +434,6 @@ namespace Redemption.Globals.NPC
             }
             if (infected)
             {
-                npc.defense -= 30;
                 if (infectedTime >= 360 && npc.lifeMax < 7500)
                 {
                     BaseAI.DamageNPC(npc, 7500, 0, Main.LocalPlayer, true, true);
@@ -445,7 +443,7 @@ namespace Redemption.Globals.NPC
                 {
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
-                        if (!npc.active || npc.friendly)
+                        if (!npc.active || npc.friendly || infected)
                             continue;
 
                         if (!npc.Hitbox.Intersects(npc.Hitbox))
@@ -547,7 +545,7 @@ namespace Redemption.Globals.NPC
                 SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
                 }
             }
             if (iceFrozen)

@@ -31,7 +31,7 @@ namespace Redemption.Projectiles.Misc
         }
         public override void AI()
         {
-            Vector2 spawn = new Vector2(Projectile.Center.X, Projectile.Center.Y - 100);
+            Vector2 spawn = new(Projectile.Center.X, Projectile.Center.Y - 100);
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
@@ -42,10 +42,12 @@ namespace Redemption.Projectiles.Misc
             {
                 Projectile.frame = 1;
                 if (Main.netMode != NetmodeID.Server)
+                {
                     Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/GasCanister1").Type);
-                Gore.NewGore(Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
-                    ModContent.Find<ModGore>("Redemption/GasCanister2").Type);
+                    Gore.NewGore(Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
+                        ModContent.Find<ModGore>("Redemption/GasCanister2").Type);
+                }
 
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gas1"), Projectile.position);
@@ -85,7 +87,6 @@ namespace Redemption.Projectiles.Misc
     public class GasCanister_Gas : ModProjectile
     {
         public override string Texture => "Redemption/Textures/IceMist";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Virulent Gas");
