@@ -117,6 +117,14 @@ namespace Redemption.Projectiles.Misc
 
         public override void AI()
         {
+            if (Projectile.localAI[0] == 0)
+                Projectile.localAI[0] = Main.rand.Next(1, 3);
+
+            if (Projectile.localAI[0] == 1)
+                Projectile.rotation -= 0.003f;
+            else if (Projectile.localAI[0] == 2)
+                Projectile.rotation += 0.003f;
+
             if (Projectile.timeLeft < 80)
             {
                 Projectile.alpha += 20;

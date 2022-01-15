@@ -432,28 +432,6 @@ namespace Redemption.Globals.NPC
                 }
                 return false;
             }
-            if (infected)
-            {
-                if (infectedTime >= 360 && npc.lifeMax < 7500)
-                {
-                    BaseAI.DamageNPC(npc, 7500, 0, Main.LocalPlayer, true, true);
-                }
-
-                if (infectedTime >= 100)
-                {
-                    for (int i = 0; i < Main.maxNPCs; i++)
-                    {
-                        if (!npc.active || npc.friendly || infected)
-                            continue;
-
-                        if (!npc.Hitbox.Intersects(npc.Hitbox))
-                            continue;
-
-                        if (Main.rand.NextBool(75))
-                            npc.AddBuff(ModContent.BuffType<ViralityDebuff>(), 420);
-                    }
-                }
-            }
             if (stunned)
             {
                 if (npc.noGravity && !npc.noTileCollide)
@@ -483,8 +461,9 @@ namespace Redemption.Globals.NPC
         {
             if (moonflare)
             {
-                foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    Terraria.NPC target = Main.npc[i];
                     if (!target.active || target.whoAmI == npc.whoAmI || target.GetGlobalNPC<BuffNPC>().moonflare)
                         continue;
 
@@ -492,6 +471,29 @@ namespace Redemption.Globals.NPC
                         continue;
 
                     target.AddBuff(ModContent.BuffType<MoonflareDebuff>(), 360);
+                }
+            }
+            if (infected)
+            {
+                if (infectedTime >= 360 && npc.lifeMax < 7500)
+                {
+                    BaseAI.DamageNPC(npc, 7500, 0, Main.LocalPlayer, true, true);
+                }
+
+                if (infectedTime >= 100)
+                {
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        Terraria.NPC target = Main.npc[i];
+                        if (!target.active || target.whoAmI == npc.whoAmI || target.friendly || target.GetGlobalNPC<BuffNPC>().infected)
+                            continue;
+
+                        if (!target.Hitbox.Intersects(npc.Hitbox))
+                            continue;
+
+                        if (Main.rand.NextBool(75))
+                            target.AddBuff(ModContent.BuffType<ViralityDebuff>(), 420);
+                    }
                 }
             }
             if (pureChill && npc.knockBackResist > 0 && !npc.boss)
@@ -544,9 +546,7 @@ namespace Redemption.Globals.NPC
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
                     Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
-                }
             }
             if (iceFrozen)
             {
