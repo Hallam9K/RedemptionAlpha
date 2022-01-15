@@ -15,11 +15,10 @@ namespace Redemption.Items.Materials.PostML
         public override void SetStaticDefaults()
         { 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 12));
         }
         public override void SetDefaults()
         {
-            Item.width = 30;
+            Item.width = 28;
             Item.height = 24;
             Item.maxStack = 99;
             Item.value = Item.sellPrice(0, 1, 50, 0);
