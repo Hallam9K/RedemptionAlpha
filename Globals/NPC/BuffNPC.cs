@@ -270,15 +270,21 @@ namespace Redemption.Globals.NPC
         {
             if (bileDebuff)
                 player.armorPenetration += 15;
+            if (infected)
+                player.armorPenetration += 20;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Terraria.Player player = Main.player[projectile.owner];
             if (bileDebuff)
                 player.armorPenetration += 15;
+            if (infected)
+                player.armorPenetration += 20;
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            if (infected)
+                damage *= 1.2;
             if (infested)
             {
                 if (npc.defense > 0)
@@ -308,6 +314,8 @@ namespace Redemption.Globals.NPC
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
+            if (infected)         
+                drawColor = new Color(32, 158, 88);           
             if (infested)
                 drawColor = new Color(197, 219, 171);
             if (rallied)
@@ -427,9 +435,25 @@ namespace Redemption.Globals.NPC
             }
             if (infected)
             {
+                npc.defense -= 30;
                 if (infectedTime >= 360 && npc.lifeMax < 7500)
                 {
-                    BaseAI.DamageNPC(npc, 5000, 0, Main.LocalPlayer, true, true);
+                    BaseAI.DamageNPC(npc, 7500, 0, Main.LocalPlayer, true, true);
+                }
+
+                if (infectedTime >= 100)
+                {
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (!npc.active || npc.friendly)
+                            continue;
+
+                        if (!npc.Hitbox.Intersects(npc.Hitbox))
+                            continue;
+
+                        if (Main.rand.NextBool(75))
+                            npc.AddBuff(ModContent.BuffType<ViralityDebuff>(), 420);
+                    }
                 }
             }
             if (stunned)

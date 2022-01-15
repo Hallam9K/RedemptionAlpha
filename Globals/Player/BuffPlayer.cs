@@ -164,7 +164,7 @@ namespace Redemption.Globals.Player
                     Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 25 * 25);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
-                    Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 220, 2, Main.myPlayer);              
+                    Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);              
                 }
 
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))

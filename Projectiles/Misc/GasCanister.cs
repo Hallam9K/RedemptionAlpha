@@ -16,33 +16,50 @@ namespace Redemption.Projectiles.Misc
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Virulent Grenade");
+            Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 16;
-            Projectile.height = 16;
-            Projectile.friendly = true;
-            Projectile.hostile = false;
+            Projectile.width = 12;
+            Projectile.height = 20;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.DamageType = DamageClass.Generic;
             Projectile.tileCollide = true;
-            Projectile.timeLeft = 190;
+            Projectile.timeLeft = 360;
         }
         public override void AI()
         {
+            Vector2 spawn = new Vector2(Projectile.Center.X, Projectile.Center.Y - 100);
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
-        }
-        public override void Kill(int timeLeft)
-        {
-            Vector2 spawn = new Vector2(Projectile.Center.X, Projectile.Center.Y - 100);
-            if (!Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gas1"), Projectile.position);
 
-            if (Projectile.owner == Main.myPlayer)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), spawn, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Projectile.owner);
+            Projectile.localAI[0]++;
+
+            if (Projectile.localAI[0] == 180)
+            {
+                Projectile.frame = 1;
+                if (Main.netMode != NetmodeID.Server)
+                    Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
+                        ModContent.Find<ModGore>("Redemption/GasCanister1").Type);
+                Gore.NewGore(Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
+                    ModContent.Find<ModGore>("Redemption/GasCanister2").Type);
+
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gas1"), Projectile.position);
+
+                if (Projectile.owner == Main.myPlayer)
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), spawn, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Projectile.owner);
+            }
+
+            if (Projectile.localAI[0] >= 300)
+            {
+                Projectile.alpha += 5;
+            }
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (Projectile.velocity.X != oldVelocity.X)
@@ -87,11 +104,18 @@ namespace Redemption.Projectiles.Misc
             Projectile.timeLeft = 240;
             Projectile.scale = Main.rand.NextFloat(2, 2.5f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.usesLocalNPCImmunity = true;
             Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 60;
+            target.immune[Projectile.owner] = 0;
+        }
+
         public override void AI()
-        {      
+        {
             if (Projectile.timeLeft < 80)
             {
                 Projectile.alpha += 20;
@@ -122,7 +146,7 @@ namespace Redemption.Projectiles.Misc
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.Green), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.ForestGreen), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
     }
