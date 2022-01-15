@@ -71,7 +71,7 @@ namespace Redemption.Globals.NPC
                 dirtyWound = false;
                 dirtyWoundTime = 0;
             }
-            if (!npc.HasBuff(ModContent.BuffType<VirulityDebuff>()))
+            if (!npc.HasBuff(ModContent.BuffType<ViralityDebuff>()))
             {
                 infected = false;
                 infectedTime = 0;

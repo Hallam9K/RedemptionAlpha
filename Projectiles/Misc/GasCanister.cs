@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gas Canister");
+            DisplayName.SetDefault("Virulent Grenade");
         }
         public override void SetDefaults()
         {
@@ -71,7 +71,7 @@ namespace Redemption.Projectiles.Misc
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infectious Gas");
+            DisplayName.SetDefault("Virulent Gas");
         }
 
         public override void SetDefaults()
@@ -111,7 +111,7 @@ namespace Redemption.Projectiles.Misc
                     if (!Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
-                    target.AddBuff(ModContent.BuffType<VirulityDebuff>(), 420);
+                    target.AddBuff(ModContent.BuffType<ViralityDebuff>(), 420);
                 }
             }
         }

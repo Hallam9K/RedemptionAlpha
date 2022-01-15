@@ -4,13 +4,13 @@ using Terraria.ModLoader;
 
 namespace Redemption.Buffs.NPCBuffs
 {
-	public class VirulityDebuff : ModBuff
+	public class ViralityDebuff : ModBuff
 	{
 		public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Virulity");
+			DisplayName.SetDefault("Virality");
 			Main.debuff[Type] = true;
 		}
 
