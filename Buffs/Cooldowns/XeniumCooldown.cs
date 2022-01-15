@@ -9,7 +9,7 @@ namespace Redemption.Buffs.Cooldowns
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Xenium Cooldown");
-			Description.SetDefault("Your shoulder launcher is reloading.");
+			Description.SetDefault("Your shoulder launcher is reloading");
 			Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;
 			Main.buffNoSave[Type] = false;
