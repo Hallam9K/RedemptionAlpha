@@ -77,7 +77,7 @@ namespace Redemption.Globals
                 tooltips.Add(hammerLine);
             }
 
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type) && !ProjectileTags.NoElement.Has(item.shoot))
             {
                 if (ItemTags.Arcane.Has(item.type) || ProjectileTags.Arcane.Has(item.shoot))
                 {
