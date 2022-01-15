@@ -59,7 +59,6 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
-            infected = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -445,7 +444,7 @@ namespace Redemption.Globals.NPC
                 {
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
-                        if (!npc.active || npc.friendly)
+                        if (!npc.active || npc.friendly || infected)
                             continue;
 
                         if (!npc.Hitbox.Intersects(npc.Hitbox))
