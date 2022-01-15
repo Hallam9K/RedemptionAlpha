@@ -155,7 +155,7 @@ namespace Redemption.Globals.Player
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            if (Redemption.RedeSpecialAbility.JustPressed)
+            if (Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)
             {
                 if (xeniumBonus != 0 && !Player.HasBuff(ModContent.BuffType<XeniumCooldown>()))
                 {
