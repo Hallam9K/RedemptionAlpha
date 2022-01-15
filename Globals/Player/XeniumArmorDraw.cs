@@ -29,7 +29,7 @@ namespace Redemption.Globals.Player
             Terraria.Player drawPlayer = drawInfo.drawPlayer;
             if (xeniumBonus)
             {
-                Texture2D texture = ModContent.Request<Texture2D>("Redemption/Items/Armor/PostML/Xenium/XeniumBelchCannon").Value;
+                Texture2D texture = ModContent.Request<Texture2D>("Redemption/Items/Armor/PostML/Xenium/XeniumGrenadeCannon").Value;
                 Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
                 SpriteEffects spriteEffects = drawPlayer.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 drawPos = drawPlayer.position + new Vector2(drawPlayer.width * 0.5f, drawPlayer.height * 0.5f);

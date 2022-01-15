@@ -44,8 +44,12 @@ namespace Redemption.Items.Armor.PostML.Xenium
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "The belch cannon on your shoulder will fire a poison gas that infects your enemies.";
-            player.GetModPlayer<BuffPlayer>().xeniumBonus = true;
+            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+            {
+                player.setBonus = "Press " + key + " to fire a virulent grenade from your shoulder launcher";
+            }
+            player.GetModPlayer<BuffPlayer>().xeniumBonus = 1;
             ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = true;
         }
 
