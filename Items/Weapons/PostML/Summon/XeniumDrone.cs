@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.useAnimation = 26;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;
-            Item.knockBack = 6;
+            Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 0, 45, 0);
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item44;

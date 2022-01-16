@@ -56,6 +56,7 @@ namespace Redemption.Projectiles.Minions
 				int bulletID = -1;
 				float shootSpeed = 10f;
 				int shootDamage = Projectile.damage;
+				float shootKnockback = Projectile.knockBack;
 
 				if (Projectile.ai[0] % 120 == 0)
 				{
@@ -69,7 +70,7 @@ namespace Redemption.Projectiles.Minions
 
 				if (++Projectile.ai[0] % 15 == 0)
                 {
-					if (Projectile.UseAmmo(AmmoID.Bullet, ref bulletID, ref shootSpeed, ref shootDamage, ref Projectile.knockBack, Main.rand.Next(5) > 0));
+					if (Projectile.UseAmmo(AmmoID.Bullet, ref bulletID, ref shootSpeed, ref shootDamage, ref shootKnockback, Main.rand.Next(5) > 0))
                     {
 						Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(shootSpeed, (target.Center - Projectile.Center).ToRotation()), bulletID, shootDamage, Projectile.knockBack, Main.myPlayer);
 					}
@@ -78,7 +79,13 @@ namespace Redemption.Projectiles.Minions
 			else
             {
 				Projectile.LookByVelocity();
-				Projectile.Move(new Vector2(owner.Center.X + (20 + Projectile.minionPos * 50) * -owner.direction + 10, owner.Center.Y - 62), 10, 0);
+				Projectile.Move(new Vector2(owner.Center.X + (20 + Projectile.minionPos * 50) * -owner.direction, owner.Center.Y - 62), 10, 0);
+			}
+			if (Main.myPlayer == owner.whoAmI && Projectile.DistanceSQ(owner.Center) > 2000 * 2000)
+			{
+				Projectile.position = owner.Center;
+				Projectile.velocity *= 0.1f;
+				Projectile.netUpdate = true;
 			}
 		}
 

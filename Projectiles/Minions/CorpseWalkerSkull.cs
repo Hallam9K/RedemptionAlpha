@@ -122,7 +122,6 @@ namespace Redemption.Projectiles.Minions
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-
         }
 
         public override bool PreDraw(ref Color lightColor)
