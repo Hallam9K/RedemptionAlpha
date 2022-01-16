@@ -60,7 +60,7 @@ namespace Redemption.Projectiles.Minions
 				if (Projectile.ai[0] % 120 == 0)
 				{
 					attackPosition = Main.rand.Next(target.width + 40, target.width + 120);
-					attackPositionY = Main.rand.Next(target.width - 30, target.width);
+					attackPositionY = Main.rand.Next(target.width - 25, target.width);
 					AttackPos = new(Projectile.Center.X > target.Center.X ? attackPosition : -attackPosition, -attackPositionY) ;
 				}
 
@@ -71,7 +71,7 @@ namespace Redemption.Projectiles.Minions
                 {
 					if (Projectile.UseAmmo(AmmoID.Bullet, ref bulletID, ref shootSpeed, ref shootDamage, ref Projectile.knockBack, Main.rand.Next(5) > 0));
                     {
-						Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.UnitX * Projectile.direction * shootSpeed, bulletID, shootDamage, Projectile.knockBack, Main.myPlayer);
+						Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(shootSpeed, (target.Center - Projectile.Center).ToRotation()), bulletID, shootDamage, Projectile.knockBack, Main.myPlayer);
 					}
 				}
 			}
