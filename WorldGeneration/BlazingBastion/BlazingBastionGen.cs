@@ -146,6 +146,32 @@ namespace Redemption.WorldGeneration
                         Wiring.ActuateForced(i, j);
                 }
             }
+            // Tower 1
+            GenUtils.ObjectPlace(origin.X + 151, origin.Y + 53, TileID.TallGateClosed);
+            GenUtils.ObjectPlace(origin.X + 163, origin.Y + 53, TileID.TallGateClosed);
+            GenUtils.ObjectPlace(origin.X + 157, origin.Y + 56, TileID.Bookcases, 4);
+            GenUtils.ObjectPlace(origin.X + 155, origin.Y + 47, TileID.HangingLanterns, 32);
+            GenUtils.ObjectPlace(origin.X + 159, origin.Y + 47, TileID.HangingLanterns, 32);
+            GenUtils.ObjectPlace(origin.X + 155, origin.Y + 45, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 159, origin.Y + 45, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 152, origin.Y + 30, TileID.Chairs, 16);
+            GenUtils.ObjectPlace(origin.X + 162, origin.Y + 30, TileID.Chairs, 16, 1);
+            GenUtils.ObjectPlace(origin.X + 157, origin.Y + 25, TileID.Chandeliers, 32);
+            WorldGen.AddBuriedChest(origin.X + 154, origin.Y + 30, 0, false, 4);
+            // Tower 2
+            GenUtils.ObjectPlace(origin.X + 264, origin.Y + 53, TileID.TallGateClosed);
+            GenUtils.ObjectPlace(origin.X + 276, origin.Y + 53, TileID.TallGateClosed);
+            GenUtils.ObjectPlace(origin.X + 270, origin.Y + 56, TileID.Bookcases, 4);
+            GenUtils.ObjectPlace(origin.X + 268, origin.Y + 47, TileID.HangingLanterns, 32);
+            GenUtils.ObjectPlace(origin.X + 272, origin.Y + 47, TileID.HangingLanterns, 32);
+            GenUtils.ObjectPlace(origin.X + 268, origin.Y + 45, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 272, origin.Y + 45, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 265, origin.Y + 30, TileID.Chairs, 16);
+            GenUtils.ObjectPlace(origin.X + 275, origin.Y + 30, TileID.Chairs, 16, 1);
+            GenUtils.ObjectPlace(origin.X + 270, origin.Y + 25, TileID.Chandeliers, 32);
+            WorldGen.AddBuriedChest(origin.X + 274, origin.Y + 30, 0, false, 4);
+
+            // Bastion
             GenUtils.ObjectPlace(origin.X + 180, origin.Y + 59, TileID.TallGateClosed);
             GenUtils.ObjectPlace(origin.X + 247, origin.Y + 59, TileID.TallGateClosed);
             GenUtils.ObjectPlace(origin.X + 187, origin.Y + 63, TileID.Benches, 10);
