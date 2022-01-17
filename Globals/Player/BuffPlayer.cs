@@ -60,6 +60,7 @@ namespace Redemption.Globals.Player
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
+        public int xeniumBonus;
         public int hardlightBonus;
 
         public bool MetalSet;
@@ -111,8 +112,9 @@ namespace Redemption.Globals.Player
             HEVSuit = false;
             WastelandWaterImmune = false;
             hardlightBonus = 0;
+            xeniumBonus = 0;
             snipped = false;
-            island = false;
+            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -149,12 +151,23 @@ namespace Redemption.Globals.Player
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
+            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            if (Redemption.RedeSpecialAbility.JustPressed)
+            if (Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)
             {
+                if (xeniumBonus != 0 && !Player.HasBuff(ModContent.BuffType<XeniumCooldown>()))
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GrenadeLauncher"), Player.position);
+                    Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
+                    Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
+
+                    Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
+                }
+
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
                 {
                     if (!Main.dedServ)

@@ -6,6 +6,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Tools.PreHM;
+using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Blisterface;
@@ -48,7 +49,7 @@ namespace Redemption.Globals.NPC
 
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Plantlike.Has(npc.type))
@@ -128,11 +129,8 @@ namespace Redemption.Globals.NPC
                     damage = (int)(damage * 1.25f);
                 if (NPCTags.Robotic.Has(npc.type))
                 {
-                    if (ItemTags.Blood.Has(item.type))
-                        damage = (int)(damage * 0.25f);
-
-                    if (ItemTags.Poison.Has(item.type))
-                        damage = (int)(damage * 0.25f);
+                    if (ItemTags.Blood.Has(item.type) || ItemTags.Poison.Has(item.type))
+                        damage = (int)(damage * 0.5f);
 
                     if (ItemTags.Thunder.Has(item.type))
                         damage = (int)(damage * 1.25f);
@@ -140,6 +138,18 @@ namespace Redemption.Globals.NPC
                     if (ItemTags.Water.Has(item.type))
                         damage = (int)(damage * 1.5f);
                 }
+                if (!NPCTags.Inorganic.Has(npc.type))
+                {
+                    if (ItemTags.Blood.Has(item.type))
+                        damage = (int)(damage * 1.15f);
+
+                    if (ItemTags.Poison.Has(item.type))
+                        damage = (int)(damage * 1.15f);
+                }
+                if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
+                    damage = (int)(damage * 1.15f);
+                if (ItemTags.Wind.Has(item.type) && (npc.noGravity || !npc.collideY))
+                    knockback = (int)((knockback * 1.1f) + 2);
                 #endregion
             }
 
@@ -164,7 +174,7 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileTags.NoElement.Has(projectile.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Plantlike.Has(npc.type))
@@ -245,7 +255,7 @@ namespace Redemption.Globals.NPC
                 if (NPCTags.Robotic.Has(npc.type))
                 {
                     if (ProjectileTags.Blood.Has(projectile.type) || ProjectileTags.Poison.Has(projectile.type))
-                        damage = (int)(damage * 0.25f);
+                        damage = (int)(damage * 0.5f);
 
                     if (ProjectileTags.Thunder.Has(projectile.type))
                         damage = (int)(damage * 1.25f);
@@ -253,6 +263,10 @@ namespace Redemption.Globals.NPC
                     if (ProjectileTags.Water.Has(projectile.type))
                         damage = (int)(damage * 1.5f);
                 }
+                if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
+                    damage = (int)(damage * 1.15f);
+                if (ProjectileTags.Wind.Has(projectile.type) && (npc.noGravity || !npc.collideY))
+                    knockback = (int)((knockback * 1.1f) + 2);
                 #endregion
             }
         }
@@ -262,7 +276,7 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Infected.Has(npc.type))
@@ -298,6 +312,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(4) && ItemTags.Water.Has(item.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
+                if (ItemTags.Shadow.Has(item.type))
+                {
+                    if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
+                        Item.NewItem(npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                }
                 #endregion
             }
 
@@ -305,7 +324,7 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
+            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileTags.NoElement.Has(projectile.type))
             {
                 #region Elemental Attributes
                 if (NPCTags.Infected.Has(npc.type))
@@ -340,6 +359,11 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(4) && ProjectileTags.Water.Has(projectile.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+                }
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                {
+                    if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
+                        Item.NewItem(npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }

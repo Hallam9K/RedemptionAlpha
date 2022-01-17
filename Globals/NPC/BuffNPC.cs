@@ -5,6 +5,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
+using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Ranged;
 using System.Linq;
 using Terraria;
@@ -39,6 +40,8 @@ namespace Redemption.Globals.NPC
         public bool bileDebuff;
         public bool electrified;
         public bool stunned;
+        public bool infected;
+        public int infectedTime;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -66,6 +69,11 @@ namespace Redemption.Globals.NPC
             {
                 dirtyWound = false;
                 dirtyWoundTime = 0;
+            }
+            if (!npc.HasBuff(ModContent.BuffType<ViralityDebuff>()))
+            {
+                infected = false;
+                infectedTime = 0;
             }
         }
 
@@ -116,6 +124,7 @@ namespace Redemption.Globals.NPC
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
                 }
                 if (NPCTags.Infected.Has(i))
@@ -133,7 +142,6 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
                 }
-
             }
         }
         #endregion
@@ -146,6 +154,17 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= infestedTime / 120;
+            }
+            if (infected)
+            {
+                infectedTime++;
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 500;
+
+                if (damage < 100)
+                    damage = 100;
             }
             if (dirtyWound)
             {
@@ -250,15 +269,21 @@ namespace Redemption.Globals.NPC
         {
             if (bileDebuff)
                 player.armorPenetration += 15;
+            if (infected)
+                player.armorPenetration += 20;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Terraria.Player player = Main.player[projectile.owner];
             if (bileDebuff)
                 player.armorPenetration += 15;
+            if (infected)
+                player.armorPenetration += 20;
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            if (infected)
+                damage *= 1.2;
             if (infested)
             {
                 if (npc.defense > 0)
@@ -288,6 +313,8 @@ namespace Redemption.Globals.NPC
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
+            if (infected)
+                drawColor = new Color(32, 158, 88);
             if (infested)
                 drawColor = new Color(197, 219, 171);
             if (rallied)
@@ -434,8 +461,9 @@ namespace Redemption.Globals.NPC
         {
             if (moonflare)
             {
-                foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
+                    Terraria.NPC target = Main.npc[i];
                     if (!target.active || target.whoAmI == npc.whoAmI || target.GetGlobalNPC<BuffNPC>().moonflare)
                         continue;
 
@@ -443,6 +471,29 @@ namespace Redemption.Globals.NPC
                         continue;
 
                     target.AddBuff(ModContent.BuffType<MoonflareDebuff>(), 360);
+                }
+            }
+            if (infected)
+            {
+                if (infectedTime >= 360 && npc.lifeMax < 7500)
+                {
+                    BaseAI.DamageNPC(npc, 7500, 0, Main.LocalPlayer, true, true);
+                }
+
+                if (infectedTime >= 100)
+                {
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        Terraria.NPC target = Main.npc[i];
+                        if (!target.active || target.whoAmI == npc.whoAmI || target.friendly || target.GetGlobalNPC<BuffNPC>().infected)
+                            continue;
+
+                        if (!target.Hitbox.Intersects(npc.Hitbox))
+                            continue;
+
+                        if (Main.rand.NextBool(75))
+                            target.AddBuff(ModContent.BuffType<ViralityDebuff>(), 420);
+                    }
                 }
             }
             if (pureChill && npc.knockBackResist > 0 && !npc.boss)
@@ -490,6 +541,12 @@ namespace Redemption.Globals.NPC
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
                         Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
+            }
+            if (infected && infectedTime >= 360 && npc.lifeMax > 5)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
             }
             if (iceFrozen)
             {

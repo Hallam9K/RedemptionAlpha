@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Friendly
                     for (int y = -40; y <= 40; y++)
                     {
                         Point tileToNPC = NPC.Center.ToTileCoordinates();
-                        int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].type;
+                        int type = Framing.GetTileSafely(tileToNPC.X, tileToNPC.Y).type;
                         if (type == TileID.VanityTreeSakura)
                             SakuraScore++;
                         if (type == TileID.VanityTreeYellowWillow)
@@ -348,14 +348,14 @@ namespace Redemption.NPCs.Friendly
             {
                 for (int y = -40; y <= 40; y++)
                 {
-                    int type = Main.tile[spawnInfo.spawnTileX + x, spawnInfo.spawnTileY + y].type;
+                    int type = Framing.GetTileSafely(spawnInfo.spawnTileX + x, spawnInfo.spawnTileY + y).type;
                     if (type == TileID.Trees || type == TileID.PalmTree || type == TileID.VanityTreeSakura || type == TileID.VanityTreeYellowWillow)
                         score++;
                 }
             }
 
             float baseChance = SpawnCondition.OverworldDay.Chance * (!NPC.AnyNPCs(NPC.type) ? 1 : 0);
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? (Main.raining ? 0.01f : 0.005f) : 0f;
+            float multiplier = Framing.GetTileSafely(spawnInfo.spawnTileX, spawnInfo.spawnTileY).type == TileID.Grass ? (Main.raining ? 0.01f : 0.005f) : 0f;
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;
