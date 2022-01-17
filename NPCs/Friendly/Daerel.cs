@@ -36,8 +36,11 @@ namespace Redemption.NPCs.Friendly
             NPC.Happiness.LikeBiome(BiomeID.Snow);
             NPC.Happiness.LoveBiome(BiomeID.Forest);
             NPC.Happiness.DislikeBiome(BiomeID.NormalUnderground);
+            NPC.Happiness.HateBiome(BiomeID.Jungle);
 
             NPC.Happiness.LoveNPC(ModContent.NPCType<Zephos>());
+            NPC.Happiness.LikeNPC(NPCID.Stylist);
+            NPC.Happiness.HateNPC(NPCID.TaxCollector);
             NPC.Happiness.DislikeNPC(NPCID.Merchant);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
