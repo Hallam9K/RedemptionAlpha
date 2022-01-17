@@ -29,6 +29,14 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 4;
 
+            NPC.Happiness.LoveBiome(BiomeID.NormalUnderground);
+            NPC.Happiness.DislikeBiome(BiomeID.Ocean);
+
+            NPC.Happiness.LikeNPC(ModContent.NPCType<Zephos>());
+            NPC.Happiness.LikeNPC(ModContent.NPCType<Daerel>());
+            NPC.Happiness.DislikeNPC(NPCID.Merchant);
+            NPC.Happiness.HateNPC(NPCID.TaxCollector);
+
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Velocity = 1f
