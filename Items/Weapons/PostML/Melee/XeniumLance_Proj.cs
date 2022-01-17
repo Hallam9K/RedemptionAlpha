@@ -47,8 +47,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
         private Vector2 startVector;
         public ref float Length => ref Projectile.localAI[0];
         public ref float Rot => ref Projectile.localAI[1];
-        public float Timer;
+        public int Timer;
         private float speed;
+        private int directionLock;
 
        
         public override bool PreAI()
@@ -144,6 +145,28 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         Projectile.Kill();
 
                     Length = MathHelper.Clamp(Length, 60, 120);
+                    break;
+                case 3:
+                    directionLock = player.direction;
+                    if (Timer++ == 0)
+                    {
+                        startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
+                        speed = 1.2f;
+                    }
+
+                    if (Timer == 5)
+                    {
+                        player.velocity = RedeHelper.PolarVector(35, Projectile.velocity.ToRotation());
+                    }
+
+                    Projectile.damage += Timer * 100;
+                    speed -= 0.02f;
+                    Length *= speed;
+                    vector = startVector * Length;
+                    if (Timer >= 20)
+                        Projectile.Kill();
+
+                    Length = MathHelper.Clamp(Length, 60, 180);
                     break;
             }
             Projectile.Center = player.MountedCenter + vector;       
