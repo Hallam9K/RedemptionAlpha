@@ -32,6 +32,18 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 26;
             NPCID.Sets.HatOffsetY[NPC.type] = -4;
 
+            NPC.Happiness.LoveBiome(BiomeID.Forest);
+            NPC.Happiness.LikeBiome(BiomeID.Hallow);
+            NPC.Happiness.DislikeBiome(BiomeID.Jungle);
+            NPC.Happiness.DislikeBiome(BiomeID.Desert);
+            NPC.Happiness.HateBiome(BiomeID.Snow);
+
+            NPC.Happiness.HateNPC(NPCID.Cyborg);
+            NPC.Happiness.HateNPC(NPCID.ArmsDealer);
+            NPC.Happiness.DislikeNPC(NPCID.WitchDoctor);
+            NPC.Happiness.DislikeNPC(NPCID.Truffle);
+            NPC.Happiness.LikeNPC(NPCID.Nurse);
+            NPC.Happiness.LikeNPC(NPCID.Mechanic);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
