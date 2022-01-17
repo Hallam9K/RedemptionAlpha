@@ -89,7 +89,7 @@ Mods: {
 				DislikeBiome: "My current environment is rather... undesirable."
 				HateBiome: "...Just like home. I really do not like this environment."
 				LikeNPC: "{NPCName} and I have things in common. We get along well."
-				LoveNPC: "I like {NPCName}."
+				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
 				DislikeNPC: "I find {NPCName} rather unsettling."
 				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
 			}
