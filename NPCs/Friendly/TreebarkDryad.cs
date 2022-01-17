@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Friendly
                     for (int y = -40; y <= 40; y++)
                     {
                         Point tileToNPC = NPC.Center.ToTileCoordinates();
-                        int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].type;
+                        int type = Framing.GetTileSafely(tileToNPC.X, tileToNPC.Y).type;
                         if (type == TileID.VanityTreeSakura)
                             SakuraScore++;
                         if (type == TileID.VanityTreeYellowWillow)
