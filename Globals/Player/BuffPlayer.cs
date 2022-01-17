@@ -114,6 +114,7 @@ namespace Redemption.Globals.Player
             hardlightBonus = 0;
             xeniumBonus = 0;
             snipped = false;
+            island = false;
             ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
