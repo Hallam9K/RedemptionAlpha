@@ -37,9 +37,12 @@ namespace Redemption.NPCs.Friendly
             NPC.Happiness.LikeBiome(BiomeID.Forest);
             NPC.Happiness.LoveBiome(BiomeID.Ocean);
             NPC.Happiness.DislikeBiome(BiomeID.NormalUnderground);
+            NPC.Happiness.HateBiome(BiomeID.Snow);
 
             NPC.Happiness.LoveNPC(ModContent.NPCType<Daerel>());
+            NPC.Happiness.LikeNPC(NPCID.Pirate);
             NPC.Happiness.DislikeNPC(NPCID.Merchant);
+            NPC.Happiness.HateNPC(NPCID.TaxCollector);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {

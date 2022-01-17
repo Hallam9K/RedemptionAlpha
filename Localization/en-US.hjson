@@ -27,11 +27,11 @@ Mods: {
 				LikeBiome: "I think {BiomeName} is a very nice place, I hardly see any snow where I was from."
 				LoveBiome: "I think {BiomeName} is perfect, calm and tranquil."
 				DislikeBiome: "I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!"
-				HateBiome: "I hate it here."
-				LikeNPC: "I like {NPCName}."
+				HateBiome: "Why'd you put me in {BiomeName}? You know how hostile jungles are!?"
+				LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
 				LoveNPC: "Me and {NPCName} are great friends, thank you for letting us live in the same town."
 				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
-				HateNPC: "I hate {NPCName}."
+				HateNPC: "Psst, could you move {NPCName} far away from me, I'm already super broke as is."
 			}
 			Fallen: {
 				Content: Nice little place ya got here.
@@ -39,14 +39,14 @@ Mods: {
 				LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
 				FarFromHome: Could ya take me back to my home?
 				DislikeCrowded: All these humans are makin' my bones rattle.
-				LikeBiome: "{BiomeName} is perfect for us Fallen, not many humans come and go here."
-				LoveBiome: "{BiomeName} is perfect."
+				LikeBiome: "Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were."
+				LoveBiome: "The caverns are perfect for us Fallen, not many humans come and go here."
 				DislikeBiome: "I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!"
 				HateBiome: "I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl."
 				LikeNPC: "{NPCName} got somethin' about him I like."
-				LoveNPC: "I like {NPCName}."
+				LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
 				DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
-				HateNPC: "I hate {NPCName}."
+				HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
 			}
 			Newb: {
 				Content: Me like here!
@@ -54,13 +54,13 @@ Mods: {
 				LoveSpace: So little people, yay!
 				FarFromHome: Me lost, can you find home?
 				DislikeCrowded: Too many faces!
-				LikeBiome: "{BiomeName} good."
-				LoveBiome: "Me love {BiomeName}!"
-				DislikeBiome: "Me feel {BiomeName} make me sad!"
-				HateBiome: "{BiomeName} bad!"
+				LikeBiome: "Me like {BiomeName}."
+				LoveBiome: "Me love {BiomeName}! It give memory of... Uh.."
+				DislikeBiome: "Too boring here, me hate sand!"
+				HateBiome: "Me feel {BiomeName} make me sad!"
 				LikeNPC: "Me like {NPCName}!"
-				LoveNPC: "Me like {NPCName}!"
-				DislikeNPC: "{NPCName} tells me he sell dirt, but he no sell dirt, I sell dirt!"
+				LoveNPC: "{NPCName} knows magic like me!"
+				DislikeNPC: "I feel evil within {NPCName}, very bad!"
 				HateNPC: "My hatred towards {NPCName} is beyond your mortal comprehension."
 			}
 			Zephos: {
@@ -72,11 +72,11 @@ Mods: {
 				LikeBiome: "I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming."
 				LoveBiome: "Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!"
 				DislikeBiome: "Not a fan of {BiomeName}, I'd rather live on the surface."
-				HateBiome: "{BiomeName} sucks."
-				LikeNPC: "I like {NPCName}."
+				HateBiome: "It's so cold here, I'm shaking in my boots!"
+				LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
 				LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
 				DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
-				HateNPC: "I hate {NPCName}."
+				HateNPC: "{NPCName} will never take my money! NEVER!!"
 			}
 			TBot: {
 				Content: Feeling rather content, thank you for asking.
@@ -89,7 +89,7 @@ Mods: {
 				DislikeBiome: "My current environment is rather... undesirable."
 				HateBiome: "...Just like home. I really do not like this environment."
 				LikeNPC: "{NPCName} and I have things in common. We get along well."
-				LoveNPC: "I like {NPCName}."
+				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
 				DislikeNPC: "I find {NPCName} rather unsettling."
 				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
 			}
