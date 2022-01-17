@@ -36,12 +36,14 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 14;
 
-            NPC.Happiness.LikeBiome(BiomeID.NormalUnderground);
+            NPC.Happiness.LoveBiome(BiomeID.NormalUnderground);
+            NPC.Happiness.LikeBiome(BiomeID.Snow);
             NPC.Happiness.HateBiome(BiomeID.Hallow);
             NPC.Happiness.DislikeBiome(BiomeID.Forest);
 
+            NPC.Happiness.LoveNPC(NPCID.GoblinTinkerer);
             NPC.Happiness.LikeNPC(NPCID.Clothier);
-            NPC.Happiness.HateNPC(NPCID.WitchDoctor);
+            NPC.Happiness.HateNPC(NPCID.Nurse);
             NPC.Happiness.DislikeNPC(NPCID.Dryad);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
