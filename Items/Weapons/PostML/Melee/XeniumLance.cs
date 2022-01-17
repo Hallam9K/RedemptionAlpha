@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Melee;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
+using Redemption.Tiles.Furniture.Lab;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -97,6 +99,14 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Cooldown = 40;
 
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 15)
+                .AddTile(ModContent.TileType<XeniumRefineryTile>())
+                .Register();
         }
     }
 }
