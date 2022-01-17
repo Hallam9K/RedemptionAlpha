@@ -42,6 +42,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.Globals
 {
@@ -392,7 +393,7 @@ namespace Redemption.Globals
             Water.SetMultiple(ItemID.Muramasa);
             Ice.SetMultiple(ItemID.IceBlade, ItemID.IceSickle, ItemID.Frostbrand, ModContent.ItemType<PureIronSword>(), ModContent.ItemType<BladeOfTheMountain>());
             Earth.SetMultiple(ItemID.Seedler, ItemID.FossilPickaxe, ItemID.Picksaw);
-            Thunder.SetMultiple(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex, ModContent.ItemType<SlayerGun>());
+            Thunder.SetMultiple(ItemID.InfluxWaver, ItemID.VortexPickaxe, ItemID.LunarHamaxeVortex, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<XeniumLance>());
             Holy.SetMultiple(ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer, ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<BlindJustice>());
             Shadow.SetMultiple(ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker);
             Nature.SetMultiple(ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer, ModContent.ItemType<CursedGrassBlade>());
