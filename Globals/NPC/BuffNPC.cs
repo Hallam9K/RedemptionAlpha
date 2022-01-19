@@ -92,7 +92,7 @@ namespace Redemption.Globals.NPC
 
         public override void SetStaticDefaults()
         {
-            for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++)
+            for (int i = 0; i < NPCLoader.NPCCount; i++)
             {
                 if (NPCTags.Demon.Has(i))
                 {
