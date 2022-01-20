@@ -19,6 +19,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -63,7 +64,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);

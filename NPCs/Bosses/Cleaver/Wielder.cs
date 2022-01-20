@@ -8,6 +8,8 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using System.IO;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -50,7 +52,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);

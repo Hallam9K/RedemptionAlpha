@@ -19,6 +19,7 @@ using Redemption.Items.Lore;
 using Terraria.Audio;
 using Terraria.GameContent.Events;
 using ReLogic.Content;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -57,7 +58,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 

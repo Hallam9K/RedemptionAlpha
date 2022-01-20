@@ -20,6 +20,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -55,14 +56,16 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCDebuffImmunityData debuffData = new()
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused
+                    BuffID.Bleeding,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

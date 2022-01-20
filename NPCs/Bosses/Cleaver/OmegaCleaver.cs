@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Donator.Uncon;
@@ -55,7 +56,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);

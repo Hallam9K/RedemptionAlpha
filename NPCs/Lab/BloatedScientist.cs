@@ -44,7 +44,11 @@ namespace Redemption.NPCs.Lab
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned
+                    BuffID.Poisoned,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 

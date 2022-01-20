@@ -7,6 +7,9 @@ using Redemption.Globals;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Biomes;
+using Terraria.DataStructures;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -18,6 +21,19 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             DisplayName.SetDefault("Hive Growth");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Bleeding,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
+                }
+            });
 
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;

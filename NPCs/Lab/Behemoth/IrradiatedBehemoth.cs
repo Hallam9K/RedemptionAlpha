@@ -15,6 +15,7 @@ using Terraria.Audio;
 using Redemption.WorldGeneration;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Lore;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -50,7 +51,14 @@ namespace Redemption.NPCs.Lab.Behemoth
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 

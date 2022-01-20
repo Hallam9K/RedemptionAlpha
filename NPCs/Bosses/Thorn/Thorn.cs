@@ -22,6 +22,7 @@ using Terraria.Chat;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -61,7 +62,10 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned,
-                    BuffID.Confused
+                    BuffID.Confused,
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);

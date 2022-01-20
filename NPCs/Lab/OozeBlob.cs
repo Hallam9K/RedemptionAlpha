@@ -13,6 +13,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Lab
 {
@@ -43,6 +44,13 @@ namespace Redemption.NPCs.Lab
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Bleeding,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 
