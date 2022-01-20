@@ -303,12 +303,12 @@ namespace Redemption.NPCs.PreHM
 
                 if (friendly)
                 {
-                    if (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type] || NPCTags.SkeletonHumanoid.Has(target.type))
+                    if (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type] || NPCLists.SkeletonHumanoid.Contains(target.type))
                         continue;
                 }
                 else
                 {
-                    if (nearestUndead && ((!NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type)) || target.life >= target.lifeMax))
+                    if (nearestUndead && ((!NPCLists.Undead.Contains(target.type) && !NPCLists.Skeleton.Contains(target.type)) || target.life >= target.lifeMax))
                         continue;
 
                     if (!nearestUndead && !WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))

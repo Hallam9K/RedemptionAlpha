@@ -10,6 +10,9 @@ using Redemption.Base;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using Terraria.DataStructures;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -21,6 +24,19 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             DisplayName.SetDefault("Missile Drone Mk.I");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCDebuffImmunityData debuffData = new()
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Confused,
+                    BuffID.Poisoned,
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
+                }
+            };
+            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
 
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;

@@ -13,6 +13,8 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.WorldGeneration;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -57,7 +59,11 @@ namespace Redemption.NPCs.Lab.Volt
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)

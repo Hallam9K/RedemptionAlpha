@@ -104,7 +104,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (NPCTags.Armed.Has(target.type))
+            if (NPCLists.Armed.Contains(target.type))
                 target.AddBuff(ModContent.BuffType<DisarmedDebuff>(), 1800);
         }
 

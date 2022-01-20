@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Melee
         public override bool? CanCutTiles() => false;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (NPCTags.Demon.Has(target.type))
+            if (NPCLists.Demon.Contains(target.type))
                 damage *= 2;
         }
         public override bool PreDraw(ref Color lightColor)

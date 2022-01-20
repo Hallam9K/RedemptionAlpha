@@ -25,7 +25,7 @@ namespace Redemption.Globals
         }
         public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
-            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))
             {
                 if (Main.rand.NextBool(chance))
                 {

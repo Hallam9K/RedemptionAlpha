@@ -19,6 +19,8 @@ using System;
 using Redemption.WorldGeneration;
 using Redemption.Base;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -57,7 +59,11 @@ namespace Redemption.NPCs.Lab.MACE
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);

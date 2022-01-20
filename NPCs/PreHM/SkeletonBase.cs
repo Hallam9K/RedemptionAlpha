@@ -53,7 +53,7 @@ namespace Redemption.NPCs.PreHM
         public bool AttackerIsUndead()
         {
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
-            if (globalNPC.attacker is NPC && (NPCTags.Undead.Has((globalNPC.attacker as NPC).type) || NPCTags.Skeleton.Has((globalNPC.attacker as NPC).type)))
+            if (globalNPC.attacker is NPC && (NPCLists.Undead.Contains((globalNPC.attacker as NPC).type) || NPCLists.Skeleton.Contains((globalNPC.attacker as NPC).type)))
                 return true;
 
             return false;

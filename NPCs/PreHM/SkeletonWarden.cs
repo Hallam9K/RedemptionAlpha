@@ -421,7 +421,7 @@ namespace Redemption.NPCs.PreHM
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<SkeletonWarden>() || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
-                if (nearestUndead && !NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type))
+                if (nearestUndead && !NPCLists.Undead.Contains(target.type) && !NPCLists.Skeleton.Contains(target.type))
                     continue;
 
                 if (!nearestUndead && !WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))

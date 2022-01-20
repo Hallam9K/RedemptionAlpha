@@ -122,8 +122,8 @@ namespace Redemption.NPCs.Critters
                     {
                         NPC possibleTarget = Main.npc[i];
                         if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
-                            !NPCTags.Undead.Has(possibleTarget.type) &&
-                            !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                            !NPCLists.Undead.Contains(possibleTarget.type) &&
+                            !NPCLists.SkeletonHumanoid.Contains(possibleTarget.type))
                             continue;
 
                         if (hitCooldown > 0 || !NPC.Hitbox.Intersects(possibleTarget.Hitbox))
@@ -162,7 +162,7 @@ namespace Redemption.NPCs.Critters
             {
                 NPC possibleTarget = Main.npc[i];
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI ||
-                    !NPCTags.Undead.Has(possibleTarget.type) && !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                    !NPCLists.Undead.Contains(possibleTarget.type) && !NPCLists.SkeletonHumanoid.Contains(possibleTarget.type))
                     continue;
 
                 if (hopCooldown == 0 && Main.rand.NextBool(200) && NPC.Sight(possibleTarget, 60, false, true) &&

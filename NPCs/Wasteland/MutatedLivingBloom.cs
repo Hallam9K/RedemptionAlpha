@@ -49,7 +49,11 @@ namespace Redemption.NPCs.Wasteland
                     BuffID.Bleeding,
                     BuffID.Poisoned,
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 

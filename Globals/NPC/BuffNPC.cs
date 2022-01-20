@@ -92,34 +92,34 @@ namespace Redemption.Globals.NPC
 
         public override void SetStaticDefaults()
         {
-            for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++)
+            for (int i = 0; i < NPCLoader.NPCCount; i++)
             {
-                if (NPCTags.Demon.Has(i))
+                if (NPCLists.Demon.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<DragonblazeDebuff>(),
                     ModContent.BuffType<MoonflareDebuff>() });
                 }
-                if (NPCTags.Cold.Has(i))
+                if (NPCLists.Cold.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<PureChillDebuff>(),
                     ModContent.BuffType<IceFrozen>() });
                 }
-                if (NPCTags.Plantlike.Has(i))
+                if (NPCLists.Plantlike.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>(),
                     ModContent.BuffType<InfestedDebuff>() });
                 }
-                if (NPCTags.Dragonlike.Has(i))
+                if (NPCLists.Dragonlike.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<DragonblazeDebuff>() });
                 }
-                if (NPCTags.Inorganic.Has(i))
+                if (NPCLists.Inorganic.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
@@ -127,7 +127,7 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<ViralityDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>() });
                 }
-                if (NPCTags.Infected.Has(i))
+                if (NPCLists.Infected.Contains(i))
                 {
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<BileDebuff>(),
@@ -213,7 +213,7 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                if (NPCTags.Plantlike.Has(npc.type) || NPCTags.Cold.Has(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+                if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
                 {
                     npc.lifeRegen -= 24;
                     if (damage < 2)

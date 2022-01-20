@@ -52,8 +52,9 @@ namespace Redemption.NPCs.Friendly
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Bleeding,
                     BuffID.Poisoned,
+                    ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<InfestedDebuff>()
                 }
             });
 

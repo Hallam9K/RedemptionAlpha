@@ -60,9 +60,9 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>(),
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
