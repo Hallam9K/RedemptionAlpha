@@ -138,8 +138,8 @@ namespace Redemption.NPCs.Critters
                             if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                                 continue;
 
-                            if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCTags.Undead.Has(possibleTarget.type) &&
-                                !NPCTags.SkeletonHumanoid.Has(possibleTarget.type) &&
+                            if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCLists.Undead.Contains(possibleTarget.type) &&
+                                !NPCLists.SkeletonHumanoid.Contains(possibleTarget.type) &&
                                 possibleTarget.type != ModContent.NPCType<DevilsTongue>())
                                 continue;
 
@@ -214,8 +214,8 @@ namespace Redemption.NPCs.Critters
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                     continue;
 
-                if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCTags.Undead.Has(possibleTarget.type) &&
-                    !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCLists.Undead.Contains(possibleTarget.type) &&
+                    !NPCLists.SkeletonHumanoid.Contains(possibleTarget.type))
                     continue;
 
                 if (hitCooldown > 0 || !NPC.Hitbox.Intersects(possibleTarget.Hitbox))

@@ -136,8 +136,8 @@ namespace Redemption.NPCs.Lab
                 {
                     NPC target = Main.npc[i];
                     if (!target.active || target.dontTakeDamage || target.immortal || NPC.whoAmI == target.whoAmI || target.type == Type || target.life >= NPC.damage ||
-                        NPC.height < target.height - 8 || NPC.width < target.width - 8 || target.boss || NPCTags.Inorganic.Has(target.type) ||
-                        NPCTags.Spirit.Has(target.type) || !NPC.Hitbox.Intersects(target.Hitbox))
+                        NPC.height < target.height - 8 || NPC.width < target.width - 8 || target.boss || NPCLists.Inorganic.Contains(target.type) ||
+                        NPCLists.Spirit.Contains(target.type) || !NPC.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item2, NPC.position);

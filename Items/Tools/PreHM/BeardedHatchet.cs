@@ -37,7 +37,7 @@ namespace Redemption.Items.Tools.PreHM
 
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
-            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))
             {
                 if (Main.rand.NextBool(20))
                 {
@@ -47,7 +47,7 @@ namespace Redemption.Items.Tools.PreHM
                     crit = true;
                 }
             }
-            if (NPCTags.Skeleton.Has(target.type))
+            if (NPCLists.Skeleton.Contains(target.type))
             {
                 damage = (int)(damage * 1.45f);
             }

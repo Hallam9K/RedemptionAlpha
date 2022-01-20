@@ -60,7 +60,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
-            if (NPCTags.Dragonlike.Has(target.type))
+            if (NPCLists.Dragonlike.Contains(target.type))
                 damage *= 10;
         }
     }

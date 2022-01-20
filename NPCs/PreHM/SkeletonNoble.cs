@@ -420,7 +420,7 @@ namespace Redemption.NPCs.PreHM
 
                 if (friendly)
                 {
-                    if (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type] || NPCTags.SkeletonHumanoid.Has(target.type))
+                    if (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type] || NPCLists.SkeletonHumanoid.Contains(target.type))
                         continue;
                 }
                 else

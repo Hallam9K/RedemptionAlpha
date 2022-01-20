@@ -142,7 +142,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (NPCTags.Dragonlike.Has(target.type))
+            if (NPCLists.Dragonlike.Contains(target.type))
                 damage *= 4;
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);

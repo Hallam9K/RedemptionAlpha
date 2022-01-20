@@ -10,7 +10,7 @@ namespace Redemption.Globals
 	{
 		public bool CanDrop(DropAttemptInfo info)
 		{
-			if (!info.IsInSimulation && NPCTags.SkeletonHumanoid.Has(info.npc.type))
+			if (!info.IsInSimulation && NPCLists.SkeletonHumanoid.Contains(info.npc.type))
 			{
 				return info.npc.GetGlobalNPC<RedeNPC>().decapitated;
 			}

@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (NPCTags.Undead.Has(target.type))
+            if (NPCLists.Undead.Contains(target.type))
                 damage = (int)(damage * 2f);
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);
