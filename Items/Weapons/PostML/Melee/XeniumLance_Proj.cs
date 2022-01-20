@@ -155,10 +155,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     }
 
                     if (Timer == 5)
-                    {
+                    {        
                         player.velocity = RedeHelper.PolarVector(35, Projectile.velocity.ToRotation());
                     }
 
+                    player.shadowDodge = true;
                     Projectile.damage += Timer * 100;
                     speed -= 0.02f;
                     Length *= speed;
