@@ -73,7 +73,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash2").WithPitchVariance(0.1f).WithVolume(1), player.position);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 3, sp ? 1 : 0);
-                player.AddBuff(ModContent.BuffType<XeniumLanceCooldown>(), 10 * 60);
+                player.AddBuff(ModContent.BuffType<XeniumLanceCooldown>(), 20 * 60);
                 ShotCount--;
             }
             else

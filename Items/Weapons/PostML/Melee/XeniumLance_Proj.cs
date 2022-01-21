@@ -51,7 +51,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         private float speed;
         private int directionLock;
 
-       
+
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
@@ -151,26 +151,30 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     if (Timer++ == 0)
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
-                        speed = 1.2f;
+                        speed = 1.15f;
                     }
 
                     if (Timer == 5)
-                    {        
+                    {
                         player.velocity = RedeHelper.PolarVector(35, Projectile.velocity.ToRotation());
                     }
 
-                    player.shadowDodge = true;
-                    Projectile.damage += Timer * 100;
-                    speed -= 0.02f;
+                    if (Timer >= 10)
+                    {
+                        player.immune = true;
+                        player.immuneTime = 60;
+                        Projectile.damage += Timer * 100;
+                    }
                     Length *= speed;
                     vector = startVector * Length;
-                    if (Timer >= 20)
+                    speed -= 0.012f;
+                    if (Timer >= 30)
                         Projectile.Kill();
 
                     Length = MathHelper.Clamp(Length, 60, 180);
                     break;
             }
-            Projectile.Center = player.MountedCenter + vector;       
+            Projectile.Center = player.MountedCenter + vector;
 
             return false;
         }
@@ -182,9 +186,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-    
+
             Vector2 v = Projectile.Center - RedeHelper.PolarVector(64, (Projectile.Center - player.Center).ToRotation());
-           
+
             Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
