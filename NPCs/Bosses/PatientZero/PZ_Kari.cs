@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 52;
             NPC.height = 66;
             NPC.friendly = false;
-            NPC.damage = 100;
+            NPC.damage = 150;
             NPC.defense = 10;
             NPC.lifeMax = 200000;
             NPC.HitSound = SoundID.NPCHit13;

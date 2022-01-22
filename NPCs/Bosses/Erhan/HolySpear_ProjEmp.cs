@@ -2,14 +2,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class HolySpear_Proj : ModProjectile
+    public class HolySpear_ProjEmp : ModProjectile
     {
+        public override string Texture => "Redemption/NPCs/Bosses/Erhan/HolySpear_Proj";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Spear");
@@ -18,8 +20,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void SetDefaults()
         {
-            Projectile.width = 24;
-            Projectile.height = 24;
+            Projectile.width = 18;
+            Projectile.height = 18;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.tileCollide = true;
@@ -62,8 +64,11 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             return false;
         }
+
         public override void Kill(int timeLeft)
         {
+            SoundEngine.PlaySound(SoundID.Item122);
+            Projectile.NewProjectile(Projectile.InheritSource(Projectile), new(Projectile.Center.X, Projectile.Center.Y - 800), Vector2.Zero, ModContent.ProjectileType<HolyBeam>(), Projectile.damage, 0, Main.myPlayer);
             for (int i = 0; i < 15; i++)
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
