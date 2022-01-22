@@ -216,6 +216,11 @@ namespace Redemption.NPCs.Friendly
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y == 5 * frameHeight)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice1").WithPitchVariance(0.1f), NPC.position);
+                    }
                     if (NPC.frame.Y == 8 * frameHeight)
                     {
                         if (NPC.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
@@ -265,7 +270,7 @@ namespace Redemption.NPCs.Friendly
         {
             RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false))
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage)
             {
                 SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 81);
                 globalNPC.attacker = Main.npc[gotNPC];
