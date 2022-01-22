@@ -28,10 +28,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.Spear);
-            Length = 60;
+            Length = 40;
             Rot = MathHelper.ToRadians(3);
-            Projectile.width = 68;
-            Projectile.height = 68;
+            Projectile.width = 48;
+            Projectile.height = 48;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(136, 255, 255), new Color(105, 255, 255)), new NoCap(), new DefaultTrailPosition(), 250f, 350f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(136, 255, 255), new Color(105, 255, 255)), new NoCap(), new DefaultTrailPosition(), 150f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         private Vector2 vector;
@@ -151,7 +151,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     if (Timer++ == 0)
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
-                        speed = 1.15f;
+                        speed = 1.2f;
                     }
 
                     if (Timer == 5)
@@ -167,11 +167,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     }
                     Length *= speed;
                     vector = startVector * Length;
-                    speed -= 0.012f;
-                    if (Timer >= 30)
+                    speed -= 0.015f;
+                    if (Timer >= 26)
                         Projectile.Kill();
 
-                    Length = MathHelper.Clamp(Length, 60, 180);
+                    Length = MathHelper.Clamp(Length, 60, 120);
                     break;
             }
             Projectile.Center = player.MountedCenter + vector;
@@ -187,7 +187,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Vector2 v = Projectile.Center - RedeHelper.PolarVector(64, (Projectile.Center - player.Center).ToRotation());
+            Vector2 v = Projectile.Center - RedeHelper.PolarVector(48, (Projectile.Center - player.Center).ToRotation());
 
             Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
