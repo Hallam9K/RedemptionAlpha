@@ -629,7 +629,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer == 80)
                                         ArmType = 1;
 
-                                    if (AITimer == 100 || AITimer == 120 || AITimer == 400 || AITimer == 420)
+                                    if (AITimer == 100 || AITimer == 120 || AITimer == 360 || AITimer == 380)
                                     {
                                         TeleGlow = true;
                                         TeleGlowTimer = 0;
@@ -638,15 +638,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                                                 new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)), false, SoundID.Item101);
                                     }
 
-                                    if (AITimer < 380 && AITimer > 160)
-                                        NPC.Move(new Vector2(player.Center.X, player.Center.Y - 350), 10, 40, false);
                                     else
                                         NPC.velocity *= 0.5f;
 
-                                    if (AITimer == 500)
+                                    if (AITimer == 460)
                                         ArmType = 0;
 
-                                    if (AITimer >= 560)
+                                    if (AITimer >= 520)
                                     {
                                         AITimer = 0;
                                         TimerRand = 1;
