@@ -405,8 +405,9 @@ namespace Redemption.Globals
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC npc = Main.npc[i];
                 if (!npc.active)
                     continue;
 

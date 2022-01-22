@@ -11,6 +11,8 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.NPCs.PreHM;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -76,7 +78,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Swing1").WithPitchVariance(0.1f).WithVolume(0.4f), player.position);
-                            startVector = RedeHelper.PolarVector(1, MathHelper.ToRadians(-45f * player.direction - 90f));
+                            startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                             speed = MathHelper.ToRadians(3);
                         }
                         if (Timer < 5 * SwingSpeed)
@@ -134,6 +136,14 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (target.life <= 0 && target.lifeMax >= 50 && (Main.rand.NextBool(6) || NPCLists.Spirit.Contains(target.type)) && NPC.CountNPCS(ModContent.NPCType<WraithSlayer_Samurai>()) < 4)
+            {
+                for (int i = 0; i < 20; i++)
+                    Dust.NewDust(target.position, target.width, target.height, DustID.Wraith);
+
+                Player player = Main.player[Projectile.owner];
+                RedeHelper.SpawnNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: player.whoAmI);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -148,7 +158,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Color.Purple * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Color color = Color.MediumPurple * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color * (Timer / 10), oldrot[k], origin, Projectile.scale, spriteEffects, 0);
             }
 
