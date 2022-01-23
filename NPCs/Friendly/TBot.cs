@@ -32,11 +32,11 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 26;
             NPCID.Sets.HatOffsetY[NPC.type] = -4;
 
-            NPC.Happiness.LoveBiome(BiomeID.Forest);
-            NPC.Happiness.LikeBiome(BiomeID.Hallow);
-            NPC.Happiness.DislikeBiome(BiomeID.Jungle);
-            NPC.Happiness.DislikeBiome(BiomeID.Desert);
-            NPC.Happiness.HateBiome(BiomeID.Snow);
+            NPC.Happiness.LoveBiome(PrimaryBiomeID.Forest);
+            NPC.Happiness.LikeBiome(PrimaryBiomeID.Hallow);
+            NPC.Happiness.DislikeBiome(PrimaryBiomeID.Jungle);
+            NPC.Happiness.DislikeBiome(PrimaryBiomeID.Desert);
+            NPC.Happiness.HateBiome(PrimaryBiomeID.Snow);
 
             NPC.Happiness.HateNPC(NPCID.Cyborg);
             NPC.Happiness.DislikeNPC(NPCID.Truffle);
