@@ -14,6 +14,8 @@ using Redemption.Base;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Tiles.Furniture.Misc;
 
 namespace Redemption.WorldGeneration
 {
@@ -192,6 +194,25 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 222, origin.Y + 90, TileID.Chandeliers, 32);
             GenUtils.ObjectPlace(origin.X + 240, origin.Y + 90, TileID.Chandeliers, 32);
             GenUtils.ObjectPlace(origin.X + 245, origin.Y + 90, TileID.Chandeliers, 32);
+
+            GenUtils.ObjectPlace(origin.X + 180, origin.Y + 39, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 186, origin.Y + 39, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 241, origin.Y + 39, TileID.Lamps, 23);
+            GenUtils.ObjectPlace(origin.X + 247, origin.Y + 39, TileID.Lamps, 23);
+
+            GenUtils.ObjectPlace(origin.X + 177, origin.Y + 87, ModContent.TileType<NozaCageHangingTile>());
+            GenUtils.ObjectPlace(origin.X + 200, origin.Y + 87, ModContent.TileType<NozaCageHangingTile>());
+            GenUtils.ObjectPlace(origin.X + 217, origin.Y + 87, ModContent.TileType<NozaCageHangingTile>());
+            GenUtils.ObjectPlace(origin.X + 249, origin.Y + 87, ModContent.TileType<NozaCageHangingTile>());
+            GenUtils.ObjectPlace(origin.X + 184, origin.Y + 106, ModContent.TileType<NozaCageTile>());
+            GenUtils.ObjectPlace(origin.X + 190, origin.Y + 106, ModContent.TileType<NozaCageLargeTile>(), 0, 1);
+            GenUtils.ObjectPlace(origin.X + 198, origin.Y + 106, ModContent.TileType<NozaCageSmallTile>());
+            GenUtils.ObjectPlace(origin.X + 221, origin.Y + 106, ModContent.TileType<NozaCageTile>());
+            GenUtils.ObjectPlace(origin.X + 224, origin.Y + 106, ModContent.TileType<NozaCageSmallTile>(), 0, 1);
+            GenUtils.ObjectPlace(origin.X + 242, origin.Y + 106, ModContent.TileType<NozaCageTile>(), 0, 1);
+            GenUtils.ObjectPlace(origin.X + 248, origin.Y + 106, ModContent.TileType<NozaCageLargeTile>());
+            GenUtils.ObjectPlace(origin.X + 190, origin.Y + 101, ModContent.TileType<NozaCageSmallTile>());
+            GenUtils.ObjectPlace(origin.X + 242, origin.Y + 103, ModContent.TileType<NozaCageSmallTile>(), 0, 1);
 
             bool placedBigHouse = false;
             int attempts = 0;
