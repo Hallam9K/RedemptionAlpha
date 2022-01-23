@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -35,6 +36,7 @@ namespace Redemption.Tiles.Furniture.Misc
             name.SetDefault("Cage");
             AddMapEntry(new Color(116, 121, 144), name);
         }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new Vector2(i, j) * 16f, ModContent.ItemType<NozaCageHanging>());
         public override bool CanExplode(int i, int j) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
