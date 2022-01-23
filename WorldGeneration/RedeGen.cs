@@ -395,7 +395,7 @@ namespace Redemption.WorldGeneration
                         Tile tile = Main.tile[placeX, placeY];
                         if (tile.type != TileID.Grass)
                             continue;
-                        if (!CheckFlat(placeX, placeY, 14, 2))
+                        if (!CheckFlat(placeX, placeY, 10, 2))
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCave", AssetRequestMode.ImmediateLoad).Value;
