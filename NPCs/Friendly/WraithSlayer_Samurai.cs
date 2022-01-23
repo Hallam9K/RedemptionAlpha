@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.width = 42;
             NPC.height = 70;
-            NPC.damage = 400;
+            NPC.damage = 1050;
             NPC.friendly = true;
             NPC.defense = 24;
             NPC.lifeMax = 250;
@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Friendly
             NPC.chaseable = false;
             NPC.aiStyle = -1;
             NPC.alpha = 255;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 120;
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 200;
         }
         public override void HitEffect(int hitDirection, double damage)
         {

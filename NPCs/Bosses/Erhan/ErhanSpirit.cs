@@ -32,6 +32,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             Begin,
             Idle,
             Attacks,
+            Praying,
+            EmpoweredAttacks,
             Fallen,
         }
 
@@ -185,6 +187,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         private bool floatTimer;
         private float TimerRand2;
         private bool Funny;
+        private int EmpoweredNumber;
+        private string EmpoweredName;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -330,7 +334,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer > 80)
                     {
                         if (AttackNumber != 0 && AttackNumber % 5 == 0)
-                            AIState = ActionState.Fallen;
+                        {
+                            if (Main.expertMode)
+                                AIState = ActionState.Praying;
+                            else
+                                AIState = ActionState.Fallen;
+                        }
                         else
                         {
                             AttackChoice();
@@ -553,6 +562,397 @@ namespace Redemption.NPCs.Bosses.Erhan
                             #endregion
                     }
                     break;
+                case ActionState.EmpoweredAttacks:
+                    switch (EmpoweredNumber)
+                    {
+                        #region Will
+                        case 0:
+                            switch (TimerRand)
+                            {
+                                case 0:
+                                    AITimer++;
+                                    if (AITimer < 80)
+                                        NPC.Move(new Vector2(player.Center.X, player.Center.Y - 350), 10, 40, false);
+                                    else
+                                        NPC.velocity *= 0.5f;
+
+                                    if (AITimer == 80)
+                                        ArmType = 1;
+
+                                    if (AITimer == 100 || AITimer == 120 || AITimer == 360 || AITimer == 380)
+                                    {
+                                        TeleGlow = true;
+                                        TeleGlowTimer = 0;
+                                        for (int i = 0; i < Main.rand.Next(8, 12); i++)
+                                            NPC.Shoot(NPC.Center + new Vector2(Main.rand.Next(-1000, 1000), 0), ModContent.ProjectileType<Erhan_LightmassEmp>(), NPC.damage * 2,
+                                                new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)), false, SoundID.Item101);
+                                    }
+
+                                    else
+                                        NPC.velocity *= 0.5f;
+
+                                    if (AITimer == 460)
+                                        ArmType = 0;
+
+                                    if (AITimer >= 520)
+                                    {
+                                        AITimer = 0;
+                                        TimerRand = 1;
+                                        NPC.netUpdate = true;
+                                    }
+                                    break;
+
+                                case 1:
+                                    AITimer++;
+                                    if (AITimer < 40)
+                                        NPC.Move(new Vector2(player.Center.X + (40 * NPC.spriteDirection), player.Center.Y - 250), 10, 40, false);
+                                    else
+                                        NPC.velocity *= 0.5f;
+
+                                    if (AITimer == 80)
+                                        ArmType = 1;
+
+                                    if (AITimer >= 90 && AITimer % 5 == 0 && AITimer <= 130)
+                                    {
+                                        TimerRand2 += (float)Math.PI / 15;
+                                        if (TimerRand2 > (float)Math.PI)
+                                        {
+                                            TimerRand2 -= (float)Math.PI * 2;
+                                        }
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_ProjEmp>(), NPC.damage * 2,
+                                            new Vector2(0.1f, 0).RotatedBy(TimerRand2 + Math.PI / 2), false, SoundID.Item125);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_ProjEmp>(), NPC.damage * 2,
+                                            new Vector2(0.1f, 0).RotatedBy(-TimerRand2 + Math.PI / 2), false, SoundID.Item125);
+
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                            new Vector2(0.1f, 0).RotatedBy(TimerRand2 + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                            new Vector2(0.1f, 0).RotatedBy(-TimerRand2 + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                    }
+
+                                    if (AITimer > 150 && AITimer % 5 == 0 && AITimer <= 185)
+                                    {
+                                        player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                                        TimerRand2 -= (float)Math.PI / 13;
+                                        if (TimerRand2 > (float)Math.PI)
+                                        {
+                                            TimerRand2 -= (float)Math.PI * 2;
+                                        }
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_ProjEmp>(), NPC.damage * 2,
+                                            new Vector2(0.1f, 0).RotatedBy(TimerRand2 + Math.PI / 2), false, SoundID.Item125, "", 1);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_ProjEmp>(), NPC.damage * 2,
+                                            new Vector2(0.1f, 0).RotatedBy(-TimerRand2 + Math.PI / 2), false, SoundID.Item125, "", 1);
+
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                            new Vector2(0.1f, 0).RotatedBy(TimerRand2 + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                            new Vector2(0.1f, 0).RotatedBy(-TimerRand2 + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                    }
+
+                                    if (AITimer >= 260)
+                                        ArmType = 0;
+
+                                    if (AITimer >= 300)
+                                    {
+                                        EmpoweredGlowW = false;
+                                        NPC.netUpdate = true;
+                                    }
+
+                                    if (AITimer >= 360)
+                                    {
+                                        TimerRand = 0;
+                                        AITimer = 0;
+                                        TimerRand2 = 0;
+                                        AIState = ActionState.Fallen;
+                                    }
+                                    break;
+                            }
+                            break;
+                        #endregion
+
+                        #region Patience
+                        case 1:
+                            AITimer++;
+                            if (AITimer < 60)
+                                NPC.Move(new Vector2(player.Center.X, player.Center.Y - 350), 10, 40, false);
+                            else if (AITimer > 60 && AITimer < 130)
+                                NPC.velocity *= 0.5f;
+
+                            if (AITimer == 20)
+                            {
+                                HeadFrameY = 1;
+                                ArmType = 2;
+                            }
+                            if (AITimer == 40)
+                            {
+                                NPC.Shoot(new Vector2(player.Center.X - 800, player.Center.Y - 800),
+                                    ModContent.ProjectileType<RayOfGuidanceEmp>(), (int)(NPC.damage * 2.5f),
+                                    Vector2.Zero, false, SoundID.Item162);
+                                NPC.Shoot(new Vector2(player.Center.X + 800, player.Center.Y - 800),
+                                   ModContent.ProjectileType<RayOfGuidanceEmp>(), (int)(NPC.damage * 2.5f),
+                                   Vector2.Zero, false, SoundID.Item162);
+                            }
+
+                            if (AITimer >= 110 && AITimer % 5 == 0 && AITimer <= 150)
+                            {
+                                TimerRand += (float)Math.PI / 13;
+                                if (TimerRand > (float)Math.PI)
+                                {
+                                    TimerRand -= (float)Math.PI * 2;
+                                }
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage * 2,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item125);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage * 2,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125);
+
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+
+                                if (AITimer == 150)
+                                    TimerRand = 0;
+                            }
+
+                            if (AITimer < 210 && AITimer > 160)
+                                NPC.Move(new Vector2(player.Center.X - (350 * NPC.spriteDirection), player.Center.Y - 250), 20, 40, false);
+                            else if (AITimer > 210 && AITimer < 250)
+                                NPC.velocity *= 0.5f;
+
+                            if (AITimer >= 210 && AITimer % 5 == 0 && AITimer <= 250)
+                            {
+                                TimerRand += (float)Math.PI / 13;
+                                if (TimerRand > (float)Math.PI)
+                                {
+                                    TimerRand -= (float)Math.PI * 2;
+                                }
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage * 2,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item125);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage * 2,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125);
+
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+
+                                if (AITimer == 250)
+                                    TimerRand = 0;
+                            }
+
+                            if (AITimer < 290 && AITimer > 250)
+                                NPC.Move(new Vector2(player.Center.X - (200 * NPC.spriteDirection), player.Center.Y - 250), 20, 40, false);
+                            else if (AITimer > 290 && AITimer < 320)
+                                NPC.velocity *= 0.5f;
+
+                            if (AITimer >= 300 && AITimer % 5 == 0 && AITimer <= 340)
+                            {
+                                TimerRand += (float)Math.PI / 13;
+                                if (TimerRand > (float)Math.PI)
+                                {
+                                    TimerRand -= (float)Math.PI * 2;
+                                }
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_ProjEmp>(), NPC.damage * 2,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item125);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_ProjEmp>(), NPC.damage * 2,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125);
+
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                            }
+
+                            if (AITimer == 350)
+                            {
+                                HeadFrameY = 0;
+                                ArmType = 0;
+                            }
+
+                            if (AITimer >= 360)
+                            {
+                                EmpoweredGlowP = false;
+                                NPC.netUpdate = true;
+                            }
+
+                            if (AITimer >= 420)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Fallen;
+                            }
+                            break;
+                        #endregion
+
+                        #region Strength
+                        case 2:
+                            switch (TimerRand)
+                            {
+                                case 0:
+                                    if (AITimer++ == 0)
+                                    {
+                                        move = NPC.Center.X;
+                                        speed = 7;
+                                    }
+                                    NPC.Move(new Vector2(move, player.Center.Y - 250), speed, 50, false);
+                                    MoveClamp();
+                                    if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                                        speed *= 1.03f;
+                                    else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                                        speed *= 0.96f;
+
+                                    if (AITimer == 20)
+                                    {
+                                        HeadFrameY = 1;
+                                        ArmType = 2;
+                                    }
+                                    if (AITimer == 40)
+                                    {
+                                        NPC.Shoot(new Vector2(player.Center.X, player.Center.Y - 600),
+                                            ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 2.5f),
+                                            new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                                    }
+                                    if (AITimer >= 70 && AITimer % 15 == 0 && AITimer <= 220)
+                                    {
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-800, 800), player.Center.Y - 600),
+                                            ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 2.5f),
+                                            new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                                    }
+                                    if (AITimer == 340)
+                                    {
+                                        HeadFrameY = 0;
+                                        ArmType = 0;
+                                    }
+
+                                    if (AITimer >= 350)
+                                    {
+                                        AITimer = 0;
+                                        TimerRand = 1;
+                                        NPC.netUpdate = true;
+                                    }
+                                    break;
+                                case 1:
+                                    if (AITimer++ == 0)
+                                    {
+                                        move = NPC.Center.X;
+                                        speed = 8;
+                                    }
+                                    NPC.Move(new Vector2(move, player.Center.Y - 250), speed, 50, false);
+                                    MoveClamp();
+                                    if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                                        speed *= 1.03f;
+                                    else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                                        speed *= 0.96f;
+
+                                    if (AITimer == 80)
+                                        ArmType = 1;
+
+                                    if (AITimer == 100 || AITimer == 120)
+                                    {
+                                        TeleGlow = true;
+                                        TeleGlowTimer = 0;
+                                        for (int i = 0; i < Main.rand.Next(8, 12); i++)
+                                            NPC.Shoot(player.Center + new Vector2(Main.rand.Next(-1000, 1000), -350), ModContent.ProjectileType<Erhan_LightmassEmp>(), NPC.damage * 2,
+                                                new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)), false, SoundID.Item101);
+                                    }
+
+                                    if (AITimer == 160)
+                                    {
+                                        HeadFrameY = 1;
+                                        ArmType = 2;
+                                    }
+
+                                    if (AITimer >= 180 && AITimer % 15 == 0 && AITimer <= 260)
+                                    {
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-1000, 1000), player.Center.Y - 600),
+                                            ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 2.5f),
+                                            new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                                    }
+
+                                    if (AITimer == 330)
+                                    {
+                                        HeadFrameY = 0;
+                                        EmpoweredGlowS = false;
+                                        NPC.netUpdate = true;
+                                    }
+
+                                    if (AITimer >= 390)
+                                    {
+                                        TimerRand2 = 0;
+                                        TimerRand = 0;
+                                        AITimer = 0;
+                                        AIState = ActionState.Fallen;
+                                        NPC.netUpdate = true;
+                                    }
+
+                                    break;
+                            }
+                            break;
+                            #endregion
+                    }
+
+                    break;
+                case ActionState.Praying:
+                    if (AITimer++ == 0)
+                    {
+                        move = NPC.Center.X;
+                        speed = 9;
+                    }
+
+                    if (AITimer < 50)
+                    {
+                        NPC.Move(new Vector2(move, player.Center.Y - 250), speed, 50, false);
+                        MoveClamp();
+                        if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                            speed *= 1.03f;
+                        else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                            speed *= 0.96f;
+                    }
+                    else
+                        NPC.velocity *= 0.5f;
+
+                    if (AITimer == 59)
+                    {
+                        EmpoweredNumber = Main.rand.Next(3);
+                        if (EmpoweredNumber == 0)
+                        {
+                            EmpoweredGlowW = true;
+                            EmpoweredName = "WILL";
+                        }
+                        if (EmpoweredNumber == 1)
+                        {
+                            EmpoweredGlowP = true;
+                            EmpoweredName = "PATIENCE";
+                        }
+                        if (EmpoweredNumber == 2)
+                        {
+                            EmpoweredGlowS = true;
+                            EmpoweredName = "STRENGTH";
+                        }
+
+                    }
+                    if (AITimer == 60)
+                    {
+                        ArmType = 3;
+                        HeadFrameY = 2;
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("O' LORD, HALLOWED BE THINE NAME, SAVE NOW YOUR SERVANT'S BUTTOCKS! GRANT ME " + EmpoweredName + "!", 180, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                    }
+
+                    if (AITimer == 240)
+                    {
+                        ArmType = 0;
+                        HeadFrameY = 0;
+                    }
+
+                    if (AITimer > 260)
+                    {
+
+                        AIState = ActionState.EmpoweredAttacks;
+                        AITimer = 0;
+                        NPC.netUpdate = true;
+                    }
+
+                    break;
                 case ActionState.Fallen:
                     switch (TimerRand)
                     {
@@ -660,6 +1060,9 @@ namespace Redemption.NPCs.Bosses.Erhan
         private int HolyFlareTimer;
         private bool TeleGlow;
         private int TeleGlowTimer;
+        private bool EmpoweredGlowP;
+        private bool EmpoweredGlowS;
+        private bool EmpoweredGlowW;
         public override void FindFrame(int frameHeight)
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -791,7 +1194,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
 
-            int heightArms = ArmsTex.Height / 18;
+            int heightArms = ArmsTex.Height / 24;
             int yArms = heightArms * ArmFrameY;
             Rectangle rectArms = new(0, yArms, ArmsTex.Width, heightArms);
             Vector2 originArms = new(ArmsTex.Width / 2f, heightArms / 2f);
@@ -830,6 +1233,27 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, NPC.rotation, origin2, 2f, SpriteEffects.None, 0);
                 spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.4f, NPC.rotation, origin2, 2f, SpriteEffects.None, 0);
+            }
+
+            Texture2D wings = ModContent.Request<Texture2D>("Redemption/Textures/HolyWingsTex").Value;
+            Rectangle rect3 = new(0, 0, wings.Width, wings.Height);
+            Vector2 origin3 = new(wings.Width / 2, wings.Height / 2);
+            Vector2 position3 = NPC.Center - screenPos - new Vector2(0, 40);
+            Color colour3 = Color.Red;
+            Color colour4 = Color.Green;
+            Color colour5 = Color.Blue;
+
+            if (EmpoweredGlowS)
+            {
+                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), colour3, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
+            }
+            if (EmpoweredGlowP)
+            {
+                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), colour4, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
+            }
+            if (EmpoweredGlowW)
+            {
+                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), colour5, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
             }
 
             spriteBatch.End();
