@@ -239,7 +239,6 @@ namespace Redemption.Globals.Player
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
                     infectionTimer = 0;
                 }
-
                 if (infectionTimer >= 3600)
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
@@ -267,7 +266,11 @@ namespace Redemption.Globals.Player
                 }
             }
             else
+            {
+                if (infectionTimer >= 3000)
+                    Player.AddBuff(ModContent.BuffType<AntibodiesDebuff>(), 18000);
                 infectionTimer = 0;
+            }
 
             if (shockDebuff)
             {
