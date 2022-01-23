@@ -38,12 +38,17 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void AI()
         {
+            if (Projectile.localAI[0] == 0)
+            {
+                DustHelper.DrawStar(Projectile.Center, DustID.GoldFlame, 4, 2, noGravity: true);
+                Projectile.localAI[0] = 1;
+            }
             if (Projectile.timeLeft >= 340)
                 Projectile.velocity *= 0.98f;
-            else if (Projectile.timeLeft <= 340)
+            else if (Projectile.timeLeft <= 320)
             {
                 Vector2 move = Vector2.Zero;
-                float distance = 550f;
+                float distance = 800f;
                 bool targetted = false;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
@@ -61,7 +66,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                 }
                 if (targetted)
-                    Projectile.Move(move, 16, 50);
+                    Projectile.Move(move, 14, 70);
                 else
                     Projectile.velocity *= 0.98f;
             }       
