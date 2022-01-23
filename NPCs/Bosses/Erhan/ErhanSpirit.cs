@@ -584,7 +584,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         TeleGlow = true;
                                         TeleGlowTimer = 0;
                                         for (int i = 0; i < Main.rand.Next(8, 12); i++)
-                                            NPC.Shoot(NPC.Center + new Vector2(Main.rand.Next(-1000, 1000), 0), ModContent.ProjectileType<Erhan_LightmassEmp>(), NPC.damage * 2,
+                                            NPC.Shoot(NPC.Center + new Vector2(Main.rand.Next(-1000, 1000), -150), ModContent.ProjectileType<Erhan_LightmassEmp>(), NPC.damage * 2,
                                                 new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)), false, SoundID.Item101);
                                     }
 
@@ -654,7 +654,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                     if (AITimer >= 300)
                                     {
-                                        EmpoweredGlowW = false;
+                                        EmpoweredGlow = default;
                                         NPC.netUpdate = true;
                                     }
 
@@ -771,7 +771,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                             if (AITimer >= 360)
                             {
-                                EmpoweredGlowP = false;
+                                EmpoweredGlow = default;
                                 NPC.netUpdate = true;
                             }
 
@@ -873,7 +873,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         HeadFrameY = 0;
                                         ArmType = 0;
-                                        EmpoweredGlowS = false;
+                                        EmpoweredGlow = default;
                                         NPC.netUpdate = true;
                                     }
 
@@ -915,22 +915,21 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer == 59)
                     {
                         EmpoweredNumber = Main.rand.Next(3);
-                        if (EmpoweredNumber == 0)
+                        switch (EmpoweredNumber)
                         {
-                            EmpoweredGlowW = true;
-                            EmpoweredName = "WILL";
+                            case 0:
+                                EmpoweredGlow = Color.Blue;
+                                EmpoweredName = "WILL";
+                                break;
+                            case 1:
+                                EmpoweredGlow = Color.Green;
+                                EmpoweredName = "PATIENCE";
+                                break;
+                            case 2:
+                                EmpoweredGlow = Color.Red;
+                                EmpoweredName = "STRENGTH";
+                                break;
                         }
-                        if (EmpoweredNumber == 1)
-                        {
-                            EmpoweredGlowP = true;
-                            EmpoweredName = "PATIENCE";
-                        }
-                        if (EmpoweredNumber == 2)
-                        {
-                            EmpoweredGlowS = true;
-                            EmpoweredName = "STRENGTH";
-                        }
-
                     }
                     if (AITimer == 60)
                     {
@@ -1061,9 +1060,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         private int HolyFlareTimer;
         private bool TeleGlow;
         private int TeleGlowTimer;
-        private bool EmpoweredGlowP;
-        private bool EmpoweredGlowS;
-        private bool EmpoweredGlowW;
+        private Color EmpoweredGlow;
         public override void FindFrame(int frameHeight)
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -1240,22 +1237,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             Rectangle rect3 = new(0, 0, wings.Width, wings.Height);
             Vector2 origin3 = new(wings.Width / 2, wings.Height / 2);
             Vector2 position3 = NPC.Center - screenPos - new Vector2(0, 40);
-            Color colour3 = Color.Red;
-            Color colour4 = Color.Green;
-            Color colour5 = Color.Blue;
 
-            if (EmpoweredGlowS)
-            {
-                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), colour3, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
-            }
-            if (EmpoweredGlowP)
-            {
-                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), colour4, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
-            }
-            if (EmpoweredGlowW)
-            {
-                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), colour5, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
-            }
+            if (EmpoweredGlow != default)
+                spriteBatch.Draw(wings, position3, new Rectangle?(rect3), EmpoweredGlow, NPC.rotation, origin3, 2.2f, SpriteEffects.None, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
