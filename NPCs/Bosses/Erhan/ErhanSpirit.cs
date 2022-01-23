@@ -871,13 +871,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                     if (AITimer == 330)
                                     {
-                                        HeadFrameY = 0;
                                         EmpoweredGlowS = false;
                                         NPC.netUpdate = true;
                                     }
 
                                     if (AITimer >= 390)
                                     {
+                                        HeadFrameY = 0;
                                         TimerRand2 = 0;
                                         TimerRand = 0;
                                         AITimer = 0;
