@@ -919,8 +919,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
                                     }
 
-                                    if (AITimer >= 330)
+                                    if (AITimer == 330)
                                     {
+                                        HeadFrameY = 0;
                                         EmpoweredGlowS = false;                    
                                         NPC.netUpdate = true;
                                     }
@@ -931,6 +932,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         TimerRand = 0;
                                         AITimer = 0;
                                         AIState = ActionState.Fallen;
+                                        NPC.netUpdate = true;
                                     }
 
                                     break;
