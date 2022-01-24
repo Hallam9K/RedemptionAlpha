@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.width = 42;
             NPC.height = 70;
-            NPC.damage = 1050;
+            NPC.damage = 1550;
             NPC.friendly = true;
             NPC.defense = 24;
             NPC.lifeMax = 250;
