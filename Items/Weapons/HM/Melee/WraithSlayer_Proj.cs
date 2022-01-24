@@ -32,12 +32,12 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override void SetSafeDefaults()
         {
-            Projectile.width = 90;
-            Projectile.height = 90;
+            Projectile.width = 70;
+            Projectile.height = 70;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Length = 46;
+            Length = 66;
             Rot = MathHelper.ToRadians(3);
         }
         private Vector2 startVector;
@@ -64,9 +64,9 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4 - (Projectile.ai[0] == 0 ? 0 : MathHelper.PiOver2);
             else
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4 + (Projectile.ai[0] == 0 ? 0 : MathHelper.PiOver2);
 
             if (Main.myPlayer == Projectile.owner)
             {
@@ -148,9 +148,12 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Player player = Main.player[Projectile.owner];
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects spriteEffects2 = Projectile.ai[0] == 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Vector2 v = RedeHelper.PolarVector(20, (Projectile.Center - player.Center).ToRotation());
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -159,13 +162,13 @@ namespace Redemption.Items.Weapons.HM.Melee
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Color.MediumPurple * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color * (Timer / 10), oldrot[k], origin, Projectile.scale, spriteEffects, 0);
+                Main.EntitySpriteDraw(texture, drawPos - v, null, color * (Timer / 10), oldrot[k], origin, Projectile.scale, spriteEffects | spriteEffects2, 0);
             }
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects | spriteEffects2, 0);
             return false;
         }
     }
