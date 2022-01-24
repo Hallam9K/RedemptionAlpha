@@ -103,7 +103,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 switch (AttackMode)
                 {
                     case 0:
-                        int proj = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
+                        int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj].hostile = false;
                         Main.projectile[proj].friendly = true;
                         Main.projectile[proj].DamageType = DamageClass.Ranged;
@@ -128,7 +128,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             Main.projectile[proj3].tileCollide = true;
                             Main.projectile[proj3].netUpdate2 = true;
                         }
-                        int proj2 = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
+                        int proj2 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj2].hostile = false;
                         Main.projectile[proj2].friendly = true;
                         Main.projectile[proj2].DamageType = DamageClass.Ranged;
