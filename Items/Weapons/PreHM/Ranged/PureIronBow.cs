@@ -3,6 +3,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Items.Materials.PreHM;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -12,6 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             DisplayName.SetDefault("Pure-Iron Bow");
             Tooltip.SetDefault("Replaces Wooden Arrows with Frostburn Arrows");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
