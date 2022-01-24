@@ -23,8 +23,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 80;
-            Item.height = 80;
+            Item.width = 90;
+            Item.height = 90;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.sellPrice(gold: 7);
 
@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 148;
+            Item.damage = 118;
             Item.knockBack = 6;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
