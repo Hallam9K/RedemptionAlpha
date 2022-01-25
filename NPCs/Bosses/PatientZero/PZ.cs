@@ -20,6 +20,7 @@ using Terraria.Audio;
 using Terraria.GameContent.Events;
 using ReLogic.Content;
 using Redemption.Buffs.Debuffs;
+using Redemption.Items.Placeable.Trophies;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -91,12 +92,13 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.netAlways = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2");
+            BossBag = ModContent.ItemType<PZBag>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 200 years, conscious and aware of the situation around him... God, that must be tormentous.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -143,6 +145,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7_1>()));
+
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZTrophy>(), 10));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {

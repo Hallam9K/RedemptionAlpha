@@ -29,14 +29,6 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
         public override void UpdateEquip(Player player)
         {
             player.GetModPlayer<BuffPlayer>().DruidDamageFlat += 1;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 36)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-        }        
+        }       
     }
 }

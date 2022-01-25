@@ -6,6 +6,8 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Donator.Uncon;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -93,6 +95,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
+            BossBag = ModContent.ItemType<OmegaCleaverBag>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -139,6 +142,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

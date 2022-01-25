@@ -41,14 +41,6 @@ namespace Redemption.Items.Armor.HM.Hardlight
             return body.type == ModContent.ItemType<HardlightPlate>() && legs.type == ModContent.ItemType<HardlightBoots>();
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<CyberPlating>(), 8)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
-
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight ritualist bonus
