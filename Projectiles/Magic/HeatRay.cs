@@ -148,12 +148,6 @@ namespace Redemption.Projectiles.Magic
             Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
             Utils.PlotTileLine(Projectile.Center, Projectile.Center + unit * LaserLength, (Projectile.width + 16) * Projectile.scale, DelegateMethods.CutTiles);
         }
-        private void CastLights()
-        {
-            // Cast a light along the line of the Laser
-            DelegateMethods.v3_1 = new Vector3(1f, 1f, 1f);
-            Utils.PlotTileLine(Projectile.Center, Projectile.Center + new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserLength, 26, DelegateMethods.CastLight);
-        }
         #endregion
 
         #region Drawcode

@@ -73,8 +73,9 @@ namespace Redemption.Globals
             }
 
             //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
-            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC npc = Main.npc[i];
                 float distance = (npc.Center - position).Length();
                 if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
                     npc.lifeMax <= 5 || npc.GetGlobalNPC<RedeNPC>().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
@@ -95,10 +96,11 @@ namespace Redemption.Globals
         {
             bool foundTarget = false;
             //this is the meat of the targeting logic, it loops through every NPC to check if it is valid the minimum distance and target selected are updated so that the closest valid NPC is selected
-            foreach (Terraria.NPC candidate in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC candidate = Main.npc[i];
                 float distance = (candidate.Center - position).Length();
-                if (!(distance < maxDistance) || !candidate.active || candidate.type == npc.type ||
+                if (!(distance < maxDistance) || !npc.active || candidate.type == npc.type ||
                     !Collision.CanHit(position, 0, 0, candidate.Center, 0, 0) && !ignoreTiles)
                     continue;
 
@@ -220,11 +222,11 @@ namespace Redemption.Globals
 
         public static void SlowRotation(this ref float currentRotation, float targetAngle, float speed)
         {
-            int f = 1; //this is used to switch rotation direction
             float actDirection = new Vector2((float)Math.Cos(currentRotation), (float)Math.Sin(currentRotation))
                 .ToRotation();
             targetAngle = new Vector2((float)Math.Cos(targetAngle), (float)Math.Sin(targetAngle)).ToRotation();
 
+            int f;
             //this makes f 1 or -1 to rotate the shorter distance
             if (Math.Abs(actDirection - targetAngle) > Math.PI)
             {
@@ -313,8 +315,9 @@ namespace Redemption.Globals
 
         public static bool BossActive()
         {
-            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC npc = Main.npc[i];
                 if (!npc.active || !npc.boss)
                     continue;
 
@@ -1138,8 +1141,9 @@ namespace Redemption.Globals
         {
             if (AlwaysDmgNPC == default)
                 AlwaysDmgNPC = new() { 0 };
-            foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
                     continue;
 
@@ -1158,8 +1162,9 @@ namespace Redemption.Globals
         {
             if (DontDmgNPC == default)
                 DontDmgNPC = new() { 0 };
-            foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC target = Main.npc[i];
                 if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
                     continue;
 
