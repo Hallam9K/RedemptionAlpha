@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Friendly
             NPC.damage = 1550;
             NPC.friendly = true;
             NPC.defense = 24;
-            NPC.lifeMax = 250;
+            NPC.lifeMax = 350;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath52;
             NPC.knockBackResist = 0f;
@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Friendly
             NPC.chaseable = false;
             NPC.aiStyle = -1;
             NPC.alpha = 255;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 200;
+            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 300;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
