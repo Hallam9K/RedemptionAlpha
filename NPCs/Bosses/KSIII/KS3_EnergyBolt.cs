@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = Projectile.Center - Main.screenPosition;
-            Color colour = Color.Lerp(Color.White, new Color(0, 242, 170), 1f / Projectile.localAI[0] * 10f) * (1f / Projectile.localAI[0] * 10f);
+            Color colour = Color.Lerp(Color.White, new Color(0, 242, 170), 1f);
 
             Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour, Projectile.rotation, origin, 0.6f, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour * 0.4f, Projectile.rotation, origin, 1f, SpriteEffects.None, 0);
