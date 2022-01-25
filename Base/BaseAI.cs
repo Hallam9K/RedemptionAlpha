@@ -55,7 +55,7 @@ namespace Redemption.Base
                 vineLength = vineLengthLong;
                 if (ai[0] > vineTimeMax) { ai[0] = 0f; }
             }
-            Vector2 targetCenter = target.Center + targetOffset + (target == owner ? new Vector2(0f, owner is Player ? ((Player)owner).gfxOffY : owner is NPC ? ((NPC)owner).gfxOffY : ((Projectile)owner).gfxOffY) : default);
+            Vector2 targetCenter = target.Center + targetOffset + (target == owner ? new Vector2(0f, owner is Player player ? player.gfxOffY : owner is NPC nPC ? nPC.gfxOffY : ((Projectile)owner).gfxOffY) : default);
             if (!targetOwner)
             {
                 float distTargetX = targetCenter.X - endPoint.X;
@@ -158,7 +158,6 @@ namespace Redemption.Base
             AIMinionFlier(projectile, ref ai, owner, ref tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, movementFixed, hover, hoverHeight, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget, shootTarget);
             if (!dummyTileCollide) projectile.tileCollide = tileCollide;
             if (autoSpriteDir) { projectile.spriteDirection = projectile.direction; }
-            float dist = Vector2.Distance(projectile.Center, owner.Center);
             if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
             if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && Math.Abs(projectile.velocity.X + projectile.velocity.Y) <= 0.025f) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
         }
@@ -238,7 +237,6 @@ namespace Redemption.Base
             if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(maxSpeed, Math.Max(Main.player[projectile.owner].maxRunSpeed, Main.player[projectile.owner].accRunSpeed)); }
             AIMinionFighter(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, ref projectile.gfxOffY, ref projectile.stepSpeed, pet ? 0 : projectile.minionPos, jumpDistX, jumpDistY, lineDist, returnDist, teleportDist, moveInterval, maxSpeed, maxSpeedFlying, getTarget);
             projectile.spriteDirection = projectile.direction;
-            float dist = Vector2.Distance(projectile.Center, owner.Center);
             if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
             if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
         }
@@ -354,7 +352,6 @@ namespace Redemption.Base
             if (maxSpeedFlying == -1f) { maxSpeedFlying = Math.Max(jumpVelX, jumpVelY); }
             AIMinionSlime(projectile, ref ai, owner, ref projectile.tileCollide, ref projectile.netUpdate, pet ? 0 : projectile.minionPos, lineDist, returnDist, teleportDist, jumpVelX, jumpVelY, maxSpeedFlying, getTarget);
             projectile.spriteDirection = projectile.direction;
-            float dist = Vector2.Distance(projectile.Center, owner.Center);
             if (ai[0] == 1) { projectile.spriteDirection = owner.velocity.X == 0 ? projectile.spriteDirection : owner.velocity.X > 0 ? 1 : -1; }
             if ((getTarget == null || getTarget(projectile, owner) == null || getTarget(projectile, owner) == owner) && projectile.velocity.X is >= -0.025f or <= 0.025f && projectile.velocity.Y == 0) { projectile.spriteDirection = owner.Center.X > projectile.Center.X ? 1 : -1; }
         }
@@ -398,9 +395,7 @@ namespace Redemption.Base
                     targetCenter.X += (lineDist + lineDist * minionPos) * -owner.direction;
                 }
                 float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
-                float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
                 int moveDirection = targetCenter.X > codable.Center.X ? 1 : -1;
-                int moveDirectionY = targetCenter.Y > codable.Center.Y ? 1 : -1;
                 if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
                 {
                     codable.velocity.X *= Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f;
@@ -727,7 +722,7 @@ namespace Redemption.Base
         public static Vector2 AIVelocityLinear(Entity codable, Vector2 destVec, float moveInterval, float maxSpeed, bool direct = false)
         {
             Vector2 returnVelocity = codable.velocity;
-            bool tileCollide = codable is NPC ? !((NPC)codable).noTileCollide : codable is Projectile ? ((Projectile)codable).tileCollide : false;
+            bool tileCollide = codable is NPC nPC ? !nPC.noTileCollide : codable is Projectile projectile && projectile.tileCollide;
             if (direct)
             {
                 Vector2 rotVec = BaseUtility.RotateVector(codable.Center, codable.Center + new Vector2(maxSpeed, 0f), BaseUtility.RotationTo(codable.Center, destVec));
@@ -758,7 +753,7 @@ namespace Redemption.Base
          * ----------------------------------------
          */
 
-        public static void AILightningBolt(Projectile projectile, ref float[] ai, float changeAngleAt = 40)
+        public static void AILightningBolt(Projectile projectile, float changeAngleAt = 40)
         {
             int projFrameCounter = projectile.frameCounter;
             projectile.frameCounter = projFrameCounter + 1;
@@ -859,7 +854,7 @@ namespace Redemption.Base
             }
         }
 
-        public static void AIProjWorm(Projectile p, ref float[] ai, int[] wormTypes, int wormLength, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
+        public static void AIProjWorm(Projectile p, int[] wormTypes, int wormLength, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
         {
             int[] wtypes = new int[wormTypes.Length == 1 ? 1 : wormLength];
             wtypes[0] = wormTypes[0];
@@ -872,10 +867,10 @@ namespace Redemption.Base
                 }
             }
             int dummyNPC = -1;
-            AIProjWorm(p, ref ai, ref dummyNPC, wtypes, velScalar, velScalarIdle, velocityMax, velocityMaxIdle);
+            AIProjWorm(p, ref dummyNPC, wtypes, velScalar, velScalarIdle, velocityMax, velocityMaxIdle);
         }
 
-        public static void AIProjWorm(Projectile p, ref float[] ai, ref int npcTargetToAttack, int[] wormTypes, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
+        public static void AIProjWorm(Projectile p, ref int npcTargetToAttack, int[] wormTypes, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
         {
             Player plrOwner = Main.player[p.owner];
             if ((int)Main.time % 120 == 0) p.netUpdate = true;
@@ -933,7 +928,6 @@ namespace Redemption.Base
                                 if (npcTargetDist < minAttackDist)
                                 {
                                     target = m;
-                                    bool boss = npcTarget.boss;
                                 }
                             }
                             dummy = m;
@@ -1043,7 +1037,6 @@ namespace Redemption.Base
                     float projScale = MathHelper.Clamp(Main.projectile[byUuid].scale, 0f, 50f);
                     projectileScale = projScale;
                     tileScalar = 16f;
-                    int num1064 = Main.projectile[byUuid].alpha;
                     Main.projectile[byUuid].localAI[0] = p.localAI[0] + 1f;
                     if (Main.projectile[byUuid].type != wormTypes[0])
                     {
@@ -1119,7 +1112,7 @@ namespace Redemption.Base
                         projectile.velocity *= 6f / projectile.velocity.Length();
                     }
                 }
-                if (spawnDust != null) spawnDust(0, projectile);
+                spawnDust?.Invoke(0, projectile);
                 projectile.rotation = projectile.velocity.X * 0.1f;
             }
             if (ai[0] == hoverTime)
@@ -1173,7 +1166,7 @@ namespace Redemption.Base
             if (ai[0] >= hoverTime)
             {
                 projectile.rotation = projectile.rotation.AngleLerp(projectile.velocity.ToRotation() + 1.57079637f, 0.4f);
-                if (spawnDust != null) spawnDust(1, projectile);
+                spawnDust?.Invoke(1, projectile);
             }
         }
 
@@ -1691,7 +1684,7 @@ namespace Redemption.Base
 
         public static void EntityCollideYoyo(Projectile p, ref float[] ai, ref float[] localAI, Entity owner, Entity target, bool spawnCounterweight = true, float velMult = 1f)
         {
-            if (owner is Player && spawnCounterweight) { ((Player)owner).Counterweight(target.Center, p.damage, p.knockBack); }
+            if (owner is Player player && spawnCounterweight) { player.Counterweight(target.Center, p.damage, p.knockBack); }
             if (target.Center.X < owner.Center.X) { p.direction = -1; } else { p.direction = 1; }
             if (ai[0] >= 0f)
             {
@@ -1818,8 +1811,8 @@ namespace Redemption.Base
 		 */
         public static void AIDemonScythe(Entity codable, ref float[] ai, int startSpeedupInterval = 30, int stopSpeedupInterval = 100, float rotateScalar = 0.8f, float speedupScalar = 1.06f, float maxSpeed = 8f)
         {
-            if (codable is Projectile) { ((Projectile)codable).rotation += codable.direction * rotateScalar; }
-            if (codable is NPC) { ((NPC)codable).rotation += codable.direction * rotateScalar; }
+            if (codable is Projectile projectile) { projectile.rotation += codable.direction * rotateScalar; }
+            if (codable is NPC nPC) { nPC.rotation += codable.direction * rotateScalar; }
             ai[0] += 1f;
             if (ai[0] >= startSpeedupInterval)
             {
@@ -2172,7 +2165,6 @@ namespace Redemption.Base
                     pointDist = meleeSpeed1 / pointDist;
                     pointX *= pointDist;
                     pointY *= pointDist;
-                    new Vector2(p.velocity.X, p.velocity.Y);
                     float pointX2 = pointX - p.velocity.X;
                     float pointY2 = pointY - p.velocity.Y;
                     float pointDist2 = (float)Math.Sqrt(pointX2 * pointX2 + pointY2 * pointY2);
@@ -2482,7 +2474,6 @@ namespace Redemption.Base
             if (noDmg) npc.dontTakeDamage = false;
             Player targetPlayer = npc.target < 0 ? null : Main.player[npc.target];
             Vector2 playerCenter = targetPlayer == null ? npc.Center + new Vector2(0, 5f) : targetPlayer.Center;
-            Vector2 dist = playerCenter - npc.Center;
 
             if (npc.justHit && Main.netMode != NetmodeID.MultiplayerClient && noDmg && Main.rand.Next(6) == 0)
             {
@@ -2506,7 +2497,6 @@ namespace Redemption.Base
                 npc.TargetClosest();
                 targetPlayer = Main.player[npc.target];
                 playerCenter = targetPlayer.Center;
-                dist = playerCenter - npc.Center;
                 if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
                 {
                     ai[0] = 1f;
@@ -2723,7 +2713,7 @@ namespace Redemption.Base
                 ++ai[1];
                 rotation += (float)(0.1 + (double)(ai[1] / rotTime) * 0.4f) * codable.direction * rotScalar;
                 if (ai[1] < rotTime) return;
-                if (codable is NPC) { ((NPC)codable).netUpdate = true; } else if (codable is Projectile) { ((Projectile)codable).netUpdate = true; }
+                if (codable is NPC nPC) { nPC.netUpdate = true; } else if (codable is Projectile projectile) { projectile.netUpdate = true; }
                 ai[0] = 0.0f;
                 ai[1] = 0.0f;
             }
@@ -3830,7 +3820,7 @@ namespace Redemption.Base
                 if (npc.velocity.Y < 0f && npc.velocity.Y > -max) { npc.velocity.Y = -max; }
             }
             npc.TargetClosest();
-            Action move = () =>
+            void move()
             {
                 if (npc.direction == -1 && npc.velocity.X > -maxSpeedX)
                 {
@@ -3866,7 +3856,7 @@ namespace Redemption.Base
                     if (npc.velocity.Y < 0f) { npc.velocity.Y -= moveIntervalY * 0.5f; }
                     if ((double)npc.velocity.Y > maxSpeedY) { npc.velocity.Y = maxSpeedY; }
                 }
-            };
+            }
             if (canBeBored) { ai[0] += 1f; }
             if (canBeBored && ai[0] > timeUntilBoredom)
             {
@@ -4171,7 +4161,7 @@ namespace Redemption.Base
                         npc.TargetClosest();
                         npc.netUpdate = true;
                         npc.whoAmI = npcID;
-                        if (onChangeType != null) onChangeType(npc, oldType, true);
+                        onChangeType?.Invoke(npc, oldType, true);
                     }
                     else
                     if (isBody && !Main.npc[(int)npc.ai[0]].active) //if the body was just split, turn it into a tail
@@ -4473,12 +4463,11 @@ namespace Redemption.Base
             if (ai[0] == 0f) { ai[0] = Math.Max(0, Math.Max(teleportInterval, teleportInterval - 150)); }
             if (ai[2] != 0f && ai[3] != 0f)
             {
-                if (teleportEffects != null) { teleportEffects(true); }
-                npc.position.X = ai[2] * 16f - npc.width / 2 + 8f;
+                teleportEffects?.Invoke(true); npc.position.X = ai[2] * 16f - npc.width / 2 + 8f;
                 npc.position.Y = ai[3] * 16f - npc.height;
                 npc.velocity.X = 0f; npc.velocity.Y = 0f;
                 ai[2] = 0f; ai[3] = 0f;
-                if (teleportEffects != null) { teleportEffects(false); }
+                teleportEffects?.Invoke(false);
             }
             if (npc.justHit) { ai[0] = 0; }
             ai[0]++;
@@ -5431,10 +5420,10 @@ namespace Redemption.Base
         /*
          *  Damages the given NPC by the given amount.
          */
-        public static void DamageNPC(NPC npc, int dmgAmt, float knockback, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
+        public static void DamageNPC(NPC npc, int dmgAmt, float knockback, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, bool crit = false, Item item = null)
         {
             int hitDirection = damager == null ? 0 : damager.direction;
-            DamageNPC(npc, dmgAmt, knockback, hitDirection, damager, dmgVariation, hitThroughDefense);
+            DamageNPC(npc, dmgAmt, knockback, hitDirection, damager, dmgVariation, hitThroughDefense, crit, item);
         }
 
         /*
@@ -5447,8 +5436,10 @@ namespace Redemption.Base
          *  dmgVariation : If true, the damage will vary based on Main.DamageVar().
          *  hitThroughDefense : If true, boosts damage to get around npc defense.
          */
-        public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, bool crit = false)
+        public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, bool crit = false, Item item = null)
         {
+            if (item == null)
+                item = new Item(ItemID.WoodenSword);
             if (npc.dontTakeDamage || (npc.immortal && npc.type != NPCID.TargetDummy))
                 return;
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
@@ -5482,10 +5473,12 @@ namespace Redemption.Base
             }
             else if (damager is Player player)
             {
-                if (player.whoAmI == Main.myPlayer)
+                if (player.whoAmI == Main.myPlayer && NPCLoader.CanBeHitByItem(npc, player, item) != false)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
+                    NPCLoader.ModifyHitByItem(npc, player, item, ref parsedDamage, ref knockback, ref crit);
+                    NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                     {
@@ -6122,7 +6115,7 @@ namespace Redemption.Base
                                 Tile tile = Main.tile[vecX, vecY];
                                 if (tile is { IsActiveUnactuated: true })
                                 {
-                                    bool ignoreTile = tileTypesToIgnore is not { Length: > 0 } ? false : BaseUtility.InArray(tileTypesToIgnore, tile.type);
+                                    bool ignoreTile = tileTypesToIgnore is { Length: > 0 } && BaseUtility.InArray(tileTypesToIgnore, tile.type);
                                     if (!ignoreTile && Main.tileSolid[tile.type])
                                     {
                                         return returnCenter ? new Vector2(vecX * 16 + 8, vecY * 16 + 8) : v;
@@ -6175,7 +6168,6 @@ namespace Redemption.Base
             Vector2 dir = end - start;
             dir.Normalize();
             float length = Vector2.Distance(start, end); float way = 0f;
-            float rotation = BaseUtility.RotationTo(start, end) - 1.57f;
             List<Vector2> vList = new();
             while (way < length)
             {

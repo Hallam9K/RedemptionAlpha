@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Lab.Volt
         {
             NPC.spriteDirection = 1;
         }
-        private float gunRot = 4.9742f;
+        private readonly float gunRot = 4.9742f;
         public static int ChatNumber = 0;
         public override void SetChatButtons(ref string button, ref string button2)
         {
