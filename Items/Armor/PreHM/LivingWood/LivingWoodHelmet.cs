@@ -52,13 +52,5 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
                 Gore.NewGore(new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
             }
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 22)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-        }   
     }
 }

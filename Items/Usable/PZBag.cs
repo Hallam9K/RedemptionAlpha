@@ -1,68 +1,44 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
+using Redemption.Globals;
 using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Materials.HM;
+using Redemption.NPCs.Bosses.PatientZero;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
-    public class SoIBag : ModItem
-    {
-        public override int BossBagNPC => ModContent.NPCType<SoI>();
+	public class PZBag : ModItem
+	{
+		public override int BossBagNPC => ModContent.NPCType<PZ>();
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Treasure Bag (Seed of Infection)");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-
-            ItemID.Sets.BossBag[Type] = true;
-            ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
-
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
-        }
-
-        public override void SetDefaults()
-        {
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 32;
-            Item.height = 34;
-            Item.rare = ItemRarityID.Expert;
-            Item.expert = true;
-        }
-
-        public override bool CanRightClick() => true;
-
-        public override void OpenBossBag(Player player)
-        {
-            if (Main.rand.NextBool(7))
-            {
-                player.QuickSpawnItem(ModContent.ItemType<InfectedMask>());
-            }
-            switch (Main.rand.Next(2))
-            {
-                case 0:
-                    player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(ModContent.ItemType<CystlingSummon>());
-                    break;
-                    // TODO: Xenomite Canister
-            }
-            player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
-        }
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.Lerp(lightColor, Color.White, 0.4f);
-        }
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Treasure Bag (Patient Zero)");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+		}
+		public override void SetDefaults()
+		{
+			Item.maxStack = 999;
+			Item.consumable = true;
+			Item.width = 24;
+			Item.height = 24;
+			Item.rare = ItemRarityID.Expert;
+			Item.expert = true;
+		}
+		public override bool CanRightClick()
+		{
+			return true;
+		}
+		public override void OpenBossBag(Player player)
+		{
+	
+		}
 
         public override void PostUpdate()
         {

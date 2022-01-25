@@ -141,6 +141,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KS3Trophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SlayerProjector>(), 4));
 

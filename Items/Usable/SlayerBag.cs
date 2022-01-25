@@ -9,6 +9,7 @@ using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
+using Redemption.Globals;
 
 namespace Redemption.Items.Usable
 {
@@ -18,7 +19,7 @@ namespace Redemption.Items.Usable
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyber Loot Box");
+            DisplayName.SetDefault("Cyber Loot Box (King Slayer III)");
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;
@@ -34,6 +35,8 @@ namespace Redemption.Items.Usable
             Item.height = 24;
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
+            if (!Main.dedServ)
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
         public override bool CanRightClick() => true;

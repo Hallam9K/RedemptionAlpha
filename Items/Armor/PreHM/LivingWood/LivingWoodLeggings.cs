@@ -23,14 +23,6 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
             Item.sellPrice(copper: 40);
             Item.rare = ItemRarityID.White;
             Item.defense = 2;
-        }
-     
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 30)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-        }     
+        } 
     }
 }
