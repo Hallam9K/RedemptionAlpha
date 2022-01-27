@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -369,7 +370,9 @@ namespace Redemption.Globals.NPC
             }
 
             Terraria.Player player = Main.player[npc.GetNearestAlivePlayer()];
-            if (projectile.friendly && !projectile.hostile)
+            if(RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IProjectileSource source) value))
+                attacker = value.entity;
+            else if (projectile.friendly && !projectile.hostile)
                 attacker = player;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
