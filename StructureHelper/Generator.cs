@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Redemption.StructureHelper.ChestHelper;
 using Terraria.ID;
+using System.IO;
 
 namespace Redemption.StructureHelper
 {
@@ -234,8 +235,7 @@ namespace Redemption.StructureHelper
         internal static bool LoadFile(string path, Mod mod, bool fullPath = false)
         {
             TagCompound tag;
-
-            if (!fullPath) tag = TagIO.FromStream(mod.GetFileStream(path));
+            if (!fullPath) tag = TagIO.FromStream(mod.GetFileStream(path, true));
             else tag = TagIO.FromFile(path);
 
             if (tag is null)
