@@ -14,6 +14,7 @@ namespace Redemption.Projectiles.Ranged
 {
     public class PlasmaRound : ModProjectile, ITrailProjectile
     {
+        public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plasma Round");
@@ -84,11 +85,6 @@ namespace Redemption.Projectiles.Ranged
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
-        public override Color? GetAlpha(Color lightColor)
-        {
-            lightColor.A = 0;
-            return lightColor;
-        }
     }
 
     public class PlasmaRound_Blast : ModProjectile
@@ -109,7 +105,9 @@ namespace Redemption.Projectiles.Ranged
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
+            Projectile.usesLocalNPCImmunity = true;
         }
+
         public override bool? CanHitNPC(NPC target) => Projectile.frame < 5 ? null : false;
         public override void AI()
         {
@@ -120,6 +118,13 @@ namespace Redemption.Projectiles.Ranged
                     Projectile.Kill();
             }
         }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 5;
+            target.immune[Projectile.owner] = 0;
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

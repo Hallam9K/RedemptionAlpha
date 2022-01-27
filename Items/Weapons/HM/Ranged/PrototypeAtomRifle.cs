@@ -23,8 +23,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.DamageType = DamageClass.Ranged;
             Item.width = 64;
             Item.height = 30;
-            Item.useTime = 68;
-            Item.useAnimation = 68;
+            Item.useTime = 48;
+            Item.useAnimation = 48;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 0.5f;
