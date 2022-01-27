@@ -63,12 +63,12 @@ namespace Redemption
                 ProjectileSource_ProjectileParent sourceParent = spawnSource as ProjectileSource_ProjectileParent;
                 attacker = Main.player[sourceParent.ParentProjectile.owner];
             }
-            else if (spawnSource is ProjectileSource_NPC && projectile.friendly && !projectile.hostile)
+            else if (spawnSource is ProjectileSource_NPC)
             {
                 ProjectileSource_NPC sourceNPC = spawnSource as ProjectileSource_NPC;
                 attacker = sourceNPC.NPC;
             }
-            if (attacker != null && projectile.friendly && !projectile.hostile)
+            if (attacker != null)
             {
                 if (projOwners.ContainsKey(index))
                     projOwners.Remove(index);
