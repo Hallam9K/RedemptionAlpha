@@ -369,11 +369,8 @@ namespace Redemption.Globals.NPC
                 #endregion
             }
 
-            Terraria.Player player = Main.player[npc.GetNearestAlivePlayer()];
             if(RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IProjectileSource source) value))
                 attacker = value.entity;
-            else if (projectile.friendly && !projectile.hostile)
-                attacker = player;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
         }

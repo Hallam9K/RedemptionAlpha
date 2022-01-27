@@ -349,121 +349,6 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex + 5, new PassLegacy("Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
-                {
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 3E-05); k++)
-                    {
-                        bool placed = false;
-                        int attempts = 0;
-                        while (!placed && attempts++ < 10000)
-                        {
-                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
-                            if (!WorldGen.InWorld(tilesX + 2, tilesY + 4))
-                                continue;
-
-                            Tile tile = Framing.GetTileSafely(tilesX + 2, tilesY + 4);
-                            if (tile.type != TileID.Stone && tile.type != TileID.Mud)
-                                continue;
-
-                            Point16 origin = new Point16(tilesX, tilesY);
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientSRocksM", origin, Mod, false);
-                            placed = true;
-                        }
-                    }
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 3E-05); k++)
-                    {
-                        bool placed = false;
-                        int attempts = 0;
-                        while (!placed && attempts++ < 10000)
-                        {
-                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
-                            if (!WorldGen.InWorld(tilesX + 2, tilesY + 7))
-                                continue;
-
-                            Tile tile = Framing.GetTileSafely(tilesX + 2, tilesY + 7);
-                            if (tile.type != TileID.Stone && tile.type != TileID.Mud)
-                                continue;
-
-                            Point16 origin = new Point16(tilesX, tilesY);
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientSPillarsM", origin, Mod, false);
-                            placed = true;
-                        }
-                    }
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-06); k++)
-                    {
-                        bool placed = false;
-                        int attempts = 0;
-                        while (!placed && attempts++ < 10000)
-                        {
-                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
-                            if (!WorldGen.InWorld(tilesX + 6, tilesY + 10))
-                                continue;
-
-                            Tile tile = Framing.GetTileSafely(tilesX + 6, tilesY + 10);
-                            if (tile.type != TileID.Stone && tile.type != TileID.Mud)
-                                continue;
-
-                            Point16 dims = Point16.Zero;
-                            Generator.GetDimensions("WorldGeneration/AncientSArch1", Mod, ref dims);
-                            for (int x = 0; x < dims.X; x++)
-                            {
-                                for (int y = 0; y < dims.Y - 3; y++)
-                                {
-                                    if (Main.tile[tilesX + x, tilesY + y].IsActive)
-                                        continue;
-                                }
-                            }
-
-                            Point16 origin = new Point16(tilesX, tilesY);
-                            Generator.GenerateStructure("WorldGeneration/AncientSArch1", origin, Mod, false);
-                            placed = true;
-                        }
-                    }
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-06); k++)
-                    {
-                        bool placed = false;
-                        int attempts = 0;
-                        while (!placed && attempts++ < 10000)
-                        {
-                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
-                            if (!WorldGen.InWorld(tilesX + 5, tilesY + 7))
-                                continue;
-
-                            Tile tile = Framing.GetTileSafely(tilesX + 5, tilesY + 7);
-                            if (tile.type != TileID.Stone && tile.type != TileID.Mud)
-                                continue;
-
-                            Point16 dims = Point16.Zero;
-                            Generator.GetDimensions("WorldGeneration/AncientSCoinPile1", Mod, ref dims);
-                            for (int x = 0; x < dims.X; x++)
-                            {
-                                for (int y = 0; y < dims.Y - 6; y++)
-                                {
-                                    if (Main.tile[tilesX + x, tilesY + y].IsActive)
-                                        continue;
-                                }
-                            }
-
-                            Point16 origin = new Point16(tilesX, tilesY);
-                            Generator.GenerateStructure("WorldGeneration/AncientSCoinPile1", origin, Mod, false);
-                            placed = true;
-                        }
-                    }
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 3E-06); k++)
-                    {
-                        int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
-                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .8));
-                        if (WorldGen.InWorld(tilesX, tilesY) && (Main.tile[tilesX, tilesY].type == TileID.Stone || Main.tile[tilesX, tilesY].type == TileID.Mud))
-                        {
-                            Point16 origin = new Point16(tilesX, tilesY);
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientSHutM", origin, Mod, false);
-                        }
-                    }
-                }));
                 tasks.Insert(ShiniesIndex2 + 1, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Surface Portal
@@ -496,7 +381,7 @@ namespace Redemption.WorldGeneration
 
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
-                        int placeY = (int)Main.worldSurface - 180;
+                        int placeY = (int)Main.worldSurface - 160;
 
                         if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
                             continue;
