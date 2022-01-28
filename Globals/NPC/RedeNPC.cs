@@ -67,7 +67,7 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
                     if (ItemTags.Holy.Has(item.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.15f);
 
                     if (ItemTags.Shadow.Has(item.type))
                         damage = (int)(damage * 0.8f);
@@ -75,18 +75,18 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Demon.Contains(npc.type))
                 {
                     if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type))
-                        damage = (int)(damage * 1.5f);
+                        damage = (int)(damage * 1.25f);
 
                     if (ItemTags.Fire.Has(item.type))
                         damage = (int)(damage * 0.5f);
 
                     if (ItemTags.Water.Has(item.type) || ItemTags.Ice.Has(item.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.1f);
                 }
                 if (NPCLists.Spirit.Contains(npc.type))
                 {
                     if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Arcane.Has(item.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.15f);
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
@@ -113,39 +113,39 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Infected.Contains(npc.type))
                 {
                     if (ItemTags.Fire.Has(item.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.15f);
 
                     if (ItemTags.Ice.Has(item.type))
                         damage = (int)(damage * 0.7f);
 
                     if (ItemTags.Blood.Has(item.type))
-                        damage = (int)(damage * 2f);
+                        damage = (int)(damage * 1.25f);
 
                     if (ItemTags.Poison.Has(item.type))
                         damage = (int)(damage * 0.1f);
                 }
                 if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ItemTags.Thunder.Has(item.type))
-                    damage = (int)(damage * 1.25f);
+                    damage = (int)(damage * 1.1f);
                 if (!npc.noTileCollide && npc.collideY && ItemTags.Earth.Has(item.type))
-                    damage = (int)(damage * 1.25f);
+                    damage = (int)(damage * 1.1f);
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
                     if (ItemTags.Blood.Has(item.type) || ItemTags.Poison.Has(item.type))
                         damage = (int)(damage * 0.5f);
 
                     if (ItemTags.Thunder.Has(item.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.1f);
 
                     if (ItemTags.Water.Has(item.type))
-                        damage = (int)(damage * 1.5f);
+                        damage = (int)(damage * 1.25f);
                 }
                 if (!NPCLists.Inorganic.Contains(npc.type))
                 {
                     if (ItemTags.Blood.Has(item.type))
-                        damage = (int)(damage * 1.15f);
+                        damage = (int)(damage * 1.1f);
 
                     if (ItemTags.Poison.Has(item.type))
-                        damage = (int)(damage * 1.15f);
+                        damage = (int)(damage * 1.1f);
                 }
                 if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
                     damage = (int)(damage * 1.15f);
@@ -192,7 +192,7 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
                     if (ProjectileTags.Holy.Has(projectile.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.15f);
 
                     if (ProjectileTags.Shadow.Has(projectile.type))
                         damage = (int)(damage * 0.8f);
@@ -200,18 +200,18 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Demon.Contains(npc.type))
                 {
                     if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type))
-                        damage = (int)(damage * 1.5f);
+                        damage = (int)(damage * 1.25f);
 
                     if (ProjectileTags.Fire.Has(projectile.type))
                         damage = (int)(damage * 0.5f);
 
-                    if (ProjectileTags.Water.Has(projectile.type))
-                        damage = (int)(damage * 1.25f);
+                    if (ProjectileTags.Water.Has(projectile.type) || ProjectileTags.Ice.Has(projectile.type))
+                        damage = (int)(damage * 1.1f);
                 }
                 if (NPCLists.Spirit.Contains(npc.type))
                 {
                     if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Arcane.Has(projectile.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.15f);
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
@@ -238,31 +238,39 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Infected.Contains(npc.type))
                 {
                     if (ProjectileTags.Fire.Has(projectile.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.15f);
 
                     if (ProjectileTags.Ice.Has(projectile.type))
                         damage = (int)(damage * 0.7f);
 
                     if (ProjectileTags.Blood.Has(projectile.type))
-                        damage = (int)(damage * 2f);
+                        damage = (int)(damage * 1.25f);
 
                     if (ProjectileTags.Poison.Has(projectile.type))
                         damage = (int)(damage * 0.1f);
                 }
                 if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ProjectileTags.Thunder.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
+                    damage = (int)(damage * 1.1f);
                 if (!npc.noTileCollide && npc.collideY && ProjectileTags.Earth.Has(projectile.type))
-                    damage = (int)(damage * 1.25f);
+                    damage = (int)(damage * 1.1f);
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
                     if (ProjectileTags.Blood.Has(projectile.type) || ProjectileTags.Poison.Has(projectile.type))
                         damage = (int)(damage * 0.5f);
 
                     if (ProjectileTags.Thunder.Has(projectile.type))
-                        damage = (int)(damage * 1.25f);
+                        damage = (int)(damage * 1.1f);
 
                     if (ProjectileTags.Water.Has(projectile.type))
-                        damage = (int)(damage * 1.5f);
+                        damage = (int)(damage * 1.25f);
+                }
+                if (!NPCLists.Inorganic.Contains(npc.type))
+                {
+                    if (ProjectileTags.Blood.Has(projectile.type))
+                        damage = (int)(damage * 1.1f);
+
+                    if (ProjectileTags.Poison.Has(projectile.type))
+                        damage = (int)(damage * 1.1f);
                 }
                 if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
                     damage = (int)(damage * 1.15f);
