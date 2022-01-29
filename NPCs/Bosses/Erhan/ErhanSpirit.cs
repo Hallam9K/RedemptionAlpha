@@ -935,7 +935,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         ArmType = 3;
                         HeadFrameY = 2;
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("O' LORD, HALLOWED BE THINE NAME, SAVE NOW YOUR SERVANT'S BUTTOCKS! GRANT ME " + EmpoweredName + "!", 180, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("O' LORD OF HALLOW! GRANT ME " + EmpoweredName + "!", 180, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                     }
 
                     if (AITimer == 240)
