@@ -90,6 +90,8 @@ namespace Redemption
                     PremultiplyTexture(ref staticBallTex);
                     Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref iceMistTex);
+                    Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref glowDustTex);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);

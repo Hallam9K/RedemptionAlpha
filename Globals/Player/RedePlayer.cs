@@ -19,6 +19,7 @@ namespace Redemption.Globals.Player
         public bool foundHall;
         public int hitTarget = -1;
         public int hitTarget2 = -1;
+        public bool medKit;
 
         public override void ResetEffects()
         {
@@ -28,6 +29,7 @@ namespace Redemption.Globals.Player
         public override void Initialize()
         {
             foundHall = false;
+            medKit = false;
         }
 
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
@@ -49,6 +51,8 @@ namespace Redemption.Globals.Player
 
         public override void PostUpdateMiscEffects()
         {
+            Player.statLifeMax2 += medKit ? 50 : 0;
+
             if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
             {
                 ReLogic.Content.Asset<Texture2D> rain = ModContent.Request<Texture2D>("Redemption/Textures/RainOriginal", ReLogic.Content.AssetRequestMode.ImmediateLoad);
@@ -88,6 +92,7 @@ namespace Redemption.Globals.Player
         {
             var saveS = new List<string>();
             if (foundHall) saveS.Add("foundHall");
+            if (medKit) saveS.Add("medKit");
 
             tag["saveS"] = saveS;
         }
@@ -96,6 +101,7 @@ namespace Redemption.Globals.Player
         {
             var saveS = tag.GetList<string>("saveS");
             foundHall = saveS.Contains("foundHall");
+            medKit = saveS.Contains("medKit");
         }
     }
 }
