@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Placeable.Furniture.Lab;
@@ -9,7 +10,9 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.HM.Melee;
+using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,6 +33,10 @@ namespace Redemption.NPCs.Friendly
             set => NPC.ai[0] = (int)value;
         }
         public ref float AITimer => ref NPC.ai[1];
+        public static void UnloadChain()
+        {
+            tailChain = null;
+        }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Noza, Tamer of Evil");
@@ -49,8 +56,16 @@ namespace Redemption.NPCs.Friendly
             NPC.knockBackResist = 0;
             NPC.aiStyle = -1;
             NPC.npcSlots = 0;
+            tailChain = new TailScarfPhys();
         }
 
+        private static IPhysChain tailChain;
+        public override void AI()
+        {
+            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[0] = tailChain;
+            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainOffset[0] = new Vector2(-4f, 6f);
+            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[0] = -NPC.spriteDirection;
+        }
         public override bool UsesPartyHat() => false;
         public override bool CanChat() => true;
         private int EyeFrameY;
@@ -197,6 +212,84 @@ namespace Redemption.NPCs.Friendly
                 spriteBatch.Draw(EyesTex, NPC.Center - screenPos - new Vector2(4 * -NPC.spriteDirection, NPC.frame.Y >= 164 && NPC.frame.Y < 328 ? 18 : 20), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             return false;
+        }
+    }
+    internal class TailScarfPhys : IPhysChain
+    {
+        public Texture2D GetTexture(Mod mod)
+        {
+            return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Noza_NPC_Tail").Value;
+        }
+
+        public int NumberOfSegments => 6;
+
+        public Color GetColor(PlayerDrawSet drawInfo, Color baseColour)
+        {
+            return baseColour;
+        }
+
+        public Vector2 AnchorOffset => new(-10, -9);
+
+        public Vector2 OriginOffset(int index) //padding
+        {
+            switch (index)
+            {
+                case 0:
+                    return new Vector2(0, 0);
+                case 1:
+                    return new Vector2(0, 0);
+                case 2:
+                    return new Vector2(-4, 0);
+                case 3:
+                    return new Vector2(-8, 0);
+                case 4:
+                    return new Vector2(-12, 0);
+                default:
+                    return new Vector2(-14, 0);
+            }
+        }
+
+        public int Length(int index)
+        {
+            switch (index)
+            {
+                case 1:
+                    return 14;
+                case 2:
+                    return 12;
+                case 3:
+                    return 12;
+                case 4:
+                    return 12;
+                case 5:
+                    return 12;
+                default:
+                    return 20;
+            }
+        }
+
+        public Rectangle GetSourceRect(Texture2D texture, int index)
+        {
+            return texture.Frame(NumberOfSegments, 1, NumberOfSegments - 1 - index, 0);
+        }
+
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        {
+            Vector2 force = new(
+                -dir * 0.5f,
+                Player.defaultGravity * (0.5f + NumberOfSegments * NumberOfSegments * 0.5f / (1 + index)) // Apply scaling gravity that weakens at the tip of the chain
+                );
+
+            if (!Main.gameMenu)
+            {
+                float windPower = 0.3f * dir * -10;
+
+                // Wave in the wind
+                force.X += 30f;
+                force.Y -= 8;
+                force.Y += (float)(Math.Sin(time * 2f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
+            }
+            return force;
         }
     }
 }
