@@ -21,6 +21,7 @@ using Terraria.GameContent.Events;
 using ReLogic.Content;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -148,6 +149,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
 
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZTrophy>(), 10));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {

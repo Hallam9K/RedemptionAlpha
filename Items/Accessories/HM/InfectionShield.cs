@@ -65,7 +65,7 @@ namespace Redemption.Items.Accessories.HM
         public const int DashCooldown = 50;
         public const int DashDuration = 35;
 
-        public const float DashVelocity = 11f;
+        public const float DashVelocity = 13f;
 
         public int DashDir = -1;
 

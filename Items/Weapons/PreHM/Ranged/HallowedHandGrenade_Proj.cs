@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -56,6 +57,14 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                     Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 10;
                 SoundEngine.PlaySound(SoundID.Item14);
+                for (int i = 0; i < 15; i++)
+                {
+                    int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), Scale: 2);
+                    Main.dust[dust].velocity *= 6;
+                    Main.dust[dust].noGravity = true;
+                    Color dustColor = new(255, 216, 0) { A = 0 };
+                    Main.dust[dust].color = dustColor;
+                }
                 for (int i = 0; i < 30; i++)
                 {
                     int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);

@@ -36,9 +36,12 @@ namespace Redemption.Items.Usable
 			return true;
 		}
 		public override void OpenBossBag(Player player)
-		{
-	
-		}
+        {
+            if (Main.rand.NextBool(7))
+                player.QuickSpawnItem(ModContent.ItemType<PZMask>());
+
+            player.QuickSpawnItem(ModContent.ItemType<MedicKit>());
+        }
 
         public override void PostUpdate()
         {
