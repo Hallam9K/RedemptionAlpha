@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Redemption.Backgrounds.Skies;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.Player;
@@ -99,10 +100,17 @@ namespace Redemption
                     PremultiplyTexture(ref wastelandCrimsonBG3Tex);
                     Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref wastelandCorruptionBG3Tex);
+                    Texture2D ruinedKingdomSurfaceClose_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceClose_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref ruinedKingdomSurfaceClose_MenuTex);
+                    Texture2D ruinedKingdomSurfaceFar_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceFar_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref ruinedKingdomSurfaceFar_MenuTex);
+                    Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
                 });
             }
 
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
+            SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
