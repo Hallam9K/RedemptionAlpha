@@ -19,6 +19,7 @@ using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.Tiles.Tiles;
 using Redemption.Biomes;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -358,7 +359,7 @@ namespace Redemption.NPCs.Friendly
                     ChatNumber = 0;
                 if (RedeWorld.slayerRep >= 1 && ChatNumber == 2)
                     ChatNumber++;
-                if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall && ChatNumber == 5)
+                if (!Main.LocalPlayer.Redemption().foundHall && ChatNumber == 5)
                     ChatNumber++;
             }
         }

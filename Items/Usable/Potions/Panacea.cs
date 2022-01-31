@@ -3,6 +3,7 @@ using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Usable.Potions
 {
@@ -31,9 +32,9 @@ namespace Redemption.Items.Usable.Potions
         }
         public override bool? UseItem(Player player)
         {
-            player.GetModPlayer<Radiation>().irradiatedEffect = 0;
-            player.GetModPlayer<Radiation>().irradiatedLevel = 0;
-            player.GetModPlayer<Radiation>().irradiatedTimer = 0;
+            player.RedemptionRad().irradiatedEffect = 0;
+            player.RedemptionRad().irradiatedLevel = 0;
+            player.RedemptionRad().irradiatedTimer = 0;
             player.AddBuff(ModContent.BuffType<PanaceaBuff>(), 36000);
             return true;
         }

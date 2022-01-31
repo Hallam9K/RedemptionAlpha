@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -53,7 +54,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (!target.active || Projectile.whoAmI == target.whoAmI || target.minion || !target.friendly || target.hostile || target.damage <= 5 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                if (!target.active || Projectile.whoAmI == target.whoAmI || target.minion || !target.friendly || target.hostile || target.damage <= 5 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                     continue;
 
                 if (!Main.dedServ)

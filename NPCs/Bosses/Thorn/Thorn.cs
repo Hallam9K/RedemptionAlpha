@@ -23,6 +23,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -465,8 +466,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
 
                     if (AITimer >= 60)

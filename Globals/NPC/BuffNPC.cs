@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.NPC
 {
@@ -464,7 +465,7 @@ namespace Redemption.Globals.NPC
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     Terraria.NPC target = Main.npc[i];
-                    if (!target.active || target.whoAmI == npc.whoAmI || target.GetGlobalNPC<BuffNPC>().moonflare)
+                    if (!target.active || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().moonflare)
                         continue;
 
                     if (!target.Hitbox.Intersects(npc.Hitbox))
@@ -485,7 +486,7 @@ namespace Redemption.Globals.NPC
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         Terraria.NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI == npc.whoAmI || target.friendly || target.GetGlobalNPC<BuffNPC>().infected)
+                        if (!target.active || target.whoAmI == npc.whoAmI || target.friendly || target.RedemptionNPCBuff().infected)
                             continue;
 
                         if (!target.Hitbox.Intersects(npc.Hitbox))

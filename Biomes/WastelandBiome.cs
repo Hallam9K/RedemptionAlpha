@@ -9,6 +9,8 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
+
 namespace Redemption.Biomes
 {
     public class WastelandPurityBiome : ModBiome
@@ -28,7 +30,7 @@ namespace Redemption.Biomes
         public override void SpecialVisuals(Player player)
         {
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
-                player.GetModPlayer<BuffPlayer>().HEVSuit;
+                player.RedemptionPlayerBuff().HEVSuit;
 
             player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()), player.Center);
 
@@ -53,8 +55,8 @@ namespace Redemption.Biomes
                 else
                     player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);
 
-                if (Main.rand.Next(80000) == 0 && player.GetModPlayer<Radiation>().irradiatedLevel == 0 && !player.GetModPlayer<BuffPlayer>().HEVSuit && !player.GetModPlayer<BuffPlayer>().hazmatSuit)
-                    player.GetModPlayer<Radiation>().irradiatedLevel++;
+                if (Main.rand.Next(80000) == 0 && player.RedemptionRad().irradiatedLevel == 0 && !player.RedemptionPlayerBuff().HEVSuit && !player.RedemptionPlayerBuff().hazmatSuit)
+                    player.RedemptionRad().irradiatedLevel++;
             }
             else
                 player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);

@@ -1,5 +1,6 @@
 using Redemption.Globals.Player;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
@@ -9,7 +10,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
-            return RedeSystem.Silence || player.GetModPlayer<Radiation>().irradiatedEffect == 2;
+            return RedeSystem.Silence || player.RedemptionRad().irradiatedEffect == 2;
         }
     }
     public class SkeletonInvasionMusic : ModSceneEffect
@@ -36,7 +37,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
-            return player.GetModPlayer<Radiation>().irradiatedEffect == 3;
+            return player.RedemptionRad().irradiatedEffect == 3;
         }
     }
     public class Rad2Music : ModSceneEffect
@@ -45,7 +46,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
-            return player.GetModPlayer<Radiation>().irradiatedEffect >= 4;
+            return player.RedemptionRad().irradiatedEffect >= 4;
         }
     }
 }

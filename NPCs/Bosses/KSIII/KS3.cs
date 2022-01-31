@@ -24,6 +24,7 @@ using Redemption.Items;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Accessories.HM;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -207,7 +208,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
+            if (projectile.Redemption().TechnicallyMelee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
                 strongHit = true;
         }
 
@@ -285,7 +286,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             else if (NPC.life < (int)(NPC.lifeMax * 0.05f) && phase < 4 && !RedeConfigClient.Instance.NoLoreElements)
                 AIState = ActionState.PhaseChange;
 
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
 
             Vector2 GunOrigin = NPC.Center + RedeHelper.PolarVector(54, gunRot) + RedeHelper.PolarVector(13 * NPC.spriteDirection, gunRot - (float)Math.PI / 2);
             int dmgIncrease = NPC.DistanceSQ(player.Center) > 800 * 800 ? 10 : 0;
@@ -301,7 +302,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                     NPC.LookAtEntity(player);
                     BodyState = (int)BodyAnim.Crossed;
-                    player.GetModPlayer<ScreenPlayer>().Rumble(5, 5);
+                    player.RedemptionScreen().Rumble(5, 5);
                     TeleVector = NPC.Center;
                     TeleGlow = true;
                     if (AITimer++ > 5)
@@ -343,7 +344,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     else
                     {
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().lockScreen = true;
                         NPC.LockMoveRadius(player);
                         if (RedeBossDowned.slayerDeath < 3)
                         {
@@ -2083,7 +2084,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer++ == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
@@ -2158,7 +2159,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2194,7 +2195,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2247,7 +2248,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case ActionState.Spared:
                     #region Spared
                     NPC.LookAtEntity(player);
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer++ == 0)
                     {
@@ -2289,7 +2290,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer < 30 && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2360,7 +2361,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 }
             }
             #region Teleporting
-            if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
+            if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.RedemptionScreen().lockScreen)
             {
                 if (AttackChoice == 3 && AIState is ActionState.PhysicalAttacks)
                     return;

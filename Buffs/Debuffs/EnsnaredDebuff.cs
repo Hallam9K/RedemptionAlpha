@@ -1,6 +1,7 @@
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -16,7 +17,7 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().ensnared = true;
+            player.RedemptionPlayerBuff().ensnared = true;
             if (player.velocity.Y < 0)
                 player.velocity.Y *= 0.6f;
             if (player.velocity.Y < -2)

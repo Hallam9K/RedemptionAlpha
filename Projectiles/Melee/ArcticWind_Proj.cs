@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -27,7 +28,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 40;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

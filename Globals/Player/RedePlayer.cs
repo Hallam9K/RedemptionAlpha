@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.Player
 {
@@ -34,7 +35,7 @@ namespace Redemption.Globals.Player
 
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
-            if (Player.GetModPlayer<BuffPlayer>().hardlightBonus == 3 && item.DamageType == DamageClass.Melee)
+            if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && item.DamageType == DamageClass.Melee)
             {
                 hitTarget = target.whoAmI;
                 hitTarget2 = target.whoAmI;
@@ -42,7 +43,7 @@ namespace Redemption.Globals.Player
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
-            if (Player.GetModPlayer<BuffPlayer>().hardlightBonus == 3 && proj.DamageType == DamageClass.Melee && proj.type != ModContent.ProjectileType<MiniSpaceship_Laser>())
+            if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && proj.DamageType == DamageClass.Melee && proj.type != ModContent.ProjectileType<MiniSpaceship_Laser>())
             {
                 hitTarget = target.whoAmI;
                 hitTarget2 = target.whoAmI;

@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
 {
@@ -22,7 +23,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Projectile.friendly = false;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 600;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         private float glowRot;

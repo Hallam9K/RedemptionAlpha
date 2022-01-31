@@ -16,6 +16,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -82,7 +83,7 @@ namespace Redemption.NPCs.Wasteland
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
             if (hopCooldown > 0)
@@ -251,7 +252,7 @@ namespace Redemption.NPCs.Wasteland
         public void SightCheck()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = GetNearestNPC();
             if (NPC.Sight(player, 800, true, true))
             {

@@ -15,6 +15,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
@@ -78,7 +79,7 @@ namespace Redemption.Globals
                 Terraria.NPC npc = Main.npc[i];
                 float distance = (npc.Center - position).Length();
                 if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
-                    npc.lifeMax <= 5 || npc.GetGlobalNPC<RedeNPC>().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
+                    npc.lifeMax <= 5 || npc.Redemption().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
                     !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles ||
                     !specialCondition(npc))
                     continue;
@@ -620,7 +621,7 @@ namespace Redemption.Globals
 
         public static bool PlayerDead(this Terraria.NPC npc)
         {
-            RedeNPC globalNPC = npc.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = npc.Redemption();
             if (globalNPC.attacker is Terraria.Player && ((globalNPC.attacker as Terraria.Player).dead || !(globalNPC.attacker as Terraria.Player).active))
                 return true;
 
@@ -901,7 +902,7 @@ namespace Redemption.Globals
             if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
                 return false;
 
-            if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)
+            if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).Redemption().invisible)
                 return false;
             if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
                 return false;
@@ -1144,7 +1145,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Terraria.NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
+                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
@@ -1165,7 +1166,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Terraria.NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
+                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (DontDmgNPC.Contains(target.type))

@@ -2,6 +2,7 @@ using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -17,11 +18,11 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().dirtyWound = true;
+            player.RedemptionPlayerBuff().dirtyWound = true;
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<BuffNPC>().dirtyWound = true;
+            npc.RedemptionNPCBuff().dirtyWound = true;
         }
     }
 }

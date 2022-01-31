@@ -22,6 +22,7 @@ using ReLogic.Content;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -713,9 +714,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             break;
                         case 1:
-                            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                            player.RedemptionScreen().lockScreen = true;
+                            player.RedemptionScreen().ScreenShakeIntensity = 5;
                             NPC.LockMoveRadius(player);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
                             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);

@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -82,7 +83,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.timeLeft = 300;
             Projectile.alpha = 255;
             Projectile.scale = 2;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

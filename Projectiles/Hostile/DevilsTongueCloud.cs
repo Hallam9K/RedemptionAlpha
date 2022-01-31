@@ -3,6 +3,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Hostile
 {
@@ -23,7 +24,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 120;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

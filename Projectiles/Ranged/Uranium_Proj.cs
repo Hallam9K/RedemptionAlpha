@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -64,7 +65,7 @@ namespace Redemption.Projectiles.Ranged
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PlasmaBlast"), Projectile.position);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
             if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                player.RedemptionScreen().ScreenShakeIntensity = 3;
 
             for (int i = 0; i < 20; i++)
             {

@@ -21,6 +21,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.NPC
 {
@@ -40,7 +41,7 @@ namespace Redemption.Globals.NPC
 
         public override bool CanHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int cooldownSlot)
         {
-            if (target.GetModPlayer<BuffPlayer>().skeletonFriendly)
+            if (target.RedemptionPlayerBuff().skeletonFriendly)
             {
                 if (NPCLists.SkeletonHumanoid.Contains(npc.type))
                     return false;
@@ -147,7 +148,7 @@ namespace Redemption.Globals.NPC
                     if (ItemTags.Poison.Has(item.type))
                         damage = (int)(damage * 1.1f);
                 }
-                if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
+                if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                     damage = (int)(damage * 1.15f);
                 if (ItemTags.Wind.Has(item.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
@@ -164,7 +165,7 @@ namespace Redemption.Globals.NPC
                     damage = damage < npc.life ? npc.life : damage;
                     crit = true;
                 }
-                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.GetGlobalItem<RedeItem>().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
+                else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
@@ -272,7 +273,7 @@ namespace Redemption.Globals.NPC
                     if (ProjectileTags.Poison.Has(projectile.type))
                         damage = (int)(damage * 1.1f);
                 }
-                if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.GetGlobalNPC<BuffNPC>().dirtyWound))
+                if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                     damage = (int)(damage * 1.15f);
                 if (ProjectileTags.Wind.Has(projectile.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
@@ -281,7 +282,7 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
         {
-            target.GetGlobalNPC<RedeNPC>().attacker = npc;
+            target.Redemption().attacker = npc;
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
         {
@@ -295,7 +296,7 @@ namespace Redemption.Globals.NPC
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.GetGlobalNPC<BuffNPC>().iceFrozen && ItemTags.Ice.Has(item.type))
+                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && ItemTags.Ice.Has(item.type))
                     {
                         SoundEngine.PlaySound(SoundID.Item30, npc.position);
                         npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
@@ -343,7 +344,7 @@ namespace Redemption.Globals.NPC
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.GetGlobalNPC<BuffNPC>().iceFrozen && ProjectileTags.Ice.Has(projectile.type))
+                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && ProjectileTags.Ice.Has(projectile.type))
                     {
                         SoundEngine.PlaySound(SoundID.Item30, npc.position);
                         npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));

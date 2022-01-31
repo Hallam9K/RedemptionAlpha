@@ -6,6 +6,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PostML.Shade
 {
@@ -40,7 +41,7 @@ namespace Redemption.Items.Armor.PostML.Shade
         {
             player.GetDamage<RitualistClass>() += .10f;
             player.GetCritChance<RitualistClass>() += 15;
-            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+            RedePlayer modPlayer = player.Redemption();
             modPlayer.maxSpiritLevel += 2;
         }
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using System;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PreHM.CommonGuard
 {
@@ -38,14 +39,14 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<BuffPlayer>().MeleeDamageFlat += 2;
+            player.RedemptionPlayerBuff().MeleeDamageFlat += 2;
         }
 
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = "Reduces damage taken by 6%";
             player.endurance += .06f;
-            player.GetModPlayer<BuffPlayer>().MetalSet = true;
+            player.RedemptionPlayerBuff().MetalSet = true;
 
             if (Main.rand.NextBool(10) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {

@@ -13,6 +13,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -68,7 +69,7 @@ namespace Redemption.NPCs.Friendly
             NPC.chaseable = false;
             NPC.aiStyle = -1;
             NPC.alpha = 255;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 300;
+            NPC.RedemptionGuard().GuardPoints = 300;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -96,12 +97,12 @@ namespace Redemption.NPCs.Friendly
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
                 return false;
             }
-            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Wraith, SoundID.Item37, 10, 1, 150);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Wraith, SoundID.Item37, 10, 1, 150);
             return true;
         }
         private Vector2 moveTo;
@@ -109,7 +110,7 @@ namespace Redemption.NPCs.Friendly
         public override void AI()
         {
             Player player = Main.player[(int)NPC.ai[3]];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             if (AIState != ActionState.Slash)
                 NPC.LookByVelocity();
@@ -224,7 +225,7 @@ namespace Redemption.NPCs.Friendly
                     if (NPC.frame.Y == 8 * frameHeight)
                     {
                         if (NPC.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                            Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                            Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 5;
 
                         NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), false, SoundID.Item71);
                         Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 280 : NPC.Center.X - 18), (int)NPC.Center.Y, 280, 60);
@@ -268,7 +269,7 @@ namespace Redemption.NPCs.Friendly
         }
         public void SightCheck()
         {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage)
             {

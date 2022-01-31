@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Lab.Volt
             Projectile.ignoreWater = true;
             Projectile.alpha = 255;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

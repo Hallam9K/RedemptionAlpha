@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -44,7 +45,7 @@ namespace Redemption.Projectiles.Ranged
             if (!projAim.active || projAim.type != ModContent.ProjectileType<Hardlight_SoSCrosshair>())
             {
                 if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                    Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 12;
+                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                 Projectile.Kill();
@@ -62,7 +63,7 @@ namespace Redemption.Projectiles.Ranged
                 {
                     proj.localAI[0]++;
                     if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                        Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 12;
+                        Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                     Projectile.Kill();
@@ -72,7 +73,7 @@ namespace Redemption.Projectiles.Ranged
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 12;
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
             Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
             Projectile.Kill();

@@ -13,6 +13,7 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Redemption.Effects;
 using ReLogic.Content;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -34,8 +35,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.height = 48;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

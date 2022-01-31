@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -31,7 +32,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = Main.rand.Next(180, 281);
             Projectile.scale = Main.rand.NextFloat(0.4f, 0.7f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

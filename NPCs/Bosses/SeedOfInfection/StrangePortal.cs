@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -25,7 +26,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            ScreenPlayer modPlayer = player.GetModPlayer<ScreenPlayer>();
+            ScreenPlayer modPlayer = player.RedemptionScreen();
             if (Projectile.localAI[0]++ == 0)
             {
                 if (!Main.dedServ)

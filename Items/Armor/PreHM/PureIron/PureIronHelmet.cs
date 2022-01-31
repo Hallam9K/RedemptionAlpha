@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PreHM.PureIron
 {
@@ -45,9 +46,9 @@ namespace Redemption.Items.Armor.PreHM.PureIron
             player.setBonus = "20% increased Fire elemental resistance\n" +
                 "33% chance for weapons to inflict Pure Chill\n" +
                 "100% chance for all Pure-Iron weapons to inflict Pure Chill";
-            player.GetModPlayer<BuffPlayer>().ElementalResistance[1] += 0.2f;
-            player.GetModPlayer<BuffPlayer>().pureIronBonus = true;
-            player.GetModPlayer<BuffPlayer>().MetalSet = true;
+            player.RedemptionPlayerBuff().ElementalResistance[1] += 0.2f;
+            player.RedemptionPlayerBuff().pureIronBonus = true;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
 
         public override void AddRecipes()

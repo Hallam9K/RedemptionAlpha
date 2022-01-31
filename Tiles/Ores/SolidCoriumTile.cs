@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Accessories.HM;
 using Redemption.Globals.Player;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Tiles.Ores
 {
@@ -37,8 +38,8 @@ namespace Redemption.Tiles.Ores
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
-            Radiation modPlayer = player.GetModPlayer<Radiation>();
-            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
+            Radiation modPlayer = player.RedemptionRad();
+            BuffPlayer suit = player.RedemptionPlayerBuff();
             var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
             if (dist <= 25 && dist > 20 && !suit.hazmatSuit && !suit.HEVSuit)
             {

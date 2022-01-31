@@ -11,6 +11,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -36,7 +37,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().IsHammer = true;
+            Projectile.Redemption().IsHammer = true;
         }
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;
@@ -103,7 +104,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                     Dust.NewDust(new Vector2(Projectile.position.X, Projectile.Bottom.Y), Projectile.width, 2, DustID.Stone,
                                         -player.velocity.X * 0.6f, -player.velocity.Y * 0.6f, Scale: 2);
 
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 2 * player.velocity.Y;
+                                player.RedemptionScreen().ScreenShakeIntensity = 2 * player.velocity.Y;
                                 Projectile.ai[1] = 1;
                             }
                             if ((!player.channel || player.velocity.Y <= 0) && Projectile.ai[0] >= 148 && Projectile.ai[1] == 0)

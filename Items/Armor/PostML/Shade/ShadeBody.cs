@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PostML.Shade
 {
@@ -33,7 +34,7 @@ namespace Redemption.Items.Armor.PostML.Shade
         public override void UpdateEquip(Player player)
         {
             player.GetDamage<RitualistClass>() += .10f;
-            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+            RedePlayer modPlayer = player.Redemption();
             modPlayer.maxSpiritLevel += 2;
         }
 

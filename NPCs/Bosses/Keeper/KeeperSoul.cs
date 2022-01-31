@@ -5,6 +5,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -57,7 +58,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             }
             if (Projectile.timeLeft == 180)
             {
-                player.GetModPlayer<ScreenPlayer>().Rumble(180, 3);
+                player.RedemptionScreen().Rumble(180, 3);
                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Octavia...", 120, 30, 0.6f, null, 2, Color.DarkGray);
             }
         }

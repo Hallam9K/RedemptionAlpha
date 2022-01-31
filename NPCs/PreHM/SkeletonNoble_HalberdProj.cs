@@ -7,6 +7,7 @@ using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -29,17 +30,17 @@ namespace Redemption.NPCs.PreHM
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return target == host.GetGlobalNPC<RedeNPC>().attacker ? null : false;
+            return target == host.Redemption().attacker ? null : false;
         }
         public override bool CanHitPlayer(Player target)
         {
-            return !target.GetModPlayer<BuffPlayer>().skeletonFriendly;
+            return !target.RedemptionPlayerBuff().skeletonFriendly;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

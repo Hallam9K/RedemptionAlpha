@@ -4,6 +4,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -26,7 +27,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 120;
             Projectile.alpha = 0;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

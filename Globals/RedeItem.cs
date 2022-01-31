@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
@@ -28,14 +29,14 @@ namespace Redemption.Globals
         }
         public override bool OnPickup(Item item, Terraria.Player player)
         {
-            if (item.type == ItemID.Heart && player.GetModPlayer<BuffPlayer>().heartInsignia)
+            if (item.type == ItemID.Heart && player.RedemptionPlayerBuff().heartInsignia)
                 player.AddBuff(ModContent.BuffType<HeartInsigniaBuff>(), 180);
 
             return true;
         }
         public override void PostUpdate(Item item)
         {
-            if (item.type == ItemID.Heart && Main.LocalPlayer.GetModPlayer<BuffPlayer>().heartInsignia)
+            if (item.type == ItemID.Heart && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
             {
                 if (!Main.rand.NextBool(6))
                     return;

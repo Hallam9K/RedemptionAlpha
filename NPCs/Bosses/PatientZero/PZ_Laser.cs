@@ -9,6 +9,7 @@ using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -65,7 +66,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
 
             if (AITimer >= 85)
             {
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 2;
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 2;
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             }

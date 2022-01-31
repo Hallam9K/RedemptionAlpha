@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -55,7 +56,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 TeleGlow = true;
                 Projectile.alpha = 255;
                 if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                    Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 10;
+                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 10;
                 SoundEngine.PlaySound(SoundID.Item14);
                 for (int i = 0; i < 15; i++)
                 {

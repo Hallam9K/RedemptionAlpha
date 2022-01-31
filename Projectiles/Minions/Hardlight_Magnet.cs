@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Base;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 800;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         Vector2 vector;
@@ -86,7 +87,7 @@ namespace Redemption.Projectiles.Minions
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile target = Main.projectile[i];
-                    if (!target.active || target.width >= 40 || target.height >= 40 || Projectile.DistanceSQ(target.Center) >= 200 * 200 || !target.hostile || target.damage <= 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+                    if (!target.active || target.width >= 40 || target.height >= 40 || Projectile.DistanceSQ(target.Center) >= 200 * 200 || !target.hostile || target.damage <= 0 || target.Redemption().TechnicallyMelee)
                         continue;
 
                     if (Projectile.owner == Main.myPlayer)

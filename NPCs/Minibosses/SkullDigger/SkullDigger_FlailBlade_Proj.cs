@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
             Projectile.alpha = 180;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

@@ -6,6 +6,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -79,7 +80,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     continue;
 
                                 if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) ||
-                                    target.GetGlobalProjectile<RedeProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type))
+                                    target.Redemption().Unparryable || ProjectileTags.Unparryable.Has(target.type))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);

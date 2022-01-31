@@ -19,6 +19,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -249,7 +250,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (!Main.dedServ)
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Omega Cleaver", 60, 90, 0.8f, 0, Color.Red,
                                 "1st Omega Prototype");
-                        player.GetModPlayer<ScreenPlayer>().Rumble(20, 7);
+                        player.RedemptionScreen().Rumble(20, 7);
                         rot = NPC.rotation;
                         if (AITimer > 20)
                         {
@@ -766,8 +767,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     else
                     {
-                        player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                        player.RedemptionScreen().lockScreen = true;
                         AITimer++;
                         rot.SlowRotation(0, (float)Math.PI / 60f);
                         NPC.rotation = rot;

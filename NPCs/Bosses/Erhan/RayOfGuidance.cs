@@ -9,6 +9,7 @@ using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -76,7 +77,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 SoundEngine.PlaySound(SoundID.Item122);
             if (AITimer >= 80)
             {
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 3;
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             }

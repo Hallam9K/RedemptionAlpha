@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.PreHM
 {
@@ -36,7 +37,7 @@ namespace Redemption.Items.Tools.PreHM
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {
-            if (player.GetModPlayer<BuffPlayer>().pureIronBonus)
+            if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
 

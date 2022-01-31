@@ -12,6 +12,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Critters
 {
@@ -94,7 +95,7 @@ namespace Redemption.NPCs.Critters
         {
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
 
             if (NPC.wet && !NPC.lavaWet && waterCooldown < 180)
             {
@@ -301,7 +302,7 @@ namespace Redemption.NPCs.Critters
         public void SightCheck()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
             if (NPC.Sight(player, 140, true, true))
             {

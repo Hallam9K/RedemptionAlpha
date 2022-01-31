@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Terraria.ModLoader;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -26,7 +27,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
-            Projectile.GetGlobalProjectile<RedeProjectile>().IsHammer = true;
+            Projectile.Redemption().IsHammer = true;
         }
 
         public override bool? CanCutTiles()
@@ -106,7 +107,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GravityHammerSlam").WithVolume(0.6f), Projectile.position);
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 20;
+                            player.RedemptionScreen().ScreenShakeIntensity = 20;
                             SlamOrigin = new(Projectile.Center.X + (70 * Projectile.spriteDirection), Projectile.Center.Y);
                             miss = false;
                         }

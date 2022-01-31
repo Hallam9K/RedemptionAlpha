@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.Buffs.Debuffs;
 using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Usable.Potions
 {
@@ -43,7 +44,7 @@ namespace Redemption.Items.Usable.Potions
         }
         public override bool? UseItem(Player player)
         {
-            Radiation modPlayer = player.GetModPlayer<Radiation>();
+            Radiation modPlayer = player.RedemptionRad();
             if (modPlayer.irradiatedEffect == 1 || modPlayer.irradiatedEffect == 2)
             {
                 modPlayer.irradiatedEffect = 0;

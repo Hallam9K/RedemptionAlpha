@@ -7,6 +7,7 @@ using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -52,7 +53,7 @@ namespace Redemption.NPCs.PreHM
 
         public bool AttackerIsUndead()
         {
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             if (globalNPC.attacker is NPC && (NPCLists.Undead.Contains((globalNPC.attacker as NPC).type) || NPCLists.Skeleton.Contains((globalNPC.attacker as NPC).type)))
                 return true;
 
@@ -61,7 +62,7 @@ namespace Redemption.NPCs.PreHM
         public override bool PreAI()
         {
             Player player = Main.player[NPC.target];
-            if (player.GetModPlayer<BuffPlayer>().skeletonFriendly)
+            if (player.RedemptionPlayerBuff().skeletonFriendly)
                 NPC.friendly = true;
             else
                 NPC.friendly = false;

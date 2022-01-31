@@ -19,6 +19,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -123,7 +124,7 @@ namespace Redemption.NPCs.PreHM
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
@@ -214,7 +215,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly))
+                        if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
                         {
                         }
                         else
@@ -261,7 +262,7 @@ namespace Redemption.NPCs.PreHM
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
                     RedeHelper.HorizontallyMove(NPC, moveTo, 0.2f,
-                        2.4f * SpeedMultiplier * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                        2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
 
@@ -288,7 +289,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).GetModPlayer<BuffPlayer>().skeletonFriendly))
+                        if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
                         {
                         }
                         else
@@ -346,7 +347,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+                RedeNPC globalNPC = NPC.Redemption();
 
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
                 NPC.frame.X = Personality switch
@@ -439,9 +440,9 @@ namespace Redemption.NPCs.PreHM
         public void SightCheck()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Block && !player.GetModPlayer<BuffPlayer>().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
+            if (AIState != ActionState.Block && !player.RedemptionPlayerBuff().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Notice"), NPC.position);

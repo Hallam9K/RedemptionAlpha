@@ -6,6 +6,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -28,7 +29,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.tileCollide = true;
             Projectile.timeLeft = 160;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

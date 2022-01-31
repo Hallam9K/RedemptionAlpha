@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Base;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 800;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         Vector2 vector;

@@ -19,6 +19,7 @@ using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -387,7 +388,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             {
                                 NPC.velocity.Y = 0;
                                 NPC.velocity.X = -0.1f * NPC.spriteDirection;
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                                player.RedemptionScreen().ScreenShakeIntensity = 3;
 
                                 if (AITimer % 2 == 0)
                                 {
@@ -440,8 +441,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                     }
                     else
                     {
-                        player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                        player.RedemptionScreen().lockScreen = true;
                         AITimer++;
 
                         if (!Main.dedServ)

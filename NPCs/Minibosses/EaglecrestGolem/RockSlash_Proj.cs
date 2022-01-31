@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 {
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
             Projectile.extraUpdates = 1;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

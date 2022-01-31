@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
