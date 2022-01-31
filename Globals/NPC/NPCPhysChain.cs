@@ -10,7 +10,7 @@ namespace Redemption.Globals.NPC
     {
         public override bool InstancePerEntity => true;
 
-        private static readonly int maxChains = 4;
+        private static readonly int maxChains = 6;
 
         /// <summary>
         /// The physchain.

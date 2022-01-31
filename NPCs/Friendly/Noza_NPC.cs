@@ -33,6 +33,7 @@ namespace Redemption.NPCs.Friendly
             set => NPC.ai[0] = (int)value;
         }
         public ref float AITimer => ref NPC.ai[1];
+        public ref float Force => ref NPC.ai[2];
         public static void UnloadChain()
         {
             tailChain = null;
@@ -47,8 +48,8 @@ namespace Redemption.NPCs.Friendly
         }
         public override void SetDefaults()
         {
-            NPC.width = 44;
-            NPC.height = 72;
+            NPC.width = 46;
+            NPC.height = 76;
             NPC.friendly = true;
             NPC.dontTakeDamage = true;
             NPC.noGravity = false;
@@ -207,9 +208,9 @@ namespace Redemption.NPCs.Friendly
             Rectangle rect = new(0, y, EyesTex.Width, Height);
             Vector2 origin = new(EyesTex.Width / 2f, Height / 2f);
 
-            if (NPC.frame.Y < 492)
+            if (NPC.frame.Y < 540)
             {
-                spriteBatch.Draw(EyesTex, NPC.Center - screenPos - new Vector2(4 * -NPC.spriteDirection, NPC.frame.Y >= 164 && NPC.frame.Y < 328 ? 18 : 20), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(EyesTex, NPC.Center - screenPos - new Vector2(3 * -NPC.spriteDirection, NPC.frame.Y >= 180 && NPC.frame.Y < 360 ? 18 : 20), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             return false;
         }
@@ -228,7 +229,7 @@ namespace Redemption.NPCs.Friendly
             return baseColour;
         }
 
-        public Vector2 AnchorOffset => new(-10, -9);
+        public Vector2 AnchorOffset => new(-10, -12);
 
         public Vector2 OriginOffset(int index) //padding
         {
@@ -239,13 +240,13 @@ namespace Redemption.NPCs.Friendly
                 case 1:
                     return new Vector2(0, 0);
                 case 2:
-                    return new Vector2(-4, 0);
+                    return new Vector2(-2, 0);
                 case 3:
-                    return new Vector2(-8, 0);
+                    return new Vector2(-4, 0);
                 case 4:
-                    return new Vector2(-12, 0);
+                    return new Vector2(-6, 0);
                 default:
-                    return new Vector2(-14, 0);
+                    return new Vector2(-20, 0);
             }
         }
 
@@ -253,6 +254,8 @@ namespace Redemption.NPCs.Friendly
         {
             switch (index)
             {
+                case 0:
+                    return 20;
                 case 1:
                     return 14;
                 case 2:
@@ -261,10 +264,8 @@ namespace Redemption.NPCs.Friendly
                     return 12;
                 case 4:
                     return 12;
-                case 5:
-                    return 12;
                 default:
-                    return 20;
+                    return 26;
             }
         }
 
@@ -282,12 +283,12 @@ namespace Redemption.NPCs.Friendly
 
             if (!Main.gameMenu)
             {
-                float windPower = 0.3f * dir * -10;
+                float windPower = 0.7f * dir * -10;
 
                 // Wave in the wind
-                force.X += 30f;
-                force.Y -= 8;
-                force.Y += (float)(Math.Sin(time * 2f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
+                force.X += 25f;
+                force.Y -= 2;
+                force.Y += (float)(Math.Sin(time * 0.5f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
             }
             return force;
         }
