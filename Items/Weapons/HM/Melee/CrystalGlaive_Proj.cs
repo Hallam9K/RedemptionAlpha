@@ -13,6 +13,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.Audio;
 using Redemption.Effects;
 using ReLogic.Content;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -31,8 +32,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.alpha = 255;
             Length = 60;
             Rot = MathHelper.ToRadians(3);
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public void DoTrailCreation(TrailManager tManager)
         {

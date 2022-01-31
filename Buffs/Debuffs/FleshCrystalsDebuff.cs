@@ -2,6 +2,7 @@ using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -17,7 +18,7 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().fleshCrystals = true;
+            player.RedemptionPlayerBuff().fleshCrystals = true;
             player.statDefense -= 11;
             player.moveSpeed *= 0.70f;
             player.AddBuff(ModContent.BuffType<HemorrhageDebuff>(), 1800);

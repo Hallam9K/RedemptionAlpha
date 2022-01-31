@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using System.IO;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -95,7 +96,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+            if (projectile.Redemption().TechnicallyMelee)
                 strongHit = true;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -211,7 +212,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (!player.active || player.dead)
                 return;
 
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -219,7 +220,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer++ == 0 && Main.rand.NextBool(50))
                             Funny = true;
 
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().lockScreen = true;
                         if (AITimer == 1)
                         {
                             aniType = 3;
@@ -243,7 +244,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     break;
                 case ActionState.Intro:
                     AITimer++;
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     if (Funny && !Main.dedServ)
                     {
                         if (AITimer == 60)
@@ -646,7 +647,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     NPC.LookAtEntity(player);
                     if (NPC.ai[2] < 260)
                     {
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().lockScreen = true;
                         NPC.LockMoveRadius(player);
                     }
 

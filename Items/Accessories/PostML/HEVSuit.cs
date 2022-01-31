@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PostML
 {
@@ -70,8 +71,8 @@ namespace Redemption.Items.Accessories.PostML
             player.buffImmune[ModContent.BuffType<GlowingPustulesDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<FleshCrystalsDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<ShockDebuff>()] = true;
-            player.GetModPlayer<BuffPlayer>().HEVSuit = true;
-            player.GetModPlayer<BuffPlayer>().WastelandWaterImmune = true;
+            player.RedemptionPlayerBuff().HEVSuit = true;
+            player.RedemptionPlayerBuff().WastelandWaterImmune = true;
             player.accDivingHelm = true;
         }
         public override void AddRecipes()

@@ -7,6 +7,7 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -23,8 +24,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
 
         private Vector2 vector;

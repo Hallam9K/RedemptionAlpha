@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -25,7 +26,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         private bool faceLeft;
@@ -76,7 +77,7 @@ namespace Redemption.Projectiles.Magic
 
                 if (Projectile.ai[0] == 180)
                 {
-                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
+                    player.RedemptionScreen().ScreenShakeIntensity = 6;
                     DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 4, 4, 1, 2, nogravity: true);
                     SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center,

@@ -3,6 +3,7 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
@@ -12,7 +13,7 @@ namespace Redemption.Globals
 		{
 			if (!info.IsInSimulation && NPCLists.SkeletonHumanoid.Contains(info.npc.type))
 			{
-				return info.npc.GetGlobalNPC<RedeNPC>().decapitated;
+				return info.npc.Redemption().decapitated;
 			}
 			return false;
 		}

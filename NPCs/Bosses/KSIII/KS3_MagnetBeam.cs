@@ -7,6 +7,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.Audio;
 using Terraria.ID;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -77,7 +78,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 LaserScale += 0.09f;
 
             if (Projectile.damage > 5)
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = Projectile.damage / 5;
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = Projectile.damage / 5;
 
             if (Projectile.timeLeft < 30 || !npc.active)
             {

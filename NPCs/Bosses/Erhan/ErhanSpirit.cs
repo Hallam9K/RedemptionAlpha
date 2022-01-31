@@ -20,6 +20,7 @@ using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -234,7 +235,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                             SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 14;
+                            player.RedemptionScreen().ScreenShakeIntensity = 14;
                             HolyFlare = true;
                             TeleGlow = true;
                             TimerRand = 1;
@@ -454,7 +455,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 ArmType = 1;
                             if (AITimer >= 90 && AITimer % 5 == 0 && AITimer <= 130)
                             {
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                                player.RedemptionScreen().ScreenShakeIntensity = 4;
                                 TimerRand += (float)Math.PI / 15;
                                 if (TimerRand > (float)Math.PI)
                                 {
@@ -474,7 +475,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 if (AITimer > 130 && AITimer % 5 == 0 && AITimer <= 165)
                                 {
-                                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                                    player.RedemptionScreen().ScreenShakeIntensity = 4;
                                     TimerRand -= (float)Math.PI / 13;
                                     if (TimerRand > (float)Math.PI)
                                     {
@@ -632,7 +633,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                     if (AITimer > 150 && AITimer % 5 == 0 && AITimer <= 185)
                                     {
-                                        player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                                        player.RedemptionScreen().ScreenShakeIntensity = 4;
                                         TimerRand2 -= (float)Math.PI / 13;
                                         if (TimerRand2 > (float)Math.PI)
                                         {
@@ -1042,7 +1043,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
                 strongHit = true;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

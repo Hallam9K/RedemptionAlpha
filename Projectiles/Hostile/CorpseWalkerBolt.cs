@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Hostile
 {
@@ -33,17 +34,17 @@ namespace Redemption.Projectiles.Hostile
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 120;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) => Projectile.Kill();
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return target == host.GetGlobalNPC<RedeNPC>().attacker && !NPCLists.Undead.Contains(target.type) && !NPCLists.Skeleton.Contains(target.type) ? null : false;
+            return target == host.Redemption().attacker && !NPCLists.Undead.Contains(target.type) && !NPCLists.Skeleton.Contains(target.type) ? null : false;
         }
         public override bool CanHitPlayer(Player target)
         {
-            return !target.GetModPlayer<BuffPlayer>().skeletonFriendly;
+            return !target.RedemptionPlayerBuff().skeletonFriendly;
         }
 
         public override Color? GetAlpha(Color lightColor) => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightYellow, Color.White, Color.LightYellow);

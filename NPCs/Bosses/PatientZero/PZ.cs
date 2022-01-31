@@ -22,6 +22,7 @@ using ReLogic.Content;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -76,9 +77,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 98;
             NPC.height = 80;
             NPC.friendly = false;
-            NPC.damage = 170;
+            NPC.damage = 140;
             NPC.defense = 80;
-            NPC.lifeMax = 350000;
+            NPC.lifeMax = 330000;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             NPC.HitSound = SoundID.NPCHit13;
@@ -293,7 +294,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), (int)(NPC.damage * 1.2f), RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
                             }
                             if (AITimer >= 150 && AITimer % 3 == 0 && AITimer <= 156)
                             {
@@ -320,7 +321,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, (MathHelper.ToRadians(90) * i) + MathHelper.PiOver4), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), (int)(NPC.damage * 1.2f), RedeHelper.PolarVector(10, (MathHelper.ToRadians(90) * i) + MathHelper.PiOver4), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
                             }
                             if (AITimer >= 150 && AITimer % 3 == 0 && AITimer <= 156)
                             {
@@ -713,9 +714,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             break;
                         case 1:
-                            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                            player.RedemptionScreen().lockScreen = true;
+                            player.RedemptionScreen().ScreenShakeIntensity = 5;
                             NPC.LockMoveRadius(player);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
                             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);

@@ -9,6 +9,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles
 {
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+			Projectile.Redemption().TechnicallyMelee = true;
 			WhipDefaults();
 		}
 		public virtual void WhipDefaults()

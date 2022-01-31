@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -34,7 +35,7 @@ namespace Redemption.Items.Accessories.PreHM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-            player.GetModPlayer<BuffPlayer>().DruidDamageFlat += 2;
+            player.RedemptionPlayerBuff().DruidDamageFlat += 2;
             player.GetCritChance<DruidClass>() += 2;
 		}
 	}

@@ -1,6 +1,7 @@
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs
 {
@@ -14,7 +15,7 @@ namespace Redemption.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().ElementalDamage[8] += 0.1f;
+            player.RedemptionPlayerBuff().ElementalDamage[8] += 0.1f;
         }
     }
 }

@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Utilities;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Base
 {
@@ -5449,7 +5450,7 @@ namespace Redemption.Base
                 npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
 
                 if (damager is NPC)
-                    npc.GetGlobalNPC<RedeNPC>().attacker = damager;
+                    npc.Redemption().attacker = damager;
 
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {

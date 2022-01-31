@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -56,7 +57,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position";
             }
-            player.GetModPlayer<BuffPlayer>().hardlightBonus = 6;
+            player.RedemptionPlayerBuff().hardlightBonus = 6;
         }
     }
 }

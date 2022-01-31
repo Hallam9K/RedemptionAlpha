@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
 using Redemption.DamageClasses;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -49,7 +50,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Summons a drone containing a fungus bio-weapon to poison the enemy";
             }
-            player.GetModPlayer<BuffPlayer>().hardlightBonus = 5;
+            player.RedemptionPlayerBuff().hardlightBonus = 5;
         }
     }
 }

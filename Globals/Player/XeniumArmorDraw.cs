@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.Player
 {

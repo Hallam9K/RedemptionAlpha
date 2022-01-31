@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -67,7 +68,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
@@ -140,7 +141,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);

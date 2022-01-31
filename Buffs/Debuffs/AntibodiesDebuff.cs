@@ -1,6 +1,7 @@
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -16,7 +17,7 @@ namespace Redemption.Buffs.Debuffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().antibodiesBuff = true;
+            player.RedemptionPlayerBuff().antibodiesBuff = true;
         }
     }
 }

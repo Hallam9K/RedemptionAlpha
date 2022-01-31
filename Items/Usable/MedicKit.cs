@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Usable
 {
@@ -31,7 +32,7 @@ namespace Redemption.Items.Usable
 
         public override bool CanUseItem(Player player)
         {
-            return !player.GetModPlayer<RedePlayer>().medKit && player.statLifeMax >= 500;
+            return !player.Redemption().medKit && player.statLifeMax >= 500;
         }
 
         public override bool? UseItem(Player player)
@@ -41,7 +42,7 @@ namespace Redemption.Items.Usable
             if (Main.myPlayer == player.whoAmI)
                 player.HealEffect(50, true);
 
-            player.GetModPlayer<RedePlayer>().medKit = true;
+            player.Redemption().medKit = true;
             SoundEngine.PlaySound(SoundID.Item43, player.position);
             return true;
         }

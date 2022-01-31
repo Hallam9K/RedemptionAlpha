@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.NPC;
 using Terraria.GameContent.Creative;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.PreHM
 {
@@ -42,7 +43,7 @@ namespace Redemption.Items.Tools.PreHM
                 if (Main.rand.NextBool(20))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
-                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
+                    target.Redemption().decapitated = true;
                     damage = damage < target.life ? target.life : damage;
                     crit = true;
                 }

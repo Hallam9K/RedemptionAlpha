@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
@@ -66,11 +67,11 @@ namespace Redemption.NPCs.Lab.Janitor
         {
             if (target.type == ModContent.NPCType<JanitorBot>() && target.ai[0] != 4 && target.ai[0] != 5)
             {
-                target.GetGlobalNPC<GuardNPC>().GuardPoints = 0;
+                target.RedemptionGuard().GuardPoints = 0;
                 target.ai[0] = 4;
                 target.ai[1] = 0;
                 target.ai[2] = 0;
-                target.GetGlobalNPC<GuardNPC>().GuardBreakCheck(target, DustID.Electric, SoundID.Item37, 10, 1, 1000);
+                target.RedemptionGuard().GuardBreakCheck(target, DustID.Electric, SoundID.Item37, 10, 1, 1000);
             }
         }
         public override void Kill(int timeleft)

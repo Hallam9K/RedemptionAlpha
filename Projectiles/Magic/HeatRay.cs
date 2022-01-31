@@ -10,6 +10,7 @@ using Redemption.Globals;
 using System;
 using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -64,7 +65,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.OnFire3, 60);
 
-            if (player.GetModPlayer<BuffPlayer>().dragonLeadBonus)
+            if (player.RedemptionPlayerBuff().dragonLeadBonus)
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
 

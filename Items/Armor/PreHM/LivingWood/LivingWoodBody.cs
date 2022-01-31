@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -28,7 +29,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<BuffPlayer>().DruidDamageFlat += 1;
+            player.RedemptionPlayerBuff().DruidDamageFlat += 1;
         }       
     }
 }

@@ -1,6 +1,7 @@
 using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -50,7 +51,7 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<BuffNPC>().stunned = true;
+            npc.RedemptionNPCBuff().stunned = true;
         }
     }
 }

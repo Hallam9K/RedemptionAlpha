@@ -20,6 +20,7 @@ using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.Player
 {
@@ -480,7 +481,7 @@ namespace Redemption.Globals.Player
                 Player.lifeRegen -= 5;
                 Player.statDefense -= 30;
             }
-            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.GetModPlayer<BuffPlayer>().WastelandWaterImmune)
+            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.RedemptionPlayerBuff().WastelandWaterImmune)
             {
                 if (Player.lifeRegen > 10)
                     Player.lifeRegen = 10;

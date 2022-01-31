@@ -6,6 +6,7 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -43,7 +44,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 3.7f;
             Item.shoot = ModContent.ProjectileType<GravityHammer_Proj>();
-            Item.GetGlobalItem<RedeItem>().TechnicallyHammer = true;
+            Item.Redemption().TechnicallyHammer = true;
         }
     }
 }

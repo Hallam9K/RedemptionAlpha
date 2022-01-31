@@ -11,6 +11,7 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -151,7 +152,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
-            if (player.GetModPlayer<BuffPlayer>().dragonLeadBonus)
+            if (player.RedemptionPlayerBuff().dragonLeadBonus)
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
 

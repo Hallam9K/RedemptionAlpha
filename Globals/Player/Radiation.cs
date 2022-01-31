@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.Player
 {
@@ -18,7 +19,7 @@ namespace Redemption.Globals.Player
             if (irradiatedLevel == 0)
                 return;
 
-            BuffPlayer suit = Player.GetModPlayer<BuffPlayer>();
+            BuffPlayer suit = Player.RedemptionPlayerBuff();
             switch (irradiatedLevel)
             {
                 case 1:

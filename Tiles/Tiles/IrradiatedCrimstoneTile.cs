@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -47,8 +48,8 @@ namespace Redemption.Tiles.Tiles
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             Player player = Main.LocalPlayer;
-            Radiation modPlayer = player.GetModPlayer<Radiation>();
-            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
+            Radiation modPlayer = player.RedemptionRad();
+            BuffPlayer suit = player.RedemptionPlayerBuff();
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 0.5f, j + 0.5f));
             if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
             {

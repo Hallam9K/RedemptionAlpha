@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
 using Redemption.DamageClasses;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -58,7 +59,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons";
             }
-            player.GetModPlayer<BuffPlayer>().hardlightBonus = 1;
+            player.RedemptionPlayerBuff().hardlightBonus = 1;
         }
     }
 }

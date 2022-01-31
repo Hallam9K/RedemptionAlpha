@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 2;
             Projectile.timeLeft = 600;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -60,7 +61,7 @@ namespace Redemption.Projectiles.Ranged
             if (!Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PlasmaBlast"), Projectile.position);
             if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                player.RedemptionScreen().ScreenShakeIntensity = 3;
         }
         public override void AI()
         {

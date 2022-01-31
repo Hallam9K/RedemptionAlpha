@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Redemption.BaseExtension;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -39,7 +40,7 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             Player player = Main.LocalPlayer;
             player.AddBuff(ModContent.BuffType<HKStatueBuff>(), 20);
-            player.GetModPlayer<RedePlayer>().foundHall = true;
+            player.Redemption().foundHall = true;
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

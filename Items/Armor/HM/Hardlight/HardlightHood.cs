@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -56,7 +57,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Summons 2 missile drones and a magnet drone";
             }
-            player.GetModPlayer<BuffPlayer>().hardlightBonus = 4;
+            player.RedemptionPlayerBuff().hardlightBonus = 4;
         }
     }
 }

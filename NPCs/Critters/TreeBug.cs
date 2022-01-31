@@ -11,6 +11,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Critters
 {
@@ -99,7 +100,7 @@ namespace Redemption.NPCs.Critters
 
                     HopCheck();
 
-                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         moveTo = NPC.FindGround(10);
                         AITimer = 0;
@@ -121,7 +122,7 @@ namespace Redemption.NPCs.Critters
                 case ActionState.Wander:
                     HopCheck();
 
-                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         RedeHelper.HorizontallyMove(NPC,
                             new Vector2(npcTarget.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50,

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -19,7 +20,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 		public override void SetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Spear);
-			Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+			Projectile.Redemption().TechnicallyMelee = true;
 		}
 
 		public override bool PreAI()

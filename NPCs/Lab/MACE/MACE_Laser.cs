@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -21,7 +22,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 100;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

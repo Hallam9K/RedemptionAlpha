@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -30,7 +31,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.timeLeft = 400;
             Projectile.extraUpdates = 1;
             Projectile.scale = 0.2f;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

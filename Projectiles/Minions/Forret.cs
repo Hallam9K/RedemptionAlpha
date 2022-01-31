@@ -8,6 +8,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -133,7 +134,7 @@ namespace Redemption.Projectiles.Minions
         {
             Player player = Main.player[Projectile.owner];
 
-            if (player.GetModPlayer<BuffPlayer>().pureIronBonus)
+            if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

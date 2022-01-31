@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -47,7 +48,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (!projAim.active || projAim.type != ModContent.ProjectileType<KS3_SoSCrosshair>())
             {
                 if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                    Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 12;
+                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<KS3_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                 Projectile.Kill();
@@ -64,7 +65,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion").WithPitchVariance(0.1f), Projectile.position);
 
             if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 12;
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
             Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<KS3_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
 

@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -35,7 +36,7 @@ namespace Redemption.Items.Accessories.HM
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             Player player = Main.player[Main.myPlayer];
-            Radiation modPlayer = player.GetModPlayer<Radiation>();
+            Radiation modPlayer = player.RedemptionRad();
             string rad = "No";
             string rad2 = "nothing to note.";
             switch (modPlayer.irradiatedLevel)

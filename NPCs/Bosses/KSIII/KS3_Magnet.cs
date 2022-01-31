@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Buffs.Debuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -143,7 +144,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile target = Main.projectile[i];
-                    if (!target.active || target.width >= 40 || target.height >= 40 || NPC.DistanceSQ(target.Center) >= 200 * 200 || !target.friendly || target.damage <= 0 || target.minion || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+                    if (!target.active || target.width >= 40 || target.height >= 40 || NPC.DistanceSQ(target.Center) >= 200 * 200 || !target.friendly || target.damage <= 0 || target.minion || target.Redemption().TechnicallyMelee)
                         continue;
 
                     NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);

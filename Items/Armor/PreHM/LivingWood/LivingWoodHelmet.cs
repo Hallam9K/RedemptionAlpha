@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using System;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -37,7 +38,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<BuffPlayer>().DruidDamageFlat += 1;
+            player.RedemptionPlayerBuff().DruidDamageFlat += 1;
         }
 
         public override void UpdateArmorSet(Player player)

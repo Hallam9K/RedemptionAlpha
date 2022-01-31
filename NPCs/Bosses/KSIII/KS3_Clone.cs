@@ -20,6 +20,7 @@ using Redemption.Items;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -214,7 +215,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             DespawnHandler();
             chance = MathHelper.Clamp(chance, 0, 1);
 
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
 
             Vector2 GunOrigin = NPC.Center + RedeHelper.PolarVector(54, gunRot) + RedeHelper.PolarVector(13 * NPC.spriteDirection, gunRot - (float)Math.PI / 2);
             int dmgIncrease = NPC.DistanceSQ(player.Center) > 800 * 800 ? 10 : 0;
@@ -227,7 +228,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case ActionState.Begin:
                     NPC.LookAtEntity(player);
                     BodyState = (int)BodyAnim.Crossed;
-                    player.GetModPlayer<ScreenPlayer>().Rumble(5, 5);
+                    player.RedemptionScreen().Rumble(5, 5);
                     TeleVector = NPC.Center;
                     TeleGlow = true;
                     if (AITimer++ == 0)
@@ -1470,7 +1471,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 }
             }
             #region Teleporting
-            if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
+            if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.RedemptionScreen().lockScreen)
             {
                 if (AttackChoice == 3 && AIState is ActionState.PhysicalAttacks)
                     return;
