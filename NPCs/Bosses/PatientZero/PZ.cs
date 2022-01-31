@@ -77,9 +77,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 98;
             NPC.height = 80;
             NPC.friendly = false;
-            NPC.damage = 170;
+            NPC.damage = 140;
             NPC.defense = 80;
-            NPC.lifeMax = 350000;
+            NPC.lifeMax = 330000;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             NPC.HitSound = SoundID.NPCHit13;
@@ -294,7 +294,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), (int)(NPC.damage * 1.2f), RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
                             }
                             if (AITimer >= 150 && AITimer % 3 == 0 && AITimer <= 156)
                             {
@@ -321,7 +321,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, (MathHelper.ToRadians(90) * i) + MathHelper.PiOver4), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), (int)(NPC.damage * 1.2f), RedeHelper.PolarVector(10, (MathHelper.ToRadians(90) * i) + MathHelper.PiOver4), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
                             }
                             if (AITimer >= 150 && AITimer % 3 == 0 && AITimer <= 156)
                             {
