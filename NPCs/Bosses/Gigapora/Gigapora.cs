@@ -153,7 +153,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !NPC.Hitbox.Intersects(target.Hitbox))
                     continue;
 
-                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
                 if (NPC.immortal)
                     DustHelper.DrawCircle(target.Center, DustID.LifeDrain, 1, 2, 2, nogravity: true);
                 target.Kill();
@@ -327,7 +326,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (NPC.immortal)
             {
-                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithVolume(0.5f).WithPitchVariance(0.1f), NPC.position);
                 damage = 0;
                 return false;
             }
