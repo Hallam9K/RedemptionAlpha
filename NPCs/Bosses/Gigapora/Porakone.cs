@@ -169,6 +169,12 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
                             for (int i = 0; i < 10; i++)
                                 Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+
+                            if (Main.netMode == NetmodeID.Server)
+                                return;
+
+                            for (int i = 0; i < 4; i++)
+                                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PorakoneGore" + (i + 1)).Type, 1);
                         }
                     }
                     break;
