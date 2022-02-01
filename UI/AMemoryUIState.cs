@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -11,14 +12,16 @@ namespace Redemption.UI
         public UIImage BgSprite = new(ModContent.Request<Texture2D>("Redemption/UI/AMemory", ReLogic.Content.AssetRequestMode.ImmediateLoad));
 
         public static bool Visible = false;
+        public Vector2 lastScreenSize;
 
         public override void OnInitialize()
         {
+            lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+
             BgSprite.Width.Set(426, 0f);
             BgSprite.Height.Set(438, 0f);
-            BgSprite.Top.Set((Main.screenHeight / 2) - 332 / 2, 0f);
-            BgSprite.Left.Set((Main.screenWidth / 2) - 608 / 2, 0f);
-            BgSprite.VAlign = BgSprite.HAlign = 0.5f;
+            BgSprite.Left.Set((Main.screenWidth / 2f) + 426f / 2f, 0f);
+            BgSprite.Top.Set((Main.screenHeight / 2f) + 438f / 2f, 0f);
 
             UIImageButton closeButton = new(ModContent.Request<Texture2D>("Redemption/UI/ButtonClosePlaceholder", ReLogic.Content.AssetRequestMode.ImmediateLoad));
 
@@ -45,7 +48,18 @@ namespace Redemption.UI
             if (!Visible)
                 return;
 
+            if(lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+            {
+                lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+                BgSprite.Left.Pixels = (Main.screenWidth / 2f) - 426f / 2f;
+                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 438 / 2f;
+                BgSprite.Recalculate();
+            }
+
             base.Draw(spriteBatch);
+
+            //spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/UI/AMemory").Value, new Vector2(BgSprite.Left.Pixels, BgSprite.Top.Pixels), Color.White);
+
         }
     }
 }
