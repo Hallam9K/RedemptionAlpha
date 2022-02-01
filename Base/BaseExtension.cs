@@ -23,6 +23,8 @@ namespace Redemption.BaseExtension
         public static GuardNPC RedemptionGuard(this NPC npc) => npc.GetGlobalNPC<GuardNPC>(true);
         /// <summary>References the RedeItem instance.</summary>
         public static RedeItem Redemption(this Item item) => item.GetGlobalItem<RedeItem>();
+        /// <summary>References the </summary>
+        public static ItemUseGlow RedemptionGlow(this Item item) => item.GetGlobalItem<ItemUseGlow>();
         /// <summary>References the RedeProjectile instance.</summary>
         public static RedeProjectile Redemption(this Projectile proj) => proj.GetGlobalProjectile<RedeProjectile>();
     }
