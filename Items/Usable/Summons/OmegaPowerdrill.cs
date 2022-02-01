@@ -1,5 +1,6 @@
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Cleaver;
+using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.Audio;
@@ -9,13 +10,13 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Summons
 {
-    public class CleaverSword : ModItem
+    public class OmegaPowerdrill : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Blade");
-            Tooltip.SetDefault("Summons Omega Cleaver" +
-                "\n'The corrupted blade draws near the power, thus beginning the final hour'"
+            DisplayName.SetDefault("Omega Powerdrill");
+            Tooltip.SetDefault("Summons Omega Gigapora\n" +
+                "'Mechanical whirls beneath the ground, be wary of the deadly sound'"
                 + "\nOnly usable at night"
                 + "\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
@@ -23,8 +24,8 @@ namespace Redemption.Items.Usable.Summons
         }
         public override void SetDefaults()
         {
-            Item.width = 34;
-            Item.height = 38;
+            Item.width = 40;
+            Item.height = 42;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Red;
@@ -35,7 +36,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>());
+            return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()) && !NPC.AnyNPCs(ModContent.NPCType<Porakone>());
         }
         public override bool? UseItem(Player player)
         {
@@ -43,10 +44,10 @@ namespace Redemption.Items.Usable.Summons
             {
                 SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
 
-                int type = ModContent.NPCType<Wielder>();
+                int type = ModContent.NPCType<Porakone>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.NewNPC((int)player.position.X + 200, (int)player.position.Y + 500, type);
+                    NPC.NewNPC((int)player.position.X + 200, (int)player.position.Y - 500, type);
                 else
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
             }

@@ -256,7 +256,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer > 261)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
-                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
                             aniType = 4;
                             AITimer = 0;
                             AIState = ActionState.Intro2;
@@ -268,7 +268,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer > 60)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
-                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
 
                             aniType = 4;
                             AITimer = 0;

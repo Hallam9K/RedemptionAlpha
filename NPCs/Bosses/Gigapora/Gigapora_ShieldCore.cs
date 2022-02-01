@@ -1,0 +1,144 @@
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Globals;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
+using Redemption.Biomes;
+using Terraria.DataStructures;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+
+namespace Redemption.NPCs.Bosses.Gigapora
+{
+    public class Gigapora_ShieldCore : ModNPC
+    {
+        public static int BodyType() => ModContent.NPCType<Gigapora>();
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Shield Core");
+            Main.npcFrameCount[NPC.type] = 19;
+            NPCDebuffImmunityData debuffData = new()
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Confused,
+                    BuffID.Poisoned,
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
+                }
+            };
+            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+        }
+
+        public override void SetDefaults()
+        {
+            NPC.aiStyle = -1;
+            NPC.lifeMax = 20000;
+            NPC.damage = 60;
+            NPC.defense = 25;
+            NPC.knockBackResist = 0;
+            NPC.width = 76;
+            NPC.height = 44;
+            NPC.value = 0;
+            NPC.lavaImmune = true;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath14;
+            SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
+        }
+
+        public override void OnKill()
+        {
+            Item.NewItem(NPC.getRect(), ItemID.Heart);
+            Item.NewItem(NPC.getRect(), ItemID.Heart);
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, Scale: 2);
+                    Main.dust[dustIndex].velocity *= 2f;
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric);
+                    Main.dust[dustIndex].velocity *= 2f;
+                }
+            }
+        }
+
+        public override void AI()
+        {
+            DespawnHandler();
+            if (NPC.ai[1]++ >= 60)
+                NPC.Move(Vector2.Zero, 8, 60, true);
+            else
+                NPC.velocity *= 0.96f;
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.rotation = NPC.velocity.X * 0.07f;
+            if (++NPC.frameCounter >= 5)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 18 * frameHeight)
+                    NPC.frame.Y = 10 * frameHeight;
+            }
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            int associatedNPCType = BodyType();
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
+
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new FlavorTextBestiaryInfoElement("Absolute BEBE")
+            });
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
+        }
+
+        private void DespawnHandler()
+        {
+            Player player = Main.player[NPC.target];
+            if (!player.active || player.dead)
+            {
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (!player.active || player.dead)
+                {
+                    NPC.velocity.Y = -10;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    return;
+                }
+            }
+        }
+    }
+}

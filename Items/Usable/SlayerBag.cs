@@ -10,6 +10,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Usable
 {
@@ -36,7 +37,7 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
             if (!Main.dedServ)
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
         public override bool CanRightClick() => true;

@@ -20,6 +20,8 @@ namespace Redemption.UI
         private readonly UIImageButton SwitchSprite2 = new(ModContent.Request<Texture2D>("Redemption/UI/NukeDetonationUI_SwitchDown", ReLogic.Content.AssetRequestMode.ImmediateLoad));
         public readonly UIImageButton Button = new(ModContent.Request<Texture2D>(Redemption.EMPTY_TEXTURE));
 
+        public Vector2 lastScreenSize;
+
         public int ButtonState = 0;
         public bool Switch1State;
         public bool Switch2State;
@@ -28,11 +30,12 @@ namespace Redemption.UI
 
         public override void OnInitialize()
         {
+            lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+
             BgSprite.Width.Set(608, 0f);
             BgSprite.Height.Set(332, 0f);
-            BgSprite.Top.Set((Main.screenHeight / 2) - 332 / 2, 0f);
-            BgSprite.Left.Set((Main.screenWidth / 2) - 608 / 2, 0f);
-            BgSprite.VAlign = BgSprite.HAlign = 0.5f;
+            BgSprite.Top.Set((Main.screenHeight / 2f) - (332f / 2f), 0f);
+            BgSprite.Left.Set((Main.screenWidth / 2f) - (608f / 2f), 0f);
 
             SwitchSprite1.Left.Set(216, 0f);
             SwitchSprite1.Top.Set(108, 0f);
@@ -183,6 +186,14 @@ namespace Redemption.UI
         {
             if (!Visible)
                 return;
+
+            if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+            {
+                lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+                BgSprite.Left.Pixels = (Main.screenWidth / 2f) - (608f / 2f);
+                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - (332f / 2f);
+                BgSprite.Recalculate();
+            }
 
             base.Draw(spriteBatch);
         }
