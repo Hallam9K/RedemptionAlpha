@@ -28,7 +28,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public enum ActionState
         {
             Intro,
-            WormAILol
+            WormAILol,
+            ProtectCore,
+            Gigabeam
         }
 
         public ActionState AIState
@@ -150,7 +152,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 shieldAlpha += 0.04f;
             else
                 shieldAlpha -= 0.04f;
-            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 2);
+            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 1);
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
@@ -259,12 +261,144 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity.Y += 0.2f;
                     }
                     else if (TimerRand == 0)
-                        WormMovement(player);
-                    if (++AITimer > 420)
+                        WormMovement(player, 18, 0.1f);
+                    if (++AITimer > 600)
                     {
+                        TimerRand = 0;
                         AITimer = 0;
+                        if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()) && Main.rand.NextBool(2))
+                            AIState = ActionState.ProtectCore;
+                        else
+                            AIState = ActionState.Gigabeam;
                     }
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                    break;
+                case ActionState.ProtectCore:
+                    int n = NPC.FindFirstNPC(ModContent.NPCType<Gigapora_ShieldCore>());
+                    if (n != -1)
+                    {
+                        targetPos = RedeHelper.CenterPoint(Main.npc[n].Center, player.Center);
+                        switch (TimerRand)
+                        {
+                            case 0:
+                                if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                                {
+                                    if (AITimer > 0)
+                                    {
+                                        TimerRand = 0;
+                                        AITimer = 0;
+                                        AIState = ActionState.WormAILol;
+                                    }
+                                    else
+                                        TimerRand = 1;
+                                }
+                                if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                                    NPC.velocity.X += 0.1f;
+                                else if (NPC.velocity.X > -6)
+                                    NPC.velocity.X -= 0.1f;
+                                if (NPC.velocity.Y <= 20)
+                                    NPC.velocity.Y += 0.2f;
+                                break;
+                            case 1:
+                                if (NPC.DistanceSQ(new Vector2(targetPos.X, player.Center.Y + 400)) < 100 * 100 || AITimer++ >= 180)
+                                {
+                                    AITimer = 0;
+                                    TimerRand = 2;
+                                }
+                                else
+                                    Movement(new Vector2(targetPos.X, player.Center.Y + 500), 0.1f, 20);
+                                break;
+                            case 2:
+                                if (NPC.DistanceSQ(targetPos) < 150 * 150 || AITimer++ >= 120)
+                                {
+                                    AITimer = 100;
+                                    TimerRand = 0;
+                                }
+                                else
+                                {
+                                    Main.npc[n].ai[3] = 1;
+                                    Movement(targetPos, 0.5f, 20);
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        TimerRand = 0;
+                        AITimer = 0;
+                        AIState = ActionState.WormAILol;
+                    }
+                    NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                    break;
+                case ActionState.Gigabeam:
+                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                            {
+                                if (AITimer > 0)
+                                {
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    AIState = ActionState.WormAILol;
+                                }
+                                else
+                                    TimerRand = 1;
+                            }
+                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                                NPC.velocity.X += 0.1f;
+                            else if (NPC.velocity.X > -6)
+                                NPC.velocity.X -= 0.1f;
+                            if (NPC.velocity.Y <= 20)
+                                NPC.velocity.Y += 0.2f;
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 1:
+                            if (NPC.DistanceSQ(targetPos) < 100 * 100 || AITimer++ >= 600)
+                            {
+                                NPC.velocity.X *= 0.1f;
+                                NPC.velocity.Y = -30;
+                                AITimer = 0;
+                                TimerRand = 2;
+                            }
+                            else
+                                Movement(targetPos, 0.4f, 20);
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 2:
+                            if (player.Center.Y + 60 > NPC.Center.Y)
+                                AITimer = 1;
+                            if (AITimer > 0)
+                            {
+                                AITimer++;
+                                DrillLaser = true;
+                                NPC.velocity *= 0.94f;
+                                if (NPC.velocity.Y > -4 || AITimer >= 120)
+                                {
+                                    if (!Main.dedServ)
+                                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigabeamSound").WithVolume(1.5f), NPC.position);
+                                    AITimer = 0;
+                                    TimerRand = 3;
+                                }
+                            }
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 3:
+                            NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() + 1.57f, (float)Math.PI / 220f);
+                            NPC.velocity = RedeHelper.PolarVector(-4, NPC.rotation + 1.57f);
+                            if (AITimer++ == 80)
+                            {
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                            }
+                            if (AITimer >= 380)
+                            {
+                                DrillLaser = false;
+                                AITimer = 100;
+                                TimerRand = 0;
+                            }
+                            break;
+                    }
                     break;
             }
             if (AIState > ActionState.Intro && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
@@ -308,6 +442,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 {
                                     int index = NPC.NewNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
                                     Main.npc[index].velocity = Main.npc[(int)NPC.ai[3]].velocity;
+                                    Main.npc[index].frameCounter = -25;
                                     if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                                         NetMessage.SendData(MessageID.SyncNPC, number: index);
                                 }
@@ -320,6 +455,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
         }
         private int DrillFrame;
+        private bool DrillLaser;
         public override void FindFrame(int frameHeight)
         {
             NPC.frameCounter++;
@@ -330,9 +466,21 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (NPC.frame.Y >= frameHeight)
                     NPC.frame.Y = 0;
 
-                DrillFrame++;
-                if (DrillFrame > 4)
-                    DrillFrame = 0;
+                if (DrillLaser)
+                {
+                    DrillFrame++;
+                    if (DrillFrame > 12)
+                        DrillFrame = 12;
+                }
+                else
+                {
+                    if (DrillFrame > 5)
+                        DrillFrame--;
+                    else
+                        DrillFrame++;
+                    if (DrillFrame == 5)
+                        DrillFrame = 0;
+                }
             }
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

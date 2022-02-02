@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 shieldAlpha += 0.04f;
             else
                 shieldAlpha -= 0.04f;
-            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 2);
+            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 1);
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
