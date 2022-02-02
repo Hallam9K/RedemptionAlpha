@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void AI()
         {
             DespawnHandler();
-            if (NPC.ai[1]++ >= 60)
+            if (NPC.ai[1]++ >= 85)
                 NPC.Move(Vector2.Zero, 8, 60, true);
             else
                 NPC.velocity *= 0.99f;
