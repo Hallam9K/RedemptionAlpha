@@ -28,7 +28,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public enum ActionState
         {
             Intro,
-            WormAILol
+            WormAILol,
+            ProtectCore
         }
 
         public ActionState AIState
@@ -150,7 +151,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 shieldAlpha += 0.04f;
             else
                 shieldAlpha -= 0.04f;
-            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 2);
+            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 1);
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
@@ -260,9 +261,68 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     else if (TimerRand == 0)
                         WormMovement(player);
-                    if (++AITimer > 420)
+                    if (++AITimer > 600 && NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()))
                     {
+                        TimerRand = 0;
                         AITimer = 0;
+                        AIState = ActionState.ProtectCore;
+                    }
+                    NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                    break;
+                case ActionState.ProtectCore:
+                    int n = NPC.FindFirstNPC(ModContent.NPCType<Gigapora_ShieldCore>());
+                    if (n != -1)
+                    {
+                        Vector2 protectOrigin = RedeHelper.CenterPoint(Main.npc[n].Center, player.Center);
+                        switch (TimerRand)
+                        {
+                            case 0:
+                                if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                                {
+                                    if (AITimer > 0)
+                                    {
+                                        TimerRand = 0;
+                                        AITimer = 0;
+                                        AIState = ActionState.WormAILol;
+                                    }
+                                    else
+                                        TimerRand = 1;
+                                }
+                                if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                                    NPC.velocity.X += 0.2f;
+                                else if (NPC.velocity.X > -6)
+                                    NPC.velocity.X -= 0.1f;
+                                if (NPC.velocity.Y <= 20)
+                                    NPC.velocity.Y += 0.2f;
+                                break;
+                            case 1:
+                                if (NPC.DistanceSQ(new Vector2(protectOrigin.X, player.Center.Y + 400)) < 100 * 100 || AITimer++ >= 180)
+                                {
+                                    AITimer = 0;
+                                    TimerRand = 2;
+                                }
+                                else
+                                    Movement(new Vector2(protectOrigin.X, player.Center.Y + 500), 0.1f, 20);
+                                break;
+                            case 2:
+                                if (NPC.DistanceSQ(protectOrigin) < 150 * 150 || AITimer++ >= 120)
+                                {
+                                    AITimer = 100;
+                                    TimerRand = 0;
+                                }
+                                else
+                                {
+                                    Main.npc[n].ai[3] = 1;
+                                    Movement(protectOrigin, 0.5f, 20);
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        TimerRand = 0;
+                        AITimer = 0;
+                        AIState = ActionState.WormAILol;
                     }
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                     break;
