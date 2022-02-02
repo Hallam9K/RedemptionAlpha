@@ -24,6 +24,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
     [AutoloadBossHead]
     public class Gigapora : ModNPC
     {
+        public float[] oldrot = new float[6];
         public enum ActionState
         {
             Intro,
@@ -42,6 +43,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             DisplayName.SetDefault("Omega Gigapora");
             Main.npcFrameCount[NPC.type] = 2;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 6;
+            NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
@@ -139,6 +142,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private float shieldAlpha;
         public override void AI()
         {
+            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = NPC.rotation;
+
             if (NPC.immortal)
                 shieldAlpha += 0.04f;
             else
@@ -168,7 +175,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 {
                     NPC.realLife = NPC.whoAmI;
                     int latestNPC = NPC.whoAmI;
-                    int[] Type = { 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 7 };
+                    int[] Type = { 0, 1, -1, -2, 2, -3, -4, 3, -5, -6, 4, -7, -8, 5, -9, -10, 6, -11, 7 };
                     for (int i = 0; i < Type.Length; ++i)
                     {
                         latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
@@ -297,7 +304,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                                 SoundEngine.PlaySound(SoundID.Item61, NPC.position);
                                 seg.ai[0] = 1;
-                                RedeHelper.SpawnNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), seg.whoAmI);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int index = NPC.NewNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
+                                    Main.npc[index].velocity = Main.npc[(int)NPC.ai[3]].velocity;
+                                    if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: index);
+                                }
                                 BodyTimer = 0;
                                 BodyState = 1;
                             }
@@ -483,8 +496,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
                 Texture2D thrusterBlue = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterBlue").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                float thrusterScaleX = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f);
-                float thrusterScaleY = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f);
+                //float thrusterScaleX = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f);
+                //float thrusterScaleY = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f);
+                float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
+                thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
+                float thrusterScaleY = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.3f, 2f);
                 float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
                 Vector2 pos = NPC.Center + new Vector2(0, 0);
 
@@ -492,8 +508,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                 Vector2 thrusterBOrigin = new(thrusterBlue.Width / 2f, thrusterBlue.Height / 2f - 20);
-                spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(39, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White, NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(39, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White, NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    spriteBatch.Draw(thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                }
+                spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

@@ -12,6 +12,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -89,7 +90,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (NPC.ai[1]++ >= 60)
                 NPC.Move(Vector2.Zero, 8, 60, true);
             else
-                NPC.velocity *= 0.96f;
+                NPC.velocity *= 0.99f;
         }
 
         public override void FindFrame(int frameHeight)
@@ -117,10 +118,28 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D glowRadius = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            float glowOpacity = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.3f, 0.5f, 0.3f);
+            float glowSize = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.5f, 1f, 1.5f);
+            float glowSize2 = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1f, 1.5f, 1f);
+            Vector2 glowOrigin = new(glowRadius.Width / 2f, glowRadius.Height / 2f);
+            spriteBatch.Draw(glowRadius, NPC.Center - screenPos, null, Color.Red * glowOpacity, 0, glowOrigin, glowSize, effects, 0);
+            spriteBatch.Draw(glowRadius, NPC.Center - screenPos, null, Color.Red * glowOpacity * 0.7f, 0, glowOrigin, glowSize2 * 1.5f, effects, 0);
+
+            spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraph").Value, NPC.Center - screenPos, new Rectangle(0, 0, 64, 128), Color.Red * glowOpacity, (Main.npc[(int)NPC.ai[0]].Center - NPC.Center).ToRotation(), new Vector2(0, 64), new Vector2(NPC.Distance(Main.npc[(int)NPC.ai[0]].Center) / 150, NPC.width / 128f), SpriteEffects.None, 0f);
+            spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraphCap").Value, NPC.Center - screenPos, new Rectangle(0, 0, 64, 128), Color.Red * glowOpacity, (NPC.Center - Main.npc[(int)NPC.ai[0]].Center).ToRotation(), new Vector2(0, 64), new Vector2(NPC.width / 128f, NPC.width / 128f), SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
             return false;
         }
 
