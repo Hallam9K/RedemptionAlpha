@@ -5,6 +5,7 @@ using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Trophies;
 using System;
@@ -387,11 +388,39 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         case 3:
                             NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() + 1.57f, (float)Math.PI / 220f);
                             NPC.velocity = RedeHelper.PolarVector(-4, NPC.rotation + 1.57f);
+                            if (AITimer < 80)
+                            {
+                                for (int k = 0; k < 2; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 200);
+                                    vector.Y = (float)(Math.Cos(angle) * 200);
+                                    Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f) + vector, 2, 2, ModContent.DustType<GlowDust>(), 0f, 0f, 100, default, 2f)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = dust2.position.DirectionTo(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f)) * 10f;
+                                    Color dustColor = new(216, 35, 10) { A = 0 };
+                                    dust2.color = dustColor;
+                                }
+                                for (int k = 0; k < 2; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 200);
+                                    vector.Y = (float)(Math.Cos(angle) * 200);
+                                    Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f) + vector, 2, 2, ModContent.DustType<GlowDust>(), 0f, 0f, 100, default, 1f)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = dust2.position.DirectionTo(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f)) * 10f;
+                                    Color dustColor = new(255, 200, 193) { A = 0 };
+                                    dust2.color = dustColor;
+                                }
+                            }
                             if (AITimer++ == 80)
                             {
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(30, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                             }
-                            if (AITimer >= 380)
+                            if (AITimer >= 340)
                             {
                                 DrillLaser = false;
                                 AITimer = 100;
