@@ -5,6 +5,7 @@ using Redemption.Backgrounds.Skies;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Globals.RenderTargets;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
@@ -40,6 +41,8 @@ namespace Redemption
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
         public static ModKeybind RedeSpecialAbility;
+
+        public static RenderTargetManager Targets;
 
         private List<ILoadable> _loadCache;
 

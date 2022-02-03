@@ -52,7 +52,7 @@ namespace Redemption.UI
             {
                 lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
                 BgSprite.Left.Pixels = (Main.screenWidth / 2f) - 426f / 2f;
-                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 438 / 2f;
+                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 438f / 2f;
                 BgSprite.Recalculate();
             }
 

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -46,38 +49,66 @@ namespace Redemption.Items
             Talk($"Drawing sprites at [{x}, {y}]. Right-click to discard.", new Color(218, 70, 70));
             return true;
         }
+        public static void DrawRenderTarget2D()
+        {
+            //GraphicsDevice graphicsDevice = Main.graphics.GraphicsDevice;
+
+            ////RenderTargetBinding[] tempTarget = graphicsDevice.GetRenderTargets();
+            ////graphicsDevice.SetRenderTarget(RedeDetours.renderTarget);
+            ////graphicsDevice.Clear(Color.Transparent);
+
+            //SpriteBatch spriteBatch = new(graphicsDevice);
+            //// Sprite drawing code here.
+            //Texture2D tex = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/Midnight_SlashProj").Value;
+            ////Texture2D background = ModContent.Request<Texture2D>("Redemption/Effects/ParallaxBackground2").Value;
+            //Effect effect = ModContent.Request<Effect>("Redemption/Effects/Midnight").Value;
+            //float c = 1f / 255f;
+            //effect.Parameters["conversion"].SetValue(new Vector2(1f / tex.Width, 1f / tex.Height) * 2f);
+            ////effect.Parameters["offset"].SetValue(new Vector2(Main.GlobalTimeWrappedHourly * 0.3f, Main.GlobalTimeWrappedHourly * 0.25f));
+            //effect.Parameters["innerColor"].SetValue(new Vector4(24 * c, 18 * c, 52 * c, 1f));
+            //effect.Parameters["borderColor"].SetValue(new Vector4(255 * c, 25 * c, 153 * c, 1f));
+            //effect.Parameters["sampleTexture"].SetValue(tex);
+            ////effect.Parameters["sampleTexture2"].SetValue(background);
+            //effect.CurrentTechnique.Passes[0].Apply();
+
+            //spriteBatch.Begin(default, default, default, default, default, null, Main.GameViewMatrix.ZoomMatrix);
+            //spriteBatch.Draw(tex, Main.LocalPlayer.position - Main.screenPosition, new Rectangle(0, 158 * 5, 238, 158), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+            ////graphicsDevice.SetRenderTargets(tempTarget);
+            ////spriteBatch.Draw(RedeDetours.renderTarget, Main.LocalPlayer.position - Main.screenPosition - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), null, Color.White, 0, new Vector2(0, 0), 2f, SpriteEffects.None, 0);
+            ////spriteBatch.Draw(tex, Main.LocalPlayer.position - Main.screenPosition - new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) + new Vector2(100f, 100f), null, Color.White, 0, new Vector2(0, 0), 2f, SpriteEffects.None, 0);
+            //spriteBatch.End();
+        }
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            // Seems to cause RAM issues
-            if (x != 0 && y != 0)
-            {
-                //RenderTargetBinding[] tempTarget = Main.graphics.GraphicsDevice.GetRenderTargets();
-                //RenderTarget2D renderTarget = new(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
-                //Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
-                //Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+            GraphicsDevice graphicsDevice = Main.graphics.GraphicsDevice;
+            //RenderTargetBinding[] tempTarget = graphicsDevice.GetRenderTargets();
+            //graphicsDevice.SetRenderTarget(RedeDetours.renderTarget);
+            //graphicsDevice.Clear(Color.Transparent);
 
-                SpriteBatch sb = new(Main.graphics.GraphicsDevice);
+            SpriteBatch sb = new(graphicsDevice);
+            // Sprite drawing code here.
+            Texture2D tex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora").Value;
+            Texture2D mask = ModContent.Request<Texture2D>("Redemption/Effects/Hexagons").Value;
+            Effect effect = ModContent.Request<Effect>("Redemption/Effects/Shield").Value;
+            float c = 1f / 255f;
+            effect.Parameters["conversion"].SetValue(new Vector2(1f / tex.Width, 1f / tex.Height) * 2f);
+            effect.Parameters["offset"].SetValue(new Vector2(Main.GlobalTimeWrappedHourly * 0.3f, Main.GlobalTimeWrappedHourly * 0.25f));
+            effect.Parameters["innerColor"].SetValue(new Vector4(104 * c * 0.5f, 213 * c * 0.5f, 237 * c * 0.5f, 0.5f));
+            effect.Parameters["borderColor"].SetValue(new Vector4(154 * c, 243 * c, 215 * c, 1f));
+            effect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+            effect.Parameters["sinMult"].SetValue(30f);
+            effect.Parameters["sampleTexture"].SetValue(tex);
+            effect.Parameters["sampleTexture2"].SetValue(mask);
 
-                // Sprite drawing code here.
-                Texture2D tex = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/Midnight_SlashProj").Value;
-                //Texture2D background = ModContent.Request<Texture2D>("Redemption/Effects/ParallaxBackground2").Value;
-                Effect effect = ModContent.Request<Effect>("Redemption/Effects/Midnight").Value;
-                float c = 1f / 255f;
-                effect.Parameters["conversion"].SetValue(new Vector2(1f / tex.Width, 1f / tex.Height) * 2f);
-                //effect.Parameters["offset"].SetValue(new Vector2(Main.GlobalTimeWrappedHourly * 0.3f, Main.GlobalTimeWrappedHourly * 0.25f));
-                effect.Parameters["innerColor"].SetValue(new Vector4(24 * c, 18 * c, 52 * c, 1f));
-                effect.Parameters["borderColor"].SetValue(new Vector4(255 * c, 25 * c, 153 * c, 1f));
-                effect.Parameters["sampleTexture"].SetValue(tex);
-                //effect.Parameters["sampleTexture2"].SetValue(background);
-                effect.CurrentTechnique.Passes[0].Apply();
+            //effect.CurrentTechnique.Passes[0].Apply();
+            sb.Begin(default, default, SamplerState.PointClamp, default, default, effect, Main.GameViewMatrix.ZoomMatrix);
+            sb.Draw(tex, Main.LocalPlayer.position - Main.screenPosition, new Rectangle(0, 0, 120, 100), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
-                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, effect, Main.GameViewMatrix.ZoomMatrix);
-                sb.Draw(tex, new Vector2(x * 16, y * 16) - Main.screenPosition, new Rectangle(0, 158 * 5, 238, 158), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-                //Main.graphics.GraphicsDevice.SetRenderTargets(tempTarget);
-                //sb.Draw(renderTarget, Vector2.Zero, Color.White);
-                sb.End();
-            }
+            //graphicsDevice.SetRenderTargets(tempTarget);
+            //spriteBatch.Draw(RedeDetours.renderTarget, Main.LocalPlayer.position - Main.screenPosition - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), null, Color.White, 0, new Vector2(0, 0), 2f, SpriteEffects.None, 0);
+            //spriteBatch.Draw(tex, Main.LocalPlayer.position - Main.screenPosition - new Vector2(Main.screenWidth / 2f, Main.screenHeight / 2f) + new Vector2(100f, 100f), null, Color.White, 0, new Vector2(0, 0), 2f, SpriteEffects.None, 0);
+            sb.End();
         }
         public void Talk(string message, Color color) => Main.NewText(message, color.R, color.G, color.B);
     }
