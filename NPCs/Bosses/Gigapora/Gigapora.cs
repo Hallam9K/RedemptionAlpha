@@ -23,30 +23,30 @@ using static Redemption.Globals.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-  [AutoloadBossHead]
-  public class Gigapora : ModNPC, IShieldSprite
-  {
-    public float[] oldrot = new float[6];
-    public enum ActionState
+    [AutoloadBossHead]
+    public class Gigapora : ModNPC, IShieldSprite
     {
-      Intro,
-      WormAILol,
-      ProtectCore,
-      Gigabeam
-    }
+        public float[] oldrot = new float[6];
+        public enum ActionState
+        {
+            Intro,
+            WormAILol,
+            ProtectCore,
+            Gigabeam
+        }
 
-    public ActionState AIState
-    {
-      get => (ActionState)NPC.ai[0];
-      set => NPC.ai[0] = (int)value;
-    }
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
 
-    public ref float AITimer => ref NPC.ai[1];
-    public ref float TimerRand => ref NPC.ai[2];
+        public ref float AITimer => ref NPC.ai[1];
+        public ref float TimerRand => ref NPC.ai[2];
 
-    public bool Active { get => NPC.active; set => NPC.active = value; }
+        public bool Active { get => NPC.active; set => NPC.active = value; }
 
-    public override void SetStaticDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Gigapora");
             Main.npcFrameCount[NPC.type] = 2;
@@ -486,6 +486,12 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             }
                         }
                         break;
+                    case 1:
+                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        {
+                            NPC.immortal = false;
+                        }
+                        break;
                 }
             }
         }
@@ -679,6 +685,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                     Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
                     var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                    float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
                     spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
                     int height = drill.Height / 13;
@@ -699,7 +706,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
                 thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
                 float thrusterScaleY = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.3f, 2f);
-                float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
                 Vector2 pos = NPC.Center + new Vector2(0, 0);
 
                 spriteBatch.End();
@@ -721,9 +727,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 spriteBatch.Draw(glowMask, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
+                // texture
+
                 int height = drill.Height / 13;
                 int y = height * DrillFrame;
                 spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+
+                // drill
             }
             return false;
         }
