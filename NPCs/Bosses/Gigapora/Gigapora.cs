@@ -23,27 +23,30 @@ using static Redemption.Globals.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    [AutoloadBossHead]
-    public class Gigapora : ModNPC, IShieldSprite
+  [AutoloadBossHead]
+  public class Gigapora : ModNPC, IShieldSprite
+  {
+    public float[] oldrot = new float[6];
+    public enum ActionState
     {
-        public float[] oldrot = new float[6];
-        public enum ActionState
-        {
-            Intro,
-            WormAILol,
-            ProtectCore,
-            Gigabeam
-        }
+      Intro,
+      WormAILol,
+      ProtectCore,
+      Gigabeam
+    }
 
-        public ActionState AIState
-        {
-            get => (ActionState)NPC.ai[0];
-            set => NPC.ai[0] = (int)value;
-        }
+    public ActionState AIState
+    {
+      get => (ActionState)NPC.ai[0];
+      set => NPC.ai[0] = (int)value;
+    }
 
-        public ref float AITimer => ref NPC.ai[1];
-        public ref float TimerRand => ref NPC.ai[2];
-        public override void SetStaticDefaults()
+    public ref float AITimer => ref NPC.ai[1];
+    public ref float TimerRand => ref NPC.ai[2];
+
+    public bool Active { get => NPC.active; set => NPC.active = value; }
+
+    public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Gigapora");
             Main.npcFrameCount[NPC.type] = 2;

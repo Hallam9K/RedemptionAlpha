@@ -74,7 +74,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (!added)
             {
-                Redemption.Targets.ShieldLayer.Sprites.Add(this);
+                Redemption.Targets.ShieldLayer.Push(this);
                 added = true;
             }
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
