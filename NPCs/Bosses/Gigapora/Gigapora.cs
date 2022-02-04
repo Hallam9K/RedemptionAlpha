@@ -19,11 +19,12 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Redemption.Globals.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
     [AutoloadBossHead]
-    public class Gigapora : ModNPC
+    public class Gigapora : ModNPC, IShieldSprite
     {
         public float[] oldrot = new float[6];
         public enum ActionState
@@ -110,6 +111,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnKill()
         {
+            Redemption.Targets.ShieldLayer.Sprites.Remove(this);
             if (!RedeBossDowned.downedVlitch2)
             {
                 //Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
@@ -173,6 +175,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!spawned)
             {
                 NPC.TargetClosest(false);
+                Redemption.Targets.ShieldLayer.Sprites.Add(this);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -664,6 +667,23 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             rotation = NPC.rotation;
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (NPC.type == ModContent.NPCType<Gigapora>())
+            {
+                if (!NPC.IsABestiaryIconDummy)
+                {
+                    Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+                    Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
+                    var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                    spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+                    int height = drill.Height / 13;
+                    int y = height * DrillFrame;
+                    spriteBatch.Draw(drill, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+                }
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.type == ModContent.NPCType<Gigapora>())
@@ -673,8 +693,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
                 Texture2D thrusterBlue = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterBlue").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                //float thrusterScaleX = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f);
-                //float thrusterScaleY = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f);
                 float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
                 thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
                 float thrusterScaleY = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.3f, 2f);
@@ -700,45 +718,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 spriteBatch.Draw(glowMask, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                if (!NPC.IsABestiaryIconDummy && NPC.immortal && !Main.dedServ && spriteBatch != null)
-                {
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-
-                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
-                    effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-                    effect.Parameters["alpha"].SetValue(shieldAlpha * pulse);
-                    effect.Parameters["red"].SetValue(new Color(223, 62, 55).ToVector4());
-                    effect.Parameters["red2"].SetValue(new Color(223, 62, 55).ToVector4());
-
-                    effect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(texture, pos - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-
-                    spriteBatch.End();
-                    spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                }
-
                 int height = drill.Height / 13;
                 int y = height * DrillFrame;
                 spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
-
-                if (!NPC.IsABestiaryIconDummy && NPC.immortal && !Main.dedServ && spriteBatch != null)
-                {
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-
-                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
-                    effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-                    effect.Parameters["alpha"].SetValue(shieldAlpha * pulse);
-                    effect.Parameters["red"].SetValue(new Color(223, 62, 55).ToVector4());
-                    effect.Parameters["red2"].SetValue(new Color(223, 62, 55).ToVector4());
-
-                    effect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
-
-                    spriteBatch.End();
-                    spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                }
             }
             return false;
         }

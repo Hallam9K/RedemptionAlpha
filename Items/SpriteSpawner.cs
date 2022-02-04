@@ -89,7 +89,7 @@ namespace Redemption.Items
             SpriteBatch sb = new(graphicsDevice);
             // Sprite drawing code here.
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora").Value;
-            Texture2D mask = ModContent.Request<Texture2D>("Redemption/Effects/Hexagons").Value;
+            Texture2D mask = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons").Value;
             Effect effect = ModContent.Request<Effect>("Redemption/Effects/Shield").Value;
             float c = 1f / 255f;
             effect.Parameters["conversion"].SetValue(new Vector2(1f / tex.Width, 1f / tex.Height) * 2f);
