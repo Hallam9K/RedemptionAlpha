@@ -11,6 +11,7 @@ using Terraria.ID;
 using Redemption.Globals;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -45,7 +46,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 260;
             Projectile.hide = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
@@ -55,9 +56,23 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
-            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain);
-            Main.dust[dust].velocity = RedeHelper.PolarVector(30, Projectile.rotation);
-            Main.dust[dust].noGravity = true;
+            for (int i = 0; i < MaxLaserLength; i += 10)
+            {
+                if (Main.rand.Next(40) == 0)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * i, ModContent.DustType<GlowDust>(), Vector2.UnitX.RotatedBy(Projectile.rotation) * Main.rand.NextFloat(10, 20), 0, default, 2f);
+                    dust.noGravity = true;
+                    Color dustColor = new(216, 35, 10) { A = 0 };
+                    dust.color = dustColor;
+                }
+                if (Main.rand.Next(40) == 0)
+                {
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * i, ModContent.DustType<GlowDust>(), Vector2.UnitX.RotatedBy(Projectile.rotation) * Main.rand.NextFloat(10, 20), 0, default, 1f);
+                    dust.noGravity = true;
+                    Color dustColor = new(255, 200, 193) { A = 0 };
+                    dust.color = dustColor;
+                }
+            }
 
             #region Beginning And End Effects
             if (AITimer == 0)
@@ -131,7 +146,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(RedeColor.RedPulse), (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

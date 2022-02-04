@@ -5,6 +5,7 @@ using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Trophies;
 using System;
@@ -18,11 +19,12 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Redemption.Globals.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
     [AutoloadBossHead]
-    public class Gigapora : ModNPC
+    public class Gigapora : ModNPC, IShieldSprite
     {
         public float[] oldrot = new float[6];
         public enum ActionState
@@ -41,6 +43,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public ref float AITimer => ref NPC.ai[1];
         public ref float TimerRand => ref NPC.ai[2];
+
+        public bool Active { get => NPC.active; set => NPC.active = value; }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Gigapora");
@@ -109,6 +114,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnKill()
         {
+            Redemption.Targets.ShieldLayer.Sprites.Remove(this);
             if (!RedeBossDowned.downedVlitch2)
             {
                 //Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
@@ -172,6 +178,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!spawned)
             {
                 NPC.TargetClosest(false);
+                Redemption.Targets.ShieldLayer.Sprites.Add(this);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -387,11 +394,39 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         case 3:
                             NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() + 1.57f, (float)Math.PI / 220f);
                             NPC.velocity = RedeHelper.PolarVector(-4, NPC.rotation + 1.57f);
+                            if (AITimer < 80)
+                            {
+                                for (int k = 0; k < 2; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 200);
+                                    vector.Y = (float)(Math.Cos(angle) * 200);
+                                    Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f) + vector, 2, 2, ModContent.DustType<GlowDust>(), 0f, 0f, 100, default, 2f)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = dust2.position.DirectionTo(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f)) * 10f;
+                                    Color dustColor = new(216, 35, 10) { A = 0 };
+                                    dust2.color = dustColor;
+                                }
+                                for (int k = 0; k < 2; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 200);
+                                    vector.Y = (float)(Math.Cos(angle) * 200);
+                                    Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f) + vector, 2, 2, ModContent.DustType<GlowDust>(), 0f, 0f, 100, default, 1f)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = dust2.position.DirectionTo(NPC.Center + RedeHelper.PolarVector(128, NPC.rotation - 1.57f)) * 10f;
+                                    Color dustColor = new(255, 200, 193) { A = 0 };
+                                    dust2.color = dustColor;
+                                }
+                            }
                             if (AITimer++ == 80)
                             {
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(30, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                             }
-                            if (AITimer >= 380)
+                            if (AITimer >= 340)
                             {
                                 DrillLaser = false;
                                 AITimer = 100;
@@ -449,6 +484,12 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 BodyTimer = 0;
                                 BodyState = 1;
                             }
+                        }
+                        break;
+                    case 1:
+                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        {
+                            NPC.immortal = false;
                         }
                         break;
                 }
@@ -635,6 +676,24 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             rotation = NPC.rotation;
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (NPC.type == ModContent.NPCType<Gigapora>())
+            {
+                if (!NPC.IsABestiaryIconDummy)
+                {
+                    Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+                    Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
+                    var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                    float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
+                    spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+                    int height = drill.Height / 13;
+                    int y = height * DrillFrame;
+                    spriteBatch.Draw(drill, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+                }
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.type == ModContent.NPCType<Gigapora>())
@@ -644,12 +703,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
                 Texture2D thrusterBlue = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterBlue").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                //float thrusterScaleX = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f);
-                //float thrusterScaleY = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f, 0.5f, 1.5f);
                 float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
                 thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
                 float thrusterScaleY = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.3f, 2f);
-                float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
                 Vector2 pos = NPC.Center + new Vector2(0, 0);
 
                 spriteBatch.End();
@@ -671,45 +727,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 spriteBatch.Draw(glowMask, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                if (!NPC.IsABestiaryIconDummy && NPC.immortal && !Main.dedServ && spriteBatch != null)
-                {
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-
-                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
-                    effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-                    effect.Parameters["alpha"].SetValue(shieldAlpha * pulse);
-                    effect.Parameters["red"].SetValue(new Color(223, 62, 55).ToVector4());
-                    effect.Parameters["red2"].SetValue(new Color(223, 62, 55).ToVector4());
-
-                    effect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(texture, pos - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-
-                    spriteBatch.End();
-                    spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                }
+                // texture
 
                 int height = drill.Height / 13;
                 int y = height * DrillFrame;
                 spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
 
-                if (!NPC.IsABestiaryIconDummy && NPC.immortal && !Main.dedServ && spriteBatch != null)
-                {
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-
-                    Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
-                    effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-                    effect.Parameters["alpha"].SetValue(shieldAlpha * pulse);
-                    effect.Parameters["red"].SetValue(new Color(223, 62, 55).ToVector4());
-                    effect.Parameters["red2"].SetValue(new Color(223, 62, 55).ToVector4());
-
-                    effect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
-
-                    spriteBatch.End();
-                    spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                }
+                // drill
             }
             return false;
         }
