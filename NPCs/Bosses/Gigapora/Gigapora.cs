@@ -24,7 +24,7 @@ using static Redemption.Globals.RenderTargets.ShieldLayer;
 namespace Redemption.NPCs.Bosses.Gigapora
 {
     [AutoloadBossHead]
-    public class Gigapora : ModNPC, IShieldSprite
+    public class Gigapora : ModNPC
     {
         public float[] oldrot = new float[6];
         public enum ActionState
@@ -49,7 +49,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Gigapora");
-            Main.npcFrameCount[NPC.type] = 2;
+            Main.npcFrameCount[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetDefaults()
         {
             NPC.width = 120;
-            NPC.height = 180;
+            NPC.height = 140;
             NPC.damage = 140;
             NPC.defense = 80;
             NPC.lifeMax = 50000;
@@ -114,7 +114,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnKill()
         {
-            Redemption.Targets.ShieldLayer.Sprites.Remove(this);
             if (!RedeBossDowned.downedVlitch2)
             {
                 //Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
@@ -178,7 +177,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!spawned)
             {
                 NPC.TargetClosest(false);
-                Redemption.Targets.ShieldLayer.Sprites.Add(this);
+                //Redemption.Targets.ShieldLayer.Sprites.Add(this);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -510,16 +509,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (DrillLaser)
                 {
                     DrillFrame++;
-                    if (DrillFrame > 12)
-                        DrillFrame = 12;
+                    if (DrillFrame > 18)
+                        DrillFrame = 16;
                 }
                 else
                 {
-                    if (DrillFrame > 5)
+                    if (DrillFrame > 8)
                         DrillFrame--;
                     else
                         DrillFrame++;
-                    if (DrillFrame == 5)
+                    if (DrillFrame == 8)
                         DrillFrame = 0;
                 }
             }
@@ -676,7 +675,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             rotation = NPC.rotation;
         }
-        public void Draw(SpriteBatch spriteBatch)
+        /*public void Draw(SpriteBatch spriteBatch)
         {
             if (NPC.type == ModContent.NPCType<Gigapora>())
             {
@@ -684,16 +683,26 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 {
                     Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                     Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
+                    Texture2D drillShoot = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill_Shoot").Value;
                     var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                     float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
                     spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                    int height = drill.Height / 13;
-                    int y = height * DrillFrame;
-                    spriteBatch.Draw(drill, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+                    if (DrillFrame > 8)
+                    {
+                        int height = drillShoot.Height / 11;
+                        int y = height * (DrillFrame - 8);
+                        spriteBatch.Draw(drillShoot, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+                    }
+                    else
+                    {
+                        int height = drill.Height / 8;
+                        int y = height * DrillFrame;
+                        spriteBatch.Draw(drill, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+                    }
                 }
             }
-        }
+        }*/
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.type == ModContent.NPCType<Gigapora>())
@@ -701,6 +710,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                 Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
                 Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
+                Texture2D drillShoot = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill_Shoot").Value;
                 Texture2D thrusterBlue = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterBlue").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
@@ -729,9 +739,18 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                 // texture
 
-                int height = drill.Height / 13;
-                int y = height * DrillFrame;
-                spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
+                if (DrillFrame >= 8)
+                {
+                    int height = drillShoot.Height / 11;
+                    int y = height * (DrillFrame - 8);
+                    spriteBatch.Draw(drillShoot, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(18, 100), NPC.scale, effects, 0);
+                }
+                else
+                {
+                    int height = drill.Height / 8;
+                    int y = height * DrillFrame;
+                    spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-8, 96), NPC.scale, effects, 0);
+                }
 
                 // drill
             }
