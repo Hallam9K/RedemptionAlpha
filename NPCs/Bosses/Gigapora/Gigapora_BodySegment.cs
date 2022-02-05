@@ -17,14 +17,14 @@ using static Redemption.Globals.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    public class Gigapora_BodySegment : Gigapora, IShieldSprite
+    public class Gigapora_BodySegment : Gigapora
     {
         public new float[] oldrot = new float[6];
         public ref float SegmentType => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Gigapora");
-            Main.npcFrameCount[NPC.type] = 7;
+            Main.npcFrameCount[NPC.type] = 16;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -74,7 +74,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (!added)
             {
-                Redemption.Targets.ShieldLayer.Push(this);
+                //Redemption.Targets.ShieldLayer.Push(this);
                 added = true;
             }
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -177,7 +177,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 5 * frameHeight)
+                if (NPC.frame.Y > 6 * frameHeight)
                     NPC.frame.Y = 0;
 
                 TailFrame++;
@@ -208,7 +208,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             return true;
         }
-        public new void Draw(SpriteBatch spriteBatch)
+        /*public new void Draw(SpriteBatch spriteBatch)
         {
             if (!NPC.IsABestiaryIconDummy)
             {
@@ -231,7 +231,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 switch (SegmentType)
                 {
                     case 7:
-                        int height2 = tail.Height / 2;
+                        int height2 = tail.Height / 3;
                         int y2 = height2 * TailFrame;
                         Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
 
@@ -239,7 +239,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         break;
                 }
             }
-        }
+        }*/
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -288,7 +288,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             switch (SegmentType)
             {
                 case 7:
-                    int height2 = tail.Height / 2;
+                    int height2 = tail.Height / 3;
                     int y2 = height2 * TailFrame;
                     Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
                     spriteBatch.Draw(tail, pos - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), drawColor, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
