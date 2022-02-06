@@ -509,8 +509,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (DrillLaser)
                 {
                     DrillFrame++;
-                    if (DrillFrame > 18)
-                        DrillFrame = 16;
+                    if (DrillFrame > 15)
+                        DrillFrame = 15;
                 }
                 else
                 {
@@ -741,9 +741,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                 if (DrillFrame >= 8)
                 {
-                    int height = drillShoot.Height / 11;
+                    int height = drillShoot.Height / 8;
                     int y = height * (DrillFrame - 8);
-                    spriteBatch.Draw(drillShoot, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(18, 100), NPC.scale, effects, 0);
+                    spriteBatch.Draw(drillShoot, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
                 }
                 else
                 {
