@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(5, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
 
-            Projectile.Center = npc.Center + RedeHelper.PolarVector(64, npc.rotation - 1.57f);
+            Projectile.Center = npc.Center + RedeHelper.PolarVector(14, npc.rotation - 1.57f);
             Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation - 1.57f);
 
             if (AITimer <= 10)
