@@ -383,7 +383,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 if (NPC.velocity.Y > -4 || AITimer >= 120)
                                 {
                                     if (!Main.dedServ)
-                                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigabeamSound").WithVolume(1.5f), NPC.position);
+                                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserCharge").WithVolume(1.5f), NPC.position);
                                     AITimer = 0;
                                     TimerRand = 3;
                                 }
@@ -393,7 +393,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         case 3:
                             NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() + 1.57f, (float)Math.PI / 220f);
                             NPC.velocity = RedeHelper.PolarVector(-4, NPC.rotation + 1.57f);
-                            if (AITimer < 80)
+                            if (AITimer < 120)
                             {
                                 for (int k = 0; k < 2; k++)
                                 {
@@ -420,13 +420,18 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                     dust2.color = dustColor;
                                 }
                             }
-                            if (AITimer++ == 80)
+                            if (AITimer++ == 120)
                             {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserFire").WithVolume(1.5f), NPC.position);
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(30, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                             }
-                            if (AITimer >= 340)
+
+                            if (AITimer >= 420)
                             {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserCoolDown").WithVolume(1.5f), NPC.position);
                                 DrillLaser = false;
                                 AITimer = 100;
                                 TimerRand = 0;
