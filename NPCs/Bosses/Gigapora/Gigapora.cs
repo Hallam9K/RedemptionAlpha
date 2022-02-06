@@ -455,10 +455,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         private float BodyTimer;
         private int BodyState;
+        private int Ejected;
         public override void PostAI()
         {
-            Player player = Main.player[NPC.target];
-            Point ground = NPC.Center.ToTileCoordinates();
             if (NPC.type == ModContent.NPCType<Gigapora_BodySegment>())
             {
                 switch (BodyState)
@@ -466,25 +465,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     case 0:
                         if (BodyTimer++ >= 600)
                         {
-                            for (int i = 0; i < Main.maxNPCs; i++)
+                            EjectCore();
+                            if (Ejected >= 1)
                             {
-                                NPC seg = Main.npc[i];
-                                if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] != 1 || seg.ai[0] != 0)
-                                    continue;
-
-                                if (seg.DistanceSQ(player.Center) >= 400 * 400 || Framing.GetTileSafely(ground.X, ground.Y).IsActive)
-                                    continue;
-
-                                SoundEngine.PlaySound(SoundID.Item61, NPC.position);
-                                seg.ai[0] = 1;
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                {
-                                    int index = NPC.NewNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
-                                    Main.npc[index].velocity = Main.npc[(int)NPC.ai[3]].velocity;
-                                    Main.npc[index].frameCounter = -25;
-                                    if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: index);
-                                }
+                                Ejected = 0;
                                 BodyTimer = 0;
                                 BodyState = 1;
                             }
@@ -492,11 +476,85 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         break;
                     case 1:
                         if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                            BodyState = 2;
+                        break;
+                    case 2:
+                        if (BodyTimer++ >= 300)
                         {
-                            NPC.immortal = false;
+                            EjectCore(2);
+                            if (Ejected >= 1)
+                            {
+                                Ejected = 0;
+                                BodyTimer = 0;
+                                BodyState = 3;
+                            }
                         }
                         break;
+                    case 3:
+                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                            BodyState = 4;
+                        break;
+                    case 4:
+                        if (BodyTimer++ >= 300)
+                        {
+                            EjectCore(3);
+                            EjectCore(4);
+                            if (Ejected >= 2)
+                            {
+                                Ejected = 0;
+                                BodyTimer = 0;
+                                BodyState = 5;
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                            BodyState = 6;
+                        break;
+                    case 6:
+                        if (BodyTimer++ >= 400)
+                        {
+                            EjectCore(5);
+                            EjectCore(6);
+                            if (Ejected >= 2)
+                            {
+                                Ejected = 0;
+                                BodyTimer = 0;
+                                BodyState = 7;
+                            }
+                        }
+                        break;
+                    case 7:
+                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                            BodyState = 8;
+                        break;
                 }
+            }
+        }
+        public void EjectCore(int segID = 1)
+        {
+            Player player = Main.player[NPC.target];
+            Point ground = NPC.Center.ToTileCoordinates();
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC seg = Main.npc[i];
+                if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] != segID || seg.ai[0] != 0)
+                    continue;
+
+                if (seg.DistanceSQ(player.Center) >= 400 * 400 || Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                    continue;
+
+                SoundEngine.PlaySound(SoundID.Item61, NPC.position);
+                seg.ai[0] = 1;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int index = NPC.NewNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
+                    Main.npc[index].velocity = Main.npc[(int)NPC.ai[3]].velocity;
+                    Main.npc[index].frameCounter = -25;
+                    if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
+                Ejected++;
             }
         }
         private int DrillFrame;
