@@ -100,6 +100,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 target.Kill();
             }
 
+            if (FrameState == 2)
+            {
+                NPC.immortal = false;
+            }
             Vector2 chasePosition = Main.npc[(int)NPC.ai[1]].Center;
             Vector2 directionVector = chasePosition - NPC.Center;
             NPC.spriteDirection = (directionVector.X > 0f) ? 1 : -1;
@@ -168,21 +172,31 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private int TailFrame;
         public override void FindFrame(int frameHeight)
         {
-            if (SegmentType >= 1 && SegmentType <= 6 && FrameState == 1)
+            if (SegmentType >= 1 && SegmentType <= 6)
             {
-                CoreFrame = 1;
+                if (FrameState == 1)
+                    CoreFrame = 1;
+                else if (FrameState == 2)
+                    CoreFrame = 2;
             }
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 5)
+            if (SegmentType <= 0 && FrameState == 2)
             {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += frameHeight;
-                if (NPC.frame.Y > 6 * frameHeight)
-                    NPC.frame.Y = 0;
+                NPC.frame.Y = 15 * frameHeight;
+            }
+            else
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 6 * frameHeight)
+                        NPC.frame.Y = 0;
 
-                TailFrame++;
-                if (TailFrame > 1)
-                    TailFrame = 0;
+                    TailFrame++;
+                    if (TailFrame > 1)
+                        TailFrame = 0;
+                }
             }
         }
 
