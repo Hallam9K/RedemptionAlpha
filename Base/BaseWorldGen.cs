@@ -589,7 +589,7 @@ namespace Redemption.Base
                     int y2 = y1 + y;
                     if ((wallEnds || tileCeiling != -1) && y1 < ceilingThickness) //ceiling
                     {
-                        GenerateTile(x2, y2, tileCeiling, wallEnds && y1 == 0 ? wall : -1, 0, tileCeiling == -1 ? !wallEnds : true, true, 0, false, false);
+                        GenerateTile(x2, y2, tileCeiling, wallEnds && y1 == 0 ? wall : -1, 0, tileCeiling != -1 || !wallEnds, true, 0, false, false);
                     }
                     else
                     if ((wallEnds || tileFloor != -1) && y1 >= height - floorThickness) //floor

@@ -3,18 +3,20 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Redemption.Globals.RenderTargets
+namespace Redemption.Effects.RenderTargets
 {
     public class RenderTargetManager : ModSystem
     {
         public static RenderTargetManager Instance;
         public static Vector2 lastViewSize;
+        public BasicLayer BasicLayer;
         public EmberLayer EmberLayer;
         public ShieldLayer ShieldLayer;
         public override void OnModLoad()
         {
             Instance = this;
             Redemption.Targets = this;
+            BasicLayer = new BasicLayer();
             EmberLayer = new EmberLayer();
             ShieldLayer = new ShieldLayer();
             On.Terraria.Main.DrawNPCs += (orig, self, behindTiles) =>
@@ -30,6 +32,7 @@ namespace Redemption.Globals.RenderTargets
         {
             Instance = null;
             Redemption.Targets = null;
+            BasicLayer = null;
             EmberLayer = null;
             ShieldLayer = null;
             On.Terraria.Main.DrawNPCs -= (orig, self, behindTiles) =>
@@ -49,6 +52,8 @@ namespace Redemption.Globals.RenderTargets
         {
             Main.QueueMainThreadAction(() =>
             {
+                BasicLayer.Target = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
+                BasicLayer.EffectTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                 EmberLayer.Target = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                 EmberLayer.EffectTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                 ShieldLayer.Target = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
@@ -59,6 +64,8 @@ namespace Redemption.Globals.RenderTargets
         {
             RenderTargetBinding[] previousTargets = graphicsDevice.GetRenderTargets();
 
+            if (BasicLayer?.Sprites.Count > 0)
+                BasicLayer.PreDrawLayer(spriteBatch, graphicsDevice);
             if (EmberLayer?.Sprites.Count > 0)
                 EmberLayer.PreDrawLayer(spriteBatch, graphicsDevice);
             if (ShieldLayer?.Sprites.Count > 0)
@@ -69,6 +76,8 @@ namespace Redemption.Globals.RenderTargets
         private void DrawLayers(SpriteBatch spriteBatch)
         {
             spriteBatch.End();
+            if (BasicLayer?.Sprites.Count > 0)
+                BasicLayer.DrawLayer(spriteBatch);
             if (EmberLayer?.Sprites.Count > 0)
                 EmberLayer.DrawLayer(spriteBatch);
             if (ShieldLayer?.Sprites.Count > 0)

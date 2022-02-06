@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Effects;
 using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
@@ -11,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Ranged
 {

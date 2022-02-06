@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using ReLogic.Content;
@@ -14,6 +13,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.NPCs.Friendly
 {

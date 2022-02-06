@@ -1,4 +1,7 @@
-﻿using Redemption.Effects;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Effects.PrimitiveTrails;
+using Redemption.Particles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,14 +18,25 @@ namespace Redemption
         {
             On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
             On.Terraria.Projectile.NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float += Projectile_NewProjectile;
+            On.Terraria.Main.DrawDust += Main_DrawDust;
+            Main.OnResolutionChanged += Main_OnResolutionChanged;
         }
-
         public static void Unload()
         {
             On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
             On.Terraria.Projectile.NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float -= Projectile_NewProjectile;
+            On.Terraria.Main.DrawDust -= Main_DrawDust;
+            Main.OnResolutionChanged -= Main_OnResolutionChanged;
         }
-
+        private static void Main_DrawDust(On.Terraria.Main.orig_DrawDust orig, Main self)
+        {
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            ParticleManager.PreUpdate(Main.spriteBatch);
+            ParticleManager.Update(Main.spriteBatch);
+            ParticleManager.PostUpdate(Main.spriteBatch);
+            Main.spriteBatch.End();
+            orig(self);
+        }
         private static void Main_DrawProjectiles(On.Terraria.Main.orig_DrawProjectiles orig, Main self)
         {
             if (!Main.dedServ)
@@ -30,7 +44,6 @@ namespace Redemption
 
             orig(self);
         }
-
         private static int Projectile_NewProjectile(On.Terraria.Projectile.orig_NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float orig, IProjectileSource spawnSource, float X, float Y, float SpeedX, float SpeedY, int Type, int Damage, float KnockBack, int Owner, float ai0, float ai1)
         {
             int index = orig(spawnSource, X, Y, SpeedX, SpeedY, Type, Damage, KnockBack, Owner, ai0, ai1);
@@ -84,6 +97,19 @@ namespace Redemption
                     Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, index).Send();
             }
             return index;
+        }
+        private static void Main_OnResolutionChanged(Vector2 obj)
+        {
+            int width = Main.graphics.GraphicsDevice.Viewport.Width;
+            int height = Main.graphics.GraphicsDevice.Viewport.Height;
+            Vector2 zoom = Main.GameViewMatrix.Zoom;
+            Matrix view = Matrix.CreateLookAt(Vector3.Zero, Vector3.UnitZ, Vector3.Up) * Matrix.CreateTranslation(width / 2, height / -2, 0) * Matrix.CreateRotationZ(MathHelper.Pi) * Matrix.CreateScale(zoom.X, zoom.Y, 1f);
+            Matrix projection = Matrix.CreateOrthographic(width, height, 0, 1000);
+            RedeSystem.TrailManager.worldViewProjection = view * projection;
+        }
+        public static void NewParticle(Vector2 Position, Vector2 Velocity, Particle Type, Color Color, float Scale, float AI0 = 0, float AI1 = 0, float AI2 = 0, float AI3 = 0, float AI4 = 0, float AI5 = 0, float AI6 = 0, float AI7 = 0)
+        {
+
         }
     }
 }

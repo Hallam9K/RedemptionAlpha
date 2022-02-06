@@ -3,8 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
-using Redemption.Effects;
 using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

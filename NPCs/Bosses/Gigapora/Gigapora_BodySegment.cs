@@ -13,7 +13,7 @@ using Redemption.Globals;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Terraria.Audio;
-using static Redemption.Globals.RenderTargets.ShieldLayer;
+using static Redemption.Effects.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -48,7 +48,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -199,7 +198,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
             }
         }
-
         public override bool CheckActive() => false;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -222,38 +220,59 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             return true;
         }
-        /*public new void Draw(SpriteBatch spriteBatch)
+        public new void Draw(SpriteBatch spriteBatch)
         {
             if (!NPC.IsABestiaryIconDummy)
             {
+                Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                 Texture2D core = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Core").Value;
                 Texture2D tail = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Tail").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
-                if (SegmentType >= 1 && SegmentType <= 6)
+
+                ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
+                ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
+                ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+                ShieldEffect.Parameters["border"].SetValue(borderColor.ToVector4());
+                ShieldEffect.Parameters["inner"].SetValue(innerColor.ToVector4());
+                float ratratrat = texture.Width / core.Width;
+                switch (SegmentType)
                 {
+                case float s when s <= 0:
+                    ShieldEffect.Parameters["sinMult"].SetValue(30f / 7f);
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2 / (HexagonTexture.Width), texture.Height / 7 / (HexagonTexture.Height)));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
+                    ShieldEffect.Parameters["frameAmount"].SetValue(7f);
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
+                    spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    break;
+                case float s when s >= 1 && s <= 6:
                     int height = core.Height / 3;
                     int y = height * CoreFrame;
                     Vector2 coreOrigin = new(core.Width / 2f, height / 2f);
+                    ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(core.Width / 2 / (HexagonTexture.Width), height / (HexagonTexture.Height)));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (core.Width / 2), 1f / (core.Height / 2)));
+                    ShieldEffect.Parameters["frameAmount"].SetValue(3f);
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     spriteBatch.Draw(core, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, core.Width, height)), Color.White * shieldAlpha, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
-                }
-                if (SegmentType <= 0)
-                {
-                    spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                }
-                switch (SegmentType)
-                {
-                    case 7:
-                        int height2 = tail.Height / 3;
-                        int y2 = height2 * TailFrame;
-                        Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
-
-                        spriteBatch.Draw(tail, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), Color.White * shieldAlpha, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
-                        break;
+                    break;
+                case 7:
+                    int height2 = tail.Height / 2;
+                    int y2 = height2 * TailFrame;
+                    Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
+                    ShieldEffect.Parameters["sinMult"].SetValue(30f / 4f);
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(tail.Width / 2 / (HexagonTexture.Width), height2 / (HexagonTexture.Height)));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (tail.Width / 2), 1f / (tail.Height / 2)));
+                    ShieldEffect.Parameters["frameAmount"].SetValue(2f);
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
+                    spriteBatch.Draw(tail, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), Color.White * shieldAlpha, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
+                    break;
                 }
             }
-        }*/
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -301,14 +320,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             switch (SegmentType)
             {
-                case 7:
-                    int height2 = tail.Height / 3;
-                    int y2 = height2 * TailFrame;
-                    Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
-                    spriteBatch.Draw(tail, pos - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), drawColor, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
+            case 7:
+                int height2 = tail.Height / 2;
+                int y2 = height2 * TailFrame;
+                Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
+                spriteBatch.Draw(tail, pos - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), drawColor, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
 
-                    // tail shader
-                    break;
+                // tail shader
+                break;
             }
             return false;
         }
@@ -321,7 +340,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     Main.npc[ai3].immune[Main.myPlayer] = NPC.immune[Main.myPlayer];
             }
         }
-
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
             int ai3 = (int)NPC.ai[3];
