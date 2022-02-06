@@ -65,6 +65,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Item.NewItem(NPC.getRect(), ItemID.Heart);
             Item.NewItem(NPC.getRect(), ItemID.Heart);
+            NPC seg = Main.npc[(int)NPC.ai[0]];
+            if (seg.active && seg.type == ModContent.NPCType<Gigapora_BodySegment>())
+            {
+                seg.ai[0] = 2;
+                Main.npc[seg.whoAmI - 1].ai[0] = 2;
+                Main.npc[seg.whoAmI + 1].ai[0] = 2;
+            }
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -86,6 +93,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public override void AI()
         {
+            NPC seg = Main.npc[(int)NPC.ai[0]];
+            if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
+                NPC.active = false;
             DespawnHandler();
             if (NPC.ai[1]++ >= 85)
                 NPC.Move(Vector2.Zero, 8, 60, true);
