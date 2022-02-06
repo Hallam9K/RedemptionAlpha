@@ -428,10 +428,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
                             }
 
-                            if (AITimer >= 420)
+                            if (AITimer == 453 && !Main.dedServ)
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserCoolDown").WithVolume(1.5f), NPC.position);
+                            if (AITimer >= 470)
                             {
-                                if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserCoolDown").WithVolume(1.5f), NPC.position);
                                 DrillLaser = false;
                                 AITimer = 100;
                                 TimerRand = 0;

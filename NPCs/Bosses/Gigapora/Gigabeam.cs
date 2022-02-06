@@ -46,7 +46,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 260;
+            Projectile.timeLeft = 350;
             Projectile.hide = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
