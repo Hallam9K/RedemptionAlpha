@@ -11,9 +11,9 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Terraria.Graphics.Shaders;
-using Redemption.Effects;
 using ReLogic.Content;
 using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {

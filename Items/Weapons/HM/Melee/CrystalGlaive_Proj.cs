@@ -11,9 +11,9 @@ using System;
 using Redemption.Buffs.Debuffs;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
-using Redemption.Effects;
 using ReLogic.Content;
 using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {

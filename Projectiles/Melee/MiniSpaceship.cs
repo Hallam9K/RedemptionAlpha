@@ -4,10 +4,10 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.Effects;
 using Redemption.Globals.Player;
 using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Melee
 {

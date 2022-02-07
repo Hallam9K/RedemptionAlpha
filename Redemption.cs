@@ -2,14 +2,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
-using Redemption.Effects;
+using Redemption.Effects.PrimitiveTrails;
+using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
-using Redemption.Globals.RenderTargets;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
+using Redemption.Particles;
 using Redemption.StructureHelper;
 using Redemption.StructureHelper.ChestHelper.GUI;
 using Redemption.UI;
@@ -43,6 +44,7 @@ namespace Redemption
         public static ModKeybind RedeSpecialAbility;
 
         public static RenderTargetManager Targets;
+        public static ParticleManager Particles;
 
         private List<ILoadable> _loadCache;
 
