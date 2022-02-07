@@ -20,7 +20,6 @@ namespace Redemption.Effects.PrimitiveTrails
         private List<Trail> _trails = new();
         private readonly Effect _effect;
         private readonly BasicEffect _basicEffect;
-        public Matrix worldViewProjection;
 
         public TrailManager(Mod mod)
         {
@@ -240,12 +239,9 @@ namespace Redemption.Effects.PrimitiveTrails
             }
 
             float currentDistance = 0f;
-            // In order to give the trail the desired width, we need a halfwidth to assist in making the tris.
             float halfWidth = _widthStart * 0.5f;
 
-            // This is the angle of the first point
             Vector2 startNormal = CurveNormal(_points, 0);
-            // Now we use the halfwidth to generate each half of the trail's tris, based on the list of points given
             Vector2 prevClockwise = _points[0] + startNormal * halfWidth;
             Vector2 prevCClockwise = _points[0] - startNormal * halfWidth;
 
@@ -256,7 +252,7 @@ namespace Redemption.Effects.PrimitiveTrails
             {
                 currentDistance += Vector2.Distance(_points[i - 1], _points[i]);
 
-                float thisPointsWidth = halfWidth * (1f - i / (float)(_points.Count - 1));
+                float thisPointsWidth = halfWidth * (1f - (i / (float)(_points.Count - 1)));
 
                 Vector2 normal = CurveNormal(_points, i);
                 Vector2 clockwise = _points[i] + normal * thisPointsWidth;
@@ -277,14 +273,19 @@ namespace Redemption.Effects.PrimitiveTrails
             }
 
             //set effect parameter for matrix (todo: try have this only calculated when screen size changes?)
-            // Done.
-            effect.Parameters["WorldViewProjection"].SetValue(RedeSystem.TrailManager.worldViewProjection);
+            int width = device.Viewport.Width;
+            int height = device.Viewport.Height;
+            Vector2 zoom = Main.GameViewMatrix.Zoom;
+            Matrix view = Matrix.CreateLookAt(Vector3.Zero, Vector3.UnitZ, Vector3.Up) * Matrix.CreateTranslation(width / 2, height / -2, 0) * Matrix.CreateRotationZ(MathHelper.Pi) * Matrix.CreateScale(zoom.X, zoom.Y, 1f);
+            Matrix projection = Matrix.CreateOrthographic(width, height, 0, 1000);
+            effect.Parameters["WorldViewProjection"].SetValue(view * projection);
             //effect.Parameters["WorldViewProjection"].SetValue(Main.GameViewMatrix.TransformationMatrix * Main.GameViewMatrix.ZoomMatrix);
 
             //apply this trail's shader pass and draw
-            _trailShader.ApplyShader(effect, this, _points);
+            _trailShader.ApplyShader(effect, this, this._points);
             device.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, (_points.Count - 1) * 2 + _trailCap.ExtraTris);
         }
+
         //Helper methods
         private Vector2 CurveNormal(List<Vector2> points, int index)
         {
@@ -313,7 +314,6 @@ namespace Redemption.Effects.PrimitiveTrails
         void ApplyShader(Effect effect, Trail trail, List<Vector2> positions);
     }
 
-    #region Different Trail Shaders
     public class DefaultShader : ITrailShader
     {
         public string ShaderPass => "DefaultPass";
@@ -322,6 +322,7 @@ namespace Redemption.Effects.PrimitiveTrails
             effect.CurrentTechnique.Passes[ShaderPass].Apply();
         }
     }
+
     public class ImageShader : ITrailShader
     {
         public string ShaderPass => "BasicImagePass";
@@ -354,14 +355,12 @@ namespace Redemption.Effects.PrimitiveTrails
             effect.CurrentTechnique.Passes[ShaderPass].Apply();
         }
     }
-    #endregion
 
     public interface ITrailPosition
     {
         Vector2 GetNextTrailPosition(Projectile projectile);
     }
 
-    #region Different Trail Positions
     public class DefaultTrailPosition : ITrailPosition
     {
         public Vector2 GetNextTrailPosition(Projectile projectile)
@@ -369,6 +368,7 @@ namespace Redemption.Effects.PrimitiveTrails
             return projectile.Center;
         }
     }
+
     public class OriginTrailPosition : ITrailPosition
     {
         public Vector2 GetNextTrailPosition(Projectile projectile)
@@ -381,6 +381,7 @@ namespace Redemption.Effects.PrimitiveTrails
     {
         public Vector2 GetNextTrailPosition(Projectile projectile) => projectile.Center + projectile.velocity + Vector2.UnitY * projectile.gfxOffY;
     }
+
     public class ZigZagTrailPosition : ITrailPosition
     {
         private int _zigType;
@@ -416,6 +417,7 @@ namespace Redemption.Effects.PrimitiveTrails
             return projectile.Center + offset * _strength;
         }
     }
+
     public class WaveTrailPos : ITrailPosition
     {
         private float _counter;
@@ -432,7 +434,6 @@ namespace Redemption.Effects.PrimitiveTrails
             return proj.Center + offset.RotatedBy(proj.velocity.ToRotation()) * _strength;
         }
     }
-    #endregion
 
     public interface ITrailColor
     {
@@ -496,7 +497,7 @@ namespace Redemption.Effects.PrimitiveTrails
                     if (l < 0.5f)
                         temp2 = l * (1f + s);
                     else
-                        temp2 = l + s - l * s;
+                        temp2 = l + s - (l * s);
 
                     float temp1 = 2f * l - temp2;
 
@@ -519,7 +520,7 @@ namespace Redemption.Effects.PrimitiveTrails
             else if (temp3 < 0.5f)
                 return temp2;
             else if (temp3 < 0.66666666f)
-                return temp1 + (temp2 - temp1) * (0.66666666f - temp3) * 6f;
+                return temp1 + ((temp2 - temp1) * (0.66666666f - temp3) * 6f);
             else
                 return temp1;
         }
@@ -623,6 +624,7 @@ namespace Redemption.Effects.PrimitiveTrails
             }
         }
     }
+
     public class TriangleCap : ITrailCap
     {
         public int ExtraTris => 1;
@@ -640,15 +642,16 @@ namespace Redemption.Effects.PrimitiveTrails
             width *= _widthmod;
             float rotation = startNormal.ToRotation();
             float halfwidth = width / 2;
-            Vector2 TipPos = position + Vector2.UnitY.RotatedBy(rotation) * width * _length - Main.screenPosition;
-            Vector2 LeftBasePos = position + Vector2.UnitY.RotatedBy(rotation + MathHelper.PiOver2) * halfwidth - Main.screenPosition;
-            Vector2 RightBasePos = position + Vector2.UnitY.RotatedBy(rotation - MathHelper.PiOver2) * halfwidth - Main.screenPosition;
+            Vector2 TipPos = position + (Vector2.UnitY.RotatedBy(rotation) * width * _length) - Main.screenPosition;
+            Vector2 LeftBasePos = position + (Vector2.UnitY.RotatedBy(rotation + MathHelper.PiOver2) * halfwidth) - Main.screenPosition;
+            Vector2 RightBasePos = position + (Vector2.UnitY.RotatedBy(rotation - MathHelper.PiOver2) * halfwidth) - Main.screenPosition;
 
             array[currentIndex++] = new VertexPositionColorTexture(new Vector3(LeftBasePos, 0), colour, Vector2.Zero);
             array[currentIndex++] = new VertexPositionColorTexture(new Vector3(RightBasePos, 0), colour, Vector2.One);
             array[currentIndex++] = new VertexPositionColorTexture(new Vector3(TipPos, 0), colour, new Vector2(0.5f, 1f));
         }
     }
+
     public class NoCap : ITrailCap
     {
         public int ExtraTris => 0;

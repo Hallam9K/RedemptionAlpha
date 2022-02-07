@@ -19,14 +19,12 @@ namespace Redemption
             On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
             On.Terraria.Projectile.NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float += Projectile_NewProjectile;
             On.Terraria.Main.DrawDust += Main_DrawDust;
-            Main.OnResolutionChanged += Main_OnResolutionChanged;
         }
         public static void Unload()
         {
             On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
             On.Terraria.Projectile.NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float -= Projectile_NewProjectile;
             On.Terraria.Main.DrawDust -= Main_DrawDust;
-            Main.OnResolutionChanged -= Main_OnResolutionChanged;
         }
         private static void Main_DrawDust(On.Terraria.Main.orig_DrawDust orig, Main self)
         {
@@ -97,15 +95,6 @@ namespace Redemption
                     Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, index).Send();
             }
             return index;
-        }
-        private static void Main_OnResolutionChanged(Vector2 obj)
-        {
-            int width = Main.graphics.GraphicsDevice.Viewport.Width;
-            int height = Main.graphics.GraphicsDevice.Viewport.Height;
-            Vector2 zoom = Main.GameViewMatrix.Zoom;
-            Matrix view = Matrix.CreateLookAt(Vector3.Zero, Vector3.UnitZ, Vector3.Up) * Matrix.CreateTranslation(width / 2, height / -2, 0) * Matrix.CreateRotationZ(MathHelper.Pi) * Matrix.CreateScale(zoom.X, zoom.Y, 1f);
-            Matrix projection = Matrix.CreateOrthographic(width, height, 0, 1000);
-            RedeSystem.TrailManager.worldViewProjection = view * projection;
         }
         public static void NewParticle(Vector2 Position, Vector2 Velocity, Particle Type, Color Color, float Scale, float AI0 = 0, float AI1 = 0, float AI2 = 0, float AI3 = 0, float AI4 = 0, float AI5 = 0, float AI6 = 0, float AI7 = 0)
         {
