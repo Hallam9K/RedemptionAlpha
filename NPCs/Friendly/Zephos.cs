@@ -272,8 +272,8 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CantripStaff>());
             //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IronfurAmulet>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Archcloth>());
-            //if (NPC.downedBoss1)
-            //    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ForestGolemPainting>());
+            if (NPC.downedBoss1)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SilverRapier>());
 
             if (NPC.downedBoss2)
             {

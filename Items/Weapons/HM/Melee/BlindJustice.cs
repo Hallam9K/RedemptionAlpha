@@ -91,7 +91,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'Elegant and holy, this weapon was owned by Eymen - a well-renowned priest of Fairwood, and father of Erhan.\n" +
+                    "'Elegant and holy, this weapon was owned by Eymen - a well-renowned priest of Fairwood.\n" +
                     "He imbued the blade with part of his permanent soul to keep it holy far past his own death.\n" +
                     "Eymen treated his weapon like his own flesh, and used it to smite numerous demons of high calibre.'")
                 {
