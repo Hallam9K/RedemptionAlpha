@@ -22,6 +22,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.Globals.NPC
 {
@@ -34,6 +35,11 @@ namespace Redemption.Globals.NPC
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
 
+        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        {
+            if (type == NPCID.SkeletonMerchant)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
+        }
         public override void ResetEffects(Terraria.NPC npc)
         {
             invisible = false;
@@ -378,7 +384,7 @@ namespace Redemption.Globals.NPC
                 #endregion
             }
 
-            if(RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IProjectileSource source) value))
+            if (RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IProjectileSource source) value))
                 attacker = value.entity;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;

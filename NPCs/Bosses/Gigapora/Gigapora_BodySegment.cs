@@ -17,7 +17,7 @@ using static Redemption.Effects.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    public class Gigapora_BodySegment : Gigapora
+    public class Gigapora_BodySegment : Gigapora, IShieldSprite
     {
         public new float[] oldrot = new float[6];
         public ref float SegmentType => ref NPC.ai[2];
@@ -73,7 +73,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (!added)
             {
-                //Redemption.Targets.ShieldLayer.Push(this);
+                Redemption.Targets.ShieldLayer.Push(this);
                 added = true;
             }
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -225,7 +225,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!NPC.IsABestiaryIconDummy)
             {
                 Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Empty", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                 Texture2D core = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Core").Value;
                 Texture2D tail = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Tail").Value;
@@ -235,18 +235,18 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
                 ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
                 ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
-                ShieldEffect.Parameters["border"].SetValue(borderColor.ToVector4());
-                ShieldEffect.Parameters["inner"].SetValue(innerColor.ToVector4());
+                ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * shieldAlpha).ToVector4());
+                ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
                 float ratratrat = texture.Width / core.Width;
                 switch (SegmentType)
                 {
                     case float s when s <= 0:
                         ShieldEffect.Parameters["sinMult"].SetValue(30f / 7f);
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2 / (HexagonTexture.Width), texture.Height / 7 / (HexagonTexture.Height)));
+                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2 / (HexagonTexture.Width), texture.Height / 16 / (HexagonTexture.Height)));
                         ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
-                        ShieldEffect.Parameters["frameAmount"].SetValue(7f);
+                        ShieldEffect.Parameters["frameAmount"].SetValue(16f);
                         ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                        spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                         break;
                     case float s when s >= 1 && s <= 6:
                         int height = core.Height / 3;
@@ -257,7 +257,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (core.Width / 2), 1f / (core.Height / 2)));
                         ShieldEffect.Parameters["frameAmount"].SetValue(3f);
                         ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                        spriteBatch.Draw(core, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, core.Width, height)), Color.White * shieldAlpha, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
+                        spriteBatch.Draw(core, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, core.Width, height)), Color.White, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
                         break;
                     case 7:
                         int height2 = tail.Height / 3;
@@ -266,9 +266,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         ShieldEffect.Parameters["sinMult"].SetValue(30f / 4f);
                         ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(tail.Width / 2 / (HexagonTexture.Width), height2 / (HexagonTexture.Height)));
                         ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (tail.Width / 2), 1f / (tail.Height / 2)));
-                        ShieldEffect.Parameters["frameAmount"].SetValue(2f);
+                        ShieldEffect.Parameters["frameAmount"].SetValue(3f);
                         ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                        spriteBatch.Draw(tail, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), Color.White * shieldAlpha, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
+                        spriteBatch.Draw(tail, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), Color.White, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
                         break;
                 }
             }
@@ -309,14 +309,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Vector2 coreOrigin = new(core.Width / 2f, height / 2f);
                 spriteBatch.Draw(core, pos - screenPos, new Rectangle?(new Rectangle(0, y, core.Width, height)), drawColor, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
                 spriteBatch.Draw(coreGlow, pos - screenPos, new Rectangle?(new Rectangle(0, y, core.Width, height)), RedeColor.RedPulse, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
-
-                // core shader
             }
             if (SegmentType <= 0)
             {
                 spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-
-                // texture shader
             }
             switch (SegmentType)
             {
@@ -325,8 +321,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     int y2 = height2 * TailFrame;
                     Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
                     spriteBatch.Draw(tail, pos - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), drawColor, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
-
-                    // tail shader
                     break;
             }
             return false;

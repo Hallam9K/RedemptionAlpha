@@ -44,7 +44,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight ritualist bonus
+            player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight druid bonus
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
