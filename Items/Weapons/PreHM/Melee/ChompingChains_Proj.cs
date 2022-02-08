@@ -8,6 +8,7 @@ using Redemption.Projectiles.Magic;
 using Redemption.Globals;
 using Terraria.Audio;
 using ReLogic.Content;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -29,6 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.ownerHitCheck = true;
             Projectile.ignoreWater = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void AI()
         {
@@ -81,7 +83,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, perturbedSpeed, ModContent.ProjectileType<ChompingChains_Proj_Skull>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, i);
+                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, perturbedSpeed * 1.2f, ModContent.ProjectileType<ChompingChains_Proj_Skull>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, i);
                 }
             }
             else if (Projectile.localAI[0] >= 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ChompingChains_Proj_Skull>()] <= 0)
@@ -114,6 +116,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.tileCollide = true;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         NPC nommed;
         Vector2 locked;
@@ -140,13 +143,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             Projectile.localAI[0] = 2;
                         break;
                     case 1:
+                        Projectile.tileCollide = false;
                         Projectile.localAI[1]++;
                         Projectile.Center = nommed.Center + locked;
                         if (Projectile.localAI[1] >= 300 || !nommed.active || Projectile.DistanceSQ(handle.Center) >= 600 * 600 || !player.channel)
                             Projectile.localAI[0] = 2;
                         break;
                     case 2:
-                        Projectile.Move(handle.Center, 11, 1);
+                        Projectile.tileCollide = false;
+                        Projectile.Move(handle.Center, 15, 1);
                         if (Projectile.DistanceSQ(handle.Center) < 20 * 20)
                             Projectile.Kill();
                         break;

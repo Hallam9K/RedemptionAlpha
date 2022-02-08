@@ -10,6 +10,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.Lab;
 
 namespace Redemption.Globals.Player
 {
@@ -67,7 +70,14 @@ namespace Redemption.Globals.Player
                     TextureAssets.Rain = rain;
             }
         }
-
+        public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+        {
+            if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
+            {
+                if (Player.InModBiome(ModContent.GetInstance<LabBiome>()) && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
+                    itemDrop = ModContent.ItemType<LabCrate>();
+            }
+        }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
             if (!mediumCoreDeath && (Player.name.Contains("Liz") || Player.name.Contains("Lizzy") || Player.name.Contains("Elizabeth")))

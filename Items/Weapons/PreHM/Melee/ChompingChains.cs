@@ -26,7 +26,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetDefaults()
 		{
-            Item.damage = 39;
+            Item.damage = 28;
             Item.DamageType = DamageClass.Melee;
             Item.width = 54;
             Item.height = 50;
@@ -39,6 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;
             Item.useTurn = true;
             Item.noUseGraphic = true;
+            Item.noMelee = true;
             Item.channel = true;
             Item.rare = ItemRarityID.Green;
             Item.shoot = ModContent.ProjectileType<ChompingChains_Proj>();
@@ -58,7 +59,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "''") // TODO: Lore for Chomping Chains
+                    "'A tool of torture used by a skeleton known as the Tormenter, infamous among the catacombs\n" +
+                    "of Gathuram's undead residents for his unforgiving command over his skeletal servants.\n" +
+                    "The Tormenter met an ironic end by his own weapon when his minions revolted against his control.'")
                 {
                     overrideColor = Color.LightGray
                 };
