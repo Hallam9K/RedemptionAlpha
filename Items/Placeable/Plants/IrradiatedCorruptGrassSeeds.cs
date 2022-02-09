@@ -33,7 +33,7 @@ namespace Redemption.Items.Placeable.Plants
         public override bool CanUseItem(Player p)
         {
             Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
-            if (tile != null && tile.IsActive && tile.type == ModContent.TileType<IrradiatedDirtTile>())
+            if (tile != null && tile.HasTile && tile.TileType == ModContent.TileType<IrradiatedDirtTile>())
             {
                 WorldGen.destroyObject = true;
                 TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()] = true;

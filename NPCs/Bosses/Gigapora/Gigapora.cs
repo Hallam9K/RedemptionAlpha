@@ -260,7 +260,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         TimerRand = 1;
                     if (TimerRand == 1)
                     {
-                        if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                        if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                             TimerRand = 0;
                         if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
                             NPC.velocity.X += 0.1f;
@@ -290,7 +290,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         switch (TimerRand)
                         {
                             case 0:
-                                if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                                if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                                 {
                                     if (AITimer > 0)
                                     {
@@ -344,7 +344,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     switch (TimerRand)
                     {
                         case 0:
-                            if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                            if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                             {
                                 if (AITimer > 0)
                                 {
@@ -443,7 +443,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
             }
-            if (AIState > ActionState.Intro && Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+            if (AIState > ActionState.Intro && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
             {
                 player.RedemptionScreen().ScreenShakeIntensity = 3;
                 if (NPC.soundDelay == 0)
@@ -544,7 +544,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] != segID || seg.ai[0] != 0)
                     continue;
 
-                if (seg.DistanceSQ(player.Center) >= 400 * 400 || Framing.GetTileSafely(ground.X, ground.Y).IsActive)
+                if (seg.DistanceSQ(player.Center) >= 400 * 400 || Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                     continue;
 
                 SoundEngine.PlaySound(SoundID.Item61, NPC.position);

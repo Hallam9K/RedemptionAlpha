@@ -29,7 +29,7 @@ namespace Redemption.Gores.Misc
 			{
 				int tileX = (int)(gore.position.X / 16f);
 				int tileY = (int)(gore.position.Y / 16f) - 1;
-				if (WorldGen.InWorld(tileX, tileY, 0) && !Main.tile[tileX, tileY].IsActive)
+				if (WorldGen.InWorld(tileX, tileY, 0) && !Main.tile[tileX, tileY].HasTile)
 					gore.active = false;
 
 				if (gore.Frame.CurrentRow == 0 || gore.Frame.CurrentRow == 1 || gore.Frame.CurrentRow == 2)

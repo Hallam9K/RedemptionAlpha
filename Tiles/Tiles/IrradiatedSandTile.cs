@@ -69,10 +69,10 @@ namespace Redemption.Tiles.Tiles
             Tile below = Main.tile[i, j + 1];
             bool canFall = true;
 
-            if (below == null || below.IsActive)
+            if (below == null || below.HasTile)
                 canFall = false;
 
-            if (above.IsActive && (TileID.Sets.BasicChest[above.type] || TileID.Sets.BasicChestFake[above.type] || above.type == TileID.PalmTree))
+            if (above.HasTile && (TileID.Sets.BasicChest[above.TileType] || TileID.Sets.BasicChestFake[above.TileType] || above.TileType == TileID.PalmTree))
                 canFall = false;
 
             if (canFall)
@@ -90,7 +90,8 @@ namespace Redemption.Tiles.Tiles
                 }
                 else if (Main.netMode == NetmodeID.Server)
                 {
-                    Main.tile[i, j].IsActive = false;
+                    Tile Mtile = Main.tile[i, j];
+                    Mtile.HasTile = false;
                     bool spawnProj = true;
 
                     for (int k = 0; k < 1000; k++)
@@ -211,9 +212,9 @@ namespace Redemption.Tiles.Tiles
                 if (tile.IsHalfBlock && Projectile.velocity.Y > 0f && Math.Abs(Projectile.velocity.Y) > Math.Abs(Projectile.velocity.X))
                     tileY--;
 
-                if (!tile.IsActive)
+                if (!tile.HasTile)
                 {
-                    bool onMinecartTrack = tileY < Main.maxTilesY - 2 && tileBelow != null && tileBelow.IsActive && tileBelow.type == TileID.MinecartTrack;
+                    bool onMinecartTrack = tileY < Main.maxTilesY - 2 && tileBelow != null && tileBelow.HasTile && tileBelow.TileType == TileID.MinecartTrack;
 
                     if (!onMinecartTrack)
                     {
@@ -224,7 +225,7 @@ namespace Redemption.Tiles.Tiles
                         Item.NewItem((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
                     }
 
-                    if (!onMinecartTrack && tile.IsActive && tile.type == tileType)
+                    if (!onMinecartTrack && tile.HasTile && tile.TileType == tileType)
                     {
                         if (tileBelow.IsHalfBlock || tileBelow.Slope != 0)
                         {

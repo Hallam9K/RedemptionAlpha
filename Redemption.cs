@@ -11,8 +11,6 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.Particles;
-using Redemption.StructureHelper;
-using Redemption.StructureHelper.ChestHelper.GUI;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -285,12 +283,6 @@ namespace Redemption
             Silence = false;
         }
 
-        UserInterface GeneratorMenuUI;
-        internal ManualGeneratorMenu GeneratorMenu;
-
-        UserInterface ChestMenuUI;
-        internal ChestCustomizerState ChestCustomizer;
-
         public UserInterface DialogueUILayer;
         public MoRDialogueUI DialogueUIElement;
         public UserInterface ChaliceUILayer;
@@ -334,16 +326,6 @@ namespace Redemption
                 AMemoryUILayer = new UserInterface();
                 AMemoryUIElement = new AMemoryUIState();
                 AMemoryUILayer.SetState(AMemoryUIElement);
-
-                GeneratorMenuUI = new UserInterface();
-                GeneratorMenu = new ManualGeneratorMenu();
-                GeneratorMenuUI.SetState(GeneratorMenu);
-
-                ChestMenuUI = new UserInterface();
-                ChestCustomizer = new ChestCustomizerState();
-                ChestMenuUI.SetState(ChestCustomizer);
-
-
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
@@ -417,18 +399,6 @@ namespace Redemption
             layers.Insert(layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")), new LegacyGameInterfaceLayer("GUI Menus",
                 delegate
                 {
-                    if (ManualGeneratorMenu.Visible)
-                    {
-                        GeneratorMenuUI.Update(Main._drawInterfaceGameTime);
-                        GeneratorMenu.Draw(Main.spriteBatch);
-                    }
-
-                    if (ChestCustomizerState.Visible)
-                    {
-                        ChestMenuUI.Update(Main._drawInterfaceGameTime);
-                        ChestCustomizer.Draw(Main.spriteBatch);
-                    }
-
                     return true;
                 }, InterfaceScaleType.UI));
             int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
@@ -505,7 +475,7 @@ namespace Redemption
         #endregion
 
         #region StructureHelper Draw
-        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        /*public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
             if (Main.LocalPlayer.HeldItem.ModItem is CopyWand)
             {
@@ -569,7 +539,7 @@ namespace Redemption
                 spriteBatch.End();
                 spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
             }
-        }
+        }*/
         #endregion
     }
 }

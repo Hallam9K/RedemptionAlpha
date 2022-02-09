@@ -186,7 +186,7 @@ namespace Redemption.Base
             if (dist > teleportDist) { codable.Center = owner.Center; }
             int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
             Tile tile = Main.tile[tileX, tileY];
-            bool inTile = tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type];
+            bool inTile = tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType];
             float prevAI = ai[0];
             ai[0] = ai[0] == 1 && (dist > Math.Max(lineDist, returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox)) || dist > returnDist || inTile ? 1 : 0;
             if (ai[0] != prevAI) { netUpdate = true; }
@@ -268,7 +268,7 @@ namespace Redemption.Base
             if (dist > teleportDist) { codable.Center = owner.Center; }
             int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
             Tile tile = Main.tile[tileX, tileY];
-            bool inTile = tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type];
+            bool inTile = tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType];
             float prevAI = ai[0];
             ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
             if (ai[0] != prevAI) { netUpdate = true; }
@@ -380,7 +380,7 @@ namespace Redemption.Base
             if (dist > teleportDist) { codable.Center = owner.Center; }
             int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
             Tile tile = Main.tile[tileX, tileY];
-            bool inTile = tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type];
+            bool inTile = tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType];
             float prevAI = ai[0];
             ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
             if (ai[0] != prevAI) { netUpdate = true; }
@@ -2246,7 +2246,7 @@ namespace Redemption.Base
             {
                 for (int y = tileLeftY; y < tileRightY; y++)
                 {
-                    if (Main.tile[x, y] != null && Main.tile[x, y].IsActiveUnactuated && (canStick != null ? canStick(x, y) : Main.tileSolid[Main.tile[x, y].type] || Main.tileSolidTop[Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))
+                    if (Main.tile[x, y] != null && Main.tile[x, y].HasUnactuatedTile && (canStick != null ? canStick(x, y) : Main.tileSolid[Main.tile[x, y].TileType] || Main.tileSolidTop[Main.tile[x, y].TileType] && Main.tile[x, y].TileFrameY == 0))
                     {
                         Vector2 pos = new(x * 16, y * 16);
                         if (position.X + width - 4f > pos.X && position.X + 4f < pos.X + 16f && position.Y + height - 4f > pos.Y && position.Y + 4f < pos.Y + 16f)
@@ -2896,16 +2896,16 @@ namespace Redemption.Base
             for (int x2 = xLeft; x2 < xRight; x2++)
             {
                 Tile tileUp = Main.tile[x2, yUp], tileDown = Main.tile[x2, yDown];
-                if (tileUp is { IsActiveUnactuated: true } && Main.tileSolid[tileUp.type] && !Main.tileSolidTop[tileUp.type]) up = true;
-                if (tileDown is { IsActiveUnactuated: true } && Main.tileSolid[tileDown.type]) down = true;
+                if (tileUp is { HasUnactuatedTile: true } && Main.tileSolid[tileUp.TileType] && !Main.tileSolidTop[tileUp.TileType]) up = true;
+                if (tileDown is { HasUnactuatedTile: true } && Main.tileSolid[tileDown.TileType]) down = true;
                 if (up && down) break;
             }
             //LEFT/RIGHT
             for (int y2 = yUp; y2 < yDown; y2++)
             {
                 Tile tileLeft = Main.tile[xLeft, y2], tileRight = Main.tile[xRight, y2];
-                if (tileLeft is { IsActiveUnactuated: true } && Main.tileSolid[tileLeft.type] && !Main.tileSolidTop[tileLeft.type]) left = true;
-                if (tileRight is { IsActiveUnactuated: true } && Main.tileSolid[tileRight.type] && !Main.tileSolidTop[tileRight.type]) right = true;
+                if (tileLeft is { HasUnactuatedTile: true } && Main.tileSolid[tileLeft.TileType] && !Main.tileSolidTop[tileLeft.TileType]) left = true;
+                if (tileRight is { HasUnactuatedTile: true } && Main.tileSolid[tileRight.TileType] && !Main.tileSolidTop[tileRight.TileType]) right = true;
                 if (left && right) break;
             }
         }
@@ -3177,7 +3177,7 @@ namespace Redemption.Base
             }
             else
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient && !npc.homeless && !Main.tileDungeon[Main.tile[npcTileX, npcTileY].type] && (npcTileX < npc.homeTileX - 35 || npcTileX > npc.homeTileX + 35))
+                if (Main.netMode != NetmodeID.MultiplayerClient && !npc.homeless && !Main.tileDungeon[Main.tile[npcTileX, npcTileY].TileType] && (npcTileX < npc.homeTileX - 35 || npcTileX > npc.homeTileX + 35))
                 {
                     if (npc.Center.X < npc.homeTileX * 16 && npc.direction == -1)
                         ai[1] -= 5f;
@@ -3222,18 +3222,8 @@ namespace Redemption.Base
                 ai[2] = -1f;
                 int tileX2 = (int)((npc.Center.X + 15 * npc.direction) / 16f);
                 int tileY2 = (int)((npc.position.Y + npc.height - 16f) / 16f);
-                #region denull tiles
-                if (Main.tile[tileX2, tileY2] == null) Main.tile[tileX2, tileY2] = new Tile();
-                if (Main.tile[tileX2, tileY2 - 1] == null) Main.tile[tileX2, tileY2 - 1] = new Tile();
-                if (Main.tile[tileX2, tileY2 - 2] == null) Main.tile[tileX2, tileY2 - 2] = new Tile();
-                if (Main.tile[tileX2, tileY2 - 3] == null) Main.tile[tileX2, tileY2 - 3] = new Tile();
-                if (Main.tile[tileX2, tileY2 + 1] == null) Main.tile[tileX2, tileY2 + 1] = new Tile();
-                if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null) Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
-                if (Main.tile[tileX2 + npc.direction, tileY2 - 1] == null) Main.tile[tileX2 + npc.direction, tileY2 - 1] = new Tile();
-                if (Main.tile[tileX2 + npc.direction, tileY2 + 1] == null) Main.tile[tileX2 + npc.direction, tileY2 + 1] = new Tile();
-                #endregion
                 //Main.tile[tileX2 - npc.direction, tileY2 + 1].halfBrick();
-                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tile[tileX2, tileY2 - 2].type == 10 && (Main.rand.Next(10) == 0 || seekHouse))
+                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].HasUnactuatedTile && Main.tile[tileX2, tileY2 - 2].TileType == 10 && (Main.rand.Next(10) == 0 || seekHouse))
                 {
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         return;
@@ -3268,7 +3258,7 @@ namespace Redemption.Base
                 {
                     if (npc.velocity.X < 0f && npc.spriteDirection == -1 || npc.velocity.X > 0f && npc.spriteDirection == 1)
                     {
-                        if (Main.tile[tileX2, tileY2 - 2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 2].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 2].type])
+                        if (Main.tile[tileX2, tileY2 - 2].HasUnactuatedTile && Main.tileSolid[Main.tile[tileX2, tileY2 - 2].TileType] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 2].TileType])
                         {
                             if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 5, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 5, tileY2 - 1))
                             {
@@ -3280,7 +3270,7 @@ namespace Redemption.Base
                             }
                             else { npc.direction *= -1; npc.netUpdate = true; }
                         }
-                        else if (Main.tile[tileX2, tileY2 - 1].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2 - 1].type] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 1].type])
+                        else if (Main.tile[tileX2, tileY2 - 1].HasUnactuatedTile && Main.tileSolid[Main.tile[tileX2, tileY2 - 1].TileType] && !Main.tileSolidTop[Main.tile[tileX2, tileY2 - 1].TileType])
                         {
                             if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 4, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 4, tileY2 - 1))
                             {
@@ -3294,7 +3284,7 @@ namespace Redemption.Base
                         }
                         else if (npc.position.Y + npc.height - tileY2 * 16f > 20f)
                         {
-                            if (Main.tile[tileX2, tileY2].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX2, tileY2].type] && Main.tile[tileX2, tileY2].Slope == 0)
+                            if (Main.tile[tileX2, tileY2].HasUnactuatedTile && Main.tileSolid[Main.tile[tileX2, tileY2].TileType] && Main.tile[tileX2, tileY2].Slope == 0)
                             {
                                 if (npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2, tileY2 - 3, tileY2 - 1) || npc.direction == -1 && !Collision.SolidTiles(tileX2, tileX2 + 2, tileY2 - 3, tileY2 - 1))
                                 {
@@ -3306,17 +3296,7 @@ namespace Redemption.Base
                         }
                         try
                         {
-                            #region more denulling tiles
-                            if (Main.tile[tileX2, tileY2 + 1] == null) Main.tile[tileX2, tileY2 + 1] = new Tile();
-                            if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null) Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
-                            if (Main.tile[tileX2, tileY2 + 2] == null) Main.tile[tileX2, tileY2 + 2] = new Tile();
-                            if (Main.tile[tileX2 - npc.direction, tileY2 + 2] == null) Main.tile[tileX2 - npc.direction, tileY2 + 2] = new Tile();
-                            if (Main.tile[tileX2, tileY2 + 3] == null) Main.tile[tileX2, tileY2 + 3] = new Tile();
-                            if (Main.tile[tileX2 - npc.direction, tileY2 + 3] == null) Main.tile[tileX2 - npc.direction, tileY2 + 3] = new Tile();
-                            if (Main.tile[tileX2, tileY2 + 4] == null) Main.tile[tileX2, tileY2 + 4] = new Tile();
-                            if (Main.tile[tileX2 - npc.direction, tileY2 + 4] == null) Main.tile[tileX2 - npc.direction, tileY2 + 4] = new Tile();
-                            #endregion
-                            if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 1].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 1].type]) && (!Main.tile[tileX2, tileY2 + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 2].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 2].type]) && (!Main.tile[tileX2, tileY2 + 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 3].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].IsActive || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 3].type]) && (!Main.tile[tileX2, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2, tileY2 + 4].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 4].type]))
+                            if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX2, tileY2 + 1].TileType]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].HasTile || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 1].TileType]) && (!Main.tile[tileX2, tileY2 + 2].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX2, tileY2 + 2].TileType]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].HasTile || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 2].TileType]) && (!Main.tile[tileX2, tileY2 + 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX2, tileY2 + 3].TileType]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].HasTile || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 3].TileType]) && (!Main.tile[tileX2, tileY2 + 4].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX2, tileY2 + 4].TileType]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX2 - npc.direction, tileY2 + 4].TileType]))
                             {
                                 npc.direction *= -1;
                                 npc.velocity.X *= -1f;
@@ -3575,7 +3555,7 @@ namespace Redemption.Base
                 {
                     for (int y = centerTileY - 1; y <= centerTileY + 1; ++y)
                     {
-                        if (Main.tile[x, y].wall > 0) { wallExists = true; break; }
+                        if (Main.tile[x, y].WallType > 0) { wallExists = true; break; }
                     }
                 }
                 if (!wallExists) npc.Transform(transformType);
@@ -3719,11 +3699,7 @@ namespace Redemption.Base
             bool tileBelowEmpty = true;
             for (int tY = tileY; tY < tileY + hoverHeight; tY++)
             {
-                if (Main.tile[tileX, tY] == null)
-                {
-                    Main.tile[tileX, tY] = new Tile();
-                }
-                if (Main.tile[tileX, tY].IsActiveUnactuated && Main.tileSolid[Main.tile[tileX, tY].type] || Main.tile[tileX, tY].LiquidAmount > 0)
+                if (Main.tile[tileX, tY].HasUnactuatedTile && Main.tileSolid[Main.tile[tileX, tY].TileType] || Main.tile[tileX, tY].LiquidAmount > 0)
                 {
                     tileBelowEmpty = false;
                     break;
@@ -3912,8 +3888,7 @@ namespace Redemption.Base
             {
                 Vector2 tilePos = isTilePos ? new Vector2(ai[0], ai[1]) : new Vector2(ai[0] / 16f, ai[1] / 16f);
                 int tx = (int)tilePos.X; int ty = (int)tilePos.Y;
-                if (Main.tile[tx, ty] == null) { Main.tile[tx, ty] = new Tile(); }
-                if (!Main.tile[tx, ty].IsActiveUnactuated || !Main.tileSolid[Main.tile[tx, ty].type] || Main.tileSolid[Main.tile[tx, ty].type] && Main.tileSolidTop[Main.tile[tx, ty].type])
+                if (!Main.tile[tx, ty].HasUnactuatedTile || !Main.tileSolid[Main.tile[tx, ty].TileType] || Main.tileSolid[Main.tile[tx, ty].TileType] && Main.tileSolidTop[Main.tile[tx, ty].TileType])
                 {
                     if (npc.DeathSound != null) SoundEngine.PlaySound(npc.DeathSound, (int)npc.Center.X, (int)npc.Center.Y);
                     npc.life = -1;
@@ -4217,7 +4192,7 @@ namespace Redemption.Base
                     for (int tY = tileY; tY < tileCenterY; tY++)
                     {
                         Tile checkTile = BaseWorldGen.GetTileSafely(tX, tY);
-                        if (checkTile != null && (checkTile.IsActiveUnactuated && (Main.tileSolid[checkTile.type] || Main.tileSolidTop[checkTile.type] && checkTile.frameY == 0) || checkTile.LiquidAmount > 64))
+                        if (checkTile != null && (checkTile.HasUnactuatedTile && (Main.tileSolid[checkTile.TileType] || Main.tileSolidTop[checkTile.TileType] && checkTile.TileFrameY == 0) || checkTile.LiquidAmount > 64))
                         {
                             Vector2 tPos;
                             tPos.X = tX * 16;
@@ -4225,7 +4200,7 @@ namespace Redemption.Base
                             if (npc.position.X + npc.width > tPos.X && npc.position.X < tPos.X + 16f && npc.position.Y + npc.height > tPos.Y && npc.position.Y < tPos.Y + 16f)
                             {
                                 canMove = true;
-                                if (spawnTileDust && Main.rand.Next(100) == 0 && checkTile.IsActiveUnactuated)
+                                if (spawnTileDust && Main.rand.Next(100) == 0 && checkTile.HasUnactuatedTile)
                                 {
                                     WorldGen.KillTile(tX, tY, true, true);
                                 }
@@ -4500,9 +4475,9 @@ namespace Redemption.Base
                     int tpTileY = Main.rand.Next(playerTileY - distFromPlayer, playerTileY + distFromPlayer);
                     for (int tpY = tpTileY; tpY < playerTileY + distFromPlayer; tpY++)
                     {
-                        if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (!checkGround || Main.tile[tpTileX, tpY].IsActiveUnactuated))
+                        if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (!checkGround || Main.tile[tpTileX, tpY].HasUnactuatedTile))
                         {
-                            if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) || Main.tile[tpTileX, tpY - 1].LiquidType != 2 && (!checkGround || Main.tileSolid[Main.tile[tpTileX, tpY].type]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
+                            if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) || Main.tile[tpTileX, tpY - 1].LiquidType != 2 && (!checkGround || Main.tileSolid[Main.tile[tpTileX, tpY].TileType]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                             {
                                 if (attackInterval != -1) { ai[1] = 20f; }
                                 ai[2] = tpTileX;
@@ -4595,13 +4570,9 @@ namespace Redemption.Base
                     }
                     int tileX = (int)(npc.Center.X / 16);
                     int tileY = (int)(npc.Center.Y / 16);
-                    for (int m = -1; m < 3; m++)
-                    {
-                        if (Main.tile[tileX, tileY + m] == null) { Main.tile[tileX, tileY + m] = new Tile(); }
-                    }
                     if (Main.tile[tileX, tileY - 1].LiquidAmount > 128)
                     {
-                        if (Main.tile[tileX, tileY + 1].IsActiveUnactuated || Main.tile[tileX, tileY + 2].IsActiveUnactuated) { ai[0] = -1f; }
+                        if (Main.tile[tileX, tileY + 1].HasUnactuatedTile || Main.tile[tileX, tileY + 2].HasUnactuatedTile) { ai[0] = -1f; }
                     }
                     //if npc's y speed goes above max velocity, slow the npc down.
                     if (npc.velocity.Y > velMaxY || npc.velocity.Y < -velMaxY) { npc.velocity.Y *= 0.95f; }
@@ -4947,13 +4918,7 @@ namespace Redemption.Base
                 int tileX = (int)((pos.X + (double)(codable.width / 2) + (codable.width / 2 + 1) * offset) / 16.0);
                 int tileY = (int)((pos.Y + (double)codable.height - 1.0) / 16.0);
 
-                if (Main.tile[tileX, tileY] == null) Main.tile[tileX, tileY] = new Tile();
-                if (Main.tile[tileX, tileY - 1] == null) Main.tile[tileX, tileY - 1] = new Tile();
-                if (Main.tile[tileX, tileY - 2] == null) Main.tile[tileX, tileY - 2] = new Tile();
-                if (Main.tile[tileX, tileY - 3] == null) Main.tile[tileX, tileY - 3] = new Tile();
-                if (Main.tile[tileX, tileY + 1] == null) Main.tile[tileX, tileY + 1] = new Tile();
-                if (Main.tile[tileX - offset, tileY - 3] == null) Main.tile[tileX - offset, tileY - 3] = new Tile();
-                if (tileX * 16 < pos.X + (double)codable.width && tileX * 16 + 16 > (double)pos.X && (Main.tile[tileX, tileY].IsActiveUnactuated && Main.tile[tileX, tileY].Slope == 0 && Main.tile[tileX, tileY - 1].Slope == 0 && Main.tileSolid[Main.tile[tileX, tileY].type] && !Main.tileSolidTop[Main.tile[tileX, tileY].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && Main.tile[tileX, tileY - 1].IsActiveUnactuated) && (!Main.tile[tileX, tileY - 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 1].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 1].type] || Main.tile[tileX, tileY - 1].IsHalfBlock && (!Main.tile[tileX, tileY - 4].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 4].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 4].type])) && (!Main.tile[tileX, tileY - 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 2].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 2].type]) && (!Main.tile[tileX, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY - 3].type] || Main.tileSolidTop[Main.tile[tileX, tileY - 3].type]) && (!Main.tile[tileX - offset, tileY - 3].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX - offset, tileY - 3].type]))
+                if (tileX * 16 < pos.X + (double)codable.width && tileX * 16 + 16 > (double)pos.X && (Main.tile[tileX, tileY].HasUnactuatedTile && Main.tile[tileX, tileY].Slope == 0 && Main.tile[tileX, tileY - 1].Slope == 0 && Main.tileSolid[Main.tile[tileX, tileY].TileType] && !Main.tileSolidTop[Main.tile[tileX, tileY].TileType] || Main.tile[tileX, tileY - 1].IsHalfBlock && Main.tile[tileX, tileY - 1].HasUnactuatedTile) && (!Main.tile[tileX, tileY - 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX, tileY - 1].TileType] || Main.tileSolidTop[Main.tile[tileX, tileY - 1].TileType] || Main.tile[tileX, tileY - 1].IsHalfBlock && (!Main.tile[tileX, tileY - 4].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX, tileY - 4].TileType] || Main.tileSolidTop[Main.tile[tileX, tileY - 4].TileType])) && (!Main.tile[tileX, tileY - 2].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX, tileY - 2].TileType] || Main.tileSolidTop[Main.tile[tileX, tileY - 2].TileType]) && (!Main.tile[tileX, tileY - 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX, tileY - 3].TileType] || Main.tileSolidTop[Main.tile[tileX, tileY - 3].TileType]) && (!Main.tile[tileX - offset, tileY - 3].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX - offset, tileY - 3].TileType]))
                 {
                     float tileWorldY = tileY * 16;
                     if (Main.tile[tileX, tileY].IsHalfBlock)
@@ -5022,17 +4987,15 @@ namespace Redemption.Base
                     {
                         Tile tile = Main.tile[tileX, y];
                         Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
-                        if (tile == null) { tile = Main.tile[tileX, y] = new Tile(); }
-                        if (tileNear == null) { tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile(); }
-                        if (tile.IsActiveUnactuated && (y != tileY || tile.Slope == 0) && Main.tileSolid[tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[tile.type]))
+                        if (tile.HasUnactuatedTile && (y != tileY || tile.Slope == 0) && Main.tileSolid[tile.TileType] && (jumpUpPlatforms || !Main.tileSolidTop[tile.TileType]))
                         {
-                            if (!Main.tileSolidTop[tile.type])
+                            if (!Main.tileSolidTop[tile.TileType])
                             {
                                 Rectangle tileHitbox = new(tileX * 16, y * 16, 16, 16);
                                 tileHitbox.Y = hitbox.Y;
                                 if (tileHitbox.Intersects(hitbox)) { newVelocity = velocity; break; }
                             }
-                            if (tileNear.IsActiveUnactuated && Main.tileSolid[tileNear.type] && !Main.tileSolidTop[tileNear.type]) { newVelocity = velocity; break; }
+                            if (tileNear.HasUnactuatedTile && Main.tileSolid[tileNear.TileType] && !Main.tileSolidTop[tileNear.TileType]) { newVelocity = velocity; break; }
                             if (target != null && y * 16 < target.Center.Y) { continue; }
                             lastY = y;
                             newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - (tileY - y - 2) * 0.0525f : 1f));
@@ -5044,13 +5007,10 @@ namespace Redemption.Base
                 // if the npc isn't jumping already...
                 if (newVelocity.Y == velocity.Y)
                 {
-                    if (Main.tile[tileX, tileY + 1] == null) { Main.tile[tileX, tileY + 1] = new Tile(); }
-                    if (Main.tile[tileX + direction, tileY + 1] == null) { Main.tile[tileX, tileY + 1] = new Tile(); }
-                    if (Main.tile[tileX + direction, tileY + 2] == null) { Main.tile[tileX, tileY + 2] = new Tile(); }
                     //...and there's a gap in front of the npc, attempt to jump across it.
-                    if (directionY < 0 && (!Main.tile[tileX, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].type]))
+                    if (directionY < 0 && (!Main.tile[tileX, tileY + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX, tileY + 1].TileType]) && (!Main.tile[tileX + direction, tileY + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX + direction, tileY + 1].TileType]))
                     {
-                        if (!Main.tile[tileX + direction, tileY + 2].IsActiveUnactuated || !Main.tileSolid[Main.tile[tileX, tileY + 2].type] || target == null || target.Center.Y + target.height * 0.25f < tileY * 16f)
+                        if (!Main.tile[tileX + direction, tileY + 2].HasUnactuatedTile || !Main.tileSolid[Main.tile[tileX, tileY + 2].TileType] || target == null || target.Center.Y + target.height * 0.25f < tileY * 16f)
                         {
                             newVelocity.Y = -8f;
                             newVelocity.X *= 1.5f * (1f / maxSpeedX);
@@ -5059,8 +5019,7 @@ namespace Redemption.Base
                                 for (int x = tileX; x < tileItX; x++)
                                 {
                                     Tile tile = Main.tile[x, tileY + 1];
-                                    if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-                                    if (x != tileX && !tile.IsActiveUnactuated)
+                                    if (x != tileX && !tile.HasUnactuatedTile)
                                     {
                                         newVelocity.Y -= 0.0325f;
                                         newVelocity.X += direction * 0.255f;
@@ -5073,8 +5032,7 @@ namespace Redemption.Base
                                 for (int x = tileItX; x < tileX; x++)
                                 {
                                     Tile tile = Main.tile[x, tileY + 1];
-                                    if (tile == null) { tile = Main.tile[x, tileY + 1] = new Tile(); }
-                                    if (x != tileItX && !tile.IsActiveUnactuated)
+                                    if (x != tileItX && !tile.HasUnactuatedTile)
                                     {
                                         newVelocity.Y -= 0.0325f;
                                         newVelocity.X += direction * 0.255f;
@@ -5110,14 +5068,7 @@ namespace Redemption.Base
             {
                 int tileX = (int)((npc.Center.X + (npc.width / 2 + 8f) * npc.direction) / 16f);
                 int tileY = (int)((npc.position.Y + npc.height - 15f) / 16f);
-                for (int m = 1; m >= -3; m--)
-                {
-                    if (m == 1 && Main.tile[tileX + npc.direction, tileY + m] == null) { Main.tile[tileX + npc.direction, tileY + m] = new Tile(); }
-                    else
-                        if (m == -1 && Main.tile[tileX + npc.direction, tileY + m] == null) { Main.tile[tileX + npc.direction, tileY + m] = new Tile(); }
-                    if (Main.tile[tileX, tileY + m] == null) { Main.tile[tileX, tileY + m] = new Tile(); }
-                }
-                if (Main.tile[tileX, tileY - 1].IsActiveUnactuated && Main.tile[tileX, tileY - 1].type == 10)
+                if (Main.tile[tileX, tileY - 1].HasUnactuatedTile && Main.tile[tileX, tileY - 1].TileType == 10)
                 {
                     doorCounter += 1f;
                     tickUpdater = 0f;
@@ -5141,7 +5092,7 @@ namespace Redemption.Base
                                 if (interactDoorStyle == 1)
                                 {
                                     WorldGen.KillTile(tileX, tileY);
-                                    openedDoor = !Main.tile[tileX, tileY].IsActiveUnactuated;
+                                    openedDoor = !Main.tile[tileX, tileY].HasUnactuatedTile;
                                 }
                                 else
                                 {
@@ -5179,7 +5130,7 @@ namespace Redemption.Base
                 for (int y = topY; x < topY + rect.Height; y++)
                 {
                     Tile tile = Main.tile[x, y];
-                    if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
+                    if (tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                     {
                         return false;
                     }
@@ -5254,7 +5205,7 @@ namespace Redemption.Base
                 for (int y2 = tilePosY; y2 < tilePosHeight; y2++)
                 {
                     if (Main.tile[x2, y2] == null) { return false; }
-                    if (Main.tile[x2, y2].IsActiveUnactuated && Main.tileSolid[Main.tile[x2, y2].type])
+                    if (Main.tile[x2, y2].HasUnactuatedTile && Main.tileSolid[Main.tile[x2, y2].TileType])
                     {
                         hitTilePos = new Vector2(x2, y2);
                         return true;
@@ -6114,10 +6065,10 @@ namespace Redemption.Base
                             if ((int)vec.X != vecX && (int)vec.Y != vecY)
                             {
                                 Tile tile = Main.tile[vecX, vecY];
-                                if (tile is { IsActiveUnactuated: true })
+                                if (tile is { HasUnactuatedTile: true })
                                 {
-                                    bool ignoreTile = tileTypesToIgnore is { Length: > 0 } && BaseUtility.InArray(tileTypesToIgnore, tile.type);
-                                    if (!ignoreTile && Main.tileSolid[tile.type])
+                                    bool ignoreTile = tileTypesToIgnore is { Length: > 0 } && BaseUtility.InArray(tileTypesToIgnore, tile.TileType);
+                                    if (!ignoreTile && Main.tileSolid[tile.TileType])
                                     {
                                         return returnCenter ? new Vector2(vecX * 16 + 8, vecY * 16 + 8) : v;
                                     }

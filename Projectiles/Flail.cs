@@ -359,12 +359,12 @@ namespace Redemption.Projectiles
 						continue;
 					}
 					Tile tileSafely = Framing.GetTileSafely(i, j);
-					if (!tileSafely.IsActive || !Main.tileSolid[tileSafely.type] || Main.tileSolidTop[tileSafely.type] || Main.tileFrameImportant[tileSafely.type])
+					if (!tileSafely.HasTile || !Main.tileSolid[tileSafely.TileType] || Main.tileSolidTop[tileSafely.TileType] || Main.tileFrameImportant[tileSafely.TileType])
 					{
 						continue;
 					}
 					Tile tileSafely2 = Framing.GetTileSafely(i, j - 1);
-					if (tileSafely2.IsActive && Main.tileSolid[tileSafely2.type] && !Main.tileSolidTop[tileSafely2.type])
+					if (tileSafely2.HasTile && Main.tileSolid[tileSafely2.TileType] && !Main.tileSolidTop[tileSafely2.TileType])
 					{
 						continue;
 					}

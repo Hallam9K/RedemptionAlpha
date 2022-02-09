@@ -29,17 +29,17 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         }
         public override void HitWire(int i, int j)
         {
-            int left = i - Main.tile[i, j].frameX / 18 % 1;
-            int top = j - Main.tile[i, j].frameY / 18 % 2;
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             for (int x = left; x < left + 1; x++)
             {
                 for (int y = top; y < top + 2; y++)
                 {
 
-                    if (Main.tile[x, y].frameX >= 18)
-                        Main.tile[x, y].frameX -= 18;
+                    if (Main.tile[x, y].TileFrameX >= 18)
+                        Main.tile[x, y].TileFrameX -= 18;
                     else
-                        Main.tile[x, y].frameX += 18;
+                        Main.tile[x, y].TileFrameX += 18;
                 }
             }
             if (Wiring.running)
@@ -53,7 +53,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.frameX < 18)
+            if (tile.TileFrameX < 18)
             {
                 r = 0.7f;
                 g = 0.7f;

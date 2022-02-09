@@ -459,7 +459,7 @@ namespace Redemption.Globals.NPC
                 else
                 {
                     int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
-                    bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
+                    bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType);
 
                     pool.Clear();
                     pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
@@ -473,7 +473,7 @@ namespace Redemption.Globals.NPC
             if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {
                 int[] GrassTileArray = { ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>(), ModContent.TileType<IrradiatedGrassTile>() };
-                bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type);
+                bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType);
 
                 pool.Clear();
                 pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);

@@ -50,14 +50,14 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY == 0)
+			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)
 			{
 				Main.CancelClothesWindow(true);
 				Main.mouseRightRelease = false;
-				int left = Main.tile[Player.tileTargetX, Player.tileTargetY].frameX / 18;
+				int left = Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameX / 18;
 				left %= 3;
 				left = Player.tileTargetX - left;
-				int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].frameY / 18;
+				int top = Player.tileTargetY - Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY / 18;
 				if (player.sign > -1)
 				{
 					SoundEngine.PlaySound(SoundID.MenuClose);
@@ -144,8 +144,8 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
 			int left = Player.tileTargetX;
 			int top = Player.tileTargetY;
-			left -= tile.frameX % 54 / 18;
-			if (tile.frameY % 36 != 0)
+			left -= tile.TileFrameX % 54 / 18;
+			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
 			}
@@ -186,8 +186,8 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
 			int left = Player.tileTargetX;
 			int top = Player.tileTargetY;
-			left -= tile.frameX % 54 / 18;
-			if (tile.frameY % 36 != 0)
+			left -= tile.TileFrameX % 54 / 18;
+			if (tile.TileFrameY % 36 != 0)
 			{
 				top--;
 			}
@@ -215,7 +215,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			}
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY > 0)
+			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY > 0)
 			{
 				player.cursorItemIconID = ItemID.FamiliarShirt;
 			}

@@ -46,9 +46,9 @@ namespace Redemption.Tiles.Furniture.Misc
 
         public override bool RightClick(int i, int j)
         {
-            int left = i - Main.tile[i, j].frameX / 18 % 2;
-            int top = j - Main.tile[i, j].frameY / 18 % 3;
-            if (Main.tile[left, top].frameX == 0)
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 2;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
+            if (Main.tile[left, top].TileFrameX == 0)
             {
                 Player player = Main.LocalPlayer;
                 player.QuickSpawnItem(ModContent.ItemType<CursedGem>());
@@ -57,9 +57,9 @@ namespace Redemption.Tiles.Furniture.Misc
             {
                 for (int y = top; y < top + 3; y++)
                 {
-                    if (Main.tile[x, y].frameX < 36)
+                    if (Main.tile[x, y].TileFrameX < 36)
                     {
-                        Main.tile[x, y].frameX += 36;
+                        Main.tile[x, y].TileFrameX += 36;
                     }
                 }
             }

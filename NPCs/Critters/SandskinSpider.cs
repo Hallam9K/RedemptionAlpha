@@ -102,7 +102,7 @@ namespace Redemption.NPCs.Critters
 
                     Point tileBelow = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
-                    if (BuryCheck() && Main.rand.NextBool(60) && tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && TileID.Sets.Conversion.Sand[tile.type])
+                    if (BuryCheck() && Main.rand.NextBool(60) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileID.Sets.Conversion.Sand[tile.TileType])
                     {
                         NPC.velocity.Y = 0;
                         AITimer = 0;
@@ -123,7 +123,7 @@ namespace Redemption.NPCs.Critters
 
                     tileBelow = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     tile = Main.tile[tileBelow.X, tileBelow.Y];
-                    if (BuryCheck() && Main.rand.NextBool(100) && tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && tile.Slope == SlopeType.Solid && TileID.Sets.Conversion.Sand[tile.type])
+                    if (BuryCheck() && Main.rand.NextBool(100) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && tile.Slope == SlopeType.Solid && TileID.Sets.Conversion.Sand[tile.TileType])
                     {
                         NPC.velocity.Y = 0;
                         AITimer = 0;
@@ -192,7 +192,7 @@ namespace Redemption.NPCs.Critters
                     NPC.catchItem = 0;
                     Point tileIn = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     Tile tile2 = Main.tile[tileIn.X, tileIn.Y];
-                    if (tile2 is not { IsActiveUnactuated: true } || !Main.tileSolid[tile2.type] || !TileID.Sets.Conversion.Sand[tile2.type])
+                    if (tile2 is not { HasUnactuatedTile: true } || !Main.tileSolid[tile2.TileType] || !TileID.Sets.Conversion.Sand[tile2.TileType])
                     {
                         AITimer = 0;
                         NPC.dontTakeDamage = false;

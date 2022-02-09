@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Plants
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
 			Tile tile = Framing.GetTileSafely(i, j + 1);
-			if (tile.IsActive && tile.type == Type) {
+			if (tile.HasTile && tile.TileType == Type) {
 				WorldGen.KillTile(i, j + 1);
 			}
 		}
@@ -36,8 +36,8 @@ namespace Redemption.Tiles.Plants
 		{
 			Tile tileAbove = Framing.GetTileSafely(i, j - 1);
 			int type = -1;
-			if (tileAbove.IsActive && tileAbove.Slope != SlopeType.SlopeUpLeft && tileAbove.Slope != SlopeType.SlopeUpRight) {
-				type = tileAbove.type;
+			if (tileAbove.HasTile && tileAbove.Slope != SlopeType.SlopeUpLeft && tileAbove.Slope != SlopeType.SlopeUpRight) {
+				type = tileAbove.TileType;
 			}
 
 			if (type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == Type) {
@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Plants
 		public override void RandomUpdate(int i, int j)
 		{
 			Tile tileBelow = Framing.GetTileSafely(i, j + 1);
-			if (WorldGen.genRand.NextBool(15) && !tileBelow.IsActive && tileBelow.LiquidType != LiquidID.Lava) {
+			if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava) {
 				bool placeVine = false;
 				int yTest = j;
 				while (yTest > j - 10) {
@@ -59,7 +59,7 @@ namespace Redemption.Tiles.Plants
 					if (testTile.Slope != SlopeType.Solid) {
 						break;
 					}
-					else if (!testTile.IsActive || testTile.type != ModContent.TileType<IrradiatedCrimsonGrassTile>())
+					else if (!testTile.HasTile || testTile.TileType != ModContent.TileType<IrradiatedCrimsonGrassTile>())
                     {
 						yTest--;
 						continue;
@@ -68,8 +68,8 @@ namespace Redemption.Tiles.Plants
 					break;
 				}
 				if (placeVine) {
-					tileBelow.type = Type;
-					tileBelow.IsActive = true;
+					tileBelow.TileType = Type;
+					tileBelow.HasTile = true;
 					WorldGen.SquareTileFrame(i, j + 1, true);
 					if (Main.netMode == NetmodeID.Server) {
 						NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
@@ -81,10 +81,10 @@ namespace Redemption.Tiles.Plants
         {
 			Tile tile = Framing.GetTileSafely(i, j);
 
-            var source = new Rectangle(tile.frameX, tile.frameY, 16, 16); 
+            var source = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16); 
             Rectangle realSource = source;
 
-            float xOff = GetOffset(i, j, tile.frameX); //Sin offset.
+            float xOff = GetOffset(i, j, tile.TileFrameX); //Sin offset.
             Vector2 drawPos = ((new Vector2(i, j)) * 16) - Main.screenPosition;
 
 			Color col = Lighting.GetColor(i, j, Color.White); 
@@ -96,11 +96,11 @@ namespace Redemption.Tiles.Plants
 		public float GetOffset(int i, int j, int frameX, float sOffset = 0f)
 		{
 			float sin = (float)Math.Sin((Main.time + (i * 24) + (j * 19)) * (0.04f * (!Lighting.NotRetro ? 0f : 1)) + sOffset) * 1.4f;
-			if (Framing.GetTileSafely(i, j - 1).type != Type) //Adjusts the sine wave offset to make it look nicer when closer to ground
+			if (Framing.GetTileSafely(i, j - 1).TileType != Type) //Adjusts the sine wave offset to make it look nicer when closer to ground
 				sin *= 0.25f;
-			else if (Framing.GetTileSafely(i, j - 2).type != Type)
+			else if (Framing.GetTileSafely(i, j - 2).TileType != Type)
 				sin *= 0.5f;
-			else if (Framing.GetTileSafely(i, j - 3).type != Type)
+			else if (Framing.GetTileSafely(i, j - 3).TileType != Type)
 				sin *= 0.75f;
 
 			return sin;

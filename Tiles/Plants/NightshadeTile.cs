@@ -59,19 +59,19 @@ namespace Redemption.Tiles.Plants
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            int stage = Main.tile[i, j].frameX / 18;
+            int stage = Main.tile[i, j].TileFrameX / 18;
             if (stage == 1 && !Main.dayTime)
             {
-                Main.tile[i, j].frameX += 18;
+                Main.tile[i, j].TileFrameX += 18;
             }
             else if (stage == 2 && Main.dayTime)
             {
-                Main.tile[i, j].frameX -= 18;
+                Main.tile[i, j].TileFrameX -= 18;
             }
         }
         public override bool Drop(int i, int j)
         {
-            int stage = Main.tile[i, j].frameX / 18;
+            int stage = Main.tile[i, j].TileFrameX / 18;
             switch (stage)
             {
                 case 1:
@@ -90,14 +90,14 @@ namespace Redemption.Tiles.Plants
 
         public override void RandomUpdate(int i, int j)
         {
-            if (Main.tile[i, j].frameX == 0 && !Main.dayTime)
+            if (Main.tile[i, j].TileFrameX == 0 && !Main.dayTime)
             {
-                Main.tile[i, j].frameX += 18;
+                Main.tile[i, j].TileFrameX += 18;
             }
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            int stage = Main.tile[i, j].frameX / 18;
+            int stage = Main.tile[i, j].TileFrameX / 18;
             if (stage == 2)
             {
                 r = 0.2f;

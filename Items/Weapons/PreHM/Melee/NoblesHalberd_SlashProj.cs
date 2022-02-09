@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frame++;
                         if (Projectile.frame is 4)
                         {
-                            if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
+                            if (tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                             {
                                 SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                                 player.RedemptionScreen().ScreenShakeIntensity = 5;
