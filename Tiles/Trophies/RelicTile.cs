@@ -118,12 +118,12 @@ namespace Redemption.Tiles.Trophies
 
 			Point p = new(i, j);
 			Tile tile = Main.tile[p.X, p.Y];
-			if (tile == null || !tile.IsActive)
+			if (tile == null || !tile.HasTile)
 				return;
 
 			Texture2D texture = RelicTexture.Value;
 
-			int frameY = tile.frameX / FrameWidth;
+			int frameY = tile.TileFrameX / FrameWidth;
 			Rectangle frame = texture.Frame(HorizontalFrames, VerticalFrames, 0, frameY);
 
 			Vector2 origin = frame.Size() / 2f;
@@ -131,7 +131,7 @@ namespace Redemption.Tiles.Trophies
 
 			Color color = Lighting.GetColor(p.X, p.Y);
 
-			bool direction = tile.frameY / FrameHeight != 0;
+			bool direction = tile.TileFrameY / FrameHeight != 0;
 			SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
 			const float TwoPi = (float)Math.PI * 2f;

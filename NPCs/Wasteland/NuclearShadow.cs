@@ -120,7 +120,7 @@ namespace Redemption.NPCs.Wasteland
         public override void FindFrame(int frameHeight)
         {
             Point point = NPC.Center.ToTileCoordinates();
-            if (Main.tile[point.X, point.Y].wall == 0)
+            if (Main.tile[point.X, point.Y].WallType == 0)
             {
                 if (NPC.collideY || NPC.velocity.Y == 0)
                     NPC.frame.Y = 0;

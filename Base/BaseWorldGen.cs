@@ -62,7 +62,7 @@ namespace Redemption.Base
             for (int y = startY; y < Main.maxTilesY - 10; y++)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return y; }
+                if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return y; }
             }
             return Main.maxTilesY - 10;
         }
@@ -78,7 +78,7 @@ namespace Redemption.Base
             for (int y = startY; y > 10; y--)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return y; }
+                if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return y; }
             }
             return 10;
         }
@@ -92,7 +92,7 @@ namespace Redemption.Base
                 for (int x = startX; x > 10; x--)
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
-                    if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return x; }
+                    if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return x; }
                 }
                 return 10;
             }
@@ -100,7 +100,7 @@ namespace Redemption.Base
             for (int x = startX; x < Main.maxTilesX - 10; x++)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile is {IsActive: true} && (!solid || Main.tileSolid[tile.type])) { return x; }
+                if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return x; }
             }
             return Main.maxTilesX - 10;
         }
@@ -156,9 +156,9 @@ namespace Redemption.Base
                 {
                     double dist = Vector2.Distance(new Vector2(x1 * 16f + 8f, y1 * 16f + 8f), position);
                     if (!WorldGen.InWorld(x1, y1)) continue;
-                    if (dist < distRad && Main.tile[x1, y1] != null && Main.tile[x1, y1].IsActive)
+                    if (dist < distRad && Main.tile[x1, y1] != null && Main.tile[x1, y1].HasTile)
                     {
-                        int currentType = Main.tile[x1, y1].type;
+                        int currentType = Main.tile[x1, y1].TileType;
                         int index = 0;
                         if (BaseUtility.InArray(tiles, currentType, ref index))
                         {
@@ -192,7 +192,7 @@ namespace Redemption.Base
                     if (!WorldGen.InWorld(x1, y1)) continue;
                     if (dist < distRad && Main.tile[x1, y1] != null)
                     {
-                        int currentType = Main.tile[x1, y1].wall;
+                        int currentType = Main.tile[x1, y1].WallType;
                         int index = 0;
                         if (BaseUtility.InArray(walls, currentType, ref index))
                         {
@@ -232,15 +232,16 @@ namespace Redemption.Base
          */
         public static void GenerateLiquid(int x, int y, int liquidType, bool updateFlow = true, int liquidHeight = 255, bool sync = true)
         {
+            Tile Mtile = Main.tile[x, y];
+
             if (!WorldGen.InWorld(x, y)) return;
-            if (Main.tile[x, y] == null) Main.tile[x, y] = new Tile();
             liquidHeight = (int)MathHelper.Clamp(liquidHeight, 0, 255);
             Main.tile[x, y].LiquidAmount = (byte)liquidHeight;
-            if (liquidType == 0) { Main.tile[x, y].LiquidType = LiquidID.Water; }
+            if (liquidType == 0) { Mtile.LiquidType = LiquidID.Water; }
             else
-            if (liquidType == 1) { Main.tile[x, y].LiquidType = LiquidID.Lava; }
+            if (liquidType == 1) { Mtile.LiquidType = LiquidID.Lava; }
             else
-            if (liquidType == 2) { Main.tile[x, y].LiquidType = LiquidID.Honey; }
+            if (liquidType == 2) { Mtile.LiquidType = LiquidID.Honey; }
             if (updateFlow) { Liquid.AddWater(x, y); }
             if (sync && Main.netMode != NetmodeID.SinglePlayer) { NetMessage.SendTileSquare(-1, x, y, 1); }
         }
@@ -280,8 +281,9 @@ namespace Redemption.Base
         {
             try
             {
+                Tile Mtile = Main.tile[x, y];
+
                 if (!WorldGen.InWorld(x, y)) return;
-                if (Main.tile[x, y] == null) { Main.tile[x, y] = new Tile(); }
                 TileObjectData data = tile <= -1 ? null : TileObjectData.GetTileData(tile, tileStyle);
                 int width = data == null ? 1 : data.Width;
                 int height = data == null ? 1 : data.Height;
@@ -302,12 +304,11 @@ namespace Redemption.Base
                             {
                                 int x2 = (int)newPos.X + x1;
                                 int y2 = (int)newPos.Y + y1;
-                                if (x1 == 0 && y1 == 0 && Main.tile[x2, y2].type == 21) //is a chest, special case to prevent dupe glitch
+                                if (x1 == 0 && y1 == 0 && Main.tile[x2, y2].TileType == 21) //is a chest, special case to prevent dupe glitch
                                 {
                                     KillChestAndItems(x2, y2);
                                 }
-                                Main.tile[x, y].type = 0;
-                                Main.tile[x, y].IsActive = false;
+                                Main.tile[x, y].TileType = 0;
                                 if (!silent) { WorldGen.KillTile(x, y, false, false, true); }
                                 if (removeLiquid)
                                 {
@@ -336,13 +337,13 @@ namespace Redemption.Base
                     {
                         if (tileWidth <= 1 && tileHeight <= 1 && !Main.tileFrameImportant[tile])
                         {
-                            Main.tile[x, y].type = (ushort)tile;
-                            Main.tile[x, y].IsActive = true;
-                            if (slope == -2 && oldHalfBrick) { Main.tile[x, y].IsHalfBlock = true; }
+                            Main.tile[x, y].TileType = (ushort)tile;
+                            Mtile.HasTile = true;
+                            if (slope == -2 && oldHalfBrick) { Mtile.IsHalfBlock = true; }
                             else
-                            if (slope == -1) { Main.tile[x, y].IsHalfBlock = true; }
+                            if (slope == -1) { Mtile.IsHalfBlock = true; }
                             else
-                            { Main.tile[x, y].Slope = (SlopeType)(slope == -2 ? oldSlope : (byte)slope); }
+                            { Mtile.Slope = (SlopeType)(slope == -2 ? oldSlope : (byte)slope); }
                             WorldGen.SquareTileFrame(x, y);
                         }
                         else
@@ -373,13 +374,13 @@ namespace Redemption.Base
                     }
                     else
                     {
-                        Main.tile[x, y].IsActive = false;
+                        Mtile.HasTile = false;
                     }
                 }
                 if (wall != -1)
                 {
                     if (wall == -2) { wall = 0; }
-                    Main.tile[x, y].wall = 0;
+                    Main.tile[x, y].WallType = 0;
                     WorldGen.PlaceWall(x, y, wall, true);
                 }
                 if (sync && Main.netMode != NetmodeID.SinglePlayer)
@@ -674,9 +675,9 @@ namespace Redemption.Base
             {
                 for (int y = topY; y < bottomY; y++)
                 {
-                    if (Main.tile[x, y].type != 48 && Main.tile[x, y].type != 137 && Main.tile[x, y].type != 232 && Main.tile[x, y].type != 191 && Main.tile[x, y].type != 151 && Main.tile[x, y].type != 274)
+                    if (Main.tile[x, y].TileType != 48 && Main.tile[x, y].TileType != 137 && Main.tile[x, y].TileType != 232 && Main.tile[x, y].TileType != 191 && Main.tile[x, y].TileType != 151 && Main.tile[x, y].TileType != 274)
                     {
-                        if (!Main.tile[x, y - 1].IsActive)
+                        if (!Main.tile[x, y - 1].HasTile)
                         {
                             if (WorldGen.SolidTile(x, y))
                             {
@@ -684,7 +685,7 @@ namespace Redemption.Base
                                 {
                                     if (WorldGen.SolidTile(x, y + 1))
                                     {
-                                        if (!WorldGen.SolidTile(x - 1, y) && !Main.tile[x - 1, y + 1].IsHalfBlock && WorldGen.SolidTile(x - 1, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x + 1, y - 1].IsActive)
+                                        if (!WorldGen.SolidTile(x - 1, y) && !Main.tile[x - 1, y + 1].IsHalfBlock && WorldGen.SolidTile(x - 1, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x + 1, y - 1].HasTile)
                                         {
                                             if (WorldGen.genRand.Next(2) == 0)
                                             {
@@ -695,7 +696,7 @@ namespace Redemption.Base
                                                 WorldGen.PoundTile(x, y);
                                             }
                                         }
-                                        else if (!WorldGen.SolidTile(x + 1, y) && !Main.tile[x + 1, y + 1].IsHalfBlock && WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x - 1, y - 1].IsActive)
+                                        else if (!WorldGen.SolidTile(x + 1, y) && !Main.tile[x + 1, y + 1].IsHalfBlock && WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x - 1, y - 1].HasTile)
                                         {
                                             if (WorldGen.genRand.Next(2) == 0)
                                             {
@@ -706,27 +707,27 @@ namespace Redemption.Base
                                                 WorldGen.PoundTile(x, y);
                                             }
                                         }
-                                        else if (WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y + 1) && !Main.tile[x + 1, y].IsActive && !Main.tile[x - 1, y].IsActive)
+                                        else if (WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y + 1) && !Main.tile[x + 1, y].HasTile && !Main.tile[x - 1, y].HasTile)
                                         {
                                             WorldGen.PoundTile(x, y);
                                         }
                                         if (WorldGen.SolidTile(x, y))
                                         {
-                                            if (WorldGen.SolidTile(x - 1, y) && WorldGen.SolidTile(x + 1, y + 2) && !Main.tile[x + 1, y].IsActive && !Main.tile[x + 1, y + 1].IsActive && !Main.tile[x - 1, y - 1].IsActive)
+                                            if (WorldGen.SolidTile(x - 1, y) && WorldGen.SolidTile(x + 1, y + 2) && !Main.tile[x + 1, y].HasTile && !Main.tile[x + 1, y + 1].HasTile && !Main.tile[x - 1, y - 1].HasTile)
                                             {
                                                 WorldGen.KillTile(x, y);
                                             }
-                                            else if (WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x - 1, y + 2) && !Main.tile[x - 1, y].IsActive && !Main.tile[x - 1, y + 1].IsActive && !Main.tile[x + 1, y - 1].IsActive)
+                                            else if (WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x - 1, y + 2) && !Main.tile[x - 1, y].HasTile && !Main.tile[x - 1, y + 1].HasTile && !Main.tile[x + 1, y - 1].HasTile)
                                             {
                                                 WorldGen.KillTile(x, y);
                                             }
-                                            else if (!Main.tile[x - 1, y + 1].IsActive && !Main.tile[x - 1, y].IsActive && WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x, y + 2))
+                                            else if (!Main.tile[x - 1, y + 1].HasTile && !Main.tile[x - 1, y].HasTile && WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x, y + 2))
                                             {
                                                 if (WorldGen.genRand.Next(5) == 0) WorldGen.KillTile(x, y);
                                                 else if (WorldGen.genRand.Next(5) == 0) WorldGen.PoundTile(x, y);
                                                 else WorldGen.SlopeTile(x, y, 2);
                                             }
-                                            else if (!Main.tile[x + 1, y + 1].IsActive && !Main.tile[x + 1, y].IsActive && WorldGen.SolidTile(x - 1, y) && WorldGen.SolidTile(x, y + 2))
+                                            else if (!Main.tile[x + 1, y + 1].HasTile && !Main.tile[x + 1, y].HasTile && WorldGen.SolidTile(x - 1, y) && WorldGen.SolidTile(x, y + 2))
                                             {
                                                 if (WorldGen.genRand.Next(5) == 0)
                                                 {
@@ -743,17 +744,17 @@ namespace Redemption.Base
                                             }
                                         }
                                     }
-                                    if (WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].IsActive && !Main.tile[x + 1, y].IsActive)
+                                    if (WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].HasTile && !Main.tile[x + 1, y].HasTile)
                                     {
                                         WorldGen.KillTile(x, y);
                                     }
                                 }
                             }
-                            else if (!Main.tile[x, y].IsActive && Main.tile[x, y + 1].type != 151 && Main.tile[x, y + 1].type != 274)
+                            else if (!Main.tile[x, y].HasTile && Main.tile[x, y + 1].TileType != 151 && Main.tile[x, y + 1].TileType != 274)
                             {
-                                if (Main.tile[x + 1, y].type != 190 && Main.tile[x + 1, y].type != 48 && Main.tile[x + 1, y].type != 232 && WorldGen.SolidTile(x - 1, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x - 1, y].IsActive && !Main.tile[x + 1, y - 1].IsActive)
+                                if (Main.tile[x + 1, y].TileType != 190 && Main.tile[x + 1, y].TileType != 48 && Main.tile[x + 1, y].TileType != 232 && WorldGen.SolidTile(x - 1, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x - 1, y].HasTile && !Main.tile[x + 1, y - 1].HasTile)
                                 {
-                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].type);
+                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].TileType);
                                     if (WorldGen.genRand.Next(2) == 0)
                                     {
                                         WorldGen.SlopeTile(x, y, 2);
@@ -763,9 +764,9 @@ namespace Redemption.Base
                                         WorldGen.PoundTile(x, y);
                                     }
                                 }
-                                if (Main.tile[x - 1, y].type != 190 && Main.tile[x - 1, y].type != 48 && Main.tile[x - 1, y].type != 232 && WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x + 1, y].IsActive && !Main.tile[x - 1, y - 1].IsActive)
+                                if (Main.tile[x - 1, y].TileType != 190 && Main.tile[x - 1, y].TileType != 48 && Main.tile[x - 1, y].TileType != 232 && WorldGen.SolidTile(x + 1, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x + 1, y].HasTile && !Main.tile[x - 1, y - 1].HasTile)
                                 {
-                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].type);
+                                    WorldGen.PlaceTile(x, y, Main.tile[x, y + 1].TileType);
                                     if (WorldGen.genRand.Next(2) == 0)
                                     {
                                         WorldGen.SlopeTile(x, y, 1);
@@ -777,7 +778,7 @@ namespace Redemption.Base
                                 }
                             }
                         }
-                        else if (!Main.tile[x, y + 1].IsActive && WorldGen.genRand.Next(2) == 0 && WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].IsHalfBlock && !Main.tile[x + 1, y].IsHalfBlock && Main.tile[x - 1, y].Slope == 0 && Main.tile[x + 1, y].Slope == 0 && WorldGen.SolidTile(x, y - 1))
+                        else if (!Main.tile[x, y + 1].HasTile && WorldGen.genRand.Next(2) == 0 && WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].IsHalfBlock && !Main.tile[x + 1, y].IsHalfBlock && Main.tile[x - 1, y].Slope == 0 && Main.tile[x + 1, y].Slope == 0 && WorldGen.SolidTile(x, y - 1))
                         {
                             if (WorldGen.SolidTile(x - 1, y) && !WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x - 1, y - 1))
                             {
@@ -795,13 +796,13 @@ namespace Redemption.Base
             {
                 for (int y = topY; y < bottomY; y++)
                 {
-                    if (WorldGen.genRand.Next(2) == 0 && !Main.tile[x, y - 1].IsActive && Main.tile[x, y].type != 137 && Main.tile[x, y].type != 48 && Main.tile[x, y].type != 232 && Main.tile[x, y].type != 191 && Main.tile[x, y].type != 151 && Main.tile[x, y].type != 274 && Main.tile[x, y].type != 75 && Main.tile[x, y].type != 76 && WorldGen.SolidTile(x, y) && Main.tile[x - 1, y].type != 137 && Main.tile[x + 1, y].type != 137)
+                    if (WorldGen.genRand.Next(2) == 0 && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].TileType != 137 && Main.tile[x, y].TileType != 48 && Main.tile[x, y].TileType != 232 && Main.tile[x, y].TileType != 191 && Main.tile[x, y].TileType != 151 && Main.tile[x, y].TileType != 274 && Main.tile[x, y].TileType != 75 && Main.tile[x, y].TileType != 76 && WorldGen.SolidTile(x, y) && Main.tile[x - 1, y].TileType != 137 && Main.tile[x + 1, y].TileType != 137)
                     {
-                        if (WorldGen.SolidTile(x, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x - 1, y].IsActive)
+                        if (WorldGen.SolidTile(x, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x - 1, y].HasTile)
                         {
                             WorldGen.SlopeTile(x, y, 2);
                         }
-                        if (WorldGen.SolidTile(x, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x + 1, y].IsActive)
+                        if (WorldGen.SolidTile(x, y + 1) && WorldGen.SolidTile(x - 1, y) && !Main.tile[x + 1, y].HasTile)
                         {
                             WorldGen.SlopeTile(x, y, 1);
                         }
@@ -1031,14 +1032,13 @@ namespace Redemption.Base
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY)
                 return false;
-            if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
             if (canReplace == null || canReplace != null && canReplace(x, y, _tiles[x, y]))
             {
                 _tiles[x, y].ResetToType(type);
                 if (frameX > -1)
-                    _tiles[x, y].frameX = frameX;
+                    _tiles[x, y].TileFrameX = frameX;
                 if (frameY > -1)
-                    _tiles[x, y].frameY = frameY;
+                    _tiles[x, y].TileFrameY = frameY;
                 if (doFraming)
                 {
                     WorldUtils.TileFrame(x, y, doNeighborFraming);
@@ -1060,7 +1060,6 @@ namespace Redemption.Base
         public override bool Apply(Point origin, int x, int y, params object[] args)
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY) return false;
-            if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
             Main.Map.UpdateLighting(x, y, Math.Max(Main.Map[x, y].Light, brightness));
             return UnitApply(origin, x, y, args);
         }
@@ -1088,10 +1087,9 @@ namespace Redemption.Base
         public override bool Apply(Point origin, int x, int y, params object[] args)
         {
             if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY) return false;
-            if (_tiles[x, y] == null) _tiles[x, y] = new Tile();
             if (canReplace == null || canReplace != null && canReplace(x, y, _tiles[x, y]))
             {
-                _tiles[x, y].wall = type;
+                _tiles[x, y].WallType = type;
                 WorldGen.SquareWallFrame(x, y);
                 if (neighbors)
                 {
@@ -1145,8 +1143,6 @@ namespace Redemption.Base
         {
             if (x < 0 || x >= Main.maxTilesX || y < 0 || y >= Main.maxTilesY)
                 return false;
-            if (_tiles[x, y] == null)
-                _tiles[x, y] = new Tile();
             _tiles[x, y].ClearTile();
             if (_frameNeighbors)
             {
@@ -1165,14 +1161,14 @@ namespace Redemption.Base
     {
         protected override bool CheckValidity(int x, int y)
         {
-            return _tiles[x, y].IsActive && _tiles[x, y].Slope == 0 && !_tiles[x, y].IsHalfBlock;
+            return _tiles[x, y].HasTile && _tiles[x, y].Slope == 0 && !_tiles[x, y].IsHalfBlock;
         }
     }
     public class IsSloped : GenCondition
     {
         protected override bool CheckValidity(int x, int y)
         {
-            return _tiles[x, y].IsActive && (_tiles[x, y].Slope > 0 || _tiles[x, y].IsHalfBlock);
+            return _tiles[x, y].HasTile && (_tiles[x, y].Slope > 0 || _tiles[x, y].IsHalfBlock);
         }
     }
     #endregion

@@ -44,7 +44,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.frameX == 0 && tile.frameY == 0)
+            if (tile.TileFrameX == 0 && tile.TileFrameY == 0)
             {
                 if (!Main.projectile.Any(projectile => projectile.type == ModContent.ProjectileType<BigMaceTurret_NPC>() && (projectile.ModProjectile as BigMaceTurret_NPC).Parent == tile && projectile.active))
                 {
@@ -55,7 +55,7 @@ namespace Redemption.Tiles.Furniture.Lab
                     }
                 }
             }
-            if (tile.frameX == 18 && tile.frameY == 0)
+            if (tile.TileFrameX == 18 && tile.TileFrameY == 0)
             {
                 if (!Main.projectile.Any(projectile => projectile.type == ModContent.ProjectileType<BigMaceTurret_NPC>() && (projectile.ModProjectile as BigMaceTurret_NPC).Parent == tile && projectile.active))
                 {

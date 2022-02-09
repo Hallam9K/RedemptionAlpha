@@ -163,10 +163,10 @@ namespace Redemption.Items.Usable
                 {
                     if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size))
                     {
-                        int type = Main.tile[k, l].type;
+                        int type = Main.tile[k, l].TileType;
                         if (TileID.Sets.Conversion.Stone[type] || TileID.Sets.Conversion.HardenedSand[type] || TileID.Sets.Conversion.Ice[type] || TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.Sand[type] || TileID.Sets.Conversion.Sandstone[type] || TileID.Sets.Conversion.Grass[type] || type == TileID.Dirt || TileID.Sets.Snow[type])
                         {
-                            Main.tile[k, l].type = (ushort)ModContent.TileType<PlutoniumTile>();
+                            Main.tile[k, l].TileType = (ushort)ModContent.TileType<PlutoniumTile>();
                             WorldGen.SquareTileFrame(k, l, true);
                             NetMessage.SendTileSquare(-1, k, l, 1);
                         }

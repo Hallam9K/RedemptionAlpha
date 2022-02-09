@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override bool CanUseItem(Player player)
         {
             Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-            if (tile.IsActiveUnactuated && Main.tileSolid[tile.type] && !Main.tileCut[tile.type])
+            if (tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileCut[tile.TileType])
                 return false;
 
             return true;

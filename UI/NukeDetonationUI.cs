@@ -102,8 +102,8 @@ namespace Redemption.UI
                     for (int y = -44; y <= 44; y++)
                     {
                         Point tileToWarhead = RedeWorld.nukeGroundZero.ToTileCoordinates();
-                        int type = Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].type;
-                        if (Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y] != null && Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].IsActive)
+                        int type = Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].TileType;
+                        if (Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y] != null && Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].HasTile)
                         {
                             if (Main.tileDungeon[type] || type == 88 || type == 21 || type == 26 || type == 107 || type == 108 || type == 111 || type == 226 || type == 237 || type == 221 || type == 222 || type == 223 || type == 211 || type == 404)
                                 fail = true; 

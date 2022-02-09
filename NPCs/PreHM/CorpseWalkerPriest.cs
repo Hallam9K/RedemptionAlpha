@@ -457,7 +457,7 @@ namespace Redemption.NPCs.PreHM
         {
             float desert = SpawnCondition.OverworldNightMonster.Chance;
             float desertCave = SpawnCondition.DesertCave.Chance * 0.04f;
-            float multiplier = spawnInfo.player.ZoneDesert && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Sand ? 0.2f : 0f;
+            float multiplier = spawnInfo.player.ZoneDesert && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Sand ? 0.2f : 0f;
 
             return Math.Max(desert * multiplier, desertCave);
         }

@@ -44,12 +44,12 @@ namespace Redemption.Tiles.Ores
         public override void RandomUpdate(int i, int j)
         {
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(70))
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(70))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
             }
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(400))
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);

@@ -103,7 +103,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         Point tileBelow2 = new Vector2(projHitbox.Center.X + (16 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
                         Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
                         Tile tile2 = Main.tile[tileBelow2.X, tileBelow2.Y];
-                        if ((tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type]) || (tile2 is { IsActiveUnactuated: true } && Main.tileSolid[tile2.type]))
+                        if ((tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType]) || (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType]))
                         {
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GravityHammerSlam").WithVolume(0.6f), Projectile.position);

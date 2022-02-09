@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
 
-                    if (Main.rand.NextBool(500) && tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && TileTags.WoodLeaf.Has(tile.type))
+                    if (Main.rand.NextBool(500) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileTags.WoodLeaf.Has(tile.TileType))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(180, 300);
@@ -163,7 +163,7 @@ namespace Redemption.NPCs.Critters
                         NPC.HealEffect(1);
                     }
 
-                    if (AITimer >= TimerRand || tile is not { IsActiveUnactuated: true } || !Main.tileSolid[tile.type] || !TileTags.WoodLeaf.Has(tile.type))
+                    if (AITimer >= TimerRand || tile is not { HasUnactuatedTile: true } || !Main.tileSolid[tile.TileType] || !TileTags.WoodLeaf.Has(tile.TileType))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
@@ -244,7 +244,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDayGrassCritter.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? 1.7f : 0f;
+            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Grass ? 1.7f : 0f;
 
             return baseChance * multiplier;
         }

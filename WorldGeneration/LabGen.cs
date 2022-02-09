@@ -427,7 +427,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + 217; j++)
                 {
-                    if (TileArray.Contains(Framing.GetTileSafely(i, j).type) && WorldGen.InWorld(i, j))
+                    if (TileArray.Contains(Framing.GetTileSafely(i, j).TileType) && WorldGen.InWorld(i, j))
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
                 }
             }

@@ -34,12 +34,12 @@ namespace Redemption.Globals
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions && !WorldGen.gen)
             {
-                if (type == TileID.Trees && Main.tile[i, j + 1].type == TileID.Grass)
+                if (type == TileID.Trees && Main.tile[i, j + 1].TileType == TileID.Grass)
                 {
                     if (Main.rand.NextBool(6))
                         Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<TreeBugFall>(), 0, 0);
                 }
-                if (type == TileID.PalmTree && Main.tile[i, j + 1].type == TileID.Sand)
+                if (type == TileID.PalmTree && Main.tile[i, j + 1].TileType == TileID.Sand)
                 {
                     if (Main.rand.NextBool(6))
                         Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<CoastScarabFall>(), 0, 0);
@@ -57,7 +57,7 @@ namespace Redemption.Globals
         {
             if (type == TileID.Grass && !Main.dayTime && RedeBossDowned.downedThorn)
             {
-                if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
+                if (!Framing.GetTileSafely(i, j - 1).HasTile && Main.tile[i, j].HasTile && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].WallType == 0)
                 {
                     if (Main.rand.NextBool(300))
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<NightshadeTile>(), true);
@@ -65,7 +65,7 @@ namespace Redemption.Globals
             }
             if (type == TileID.Grass && Main.dayTime && RedeBossDowned.downedThorn)
             {
-                if (!Framing.GetTileSafely(i, j - 1).IsActive && !Framing.GetTileSafely(i + 1, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i + 1, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].wall == 0)
+                if (!Framing.GetTileSafely(i, j - 1).HasTile && !Framing.GetTileSafely(i + 1, j - 1).HasTile && Main.tile[i, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i, j - 1].LiquidAmount == 0 && Main.tile[i, j - 1].WallType == 0)
                 {
                     if (Main.rand.NextBool(6000))
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
@@ -73,7 +73,7 @@ namespace Redemption.Globals
             }
             if (type == ModContent.TileType<IrradiatedCorruptGrassTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedGrassTile>())
             {
-                if (!Framing.GetTileSafely(i, j - 1).IsActive && Main.tile[i, j].IsActive && Main.tile[i, j - 1].LiquidAmount == 0)
+                if (!Framing.GetTileSafely(i, j - 1).HasTile && Main.tile[i, j].HasTile && Main.tile[i, j - 1].LiquidAmount == 0)
                 {
                     if (Main.rand.NextBool(300))
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
@@ -81,10 +81,10 @@ namespace Redemption.Globals
             }
             if (Terraria.NPC.downedBoss3 && (type == TileID.SnowBlock || TileID.Sets.Conversion.Ice[type]))
             {
-                bool tileUp = !Framing.GetTileSafely(i, j - 1).IsActive;
-                bool tileDown = !Framing.GetTileSafely(i, j + 1).IsActive;
-                bool tileLeft = !Framing.GetTileSafely(i - 1, j).IsActive;
-                bool tileRight = !Framing.GetTileSafely(i + 1, j).IsActive;
+                bool tileUp = !Framing.GetTileSafely(i, j - 1).HasTile;
+                bool tileDown = !Framing.GetTileSafely(i, j + 1).HasTile;
+                bool tileLeft = !Framing.GetTileSafely(i - 1, j).HasTile;
+                bool tileRight = !Framing.GetTileSafely(i + 1, j).HasTile;
                 if (Main.rand.NextBool(400))
                 {
                     if (tileUp)
@@ -113,24 +113,24 @@ namespace Redemption.Globals
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
-            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>()))
                 return false;
             return base.CanKillTile(i, j, type, ref blockDamaged);
         }
 
         public override bool CanExplode(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>()))
                 return false;
             return base.CanExplode(i, j, type);
         }
 
         public override bool Slope(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].IsActive && (Main.tile[i, j - 1].type == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].type == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>()))
                 return false;
             return base.Slope(i, j, type);
         }

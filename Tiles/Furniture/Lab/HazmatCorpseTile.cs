@@ -52,8 +52,8 @@ namespace Redemption.Tiles.Furniture.Lab
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            int left = i - Main.tile[i, j].frameX / 18 % 3;
-            int top = j - Main.tile[i, j].frameY / 18 % 2;
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
             {
                 if (!NPC.AnyNPCs(ModContent.NPCType<HazmatCorpse_Ghost>()))
@@ -76,7 +76,7 @@ namespace Redemption.Tiles.Furniture.Lab
             }
             else
             {
-                if (Main.tile[left, top].frameX == 0)
+                if (Main.tile[left, top].TileFrameX == 0)
                 {
                     player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
                 }
@@ -84,8 +84,8 @@ namespace Redemption.Tiles.Furniture.Lab
                 {
                     for (int y = top; y < top + 2; y++)
                     {
-                        if (Main.tile[x, y].frameX < 54)
-                            Main.tile[x, y].frameX += 54;
+                        if (Main.tile[x, y].TileFrameX < 54)
+                            Main.tile[x, y].TileFrameX += 54;
                     }
                 }
             }
@@ -93,9 +93,9 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            int left = i - Main.tile[i, j].frameX / 18 % 3;
-            int top = j - Main.tile[i, j].frameY / 18 % 2;
-            if (Main.tile[left, top].frameX == 0)
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
+            if (Main.tile[left, top].TileFrameX == 0)
             {
                 Player player = Main.LocalPlayer;
                 //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());

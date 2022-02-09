@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Lab
             else if (NPC.DistanceSQ(player.Center) < 450 * 450)
             {
                 customGunRot = false;
-                if (Main.tile[point.X, point.Y].wall == ModContent.WallType<BlackHardenedSludgeWallTile>() || Main.tile[point.X, point.Y].wall == ModContent.WallType<HardenedSludgeWallTile>() || Main.tile[point.X, point.Y].wall == ModContent.WallType<LabPlatingWallTileUnsafe>() || Main.tile[point.X, point.Y].wall == ModContent.WallType<VentWallTile>())
+                if (Main.tile[point.X, point.Y].WallType == ModContent.WallType<BlackHardenedSludgeWallTile>() || Main.tile[point.X, point.Y].WallType == ModContent.WallType<HardenedSludgeWallTile>() || Main.tile[point.X, point.Y].WallType == ModContent.WallType<LabPlatingWallTileUnsafe>() || Main.tile[point.X, point.Y].WallType == ModContent.WallType<VentWallTile>())
                 {
                     if (!player.dead && player.active)
                     {

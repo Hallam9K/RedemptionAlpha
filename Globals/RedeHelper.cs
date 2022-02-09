@@ -942,15 +942,15 @@ namespace Redemption.Globals
         {
             Terraria.Player player = Main.player[npc.target];
             Point tile = npc.Bottom.ToTileCoordinates();
-            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].IsActive &&
+            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).TileType] && Main.tile[tile.X, tile.Y].HasTile &&
                 npc.Center.Y + yOffset < player.Center.Y)
             {
                 Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if (Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type] ||
-                    Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type] || npc.collideX)
+                if (Main.tile[tile.X - 1, tile.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).TileType] ||
+                    Main.tile[tile2.X + 1, tile2.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).TileType] || npc.collideX)
                 {
                     npc.velocity.X = 0;
                 }
@@ -960,15 +960,15 @@ namespace Redemption.Globals
         public static void JumpDownPlatform(this Terraria.NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
         {
             Point tile = npc.Bottom.ToTileCoordinates();
-            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].IsActive &&
+            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).TileType] && Main.tile[tile.X, tile.Y].HasTile &&
                 npc.Center.Y + yOffset < vector.Y)
             {
                 Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if (Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type] ||
-                    Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type] || npc.collideX)
+                if (Main.tile[tile.X - 1, tile.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).TileType] ||
+                    Main.tile[tile2.X + 1, tile2.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).TileType] || npc.collideX)
                 {
                     npc.velocity.X = 0;
                 }
@@ -1091,11 +1091,11 @@ namespace Redemption.Globals
                 {
                     if ((tpY < tileY - 4 || tpY > tileY + 4 || tpTileX < tileX - 4 || tpTileX > tileX + 4) &&
                         (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
-                        Main.tile[tpTileX, tpY].IsActiveUnactuated)
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
                     {
                         if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
                             Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
-                            Main.tileSolid[Main.tile[tpTileX, tpY].type] &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
                             return new Vector2(tpTileX, tpY);
@@ -1123,11 +1123,11 @@ namespace Redemption.Globals
                 {
                     if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) &&
                         (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
-                        Main.tile[tpTileX, tpY].IsActiveUnactuated)
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
                     {
                         if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
                             Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
-                            Main.tileSolid[Main.tile[tpTileX, tpY].type] &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
                             return new Vector2(tpTileX, tpY) * 16;

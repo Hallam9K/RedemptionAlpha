@@ -71,8 +71,8 @@ namespace Redemption.Base
             Main.mouseRightRelease = false;
             int left = i;
             int top = j;
-            if (tile.frameX % 36 != 0) left--;
-            if (tile.frameY != 0) top--;
+            if (tile.TileFrameX % 36 != 0) left--;
+            if (tile.TileFrameY != 0) top--;
             if (player.sign >= 0)
             {
                 SoundEngine.PlaySound(SoundID.MenuClose);

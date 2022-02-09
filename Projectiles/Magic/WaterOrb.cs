@@ -49,7 +49,7 @@ namespace Redemption.Projectiles.Magic
 
             Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
             Tile tile2 = Main.tile[tile.X, tile.Y];
-            if (tile2 is { IsActiveUnactuated: true } && Main.tileSolid[tile2.type])
+            if (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])
                 Projectile.timeLeft -= 4;
         }
 
