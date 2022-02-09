@@ -1,5 +1,4 @@
 using Redemption.Dusts.Tiles;
-using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
 using Terraria;

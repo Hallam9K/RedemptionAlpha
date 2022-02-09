@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Redemption.Base;
 using System;
-using Redemption.Buffs.Debuffs;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
 using Redemption.BaseExtension;

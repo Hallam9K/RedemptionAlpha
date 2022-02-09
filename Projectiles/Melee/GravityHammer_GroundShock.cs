@@ -2,10 +2,8 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 

@@ -1,11 +1,10 @@
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.NPCBuffs
 {
-	public class ViralityDebuff : ModBuff
+    public class ViralityDebuff : ModBuff
 	{
 		public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
 

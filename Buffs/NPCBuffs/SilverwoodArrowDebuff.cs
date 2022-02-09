@@ -1,5 +1,4 @@
-﻿using Redemption.Globals.NPC;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 

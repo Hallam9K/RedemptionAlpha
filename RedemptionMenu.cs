@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Redemption.Backgrounds;
 using ReLogic.Content;
-using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
 namespace Redemption

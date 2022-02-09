@@ -1,11 +1,8 @@
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
-using Redemption.Dusts;
 using Redemption.Globals;
-using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

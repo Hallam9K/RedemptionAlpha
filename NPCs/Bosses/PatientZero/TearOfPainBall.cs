@@ -1,7 +1,5 @@
-using System;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
-using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

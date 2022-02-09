@@ -4,8 +4,6 @@ using Terraria;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Redemption.Globals;
 using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee

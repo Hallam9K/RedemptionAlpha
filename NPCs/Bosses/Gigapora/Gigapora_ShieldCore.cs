@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Redemption.Dusts;
 using Redemption.Globals;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals;
 using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using Terraria;

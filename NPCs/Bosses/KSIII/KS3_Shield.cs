@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using Redemption.Globals;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;

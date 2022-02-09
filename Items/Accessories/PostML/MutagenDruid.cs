@@ -3,8 +3,6 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PostML;
 
 namespace Redemption.Items.Accessories.PostML
 {

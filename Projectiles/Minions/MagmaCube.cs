@@ -4,7 +4,6 @@ using Redemption.Base;
 using Redemption.Buffs.Minions;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

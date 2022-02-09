@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Redemption.Globals.NPC;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;

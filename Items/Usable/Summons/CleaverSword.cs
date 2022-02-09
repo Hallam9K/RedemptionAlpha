@@ -1,6 +1,4 @@
-using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;

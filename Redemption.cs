@@ -6,6 +6,7 @@ using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
@@ -19,7 +20,6 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Chat;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.Graphics.Effects;
@@ -48,6 +48,7 @@ namespace Redemption
 
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
+        public static int shinkiteCapeID;
         public static int archeFemLegID;
         public static int archeMaleLegID;
         public static int unconFemLegID;
@@ -67,6 +68,7 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back");
+                shinkiteCapeID = AddEquipTexture(ModContent.GetInstance<ShinkiteChestplate>(), EquipType.Back, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back");
                 archeMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs");
                 archeFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
                 unconMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs_Legs");

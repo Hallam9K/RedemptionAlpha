@@ -1,4 +1,3 @@
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,7 +5,7 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
-	public class HairLossDebuff : ModBuff
+    public class HairLossDebuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{

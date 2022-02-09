@@ -1,5 +1,4 @@
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;

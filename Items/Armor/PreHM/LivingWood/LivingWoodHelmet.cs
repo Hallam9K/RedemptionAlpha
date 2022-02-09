@@ -2,9 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
-using Redemption.Globals.Player;
 using System;
 using Redemption.BaseExtension;
 

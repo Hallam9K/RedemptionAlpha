@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using ReLogic.Content;
 using Terraria;

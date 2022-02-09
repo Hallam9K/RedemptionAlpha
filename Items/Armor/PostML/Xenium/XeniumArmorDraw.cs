@@ -1,14 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Redemption.BaseExtension;
 
-namespace Redemption.Globals.Player
+namespace Redemption.Items.Armor.PostML.Xenium
 {
     class XeniumArmorDraw : PlayerDrawLayer
     {
@@ -26,7 +23,7 @@ namespace Redemption.Globals.Player
         public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.BackAcc);
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {
-            Terraria.Player drawPlayer = drawInfo.drawPlayer;
+            Player drawPlayer = drawInfo.drawPlayer;
             if (xeniumBonus)
             {
                 Texture2D texture = Request<Texture2D>("Redemption/Items/Armor/PostML/Xenium/XeniumGrenadeCannon").Value;

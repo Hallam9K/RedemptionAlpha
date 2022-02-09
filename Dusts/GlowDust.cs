@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Dusts
 {
-	public class GlowDust : ModDust
+    public class GlowDust : ModDust
 	{
 		public override void OnSpawn(Dust dust)
 		{

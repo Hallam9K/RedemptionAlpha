@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Dusts.Tiles;
-using Redemption.Globals.Player;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;

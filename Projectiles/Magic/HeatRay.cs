@@ -8,7 +8,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Redemption.Globals;
 using System;
-using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 

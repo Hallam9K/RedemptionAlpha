@@ -6,7 +6,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;

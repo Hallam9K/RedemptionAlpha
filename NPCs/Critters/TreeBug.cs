@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;

@@ -6,7 +6,6 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 

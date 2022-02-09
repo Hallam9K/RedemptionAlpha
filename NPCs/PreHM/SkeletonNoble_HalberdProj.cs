@@ -2,8 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;

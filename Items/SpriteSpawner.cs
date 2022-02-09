@@ -1,15 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 using Redemption.Particles;
-using ReLogic.Content;
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Redemption.Effects.RenderTargets.BasicLayer;
 

@@ -1,9 +1,6 @@
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Melee;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.Furniture.Lab;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

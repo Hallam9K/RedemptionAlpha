@@ -1,6 +1,5 @@
 using System;
 using Redemption.Dusts;
-using Redemption.Tiles.Ores;
 using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using Terraria;

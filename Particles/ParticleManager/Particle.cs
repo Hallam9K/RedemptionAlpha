@@ -2,13 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Exceptions;
 
 namespace Redemption.Particles
 {
-	public class Particle
+    public class Particle
 	{
 		public Particle particle;
 		/// <summary>

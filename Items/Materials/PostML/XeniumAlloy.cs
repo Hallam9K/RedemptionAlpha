@@ -2,10 +2,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Tiles.Bars;
 using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.Furniture.Lab;
 
 namespace Redemption.Items.Materials.PostML

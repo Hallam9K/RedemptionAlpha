@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -9,7 +8,7 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.HM
 {
-	public class TerrestrialPickaxe : ModItem
+    public class TerrestrialPickaxe : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

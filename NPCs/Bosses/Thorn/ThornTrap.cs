@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;

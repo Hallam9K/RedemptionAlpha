@@ -1,4 +1,3 @@
-using Redemption.Globals.NPC;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -7,7 +6,7 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
-	public class DecapitationCondition : IItemDropRuleCondition
+    public class DecapitationCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
 		{

@@ -2,14 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Melee;
 using Terraria.GameContent.Creative;
-using Redemption.Globals;
-using Terraria.Audio;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
-using Terraria.DataStructures;
 using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.Items.Weapons.PreHM.Melee

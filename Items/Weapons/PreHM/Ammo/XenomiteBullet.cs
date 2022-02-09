@@ -1,12 +1,11 @@
 using Redemption.Items.Materials.PreHM;
-using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Ammo
 {
-	public class XenomiteBullet : ModItem
+    public class XenomiteBullet : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
