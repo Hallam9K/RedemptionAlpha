@@ -16,6 +16,7 @@ using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
+    [AutoloadBossHead]
     public class Gigapora_ShieldCore : ModNPC
     {
         public static int BodyType() => ModContent.NPCType<Gigapora>();
