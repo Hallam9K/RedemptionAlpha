@@ -3,7 +3,6 @@ using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Terraria;
-using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 

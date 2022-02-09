@@ -1,10 +1,8 @@
-﻿using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Projectiles.Magic;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;

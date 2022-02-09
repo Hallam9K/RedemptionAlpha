@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Projectiles.Minions;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;

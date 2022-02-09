@@ -1,5 +1,4 @@
-﻿using Redemption.Globals.Player;
-using Redemption.Rarities;
+﻿using Redemption.Rarities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;

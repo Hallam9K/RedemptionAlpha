@@ -1,5 +1,4 @@
-﻿using Redemption.Globals.Player;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Projectiles;
 using System;

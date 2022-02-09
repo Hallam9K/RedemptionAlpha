@@ -6,7 +6,6 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Redemption.Dusts;
-using Redemption.Projectiles.Hostile;
 using Terraria.GameContent;
 using Redemption.Biomes;
 using Terraria.DataStructures;

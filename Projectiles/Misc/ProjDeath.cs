@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.Globals;
 using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Misc

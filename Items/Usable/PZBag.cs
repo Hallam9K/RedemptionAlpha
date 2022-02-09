@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.PatientZero;
 using Terraria;
 using Terraria.GameContent;
@@ -12,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
-	public class PZBag : ModItem
+    public class PZBag : ModItem
 	{
 		public override int BossBagNPC => ModContent.NPCType<PZ>();
 

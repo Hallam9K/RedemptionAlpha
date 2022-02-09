@@ -1,11 +1,8 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using System;
 using Terraria.ModLoader;
 using Redemption.Base;
-using Redemption.Globals;
 using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Ranged

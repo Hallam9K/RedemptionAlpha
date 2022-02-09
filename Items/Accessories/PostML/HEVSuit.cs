@@ -1,6 +1,5 @@
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Usable.Potions;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using System;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
 

@@ -1,16 +1,9 @@
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
-using Redemption.Globals;
-using Redemption.Projectiles.Misc;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.Items.Accessories.PreHM
 {

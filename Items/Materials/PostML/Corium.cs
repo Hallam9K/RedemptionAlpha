@@ -1,4 +1,3 @@
-using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Ores;
 using Terraria;

@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
 using Redemption.Items.Critters;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.ID;

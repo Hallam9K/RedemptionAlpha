@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

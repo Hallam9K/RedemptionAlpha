@@ -1,4 +1,3 @@
-using Redemption.Globals.Player;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 

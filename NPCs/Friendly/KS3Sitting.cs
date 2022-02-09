@@ -11,7 +11,6 @@ using Redemption.Items.Lore;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Materials.HM;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Terraria.Audio;
 using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;

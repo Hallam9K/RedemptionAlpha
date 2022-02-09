@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

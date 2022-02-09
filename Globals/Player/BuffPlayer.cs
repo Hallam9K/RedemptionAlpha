@@ -21,6 +21,8 @@ using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
+using Redemption.Items.Armor.PostML.Xenium;
+using Redemption.Items.Armor.PostML.Shinkite;
 
 namespace Redemption.Globals.Player
 {
@@ -117,6 +119,7 @@ namespace Redemption.Globals.Player
             snipped = false;
             trappedSoul = false;
             ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
+            ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -154,6 +157,7 @@ namespace Redemption.Globals.Player
             hairLoss = false;
             bileDebuff = false;
             ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
+            ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)

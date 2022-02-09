@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Wasteland;
 using System.Collections.Generic;
 using Terraria;

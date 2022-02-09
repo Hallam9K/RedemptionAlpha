@@ -1,5 +1,4 @@
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.MusicBoxes
 {
-	public class OmegaBox : ModItem
+    public class OmegaBox : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

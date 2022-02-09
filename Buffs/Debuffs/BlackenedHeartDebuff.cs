@@ -1,4 +1,3 @@
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

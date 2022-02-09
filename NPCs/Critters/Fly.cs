@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;

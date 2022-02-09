@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

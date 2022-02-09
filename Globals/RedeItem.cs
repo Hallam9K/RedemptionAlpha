@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
-using Redemption.Globals.Player;
 using Redemption.Items.Usable;
 using Redemption.Rarities;
 using System.Collections.Generic;

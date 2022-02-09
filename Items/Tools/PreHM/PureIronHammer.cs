@@ -3,13 +3,12 @@ using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Terraria;
-using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.PreHM
 {
-	public class PureIronHammer : ModItem
+    public class PureIronHammer : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

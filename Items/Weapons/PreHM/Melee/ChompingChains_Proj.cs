@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Projectiles.Magic;
 using Redemption.Globals;
 using Terraria.Audio;
 using ReLogic.Content;

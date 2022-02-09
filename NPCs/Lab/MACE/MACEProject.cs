@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 using Terraria.DataStructures;
-using Redemption.Globals.NPC;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Usable;

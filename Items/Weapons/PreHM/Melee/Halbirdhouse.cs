@@ -2,11 +2,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
 using Terraria.GameContent.Creative;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {

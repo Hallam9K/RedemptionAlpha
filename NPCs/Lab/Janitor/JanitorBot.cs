@@ -6,7 +6,6 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Redemption.Items.Usable;
 using System.Collections.Generic;
 using Terraria;

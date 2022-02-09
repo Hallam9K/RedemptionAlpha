@@ -7,7 +7,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
-using Redemption.Globals;
 using Terraria.Localization;
 using Redemption.BaseExtension;
 

@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
