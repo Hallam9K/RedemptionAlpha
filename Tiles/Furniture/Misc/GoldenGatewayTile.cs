@@ -77,7 +77,7 @@ namespace Redemption.Tiles.Furniture.Misc
 
 			Point p = new(i, j);
 			Tile tile = Main.tile[p.X, p.Y];
-			if (tile == null || !tile.IsActive)
+			if (tile == null || !tile.HasTile)
 				return;
 
 			Texture2D texture = GatewayTexture.Value;
@@ -89,7 +89,7 @@ namespace Redemption.Tiles.Furniture.Misc
 
 			Color color = Lighting.GetColor(p.X, p.Y);
 
-			bool direction = tile.frameY / FrameHeight != 0;
+			bool direction = tile.TileFrameY / FrameHeight != 0;
 			SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
 			const float TwoPi = (float)Math.PI * 2f;

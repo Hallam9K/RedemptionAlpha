@@ -104,7 +104,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y + 46; j < origin.Y + 50; j++)
                 {
-                    if (Framing.GetTileSafely(i, j).type == ModContent.TileType<ShinkiteBrickTile>() && WorldGen.InWorld(i, j))
+                    if (Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ShinkiteBrickTile>() && WorldGen.InWorld(i, j))
                         Wiring.ActuateForced(i, j);
                 }
             }
@@ -112,9 +112,9 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y + 87; j < origin.Y + 107; j++)
                 {
-                    if ((Framing.GetTileSafely(i, j).type == ModContent.TileType<ShinkiteBrickTile>() ||
-                        Framing.GetTileSafely(i, j).type == TileID.ObsidianBrick ||
-                        Framing.GetTileSafely(i, j).type == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
+                    if ((Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ShinkiteBrickTile>() ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.ObsidianBrick ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
                         Wiring.ActuateForced(i, j);
                 }
             }
@@ -122,9 +122,9 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y + 87; j < origin.Y + 107; j++)
                 {
-                    if ((Framing.GetTileSafely(i, j).type == ModContent.TileType<ShinkiteBrickTile>() ||
-                        Framing.GetTileSafely(i, j).type == TileID.ObsidianBrick ||
-                        Framing.GetTileSafely(i, j).type == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
+                    if ((Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ShinkiteBrickTile>() ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.ObsidianBrick ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
                         Wiring.ActuateForced(i, j);
                 }
             }
@@ -132,9 +132,9 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y + 87; j < origin.Y + 107; j++)
                 {
-                    if ((Framing.GetTileSafely(i, j).type == ModContent.TileType<ShinkiteBrickTile>() ||
-                        Framing.GetTileSafely(i, j).type == TileID.ObsidianBrick ||
-                        Framing.GetTileSafely(i, j).type == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
+                    if ((Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ShinkiteBrickTile>() ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.ObsidianBrick ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
                         Wiring.ActuateForced(i, j);
                 }
             }
@@ -142,9 +142,9 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y + 87; j < origin.Y + 107; j++)
                 {
-                    if ((Framing.GetTileSafely(i, j).type == ModContent.TileType<ShinkiteBrickTile>() ||
-                        Framing.GetTileSafely(i, j).type == TileID.ObsidianBrick ||
-                        Framing.GetTileSafely(i, j).type == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
+                    if ((Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ShinkiteBrickTile>() ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.ObsidianBrick ||
+                        Framing.GetTileSafely(i, j).TileType == TileID.HellstoneBrick) && WorldGen.InWorld(i, j))
                         Wiring.ActuateForced(i, j);
                 }
             }
@@ -225,7 +225,7 @@ namespace Redemption.WorldGeneration
                 {
                     for (int j = 0; j <= 30; j++)
                     {
-                        int type = Framing.GetTileSafely(placeX + i, placeY + j).type;
+                        int type = Framing.GetTileSafely(placeX + i, placeY + j).TileType;
                         if (type == TileID.ObsidianBrick || type == TileID.HellstoneBrick)
                         {
                             whitelist = true;
@@ -251,7 +251,7 @@ namespace Redemption.WorldGeneration
                 {
                     for (int j = 0; j <= 20; j++)
                     {
-                        int type = Framing.GetTileSafely(placeX + i, placeY + j).type;
+                        int type = Framing.GetTileSafely(placeX + i, placeY + j).TileType;
                         if (type == TileID.ObsidianBrick || type == TileID.HellstoneBrick)
                         {
                             whitelist = true;
@@ -277,7 +277,7 @@ namespace Redemption.WorldGeneration
                 {
                     for (int j = 0; j <= 29; j++)
                     {
-                        int type = Framing.GetTileSafely(placeX + i, placeY + j).type;
+                        int type = Framing.GetTileSafely(placeX + i, placeY + j).TileType;
                         if (type == TileID.ObsidianBrick || type == TileID.HellstoneBrick)
                         {
                             whitelist = true;
@@ -296,7 +296,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + HEIGHT; j++)
                 {
-                    switch (Framing.GetTileSafely(i, j).type)
+                    switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.GreenStucco:
                             Framing.GetTileSafely(i, j).ClearTile();
@@ -383,7 +383,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + 30; j++)
                 {
-                    switch (Framing.GetTileSafely(i, j).type)
+                    switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.RedStucco:
                             Framing.GetTileSafely(i, j).ClearTile();
@@ -446,7 +446,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + 31; j++)
                 {
-                    switch (Framing.GetTileSafely(i, j).type)
+                    switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.RedStucco:
                             Framing.GetTileSafely(i, j).ClearTile();
@@ -520,7 +520,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + 21; j++)
                 {
-                    switch (Framing.GetTileSafely(i, j).type)
+                    switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.RedStucco:
                             Framing.GetTileSafely(i, j).ClearTile();

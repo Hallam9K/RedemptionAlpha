@@ -1014,7 +1014,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 80; j++)
                             {
-                                if (Main.tile[placeX + i, placeY + j].IsActive)
+                                if (Main.tile[placeX + i, placeY + j].HasTile)
                                 {
                                     whitelist = true;
                                     break;

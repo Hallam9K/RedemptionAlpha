@@ -115,7 +115,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + HEIGHT; j++)
                 {
-                    switch (Framing.GetTileSafely(i, j).type)
+                    switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.RedStucco:
                             Framing.GetTileSafely(i, j).ClearTile();
@@ -138,13 +138,13 @@ namespace Redemption.WorldGeneration
                             WorldGen.SlopeTile(i, j, 2);
                             break;
                     }
-                    if (Framing.GetTileSafely(i, j).type == TileID.YellowStucco)
+                    if (Framing.GetTileSafely(i, j).TileType == TileID.YellowStucco)
                     {
                         Framing.GetTileSafely(i, j).ClearTile();
                         WorldGen.PlaceTile(i, j, TileID.Platforms, true, false, -1, 29);
                     }
 
-                    if ((Framing.GetTileSafely(i, j).wall == WallID.MarbleBlock || Framing.GetTileSafely(i, j).wall == WallID.MarbleUnsafe) && WorldGen.InWorld(i, j))
+                    if ((Framing.GetTileSafely(i, j).WallType == WallID.MarbleBlock || Framing.GetTileSafely(i, j).WallType == WallID.MarbleUnsafe) && WorldGen.InWorld(i, j))
                         Framing.GetTileSafely(i, j).WallColor = PaintID.BlackPaint;
                 }
             }
@@ -196,7 +196,7 @@ namespace Redemption.WorldGeneration
             {
                 for (int j = origin.Y; j < origin.Y + HEIGHT; j++)
                 {
-                    if (TileArray.Contains(Framing.GetTileSafely(i, j).type) && WorldGen.InWorld(i, j))
+                    if (TileArray.Contains(Framing.GetTileSafely(i, j).TileType) && WorldGen.InWorld(i, j))
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
                 }
             }
