@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
@@ -41,6 +42,14 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.buffType = ModContent.BuffType<LogStaffBuff>();
 			Item.shoot = ModContent.ProjectileType<LogStaff_Proj>();
 			Item.mana = 4;
+		}
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<LivingTwig>(), 18)
+				.AddIngredient(ItemID.Acorn, 4)
+				.AddTile(TileID.WorkBenches)
+				.Register();
 		}
 		public override bool CanUseItem(Player player)
 		{
