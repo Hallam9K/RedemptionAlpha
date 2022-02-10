@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 using Terraria.ID;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PostML.Shinkite
 {
@@ -29,7 +30,7 @@ namespace Redemption.Items.Armor.PostML.Shinkite
         }
         public override void UpdateEquip(Player player)
         {
-            ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = true;
+            player.RedemptionPlayerBuff().shinkiteHead = true;
         }
     }
 }

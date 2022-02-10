@@ -31,8 +31,8 @@ namespace Redemption.Items.Armor.PostML.Shinkite
                 Vector2 origin = new(texture.Width * 0.5f, texture.Height * 0.5f);
                 Vector2 drawPos = new Vector2((int)(Position.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2);
                 drawPos.X += drawPlayer.direction == 1 ? 1 : -1;
-                drawPos.Y -= 15;
-                DrawData drawData = new(texture, drawPos + Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height] - Main.screenPosition, new Rectangle?(), drawInfo.colorArmorHead, drawInfo.drawPlayer.headRotation, origin, 1, drawInfo.playerEffect, 0)
+                drawPos.Y -= 15 * drawPlayer.gravDir;
+                DrawData drawData = new(texture, drawPos + (Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height] * drawPlayer.gravDir) - Main.screenPosition, new Rectangle?(), drawInfo.colorArmorHead, drawInfo.drawPlayer.headRotation, origin, 1, drawInfo.playerEffect, 0)
                 {
                     shader = drawInfo.cHead
                 };

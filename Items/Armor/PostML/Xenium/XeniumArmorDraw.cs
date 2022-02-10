@@ -30,7 +30,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
                 Vector2 origin = new(texture.Width * 0.5f, texture.Height * 0.5f);
                 Vector2 drawPos = drawPlayer.position + new Vector2(drawPlayer.width * 0.5f, drawPlayer.height * 0.5f);
                 drawPos.X = drawPlayer.direction == 1 ? (int)drawPos.X + 3 : (int)drawPos.X - 3;
-                DrawData drawData = new(texture, drawPos + Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height] - Main.screenPosition, new Rectangle?(), drawInfo.colorArmorBody, drawInfo.drawPlayer.bodyRotation, origin, 1, drawInfo.playerEffect, 0)
+                DrawData drawData = new(texture, drawPos + (Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height] * drawPlayer.gravDir) - Main.screenPosition, new Rectangle?(), drawInfo.colorArmorBody, drawInfo.drawPlayer.bodyRotation, origin, 1, drawInfo.playerEffect, 0)
                 {
                     shader = drawInfo.cBody
                 };

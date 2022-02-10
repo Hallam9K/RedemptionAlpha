@@ -48,7 +48,6 @@ namespace Redemption.Items.Armor.PostML.Xenium
                 player.setBonus = "Press " + key + " to fire a virulent grenade from your shoulder launcher";
             }
             player.RedemptionPlayerBuff().xeniumBonus = 1;
-            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = true;
         }
 
         public override void AddRecipes()
