@@ -65,6 +65,7 @@ namespace Redemption.Globals.Player
         public bool dragonLeadBonus;
         public int xeniumBonus;
         public int hardlightBonus;
+        public bool shinkiteHead;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -120,6 +121,7 @@ namespace Redemption.Globals.Player
             trappedSoul = false;
             ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
             ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = false;
+            shinkiteHead = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -160,6 +162,13 @@ namespace Redemption.Globals.Player
             ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = false;
         }
 
+        public override void FrameEffects()
+        {
+            if (shinkiteHead)
+                ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = true;
+            if (xeniumBonus == 1)
+                ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = true;
+        }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)

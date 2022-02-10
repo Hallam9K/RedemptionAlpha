@@ -35,7 +35,6 @@ namespace Redemption.Globals.Player
             foundHall = false;
             medKit = false;
         }
-
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
             if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && item.DamageType == DamageClass.Melee)

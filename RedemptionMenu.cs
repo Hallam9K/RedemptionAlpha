@@ -14,7 +14,7 @@ namespace Redemption
         public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation, ref float logoScale, ref Color drawColor)
         {
             logoDrawCenter -= new Vector2(36, 0);
-            logoScale = 0.75f;
+            logoScale = 1f;
             return true;
         }
         public override void Update(bool isOnTitleScreen)

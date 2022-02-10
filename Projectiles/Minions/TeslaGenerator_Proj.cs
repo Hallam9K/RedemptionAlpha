@@ -28,7 +28,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetDefaults()
         {
             Projectile.width = 34;
-            Projectile.height = 44;
+            Projectile.height = 42;
             Projectile.tileCollide = true;
             Projectile.sentry = true;
             Projectile.timeLeft = Projectile.SentryLifeTime;
