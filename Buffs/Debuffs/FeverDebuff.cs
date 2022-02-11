@@ -7,8 +7,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fever");
-			Description.SetDefault("You feel extremely ill.");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

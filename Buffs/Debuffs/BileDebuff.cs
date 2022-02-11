@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Burning Acid");
-			Description.SetDefault("Reduced defence");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

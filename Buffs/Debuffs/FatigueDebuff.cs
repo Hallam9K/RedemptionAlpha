@@ -7,8 +7,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fatigue");
-			Description.SetDefault("You are overwhelmed with tiredness.");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

@@ -7,8 +7,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Headache");
-			Description.SetDefault("Sudden and pounding pain from the inside of your skull.");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

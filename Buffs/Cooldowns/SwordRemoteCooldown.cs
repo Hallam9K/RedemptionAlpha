@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Cooldowns
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sword Remote Cooldown");
-			Description.SetDefault("You cannot use the Sword Remote");
 			Main.buffNoTimeDisplay[Type] = false;
 			Main.debuff[Type] = true;
 			Main.buffNoSave[Type] = false;

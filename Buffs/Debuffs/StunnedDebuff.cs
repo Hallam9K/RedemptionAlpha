@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Stunned!");
-			Description.SetDefault("You are stunned!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

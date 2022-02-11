@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flesh Crystals");
-            Description.SetDefault("... The pain... it's... unbearable");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = false;
             Main.buffNoTimeDisplay[Type] = true;

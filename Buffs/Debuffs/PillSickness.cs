@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pill Sickness");
-			Description.SetDefault("You feel sick");
 			Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
