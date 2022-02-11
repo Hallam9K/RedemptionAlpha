@@ -11,6 +11,8 @@ using System.IO;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -114,7 +116,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
         }
-
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordRemote>()));
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);

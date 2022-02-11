@@ -17,7 +17,8 @@ namespace Redemption.NPCs.Friendly
         {
             DisplayName.SetDefault("Daerel");
             Main.npcFrameCount[NPC.type] = 4;
-
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.SavesAndLoads[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Hide = true
@@ -27,7 +28,6 @@ namespace Redemption.NPCs.Friendly
         }
         public override void SetDefaults()
         {
-            NPC.townNPC = true;
             NPC.friendly = true;
             NPC.width = 52;
             NPC.height = 34;
@@ -39,6 +39,8 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool UsesPartyHat() => false;
+        public override bool CheckActive() => false;
+        public override bool CanChat() => true;
 
         public int Level = -1;
         public override void FindFrame(int frameHeight)

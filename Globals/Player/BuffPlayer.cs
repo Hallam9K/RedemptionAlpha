@@ -119,8 +119,6 @@ namespace Redemption.Globals.Player
             xeniumBonus = 0;
             snipped = false;
             trappedSoul = false;
-            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
-            ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = false;
             shinkiteHead = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
@@ -158,16 +156,6 @@ namespace Redemption.Globals.Player
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
-            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
-            ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = false;
-        }
-
-        public override void FrameEffects()
-        {
-            if (shinkiteHead)
-                ModContent.GetInstance<ShinkiteArmorDraw>().shinkiteHead = true;
-            if (xeniumBonus == 1)
-                ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = true;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
