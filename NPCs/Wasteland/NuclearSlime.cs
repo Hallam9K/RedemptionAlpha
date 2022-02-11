@@ -49,8 +49,8 @@ namespace Redemption.NPCs.Wasteland
             NPC.damage = 60;
             NPC.defense = 0;
             NPC.lifeMax = 300;
-            NPC.HitSound = SoundID.NPCHit1;
-            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.HitSound = SoundID.NPCHit13;
+            NPC.DeathSound = SoundID.NPCDeath19;
             NPC.value = 400f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 1;

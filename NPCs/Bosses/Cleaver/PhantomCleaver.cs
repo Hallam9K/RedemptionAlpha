@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             return false;
         }
     }
-    public class PhantomCleaverF : ModProjectile
+    public class PhantomCleaver_F : ModProjectile
     {
         public override string Texture => "Redemption/NPCs/Bosses/Cleaver/PhantomCleaver";
         public override void SetStaticDefaults()

@@ -82,7 +82,7 @@ namespace Redemption.Effects.RenderTargets
                 EmberLayer.DrawLayer(spriteBatch);
             if (ShieldLayer?.Sprites.Count > 0)
                 ShieldLayer.DrawLayer(spriteBatch);
-            spriteBatch.Begin(SpriteSortMode.Deferred, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 }

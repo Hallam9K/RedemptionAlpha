@@ -29,8 +29,9 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Friendly T-Bot");
-            Main.npcFrameCount[NPC.type] = 26;
+            Main.npcFrameCount[NPC.type] = 21;
             NPCID.Sets.HatOffsetY[NPC.type] = -4;
+            NPCID.Sets.ExtraFramesCount[Type] = 5;
 
             NPC.Happiness.LoveBiome(PrimaryBiomeID.Forest);
             NPC.Happiness.LikeBiome(PrimaryBiomeID.Hallow);
@@ -65,7 +66,13 @@ namespace Redemption.NPCs.Friendly
             AnimationType = NPCID.Guide;
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeAlpha>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
-
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.frame.Y >= 14 * frameHeight && NPC.frame.Y <= 15 * frameHeight)
+            {
+                NPC.frame.Y = 2 * frameHeight;
+            }
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
