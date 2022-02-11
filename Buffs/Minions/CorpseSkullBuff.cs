@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Corpse-Walker Skull");
-			Description.SetDefault("The dried up skull will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

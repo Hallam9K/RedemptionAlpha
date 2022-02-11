@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hair Loss");
-			Description.SetDefault("Your hair is gone!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;

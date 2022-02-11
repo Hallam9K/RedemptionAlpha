@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Antibodies");
-            Description.SetDefault("Strong antibodies flood your blood and fight off any new infection that may come.");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

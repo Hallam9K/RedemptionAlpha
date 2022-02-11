@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infested");
-            Description.SetDefault("Larva is eating away at your flesh");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;

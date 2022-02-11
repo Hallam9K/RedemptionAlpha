@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Swarmed!");
-            Description.SetDefault("No! Not the spiders! Aaaaah!");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;

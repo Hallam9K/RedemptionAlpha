@@ -4,7 +4,123 @@ Mods: {
 		Currencies: {
 			AntiqueDorulCurrency: antique doruls
 		}
+		BuffName: {
+            # Cooldowns
+			ErhanCrossCooldown: "Holy Shield Cooldown"
+			HardlightCooldown: "SoS Cooldown"
+			SwordRemoteCooldown: "Sword Remote Cooldown"
+			XeniumCooldown: "Xenium Cooldown"
+			XeniumLanceCooldown: "Xenium Lance Cooldown"
+            
+            # Debuffs
+            AntibodiesDebuff: "Xenomite Antibodies"
+            BileDebuff: "Burning Acid"
+            BlackenedHeartDebuff: "Soulless"
+            DevilScentedDebuff: "Devil Scented"
+            DirtyWoundDebuff: "Dirty Wound"
+            EnsnaredDebuff: "Ensnared"
+            FatigueDebuff: "Fatigue"
+            FeverDebuff: "Fever"
+            FleshCrystalsDebuff: "Flesh Crystals"
+            GlowingPustules: "Glowing Pustules"
+            GreenRashesDebuff: "Green Rashes"
+            HairLossDebuff: "Hair Loss"
+            HazardLaserDebuff: "Incinerated!"
+            HeadacheDebuff: "Headache"
+            HeavyRadiationDebuff: "Heavy Radiation"
+            HemorrhageDebuff: "Hemhorraging"
+            InfestedDebuff: "Infested"
+            NauseaDebuff: "Nausea"
+            NecrosisDebuff: "Necrosis"
+            PillSickness: "Pill Sickness"
+            RadiationDebuff: "Irradiated"
+            RadioactiveFalloutDebuff: "Radioactive Fallout"
+            ShockDebuff: "Shock"
+            SkinBurnDebuff: "Skin Burn"
+            SnippedDebuff: "Snipped"
+            SpiderSwarmedDebuff: "Swarmed!"
+            StaticStunDebuff: "Static Shock!"
+            Stunned2Debuff: "Snared!"
+            StunnedDebuff: "Stunned!"
+            
+            # Minions
+            CorpseSkullBuff: "Corpse-Walker Skull"
+            CystlingBuff: "Cystling"
+            ForretBuff: "Forret"
+            LogStaffBuff: "LOG"
+            MagmaCubeBuff: "Magma Cube"
+            TeslaGeneratorBuff: "Tesla Field Generator"
+            XeniumTurretBuff: "Xenium Autoturret"
+            
+            # Pets
+            BouquetOfThornsBuff: "Bouquet of Thorns"
+            CuddlyTeratomaBuff: "Cuddly Teratoma"
+            ErhanPetBuff: "Angel & Devil"
+            HalPetBuff: "Ham Sandwich"
+            KS3PetBuff: "Slayer Projector"
+            OcciePetBuff: "Occie"
+            PetChickenBuff: "Chicken Pet"
+            XenomiteElementalPetBuff: "Xenomite Elemental"
+		}
 		
+		BuffDescription: {
+            # Cooldowns
+			ErhanCrossCooldown: "The holy shield has been broken"
+			HardlightCooldown: "Hey, the ship can't help you all the time."
+			SwordRemoteCooldown: "You cannot use the Sword Remote"
+			XeniumCooldown: "Your shoulder launcher is reloading"
+			XeniumLanceCooldown: "The lance's battery is recharging"
+            
+            # Debuffs
+            AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."
+            BileDebuff: "Reduced defence"
+            BlackenedHeartDebuff: "..."
+            DevilScentedDebuff: "You smell delicious"
+            DirtyWoundDebuff: "Better wash it"
+            EnsnaredDebuff: "Tangled in thorns"
+            FatigueDebuff: "You are overwhelmed with tiredness."
+            FeverDebuff: "You feel extremely ill."
+            FleshCrystalsDebuff: "... The pain... it's... unbearable"
+            GlowingPustules: "... I have to carry on my work."
+            GreenRashesDebuff: "... Really itchy"
+            HairLossDebuff: "Your hair is gone!"
+            HazardLaserDebuff: "You are being lasered!"
+            HeadacheDebuff: "Sudden and pounding pain from the inside of your skull."
+            HeavyRadiationDebuff: "Stats greatly decreased due to radioactivity"
+            HemorrhageDebuff: "The crystals... they're sharp... it hurts to move..."
+            InfestedDebuff: "Larva is eating away at your flesh"
+            NauseaDebuff: "You feel sick"
+            NecrosisDebuff: "My extremities... numb... black and dead..."
+            PillSickness: "You feel sick"
+            RadiationDebuff: "You are dying of radiation!"
+            RadioactiveFalloutDebuff: "Stats greatly decreased due to radioactivity"
+            ShockDebuff: "What have I become..?"
+            SkinBurnDebuff: "Your skin is burning!"
+            SnippedDebuff: "Halved wing time"
+            SpiderSwarmedDebuff: "No! Not the spiders! Aaaaah!"
+            StaticStunDebuff: "You are stunned by electricity!"
+            Stunned2Debuff: "You are stunned!"
+            StunnedDebuff: "You are stunned!"
+            
+            # Minions
+            CorpseSkullBuff: "The dried up skull will fight for you"
+            CystlingBuff: "A cystling will infect others for you"
+            ForretBuff: "The horned ferret will fight for you"
+            LogStaffBuff: "A small log, perhaps a tiny squirrel is hiding inside it"
+            MagmaCubeBuff: "The molten jelly cube will fight for you"
+            TeslaGeneratorBuff: "A small generator is creating a tesla field"
+            XeniumTurretBuff: "Pewpewpewpewpewpew"
+            
+            # Pets
+            BouquetOfThornsBuff: "A gift for the newly divorced"
+            CuddlyTeratomaBuff: "Don't stand still for too long"
+            ErhanPetBuff: "They're bickering about something non-stop"
+            HalPetBuff: '''"Fear me"'''
+            KS3PetBuff: "He's bored and needs some entertainment"
+            OcciePetBuff: "Octavia's kitty cat!"
+            PetChickenBuff: "Cluck cluck"
+            XenomiteElementalPetBuff: "Cute."
+		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland
 			WastelandSnowBiome: Snow Wasteland

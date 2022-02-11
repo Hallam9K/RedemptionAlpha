@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Magma Cube");
-			Description.SetDefault("The molten jelly cube will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

@@ -9,9 +9,6 @@ namespace Redemption.Buffs.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Occie");
-			Description.SetDefault("Octavia's kitty cat!");
-
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 		}

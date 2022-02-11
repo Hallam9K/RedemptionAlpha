@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Xenomite Elemental Pet");
-			Description.SetDefault("Cute.");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 		}

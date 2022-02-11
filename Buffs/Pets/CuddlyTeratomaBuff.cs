@@ -9,9 +9,6 @@ namespace Redemption.Buffs.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cuddly Teratoma");
-			Description.SetDefault("Don't stand still for too long");
-
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 		}

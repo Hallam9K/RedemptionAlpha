@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Irradiated");
-			Description.SetDefault("You are dying of radiation!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
