@@ -605,7 +605,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
