@@ -44,7 +44,7 @@ MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - Greedy skeletons dont run away
 - When attacked, skeletons finally get alerted, but have drifty movement afterwards
 - Cursed samurai mostly work, but start erratically dashing around everywhere
-- Cursed samurais dont spawn with wrath slayer (tested on a shit ton of enemies, almost statistically impossible for it not to spawn)
+- Cursed samurais dont spawn with wrath slayer (tested on a ton of enemies, almost statistically impossible for it not to spawn)
 - Gigapora suprisingly fine, but makes core sounds every once in a while
 - Epidotran skeletons are invisible 
 - Portals dont spawn on portal tiles
