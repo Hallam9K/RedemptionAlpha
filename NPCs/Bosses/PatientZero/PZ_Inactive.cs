@@ -83,16 +83,10 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Vector2 drawCenterC = new(NPC.Center.X + 5, NPC.Center.Y + 7);
             spriteBatch.Draw(SlimeAni, drawCenterC - screenPos, new Rectangle?(new Rectangle(0, 0, SlimeAni.Width, SlimeAni.Height)), drawColor, NPC.rotation, new Vector2(SlimeAni.Width / 2f, SlimeAni.Height / 2f), NPC.scale, SpriteEffects.None, 0f);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
             Vector2 drawCenterB = new(NPC.Center.X - 2, NPC.Center.Y + 14);
             int widthB = BodyAni.Height / 8;
             int yB = widthB * BodyFrame;
             spriteBatch.Draw(BodyAni, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Width, widthB)), drawColor, NPC.rotation, new Vector2(BodyAni.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Vector2 drawCenterD = new(NPC.Center.X + 1, NPC.Center.Y + 123);
             int widthD = KariAni.Height / 4;
