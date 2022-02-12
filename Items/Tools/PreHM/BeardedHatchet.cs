@@ -3,8 +3,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Microsoft.Xna.Framework;
-using Redemption.Globals.NPC;
 using Terraria.GameContent.Creative;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.PreHM
 {
@@ -37,17 +37,17 @@ namespace Redemption.Items.Tools.PreHM
 
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
-            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))
             {
                 if (Main.rand.NextBool(20))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
-                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
+                    target.Redemption().decapitated = true;
                     damage = damage < target.life ? target.life : damage;
                     crit = true;
                 }
             }
-            if (NPCTags.Skeleton.Has(target.type))
+            if (NPCLists.Skeleton.Contains(target.type))
             {
                 damage = (int)(damage * 1.45f);
             }

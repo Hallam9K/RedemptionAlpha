@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -23,8 +23,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.DamageType = DamageClass.Ranged;
             Item.width = 64;
             Item.height = 30;
-            Item.useTime = 68;
-            Item.useAnimation = 68;
+            Item.useTime = 48;
+            Item.useAnimation = 48;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 0.5f;
@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 12;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
         public override Vector2? HoldoutOffset()

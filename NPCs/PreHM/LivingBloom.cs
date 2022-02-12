@@ -14,6 +14,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -85,7 +86,7 @@ namespace Redemption.NPCs.PreHM
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
@@ -115,7 +116,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                     }
 
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         globalNPC.attacker = npcTarget;
                         moveTo = NPC.FindGround(15);
@@ -126,7 +127,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Wander:
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         globalNPC.attacker = npcTarget;
                         moveTo = NPC.FindGround(15);
@@ -189,7 +190,7 @@ namespace Redemption.NPCs.PreHM
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
-                            if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI || target.GetGlobalNPC<RedeNPC>().invisible)
+                            if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI || target.Redemption().invisible)
                                 continue;
 
                             if (target.lifeMax < 5 || target.damage == 0 || NPC.DistanceSQ(target.Center) > 400 * 400 || target.type == NPC.type)
@@ -231,12 +232,12 @@ namespace Redemption.NPCs.PreHM
             {
                 return false;
             }
-            if (!tile.IsActive && tile.LiquidAmount == 0 && Main.tile[X, Y + 1] != null && WorldGen.SolidTile(X, Y + 1))
+            if (!tile.HasTile && tile.LiquidAmount == 0 && Main.tile[X, Y + 1] != null && WorldGen.SolidTile(X, Y + 1))
             {
-                tile.frameY = 0;
+                tile.TileFrameY = 0;
                 tile.Slope = 0;
                 tile.IsHalfBlock = false;
-                if (Main.tile[X, Y + 1].type == TileID.Grass || Main.tile[X, Y + 1].type == TileID.GolfGrass)
+                if (Main.tile[X, Y + 1].TileType == TileID.Grass || Main.tile[X, Y + 1].TileType == TileID.GolfGrass)
                 {
                     int num = Main.rand.NextFromList(6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 27, 30, 33, 36, 39, 42);
                     switch (num)
@@ -252,38 +253,38 @@ namespace Redemption.NPCs.PreHM
                             num += Main.rand.Next(3);
                             break;
                     }
-                    tile.IsActive = true;
-                    tile.type = TileID.Plants;
-                    tile.frameX = (short)(num * 18);
-                    tile.Color = Main.tile[X, Y + 1].Color;
+                    tile.HasTile = true;
+                    tile.TileType = TileID.Plants;
+                    tile.TileFrameX = (short)(num * 18);
+                    tile.TileColor = Main.tile[X, Y + 1].TileColor;
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         NetMessage.SendTileSquare(-1, X, Y);
                     }
                     return true;
                 }
-                if (Main.tile[X, Y + 1].type == TileID.HallowedGrass || Main.tile[X, Y + 1].type == TileID.GolfGrassHallowed)
+                if (Main.tile[X, Y + 1].TileType == TileID.HallowedGrass || Main.tile[X, Y + 1].TileType == TileID.GolfGrassHallowed)
                 {
                     if (Main.rand.Next(2) == 0)
                     {
-                        tile.IsActive = true;
-                        tile.type = TileID.HallowedPlants;
-                        tile.frameX = (short)(18 * Main.rand.Next(4, 7));
-                        tile.Color = Main.tile[X, Y + 1].Color;
-                        while (tile.frameX == 90)
+                        tile.HasTile = true;
+                        tile.TileType = TileID.HallowedPlants;
+                        tile.TileFrameX = (short)(18 * Main.rand.Next(4, 7));
+                        tile.TileColor = Main.tile[X, Y + 1].TileColor;
+                        while (tile.TileFrameX == 90)
                         {
-                            tile.frameX = (short)(18 * Main.rand.Next(4, 7));
+                            tile.TileFrameX = (short)(18 * Main.rand.Next(4, 7));
                         }
                     }
                     else
                     {
-                        tile.IsActive = true;
-                        tile.type = TileID.HallowedPlants2;
-                        tile.frameX = (short)(18 * Main.rand.Next(2, 8));
-                        tile.Color = Main.tile[X, Y + 1].Color;
-                        while (tile.frameX == 90)
+                        tile.HasTile = true;
+                        tile.TileType = TileID.HallowedPlants2;
+                        tile.TileFrameX = (short)(18 * Main.rand.Next(2, 8));
+                        tile.TileColor = Main.tile[X, Y + 1].TileColor;
+                        while (tile.TileFrameX == 90)
                         {
-                            tile.frameX = (short)(18 * Main.rand.Next(2, 8));
+                            tile.TileFrameX = (short)(18 * Main.rand.Next(2, 8));
                         }
                     }
                     if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -292,12 +293,12 @@ namespace Redemption.NPCs.PreHM
                     }
                     return true;
                 }
-                if (Main.tile[X, Y + 1].type == 60)
+                if (Main.tile[X, Y + 1].TileType == 60)
                 {
-                    tile.IsActive = true;
-                    tile.type = 74;
-                    tile.frameX = (short)(18 * Main.rand.Next(9, 17));
-                    tile.Color = Main.tile[X, Y + 1].Color;
+                    tile.HasTile = true;
+                    tile.TileType = 74;
+                    tile.TileFrameX = (short)(18 * Main.rand.Next(9, 17));
+                    tile.TileColor = Main.tile[X, Y + 1].TileColor;
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         NetMessage.SendTileSquare(-1, X, Y);
@@ -312,7 +313,7 @@ namespace Redemption.NPCs.PreHM
         public void RegenCheck()
         {
             int regenCooldown = NPC.wet && !NPC.lavaWet ? 30 : 40;
-            if ((NPC.wet && !NPC.lavaWet) || (Main.raining && NPC.position.Y < Main.worldSurface && Framing.GetTileSafely(NPC.Center).wall == WallID.None))
+            if ((NPC.wet && !NPC.lavaWet) || (Main.raining && NPC.position.Y < Main.worldSurface && Framing.GetTileSafely(NPC.Center).WallType == WallID.None))
             {
                 regenTimer++;
                 if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)
@@ -380,7 +381,7 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? (Main.raining ? 0.4f : 0.2f) : 0f;
+            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Grass ? (Main.raining ? 0.4f : 0.2f) : 0f;
 
             return baseChance * multiplier;
         }

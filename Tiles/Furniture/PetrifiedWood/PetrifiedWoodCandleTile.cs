@@ -28,10 +28,10 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         }
         public override void HitWire(int i, int j)
         {
-            if (Main.tile[i, j].frameX >= 18)
-                Main.tile[i, j].frameX -= 18;
+            if (Main.tile[i, j].TileFrameX >= 18)
+                Main.tile[i, j].TileFrameX -= 18;
             else
-                Main.tile[i, j].frameX += 18;
+                Main.tile[i, j].TileFrameX += 18;
         }
         public override bool RightClick(int i, int j)
         {
@@ -50,7 +50,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.frameX < 18)
+            if (tile.TileFrameX < 18)
             {
                 r = 0.7f;
                 g = 0.7f;

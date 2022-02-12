@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
-using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

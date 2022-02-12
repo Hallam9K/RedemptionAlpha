@@ -1,6 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Misc
 {
@@ -29,7 +29,7 @@ namespace Redemption.Projectiles.Misc
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (Projectile == target || !target.active || target.damage <= 0 || target.hostile || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+                if (Projectile == target || !target.active || target.damage <= 0 || target.hostile || target.Redemption().TechnicallyMelee)
                     continue;
 
                 target.Kill();

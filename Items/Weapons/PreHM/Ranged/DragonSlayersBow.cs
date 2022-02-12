@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -13,6 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             DisplayName.SetDefault("Dragon Slayer's Greatbow");
             Tooltip.SetDefault("Replaces Wooden Arrows with Hellfire Arrows");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -60,7 +62,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
-            if (NPCTags.Dragonlike.Has(target.type))
+            if (NPCLists.Dragonlike.Contains(target.type))
                 damage *= 10;
         }
     }

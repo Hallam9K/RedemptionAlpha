@@ -1,11 +1,10 @@
-using System;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
-using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -25,7 +24,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
         public override void AI()

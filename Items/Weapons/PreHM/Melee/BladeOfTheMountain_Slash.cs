@@ -6,8 +6,8 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     continue;
 
                                 if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) ||
-                                    (!ProjectileTags.Ice.Has(target.type) && (target.GetGlobalProjectile<RedeProjectile>().Unparryable || ProjectileTags.Unparryable.Has(target.type))))
+                                    (!ProjectileTags.Ice.Has(target.type) && (target.Redemption().Unparryable || ProjectileTags.Unparryable.Has(target.type))))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -118,7 +118,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
-            if (target.DistanceSQ(player.Center) > 100 * 100 && target.knockBackResist > 0 && !target.GetGlobalNPC<BuffNPC>().iceFrozen)
+            if (target.DistanceSQ(player.Center) > 100 * 100 && target.knockBackResist > 0 && !target.RedemptionNPCBuff().iceFrozen)
             {
                 SoundEngine.PlaySound(SoundID.Item30, target.position);
                 target.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(target.lifeMax, 60, 1780)));

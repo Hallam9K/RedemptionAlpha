@@ -12,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab
 {
@@ -42,7 +43,11 @@ namespace Redemption.NPCs.Lab
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned
+                    BuffID.Poisoned,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 
@@ -76,7 +81,7 @@ namespace Redemption.NPCs.Lab
                 NPC.DiscourageDespawn(60);
 
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
@@ -141,7 +146,7 @@ namespace Redemption.NPCs.Lab
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 12);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 8f * (NPC.GetGlobalNPC<BuffNPC>().rallied ? 1.2f : 1f), 18, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 8f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1f), 18, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
             }
@@ -209,7 +214,7 @@ namespace Redemption.NPCs.Lab
         public void SightCheck()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = GetNearestNPC();
             if (NPC.Sight(player, 600, true, true))
             {

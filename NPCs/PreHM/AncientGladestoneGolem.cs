@@ -19,6 +19,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -52,9 +53,9 @@ namespace Redemption.NPCs.PreHM
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>(),
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
@@ -82,7 +83,7 @@ namespace Redemption.NPCs.PreHM
             NPC.lavaImmune = true;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<AncientGladestoneGolemBanner>();
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 4;
+            NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -107,12 +108,12 @@ namespace Redemption.NPCs.PreHM
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.DD2_WitherBeastCrystalImpact);
+                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.DD2_WitherBeastCrystalImpact);
                 return false;
             }
-            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Stone, SoundID.Item37, 20, 2, 10);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, SoundID.Item37, 20, 2, 10);
 
             damage *= 2;
             return true;
@@ -124,7 +125,7 @@ namespace Redemption.NPCs.PreHM
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
@@ -239,7 +240,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+                RedeNPC globalNPC = NPC.Redemption();
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
                 switch (AIState)
                 {
@@ -261,7 +262,7 @@ namespace Redemption.NPCs.PreHM
                             {
                                 Player player = Main.player[NPC.target];
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
+                                player.RedemptionScreen().ScreenShakeIntensity = 6;
                             }
                             if (NPC.frame.Y > 9 * frameHeight)
                                 AIState = ActionState.Threatened;
@@ -287,7 +288,7 @@ namespace Redemption.NPCs.PreHM
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
                                 Player player = Main.player[NPC.target];
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 6;
+                                player.RedemptionScreen().ScreenShakeIntensity = 6;
                             }
                             if (NPC.frame.Y > 9 * frameHeight)
                                 AIState = ActionState.Threatened;
@@ -341,7 +342,7 @@ namespace Redemption.NPCs.PreHM
             int[] AncientTileArray = { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>() };
 
             float baseChance = SpawnCondition.Cavern.Chance;
-            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type) ? .03f : 0.006f;
+            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType) ? .03f : 0.006f;
 
             return baseChance * multiplier;
         }

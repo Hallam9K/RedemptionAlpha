@@ -90,11 +90,11 @@ namespace Redemption.WorldGeneration
                     {
                         int i2 = WorldGen.genRand.Next(200, Main.maxTilesX - 200);
                         int j2 = WorldGen.genRand.Next((int)WorldGen.rockLayerHigh, (int)(Main.maxTilesY * .7f));
-                        int tileUp = Framing.GetTileSafely(i2, j2 - 1).type;
-                        int tileDown = Framing.GetTileSafely(i2, j2 + 1).type;
-                        int tileLeft = Framing.GetTileSafely(i2 - 1, j2).type;
-                        int tileRight = Framing.GetTileSafely(i2 + 1, j2).type;
-                        if (!Framing.GetTileSafely(i2, j2).IsActive &&
+                        int tileUp = Framing.GetTileSafely(i2, j2 - 1).TileType;
+                        int tileDown = Framing.GetTileSafely(i2, j2 + 1).TileType;
+                        int tileLeft = Framing.GetTileSafely(i2 - 1, j2).TileType;
+                        int tileRight = Framing.GetTileSafely(i2 + 1, j2).TileType;
+                        if (!Framing.GetTileSafely(i2, j2).HasTile &&
                             (tileUp == TileID.SnowBlock || tileDown == TileID.SnowBlock || tileLeft == TileID.SnowBlock || tileRight == TileID.SnowBlock || TileID.Sets.Conversion.Ice[tileUp] || TileID.Sets.Conversion.Ice[tileDown] || TileID.Sets.Conversion.Ice[tileLeft] || TileID.Sets.Conversion.Ice[tileRight]))
                         {
                             WorldGen.PlaceObject(i2, j2, ModContent.TileType<CryoCrystalTile>(), true);
@@ -107,8 +107,8 @@ namespace Redemption.WorldGeneration
                         for (int j = 0; j < Main.maxTilesY; j++)
                         {
                             Tile tile = Main.tile[i, j];
-                            if (tile.type == ModContent.TileType<DragonLeadOre2Tile>())
-                                tile.type = TileID.Stone;
+                            if (tile.TileType == ModContent.TileType<DragonLeadOre2Tile>())
+                                tile.TileType = TileID.Stone;
                         }
                     }
                 }
@@ -125,8 +125,8 @@ namespace Redemption.WorldGeneration
                         for (int j = 0; j < Main.maxTilesY; j++)
                         {
                             Tile tile = Main.tile[i, j];
-                            if (tile.type == ModContent.TileType<DragonLeadOre2Tile>())
-                                tile.type = (ushort)ModContent.TileType<DragonLeadOreTile>();
+                            if (tile.TileType == ModContent.TileType<DragonLeadOre2Tile>())
+                                tile.TileType = (ushort)ModContent.TileType<DragonLeadOreTile>();
                         }
                     }
                 }
@@ -196,14 +196,14 @@ namespace Redemption.WorldGeneration
                 if (placeY > Main.worldSurface)
                     continue;
                 Tile tile = Main.tile[placeX, placeY];
-                if (tile.type != TileID.Grass)
+                if (tile.TileType != TileID.Grass)
                     continue;
                 if (!CheckFlat(placeX, placeY, 2, 0))
                     continue;
 
                 WorldGen.PlaceObject(placeX, placeY - 1, ModContent.TileType<HeartOfThornsTile>(), true);
                 NetMessage.SendObjectPlacment(-1, placeX, placeY - 1, (ushort)ModContent.TileType<HeartOfThornsTile>(), 0, 0, -1, -1);
-                if (Main.tile[placeX, placeY - 1].type != ModContent.TileType<HeartOfThornsTile>())
+                if (Main.tile[placeX, placeY - 1].TileType != ModContent.TileType<HeartOfThornsTile>())
                     continue;
                 placeX2 = placeX;
                 attempts = 0;
@@ -221,7 +221,7 @@ namespace Redemption.WorldGeneration
                 if (placeY > Main.worldSurface)
                     continue;
                 Tile tile = Main.tile[placeX3, placeY];
-                if (tile.type != TileID.Grass)
+                if (tile.TileType != TileID.Grass)
                     continue;
                 switch (WorldGen.genRand.Next(2))
                 {
@@ -261,7 +261,7 @@ namespace Redemption.WorldGeneration
                         int y = Main.maxTilesY;
                         int tilesX = WorldGen.genRand.Next(0, x);
                         int tilesY = WorldGen.genRand.Next((int)(y * .05f), (int)(y * .3));
-                        if (Main.tile[tilesX, tilesY].type == TileID.Dirt)
+                        if (Main.tile[tilesX, tilesY].TileType == TileID.Dirt)
                         {
                             WorldGen.OreRunner(tilesX, tilesY, WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 6), (ushort)ModContent.TileType<PlantMatterTile>());
                         }
@@ -272,7 +272,7 @@ namespace Redemption.WorldGeneration
                         int y = Main.maxTilesY;
                         int tilesX = WorldGen.genRand.Next(0, x);
                         int tilesY = WorldGen.genRand.Next((int)(y * .05f), (int)(y * .5));
-                        if (Main.tile[tilesX, tilesY].type == TileID.Mud)
+                        if (Main.tile[tilesX, tilesY].TileType == TileID.Mud)
                         {
                             WorldGen.OreRunner(tilesX, tilesY, WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 8), (ushort)ModContent.TileType<PlantMatterTile>());
                         }
@@ -320,12 +320,12 @@ namespace Redemption.WorldGeneration
                             {
                                 for (int y = 0; y < tex.Height; y++)
                                 {
-                                    if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(Main.tile[tilesX + x, tilesY + y].type))
+                                    if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(Main.tile[tilesX + x, tilesY + y].TileType))
                                     {
                                         whitelist = true;
                                         break;
                                     }
-                                    int type = Main.tile[tilesX + x, tilesY + y].type;
+                                    int type = Main.tile[tilesX + x, tilesY + y].TileType;
                                     if (type == TileID.Stone || type == TileID.Dirt)
                                         stoneScore++;
                                     else
@@ -380,7 +380,7 @@ namespace Redemption.WorldGeneration
 
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
-                        int placeY = (int)Main.worldSurface - 180;
+                        int placeY = (int)Main.worldSurface - 160;
 
                         if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
                             continue;
@@ -393,9 +393,9 @@ namespace Redemption.WorldGeneration
                         if (placeY > Main.worldSurface)
                             continue;
                         Tile tile = Main.tile[placeX, placeY];
-                        if (tile.type != TileID.Grass)
+                        if (tile.TileType != TileID.Grass)
                             continue;
-                        if (!CheckFlat(placeX, placeY, 14, 2))
+                        if (!CheckFlat(placeX, placeY, 10, 2))
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCave", AssetRequestMode.ImmediateLoad).Value;
@@ -409,7 +409,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 82; j++)
                             {
-                                int type = Main.tile[origin.X + i, origin.Y + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].TileType;
                                 if (TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand ||
                                 type == ModContent.TileType<HeartOfThornsTile>())
                                 {
@@ -455,7 +455,7 @@ namespace Redemption.WorldGeneration
                     {
                         for (int j = originPoint.Y + 66; j < originPoint.Y + 74; j++)
                         {
-                            if (!Framing.GetTileSafely(i, j).IsActive)
+                            if (!Framing.GetTileSafely(i, j).HasTile)
                                 WorldGen.PlaceLiquid(i, j, LiquidID.Water, 255);
                         }
                     }
@@ -465,8 +465,8 @@ namespace Redemption.WorldGeneration
                         for (int j = originPoint.Y; j < originPoint.Y + 82; j++)
                         {
                             WorldGen.GrowTree(i, j - 1);
-                            if (Main.tile[i, j].type == TileID.Dirt && !Framing.GetTileSafely(i, j - 1).IsActive &&
-                            Framing.GetTileSafely(i, j).IsActive)
+                            if (Main.tile[i, j].TileType == TileID.Dirt && !Framing.GetTileSafely(i, j - 1).HasTile &&
+                            Framing.GetTileSafely(i, j).HasTile)
                             {
                                 if (WorldGen.genRand.NextBool(3))
                                 {
@@ -526,7 +526,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Tile tile = Main.tile[placeX, placeY];
-                        if (tile.type != TileID.Stone)
+                        if (tile.TileType != TileID.Stone)
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortal", AssetRequestMode.ImmediateLoad).Value;
@@ -541,7 +541,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 47; j++)
                             {
-                                int type = Main.tile[origin.X + i, origin.Y + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].TileType;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
@@ -589,7 +589,7 @@ namespace Redemption.WorldGeneration
                     {
                         for (int j = originPoint.Y; j < originPoint.Y + 47; j++)
                         {
-                            switch (Main.tile[i, j].type)
+                            switch (Main.tile[i, j].TileType)
                             {
                                 case TileID.AmberGemspark:
                                     Main.tile[i, j].ClearTile();
@@ -650,7 +650,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Tile tile = Main.tile[placeX, placeY];
-                        if (tile.type != TileID.Stone)
+                        if (tile.TileType != TileID.Stone)
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AncientHutTiles", AssetRequestMode.ImmediateLoad).Value;
@@ -665,7 +665,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 21; j++)
                             {
-                                int type = Main.tile[origin.X + i, origin.Y + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].TileType;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
@@ -709,7 +709,7 @@ namespace Redemption.WorldGeneration
                     {
                         for (int j = origin.Y; j < origin.Y + 47; j++)
                         {
-                            switch (Main.tile[i, j].type)
+                            switch (Main.tile[i, j].TileType)
                             {
                                 case TileID.AmberGemspark:
                                     Main.tile[i, j].ClearTile();
@@ -775,7 +775,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Tile tile = Main.tile[placeX2, placeY2];
-                        if (tile.type != TileID.Stone)
+                        if (tile.TileType != TileID.Stone)
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesTiles", AssetRequestMode.ImmediateLoad).Value;
@@ -790,7 +790,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 47; j++)
                             {
-                                int type = Main.tile[origin2.X + i, origin2.Y + j].type;
+                                int type = Main.tile[origin2.X + i, origin2.Y + j].TileType;
                                 if (TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
@@ -840,7 +840,7 @@ namespace Redemption.WorldGeneration
                     {
                         for (int j = HallPoint.Y; j < HallPoint.Y + 47; j++)
                         {
-                            switch (Main.tile[i, j].type)
+                            switch (Main.tile[i, j].TileType)
                             {
                                 case TileID.AmberGemspark:
                                     Main.tile[i, j].ClearTile();
@@ -905,7 +905,7 @@ namespace Redemption.WorldGeneration
                             continue;
 
                         Tile tile = Main.tile[placeX, placeY];
-                        if (tile.type != TileID.Stone)
+                        if (tile.TileType != TileID.Stone)
                             continue;
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/TiedLairTiles", AssetRequestMode.ImmediateLoad).Value;
@@ -919,7 +919,7 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= 16; j++)
                             {
-                                int type = Main.tile[origin.X + i, origin.Y + j].type;
+                                int type = Main.tile[origin.X + i, origin.Y + j].TileType;
                                 if (type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
@@ -995,27 +995,21 @@ namespace Redemption.WorldGeneration
                     biome.Place(origin, WorldGen.structures);
                 }));
             }
+
         }
         public static void AncientWoodChest(int x, int y, int ID = 0)
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<AncientWoodChestTile>(), false);
 
-            int[] ChestLoot = new int[]
-            {
-                ModContent.ItemType<PouchBelt>(), ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>()
-            };
-            int[] ChestLoot2 = new int[]
-            {
-                ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>()
-            };
-            int[] ChestLoot3 = new int[]
-            {
-                ItemID.MiningPotion, ItemID.BattlePotion, ItemID.BuilderPotion, ItemID.InvisibilityPotion
-            };
-            int[] ChestLoot4 = new int[]
-            {
-                ItemID.SpelunkerPotion, ItemID.StrangeBrew, ItemID.RecallPotion, ModContent.ItemType<VendettaPotion>(),
-            };
+            int[] ChestLoot = new int[] {
+                ModContent.ItemType<PouchBelt>(), ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>() };
+            int[] ChestLoot2 = new int[] {
+                ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
+            int[] ChestLoot3 = new int[] {
+                ItemID.MiningPotion, ItemID.BattlePotion, ItemID.BuilderPotion, ItemID.InvisibilityPotion };
+            int[] ChestLoot4 = new int[] {
+                ItemID.SpelunkerPotion, ItemID.StrangeBrew, ItemID.RecallPotion, ModContent.ItemType<VendettaPotion>(), };
+
             if (PlacementSuccess >= 0)
             {
                 int slot = 0;

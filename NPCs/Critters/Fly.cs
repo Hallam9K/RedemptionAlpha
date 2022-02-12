@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
@@ -13,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Critters
 {
@@ -129,7 +128,7 @@ namespace Redemption.NPCs.Critters
                     }
                     else
                     {
-                        if (player.GetModPlayer<BuffPlayer>().devilScented)
+                        if (player.RedemptionPlayerBuff().devilScented)
                             Aggressive = 1;
                         float nearestNPCDist = -1;
                         for (int i = 0; i < Main.maxNPCs; i++)
@@ -138,8 +137,8 @@ namespace Redemption.NPCs.Critters
                             if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                                 continue;
 
-                            if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCTags.Undead.Has(possibleTarget.type) &&
-                                !NPCTags.SkeletonHumanoid.Has(possibleTarget.type) &&
+                            if (!possibleTarget.RedemptionNPCBuff().devilScented && !NPCLists.Undead.Contains(possibleTarget.type) &&
+                                !NPCLists.SkeletonHumanoid.Contains(possibleTarget.type) &&
                                 possibleTarget.type != ModContent.NPCType<DevilsTongue>())
                                 continue;
 
@@ -184,7 +183,7 @@ namespace Redemption.NPCs.Critters
                         AIState = ActionState.Flying;
                     }
 
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.lifeMax > 5 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.lifeMax > 5 && !npcTarget.Redemption().invisible)
                     {
                         NPC.velocity.Y -= 10;
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
@@ -214,8 +213,8 @@ namespace Redemption.NPCs.Critters
                 if (!possibleTarget.active || possibleTarget.whoAmI == NPC.whoAmI)
                     continue;
 
-                if (!possibleTarget.GetGlobalNPC<BuffNPC>().devilScented && !NPCTags.Undead.Has(possibleTarget.type) &&
-                    !NPCTags.SkeletonHumanoid.Has(possibleTarget.type))
+                if (!possibleTarget.RedemptionNPCBuff().devilScented && !NPCLists.Undead.Contains(possibleTarget.type) &&
+                    !NPCLists.SkeletonHumanoid.Contains(possibleTarget.type))
                     continue;
 
                 if (hitCooldown > 0 || !NPC.Hitbox.Intersects(possibleTarget.Hitbox))

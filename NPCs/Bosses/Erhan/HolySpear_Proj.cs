@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -18,15 +19,15 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void SetDefaults()
         {
-            Projectile.width = 18;
-            Projectile.height = 18;
+            Projectile.width = 24;
+            Projectile.height = 24;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.tileCollide = true;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
             Projectile.extraUpdates = 1;
         }
 

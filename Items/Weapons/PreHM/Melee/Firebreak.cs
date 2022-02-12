@@ -7,6 +7,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Melee;
 using Terraria.GameContent.Creative;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -35,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useTurn = true;
             Item.rare = ItemRarityID.Orange;
             if (!Main.dedServ)
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {

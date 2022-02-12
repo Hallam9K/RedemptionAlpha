@@ -2,11 +2,10 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -29,8 +28,8 @@ namespace Redemption.Projectiles.Melee
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 600;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().IsHammer = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().IsHammer = true;
             Projectile.hide = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)

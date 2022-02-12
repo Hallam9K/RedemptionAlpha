@@ -28,17 +28,17 @@ namespace Redemption.Tiles.Furniture.AncientWood
         }
         public override void HitWire(int i, int j)
         {
-            int left = i - Main.tile[i, j].frameX / 18 % 2;
-            int top = j - Main.tile[i, j].frameY / 18 % 2;
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 2;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             for (int x = left; x < left + 2; x++)
             {
                 for (int y = top; y < top + 2; y++)
                 {
 
-                    if (Main.tile[x, y].frameX >= 36)
-                        Main.tile[x, y].frameX -= 36;
+                    if (Main.tile[x, y].TileFrameX >= 36)
+                        Main.tile[x, y].TileFrameX -= 36;
                     else
-                        Main.tile[x, y].frameX += 36;
+                        Main.tile[x, y].TileFrameX += 36;
                 }
             }
             if (Wiring.running)
@@ -55,7 +55,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.frameX < 36)
+            if (tile.TileFrameX < 36)
             {
                 r = 0.8f;
                 g = 0.6f;
@@ -71,8 +71,8 @@ namespace Redemption.Tiles.Furniture.AncientWood
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
 
-            int height = tile.frameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/AncientWood/AncientWoodCandelabraTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/AncientWood/AncientWoodCandelabraTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

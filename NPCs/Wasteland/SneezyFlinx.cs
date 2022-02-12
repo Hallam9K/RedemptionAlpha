@@ -39,7 +39,11 @@ namespace Redemption.NPCs.Wasteland
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned,
                     ModContent.BuffType<PureChillDebuff>(),
-                    ModContent.BuffType<IceFrozen>()
+                    ModContent.BuffType<IceFrozen>(),
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)

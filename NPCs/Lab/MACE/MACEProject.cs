@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 using Terraria.DataStructures;
-using Redemption.Globals.NPC;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Usable;
@@ -19,6 +18,9 @@ using System;
 using Redemption.WorldGeneration;
 using Redemption.Base;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -57,7 +59,11 @@ namespace Redemption.NPCs.Lab.MACE
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
@@ -81,7 +87,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.lavaImmune = true;
             NPC.boss = true;
             NPC.netAlways = true;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax / 4;
+            NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusicMP");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
@@ -136,12 +142,12 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
                 return false;
             }
-            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 4000);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 4000);
             return true;
         }
 
@@ -163,14 +169,14 @@ namespace Redemption.NPCs.Lab.MACE
             if (Phase == 2)
                 EyeOrigin = NPC.Center + new Vector2(-22, 22);
 
-            if (Phase == 0 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= GuardPointMax / 2)
+            if (Phase == 0 && NPC.RedemptionGuard().GuardPoints <= GuardPointMax / 2)
             {
                 AIState = ActionState.PhaseChange;
                 NPC.netUpdate = true;
             }
-            if ((Phase == 1 && NPC.GetGlobalNPC<GuardNPC>().GuardPoints <= 0) || (Phase < 2 && NPC.life <= (int)(NPC.lifeMax * 0.75f)))
+            if ((Phase == 1 && NPC.RedemptionGuard().GuardPoints <= 0) || (Phase < 2 && NPC.life <= (int)(NPC.lifeMax * 0.75f)))
             {
-                NPC.GetGlobalNPC<GuardNPC>().GuardPoints = 0;
+                NPC.RedemptionGuard().GuardPoints = 0;
                 AIState = ActionState.PhaseChange;
                 NPC.netUpdate = true;
             }
@@ -183,7 +189,7 @@ namespace Redemption.NPCs.Lab.MACE
                         {
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SpookyNoise"), NPC.position);
                         }
-                        GuardPointMax = NPC.GetGlobalNPC<GuardNPC>().GuardPoints;
+                        GuardPointMax = NPC.RedemptionGuard().GuardPoints;
                         CraneOrigin = NPC.Center;
                         GlowActive = true;
                     }
@@ -394,7 +400,7 @@ namespace Redemption.NPCs.Lab.MACE
                             else
                                 Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
                             if (AITimer == 290)
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 30;
+                                player.RedemptionScreen().ScreenShakeIntensity = 30;
 
                             if (AITimer == 320)
                                 JawOpen = false;
@@ -489,7 +495,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 {
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2"), NPC.position);
-                                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 20;
+                                    player.RedemptionScreen().ScreenShakeIntensity = 20;
 
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
@@ -560,7 +566,7 @@ namespace Redemption.NPCs.Lab.MACE
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2"), NPC.position);
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 20;
+                                player.RedemptionScreen().ScreenShakeIntensity = 20;
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
@@ -698,7 +704,7 @@ namespace Redemption.NPCs.Lab.MACE
                 Rectangle rect2 = new(0, 0, jawTex.Width, jawTex.Height);
                 Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
 
-                float heatOpacity = (float)NPC.GetGlobalNPC<GuardNPC>().GuardPoints / GuardPointMax;
+                float heatOpacity = (float)NPC.RedemptionGuard().GuardPoints / GuardPointMax;
                 Main.spriteBatch.Draw(jawTex, drawCenterJaw + JawCenter - screenPos, new Rectangle?(rect2), NPC.GetAlpha(heat) * MathHelper.Lerp(2, 0, heatOpacity), NPC.rotation, new Vector2(jawTex.Width / 2f, jawTex.Height / 2f - 60), NPC.scale, SpriteEffects.None, 0);
             }
 

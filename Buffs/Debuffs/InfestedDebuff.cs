@@ -1,8 +1,7 @@
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -10,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infested");
-            Description.SetDefault("Larva is eating away at your flesh");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
@@ -19,21 +16,21 @@ namespace Redemption.Buffs.Debuffs
         }
         public override bool ReApply(Player player, int time, int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().infestedTime += 60;
+            player.RedemptionPlayerBuff().infestedTime += 60;
             return false;
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().infested = true;
+            player.RedemptionPlayerBuff().infested = true;
         }
         public override bool ReApply(NPC npc, int time, int buffIndex)
         {
-            npc.GetGlobalNPC<BuffNPC>().infestedTime += 60;
+            npc.RedemptionNPCBuff().infestedTime += 60;
             return false;
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<BuffNPC>().infested = true;
+            npc.RedemptionNPCBuff().infested = true;
         }
     }
 }

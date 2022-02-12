@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Incinerated!");
-			Description.SetDefault("You are being lasered!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
 		}

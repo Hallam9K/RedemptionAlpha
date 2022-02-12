@@ -34,14 +34,14 @@ namespace Redemption.Base
 
 		public static void SetTileFrame(int x, int y, int tileWidth, int tileHeight, int frame, int tileFrameWidth = 16)
 		{
-			int type = Main.tile[x, y].type;
+			int type = Main.tile[x, y].TileType;
 			int frameWidth = (tileFrameWidth + 2) * tileWidth;
 			for (int x1 = 0; x1 < tileWidth; x1++)
 			{
 				for (int y1 = 0; y1 < tileHeight; y1++)
 				{
 					int x2 = x + x1; int y2 = y + y1;
-					Main.tile[x2, y2].frameX = (short)(frame * frameWidth + (tileFrameWidth + 2) * x1);
+					Main.tile[x2, y2].TileFrameX = (short)(frame * frameWidth + (tileFrameWidth + 2) * x1);
 				}
 			}
 		}
@@ -66,16 +66,16 @@ namespace Redemption.Base
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
 					Tile tile = Main.tile[x1, y1];
-					if (tile is {IsActive: true} && tile.type == type && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
+					if (tile is {HasTile: true} && tile.TileType == type && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
 					{
 						dist = Vector2.Distance(originalPos, new Vector2(x1, y1));
-                        if (type == 21 || TileObjectData.GetTileData(tile.type, 0) != null && (TileObjectData.GetTileData(tile.type, 0).Width > 1 || TileObjectData.GetTileData(tile.type, 0).Height > 1))
+                        if (type == 21 || TileObjectData.GetTileData(tile.TileType, 0) != null && (TileObjectData.GetTileData(tile.TileType, 0).Width > 1 || TileObjectData.GetTileData(tile.TileType, 0).Height > 1))
 						{
 							int x2 = x1; int y2 = y1;
 							if (type == 21)
 							{
-								x2 -= tile.frameX / 18 % 2;
-								y2 -= tile.frameY / 18 % 2;
+								x2 -= tile.TileFrameX / 18 % 2;
+								y2 -= tile.TileFrameY / 18 % 2;
 							}else
 							{
 								Vector2 top = FindTopLeft(x2, y2);
@@ -101,9 +101,9 @@ namespace Redemption.Base
         public static Vector2 FindTopLeft(int x, int y)
         {
             Tile tile = Main.tile[x, y]; if (tile == null) return new Vector2(x, y);
-            TileObjectData data = TileObjectData.GetTileData(tile.type, 0);
-            x -= tile.frameX / 18 % data.Width;
-            y -= tile.frameY / 18 % data.Height;
+            TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
+            x -= tile.TileFrameX / 18 % data.Width;
+            y -= tile.TileFrameY / 18 % data.Height;
             return new Vector2(x, y);
         }
 
@@ -125,15 +125,15 @@ namespace Redemption.Base
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
 					Tile tile = Main.tile[x1, y1];
-					if (tile is {IsActive: true} && tile.type == type && (addTile == null || addTile(tile)))
+					if (tile is {HasTile: true} && tile.TileType == type && (addTile == null || addTile(tile)))
 					{
 						if (type == 21 || TileObjectData.GetTileData(tile).Width > 1 || TileObjectData.GetTileData(tile).Height > 1)
 						{
 							int x2 = x1; int y2 = y1;
 							if (type == 21)
 							{
-								x2 -= tile.frameX / 18 % 2;
-								y2 -= tile.frameY / 18 % 2;
+								x2 -= tile.TileFrameX / 18 % 2;
+								y2 -= tile.TileFrameY / 18 % 2;
 							}else
 							{
 								Point p = FindTopLeftPoint(x2, y2); x2 = p.X; y2 = p.Y;
@@ -193,7 +193,7 @@ namespace Redemption.Base
             Tile tile = Main.tile[tileX, tileY];
             if(tile != null)
             {
-                PlayTileHitSound(tileX * 16, tileY * 16, tile.type);
+                PlayTileHitSound(tileX * 16, tileY * 16, tile.TileType);
             }
         }
 
@@ -233,7 +233,7 @@ namespace Redemption.Base
                 for (int y1 = y; y1 < y + height; y1++)
                 {
                     Tile tile = Main.tile[x1, y1];
-                    if(tile is not {IsActive: true} || tile.type != type)
+                    if(tile is not {HasTile: true} || tile.TileType != type)
                     {
                         return false;
                     }
@@ -259,18 +259,18 @@ namespace Redemption.Base
                     Tile tile = Main.tile[x2, y2];
                     if (tile == null) { continue; }
                     addedTile = false;
-                    if (tile.IsActive)
+                    if (tile.HasTile)
                     {
                         foreach (int i in tileTypes)
                         {
-                            if (tile.type == i) { tileCount++; addedTile = true; break; }
+                            if (tile.TileType == i) { tileCount++; addedTile = true; break; }
                         }
                     }
                     if (!addedTile)
                     {
                         foreach (int i in wallTypes)
                         {
-                            if (tile.wall == i) { tileCount++; break; }
+                            if (tile.WallType == i) { tileCount++; break; }
                         }
                     }
                     addedTile = false;
@@ -296,7 +296,7 @@ namespace Redemption.Base
                     if (tile == null) { continue; }
                     foreach (int i in wallTypes)
                     {
-                        if (tile.wall == i) { wallCount++; break; }
+                        if (tile.WallType == i) { wallCount++; break; }
                     }
                 }
             }
@@ -317,10 +317,10 @@ namespace Redemption.Base
                     int y2 = (int)tileCenter.Y + y;
                     if (x2 < 0 || y2 < 0 || x2 > Main.maxTilesX || y2 > Main.maxTilesY) { continue; }
                     Tile tile = Main.tile[x2, y2];
-                    if (tile is not {IsActive: true}) { continue; }
+                    if (tile is not {HasTile: true}) { continue; }
                     foreach (int i in tileTypes)
                     {
-                        if (tile.type == i) { tileCount++; break; }
+                        if (tile.TileType == i) { tileCount++; break; }
                     }
                 }
             }

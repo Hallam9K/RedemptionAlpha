@@ -1,18 +1,18 @@
-using Redemption.Globals.NPC;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
-	public class DecapitationCondition : IItemDropRuleCondition
+    public class DecapitationCondition : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
 		{
-			if (!info.IsInSimulation && NPCTags.SkeletonHumanoid.Has(info.npc.type))
+			if (!info.IsInSimulation && NPCLists.SkeletonHumanoid.Contains(info.npc.type))
 			{
-				return info.npc.GetGlobalNPC<RedeNPC>().decapitated;
+				return info.npc.Redemption().decapitated;
 			}
 			return false;
 		}

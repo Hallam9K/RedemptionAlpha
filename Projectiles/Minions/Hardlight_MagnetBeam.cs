@@ -7,6 +7,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.Audio;
 using Terraria.ID;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -80,7 +81,7 @@ namespace Redemption.Projectiles.Minions
                 LaserScale += 0.09f;
 
             if (Projectile.damage > 5 * 8)
-                Main.player[Main.myPlayer].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = Projectile.damage / (5 * 8);
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = Projectile.damage / (5 * 8);
 
             if (Projectile.timeLeft < 30 || !proj.active)
             {

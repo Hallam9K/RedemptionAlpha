@@ -1,15 +1,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Redemption.Effects;
+using Redemption.Backgrounds.Skies;
+using Redemption.Effects.PrimitiveTrails;
+using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
-using Redemption.StructureHelper;
-using Redemption.StructureHelper.ChestHelper.GUI;
+using Redemption.Particles;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -18,7 +20,6 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Chat;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.Graphics.Effects;
@@ -40,10 +41,14 @@ namespace Redemption
         public Vector2 cameraOffset;
         public static ModKeybind RedeSpecialAbility;
 
+        public static RenderTargetManager Targets;
+        public static ParticleManager Particles;
+
         private List<ILoadable> _loadCache;
 
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
+        public static int shinkiteCapeID;
         public static int archeFemLegID;
         public static int archeMaleLegID;
         public static int unconFemLegID;
@@ -63,6 +68,7 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back");
+                shinkiteCapeID = AddEquipTexture(ModContent.GetInstance<ShinkiteChestplate>(), EquipType.Back, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back");
                 archeMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs");
                 archeFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
                 unconMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs_Legs");
@@ -90,6 +96,8 @@ namespace Redemption
                     PremultiplyTexture(ref staticBallTex);
                     Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref iceMistTex);
+                    Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref glowDustTex);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
@@ -97,11 +105,18 @@ namespace Redemption
                     PremultiplyTexture(ref wastelandCrimsonBG3Tex);
                     Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref wastelandCorruptionBG3Tex);
+                    Texture2D ruinedKingdomSurfaceClose_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceClose_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref ruinedKingdomSurfaceClose_MenuTex);
+                    Texture2D ruinedKingdomSurfaceFar_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceFar_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref ruinedKingdomSurfaceFar_MenuTex);
+                    Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
                 });
             }
 
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
+            SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
@@ -242,8 +257,7 @@ namespace Redemption
                         break;
                     }
 
-                    ITrailProjectile trailproj = Main.projectile[projindex].ModProjectile as ITrailProjectile;
-                    if (trailproj != null)
+                    if (Main.projectile[projindex].ModProjectile is ITrailProjectile trailproj)
                         trailproj.DoTrailCreation(RedeSystem.TrailManager);
 
                     break;
@@ -271,12 +285,6 @@ namespace Redemption
         {
             Silence = false;
         }
-
-        UserInterface GeneratorMenuUI;
-        internal ManualGeneratorMenu GeneratorMenu;
-
-        UserInterface ChestMenuUI;
-        internal ChestCustomizerState ChestCustomizer;
 
         public UserInterface DialogueUILayer;
         public MoRDialogueUI DialogueUIElement;
@@ -321,16 +329,6 @@ namespace Redemption
                 AMemoryUILayer = new UserInterface();
                 AMemoryUIElement = new AMemoryUIState();
                 AMemoryUILayer.SetState(AMemoryUIElement);
-
-                GeneratorMenuUI = new UserInterface();
-                GeneratorMenu = new ManualGeneratorMenu();
-                GeneratorMenuUI.SetState(GeneratorMenu);
-
-                ChestMenuUI = new UserInterface();
-                ChestCustomizer = new ChestCustomizerState();
-                ChestMenuUI.SetState(ChestCustomizer);
-
-
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
@@ -404,18 +402,6 @@ namespace Redemption
             layers.Insert(layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")), new LegacyGameInterfaceLayer("GUI Menus",
                 delegate
                 {
-                    if (ManualGeneratorMenu.Visible)
-                    {
-                        GeneratorMenuUI.Update(Main._drawInterfaceGameTime);
-                        GeneratorMenu.Draw(Main.spriteBatch);
-                    }
-
-                    if (ChestCustomizerState.Visible)
-                    {
-                        ChestMenuUI.Update(Main._drawInterfaceGameTime);
-                        ChestCustomizer.Draw(Main.spriteBatch);
-                    }
-
                     return true;
                 }, InterfaceScaleType.UI));
             int MouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
@@ -492,7 +478,7 @@ namespace Redemption
         #endregion
 
         #region StructureHelper Draw
-        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        /*public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
             if (Main.LocalPlayer.HeldItem.ModItem is CopyWand)
             {
@@ -556,7 +542,7 @@ namespace Redemption
                 spriteBatch.End();
                 spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
             }
-        }
+        }*/
         #endregion
     }
 }

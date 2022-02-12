@@ -29,10 +29,10 @@ namespace Redemption.Tiles.Furniture.AncientWood
         }
         public override void HitWire(int i, int j)
         {
-            if (Main.tile[i, j].frameX >= 18)
-                Main.tile[i, j].frameX -= 18;
+            if (Main.tile[i, j].TileFrameX >= 18)
+                Main.tile[i, j].TileFrameX -= 18;
             else
-                Main.tile[i, j].frameX += 18;
+                Main.tile[i, j].TileFrameX += 18;
         }
         public override bool RightClick(int i, int j)
         {
@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.frameX < 18)
+            if (tile.TileFrameX < 18)
             {
                 r = 0.8f;
                 g = 0.6f;
@@ -67,8 +67,8 @@ namespace Redemption.Tiles.Furniture.AncientWood
             {
                 zero = Vector2.Zero;
             }
-            int height = tile.frameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/AncientWood/AncientWoodCandleTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/AncientWood/AncientWoodCandleTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

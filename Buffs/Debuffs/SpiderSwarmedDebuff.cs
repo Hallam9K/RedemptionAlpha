@@ -1,8 +1,7 @@
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -10,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Swarmed!");
-            Description.SetDefault("No! Not the spiders! Aaaaah!");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
@@ -19,11 +16,11 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().spiderSwarmed = true;
+            player.RedemptionPlayerBuff().spiderSwarmed = true;
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<BuffNPC>().spiderSwarmed = true;
+            npc.RedemptionNPCBuff().spiderSwarmed = true;
         }
     }
 }

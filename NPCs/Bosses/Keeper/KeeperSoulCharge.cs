@@ -2,8 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Globals;
-using Redemption.Effects;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.DamageType = DamageClass.Magic;
             Projectile.alpha = 0;
             Projectile.timeLeft = 200;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

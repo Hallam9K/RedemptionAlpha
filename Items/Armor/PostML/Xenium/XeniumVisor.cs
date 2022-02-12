@@ -2,12 +2,10 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
-using Redemption.Rarities;
-using Redemption.DamageClasses;
 using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PostML.Xenium
 {
@@ -49,8 +47,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
             {
                 player.setBonus = "Press " + key + " to fire a virulent grenade from your shoulder launcher";
             }
-            player.GetModPlayer<BuffPlayer>().xeniumBonus = 1;
-            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = true;
+            player.RedemptionPlayerBuff().xeniumBonus = 1;
         }
 
         public override void AddRecipes()

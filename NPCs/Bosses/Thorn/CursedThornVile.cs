@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

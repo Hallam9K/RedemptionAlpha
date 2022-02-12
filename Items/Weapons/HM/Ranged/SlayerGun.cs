@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Redemption.NPCs.Bosses.KSIII;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 8;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
         public int AttackMode;
@@ -103,7 +103,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 switch (AttackMode)
                 {
                     case 0:
-                        int proj = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
+                        int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj].hostile = false;
                         Main.projectile[proj].friendly = true;
                         Main.projectile[proj].DamageType = DamageClass.Ranged;
@@ -128,7 +128,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             Main.projectile[proj3].tileCollide = true;
                             Main.projectile[proj3].netUpdate2 = true;
                         }
-                        int proj2 = Projectile.NewProjectile(source, position, velocity, ProjectileID.PhantasmalBolt, damage, knockback, player.whoAmI);
+                        int proj2 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj2].hostile = false;
                         Main.projectile[proj2].friendly = true;
                         Main.projectile[proj2].DamageType = DamageClass.Ranged;

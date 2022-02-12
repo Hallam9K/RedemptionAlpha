@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
             Projectile.alpha = 180;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()
@@ -118,7 +119,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
             Tile tile2 = Main.tile[tile.X, tile.Y];
-            if (tile2 is { IsActiveUnactuated: true } && Main.tileSolid[tile2.type])
+            if (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])
                 Projectile.timeLeft -= 4;
             return false;
         }

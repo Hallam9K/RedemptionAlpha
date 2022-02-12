@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -15,7 +17,8 @@ namespace Redemption.NPCs.Friendly
         {
             DisplayName.SetDefault("Adam");
             Main.npcFrameCount[NPC.type] = 4;
-
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.SavesAndLoads[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Hide = true
@@ -25,10 +28,9 @@ namespace Redemption.NPCs.Friendly
         }
         public override void SetDefaults()
         {
-            NPC.townNPC = true;
             NPC.friendly = true;
             NPC.width = 56;
-            NPC.height = 42;
+            NPC.height = 36;
             NPC.aiStyle = -1;
             NPC.defense = 0;
             NPC.lifeMax = 250;
@@ -37,6 +39,8 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool UsesPartyHat() => false;
+        public override bool CheckActive() => false;
+        public override bool CanChat() => true;
 
         public override void FindFrame(int frameHeight)
         {

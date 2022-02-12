@@ -20,6 +20,9 @@ using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
+using Redemption.BaseExtension;
+using Redemption.Items.Armor.PostML.Xenium;
+using Redemption.Items.Armor.PostML.Shinkite;
 
 namespace Redemption.Globals.Player
 {
@@ -57,11 +60,13 @@ namespace Redemption.Globals.Player
         public bool HEVSuit;
         public bool snipped;
         public bool island;
+        public bool trappedSoul;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
         public int xeniumBonus;
         public int hardlightBonus;
+        public bool shinkiteHead;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -115,7 +120,8 @@ namespace Redemption.Globals.Player
             xeniumBonus = 0;
             snipped = false;
             island = false;
-            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
+            trappedSoul = false;
+            shinkiteHead = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -152,9 +158,7 @@ namespace Redemption.Globals.Player
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
-            ModContent.GetInstance<XeniumArmorDraw>().xeniumBonus = false;
         }
-
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)
@@ -241,7 +245,6 @@ namespace Redemption.Globals.Player
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
                     infectionTimer = 0;
                 }
-
                 if (infectionTimer >= 3600)
                 {
                     Player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
@@ -269,7 +272,11 @@ namespace Redemption.Globals.Player
                 }
             }
             else
+            {
+                if (infectionTimer >= 3000)
+                    Player.AddBuff(ModContent.BuffType<AntibodiesDebuff>(), 18000);
                 infectionTimer = 0;
+            }
 
             if (shockDebuff)
             {
@@ -479,7 +486,7 @@ namespace Redemption.Globals.Player
                 Player.lifeRegen -= 5;
                 Player.statDefense -= 30;
             }
-            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.GetModPlayer<BuffPlayer>().WastelandWaterImmune)
+            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.RedemptionPlayerBuff().WastelandWaterImmune)
             {
                 if (Player.lifeRegen > 10)
                     Player.lifeRegen = 10;

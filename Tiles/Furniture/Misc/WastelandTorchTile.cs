@@ -78,7 +78,7 @@ namespace Redemption.Tiles.Furniture.Misc
 		{
 			Tile tile = Main.tile[i, j];
 
-			if (tile.frameX < 66)
+			if (tile.TileFrameX < 66)
 			{
 				r = 0.85f;
 				g = 0.7f;
@@ -115,8 +115,8 @@ namespace Redemption.Tiles.Furniture.Misc
 			int width = 20;
 			int height = 20;
 			var tile = Main.tile[i, j];
-			int frameX = tile.frameX;
-			int frameY = tile.frameY;
+			int frameX = tile.TileFrameX;
+			int frameY = tile.TileFrameY;
 
 			for (int k = 0; k < 7; k++)
 			{

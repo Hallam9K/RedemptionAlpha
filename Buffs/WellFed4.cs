@@ -1,7 +1,7 @@
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs
 {
@@ -18,7 +18,7 @@ namespace Redemption.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {         
-            player.GetModPlayer<BuffPlayer>().wellFed4 = true;
+            player.RedemptionPlayerBuff().wellFed4 = true;
             player.wellFed = true;
             player.moveSpeed *= 1.5f;
             player.statDefense += 6;

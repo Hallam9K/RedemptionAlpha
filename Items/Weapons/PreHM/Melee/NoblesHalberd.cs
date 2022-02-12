@@ -4,8 +4,7 @@ using Terraria;
 using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -46,7 +45,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 3.7f;
             Item.shoot = ModContent.ProjectileType<NoblesHalberd_SlashProj>();
-            Item.GetGlobalItem<RedeItem>().TechnicallyAxe = true;
+            Item.Redemption().TechnicallyAxe = true;
         }
 
         public override bool AltFunctionUse(Player player) => true;

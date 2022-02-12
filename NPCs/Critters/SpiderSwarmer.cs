@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Critters
 {
@@ -81,7 +82,7 @@ namespace Redemption.NPCs.Critters
         {
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
 
             if (hopCooldown > 0)
                 hopCooldown--;
@@ -171,7 +172,7 @@ namespace Redemption.NPCs.Critters
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI == NPC.whoAmI || target != NPC.GetGlobalNPC<RedeNPC>().attacker)
+                        if (!target.active || target.whoAmI == NPC.whoAmI || target != NPC.Redemption().attacker)
                             continue;
 
                         if (target.immune[NPC.whoAmI] > 0 || !NPC.Hitbox.Intersects(target.Hitbox))
@@ -223,7 +224,7 @@ namespace Redemption.NPCs.Critters
         public void SightCheck()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = GetNearestNPC();
             if (CountCheck() > 5)
             {

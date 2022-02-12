@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.HM;
 using System;
@@ -58,13 +59,13 @@ namespace Redemption.Items.Accessories.HM
     }
     public class ThornshieldDashPlayer : ModPlayer
     {
-        public const int DashRight = 0;
-        public const int DashLeft = 1;
+        public const int DashRight = 2;
+        public const int DashLeft = 3;
 
         public const int DashCooldown = 50;
         public const int DashDuration = 35;
 
-        public const float DashVelocity = 11f;
+        public const float DashVelocity = 13f;
 
         public int DashDir = -1;
 
@@ -109,14 +110,13 @@ namespace Redemption.Items.Accessories.HM
                 Player.velocity = newVelocity;
 
                 ShieldHit = -1;
-                Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenFairy, 0f, 0f, 0, default, 1f);
-                Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenFairy, 0f, 0f, 0, default, 1f);
                 for (int i = 0; i < 10; i++)
                 {
                     int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenFairy, 0f, 0f, 100, default, 2f);
                     Main.dust[dust].position.X += Main.rand.Next(-5, 6);
                     Main.dust[dust].position.Y += Main.rand.Next(-5, 6);
                     Main.dust[dust].velocity *= 0.2f;
+                    Main.dust[dust].noGravity = true;
                 }
             }
 
@@ -127,13 +127,17 @@ namespace Redemption.Items.Accessories.HM
             {
                 Player.eocDash = DashTimer;
                 Player.armorEffectDrawShadowEOCShield = true;
-
-                if (ShieldHit < 0)
+                if (ShieldHit < 0 && DashTimer > 15)
                 {
-                    Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenFairy);
-                    Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenFairy);
-                    Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenFairy);
+                    int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenTorch);
+                    Main.dust[d].noGravity = true;
                     Rectangle hitbox = new((int)(Player.position.X + Player.velocity.X * 0.5 - 4), (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4), Player.width + 8, Player.height + 8);
+
+                    if (DashTimer > 25)
+                    {
+                        Player.immune = true;
+                        Player.immuneTime = 10;
+                    }
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -163,21 +167,20 @@ namespace Redemption.Items.Accessories.HM
                             if (Main.rand.NextBool(5))
                                 npc.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);
 
-                            npc.StrikeNPC((int)damage, knockback, hitDirection, crit);
+                            BaseAI.DamageNPC(npc, (int)damage, knockback, hitDirection, Player, crit: crit, item: new Item(ItemID.BeeKeeper));
                             if (Main.netMode != NetmodeID.SinglePlayer)
                                 NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
                                     0, 0);
                         }
 
-                        Player.dashDelay = 30;
-                        Player.velocity.X = -hitDirection * 1f;
-                        Player.velocity.Y = -4f;
                         Player.immune = true;
-                        Player.immuneTime = 10;
+                        Player.immuneTime = 20;
+                        Player.dashDelay = 30;
+                        Player.velocity.X = -Player.velocity.X;
+                        Player.velocity.Y = -4f;
                         ShieldHit = i;
                     }
                 }
-
                 DashTimer--;
             }
         }

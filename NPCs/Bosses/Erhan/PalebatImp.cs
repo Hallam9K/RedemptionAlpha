@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -73,8 +74,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (RedeBossDowned.erhanDeath == 0)
             {
-                player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                player.RedemptionScreen().lockScreen = true;
             }
             switch (TimerRand)
             {
@@ -104,7 +105,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     shakeTimer += 0.004f;
                     shakeTimer = MathHelper.Clamp(shakeTimer, 0, 1.2f);
 
-                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = shakeTimer * 10;
+                    player.RedemptionScreen().ScreenShakeIntensity = shakeTimer * 10;
 
                     if (AITimer == 80)
                         NPC.alpha = 0;
@@ -112,7 +113,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer++ == 360)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch, NPC.position);
-                        player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 18;
+                        player.RedemptionScreen().ScreenShakeIntensity = 18;
                         DustHelper.DrawDustImage(NPC.Center, DustID.Torch, 0.5f, "Redemption/Effects/DustImages/DemonShape", 3, true, 0);
                     }
                     break;
@@ -137,7 +138,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             Main.dust[dust].noGravity = true;
                         }
                         SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, NPC.position);
-                        player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 4;
+                        player.RedemptionScreen().ScreenShakeIntensity = 4;
                     }
                     if (AITimer >= 80)
                         NPC.noGravity = false;

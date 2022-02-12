@@ -6,11 +6,11 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -142,7 +142,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (NPCTags.Dragonlike.Has(target.type))
+            if (NPCLists.Dragonlike.Contains(target.type))
                 damage *= 4;
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);
@@ -151,7 +151,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
-            if (player.GetModPlayer<BuffPlayer>().dragonLeadBonus)
+            if (player.RedemptionPlayerBuff().dragonLeadBonus)
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
 

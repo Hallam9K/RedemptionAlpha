@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using System;
 using Terraria.ModLoader;
 using Redemption.Base;
-using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -28,7 +26,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.alpha = 50;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public bool offsetLeft = false;
         public Vector2 originalVelocity = Vector2.Zero;

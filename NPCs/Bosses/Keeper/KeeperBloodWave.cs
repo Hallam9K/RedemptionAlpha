@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -25,7 +26,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

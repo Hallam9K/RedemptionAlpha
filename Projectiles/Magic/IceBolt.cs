@@ -1,15 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -24,7 +24,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -132,7 +132,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 240);
 
-            if (player.GetModPlayer<BuffPlayer>().pureIronBonus)
+            if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)

@@ -4,11 +4,11 @@ using Redemption.Base;
 using Redemption.Buffs.Minions;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -124,7 +124,7 @@ namespace Redemption.Projectiles.Minions
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.OnFire, 240);
 
-            if (player.GetModPlayer<BuffPlayer>().dragonLeadBonus)
+            if (player.RedemptionPlayerBuff().dragonLeadBonus)
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -6,7 +6,6 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Redemption.Dusts;
-using Redemption.Projectiles.Hostile;
 using Terraria.GameContent;
 using Redemption.Biomes;
 using Terraria.DataStructures;
@@ -19,6 +18,10 @@ using Redemption.Items.Lore;
 using Terraria.Audio;
 using Terraria.GameContent.Events;
 using ReLogic.Content;
+using Redemption.Buffs.Debuffs;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Armor.Vanity;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -57,7 +60,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 
@@ -69,9 +76,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 98;
             NPC.height = 80;
             NPC.friendly = false;
-            NPC.damage = 110;
+            NPC.damage = 140;
             NPC.defense = 80;
-            NPC.lifeMax = 340000;
+            NPC.lifeMax = 330000;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             NPC.HitSound = SoundID.NPCHit13;
@@ -86,12 +93,13 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.netAlways = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2");
+            BossBag = ModContent.ItemType<PZBag>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 200 years, conscious and aware of the situation around him... God, that must be tormentous.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -138,6 +146,14 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7_1>()));
+
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZTrophy>(), 10));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
@@ -277,7 +293,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), (int)(NPC.damage * 1.2f), RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
                             }
                             if (AITimer >= 150 && AITimer % 3 == 0 && AITimer <= 156)
                             {
@@ -304,7 +320,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PatientZeroLaser"), NPC.position);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), NPC.damage, RedeHelper.PolarVector(10, (MathHelper.ToRadians(90) * i) + MathHelper.PiOver4), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Laser>(), (int)(NPC.damage * 1.2f), RedeHelper.PolarVector(10, (MathHelper.ToRadians(90) * i) + MathHelper.PiOver4), false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI, -1);
                             }
                             if (AITimer >= 150 && AITimer % 3 == 0 && AITimer <= 156)
                             {
@@ -697,9 +713,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             break;
                         case 1:
-                            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                            player.RedemptionScreen().lockScreen = true;
+                            player.RedemptionScreen().ScreenShakeIntensity = 5;
                             NPC.LockMoveRadius(player);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
                             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);

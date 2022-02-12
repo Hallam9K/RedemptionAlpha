@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Critters
 {
@@ -96,7 +97,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? 0.25f : 0f;
+            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Grass ? 0.25f : 0f;
 
             return baseChance * multiplier;
         }
@@ -110,7 +111,7 @@ namespace Redemption.NPCs.Critters
         {
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
 
             if (hopCooldown > 0)
                 hopCooldown--;
@@ -161,8 +162,8 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
 
-                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.type == TileID.HayBlock &&
-                        tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
+                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.TileType == TileID.HayBlock &&
+                        tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(300, 1200);
@@ -200,7 +201,7 @@ namespace Redemption.NPCs.Critters
 
                     Point tileBelow2 = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
                     Tile tile2 = Main.tile[tileBelow2.X, tileBelow2.Y];
-                    if (tile2.type != TileID.HayBlock || tile2 is not { IsActiveUnactuated: true } || !Main.tileSolid[tile2.type])
+                    if (tile2.TileType != TileID.HayBlock || tile2 is not { HasUnactuatedTile: true } || !Main.tileSolid[tile2.TileType])
                     {
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
@@ -358,7 +359,7 @@ namespace Redemption.NPCs.Critters
         public void SightCheck()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
             if (NPC.Sight(player, 140, true, true))
             {

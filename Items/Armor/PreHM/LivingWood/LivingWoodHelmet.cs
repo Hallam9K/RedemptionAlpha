@@ -2,10 +2,9 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
-using Redemption.Globals.Player;
 using System;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -37,7 +36,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<BuffPlayer>().DruidDamageFlat += 1;
+            player.RedemptionPlayerBuff().DruidDamageFlat += 1;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -52,13 +51,5 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
                 Gore.NewGore(new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
             }
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<LivingTwig>(), 22)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-        }   
     }
 }

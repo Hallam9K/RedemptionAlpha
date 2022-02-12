@@ -9,9 +9,6 @@ namespace Redemption.Buffs.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Angel & Devil");
-			Description.SetDefault("They're bickering about something non-stop");
-
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 		}

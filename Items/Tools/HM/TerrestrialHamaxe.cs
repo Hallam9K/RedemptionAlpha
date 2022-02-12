@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.HM
 {
-	public class TerrestrialHamaxe : ModItem
+    public class TerrestrialHamaxe : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -34,7 +34,7 @@ namespace Redemption.Items.Tools.HM
 			Item.autoReuse = true;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
             }
         }
         public override void AddRecipes()

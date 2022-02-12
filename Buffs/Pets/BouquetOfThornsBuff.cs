@@ -9,9 +9,6 @@ namespace Redemption.Buffs.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bouquet of Thorns");
-			Description.SetDefault("A gift for the newly divorced");
-
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 		}

@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using System;
-using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

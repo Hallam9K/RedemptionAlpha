@@ -2,9 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Donator.Uncon;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +19,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -55,7 +59,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -88,6 +96,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
+            BossBag = ModContent.ItemType<OmegaCleaverBag>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -134,6 +143,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
@@ -238,7 +250,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (!Main.dedServ)
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Omega Cleaver", 60, 90, 0.8f, 0, Color.Red,
                                 "1st Omega Prototype");
-                        player.GetModPlayer<ScreenPlayer>().Rumble(20, 7);
+                        player.RedemptionScreen().Rumble(20, 7);
                         rot = NPC.rotation;
                         if (AITimer > 20)
                         {
@@ -755,8 +767,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     else
                     {
-                        player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                        player.RedemptionScreen().lockScreen = true;
                         AITimer++;
                         rot.SlowRotation(0, (float)Math.PI / 60f);
                         NPC.rotation = rot;

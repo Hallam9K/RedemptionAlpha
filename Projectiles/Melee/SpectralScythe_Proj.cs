@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.tileCollide = false;
             Projectile.penetrate = 8;
             Projectile.timeLeft = 300;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {
@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Melee
         public override bool? CanCutTiles() => false;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (NPCTags.Demon.Has(target.type))
+            if (NPCLists.Demon.Contains(target.type))
                 damage *= 2;
         }
         public override bool PreDraw(ref Color lightColor)

@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Usable
 {
@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Purple;
             Item.maxStack = 1;
             if (!Main.dedServ)
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
     }
 }

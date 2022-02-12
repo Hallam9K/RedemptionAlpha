@@ -83,8 +83,8 @@ namespace Redemption.Tiles.Furniture.Lab
             if (player.HasItem(ModContent.ItemType<Keycard>()))
             {
                 SoundEngine.PlaySound(SoundID.Unlock);
-                int left = i - Main.tile[i, j].frameX / 18 % 1;
-                int top = j - Main.tile[i, j].frameY / 18 % 4;
+                int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
+                int top = j - Main.tile[i, j].TileFrameY / 18 % 4;
                 WorldGen.KillTile(i, j, noItem: true);
                 WorldGen.PlaceObject(i, j, ModContent.TileType<LabKeycardDoorOpen>());
                 NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<LabKeycardDoorOpen>(), 0, 0, -1, -1);

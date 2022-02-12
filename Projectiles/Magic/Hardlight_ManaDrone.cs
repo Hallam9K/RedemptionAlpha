@@ -6,6 +6,7 @@ using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 800;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

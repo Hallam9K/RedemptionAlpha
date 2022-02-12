@@ -1,6 +1,5 @@
 using System;
 using Redemption.Dusts;
-using Redemption.Tiles.Ores;
 using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using Terraria;
@@ -74,8 +73,8 @@ namespace Redemption.Projectiles.Misc
                 {
                     if (WorldGen.InWorld(k, l, 1) && Math.Abs(k - i) + Math.Abs(l - j) < Math.Sqrt(size * size + size * size))
                     {
-                        int type = Main.tile[k, l].type;
-                        int wall = Main.tile[k, l].wall;
+                        int type = Main.tile[k, l].TileType;
+                        int wall = Main.tile[k, l].WallType;
                         if (type == TileID.LeafBlock)
                             WorldGen.KillTile(k, l, false, false, true);
                         if (wall == WallID.LivingLeaf)

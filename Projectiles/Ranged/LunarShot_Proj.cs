@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
-using Redemption.Effects;
+using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;

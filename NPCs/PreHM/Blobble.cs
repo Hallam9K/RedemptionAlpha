@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -53,6 +55,9 @@ namespace Redemption.NPCs.PreHM
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Bleeding,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 

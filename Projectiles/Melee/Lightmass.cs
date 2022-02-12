@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -30,7 +30,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -50,7 +50,7 @@ namespace Redemption.Projectiles.Melee
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.CanBeChasedBy() || target.GetGlobalNPC<RedeNPC>().invisible)
+                    if (!target.CanBeChasedBy() || target.Redemption().invisible)
                         continue;
 
                     Vector2 newMove = target.Center - Projectile.Center;

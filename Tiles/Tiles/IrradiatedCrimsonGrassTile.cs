@@ -58,7 +58,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail)
             {
                 fail = true;
-                Framing.GetTileSafely(i, j).type = (ushort)ModContent.TileType<IrradiatedDirtTile>();
+                Framing.GetTileSafely(i, j).TileType = (ushort)ModContent.TileType<IrradiatedDirtTile>();
             }
         }
 
@@ -67,19 +67,19 @@ namespace Redemption.Tiles.Tiles
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             Tile tile = Framing.GetTileSafely(i, j);
-            if (WorldGen.genRand.NextBool(15) && !tileBelow.IsActive && tileBelow.LiquidType != LiquidID.Lava)
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
             {
                 if (tile.Slope != SlopeType.SlopeUpLeft && tile.Slope != SlopeType.SlopeUpRight)
                 {
-                    tileBelow.type = (ushort)ModContent.TileType<CrimsonWastelandVine>();
-                    tileBelow.IsActive = true;
+                    tileBelow.TileType = (ushort)ModContent.TileType<CrimsonWastelandVine>();
+                    tileBelow.HasTile = true;
                     WorldGen.SquareTileFrame(i, j + 1, true);
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
                 }
             }
 
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CrimsonWastelandFoliage>(), true, Main.rand.Next(22));
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<CrimsonWastelandFoliage>(), Main.rand.Next(22), 0, -1, -1);
@@ -87,7 +87,7 @@ namespace Redemption.Tiles.Tiles
             if (Main.rand.NextBool(4))
                 WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false, 0);
 
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(100))
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);

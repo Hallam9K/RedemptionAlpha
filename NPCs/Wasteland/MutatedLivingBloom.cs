@@ -14,7 +14,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -49,7 +49,11 @@ namespace Redemption.NPCs.Wasteland
                     BuffID.Bleeding,
                     BuffID.Poisoned,
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 
@@ -83,7 +87,7 @@ namespace Redemption.NPCs.Wasteland
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
@@ -107,7 +111,7 @@ namespace Redemption.NPCs.Wasteland
                         AIState = ActionState.Wander;
                     }
 
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         globalNPC.attacker = npcTarget;
                         moveTo = NPC.FindGround(15);
@@ -118,7 +122,7 @@ namespace Redemption.NPCs.Wasteland
                     break;
 
                 case ActionState.Wander:
-                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         globalNPC.attacker = npcTarget;
                         moveTo = NPC.FindGround(15);
@@ -181,7 +185,7 @@ namespace Redemption.NPCs.Wasteland
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
-                            if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI || target.GetGlobalNPC<RedeNPC>().invisible)
+                            if (!target.active || target.whoAmI == NPC.whoAmI || target.whoAmI == globalNPC.attacker.whoAmI || target.Redemption().invisible)
                                 continue;
 
                             if (target.lifeMax < 5 || target.damage == 0 || NPC.DistanceSQ(target.Center) > 400 * 400 || target.type == NPC.type)
@@ -221,7 +225,7 @@ namespace Redemption.NPCs.Wasteland
         public void RegenCheck()
         {
             int regenCooldown = NPC.wet && !NPC.lavaWet ? 30 : 40;
-            if ((NPC.wet && !NPC.lavaWet) || (Main.raining && NPC.position.Y < Main.worldSurface && Framing.GetTileSafely(NPC.Center).wall == WallID.None))
+            if ((NPC.wet && !NPC.lavaWet) || (Main.raining && NPC.position.Y < Main.worldSurface && Framing.GetTileSafely(NPC.Center).WallType == WallID.None))
             {
                 regenTimer++;
                 if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)

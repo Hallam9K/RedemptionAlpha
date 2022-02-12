@@ -1,11 +1,10 @@
 using Redemption.Buffs;
 using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -47,7 +46,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<HammerOfProving_Proj>();
-            Item.GetGlobalItem<RedeItem>().TechnicallyHammer = true;
+            Item.Redemption().TechnicallyHammer = true;
         }
         public override void HoldItem(Player player)
         {

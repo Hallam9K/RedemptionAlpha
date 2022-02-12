@@ -3,8 +3,6 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PostML;
 
 namespace Redemption.Items.Accessories.PostML
 {
@@ -29,15 +27,6 @@ namespace Redemption.Items.Accessories.PostML
         {
             player.GetDamage<DruidClass>() *= 1.15f;
             player.GetCritChance<DruidClass>() += 10;
-        }
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<TerrestrialFragment>(), 10)
-                .AddIngredient(ModContent.ItemType<EmptyMutagen>())
-                .AddIngredient(ItemID.DestroyerEmblem)
-                .AddTile(TileID.LunarCraftingStation)
-                .Register();
         }
     }
 }

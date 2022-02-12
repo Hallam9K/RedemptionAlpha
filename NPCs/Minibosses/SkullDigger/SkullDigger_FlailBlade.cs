@@ -2,12 +2,12 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -28,8 +28,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         private float rot;
@@ -168,7 +168,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (host.GetGlobalNPC<BuffNPC>().disarmed)
+            if (host.RedemptionNPCBuff().disarmed)
                 damage = (int)(damage * 0.2f);
         }
 

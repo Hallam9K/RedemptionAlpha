@@ -1,7 +1,7 @@
-﻿using Redemption.Globals;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -23,7 +23,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 30;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

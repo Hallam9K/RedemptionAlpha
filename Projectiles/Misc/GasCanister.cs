@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Terraria;
@@ -8,6 +7,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Misc
 {
@@ -106,7 +106,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.scale = Main.rand.NextFloat(2, 2.5f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

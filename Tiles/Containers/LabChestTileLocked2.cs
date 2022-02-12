@@ -58,11 +58,11 @@ namespace Redemption.Tiles.Containers
             TileObjectData.addTile(Type);
         }
 
-        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX / 36);
+        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
 
         public override bool HasSmartInteract() => true;
 
-        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX / 36 == 1;
+        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX / 36 == 1;
 
         public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual)
         {
@@ -75,12 +75,12 @@ namespace Redemption.Tiles.Containers
             int left = i;
             int top = j;
             Tile tile = Main.tile[i, j];
-            if (tile.frameX % 36 != 0)
+            if (tile.TileFrameX % 36 != 0)
             {
                 left--;
             }
 
-            if (tile.frameY != 0)
+            if (tile.TileFrameY != 0)
             {
                 top--;
             }
@@ -114,12 +114,12 @@ namespace Redemption.Tiles.Containers
             Main.mouseRightRelease = false;
             int left = i;
             int top = j;
-            if (tile.frameX % 36 != 0)
+            if (tile.TileFrameX % 36 != 0)
             {
                 left--;
             }
 
-            if (tile.frameY != 0)
+            if (tile.TileFrameY != 0)
             {
                 top--;
             }
@@ -208,12 +208,12 @@ namespace Redemption.Tiles.Containers
             Tile tile = Main.tile[i, j];
             int left = i;
             int top = j;
-            if (tile.frameX % 36 != 0)
+            if (tile.TileFrameX % 36 != 0)
             {
                 left--;
             }
 
-            if (tile.frameY != 0)
+            if (tile.TileFrameY != 0)
             {
                 top--;
             }
@@ -229,7 +229,7 @@ namespace Redemption.Tiles.Containers
                 if (player.cursorItemIconText == "Laboratory Chest")
                 {
                     player.cursorItemIconID = ModContent.ItemType<LabChest2>();
-                    if (Main.tile[left, top].frameX / 36 == 1)
+                    if (Main.tile[left, top].TileFrameX / 36 == 1)
                     {
                         player.cursorItemIconID = ModContent.ItemType<Keycard2>();
                     }
@@ -259,8 +259,8 @@ namespace Redemption.Tiles.Containers
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
 
-            int height = tile.frameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Containers/LabChestTileLocked2_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Containers/LabChestTileLocked2_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

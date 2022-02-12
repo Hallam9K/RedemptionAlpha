@@ -11,7 +11,6 @@ using Redemption.Items.Lore;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Materials.HM;
 using Redemption.Globals;
-using Redemption.Globals.Player;
 using Terraria.Audio;
 using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +18,7 @@ using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.Tiles.Tiles;
 using Redemption.Biomes;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -358,7 +358,7 @@ namespace Redemption.NPCs.Friendly
                     ChatNumber = 0;
                 if (RedeWorld.slayerRep >= 1 && ChatNumber == 2)
                     ChatNumber++;
-                if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall && ChatNumber == 5)
+                if (!Main.LocalPlayer.Redemption().foundHall && ChatNumber == 5)
                     ChatNumber++;
             }
         }

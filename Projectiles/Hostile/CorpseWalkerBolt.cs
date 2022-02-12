@@ -2,13 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Globals.Player;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Hostile
 {
@@ -33,17 +32,17 @@ namespace Redemption.Projectiles.Hostile
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 120;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) => Projectile.Kill();
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            return target == host.GetGlobalNPC<RedeNPC>().attacker && !NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type) ? null : false;
+            return target == host.Redemption().attacker && !NPCLists.Undead.Contains(target.type) && !NPCLists.Skeleton.Contains(target.type) ? null : false;
         }
         public override bool CanHitPlayer(Player target)
         {
-            return !target.GetModPlayer<BuffPlayer>().skeletonFriendly;
+            return !target.RedemptionPlayerBuff().skeletonFriendly;
         }
 
         public override Color? GetAlpha(Color lightColor) => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightYellow, Color.White, Color.LightYellow);
@@ -123,7 +122,7 @@ namespace Redemption.Projectiles.Hostile
                 if (!target.active || target.whoAmI == host.whoAmI)
                     continue;
 
-                if (!NPCTags.Undead.Has(target.type) && !NPCTags.Skeleton.Has(target.type))
+                if (!NPCLists.Undead.Contains(target.type) && !NPCLists.Skeleton.Contains(target.type))
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))

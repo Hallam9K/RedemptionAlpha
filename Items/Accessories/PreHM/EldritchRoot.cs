@@ -1,9 +1,9 @@
 ﻿using Redemption.DamageClasses;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -28,7 +28,7 @@ namespace Redemption.Items.Accessories.PreHM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<BuffPlayer>().eldritchRoot = true;
+            player.RedemptionPlayerBuff().eldritchRoot = true;
             if (player.statLife <= (player.statLifeMax2 * 0.5f))
                 player.GetDamage<DruidClass>() += 0.15f;
         }

@@ -1,7 +1,7 @@
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soulless");
-            Description.SetDefault("...");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
@@ -24,7 +22,7 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<BuffNPC>().blackHeart = true;
+            npc.RedemptionNPCBuff().blackHeart = true;
         }
     }
 }

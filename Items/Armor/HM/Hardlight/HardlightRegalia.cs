@@ -2,9 +2,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using Redemption.Globals.Player;
-using Redemption.Items.Materials.HM;
 using Redemption.DamageClasses;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -41,23 +40,15 @@ namespace Redemption.Items.Armor.HM.Hardlight
             return body.type == ModContent.ItemType<HardlightPlate>() && legs.type == ModContent.ItemType<HardlightBoots>();
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<CyberPlating>(), 8)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
-
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight ritualist bonus
+            player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight druid bonus
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Summons a drone containing a fungus bio-weapon to poison the enemy";
             }
-            player.GetModPlayer<BuffPlayer>().hardlightBonus = 5;
+            player.RedemptionPlayerBuff().hardlightBonus = 5;
         }
     }
 }

@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Redemption.Base;
 using System;
-using Redemption.Buffs.Debuffs;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -30,8 +30,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.width = 40;
             Projectile.height = 40;
             Projectile.hide = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
@@ -173,7 +173,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.penetrate = -1;
             Projectile.timeLeft = 900;
             Projectile.scale = 1.2f;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public override bool? CanCutTiles() => false;

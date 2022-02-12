@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Redemption.Globals.Player;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.PreHM.DragonLead
 {
@@ -45,9 +45,9 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             player.setBonus = "20% increased Ice elemental resistance\n" +
                 "33% chance for weapons to inflict Dragonblaze\n" +
                 "100% chance for all Dragon-Lead weapons to inflict Dragonblaze";
-            player.GetModPlayer<BuffPlayer>().ElementalResistance[3] += 0.2f;
-            player.GetModPlayer<BuffPlayer>().dragonLeadBonus = true;
-            player.GetModPlayer<BuffPlayer>().MetalSet = true;
+            player.RedemptionPlayerBuff().ElementalResistance[3] += 0.2f;
+            player.RedemptionPlayerBuff().dragonLeadBonus = true;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
 
         public override void AddRecipes()

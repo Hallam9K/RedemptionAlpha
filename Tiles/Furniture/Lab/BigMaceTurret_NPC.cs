@@ -30,12 +30,12 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void AI()
         {
-            if (!Parent.IsActive || Parent.type != ModContent.TileType<BigMaceTurretTile>() || !LabArea.Active)
+            if (!Parent.HasTile || Parent.TileType != ModContent.TileType<BigMaceTurretTile>() || !LabArea.Active)
                 Projectile.Kill();
             else
                 Projectile.timeLeft = 2;
 
-            if (Parent.frameX == 18)
+            if (Parent.TileFrameX == 18)
                 Projectile.spriteDirection = -1;
             else
                 Projectile.spriteDirection = 1;

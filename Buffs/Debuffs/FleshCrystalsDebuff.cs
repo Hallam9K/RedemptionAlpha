@@ -1,7 +1,7 @@
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -9,15 +9,13 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flesh Crystals");
-            Description.SetDefault("... The pain... it's... unbearable");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = false;
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().fleshCrystals = true;
+            player.RedemptionPlayerBuff().fleshCrystals = true;
             player.statDefense -= 11;
             player.moveSpeed *= 0.70f;
             player.AddBuff(ModContent.BuffType<HemorrhageDebuff>(), 1800);

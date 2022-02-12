@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -9,8 +9,6 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shock");
-            Description.SetDefault("What have I become..?");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
@@ -18,7 +16,7 @@ namespace Redemption.Buffs.Debuffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().shockDebuff = true;
+            player.RedemptionPlayerBuff().shockDebuff = true;
             player.lifeRegen -= 100;
             player.wingTimeMax = 0;
             player.wingTime = 0;

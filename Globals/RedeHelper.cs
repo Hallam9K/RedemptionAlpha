@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
@@ -73,11 +73,12 @@ namespace Redemption.Globals
             }
 
             //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
-            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC npc = Main.npc[i];
                 float distance = (npc.Center - position).Length();
                 if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
-                    npc.lifeMax <= 5 || npc.GetGlobalNPC<RedeNPC>().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
+                    npc.lifeMax <= 5 || npc.Redemption().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
                     !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles ||
                     !specialCondition(npc))
                     continue;
@@ -95,10 +96,11 @@ namespace Redemption.Globals
         {
             bool foundTarget = false;
             //this is the meat of the targeting logic, it loops through every NPC to check if it is valid the minimum distance and target selected are updated so that the closest valid NPC is selected
-            foreach (Terraria.NPC candidate in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC candidate = Main.npc[i];
                 float distance = (candidate.Center - position).Length();
-                if (!(distance < maxDistance) || !candidate.active || candidate.type == npc.type ||
+                if (!(distance < maxDistance) || !npc.active || candidate.type == npc.type ||
                     !Collision.CanHit(position, 0, 0, candidate.Center, 0, 0) && !ignoreTiles)
                     continue;
 
@@ -220,11 +222,11 @@ namespace Redemption.Globals
 
         public static void SlowRotation(this ref float currentRotation, float targetAngle, float speed)
         {
-            int f = 1; //this is used to switch rotation direction
             float actDirection = new Vector2((float)Math.Cos(currentRotation), (float)Math.Sin(currentRotation))
                 .ToRotation();
             targetAngle = new Vector2((float)Math.Cos(targetAngle), (float)Math.Sin(targetAngle)).ToRotation();
 
+            int f;
             //this makes f 1 or -1 to rotate the shorter distance
             if (Math.Abs(actDirection - targetAngle) > Math.PI)
             {
@@ -313,8 +315,9 @@ namespace Redemption.Globals
 
         public static bool BossActive()
         {
-            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC npc = Main.npc[i];
                 if (!npc.active || !npc.boss)
                     continue;
 
@@ -405,8 +408,9 @@ namespace Redemption.Globals
             float nearestNPCDist = -1;
             int nearestNPC = -1;
 
-            foreach (Terraria.NPC npc in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC npc = Main.npc[i];
                 if (!npc.active)
                     continue;
 
@@ -616,7 +620,7 @@ namespace Redemption.Globals
 
         public static bool PlayerDead(this Terraria.NPC npc)
         {
-            RedeNPC globalNPC = npc.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = npc.Redemption();
             if (globalNPC.attacker is Terraria.Player && ((globalNPC.attacker as Terraria.Player).dead || !(globalNPC.attacker as Terraria.Player).active))
                 return true;
 
@@ -897,7 +901,7 @@ namespace Redemption.Globals
             if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
                 return false;
 
-            if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).GetGlobalNPC<RedeNPC>().invisible)
+            if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).Redemption().invisible)
                 return false;
             if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
                 return false;
@@ -937,15 +941,15 @@ namespace Redemption.Globals
         {
             Terraria.Player player = Main.player[npc.target];
             Point tile = npc.Bottom.ToTileCoordinates();
-            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].IsActive &&
+            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).TileType] && Main.tile[tile.X, tile.Y].HasTile &&
                 npc.Center.Y + yOffset < player.Center.Y)
             {
                 Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if (Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type] ||
-                    Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type] || npc.collideX)
+                if (Main.tile[tile.X - 1, tile.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).TileType] ||
+                    Main.tile[tile2.X + 1, tile2.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).TileType] || npc.collideX)
                 {
                     npc.velocity.X = 0;
                 }
@@ -955,15 +959,15 @@ namespace Redemption.Globals
         public static void JumpDownPlatform(this Terraria.NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
         {
             Point tile = npc.Bottom.ToTileCoordinates();
-            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].IsActive &&
+            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).TileType] && Main.tile[tile.X, tile.Y].HasTile &&
                 npc.Center.Y + yOffset < vector.Y)
             {
                 Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if (Main.tile[tile.X - 1, tile.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type] ||
-                    Main.tile[tile2.X + 1, tile2.Y - 1].IsActiveUnactuated &&
-                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type] || npc.collideX)
+                if (Main.tile[tile.X - 1, tile.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).TileType] ||
+                    Main.tile[tile2.X + 1, tile2.Y - 1].HasUnactuatedTile &&
+                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).TileType] || npc.collideX)
                 {
                     npc.velocity.X = 0;
                 }
@@ -1086,11 +1090,11 @@ namespace Redemption.Globals
                 {
                     if ((tpY < tileY - 4 || tpY > tileY + 4 || tpTileX < tileX - 4 || tpTileX > tileX + 4) &&
                         (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
-                        Main.tile[tpTileX, tpY].IsActiveUnactuated)
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
                     {
                         if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
                             Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
-                            Main.tileSolid[Main.tile[tpTileX, tpY].type] &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
                             return new Vector2(tpTileX, tpY);
@@ -1118,11 +1122,11 @@ namespace Redemption.Globals
                 {
                     if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) &&
                         (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
-                        Main.tile[tpTileX, tpY].IsActiveUnactuated)
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
                     {
                         if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
                             Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
-                            Main.tileSolid[Main.tile[tpTileX, tpY].type] &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
                             return new Vector2(tpTileX, tpY) * 16;
@@ -1137,9 +1141,10 @@ namespace Redemption.Globals
         {
             if (AlwaysDmgNPC == default)
                 AlwaysDmgNPC = new() { 0 };
-            foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
+                Terraria.NPC target = Main.npc[i];
+                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
@@ -1157,9 +1162,10 @@ namespace Redemption.Globals
         {
             if (DontDmgNPC == default)
                 DontDmgNPC = new() { 0 };
-            foreach (Terraria.NPC target in Main.npc.Take(Main.maxNPCs))
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.GetGlobalNPC<RedeNPC>().attacker)
+                Terraria.NPC target = Main.npc[i];
+                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (DontDmgNPC.Contains(target.type))

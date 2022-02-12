@@ -6,12 +6,10 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Redemption.Globals.Player;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
-using Redemption.Base;
 using System;
 using Terraria.Graphics.Shaders;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -117,7 +115,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                             Projectile.Kill();
                         if (glowAmount >= 0.9f)
                         {
-                            player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 10;
+                            player.RedemptionScreen().ScreenShakeIntensity = 10;
                             SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
                             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
                             for (int i = 0; i < 15; i++)

@@ -2,12 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using System;
-using System.IO;
-using Redemption.Items.Lore;
 using Redemption.Dusts;
 using Terraria.DataStructures;
 using Redemption.Globals;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -27,7 +25,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>()
                 }
             });
 
@@ -39,7 +41,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 52;
             NPC.height = 66;
             NPC.friendly = false;
-            NPC.damage = 100;
+            NPC.damage = 140;
             NPC.defense = 10;
             NPC.lifeMax = 200000;
             NPC.HitSound = SoundID.NPCHit13;

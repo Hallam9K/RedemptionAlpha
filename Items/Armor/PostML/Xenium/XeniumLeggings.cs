@@ -3,8 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PostML;
-using Redemption.Rarities;
-using Redemption.DamageClasses;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Items.Materials.HM;
 

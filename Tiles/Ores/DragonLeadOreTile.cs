@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Ores
                 {
                     for (int l = j - 2; l <= j + 2; l++)
                     {
-                        if ((k != i || l != j) && Main.tile[k, l].IsActive && Main.tile[k, l].type == ModContent.TileType<DragonLeadOreTile>() && !Main.rand.NextBool(2))
+                        if ((k != i || l != j) && Main.tile[k, l].HasTile && Main.tile[k, l].TileType == ModContent.TileType<DragonLeadOreTile>() && !Main.rand.NextBool(2))
                         {
                             WorldGen.KillTile(k, l, noItem: true);
                             if (Main.netMode == NetmodeID.Server)

@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             Projectile.tileCollide = false;
             Projectile.alpha = 200;
             Projectile.timeLeft = 120;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

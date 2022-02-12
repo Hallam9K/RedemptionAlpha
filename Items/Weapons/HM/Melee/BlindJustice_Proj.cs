@@ -6,8 +6,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Redemption.Globals.Player;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 
@@ -142,7 +140,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Projectile.localAI[0] == 1)
                 damage *= 2;
-            if (NPCTags.Demon.Has(target.type))
+            if (NPCLists.Demon.Contains(target.type))
                 damage *= 2;
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);

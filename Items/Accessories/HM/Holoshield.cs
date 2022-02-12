@@ -37,8 +37,8 @@ namespace Redemption.Items.Accessories.HM
     }
 	public class HoloshieldDashPlayer : ModPlayer
 	{
-		public const int DashRight = 0;
-		public const int DashLeft = 1;
+		public const int DashRight = 2;
+        public const int DashLeft = 3;
 
 		public const int DashCooldown = 50;
 		public const int DashDuration = 35;
@@ -88,8 +88,6 @@ namespace Redemption.Items.Accessories.HM
 				Player.velocity = newVelocity;
 
                 ShieldHit = -1;
-                // Here you'd be able to set an effect that happens when the dash first activates
-                // Some examples include:  the larger smoke effect from the Master Ninja Gear and Tabi
             }
 
 			if (DashDelay > 0)
@@ -100,10 +98,15 @@ namespace Redemption.Items.Accessories.HM
 				Player.eocDash = DashTimer;
 				Player.armorEffectDrawShadowEOCShield = true;
 
-                if (ShieldHit < 0)
+                if (ShieldHit < 0 && DashTimer > 15)
                 {
                     Rectangle hitbox = new((int)(Player.position.X + Player.velocity.X * 0.5 - 4),
                     (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4), Player.width + 8, Player.height + 8);
+                    if (DashTimer > 25)
+                    {
+                        Player.immune = true;
+                        Player.immuneTime = 10;
+                    }
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -135,11 +138,11 @@ namespace Redemption.Items.Accessories.HM
                                     0, 0);
                         }
 
-                        Player.dashDelay = 30;
-                        Player.velocity.X = -hitDirection * 1f;
-                        Player.velocity.Y = -4f;
                         Player.immune = true;
-                        Player.immuneTime = 10;
+                        Player.immuneTime = 20;
+                        Player.dashDelay = 30;
+                        Player.velocity.X = -Player.velocity.X;
+                        Player.velocity.Y = -4f;
                         ShieldHit = 1;
                     }
                     for (int i = 0; i < Main.maxProjectiles; i++)
@@ -158,12 +161,11 @@ namespace Redemption.Items.Accessories.HM
                         proj.friendly = true;
                         proj.hostile = false;
 
-                        int hitDirection = Player.velocity.X < 0f ? -1 : 1;
-                        Player.dashDelay = 30;
-                        Player.velocity.X = -hitDirection * 1f;
-                        Player.velocity.Y = -4f;
                         Player.immune = true;
-                        Player.immuneTime = 10;
+                        Player.immuneTime = 20;
+                        Player.dashDelay = 30;
+                        Player.velocity.X = -Player.velocity.X;
+                        Player.velocity.Y = -4f;
                         ShieldHit = 1;
                     }
                 }

@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects;
-using Redemption.Globals;
+using Redemption.Dusts;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 400;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -41,8 +42,14 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.wet && !Projectile.lavaWet)
                 Projectile.Kill();
 
-            int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1f);
-            Main.dust[dustIndex].noGravity = true;
+            int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.4f);
+            Main.dust[dust].noGravity = true;
+            Color dustColor = new(253, 221, 3) { A = 0 };
+            Main.dust[dust].color = dustColor;
+            int dust2 = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.4f);
+            Main.dust[dust2].noGravity = true;
+            Color dustColor2 = new(253, 62, 3) { A = 0 };
+            Main.dust[dust2].color = dustColor2;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
@@ -54,9 +61,9 @@ namespace Redemption.Projectiles.Magic
             SoundEngine.PlaySound(SoundID.Item20, Projectile.position);
             for (int i = 0; i < 24; i++)
             {
-                int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);
-                Main.dust[dust].velocity *= 10f;
-                Main.dust[dust].noGravity = true;
+                int dust2 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);
+                Main.dust[dust2].velocity *= 10f;
+                Main.dust[dust2].noGravity = true;
             }
             Projectile.penetrate--;
             if (Projectile.penetrate <= 0)
@@ -78,11 +85,23 @@ namespace Redemption.Projectiles.Magic
         {
             if (!Projectile.wet)
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
+
+            for (int i = 0; i < 12; i++)
+            {
+                int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.4f);
+                Main.dust[dust].noGravity = true;
+                Color dustColor = new(253, 221, 3) { A = 0 };
+                Main.dust[dust].color = dustColor;
+                int dust2 = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.4f);
+                Main.dust[dust2].noGravity = true;
+                Color dustColor2 = new(253, 62, 3) { A = 0 };
+                Main.dust[dust2].color = dustColor2;
+            }
             for (int i = 0; i < 24; i++)
             {
-                int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);
-                Main.dust[dust].velocity *= 10f;
-                Main.dust[dust].noGravity = true;
+                int dust2 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);
+                Main.dust[dust2].velocity *= 10f;
+                Main.dust[dust2].noGravity = true;
             }
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

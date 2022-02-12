@@ -1,20 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -72,7 +68,7 @@ namespace Redemption.NPCs.Wasteland
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            RedeNPC globalNPC = NPC.GetGlobalNPC<RedeNPC>();
+            RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
@@ -119,7 +115,7 @@ namespace Redemption.NPCs.Wasteland
         public override void FindFrame(int frameHeight)
         {
             Point point = NPC.Center.ToTileCoordinates();
-            if (Main.tile[point.X, point.Y].wall == 0)
+            if (Main.tile[point.X, point.Y].WallType == 0)
             {
                 if (NPC.collideY || NPC.velocity.Y == 0)
                     NPC.frame.Y = 0;

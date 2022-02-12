@@ -2,9 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Biomes;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Redemption.Items.Usable;
 using System.Collections.Generic;
 using Terraria;
@@ -13,6 +14,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
@@ -51,7 +53,11 @@ namespace Redemption.NPCs.Lab.Janitor
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 
@@ -76,7 +82,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.boss = true;
             NPC.lavaImmune = true;
             NPC.netAlways = true;
-            NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax;
+            NPC.RedemptionGuard().GuardPoints = NPC.lifeMax;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
@@ -91,12 +97,12 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (AIState is not ActionState.Slip && !NPC.GetGlobalNPC<GuardNPC>().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.GetGlobalNPC<BuffNPC>().stunned && NPC.GetGlobalNPC<GuardNPC>().GuardPoints >= 0)
+            if (AIState is not ActionState.Slip && !NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.GetGlobalNPC<GuardNPC>().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
                 return false;
             }
-            NPC.GetGlobalNPC<GuardNPC>().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 1000);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 1000);
 
             damage *= 2;
             return true;
@@ -235,8 +241,8 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AITimer >= 260)
                     {
                         AniFrameY = 0;
-                        NPC.GetGlobalNPC<GuardNPC>().GuardPoints = NPC.lifeMax;
-                        NPC.GetGlobalNPC<GuardNPC>().GuardBroken = false;
+                        NPC.RedemptionGuard().GuardPoints = NPC.lifeMax;
+                        NPC.RedemptionGuard().GuardBroken = false;
                         AITimer = 0;
                         AIState = ActionState.Jump;
                         NPC.netUpdate = true;

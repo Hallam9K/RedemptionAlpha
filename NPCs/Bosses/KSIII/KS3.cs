@@ -23,6 +23,8 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Accessories.HM;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -75,7 +77,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -136,6 +142,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KS3Trophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SlayerProjector>(), 4));
 
@@ -201,7 +208,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
+            if (projectile.Redemption().TechnicallyMelee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
                 strongHit = true;
         }
 
@@ -279,7 +286,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             else if (NPC.life < (int)(NPC.lifeMax * 0.05f) && phase < 4 && !RedeConfigClient.Instance.NoLoreElements)
                 AIState = ActionState.PhaseChange;
 
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
 
             Vector2 GunOrigin = NPC.Center + RedeHelper.PolarVector(54, gunRot) + RedeHelper.PolarVector(13 * NPC.spriteDirection, gunRot - (float)Math.PI / 2);
             int dmgIncrease = NPC.DistanceSQ(player.Center) > 800 * 800 ? 10 : 0;
@@ -295,7 +302,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                     NPC.LookAtEntity(player);
                     BodyState = (int)BodyAnim.Crossed;
-                    player.GetModPlayer<ScreenPlayer>().Rumble(5, 5);
+                    player.RedemptionScreen().Rumble(5, 5);
                     TeleVector = NPC.Center;
                     TeleGlow = true;
                     if (AITimer++ > 5)
@@ -337,7 +344,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     else
                     {
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().lockScreen = true;
                         NPC.LockMoveRadius(player);
                         if (RedeBossDowned.slayerDeath < 3)
                         {
@@ -641,7 +648,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 40 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -666,7 +673,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 20 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -691,7 +698,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 35 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -766,7 +773,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.velocity.X = player.Center.X > NPC.Center.X ? -9 : 9;
                                     for (int i = 0; i < Main.rand.Next(5, 8); i++)
                                     {
-                                        NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(Main.rand.Next(7, 11) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, SoundID.Item1, "Sounds/Custom/ShotgunBlast1");
+                                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(Main.rand.Next(8, 13) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, SoundID.Item1, "Sounds/Custom/ShotgunBlast1");
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
@@ -890,7 +897,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 if (AITimer % 10 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ProjectileID.PhantasmalBolt, 72, RedeHelper.PolarVector(6 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Sounds/Custom/Gun1");
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -1601,78 +1608,90 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                         #region Hyperspear Dropkick
                         case 3:
-                            NPC.LookAtEntity(player);
-                            AITimer++;
-                            if (AITimer < 100)
+                            if (Main.expertMode)
                             {
-                                NPC.rotation = 0;
-                                if (NPC.DistanceSQ(ShootPos) < 100 * 100 || AITimer > 50)
-                                {
-                                    ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -150 : 150, 200);
-                                    AITimer = 100;
-                                    NPC.velocity.X = 0;
-                                    NPC.velocity.Y = -25;
-
-                                    NPC.frame.X = 2 * NPC.frame.Width;
-                                    NPC.frame.Y = 160;
-                                    BodyState = (int)BodyAnim.DropkickStart;
-
-                                    SoundEngine.PlaySound(SoundID.Item74, NPC.position);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine2>(), 0, NPC.DirectionTo(player.Center + player.velocity * 20f), false, SoundID.Item1.WithVolume(0), ai1: NPC.whoAmI);
-                                    NPC.netUpdate = true;
-                                }
-                                else
-                                    NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 17f, 5f, true);
-                            }
-                            else if (AITimer >= 100 && AITimer < 200)
-                            {
-                                NPC.velocity *= 0.97f;
-                                if (NPC.velocity.Length() < 6 || AITimer > 160)
-                                {
-                                    AITimer = 200;
-                                    NPC.velocity *= 0f;
-                                    BodyState = (int)BodyAnim.Dropkick;
-                                    NPC.rotation = (player.Center + player.velocity * 20f - NPC.Center).ToRotation() + (float)(-Math.PI / 2);
-                                    NPC.netUpdate = true;
-                                }
-                            }
-                            else if (AITimer >= 200)
-                            {
-                                if (AITimer == 204)
-                                    NPC.rotation = (player.Center + player.velocity * 20f - NPC.Center).ToRotation() + (float)(-Math.PI / 2);
-
-                                if (AITimer >= 205)
-                                {
-                                    Rectangle Hitbox = new((int)NPC.Center.X - 29, (int)NPC.Center.Y - 59, 58, 118);
-                                    for (int p = 0; p < Main.maxPlayers; p++)
-                                    {
-                                        Player target = Main.player[p];
-                                        if (!target.active || target.dead)
-                                            continue;
-
-                                        if (!target.Hitbox.Intersects(Hitbox))
-                                            continue;
-
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
-                                        BaseAI.DamagePlayer(target, 156, 3, hitDirection, NPC);
-                                        target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
-                                    }
-                                }
-
-                                if (AITimer == 205)
-                                    NPC.Dash(40, true, SoundID.Item74, player.Center + player.velocity * 20f);
-
-                                if (AITimer > 260 || NPC.Center.Y > player.Center.Y + 400)
+                                NPC.LookAtEntity(player);
+                                AITimer++;
+                                if (AITimer < 100)
                                 {
                                     NPC.rotation = 0;
-                                    NPC.velocity *= 0f;
-                                    chance -= Main.rand.NextFloat(0.2f, 0.5f);
-                                    BodyState = (int)BodyAnim.IdlePhysical;
-                                    AITimer = 0;
-                                    AttackChoice = -1;
-                                    NPC.netUpdate = true;
+                                    if (NPC.DistanceSQ(ShootPos) < 100 * 100 || AITimer > 50)
+                                    {
+                                        ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -150 : 150, 200);
+                                        AITimer = 100;
+                                        NPC.velocity.X = 0;
+                                        NPC.velocity.Y = -25;
+
+                                        NPC.frame.X = 2 * NPC.frame.Width;
+                                        NPC.frame.Y = 160;
+                                        BodyState = (int)BodyAnim.DropkickStart;
+
+                                        SoundEngine.PlaySound(SoundID.Item74, NPC.position);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine2>(), 0, NPC.DirectionTo(player.Center + player.velocity * 20f), false, SoundID.Item1.WithVolume(0), ai1: NPC.whoAmI);
+                                        NPC.netUpdate = true;
+                                    }
+                                    else
+                                        NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 17f, 5f, true);
+                                }
+                                else if (AITimer >= 100 && AITimer < 200)
+                                {
+                                    NPC.velocity *= 0.97f;
+                                    if (NPC.velocity.Length() < 6 || AITimer > 160)
+                                    {
+                                        AITimer = 200;
+                                        NPC.velocity *= 0f;
+                                        BodyState = (int)BodyAnim.Dropkick;
+                                        NPC.rotation = (player.Center + player.velocity * 20f - NPC.Center).ToRotation() + (float)(-Math.PI / 2);
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                                else if (AITimer >= 200)
+                                {
+                                    if (AITimer == 204)
+                                        NPC.rotation = (player.Center + player.velocity * 20f - NPC.Center).ToRotation() + (float)(-Math.PI / 2);
+
+                                    if (AITimer >= 205)
+                                    {
+                                        Rectangle Hitbox = new((int)NPC.Center.X - 29, (int)NPC.Center.Y - 59, 58, 118);
+                                        for (int p = 0; p < Main.maxPlayers; p++)
+                                        {
+                                            Player target = Main.player[p];
+                                            if (!target.active || target.dead)
+                                                continue;
+
+                                            if (!target.Hitbox.Intersects(Hitbox))
+                                                continue;
+
+                                            int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                            BaseAI.DamagePlayer(target, 156, 3, hitDirection, NPC);
+                                            target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
+                                        }
+                                    }
+
+                                    if (AITimer == 205)
+                                        NPC.Dash(40, true, SoundID.Item74, player.Center + player.velocity * 20f);
+
+                                    if (AITimer > 260 || NPC.Center.Y > player.Center.Y + 400)
+                                    {
+                                        NPC.rotation = 0;
+                                        NPC.velocity *= 0f;
+                                        chance -= Main.rand.NextFloat(0.2f, 0.5f);
+                                        BodyState = (int)BodyAnim.IdlePhysical;
+                                        AITimer = 0;
+                                        AttackChoice = -1;
+                                        NPC.netUpdate = true;
+                                    }
                                 }
                             }
+
+                            else
+                            {
+                                chance -= Main.rand.NextFloat(0.2f, 0.5f);
+                                BodyState = (int)BodyAnim.IdlePhysical;
+                                AttackChoice = -1;
+                                NPC.netUpdate = true;
+                            }
+                          
                             break;
                         #endregion
 
@@ -2065,7 +2084,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer++ == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
@@ -2140,7 +2159,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2176,7 +2195,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2229,7 +2248,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case ActionState.Spared:
                     #region Spared
                     NPC.LookAtEntity(player);
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer++ == 0)
                     {
@@ -2271,7 +2290,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer < 30 && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2342,7 +2361,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 }
             }
             #region Teleporting
-            if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
+            if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.RedemptionScreen().lockScreen)
             {
                 if (AttackChoice == 3 && AIState is ActionState.PhysicalAttacks)
                     return;
@@ -2911,9 +2930,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
 
                 spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
-
             if (BodyState < (int)BodyAnim.IdlePhysical)
             {
                 int height = Arms.Height / 6;
@@ -2935,7 +2953,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 if (!NPC.IsABestiaryIconDummy && NPC.dontTakeDamage && !Main.dedServ && spriteBatch != null)
                 {
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
                     Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:ScanShader"]?.GetShader().Shader;
                     effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
@@ -2949,7 +2967,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
                     spriteBatch.End();
-                    spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 }
             }
             return false;

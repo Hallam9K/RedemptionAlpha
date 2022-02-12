@@ -2,12 +2,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.Projectiles.Hostile;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -30,7 +29,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

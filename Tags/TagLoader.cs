@@ -11,7 +11,6 @@ namespace Redemption.Tags
             Globals.ItemTags.SetItemTags();
             Globals.ProjectileTags.SetProjTags();
             Globals.TileTags.SetTileTags();
-            Globals.NPCTags.SetNPCTags();
         }
     }
 }

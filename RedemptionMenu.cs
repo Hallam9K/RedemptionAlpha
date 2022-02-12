@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Redemption.Backgrounds;
 using ReLogic.Content;
 using Terraria.ModLoader;
@@ -12,10 +13,17 @@ namespace Redemption
 
         public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation, ref float logoScale, ref Color drawColor)
         {
-            logoScale = 0.75f;
+            logoDrawCenter -= new Vector2(36, 0);
+            logoScale = 1f;
             return true;
         }
-        public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<WastelandSurfaceBackgroundStyle>();
+        public override void Update(bool isOnTitleScreen)
+        {
+            Main.dayTime = true;
+            Main.time = 40000;
+        }
+
+        public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<RuinedKingdomSurfaceBgStyle_Menu>();
         public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>($"{MenuAssetPath}/Logo");
 
         public override string DisplayName => "Ruined Kingdom";

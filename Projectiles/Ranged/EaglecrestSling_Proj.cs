@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Effects;
 using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
@@ -10,6 +9,8 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -63,7 +64,7 @@ namespace Redemption.Projectiles.Ranged
         {
             Player player = Main.player[Projectile.owner];
             if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                player.RedemptionScreen().ScreenShakeIntensity = 5;
 
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)

@@ -8,8 +8,6 @@ namespace Redemption.Buffs.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Xenium Autoturret");
-			Description.SetDefault("Pewpewpewpewpewpew");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

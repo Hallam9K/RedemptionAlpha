@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Globals.NPC;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
@@ -11,6 +10,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Critters
 {
@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Critters
 
                     HopCheck();
 
-                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         moveTo = NPC.FindGround(10);
                         AITimer = 0;
@@ -110,7 +110,7 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
 
-                    if (Main.rand.NextBool(500) && tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type] && TileTags.WoodLeaf.Has(tile.type))
+                    if (Main.rand.NextBool(500) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileTags.WoodLeaf.Has(tile.TileType))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(180, 300);
@@ -121,7 +121,7 @@ namespace Redemption.NPCs.Critters
                 case ActionState.Wander:
                     HopCheck();
 
-                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.GetGlobalNPC<RedeNPC>().invisible)
+                    if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0 && !npcTarget.Redemption().invisible)
                     {
                         RedeHelper.HorizontallyMove(NPC,
                             new Vector2(npcTarget.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50,
@@ -162,7 +162,7 @@ namespace Redemption.NPCs.Critters
                         NPC.HealEffect(1);
                     }
 
-                    if (AITimer >= TimerRand || tile is not { IsActiveUnactuated: true } || !Main.tileSolid[tile.type] || !TileTags.WoodLeaf.Has(tile.type))
+                    if (AITimer >= TimerRand || tile is not { HasUnactuatedTile: true } || !Main.tileSolid[tile.TileType] || !TileTags.WoodLeaf.Has(tile.TileType))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
@@ -243,7 +243,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDayGrassCritter.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == TileID.Grass ? 1.7f : 0f;
+            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Grass ? 1.7f : 0f;
 
             return baseChance * multiplier;
         }

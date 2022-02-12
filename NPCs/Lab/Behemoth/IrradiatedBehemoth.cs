@@ -15,6 +15,8 @@ using Terraria.Audio;
 using Redemption.WorldGeneration;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Lore;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -50,7 +52,14 @@ namespace Redemption.NPCs.Lab.Behemoth
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<BileDebuff>(),
+                    ModContent.BuffType<GreenRashesDebuff>(),
+                    ModContent.BuffType<GlowingPustulesDebuff>(),
+                    ModContent.BuffType<FleshCrystalsDebuff>(),
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             });
 
@@ -148,8 +157,8 @@ namespace Redemption.NPCs.Lab.Behemoth
                     if (AITimer < 180 && NPC.DistanceSQ(Main.LocalPlayer.Center) < 1300 * 1300)
                     {
                         NPC.velocity.Y = 0.1f;
-                        player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                        player.RedemptionScreen().lockScreen = true;
                     }
                     else
                     {

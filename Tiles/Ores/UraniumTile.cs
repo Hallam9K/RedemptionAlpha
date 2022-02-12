@@ -6,6 +6,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Tiles.Ores
 {
@@ -38,8 +39,8 @@ namespace Redemption.Tiles.Ores
         {
 
             Player player = Main.LocalPlayer;
-            Radiation modPlayer = player.GetModPlayer<Radiation>();
-            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
+            Radiation modPlayer = player.RedemptionRad();
+            BuffPlayer suit = player.RedemptionPlayerBuff();
             var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
             if (dist <= 15 && dist > 8 && !suit.hazmatSuit && !suit.HEVSuit)
             {

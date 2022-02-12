@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
 
 namespace Redemption.Items.Materials.PostML

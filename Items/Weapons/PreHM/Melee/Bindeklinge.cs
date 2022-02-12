@@ -4,10 +4,10 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Melee;
 using Terraria.GameContent.Creative;
-using Redemption.Globals;
 using Terraria.Audio;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useTurn = true;
             Item.rare = ItemRarityID.Blue;
             if (!Main.dedServ)
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

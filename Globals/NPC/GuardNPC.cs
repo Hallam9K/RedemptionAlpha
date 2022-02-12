@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals.NPC
 {
@@ -16,7 +17,7 @@ namespace Redemption.Globals.NPC
 
         public void GuardHit(Terraria.NPC npc, ref double damage, LegacySoundStyle sound, float dmgReduction = 0.25f)
         {
-            if (IgnoreArmour || npc.HasBuff(BuffID.BrokenArmor) || npc.GetGlobalNPC<BuffNPC>().stunned || GuardPoints < 0 || GuardBroken)
+            if (IgnoreArmour || npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPoints < 0 || GuardBroken)
                 return;
 
             damage = (int)(damage * dmgReduction);
@@ -52,7 +53,7 @@ namespace Redemption.Globals.NPC
 
             if (ItemTags.Psychic.Has(item.type))
                 IgnoreArmour = true;
-            if (item.hammer > 0 || item.GetGlobalItem<RedeItem>().TechnicallyHammer)
+            if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
                 damage *= 4;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -62,7 +63,7 @@ namespace Redemption.Globals.NPC
 
             if (ProjectileTags.Psychic.Has(projectile.type))
                 IgnoreArmour = true;
-            if (projectile.GetGlobalProjectile<RedeProjectile>().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
+            if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
                 damage *= 4;
         }
         public override void SetDefaults(Terraria.NPC npc)
@@ -86,7 +87,7 @@ namespace Redemption.Globals.NPC
         {
             if (npc.type == NPCID.GreekSkeleton)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.GetGlobalNPC<BuffNPC>().stunned && GuardPoints >= 0)
+                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
                     return false;
@@ -99,7 +100,7 @@ namespace Redemption.Globals.NPC
                 npc.type == NPCID.BlueArmoredBonesSword || npc.type == NPCID.RustyArmoredBonesAxe ||
                 npc.type == NPCID.RustyArmoredBonesFlail || npc.type == NPCID.RustyArmoredBonesSword)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.GetGlobalNPC<BuffNPC>().stunned && GuardPoints >= 0)
+                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
                     return false;
@@ -109,7 +110,7 @@ namespace Redemption.Globals.NPC
             if (npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
                 npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.GetGlobalNPC<BuffNPC>().stunned && GuardPoints >= 0)
+                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
                     return false;
@@ -118,7 +119,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type == NPCID.PossessedArmor)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.GetGlobalNPC<BuffNPC>().stunned && GuardPoints >= 0)
+                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
                     return false;
@@ -127,7 +128,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type == NPCID.GoblinWarrior)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.GetGlobalNPC<BuffNPC>().stunned && GuardPoints >= 0)
+                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
                     return false;
@@ -136,7 +137,7 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type == NPCID.Paladin)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.GetGlobalNPC<BuffNPC>().stunned && GuardPoints >= 0)
+                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.2f);
                     return false;

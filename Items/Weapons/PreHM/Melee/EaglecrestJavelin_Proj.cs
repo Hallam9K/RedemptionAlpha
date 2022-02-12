@@ -9,6 +9,7 @@ using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Base;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -105,7 +106,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Player player = Main.player[Projectile.owner];
                 if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 15;
+                    player.RedemptionScreen().ScreenShakeIntensity = 15;
 
                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
                 for (int i = 0; i < 10; i++)

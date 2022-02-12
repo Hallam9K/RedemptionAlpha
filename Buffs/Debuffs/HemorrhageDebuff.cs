@@ -1,7 +1,7 @@
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -9,15 +9,13 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hemhorraging");
-            Description.SetDefault("The crystals... they're sharp... it hurts to move...");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<BuffPlayer>().hemorrhageDebuff = true;
+            player.RedemptionPlayerBuff().hemorrhageDebuff = true;
             if (player.velocity != Vector2.Zero)
             {
                 player.lifeRegen -= 25;

@@ -2,8 +2,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
-using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -58,7 +58,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Summons a drone that gives a continuous feed of mana for 10 seconds";
             }
-            player.GetModPlayer<BuffPlayer>().hardlightBonus = 2;
+            player.RedemptionPlayerBuff().hardlightBonus = 2;
         }
     }
 }

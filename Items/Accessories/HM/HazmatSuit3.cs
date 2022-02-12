@@ -1,9 +1,9 @@
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -61,8 +61,8 @@ namespace Redemption.Items.Accessories.HM
 
 			player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
 			player.accDivingHelm = true;
-			player.GetModPlayer<BuffPlayer>().hazmatSuit = true;
-			player.GetModPlayer<BuffPlayer>().WastelandWaterImmune = true;
+			player.RedemptionPlayerBuff().hazmatSuit = true;
+			player.RedemptionPlayerBuff().WastelandWaterImmune = true;
 		}
     }
 	public class HazmatSuit3Player : ModPlayer

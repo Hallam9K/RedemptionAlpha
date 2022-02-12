@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects;
-using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 240;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.Magic
 
             Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
             Tile tile2 = Main.tile[tile.X, tile.Y];
-            if (tile2 is { IsActiveUnactuated: true } && Main.tileSolid[tile2.type])
+            if (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])
                 Projectile.timeLeft -= 4;
         }
 

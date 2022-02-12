@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -46,8 +47,8 @@ namespace Redemption.Tiles.Tiles
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             Player player = Main.LocalPlayer;
-            Radiation modPlayer = player.GetModPlayer<Radiation>();
-            BuffPlayer suit = player.GetModPlayer<BuffPlayer>();
+            Radiation modPlayer = player.RedemptionRad();
+            BuffPlayer suit = player.RedemptionPlayerBuff();
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 0.5f, j + 0.5f));
             if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
             {
@@ -65,27 +66,27 @@ namespace Redemption.Tiles.Tiles
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             Tile tileAbove2 = Framing.GetTileSafely(i, j - 2);
             
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<GrubNestTile>());
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<GrubNestTile>(), 0, 0, -1, -1);
             }
-            if (!tileAbove.IsActive && !tileAbove2.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmitesTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmitesTile>(), 0, 0, -1, -1);
             }
-            if (!tileAbove.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmites2Tile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<RadioactiveSandstoneStalagmites2Tile>(), 0, 0, -1, -1);
             }
-            if (!tileBelow.IsActive && !tileBelow2.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            if (!tileBelow.HasTile && !tileBelow2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
                 WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmitesTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmitesTile>(), 0, 0, -1, -1);
             }
-            if (!tileBelow.IsActive && Main.tile[i, j].IsActive && Main.rand.NextBool(300))
+            if (!tileBelow.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(300))
             {
                 WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmites2Tile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<RadioactiveSandstoneStalacmites2Tile>(), 0, 0, -1, -1);

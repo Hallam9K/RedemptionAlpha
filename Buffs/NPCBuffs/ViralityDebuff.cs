@@ -1,10 +1,10 @@
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.NPCBuffs
 {
-	public class ViralityDebuff : ModBuff
+    public class ViralityDebuff : ModBuff
 	{
 		public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
 
@@ -16,7 +16,7 @@ namespace Redemption.Buffs.NPCBuffs
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{
-			npc.GetGlobalNPC<BuffNPC>().infected = true;
+			npc.RedemptionNPCBuff().infected = true;
 		}
 	}
 }

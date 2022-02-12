@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -23,7 +24,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
-            Projectile.GetGlobalProjectile<RedeProjectile>().IsAxe = true;
+            Projectile.Redemption().IsAxe = true;
         }
 
         public override bool? CanCutTiles()
@@ -80,10 +81,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frame++;
                         if (Projectile.frame is 4)
                         {
-                            if (tile is { IsActiveUnactuated: true } && Main.tileSolid[tile.type])
+                            if (tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                             {
                                 SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-                                player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 5;
+                                player.RedemptionScreen().ScreenShakeIntensity = 5;
                             }
                             else
                             {

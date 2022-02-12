@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {
@@ -25,12 +25,12 @@ namespace Redemption.Globals
         }
         public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
-            if (target.life < target.lifeMax && NPCTags.SkeletonHumanoid.Has(target.type))
+            if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))
             {
                 if (Main.rand.NextBool(chance))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
-                    target.GetGlobalNPC<RedeNPC>().decapitated = true;
+                    target.Redemption().decapitated = true;
                     damage = damage < target.life ? target.life : damage;
                     crit = true;
                 }
@@ -53,8 +53,8 @@ namespace Redemption.Globals
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
-            Projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee = true;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Redemption.Globals
             switch (type)
             {
                 case BuffID.OnFire:
-                    if (NPCTags.Plantlike.Has(npc.type) || NPCTags.Cold.Has(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+                    if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
                     {
                         npc.AddBuff(BuffID.OnFire3, npc.buffTime[buffIndex]);
                         npc.buffTime[buffIndex] -= 1;

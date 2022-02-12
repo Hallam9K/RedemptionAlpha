@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -37,7 +38,7 @@ namespace Redemption.Items.Accessories.PreHM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            BuffPlayer modPlayer = player.GetModPlayer<BuffPlayer>();
+            BuffPlayer modPlayer = player.RedemptionPlayerBuff();
             modPlayer.ElementalResistance[7] += 0.1f;
             modPlayer.ElementalResistance[8] -= 0.1f;
 
@@ -68,7 +69,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (!player.active || player.HasBuff<ErhanCrossCooldown>() || !player.GetModPlayer<BuffPlayer>().erhanCross)
+            if (!player.active || player.HasBuff<ErhanCrossCooldown>() || !player.RedemptionPlayerBuff().erhanCross)
                 Projectile.Kill();
 
             Projectile.timeLeft = 10;
@@ -89,7 +90,7 @@ namespace Redemption.Items.Accessories.PreHM
                     if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     Projectile.ai[1] = 10;

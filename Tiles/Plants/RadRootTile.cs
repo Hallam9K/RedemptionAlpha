@@ -63,7 +63,7 @@ namespace Redemption.Tiles.Plants
 
 		public override bool Drop(int i, int j)
 		{
-			int stage = Main.tile[i, j].frameX / 18;
+			int stage = Main.tile[i, j].TileFrameX / 18;
             if (stage == 2)
 				Item.NewItem(i * 16, j * 16, 0, 0, ModContent.ItemType<RadRoot>());
 			return false;
@@ -71,14 +71,14 @@ namespace Redemption.Tiles.Plants
 
 		public override void RandomUpdate(int i, int j)
 		{
-			if (Main.tile[i, j].frameX == 0)
-				Main.tile[i, j].frameX += 18;
-			else if (Main.tile[i, j].frameX == 18)
-				Main.tile[i, j].frameX += 18;
+			if (Main.tile[i, j].TileFrameX == 0)
+				Main.tile[i, j].TileFrameX += 18;
+			else if (Main.tile[i, j].TileFrameX == 18)
+				Main.tile[i, j].TileFrameX += 18;
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)   //light colors
         {
-            int stage = Main.tile[i, j].frameX / 18;
+            int stage = Main.tile[i, j].TileFrameX / 18;
             if (stage == 2)
             {
                 r = 0.0f;

@@ -1,6 +1,4 @@
-using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
@@ -13,8 +11,9 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Summon For Cleaver");
-            Tooltip.SetDefault("Summons Omega Cleaver"
+            DisplayName.SetDefault("Omega Blade");
+            Tooltip.SetDefault("Summons Omega Cleaver" +
+                "\n'The corrupted blade draws near the power, thus beginning the final hour'"
                 + "\nOnly usable at night"
                 + "\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
@@ -25,7 +24,7 @@ namespace Redemption.Items.Usable.Summons
             Item.width = 34;
             Item.height = 38;
             Item.maxStack = 1;
-            Item.value = Item.sellPrice(0, 50, 0, 0);
+            Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Red;
             Item.useAnimation = 30;
             Item.useTime = 30;

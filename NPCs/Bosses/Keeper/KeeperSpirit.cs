@@ -19,6 +19,7 @@ using Terraria.Graphics.Shaders;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -464,7 +465,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 {
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -0.1f * NPC.spriteDirection;
-                                    player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 3;
+                                    player.RedemptionScreen().ScreenShakeIntensity = 3;
 
                                     if (AITimer % 2 == 0)
                                     {

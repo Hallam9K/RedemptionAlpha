@@ -1,8 +1,5 @@
-using Redemption.DamageClasses;
-using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
-using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.GameContent.Creative;

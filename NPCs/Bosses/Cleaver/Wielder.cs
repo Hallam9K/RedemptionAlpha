@@ -8,6 +8,11 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using System.IO;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -50,7 +55,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused,
                     BuffID.Poisoned,
-                    BuffID.Venom
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -89,7 +98,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (projectile.GetGlobalProjectile<RedeProjectile>().TechnicallyMelee)
+            if (projectile.Redemption().TechnicallyMelee)
                 strongHit = true;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -107,7 +116,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
         }
-
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordRemote>()));
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
@@ -205,7 +217,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (!player.active || player.dead)
                 return;
 
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = NPC.Center;
+            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -213,7 +225,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer++ == 0 && Main.rand.NextBool(50))
                             Funny = true;
 
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().lockScreen = true;
                         if (AITimer == 1)
                         {
                             aniType = 3;
@@ -237,7 +249,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     break;
                 case ActionState.Intro:
                     AITimer++;
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().lockScreen = true;
                     if (Funny && !Main.dedServ)
                     {
                         if (AITimer == 60)
@@ -249,7 +261,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer > 261)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
-                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
                             aniType = 4;
                             AITimer = 0;
                             AIState = ActionState.Intro2;
@@ -261,7 +273,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer > 60)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
-                                NPC.NewNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
 
                             aniType = 4;
                             AITimer = 0;
@@ -640,7 +652,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     NPC.LookAtEntity(player);
                     if (NPC.ai[2] < 260)
                     {
-                        player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().lockScreen = true;
                         NPC.LockMoveRadius(player);
                     }
 

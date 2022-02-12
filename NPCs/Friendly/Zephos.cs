@@ -34,12 +34,15 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 8;
 
-            NPC.Happiness.LikeBiome(BiomeID.Forest);
-            NPC.Happiness.LoveBiome(BiomeID.Ocean);
-            NPC.Happiness.DislikeBiome(BiomeID.NormalUnderground);
+            NPC.Happiness.LikeBiome(PrimaryBiomeID.Forest);
+            NPC.Happiness.LoveBiome(PrimaryBiomeID.Ocean);
+            NPC.Happiness.DislikeBiome(PrimaryBiomeID.NormalUnderground);
+            NPC.Happiness.HateBiome(PrimaryBiomeID.Snow);
 
             NPC.Happiness.LoveNPC(ModContent.NPCType<Daerel>());
+            NPC.Happiness.LikeNPC(NPCID.Pirate);
             NPC.Happiness.DislikeNPC(NPCID.Merchant);
+            NPC.Happiness.HateNPC(NPCID.TaxCollector);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
@@ -269,8 +272,8 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CantripStaff>());
             //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IronfurAmulet>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Archcloth>());
-            //if (NPC.downedBoss1)
-            //    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ForestGolemPainting>());
+            if (NPC.downedBoss1)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SilverRapier>());
 
             if (NPC.downedBoss2)
             {

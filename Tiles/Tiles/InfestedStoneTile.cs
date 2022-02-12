@@ -40,7 +40,7 @@ namespace Redemption.Tiles.Tiles
                 {
                     for (int l = j - 3; l <= j + 3; l++)
                     {
-                        if ((k != i || l != j) && Main.tile[k, l].IsActive && Main.tile[k, l].type == ModContent.TileType<InfestedStoneTile>() && !Main.rand.NextBool(3))
+                        if ((k != i || l != j) && Main.tile[k, l].HasTile && Main.tile[k, l].TileType == ModContent.TileType<InfestedStoneTile>() && !Main.rand.NextBool(3))
                         {
                             WorldGen.KillTile(k, l, noItem: true);
                             if (Main.netMode == NetmodeID.Server)

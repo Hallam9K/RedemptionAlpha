@@ -1,15 +1,13 @@
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Melee;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.Furniture.Lab;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Buffs.Cooldowns;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -26,8 +24,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 50;
-            Item.height = 50;
+            Item.width = 74;
+            Item.height = 74;
             Item.rare = ItemRarityID.Purple;
             Item.value = Item.sellPrice(gold: 15);
 
@@ -39,7 +37,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 550;
+            Item.damage = 750;
             Item.knockBack = 8;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -67,34 +65,47 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             bool sp = ShotCount > 0;
 
-            if (Cooldown > 0)
+            if (player.altFunctionUse == 2 && !player.HasBuff<XeniumLanceCooldown>())
             {
-                switch (Level)
-                {
-                    case 0:
-                        if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash").WithPitchVariance(0.1f).WithVolume(0.8f), player.position);
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 1, sp ? 1 : 0);
-                        Level++;
-                        break;
-                    case 1:
-                        if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash2").WithPitchVariance(0.1f).WithVolume(0.8f), player.position);
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 2, sp ? 1 : 0);
-
-                        Cooldown = 0;
-                        Level = 0;
-                        ShotCount = 5;
-                        return false;
-                }
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash2").WithPitchVariance(0.1f).WithVolume(1), player.position);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 3, sp ? 1 : 0);
+                player.AddBuff(ModContent.BuffType<XeniumLanceCooldown>(), 20 * 60);
+                ShotCount--;
             }
             else
             {
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash").WithPitchVariance(0.1f).WithVolume(0.8f), player.position);
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 0, sp ? 1 : 0);
-                Level = 0;
+                if (Cooldown > 0)
+                {
+                    switch (Level)
+                    {
+                        case 0:
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash").WithPitchVariance(0.1f).WithVolume(0.8f), player.position);
+                            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 1, sp ? 1 : 0);
+                            Level++;
+                            break;
+                        case 1:
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash2").WithPitchVariance(0.1f).WithVolume(0.8f), player.position);
+                            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 2, sp ? 1 : 0);
+
+                            Cooldown = 0;
+                            Level = 0;
+                            ShotCount = 5;
+                            return false;
+                    }
+                }
+                else
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash").WithPitchVariance(0.1f).WithVolume(0.8f), player.position);
+                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 0, sp ? 1 : 0);
+                    Level = 0;
+                }
             }
+            
+           
 
             Cooldown = 40;
 

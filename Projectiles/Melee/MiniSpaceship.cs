@@ -4,9 +4,10 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.Effects;
 using Redemption.Globals.Player;
 using Redemption.Projectiles.Ranged;
+using Redemption.BaseExtension;
+using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 800;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -56,7 +57,7 @@ namespace Redemption.Projectiles.Melee
             }
 
             Player player = Main.player[Projectile.owner];
-            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+            RedePlayer modPlayer = player.Redemption();
             if (Projectile.localAI[0] == 0)
             {
                 DustHelper.DrawCircle(Projectile.Center, DustID.Frost, 2, 2, 2, 1, 2, nogravity: true);

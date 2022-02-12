@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Redemption.Globals.Player;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -27,12 +26,12 @@ namespace Redemption.Items.Accessories.PreHM
             Item.accessory = true;
             if (!Main.dedServ)
             {
-                Item.GetGlobalItem<ItemUseGlow>().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
             }
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<BuffPlayer>().skeletonFriendly = true;
+            player.RedemptionPlayerBuff().skeletonFriendly = true;
         }
     }
 }

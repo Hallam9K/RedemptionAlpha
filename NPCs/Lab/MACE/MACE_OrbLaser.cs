@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.hide = true;
             Projectile.alpha = 255;
             Projectile.timeLeft = 60;
-            Projectile.GetGlobalProjectile<RedeProjectile>().Unparryable = true;
+            Projectile.Redemption().Unparryable = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
