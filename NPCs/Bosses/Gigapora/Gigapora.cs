@@ -23,7 +23,7 @@ using static Redemption.Effects.RenderTargets.ShieldLayer;
 namespace Redemption.NPCs.Bosses.Gigapora
 {
     [AutoloadBossHead]
-    public class Gigapora : ModNPC , IShieldSprite
+    public class Gigapora : ModNPC, IShieldSprite
     {
         public float[] oldrot = new float[6];
         public enum ActionState
@@ -269,14 +269,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity.Y += 0.2f;
                     }
                     else if (TimerRand == 0)
-                        WormMovement(player, 18, 0.1f);
+                        WormMovement(player, 18, 0.07f);
                     if (++AITimer > 600)
                     {
                         TimerRand = 0;
                         AITimer = 0;
                         if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()) && Main.rand.NextBool(2))
                             AIState = ActionState.ProtectCore;
-                        else
+                        else if (BodyState >= 4)
                             AIState = ActionState.Gigabeam;
                     }
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
@@ -460,77 +460,74 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private int Ejected;
         public override void PostAI()
         {
-            if (NPC.type == ModContent.NPCType<Gigapora_BodySegment>())
+            switch (BodyState)
             {
-                switch (BodyState)
-                {
-                    case 0:
-                        if (BodyTimer++ >= 600)
+                case 0:
+                    if (BodyTimer++ >= 600)
+                    {
+                        EjectCore();
+                        if (Ejected >= 1)
                         {
-                            EjectCore();
-                            if (Ejected >= 1)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 1;
-                            }
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 1;
                         }
-                        break;
-                    case 1:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 2;
-                        break;
-                    case 2:
-                        if (BodyTimer++ >= 300)
+                    }
+                    break;
+                case 1:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 2;
+                    break;
+                case 2:
+                    if (BodyTimer++ >= 300)
+                    {
+                        EjectCore(2);
+                        if (Ejected >= 1)
                         {
-                            EjectCore(2);
-                            if (Ejected >= 1)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 3;
-                            }
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 3;
                         }
-                        break;
-                    case 3:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 4;
-                        break;
-                    case 4:
-                        if (BodyTimer++ >= 300)
+                    }
+                    break;
+                case 3:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 4;
+                    break;
+                case 4:
+                    if (BodyTimer++ >= 300)
+                    {
+                        EjectCore(3);
+                        EjectCore(4);
+                        if (Ejected >= 2)
                         {
-                            EjectCore(3);
-                            EjectCore(4);
-                            if (Ejected >= 2)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 5;
-                            }
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 5;
                         }
-                        break;
-                    case 5:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 6;
-                        break;
-                    case 6:
-                        if (BodyTimer++ >= 400)
+                    }
+                    break;
+                case 5:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 6;
+                    break;
+                case 6:
+                    if (BodyTimer++ >= 400)
+                    {
+                        EjectCore(5);
+                        EjectCore(6);
+                        if (Ejected >= 2)
                         {
-                            EjectCore(5);
-                            EjectCore(6);
-                            if (Ejected >= 2)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 7;
-                            }
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 7;
                         }
-                        break;
-                    case 7:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 8;
-                        break;
-                }
+                    }
+                    break;
+                case 7:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 8;
+                    break;
             }
         }
         public void EjectCore(int segID = 1)
