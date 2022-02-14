@@ -71,7 +71,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'Visored plate mail helm of the Common Guard unit of Anglon that was scavenged by skeletons.\n" +
+                    "'Visored plate mail helm of the Common Guard unit of Anglon that were scavenged by skeletons.\n" +
                     "Originally shining steel, the metal has since dulled with time and coated with layers of dust.\n\n" +
                     "The Common Guard was founded when an Overlord's city was completely obliterated\n" +
                     "by a stray demon that sneaked through an unguarded portal to Demonhollow.\n\n" +

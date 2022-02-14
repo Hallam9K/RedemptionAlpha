@@ -103,9 +103,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'A golden staff, protected by a monastery of clerics in Thamor\n" +
-                    "Imbued with holy magic, it was primarily revered for its healing capabilities\n" +
-                    "With numerous quantities of people pursuing its power to heal themselves or their loved ones.'")
+                    "'A golden staff, protected by a monastery of clerics in Thamor.\n" +
+                    "Imbued with holy magic, it was primarily revered for its healing capabilities,\n" +
+                    "with numerous quantities of people pursuing its power to heal themselves or their loved ones.'")
                 {
                     overrideColor = Color.LightGray
                 };

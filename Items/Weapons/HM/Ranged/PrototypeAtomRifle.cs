@@ -73,7 +73,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 TooltipLine line = new(Mod, "Lore",
                     "'A Teochrome experimental weapon, it was created after a board meeting, in which military contractors wanted a\n" +
                     "nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype\n" +
-                    "created, and the death toll from radiation exposure has been suprisingly miniscule.'")
+                    "created, and the death toll from radiation exposure has been surprisingly miniscule.'")
                 {
                     overrideColor = Color.LightGray
                 };
