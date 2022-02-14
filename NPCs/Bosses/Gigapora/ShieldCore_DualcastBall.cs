@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = 1;
-            Projectile.timeLeft = 360;
+            Projectile.timeLeft = 300;
             Projectile.Redemption().Unparryable = true;
         }
         public void DoTrailCreation(TrailManager tManager)
@@ -74,7 +74,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             else
                 Projectile.velocity *= 0.94f;
 
-            if (Projectile.timeLeft <= 320)
+            if (Projectile.timeLeft <= 260)
             {
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
