@@ -31,6 +31,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             tManager.CreateTrail(Projectile, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 20f, 200f);
         }
+        public override void AI()
+        {
+            Projectile.velocity *= 1.02f;
+        }
         public override void PostDraw(Color lightColor)
         {
             Main.spriteBatch.End();

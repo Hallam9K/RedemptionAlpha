@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.width = 120;
             NPC.height = 140;
             NPC.damage = 140;
-            NPC.defense = 80;
+            NPC.defense = 20;
             NPC.lifeMax = 50000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
@@ -100,7 +100,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.trapImmune = true;
             NPC.immortal = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1G");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
             //BossBag = ModContent.ItemType<OmegaGigaporaBag>();
         }
@@ -141,12 +141,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public override bool CheckActive()
-        {
-            Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime;
-        }
-
         private bool spawned;
         private float shieldAlpha;
         public override void AI()
@@ -269,7 +263,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity.Y += 0.2f;
                     }
                     else if (TimerRand == 0)
-                        WormMovement(player, 18, 0.07f);
+                        WormMovement(player, 18, 0.05f);
                     if (++AITimer > 600)
                     {
                         TimerRand = 0;
@@ -340,6 +334,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     break;
                 case ActionState.Gigabeam:
                     targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC core = Main.npc[i];
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                            continue;
+
+                        core.ai[1] = 1;
+                        core.ai[2] = 1;
+
+                    }
                     switch (TimerRand)
                     {
                         case 0:
@@ -375,7 +379,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                             break;
                         case 2:
-                            if (player.Center.Y + 60 > NPC.Center.Y)
+                            if (player.Center.Y + 100 > NPC.Center.Y)
                                 AITimer = 1;
                             if (AITimer > 0)
                             {
@@ -460,6 +464,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private int Ejected;
         public override void PostAI()
         {
+            Player player = Main.player[NPC.target];
+            if (player.active && !player.dead && !Main.dayTime)
+                NPC.DiscourageDespawn(60);
+
             switch (BodyState)
             {
                 case 0:

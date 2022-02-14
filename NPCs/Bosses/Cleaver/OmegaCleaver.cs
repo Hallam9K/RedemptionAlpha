@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
             BossBag = ModContent.ItemType<OmegaCleaverBag>();
         }

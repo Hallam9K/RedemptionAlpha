@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 5000;
             NPC.damage = 60;
             NPC.defense = 25;
             NPC.knockBackResist = 0;
@@ -77,7 +77,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.DeathSound = SoundID.NPCDeath14;
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
-
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.damage = (int)(NPC.damage * 0.6f);
+        }
         public override void OnKill()
         {
             Item.NewItem(NPC.getRect(), ItemID.Heart);
@@ -139,7 +143,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (AITimer++ % (another ? 90 : 60) == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 16, true, SoundID.Item1, "Sounds/Custom/Laser1");
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, true, SoundID.Item1, "Sounds/Custom/Laser1");
                     }
                     if (AITimer >= (another ? 220 : 180) && NPC.DistanceSQ(player.Center) <= 600 * 600)
                     {
@@ -155,7 +159,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (AITimer++ % 3 == 0 && AITimer < 30)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation() + TimerRand - MathHelper.ToRadians(another ? 50 : 25)), true, SoundID.Item1, "Sounds/Custom/Laser1");
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation() + TimerRand - MathHelper.ToRadians(another ? 50 : 25)), true, SoundID.Item1, "Sounds/Custom/Laser1");
 
                         TimerRand += MathHelper.ToRadians(another ? 20 : 10);
                         NPC.netUpdate = true;
