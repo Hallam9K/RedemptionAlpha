@@ -253,7 +253,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!NPC.IsABestiaryIconDummy)
             {
                 Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Empty", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                 Texture2D core = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Core").Value;
                 Texture2D tail = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Tail").Value;
@@ -270,7 +270,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 {
                     case float s when s <= 0:
                         ShieldEffect.Parameters["sinMult"].SetValue(30f / 7f);
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2 / (HexagonTexture.Width), texture.Height / 16 / (HexagonTexture.Height)));
+                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2f / (HexagonTexture.Width), texture.Height / 16 / (HexagonTexture.Height)));
                         ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
                         ShieldEffect.Parameters["frameAmount"].SetValue(16f);
                         ShieldEffect.CurrentTechnique.Passes[0].Apply();
@@ -281,7 +281,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         int y = height * CoreFrame;
                         Vector2 coreOrigin = new(core.Width / 2f, height / 2f);
                         ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(core.Width / 2 / (HexagonTexture.Width), height / (HexagonTexture.Height)));
+                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(core.Width / 2f / (HexagonTexture.Width), height / 2f / HexagonTexture.Height));
                         ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (core.Width / 2), 1f / (core.Height / 2)));
                         ShieldEffect.Parameters["frameAmount"].SetValue(3f);
                         ShieldEffect.CurrentTechnique.Passes[0].Apply();
@@ -292,7 +292,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         int y2 = height2 * TailFrame;
                         Vector2 tailOrigin = new(tail.Width / 2f, height2 / 2f);
                         ShieldEffect.Parameters["sinMult"].SetValue(30f / 4f);
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(tail.Width / 2 / (HexagonTexture.Width), height2 / (HexagonTexture.Height)));
+                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(tail.Width / 2f / (HexagonTexture.Width), height2 / HexagonTexture.Height));
                         ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (tail.Width / 2), 1f / (tail.Height / 2)));
                         ShieldEffect.Parameters["frameAmount"].SetValue(3f);
                         ShieldEffect.CurrentTechnique.Passes[0].Apply();

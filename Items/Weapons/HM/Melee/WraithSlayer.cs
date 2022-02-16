@@ -63,7 +63,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "''")
+                    "''") // TODO: Wraith Slayer lore
                 {
                     overrideColor = Color.LightGray
                 };
