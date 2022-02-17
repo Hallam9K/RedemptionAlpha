@@ -317,7 +317,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ShieldEffect.Parameters["frameAmount"].SetValue(16f);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     break;
                 case float s when s >= 1 && s <= 6:
                     int height = core.Height / 3;
@@ -344,7 +344,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ShieldEffect.Parameters["frameAmount"].SetValue(3f);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(core, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y, core.Width, height)), Color.White, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(core, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y, core.Width, height)), drawColor, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -361,7 +361,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ShieldEffect.Parameters["frameAmount"].SetValue(3f);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(tail, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), Color.White, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(tail, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Width, height2)), drawColor, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
                     break;
             }
             return false;
