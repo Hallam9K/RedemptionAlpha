@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.timeLeft = 10;
             Projectile.rotation = (host.Center - Projectile.Center).ToRotation();
 
-            if (host.ai[0] != 5)
+            if (host.ai[0] != 3)
             {
                 Projectile.alpha += 10;
                 if (Projectile.alpha >= 255)

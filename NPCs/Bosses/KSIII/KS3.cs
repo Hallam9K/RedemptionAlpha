@@ -166,14 +166,14 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (!RedeBossDowned.downedSlayer)
             {
-                RedeWorld.alignment -= NPC.ai[0] == 12 ? 0 : 2;
+                RedeWorld.alignment -= NPC.ai[0] == 11 ? 0 : 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 12 ? "+0" : "-2", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 11 ? "+0" : "-2", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
