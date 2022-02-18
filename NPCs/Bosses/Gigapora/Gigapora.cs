@@ -18,12 +18,11 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Redemption.Effects.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
     [AutoloadBossHead]
-    public class Gigapora : ModNPC, IShieldSprite
+    public class Gigapora : ModNPC
     {
         public float[] oldrot = new float[6];
         public enum ActionState
@@ -173,7 +172,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!spawned)
             {
                 NPC.TargetClosest(false);
-                Redemption.Targets.ShieldLayer.Sprites.Add(this);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -468,6 +466,20 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (player.active && !player.dead && !Main.dayTime)
                 NPC.DiscourageDespawn(60);
 
+            if (NPC.type == ModContent.NPCType<Gigapora>())
+            {
+                if (BodyState < 1)
+                {
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC seg = Main.npc[i];
+                        if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] > 0)
+                            continue;
+                        seg.ai[0] = 0;
+                    }
+                }
+            }
+
             switch (BodyState)
             {
                 case 0:
@@ -745,63 +757,18 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             rotation = NPC.rotation;
         }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            if (NPC.type == ModContent.NPCType<Gigapora>())
-            {
-                if (!NPC.IsABestiaryIconDummy)
-                {
-                    Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-                    Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
-                    Texture2D drillShoot = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill_Shoot").Value;
-
-                    ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
-                    ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
-                    ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
-                    ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * shieldAlpha).ToVector4());
-                    ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
-
-                    var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                    float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
-
-                    ShieldEffect.Parameters["sinMult"].SetValue(10f);
-                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 21f / HexagonTexture.Width, texture.Height / 3 / HexagonTexture.Height));
-                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
-                    ShieldEffect.Parameters["frameAmount"].SetValue(3f);
-                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                    spriteBatch.End();
-
-                    ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
-                    ShieldEffect.Parameters["frameAmount"].SetValue(8f);
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                    if (DrillFrame >= 8)
-                    {
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drillShoot.Width / 2f / HexagonTexture.Width, drillShoot.Height / 8 / HexagonTexture.Height));
-                        ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drillShoot.Width / 2), 1f / (drillShoot.Height / 2)));
-                        ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                        int height = drillShoot.Height / 8;
-                        int y = height * (DrillFrame - 8);
-                        spriteBatch.Draw(drillShoot, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
-                    }
-                    else
-                    {
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drill.Width / 2f / HexagonTexture.Width, drill.Height / 8 / HexagonTexture.Height));
-                        ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drill.Width / 2), 1f / (drill.Height / 2)));
-                        ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                        int height = drill.Height / 8;
-                        int y = height * DrillFrame;
-                        spriteBatch.Draw(drill, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
-                    }
-                }
-            }
-        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.type == ModContent.NPCType<Gigapora>())
             {
+                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
+                ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
+                ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+                ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * shieldAlpha).ToVector4());
+                ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
+
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                 Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
                 Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
@@ -827,19 +794,38 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                ShieldEffect.Parameters["sinMult"].SetValue(10f);
+                ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2f / HexagonTexture.Width, texture.Height / 3 / HexagonTexture.Height));
+                ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
+                ShieldEffect.Parameters["frameAmount"].SetValue(3f);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                ShieldEffect.CurrentTechnique.Passes[0].Apply();
 
                 spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
                 spriteBatch.Draw(glowMask, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.End();
+
+                ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
+                ShieldEffect.Parameters["frameAmount"].SetValue(8f);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                 if (DrillFrame >= 8)
                 {
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drillShoot.Width / 2f / HexagonTexture.Width, drillShoot.Height / 8 / HexagonTexture.Height));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drillShoot.Width / 2), 1f / (drillShoot.Height / 2)));
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     int height = drillShoot.Height / 8;
                     int y = height * (DrillFrame - 8);
                     spriteBatch.Draw(drillShoot, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
                 }
                 else
                 {
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drill.Width / 2f / HexagonTexture.Width, drill.Height / 8 / HexagonTexture.Height));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drill.Width / 2), 1f / (drill.Height / 2)));
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     int height = drill.Height / 8;
                     int y = height * DrillFrame;
                     spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-8, 96), NPC.scale, effects, 0);
