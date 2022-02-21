@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -44,13 +45,6 @@ namespace Redemption.NPCs.Friendly
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
-
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-            player.RedemptionScreen().lockScreen = true;
-            player.RedemptionScreen().cutscene = true;
-            NPC.LockMoveRadius(player);
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
 
             if (NPC.alpha > 0)
                 NPC.alpha -= 10;
@@ -167,10 +161,9 @@ namespace Redemption.NPCs.Friendly
                         }
                         if (AITimer == 545)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("mind if I stay here? I assume you've some shelter to stay at.", 240, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer == 800)
-                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 210);
                         if (AITimer == 830)
                         {
+                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 180);
                             NPC.spriteDirection = -NPC.spriteDirection;
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...The resemblance between them is uncanny...", 180, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
                         }
@@ -183,6 +176,17 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
+            if (MoRDialogueUI.Visible)
+                RedeSystem.Instance.DialogueUIElement.TextPos = NPC.Center + new Vector2(0, -80) - Main.screenPosition;
+
+            if (!playerTBot && AITimer >= 785 && TimerRand == 4)
+                return;
+            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+            player.RedemptionScreen().lockScreen = true;
+            player.RedemptionScreen().cutscene = true;
+            NPC.LockMoveRadius(player);
+            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
         }
 
         public override void FindFrame(int frameHeight)
