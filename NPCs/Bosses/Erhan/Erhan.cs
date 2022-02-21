@@ -21,6 +21,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
+using Terraria.GameContent.UI;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -309,6 +310,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("To summon a demon, so close to my land... 'Tis heresy!", 240, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     if (AITimer == 600)
                                     {
+                                        EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 200);
                                         ArmType = 2;
                                         HeadFrameY = 1;
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Repent! Repent for thy sins!", 200, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
@@ -765,7 +767,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer == 620)
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Grenade.", 120, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     if (AITimer == 800)
+                                    {
+                                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 60);
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, null, NPC.Center);
+                                    }
                                     if (AITimer == 860)
                                     {
                                         HeadFrameY = 1;
