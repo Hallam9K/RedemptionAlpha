@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             {
                 case 0:
                     Projectile.Center = player.Center + new Vector2(200, -200);
-                    if (player.active && !player.dead && !RedeHelper.BossActive() && Projectile.localAI[0]++ >= 300)
+                    if (player.active && !player.dead && Projectile.localAI[0]++ >= 300 && !RedeHelper.BossActive() && player.ZoneOverworldHeight)
                     {
                         bool no = false;
                         for (int x = -3; x <= 3; x++)
