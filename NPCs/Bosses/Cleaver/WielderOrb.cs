@@ -22,8 +22,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.alpha = 255;
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override void AI()

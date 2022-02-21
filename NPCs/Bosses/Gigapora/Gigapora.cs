@@ -117,7 +117,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (!RedeBossDowned.downedVlitch2)
             {
-                //Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
         }
