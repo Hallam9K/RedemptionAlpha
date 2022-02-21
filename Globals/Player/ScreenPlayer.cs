@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption
@@ -10,6 +11,7 @@ namespace Redemption
         public int rumbleStrength;
         public int interpolantTimer;
         public bool lockScreen = false;
+        public bool cutscene;
         public override void PostUpdate()
         {
             if (rumbleDuration > 0)
@@ -26,6 +28,24 @@ namespace Redemption
             }
             ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
+            cutscene = false;
+        }
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            return !cutscene;
+        }
+        public override bool CanUseItem(Item item)
+        {
+            return !cutscene;
+        }
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (cutscene)
+            {
+                Player.statLife = 1;
+                return false;
+            }
+            return true;
         }
         public override void UpdateDead()
         {

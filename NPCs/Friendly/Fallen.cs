@@ -107,6 +107,9 @@ namespace Redemption.NPCs.Friendly
 
                 if (NPC.IsABestiaryIconDummy)
                 {
+                    if (FallenType < 0)
+                        FallenType = 0;
+
                     bestiaryTimer++;
                     if (bestiaryTimer % 60 == 0)
                     {

@@ -145,6 +145,10 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void OnKill()
         {
+            if (!RedeBossDowned.downedSeed && !RedeHelper.TBotActive())
+            {
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.target);
+            }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSeed, -1);
         }
 

@@ -20,6 +20,7 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Usable;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Lore;
+using Redemption.NPCs.Bosses.SeedOfInfection;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -106,7 +107,7 @@ namespace Redemption.NPCs.Friendly
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>());
+            return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()) && !NPC.AnyNPCs(ModContent.NPCType<TBot_Intro>()) && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<AdamPortal>());
         }
 
         public override string TownNPCName()
