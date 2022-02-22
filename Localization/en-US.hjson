@@ -51,6 +51,7 @@ Mods: {
             MagmaCubeBuff: "Magma Cube"
             TeslaGeneratorBuff: "Tesla Field Generator"
             XeniumTurretBuff: "Xenium Autoturret"
+            MicroshieldCoreBuff: "Microshield Core"
             
             # Pets
             BouquetOfThornsBuff: "Bouquet of Thorns"
@@ -111,6 +112,7 @@ Mods: {
             MagmaCubeBuff: "The molten jelly cube will fight for you"
             TeslaGeneratorBuff: "A small generator is creating a tesla field"
             XeniumTurretBuff: "Pewpewpewpewpewpew"
+            MicroshieldCoreBuff: "A tiny shield core is defending you"
             
             # Pets
             BouquetOfThornsBuff: "A gift for the newly divorced"

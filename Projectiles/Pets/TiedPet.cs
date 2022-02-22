@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.Pets
         {
             Player player = Main.player[Projectile.owner];
             CheckActive(player);
-            if (Projectile.velocity.Y >= 1 || Projectile.velocity.Y <= -1)
+            if (Projectile.velocity.Y >= -0.1f && Projectile.velocity.Y <= 0.1f)
             {
                 if (Projectile.frame < 8)
                     Projectile.frame = 8;

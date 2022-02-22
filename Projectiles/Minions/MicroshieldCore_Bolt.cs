@@ -5,35 +5,33 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 
-namespace Redemption.NPCs.Bosses.Gigapora
+namespace Redemption.Projectiles.Minions
 {
-    public class ShieldCore_Bolt : ModProjectile, ITrailProjectile
+    public class MicroshieldCore_Bolt : ModProjectile, ITrailProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Energy Bolt");
         }
-
         public override void SetDefaults()
         {
-            Projectile.width = 20;
-            Projectile.height = 20;
-            Projectile.friendly = false;
-            Projectile.hostile = true;
-            Projectile.tileCollide = false;
-            Projectile.penetrate = 1;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.penetrate = 3;
             Projectile.timeLeft = 240;
             Projectile.Redemption().Unparryable = true;
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 20f, 200f);
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 14f, 160f);
         }
         public override void AI()
         {
-            Projectile.velocity *= 1.02f;
+            Projectile.velocity *= 1.03f;
         }
         public override void PostDraw(Color lightColor)
         {
@@ -46,8 +44,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Vector2 position = Projectile.Center - Main.screenPosition;
             Color colour = Color.Lerp(Color.White, new Color(207, 29, 29), 1f);
 
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour, Projectile.rotation, origin, 1f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour * 0.4f, Projectile.rotation, origin, 1.4f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour, Projectile.rotation, origin, 0.8f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour * 0.4f, Projectile.rotation, origin, 1.2f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

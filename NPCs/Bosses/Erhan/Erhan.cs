@@ -286,9 +286,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                             NPC.netUpdate = true;
                             break;
                         case 1:
-                            if (!Main.dedServ)
+                            if (RedeBossDowned.erhanDeath <= 0 && !RedeConfigClient.Instance.NoLoreElements)
                             {
-                                if (RedeBossDowned.erhanDeath <= 0 && !RedeConfigClient.Instance.NoLoreElements)
+                                if (!Main.dedServ)
                                 {
                                     if (AITimer++ == 0)
                                     {
@@ -321,47 +321,47 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         HeadFrameY = 0;
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Lest I smack'eth thine buttocks with the Hand of Judgement!", 240, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     }
-                                    if (AITimer >= 1040)
-                                    {
-                                        if (!Main.dedServ)
-                                        {
-                                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
-                                                "Anglonic High Priest");
-                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-                                        }
-                                        if (RedeBossDowned.erhanDeath == 0)
-                                            RedeBossDowned.erhanDeath = 1;
-
-                                        TimerRand = 0;
-                                        AITimer = 0;
-                                        NPC.dontTakeDamage = false;
-                                        AIState = ActionState.Idle;
-                                        NPC.netUpdate = true;
-                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                                    }
                                 }
-                                else
+                                if (AITimer >= 1040)
                                 {
-                                    if (AITimer++ == 0)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("CEASE!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-
-                                    if (AITimer >= 120)
+                                    if (!Main.dedServ)
                                     {
-                                        if (!Main.dedServ)
-                                        {
-                                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
-                                                "Anglonic High Priest");
-                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-                                        }
-                                        TimerRand = 0;
-                                        AITimer = 0;
-                                        NPC.dontTakeDamage = false;
-                                        AIState = ActionState.Idle;
-                                        NPC.netUpdate = true;
-                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
+                                            "Anglonic High Priest");
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
                                     }
+                                    if (RedeBossDowned.erhanDeath == 0)
+                                        RedeBossDowned.erhanDeath = 1;
+
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    NPC.dontTakeDamage = false;
+                                    AIState = ActionState.Idle;
+                                    NPC.netUpdate = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                }
+                            }
+                            else
+                            {
+                                if (AITimer++ == 0 && !Main.dedServ)
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("CEASE!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+
+                                if (AITimer >= 120)
+                                {
+                                    if (!Main.dedServ)
+                                    {
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
+                                            "Anglonic High Priest");
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                    }
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    NPC.dontTakeDamage = false;
+                                    AIState = ActionState.Idle;
+                                    NPC.netUpdate = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
                             break;
@@ -606,8 +606,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                             break;
                             #endregion
                     }
-                    break;        
-                    
+                    break;
+
                 case ActionState.Fallen:
                     switch (TimerRand)
                     {

@@ -909,6 +909,8 @@ namespace Redemption.Globals
                 return false;
             if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
                 return false;
+            if (!canSeeHiding && codable is Projectile && (codable as Projectile).alpha >= 200)
+                return false;
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
@@ -934,6 +936,15 @@ namespace Redemption.Globals
             }
 
             return true;
+        }
+
+        public static void Dodge(this Terraria.NPC npc, Projectile proj, float vel = 6, float jumpVel = 2, float maxJump = 8)
+        {
+            npc.velocity = PolarVector(vel, npc.DirectionTo(proj.Center).ToRotation() + (proj.Center.X < npc.Center.X ? MathHelper.PiOver2 : -MathHelper.PiOver2));
+            npc.velocity.Y -= jumpVel;
+            npc.velocity.Y = MathHelper.Max(-maxJump, npc.velocity.Y);
+            if (npc.position.Y > proj.Bottom.Y && (proj.velocity.X > 2 || proj.velocity.X < -2) && proj.velocity.Y <= 1)
+                npc.velocity.Y = 1;
         }
 
         /// <summary>

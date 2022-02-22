@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -31,72 +32,72 @@ namespace Redemption.Items.Accessories.HM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-			player.GetModPlayer<HoloshieldDashPlayer>().DashAccessoryEquipped = true;
-			player.endurance += 0.06f;
+            player.GetModPlayer<HoloshieldDashPlayer>().DashAccessoryEquipped = true;
+            player.endurance += 0.06f;
         }
     }
-	public class HoloshieldDashPlayer : ModPlayer
-	{
-		public const int DashRight = 2;
+    public class HoloshieldDashPlayer : ModPlayer
+    {
+        public const int DashRight = 2;
         public const int DashLeft = 3;
 
-		public const int DashCooldown = 50;
-		public const int DashDuration = 35;
+        public const int DashCooldown = 50;
+        public const int DashDuration = 35;
 
-		public const float DashVelocity = 9f;
+        public const float DashVelocity = 9f;
 
-		public int DashDir = -1;
+        public int DashDir = -1;
 
-		public bool DashAccessoryEquipped;
-		public int DashDelay = 0;
-		public int DashTimer = 0;
+        public bool DashAccessoryEquipped;
+        public int DashDelay = 0;
+        public int DashTimer = 0;
         public int ShieldHit;
 
         public override void ResetEffects()
-		{
-			DashAccessoryEquipped = false;
+        {
+            DashAccessoryEquipped = false;
 
-			if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15)
-				DashDir = DashRight;
-			else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
-				DashDir = DashLeft;
-			else
-				DashDir = -1;
-		}
+            if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15)
+                DashDir = DashRight;
+            else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
+                DashDir = DashLeft;
+            else
+                DashDir = -1;
+        }
 
-		public override void PreUpdateMovement()
-		{
-			if (CanUseDash() && DashDir != -1 && DashDelay == 0)
-			{
-				Vector2 newVelocity = Player.velocity;
+        public override void PreUpdateMovement()
+        {
+            if (CanUseDash() && DashDir != -1 && DashDelay == 0)
+            {
+                Vector2 newVelocity = Player.velocity;
 
-				switch (DashDir)
-				{
-					case DashLeft when Player.velocity.X > -DashVelocity:
-					case DashRight when Player.velocity.X < DashVelocity:
-						{
-							float dashDirection = DashDir == DashRight ? 1 : -1;
-							newVelocity.X = dashDirection * DashVelocity;
-							break;
-						}
-					default:
-						return;
-				}
+                switch (DashDir)
+                {
+                    case DashLeft when Player.velocity.X > -DashVelocity:
+                    case DashRight when Player.velocity.X < DashVelocity:
+                        {
+                            float dashDirection = DashDir == DashRight ? 1 : -1;
+                            newVelocity.X = dashDirection * DashVelocity;
+                            break;
+                        }
+                    default:
+                        return;
+                }
 
-				DashDelay = DashCooldown;
-				DashTimer = DashDuration;
-				Player.velocity = newVelocity;
+                DashDelay = DashCooldown;
+                DashTimer = DashDuration;
+                Player.velocity = newVelocity;
 
                 ShieldHit = -1;
             }
 
-			if (DashDelay > 0)
-				DashDelay--;
+            if (DashDelay > 0)
+                DashDelay--;
 
-			if (DashTimer > 0)
-			{
-				Player.eocDash = DashTimer;
-				Player.armorEffectDrawShadowEOCShield = true;
+            if (DashTimer > 0)
+            {
+                Player.eocDash = DashTimer;
+                Player.armorEffectDrawShadowEOCShield = true;
 
                 if (ShieldHit < 0 && DashTimer > 15)
                 {
@@ -171,15 +172,16 @@ namespace Redemption.Items.Accessories.HM
                 }
 
                 DashTimer--;
-			}
-		}
+            }
+        }
 
-		private bool CanUseDash()
-		{
-			return DashAccessoryEquipped
-				&& Player.dashType == 0
-				&& !Player.setSolar
-				&& !Player.mount.Active
+        private bool CanUseDash()
+        {
+            return DashAccessoryEquipped
+                && Player.dashType == 0
+                && !Player.setSolar
+                && !Player.mount.Active
+                && !Player.HasBuff(ModContent.BuffType<StunnedDebuff>())
                 && !Player.GetModPlayer<ThornshieldDashPlayer>().DashAccessoryEquipped;
         }
     }
