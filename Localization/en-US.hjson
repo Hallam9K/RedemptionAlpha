@@ -61,6 +61,7 @@ Mods: {
             OcciePetBuff: "Occie"
             PetChickenBuff: "Chicken Pet"
             XenomiteElementalPetBuff: "Xenomite Elemental"
+            TiedPetBuff: "Tied"
 		}
 		
 		BuffDescription: {
@@ -120,6 +121,7 @@ Mods: {
             OcciePetBuff: "Octavia's kitty cat!"
             PetChickenBuff: "Cluck cluck"
             XenomiteElementalPetBuff: "Cute."
+            TiedPetBuff: '''"Spooked"'''
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

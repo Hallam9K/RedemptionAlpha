@@ -4,6 +4,7 @@ using Redemption.Items.Critters;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -41,24 +42,18 @@ namespace Redemption.Projectiles.Pets
             if (Projectile.velocity.Y >= 1 || Projectile.velocity.Y <= -1)
             {
                 if (Projectile.frame < 8)
-                {
                     Projectile.frame = 8;
-                }
                 if (++Projectile.frameCounter >= 5)
                 {
                     Projectile.frameCounter = 0;
                     if (++Projectile.frame >= 15)
-                    {
                         Projectile.frame = 8;
-                    }
                 }
             }
             else
             {
                 if (Projectile.velocity.X == 0)
-                {
                     Projectile.frame = 0;
-                }
                 else
                 {
                     Projectile.frameCounter += (int)(Projectile.velocity.X * 0.5f);
@@ -66,9 +61,7 @@ namespace Redemption.Projectiles.Pets
                     {
                         Projectile.frameCounter = 0;
                         if (++Projectile.frame >= 7)
-                        {
                             Projectile.frame = 1;
-                        }
                     }
                 }
             }
@@ -88,6 +81,7 @@ namespace Redemption.Projectiles.Pets
             {
                 if (Main.rand.Next(900) == 0)
                 {
+                    EmoteBubble.NewBubble(75, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(2))
                     {
                         case 0:
@@ -103,6 +97,7 @@ namespace Redemption.Projectiles.Pets
             {
                 if (Main.rand.Next(2) == 0)
                 {
+                    EmoteBubble.NewBubble(76, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(4))
                     {
                         case 0:
@@ -127,6 +122,7 @@ namespace Redemption.Projectiles.Pets
             {
                 if (Main.rand.Next(500) == 0)
                 {
+                    EmoteBubble.NewBubble(94, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(3))
                     {
                         case 0:
@@ -146,24 +142,6 @@ namespace Redemption.Projectiles.Pets
                 if (Main.rand.Next(1200) == 0)
                 {
                     CombatText.NewText(Projectile.getRect(), Color.DeepPink, "*toot*", false, false);
-                }
-            }
-            if (player.HeldItem.type == ItemID.GingerbreadCookie || player.HeldItem.type == ItemID.SugarCookie)
-            {
-                if (Main.rand.Next(800) == 0)
-                {
-                    switch (Main.rand.Next(3))
-                    {
-                        case 0:
-                            CombatText.NewText(Projectile.getRect(), Color.DeepPink, "cookie", false, false);
-                            break;
-                        case 1:
-                            CombatText.NewText(Projectile.getRect(), Color.DeepPink, "yum yum", false, false);
-                            break;
-                        case 2:
-                            CombatText.NewText(Projectile.getRect(), Color.DeepPink, "gimmi cookie", false, false);
-                            break;
-                    }
                 }
             }
             if (player.HeldItem.type == ModContent.ItemType<ChickenEgg>() || player.HeldItem.type == ModContent.ItemType<FriedChickenEgg>() || player.HeldItem.type == ModContent.ItemType<LongEgg>() || player.HeldItem.type == ModContent.ItemType<GoldChickenEgg>())
@@ -210,6 +188,7 @@ namespace Redemption.Projectiles.Pets
             {
                 if (Main.rand.Next(400) == 0)
                 {
+                    EmoteBubble.NewBubble(87, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(6))
                     {
                         case 0:
@@ -253,8 +232,9 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HasBuff(BuffID.Slow))
             {
-                if (Main.rand.Next(3000) == 0)
+                if (Main.rand.Next(1000) == 0)
                 {
+                    EmoteBubble.NewBubble(91, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(3))
                     {
                         case 0:
@@ -306,6 +286,7 @@ namespace Redemption.Projectiles.Pets
             {
                 if (Main.rand.Next(900) == 0)
                 {
+                    EmoteBubble.NewBubble(8, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(4))
                     {
                         case 0:

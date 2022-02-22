@@ -7,6 +7,7 @@ using Redemption.NPCs.Friendly;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Lizzy
@@ -44,6 +45,8 @@ namespace Redemption.Items.Donator.Lizzy
                 Projectile.Move(sleepPos, 8, 1);
                 if (Projectile.Center == sleepPos)
                 {
+                    if (Projectile.localAI[0]++ % 600 == 0)
+                        EmoteBubble.NewBubble(89, new WorldUIAnchor(Projectile), 180);
                     Projectile.spriteDirection = -1;
                     Projectile.rotation = 0;
                     Projectile.velocity *= 0;
@@ -51,6 +54,7 @@ namespace Redemption.Items.Donator.Lizzy
                 }
                 else
                 {
+                    Projectile.localAI[0] = 0;
                     Projectile.rotation = Projectile.velocity.X * 0.05f;
                     if (Projectile.frame < 9)
                         Projectile.frame = 9;
