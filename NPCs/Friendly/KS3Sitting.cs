@@ -19,6 +19,8 @@ using Redemption.WorldGeneration;
 using Redemption.Tiles.Tiles;
 using Redemption.Biomes;
 using Redemption.BaseExtension;
+using Redemption.Items.Donator.Lizzy;
+using Terraria.GameContent.UI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -63,6 +65,7 @@ namespace Redemption.NPCs.Friendly
             if (RedeBossDowned.downedVlitch3) //|| RedeBossDowned.downedNebuleus)
                 NPC.active = false;
 
+            NPC.direction = 1;
             if (NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
                 for (int i = 0; i < 15; i++)
@@ -71,6 +74,18 @@ namespace Redemption.NPCs.Friendly
                     Main.dust[dustIndex].velocity *= 3f;
                 }
                 NPC.active = false;
+            }
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile lizzy = Main.projectile[i];
+                if (!lizzy.active || lizzy.type != ModContent.ProjectileType<LizzyPet>())
+                    continue;
+
+                if (lizzy.frame != 8)
+                    continue;
+
+                if (NPC.localAI[0]++ % 500 == 0)
+                    EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {

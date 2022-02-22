@@ -22,8 +22,7 @@ namespace Redemption.Tiles.Tiles
             MineResist = 1.5f;
             AddMapEntry(new Color(128, 128, 128));
         }
-
-        public override bool Dangersense(int i, int j, Player player) => true;
+        public override bool IsTileDangerous(int i, int j, Player player) => true;
 
         public bool breakCheck;
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
