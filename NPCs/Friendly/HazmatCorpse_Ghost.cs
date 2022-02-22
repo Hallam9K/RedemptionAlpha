@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Friendly
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "sussy baka";
+            return "... What the hell is going on? Alarms are blaring, lockdown was initiated, yet no alerts over the intercom! I'm not going to wait, I want out of here ASAP!";
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

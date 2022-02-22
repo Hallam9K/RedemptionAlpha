@@ -509,8 +509,9 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSpikeShield, 0.2f);
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
-
             }
+            if (spawnInfo.player.RedemptionScreen().cutscene)
+                pool.Clear();
         }
     }
 }

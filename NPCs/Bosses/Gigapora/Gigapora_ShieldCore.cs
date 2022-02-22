@@ -99,6 +99,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShieldCoreGore" + (i + 1)).Type);
                 for (int i = 0; i < 10; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, Scale: 2);
@@ -265,12 +270,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         private void DespawnHandler()
         {
+            NPC seg = Main.npc[(int)NPC.ai[0]];
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
+            if (!player.active || player.dead || seg.ai[0] == 2)
             {
                 NPC.TargetClosest(false);
                 player = Main.player[NPC.target];
-                if (!player.active || player.dead)
+                if (!player.active || player.dead || seg.ai[0] == 2)
                 {
                     NPC.velocity.Y = -10;
                     if (NPC.timeLeft > 10)

@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Furniture.Misc
             MineResist = 15f;
             AddMapEntry(new Color(104, 91, 83));
         }
-
+        public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
