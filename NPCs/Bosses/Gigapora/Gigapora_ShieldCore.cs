@@ -99,6 +99,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShieldCoreGore" + (i + 1)).Type);
                 for (int i = 0; i < 10; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, Scale: 2);

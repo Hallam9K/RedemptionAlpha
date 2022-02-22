@@ -492,6 +492,8 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<SicklyPenguin>(), 0.6f);
                 }
             }
+            if (spawnInfo.player.RedemptionScreen().cutscene)
+                pool.Clear();
         }
     }
 }
