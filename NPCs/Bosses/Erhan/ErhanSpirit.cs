@@ -238,69 +238,24 @@ namespace Redemption.NPCs.Bosses.Erhan
                             NPC.netUpdate = true;
                             break;
                         case 1:
-                            if (!Main.dedServ)
+                            if (RedeBossDowned.erhanDeath < 4)
                             {
-                                if (RedeBossDowned.erhanDeath < 4)
+                                if (AITimer++ == 0 && Main.rand.NextBool(10))
+                                    Funny = true;
+
+                                if (Funny)
                                 {
-                                    if (AITimer++ == 0 && Main.rand.NextBool(10))
-                                        Funny = true;
-
-                                    if (Funny)
+                                    if (AITimer == 1 && !Main.dedServ)
                                     {
-                                        if (AITimer == 1)
-                                        {
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-                                        }
-                                        if (AITimer >= 181)
-                                        {
-                                            if (!Main.dedServ)
-                                                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-
-                                            if (RedeBossDowned.erhanDeath < 4)
-                                                RedeBossDowned.erhanDeath = 4;
-
-                                            TimerRand = 0;
-                                            AITimer = 0;
-                                            NPC.dontTakeDamage = false;
-                                            AIState = ActionState.Idle;
-                                            NPC.netUpdate = true;
-                                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                                        }
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
                                     }
-                                    else
-                                    {
-                                        if (AITimer == 1)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thou may inquire, how hath I returned...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-                                        if (AITimer == 181)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I am but the holiest of men,\nthus the Lord has returned me to beat thine buttocks once more!", 300, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-                                        if (AITimer >= 481)
-                                        {
-                                            if (!Main.dedServ)
-                                                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-
-                                            if (RedeBossDowned.erhanDeath < 4)
-                                                RedeBossDowned.erhanDeath = 4;
-
-                                            TimerRand = 0;
-                                            AITimer = 0;
-                                            NPC.dontTakeDamage = false;
-                                            AIState = ActionState.Idle;
-                                            NPC.netUpdate = true;
-                                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (AITimer++ == 0)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Guess whom'st've's back!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-
-                                    if (AITimer >= 120)
+                                    if (AITimer >= 181)
                                     {
                                         if (!Main.dedServ)
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+
+                                        if (RedeBossDowned.erhanDeath < 4)
+                                            RedeBossDowned.erhanDeath = 4;
 
                                         TimerRand = 0;
                                         AITimer = 0;
@@ -310,6 +265,48 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
+                                }
+                                else
+                                {
+                                    if (AITimer == 1 && !Main.dedServ)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thou may inquire, how hath I returned...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    if (AITimer == 181 && !Main.dedServ)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I am but the holiest of men,\nthus the Lord has returned me to beat thine buttocks once more!", 300, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    if (AITimer >= 481)
+                                    {
+                                        if (!Main.dedServ)
+                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+
+                                        if (RedeBossDowned.erhanDeath < 4)
+                                            RedeBossDowned.erhanDeath = 4;
+
+                                        TimerRand = 0;
+                                        AITimer = 0;
+                                        NPC.dontTakeDamage = false;
+                                        AIState = ActionState.Idle;
+                                        NPC.netUpdate = true;
+                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (AITimer++ == 0 && !Main.dedServ)
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Guess whom'st've's back!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+
+                                if (AITimer >= 120)
+                                {
+                                    if (!Main.dedServ)
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    NPC.dontTakeDamage = false;
+                                    AIState = ActionState.Idle;
+                                    NPC.netUpdate = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
                             break;
@@ -834,7 +831,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, NPC.rotation, origin2, 2f, SpriteEffects.None, 0);
                 spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.4f, NPC.rotation, origin2, 2f, SpriteEffects.None, 0);
-            }     
+            }
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

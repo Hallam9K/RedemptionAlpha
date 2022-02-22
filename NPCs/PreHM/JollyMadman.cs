@@ -163,6 +163,7 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
+        private int dodgeCooldown;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -172,7 +173,8 @@ namespace Redemption.NPCs.PreHM
                 NPC.LookByVelocity();
 
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 45 : NPC.Center.X + 7), (int)(NPC.Center.Y - 34), 38, 60);
-
+            dodgeCooldown--;
+            dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -236,6 +238,28 @@ namespace Redemption.NPCs.PreHM
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
+
+                    if (dodgeCooldown <= 0 && NPC.velocity.Y == 0)
+                    {
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            Projectile proj = Main.projectile[i];
+                            if (!proj.active || !proj.friendly || proj.damage <= 0 || proj.velocity.Length() == 0)
+                                continue;
+
+                            if (!NPC.Sight(proj, 80 + (proj.velocity.Length() * 3), true, true))
+                                continue;
+
+                            for (int l = 0; l < 10; l++)
+                            {
+                                int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Wraith, Scale: 2);
+                                Main.dust[dust].velocity *= 0.2f;
+                                Main.dust[dust].noGravity = true;
+                            }
+                            NPC.Dodge(proj);
+                            dodgeCooldown = 90;
+                        }
+                    }
 
                     if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 60 * 60)
                     {

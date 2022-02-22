@@ -2,9 +2,7 @@
 
 TODO
 
-- Gigapora Shader (i believe in you snowy :sadcat:)
 - Midnight weapon code + apply the shader to the flames
-- Give Gigapora Cores attacks
 - Code Divinity, a spell tome that flashes bright lights at the enemy, doing holy and fire damage. (it would look like a mini version of Seth's heat snaps from Split mod probably)
 - Code Rockslide, a spell tome that uses a mix of Earth and Psychic magic. Earth magic will create a large amount of rocks, being lifted by psychic magic, cap of 10 rocks. Release to throw the rocks at the target, which will explode into further damaging rubble. 
 - Code Steampunk Minigun, just a minigun that replaces normal bullets with high velocity ones
@@ -13,8 +11,7 @@ TODO
 - Rework Erhan's expert mode changes, which will involve him reading from the Holy Bible now, and improving his empowered attacks
 
 MULTIPLAYER BUGS (PLS HELP US :sadcat:)
-- Forbidden ritual doesnt spawn anything
-- Erhan text repeats and the fight doesnt begin
+- (Potentially fixed) Erhan text repeats and the fight doesnt begin
 - Revival potion does not work
 - Guard points are REALLY finnicky, no sound for dealing damage, 
 - Ancient gladestone golem very desynced, rubberbands, teleports when attacked, drops and gore are desynced from the location of death, pillar attack doesnt work

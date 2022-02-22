@@ -8,6 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Items.Usable
 {
@@ -53,7 +54,7 @@ namespace Redemption.Items.Usable
 				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}*/
 			player.QuickSpawnItem(ModContent.ItemType<OmegaBattery>(), Main.rand.Next(1, 4));
-			//player.QuickSpawnItem(ModContent.ItemType<BrokenBlade>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<BrokenBlade>());
 		}
 
         public override void PostUpdate()

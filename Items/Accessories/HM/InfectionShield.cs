@@ -190,7 +190,8 @@ namespace Redemption.Items.Accessories.HM
             return DashAccessoryEquipped
                 && Player.dashType == 0
                 && !Player.setSolar
-                && !Player.mount.Active;
+                && !Player.mount.Active
+                && !Player.HasBuff(ModContent.BuffType<StunnedDebuff>());
         }
     }
     public class InfectionShield_AcidSpark : ModProjectile
