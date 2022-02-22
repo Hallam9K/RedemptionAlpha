@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
             if (AITimer <= 10)
                 LaserScale += 0.06f;
-            else if (Projectile.timeLeft < 10 || !npc.active)
+            else if (Projectile.timeLeft < 10 || !npc.active || npc.ai[0] == 4)
             {
                 Projectile.hostile = false;
 

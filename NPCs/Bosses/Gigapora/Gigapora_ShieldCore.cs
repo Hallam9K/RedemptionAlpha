@@ -270,12 +270,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         private void DespawnHandler()
         {
+            NPC seg = Main.npc[(int)NPC.ai[0]];
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
+            if (!player.active || player.dead || seg.ai[0] == 2)
             {
                 NPC.TargetClosest(false);
                 player = Main.player[NPC.target];
-                if (!player.active || player.dead)
+                if (!player.active || player.dead || seg.ai[0] == 2)
                 {
                     NPC.velocity.Y = -10;
                     if (NPC.timeLeft > 10)

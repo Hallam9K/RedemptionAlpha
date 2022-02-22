@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void HitEffect(int hitDirection, double damage)
         {
-            NPC host = Main.npc[(int)NPC.ai[3]];
+            NPC host = Main.npc[(int)Host];
             if (NPC.life <= 0 && host.ai[0] == 4)
             {
                 if (Main.netMode == NetmodeID.Server)
@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public ref float Host => ref NPC.ai[1];
+        public ref float Host => ref NPC.ai[3];
         public ref float FrameState => ref NPC.ai[0];
         private float shieldAlpha;
         private bool frameLag;
@@ -141,8 +141,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Vector2 chasePosition = Main.npc[(int)NPC.ai[1]].Center;
             Vector2 directionVector = chasePosition - NPC.Center;
             NPC.spriteDirection = (directionVector.X > 0f) ? 1 : -1;
-            if (NPC.ai[3] > 0)
-                NPC.realLife = (int)NPC.ai[3];
+            if (Host > 0)
+                NPC.realLife = (int)Host;
             if (NPC.target < 0 || NPC.target == byte.MaxValue || Main.player[NPC.target].dead)
                 NPC.TargetClosest(true);
             if (Main.player[NPC.target].dead && NPC.timeLeft > 300)
@@ -150,7 +150,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)NPC.ai[3]].type != ModContent.NPCType<Gigapora>())
+                if (!Main.npc[(int)NPC.ai[1]].active || Main.npc[(int)Host].type != ModContent.NPCType<Gigapora>())
                 {
                     NPC.life = 0;
                     NPC.HitEffect(0, 10.0);
@@ -290,7 +290,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 damage = 0;
                 return false;
             }
-            int ai3 = (int)NPC.ai[3];
+            int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())
             {
                 if (Main.npc[ai3].immune[Main.myPlayer] > 0)
@@ -311,14 +311,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Texture2D thrusterBlue = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora_ThrusterBlue").Value;
             Texture2D thrusterOrange = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora_ThrusterOrange").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, Main.npc[(int)NPC.ai[3]].velocity.Length() / 20);
+            float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, Main.npc[(int)Host].velocity.Length() / 20);
             thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
-            float thrusterScaleY = MathHelper.Clamp(Main.npc[(int)NPC.ai[3]].velocity.Length() / 10, 0.3f, 2f);
+            float thrusterScaleY = MathHelper.Clamp(Main.npc[(int)Host].velocity.Length() / 10, 0.3f, 2f);
             Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Vector2 v = RedeHelper.Spread(4);
             Vector2 pos = NPC.Center;
-            NPC host = Main.npc[(int)NPC.ai[3]];
+            NPC host = Main.npc[(int)Host];
             if (host.ai[0] == 4)
                 pos = NPC.Center + v;
 
@@ -351,11 +351,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(Main.npc[(int)NPC.ai[3]].velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                        spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(Main.npc[(int)NPC.ai[3]].velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                        spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(Main.npc[(int)Host].velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                        spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(Main.npc[(int)Host].velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
                     }
-                    spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(Main.npc[(int)NPC.ai[3]].velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                    spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(-52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(Main.npc[(int)NPC.ai[3]].velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(Main.npc[(int)Host].velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(FrameState == 2 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(-52, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(Main.npc[(int)Host].velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
 
                     spriteBatch.End();
                     ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
@@ -388,7 +388,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
         {
-            int ai3 = (int)NPC.ai[3];
+            int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())
             {
                 if (Main.npc[ai3].immune[Main.myPlayer] == 0)
@@ -397,7 +397,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            int ai3 = (int)NPC.ai[3];
+            int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())
             {
                 if (Main.npc[ai3].immune[Main.myPlayer] == 0)
