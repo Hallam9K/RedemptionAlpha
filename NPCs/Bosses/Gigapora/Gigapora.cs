@@ -539,7 +539,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC seg = Main.npc[i];
-                    if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] > 0)
+                    if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] > 0 || seg.ai[2] == 2)
                         continue;
                     seg.ai[0] = 0;
                 }
