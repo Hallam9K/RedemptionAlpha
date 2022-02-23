@@ -71,7 +71,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 30;
-            NPC.height = 52;
+            NPC.height = 48;
             NPC.damage = 28;
             NPC.friendly = false;
             NPC.defense = 10;
@@ -164,6 +164,7 @@ namespace Redemption.NPCs.PreHM
         private Vector2 moveTo;
         private int runCooldown;
         private int dodgeCooldown;
+        private float[] doorVars = new float[3];
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -219,6 +220,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
                     bool jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -260,6 +262,7 @@ namespace Redemption.NPCs.PreHM
                             dodgeCooldown = 90;
                         }
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
                     if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 60 * 60)
                     {
@@ -464,7 +467,7 @@ namespace Redemption.NPCs.PreHM
                 GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
             }
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 4) - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
