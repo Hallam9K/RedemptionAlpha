@@ -944,7 +944,10 @@ namespace Redemption.Globals
             npc.velocity.Y -= jumpVel;
             npc.velocity.Y = MathHelper.Max(-maxJump, npc.velocity.Y);
             if (npc.position.Y > proj.Bottom.Y && (proj.velocity.X > 2 || proj.velocity.X < -2) && proj.velocity.Y <= 1)
+            {
                 npc.velocity.Y = 1;
+                npc.velocity.X = -npc.velocity.X / 2;
+            }
         }
 
         /// <summary>
