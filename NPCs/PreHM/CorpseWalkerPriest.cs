@@ -20,6 +20,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -141,6 +142,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     bool jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -163,6 +165,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                         Healing = false;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;

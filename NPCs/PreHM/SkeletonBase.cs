@@ -36,6 +36,7 @@ namespace Redemption.NPCs.PreHM
         public int VisionRange;
         public int VisionIncrease;
         public float SpeedMultiplier = 1f;
+        public float[] doorVars = new float[3];
 
         public virtual void SetSafeStaticDefaults() { }
         public override void SetStaticDefaults()

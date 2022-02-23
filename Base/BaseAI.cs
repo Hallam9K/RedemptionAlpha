@@ -9,6 +9,7 @@ using Terraria.Localization;
 using Terraria.Utilities;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Base
 {
@@ -5065,15 +5066,15 @@ namespace Redemption.Base
             bool hitTile = HitTileOnSide(npc, 3);
             if (hitTile)
             {
-                int tileX = (int)((npc.Center.X + (npc.width / 2 + 8f) * npc.direction) / 16f);
+                int tileX = (int)((npc.Center.X + (npc.width / 2 + 8f) * npc.spriteDirection) / 16f);
                 int tileY = (int)((npc.position.Y + npc.height - 15f) / 16f);
-                if (Main.tile[tileX, tileY - 1].HasUnactuatedTile && Main.tile[tileX, tileY - 1].TileType == 10)
+                if (Framing.GetTileSafely(tileX, tileY - 1).HasUnactuatedTile && (Framing.GetTileSafely(tileX, tileY - 1).TileType == TileID.ClosedDoor || TileLists.ModdedDoors.Contains(Framing.GetTileSafely(tileX, tileY - 1).TileType)))
                 {
                     doorCounter += 1f;
                     tickUpdater = 0f;
                     if (doorCounter >= doorCounterMax)
                     {
-                        npc.velocity.X = 0.5f * -npc.direction;
+                        npc.velocity.X = 0.5f * -npc.spriteDirection;
                         doorBeatCounter += 1f;
                         doorCounter = 0f;
                         bool attemptOpenDoor = false;
@@ -5095,7 +5096,7 @@ namespace Redemption.Base
                                 }
                                 else
                                 {
-                                    openedDoor = WorldGen.OpenDoor(tileX, tileY, npc.direction);
+                                    openedDoor = WorldGen.OpenDoor(tileX, tileY, npc.spriteDirection);
                                 }
                             }
                             if (!openedDoor)
@@ -5104,9 +5105,7 @@ namespace Redemption.Base
                                 npc.netUpdate = true;
                             }
                             if (Main.netMode == NetmodeID.Server && openedDoor)
-                            {
-                                NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 0, tileX, tileY, npc.direction);
-                            }
+                                NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, NetworkText.FromLiteral(""), 0, tileX, tileY, npc.spriteDirection);
                         }
                     }
                     return true;
