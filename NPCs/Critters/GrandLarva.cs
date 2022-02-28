@@ -228,7 +228,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float cave = SpawnCondition.Cavern.Chance * 0.1f;
-            float desert = SpawnCondition.OverworldDayDesert.Chance * 0.2f;
+            float desert = SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.player.ZoneBeach ? 0f : 0.2f);
             float desertUG = SpawnCondition.DesertCave.Chance * 0.2f;
             return Math.Max(cave, Math.Max(desert, desertUG));
         }
