@@ -48,7 +48,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             if (Projectile.localAI[0] == 0)
             {
-                DustHelper.DrawCircle(Projectile.Center, DustID.GreenTorch, 5, 1, 1, 1, 3, nogravity: true);
+                RedeDraw.SpawnRing(Projectile.Center, Color.Lime, 0.3f, 0.8f, 5);
+                RedeDraw.SpawnRing(Projectile.Center, Color.Lime, 0.3f, 0.85f, 0);
+                RedeDraw.SpawnRing(Projectile.Center, Color.Lime, 0.3f, 0.9f, 0);
                 Projectile.localAI[0] = 1;
             }
         }

@@ -189,7 +189,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     continue;
 
                 if (NPC.immortal && AIState is not ActionState.Death)
-                    DustHelper.DrawCircle(target.Center, DustID.LifeDrain, 1, 2, 2, nogravity: true);
+                    RedeDraw.SpawnRing(target.Center, Color.Red, 0.13f, 0.7f);
                 target.Kill();
             }
 

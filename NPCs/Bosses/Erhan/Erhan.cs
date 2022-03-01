@@ -1092,13 +1092,21 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                 return false;
             }
-
+            int heightHead = HeadTex.Height / 3;
+            int yHead = heightHead * HeadFrameY;
+            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
+            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    spriteBatch.Draw(HeadTex, oldPos + NPC.Size / 2f - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
+                }
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
@@ -1111,10 +1119,6 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int heightHead = HeadTex.Height / 3;
-            int yHead = heightHead * HeadFrameY;
-            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
-            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
 
             int heightArms = ArmsTex.Height / 24;
