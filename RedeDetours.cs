@@ -12,18 +12,18 @@ namespace Redemption
 {
     public static class RedeDetours
     {
-        public static Dictionary<int, (Entity entity, IProjectileSource source)> projOwners = new();
+        public static Dictionary<int, (Entity entity, IEntitySource source)> projOwners = new();
 
         public static void Initialize()
         {
             On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
-            On.Terraria.Projectile.NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float += Projectile_NewProjectile;
+            On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float += Projectile_NewProjectile;
             On.Terraria.Main.DrawDust += Main_DrawDust;
         }
         public static void Unload()
         {
             On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
-            On.Terraria.Projectile.NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float -= Projectile_NewProjectile;
+            On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float -= Projectile_NewProjectile;
             On.Terraria.Main.DrawDust -= Main_DrawDust;
         }
         private static void Main_DrawDust(On.Terraria.Main.orig_DrawDust orig, Main self)
@@ -42,42 +42,37 @@ namespace Redemption
 
             orig(self);
         }
-        private static int Projectile_NewProjectile(On.Terraria.Projectile.orig_NewProjectile_IProjectileSource_float_float_float_float_int_int_float_int_float_float orig, IProjectileSource spawnSource, float X, float Y, float SpeedX, float SpeedY, int Type, int Damage, float KnockBack, int Owner, float ai0, float ai1)
+        private static int Projectile_NewProjectile(On.Terraria.Projectile.orig_NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float orig, IEntitySource spawnSource, float X, float Y, float SpeedX, float SpeedY, int Type, int Damage, float KnockBack, int Owner, float ai0, float ai1)
         {
             int index = orig(spawnSource, X, Y, SpeedX, SpeedY, Type, Damage, KnockBack, Owner, ai0, ai1);
 
             Projectile projectile = Main.projectile[index];
             Entity attacker = null;
 
-            if (spawnSource is ProjectileSource_Item && projectile.friendly && !projectile.hostile)
+            if (spawnSource is EntitySource_ItemUse && projectile.friendly && !projectile.hostile)
             {
-                ProjectileSource_Item sourceItem = spawnSource as ProjectileSource_Item;
-                attacker = sourceItem.Player;
+                EntitySource_ItemUse sourceItem = spawnSource as EntitySource_ItemUse;
+                attacker = sourceItem.Entity;
             }
-            else if (spawnSource is ProjectileSource_Buff && projectile.friendly && !projectile.hostile)
+            else if (spawnSource is EntitySource_Buff && projectile.friendly && !projectile.hostile)
             {
-                ProjectileSource_Buff sourceBuff = spawnSource as ProjectileSource_Buff;
-                attacker = sourceBuff.Player;
+                EntitySource_Buff sourceBuff = spawnSource as EntitySource_Buff;
+                attacker = sourceBuff.Entity;
             }
-            else if (spawnSource is ProjectileSource_Item_WithAmmo && projectile.friendly && !projectile.hostile)
+            else if (spawnSource is EntitySource_ItemUse_WithAmmo && projectile.friendly && !projectile.hostile)
             {
-                ProjectileSource_Item_WithAmmo sourceItemAmmo = spawnSource as ProjectileSource_Item_WithAmmo;
-                attacker = sourceItemAmmo.Player;
+                EntitySource_ItemUse_WithAmmo sourceItemAmmo = spawnSource as EntitySource_ItemUse_WithAmmo;
+                attacker = sourceItemAmmo.Entity;
             }
-            else if (spawnSource is ProjectileSource_Mount && projectile.friendly && !projectile.hostile)
+            else if (spawnSource is EntitySource_Mount && projectile.friendly && !projectile.hostile)
             {
-                ProjectileSource_Mount sourceMount = spawnSource as ProjectileSource_Mount;
-                attacker = sourceMount.Player;
+                EntitySource_Mount sourceMount = spawnSource as EntitySource_Mount;
+                attacker = sourceMount.Entity;
             }
-            else if (spawnSource is ProjectileSource_ProjectileParent && projectile.friendly && !projectile.hostile)
+            else if (spawnSource is EntitySource_Parent && projectile.friendly && !projectile.hostile)
             {
-                ProjectileSource_ProjectileParent sourceParent = spawnSource as ProjectileSource_ProjectileParent;
-                attacker = Main.player[sourceParent.ParentProjectile.owner];
-            }
-            else if (spawnSource is ProjectileSource_NPC)
-            {
-                ProjectileSource_NPC sourceNPC = spawnSource as ProjectileSource_NPC;
-                attacker = sourceNPC.NPC;
+                EntitySource_Parent sourceParent = spawnSource as EntitySource_Parent;
+                attacker = sourceParent.Entity;
             }
             if (attacker != null)
             {

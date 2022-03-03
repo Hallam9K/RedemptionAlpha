@@ -6,6 +6,7 @@ using Terraria.Enums;
 using Terraria.ObjectData;
 using Redemption.Items.Placeable.Furniture.AncientWood;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.AncientWood
 {
@@ -73,7 +74,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<AncientWoodLantern>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<AncientWoodLantern>());
 			Chest.DestroyChest(i, j);
         }
     }

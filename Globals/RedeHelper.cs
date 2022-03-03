@@ -575,7 +575,7 @@ namespace Redemption.Globals
             return new(rect.Width / 2f, rect.Height / frames / 2f);
         }
 
-        public static void ProjectileExplosion(IProjectileSource source, Vector2 pos, float startAngle, int streams,
+        public static void ProjectileExplosion(IEntitySource source, Vector2 pos, float startAngle, int streams,
             int type, int damage, float projSpeed, float ai0 = 0, float ai1 = 0)
         {
             float currentAngle = startAngle;
@@ -650,7 +650,7 @@ namespace Redemption.Globals
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetProjectileSpawnSource(), position, velocity, projType, damage / 4, 0,
+                Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
             }
         }
@@ -663,7 +663,7 @@ namespace Redemption.Globals
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int index = Terraria.NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
+                int index = Terraria.NPC.NewNPC(null, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);

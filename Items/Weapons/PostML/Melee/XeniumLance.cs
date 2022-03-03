@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
         public override bool AltFunctionUse(Player player) => true;
 
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             bool sp = ShotCount > 0;
 

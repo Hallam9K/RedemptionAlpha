@@ -296,7 +296,7 @@ namespace Redemption.Globals.Player
                 PlayerDrawLayers.HairBack.Hide();
         }
 
-        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (thornCirclet && item.CountsAsClass(DamageClass.Magic))
             {

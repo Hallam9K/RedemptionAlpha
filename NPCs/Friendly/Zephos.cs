@@ -15,6 +15,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Usable.Summons;
 using Redemption.Buffs;
 using Redemption.Items.Usable;
+using Terraria.GameContent.Personalities;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -34,15 +35,15 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 8;
 
-            NPC.Happiness.LikeBiome(PrimaryBiomeID.Forest);
-            NPC.Happiness.LoveBiome(PrimaryBiomeID.Ocean);
-            NPC.Happiness.DislikeBiome(PrimaryBiomeID.NormalUnderground);
-            NPC.Happiness.HateBiome(PrimaryBiomeID.Snow);
+            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<OceanBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike);
+            NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Hate);
 
-            NPC.Happiness.LoveNPC(ModContent.NPCType<Daerel>());
-            NPC.Happiness.LikeNPC(NPCID.Pirate);
-            NPC.Happiness.DislikeNPC(NPCID.Merchant);
-            NPC.Happiness.HateNPC(NPCID.TaxCollector);
+            NPC.Happiness.SetNPCAffection<Daerel>(AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Pirate, AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.Merchant, AffectionLevel.Dislike);
+            NPC.Happiness.SetNPCAffection(NPCID.Clothier, AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {

@@ -4047,7 +4047,7 @@ namespace Redemption.Base
                             float ai2 = 0;
                             float ai3 = npc.ai[3];
 
-                            int newnpcID = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
+                            int newnpcID = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
                             Main.npc[npcID].ai[0] = newnpcID;
                             Main.npc[npcID].netUpdate = true;
                             //Main.npc[newnpcID].ai[3] = (float)npc.whoAmI;
@@ -4081,16 +4081,16 @@ namespace Redemption.Base
 
                         if (isHead)
                         {
-                            npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         else
                         if (isBody && npc.ai[2] > 0f)
                         {
-                            npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         else
                         {
-                            npc.ai[0] = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         /*if (!split)
 						{
@@ -5212,71 +5212,6 @@ namespace Redemption.Base
             }
             return false;
         }
-
-        /*
-         * specialized version of DropItem to be used specifically for boss bags.
-		 
-		 * player: The player that is receiving the boss bag loot. If null, works like DropItem.
-         */
-        public static int DropItemBossBag(Player player, Entity codable, int type, int amt, int maxStack, float chance, bool clusterItem = false)
-        {
-            if (player != null)
-            {
-                if ((float)Main.rand.NextDouble() <= chance) player.QuickSpawnItem(type, amt);
-                return -2;
-            }
-            return DropItem(codable, type, amt, maxStack, chance, clusterItem);
-        }
-
-        public static int DropItem(Entity codable, int type, int amt, int maxStack, int chance, bool clusterItem = false)
-        {
-            return DropItem(codable, type, amt, maxStack, chance / 100f, clusterItem);
-        }
-
-        /*
-         * Drops an item from a codable, and returns the item's whoAmI. Mostly convenience for mp support.
-         * If it drops more then one item it will return the last item dropped's whoAmI.
-         * 
-         * amt : the amount of the item to drop.
-         * maxStack : The max stack count per item. (only applies if clusterItem == true)
-         * chance : 0-1. The percent chance of the item drop. If projectile is not 100 and the item does not drop, projectile method returns -1.
-         * clusterItem : If true, it will stick the drops into stacks that fit to the item's maxStack value. If false it drops them as individual items.
-         */
-        public static int DropItem(Entity codable, int type, int amt, int maxStack, float chance, bool clusterItem = false, bool sync = false)
-        {
-            int itemID = -1;
-            if ((sync || Main.netMode != NetmodeID.MultiplayerClient) && (float)Main.rand.NextDouble() <= chance)
-            {
-                if (clusterItem)
-                {
-                    int stackCount = 0;
-                    int stackCount2 = 0;
-                    while (stackCount != amt)
-                    {
-                        stackCount++; stackCount2++;
-                        if (stackCount == amt || stackCount2 == maxStack)
-                        {
-                            itemID = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type, stackCount2);
-                            if (sync) NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemID);
-                            stackCount2 = 0;
-                        }
-                    }
-                }
-                else
-                {
-                    int count = 0;
-                    while (count < amt)
-                    {
-                        count++;
-                        itemID = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type);
-                        if (sync) NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemID);
-                    }
-                }
-            }
-            return itemID;
-        }
-
-
 
         /* THESE TWO ARE WIP - BROKEN IN TMODLOADER */
         /*public static LootRule AddLoot(object npcTypes, int type, int amtMin, int amtMax, int chance)

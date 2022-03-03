@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Plants
 {
@@ -32,7 +33,7 @@ namespace Redemption.Tiles.Plants
         public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<HeartOfThorns>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<HeartOfThorns>());
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.NPCs.Critters;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,7 +31,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail && !WorldGen.gen)
             {
                 if (Main.rand.NextBool(2) && Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.NewNPC(i * 16 + 8, j * 16, ModContent.NPCType<SpiderSwarmer>());
+                    NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 8, j * 16, ModContent.NPCType<SpiderSwarmer>());
 
                 if (breakCheck)
                     return;

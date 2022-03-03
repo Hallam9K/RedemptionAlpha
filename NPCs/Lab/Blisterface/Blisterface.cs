@@ -99,9 +99,9 @@ namespace Redemption.NPCs.Lab.Blisterface
         {
             Player player = Main.LocalPlayer;
             if (!LabArea.labAccess[2])
-                Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<ZoneAccessPanel3>());
+                Item.NewItem(NPC.GetItemSource_Loot(), (int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<ZoneAccessPanel3>());
 
-            Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<Keycard2>());
+            Item.NewItem(NPC.GetItemSource_Loot(), (int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<Keycard2>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBlisterface, -1);
         }

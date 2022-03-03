@@ -3,6 +3,7 @@ using Redemption.Items.Quest.KingSlayer;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.SlayerShip
 {
@@ -28,7 +29,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerHullPlating>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerHullPlating>());
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Lab.Janitor
                         CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "*Grumbles* Those darn careless bots losing their cards...", true, false);
 
                         if (!LabArea.labAccess[0])
-                            Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
+                            Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
 
                         NPC.SetEventFlagCleared(ref RedeBossDowned.downedJanitor, -1);
                         if (Main.netMode == NetmodeID.Server)

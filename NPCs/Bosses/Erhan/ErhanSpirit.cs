@@ -91,7 +91,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-            BossBag = ModContent.ItemType<ErhanBag>();
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -114,7 +113,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ErhanBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));

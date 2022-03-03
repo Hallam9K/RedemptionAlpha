@@ -71,7 +71,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override void OnKill()
         {
             if (Main.rand.NextBool(2))
-                Item.NewItem(NPC.getRect(), ItemID.Heart);
+                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ItemID.Heart);
         }
 
         public override void HitEffect(int hitDirection, double damage)

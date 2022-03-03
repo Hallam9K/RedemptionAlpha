@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Tiles
                 if (Main.netMode == NetmodeID.SinglePlayer)
                 {
                     Main.tile[i, j].ClearTile();
-                    int proj = Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), positionX, positionY, 0f, 0.41f, projectileType, 10, 0f, Main.myPlayer);
+                    int proj = Projectile.NewProjectile(new EntitySource_TileBreak(i, j), positionX, positionY, 0f, 0.41f, projectileType, 10, 0f, Main.myPlayer);
                     Main.projectile[proj].ai[0] = 1f;
                     WorldGen.SquareTileFrame(i, j);
                 }
@@ -74,7 +74,7 @@ namespace Redemption.Tiles.Tiles
 
                     if (spawnProj)
                     {
-                        int proj = Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), positionX, positionY, 0f, 2.5f, projectileType, 10, 0f, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(new EntitySource_TileBreak(i, j), positionX, positionY, 0f, 2.5f, projectileType, 10, 0f, Main.myPlayer);
                         Main.projectile[proj].velocity.Y = 0.5f;
                         Main.projectile[proj].position.Y += 2f;
                         Main.projectile[proj].netUpdate = true;
@@ -189,7 +189,7 @@ namespace Redemption.Tiles.Tiles
                     }
                     else
                     {
-                        Item.NewItem((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
+                        Item.NewItem(Projectile.GetItemSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
                     }
 
                     if (!onMinecartTrack && tile.HasTile && tile.TileType == tileType)
@@ -208,7 +208,7 @@ namespace Redemption.Tiles.Tiles
                 }
                 else
                 {
-                    Item.NewItem((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
+                    Item.NewItem(Projectile.GetItemSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
                 }
             }
         }

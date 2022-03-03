@@ -11,6 +11,7 @@ using Redemption.Globals;
 using Redemption.Dusts;
 using Redemption.Base;
 using Redemption.Items.Armor.Vanity;
+using Terraria.GameContent.Personalities;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -29,16 +30,16 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 4;
 
-            NPC.Happiness.LoveBiome(PrimaryBiomeID.NormalUnderground);
-            NPC.Happiness.LikeBiome(PrimaryBiomeID.Forest);
-            NPC.Happiness.DislikeBiome(PrimaryBiomeID.Desert);
-            NPC.Happiness.HateBiome(PrimaryBiomeID.Ocean);
+            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<DesertBiome>(AffectionLevel.Dislike);
+            NPC.Happiness.SetBiomeAffection<OceanBiome>(AffectionLevel.Hate);
 
-            NPC.Happiness.LoveNPC(NPCID.Wizard);
-            NPC.Happiness.LikeNPC(ModContent.NPCType<Zephos>());
-            NPC.Happiness.LikeNPC(ModContent.NPCType<Daerel>());
-            NPC.Happiness.DislikeNPC(NPCID.Clothier);
-            NPC.Happiness.HateNPC(NPCID.TaxCollector);
+            NPC.Happiness.SetNPCAffection<Zephos>(AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection<Daerel>(AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.Wizard, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Clothier, AffectionLevel.Dislike);
+            NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {

@@ -34,55 +34,55 @@ namespace Redemption.Items.Usable
         public override void RightClick(Player player)
         {
             if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(ModContent.ItemType<Plating>(), Main.rand.Next(1, 2));
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<Plating>(), Main.rand.Next(1, 2));
 
             if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(ModContent.ItemType<Capacitator>(), Main.rand.Next(1, 2));
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<Capacitator>(), Main.rand.Next(1, 2));
 
             if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.EmptyBucket);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.EmptyBucket);
 
             if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.IllegalGunParts);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.IllegalGunParts);
 
             if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.Handgun);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.Handgun);
 
             if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.ClockworkAssaultRifle);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.ClockworkAssaultRifle);
 
             if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.BreakerBlade);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.BreakerBlade);
 
             if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.ChainGuillotines);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.ChainGuillotines);
 
             if (Main.rand.NextBool(100))
-                player.QuickSpawnItem(ItemID.FlareGun);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.FlareGun);
 
             if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.rand.NextBool(75))
-                player.QuickSpawnItem(ItemID.ProximityMineLauncher);
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.ProximityMineLauncher);
 
             if (NPC.downedMechBossAny)
             {
-                player.QuickSpawnItem(ItemID.Cog, Main.rand.Next(4, 19));
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.Cog, Main.rand.Next(4, 19));
                 switch (Main.rand.Next(2))
                 {
                     case 0:
-                        player.QuickSpawnItem(ItemID.AdamantiteBar, Main.rand.Next(2, 7));
+                        player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.AdamantiteBar, Main.rand.Next(2, 7));
                         break;
                     case 1:
-                        player.QuickSpawnItem(ItemID.TitaniumBar, Main.rand.Next(2, 7));
+                        player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.TitaniumBar, Main.rand.Next(2, 7));
                         break;
                 }
             }
             switch (Main.rand.Next(2))
             {
                 case 0:
-                    player.QuickSpawnItem(ItemID.IronBar, Main.rand.Next(2, 7));
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.IronBar, Main.rand.Next(2, 7));
                     break;
                 case 1:
-                    player.QuickSpawnItem(ItemID.LeadBar, Main.rand.Next(2, 7));
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.LeadBar, Main.rand.Next(2, 7));
                     break;
             }
         }

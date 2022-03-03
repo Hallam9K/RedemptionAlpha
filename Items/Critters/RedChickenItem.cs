@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
 using static Redemption.NPCs.Critters.Chicken;
 using Terraria.GameContent.Creative;
+using Terraria.DataStructures;
 
 namespace Redemption.Items.Critters
 {
@@ -30,7 +31,7 @@ namespace Redemption.Items.Critters
         }
         public override bool? UseItem(Player player)
         {
-            int index = NPC.NewNPC((int)(player.position.X + Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f),
+            int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)(player.position.X + Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f),
                 ModContent.NPCType<Chicken>(), ai1: -1);
             (Main.npc[index].ModNPC as Chicken).ChickType = ChickenType.Red;
 

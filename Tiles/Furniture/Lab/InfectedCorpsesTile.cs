@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Lab
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 48, 48, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8));
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8));
 		}
 	}
 	public class InfectedCorpse2Tile : ModTile
@@ -68,7 +68,7 @@ namespace Redemption.Tiles.Furniture.Lab
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 64, 32, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8));
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8));
 		}
 	}
 	public class InfectedCorpse3Tile : ModTile
@@ -99,7 +99,7 @@ namespace Redemption.Tiles.Furniture.Lab
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 64, 32, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8));
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8));
 		}
 	}
 }

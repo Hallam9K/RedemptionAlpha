@@ -39,7 +39,7 @@ namespace Redemption.Items.Materials.PostML
         }
         public override bool? UseItem(Player player)
         {
-            int index = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y,
+            int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)player.Center.X, (int)player.Center.Y,
                 ModContent.NPCType<ShadesoulNPC>(), ai2: 60);
             Main.npc[index].velocity = RedeHelper.PolarVector(10, (Main.MouseWorld - player.Center).ToRotation());
 

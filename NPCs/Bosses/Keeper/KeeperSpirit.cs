@@ -88,7 +88,6 @@ namespace Redemption.NPCs.Bosses.Keeper
             NPC.DeathSound = SoundID.NPCDeath39;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper");
-            BossBag = ModContent.ItemType<KeeperBag>();
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -114,7 +113,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<KeeperBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KeeperTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KeeperRelic>()));
