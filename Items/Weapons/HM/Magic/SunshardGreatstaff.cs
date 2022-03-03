@@ -10,6 +10,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Dusts;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -55,7 +56,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 CastCount = 0;
         }
 
-        public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float numberProjectiles = 5;
             float rotation = MathHelper.ToRadians(20);
@@ -69,7 +70,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (CastCount >= 3)
             {
                 SoundEngine.PlaySound(SoundID.Item122, player.position);
-                DustHelper.DrawCircle(position, DustID.GoldFlame, 2, 4, 4, 1, 2, nogravity: true);
+                RedeDraw.SpawnRing(position, new Color(255, 255, 120), 0.12f, 0.86f, 4);
+                RedeDraw.SpawnRing(position, new Color(255, 255, 120), 0.14f, 0.83f, 3);
+                RedeDraw.SpawnRing(position, new Color(255, 255, 120), 0.16f);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<SunshardRay>(), damage, knockback, player.whoAmI);
                 CastCount = 0;
             }

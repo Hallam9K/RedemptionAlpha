@@ -102,7 +102,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
-            //BossBag = ModContent.ItemType<OmegaGigaporaBag>();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -139,13 +138,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (!RedeBossDowned.downedVlitch2)
             {
-                Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch2, -1);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaGigaporaBag>()));
 
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
@@ -189,7 +188,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     continue;
 
                 if (NPC.immortal && AIState is not ActionState.Death)
-                    DustHelper.DrawCircle(target.Center, DustID.LifeDrain, 1, 2, 2, nogravity: true);
+                    RedeDraw.SpawnRing(target.Center, Color.Red, 0.13f, 0.7f);
                 target.Kill();
             }
 
@@ -206,7 +205,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     int[] Type = { 0, 1, -1, -2, 2, -3, -4, 3, -5, -6, 4, -7, -8, 5, -9, -10, 6, -11, 7 };
                     for (int i = 0; i < Type.Length; ++i)
                     {
-                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
                         if (latestNPC != Main.maxNPCs)
                         {
                             Main.npc[latestNPC].realLife = NPC.whoAmI;
@@ -670,7 +669,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 seg.ai[0] = 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int index = NPC.NewNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
+                    int index = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
                     Main.npc[index].velocity = NPC.velocity;
                     Main.npc[index].frameCounter = -25;
                     if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)

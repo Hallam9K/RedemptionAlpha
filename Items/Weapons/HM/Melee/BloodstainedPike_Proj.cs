@@ -214,7 +214,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void Kill(int timeLeft)
         {
-            DustHelper.DrawCircle(Projectile.Center, DustID.LifeDrain, 3, 1, 1, 1, 3, nogravity: true);
+            RedeDraw.SpawnRing(Projectile.Center, Color.Red, 0.2f, 0.9f, 4);
         }
         public override bool PreDraw(ref Color lightColor)
         {

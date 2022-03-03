@@ -47,11 +47,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                     Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1])) * 80;
                     if (!s)
                     {
-                        DustHelper.DrawCircle(Projectile.Center, DustID.GoldFlame, 2, 2, 2, 1, 4, nogravity: true);
-                        Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<GlowDust>(), Vector2.Zero, Scale: 2);
-                        dust.noGravity = true;
-                        Color dustColor = new(255, 255, 120) { A = 0 };
-                        dust.color = dustColor;
+                        RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
+                        RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.13f, 0.83f, 0);
                         s = true;
                     }
                     if (Projectile.localAI[0]++ >= 50)

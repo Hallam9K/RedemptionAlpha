@@ -60,7 +60,7 @@ namespace Redemption.Projectiles.Ranged
         {
             Player player = Main.player[Projectile.owner];
 
-            DustHelper.DrawCircle(Projectile.Center, DustID.GreenTorch, 1, 2, 2, nogravity: true);
+            RedeDraw.SpawnRing(Projectile.Center, Color.LimeGreen, glowScale: 3);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/PlasmaBlast"), Projectile.position);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);

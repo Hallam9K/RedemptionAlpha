@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 64, 64, ModContent.ItemType<LabBackDoor>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 64, ModContent.ItemType<LabBackDoor>());
         }
 
         public override bool CanExplode(int i, int j) => false;
@@ -64,7 +64,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 64, 64, ModContent.ItemType<LabBackDoor2>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 64, ModContent.ItemType<LabBackDoor2>());
         }
 
         public override bool CanExplode(int i, int j) => false;

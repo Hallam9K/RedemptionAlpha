@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.PreHM;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,7 +26,7 @@ namespace Redemption.Tiles.Banners
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<AncientGladestoneGolemBanner>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<AncientGladestoneGolemBanner>());
         }
 
         public override void NearbyEffects(int i, int j, bool closer)

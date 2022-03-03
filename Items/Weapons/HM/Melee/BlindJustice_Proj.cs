@@ -62,7 +62,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                     glow = MathHelper.Clamp(glow, 0, 0.8f);
                     if (glow >= 0.8 && Projectile.localAI[0] == 0)
                     {
-                        DustHelper.DrawCircle(Projectile.Center, DustID.GoldFlame, 4, 2, 2, 1, 2, nogravity: true);
+                        RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4);
+                        RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f);
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/NebSound2").WithPitchVariance(0.1f), player.position);
                         Projectile.localAI[0] = 1;

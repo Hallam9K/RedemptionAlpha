@@ -88,7 +88,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
-            BossBag = ModContent.ItemType<ErhanBag>();
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -136,7 +135,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ErhanBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
@@ -577,7 +576,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
-                                int p = Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPC.damage / 4, 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
+                                int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPC.damage / 4, 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
                                 TimerRand++;
                             }
@@ -1092,13 +1091,21 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                 return false;
             }
-
+            int heightHead = HeadTex.Height / 3;
+            int yHead = heightHead * HeadFrameY;
+            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
+            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    spriteBatch.Draw(HeadTex, oldPos + NPC.Size / 2f - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
+                }
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
@@ -1111,10 +1118,6 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int heightHead = HeadTex.Height / 3;
-            int yHead = heightHead * HeadFrameY;
-            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
-            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
 
             int heightArms = ArmsTex.Height / 24;

@@ -4,6 +4,7 @@ using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Banners
 {
@@ -25,7 +26,7 @@ namespace Redemption.Tiles.Banners
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<ChickenBanner>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<ChickenBanner>());
         }
 
         public override void NearbyEffects(int i, int j, bool closer)

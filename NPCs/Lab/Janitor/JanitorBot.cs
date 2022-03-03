@@ -122,7 +122,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public override void OnKill()
         {
             if (!LabArea.labAccess[0])
-                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
+                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
 
             RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<JanitorBot_Defeated>());
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedJanitor, -1);

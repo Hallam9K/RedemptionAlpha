@@ -107,9 +107,9 @@ namespace Redemption.Tiles.Plants
                 seedItemStack = Main.rand.Next(1, 4);
             }
             if (herbItemType > 0 && herbItemStack > 0)
-                Item.NewItem(worldPosition, herbItemType, herbItemStack);
+                Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, herbItemType, herbItemStack);
             if (seedItemType > 0 && seedItemStack > 0)
-                Item.NewItem(worldPosition, seedItemType, seedItemStack);
+                Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, seedItemType, seedItemStack);
             return false;
         }
         public override bool IsTileSpelunkable(int i, int j)

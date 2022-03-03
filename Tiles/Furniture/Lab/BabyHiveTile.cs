@@ -42,7 +42,7 @@ namespace Redemption.Tiles.Furniture.Lab
             if (!WorldGen.gen && !fail && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int k = 0; k < Main.rand.Next(1, 3); k++)
-                    NPC.NewNPC(i * 16 + 8, j * 16 + 8, ModContent.NPCType<OozeBlob>());
+                    NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 8, j * 16 + 8, ModContent.NPCType<OozeBlob>());
             }
         }
 

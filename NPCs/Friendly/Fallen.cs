@@ -18,6 +18,7 @@ using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Accessories.PreHM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Single;
+using Terraria.GameContent.Personalities;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -36,15 +37,15 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 14;
 
-            NPC.Happiness.LoveBiome(PrimaryBiomeID.NormalUnderground);
-            NPC.Happiness.LikeBiome(PrimaryBiomeID.Snow);
-            NPC.Happiness.HateBiome(PrimaryBiomeID.Hallow);
-            NPC.Happiness.DislikeBiome(PrimaryBiomeID.Forest);
+            NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<HallowBiome>(AffectionLevel.Hate);
+            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Dislike);
 
-            NPC.Happiness.LoveNPC(NPCID.GoblinTinkerer);
-            NPC.Happiness.LikeNPC(NPCID.Clothier);
-            NPC.Happiness.HateNPC(NPCID.Nurse);
-            NPC.Happiness.DislikeNPC(NPCID.Dryad);
+            NPC.Happiness.SetNPCAffection(NPCID.GoblinTinkerer, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Clothier, AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.Nurse, AffectionLevel.Hate);
+            NPC.Happiness.SetNPCAffection(NPCID.Dryad, AffectionLevel.Dislike);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
@@ -243,7 +244,7 @@ namespace Redemption.NPCs.Friendly
 
                     Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
                     Main.npcChatText = "All done and repaired, here you go.";
-                    player.QuickSpawnItem(ModContent.ItemType<Zweihander>());
+                    player.QuickSpawnItem(NPC.GetItemSource_Loot(), ModContent.ItemType<Zweihander>());
 
                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                     return;

@@ -29,6 +29,6 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			DustType = DustID.t_BorealWood;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new Vector2(i, j) * 16f, ModContent.ItemType<AncientWoodSink>());
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16f, ModContent.ItemType<AncientWoodSink>());
 	}
 }

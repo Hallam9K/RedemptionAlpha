@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Furniture.Misc
             if (Main.tile[left, top].TileFrameX == 0)
             {
                 Player player = Main.LocalPlayer;
-                player.QuickSpawnItem(ModContent.ItemType<CursedGem>());
+                player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<CursedGem>());
             }
             for (int x = left; x < left + 2; x++)
             {

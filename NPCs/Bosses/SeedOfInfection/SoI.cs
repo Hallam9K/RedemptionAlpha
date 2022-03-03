@@ -89,7 +89,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.value = Item.buyPrice(0, 4, 0, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
-            BossBag = ModContent.ItemType<SoIBag>();
             NPC.netAlways = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             if (!Main.dedServ)
@@ -121,7 +120,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SoIBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoITrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SoIRelic>()));

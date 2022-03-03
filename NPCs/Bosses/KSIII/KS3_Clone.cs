@@ -103,7 +103,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
-            BossBag = ModContent.ItemType<SlayerBag>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -135,7 +134,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SlayerBag>()));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
 

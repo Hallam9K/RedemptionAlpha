@@ -37,16 +37,16 @@ namespace Redemption.Globals
                 if (type == TileID.Trees && Main.tile[i, j + 1].TileType == TileID.Grass)
                 {
                     if (Main.rand.NextBool(6))
-                        Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<TreeBugFall>(), 0, 0);
+                        Projectile.NewProjectile(new EntitySource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<TreeBugFall>(), 0, 0);
                 }
                 if (type == TileID.PalmTree && Main.tile[i, j + 1].TileType == TileID.Sand)
                 {
                     if (Main.rand.NextBool(6))
-                        Projectile.NewProjectile(new ProjectileSource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<CoastScarabFall>(), 0, 0);
+                        Projectile.NewProjectile(new EntitySource_TileBreak(i, j), i * 16, (j - 10) * 16, -4 + Main.rand.Next(0, 7), -3 + Main.rand.Next(-3, 0), ModContent.ProjectileType<CoastScarabFall>(), 0, 0);
                 }
             }
             if ((type == TileID.LeafBlock || type == TileID.LivingMahoganyLeaves) && Main.rand.NextBool(4))
-                Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<LivingTwig>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<LivingTwig>());
 
             if (type == ModContent.TileType<IrradiatedDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()])
                 return false;

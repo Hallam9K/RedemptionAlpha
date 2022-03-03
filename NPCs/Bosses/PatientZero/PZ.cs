@@ -93,7 +93,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.netAlways = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2");
-            BossBag = ModContent.ItemType<PZBag>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -138,7 +137,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void OnKill()
         {
             if (!LabArea.labAccess[5])
-                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
+                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedPZ, -1);
         }
@@ -147,7 +146,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7_1>()));
 
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<PZBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZTrophy>(), 10));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());

@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Placeable.Furniture.AncientWood;
+using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.AncientWood
 {
@@ -62,7 +63,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
                 b = 0.4f;
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<AncientWoodCandelabra>());
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<AncientWoodCandelabra>());
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

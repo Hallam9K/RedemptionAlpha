@@ -69,7 +69,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     glow = MathHelper.Clamp(glow, 0, 0.4f);
                     if (glow >= 0.4 && Projectile.localAI[0] == 0)
                     {
-                        DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 2, 2, 1, 2, nogravity: true);
+                        RedeDraw.SpawnRing(Projectile.Center, Color.OrangeRed, 0.2f, 0.85f, 4);
+                        RedeDraw.SpawnRing(Projectile.Center, Color.OrangeRed, 0.2f);
                         SoundEngine.PlaySound(SoundID.Item88, Projectile.position);
                         Projectile.localAI[0] = 1;
                     }

@@ -4,6 +4,7 @@ using Redemption.Items;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Usable.Potions;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -46,17 +47,17 @@ namespace Redemption.Tiles.Furniture.Lab
             if (Main.tile[left, top].TileFrameX == 0)
             {
                 Player player = Main.LocalPlayer;
-                player.QuickSpawnItem(ModContent.ItemType<RadiationPill>());
+                player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<RadiationPill>());
                 if (Main.rand.NextBool(40))
-                    player.QuickSpawnItem(ModContent.ItemType<EmptyMutagen>());
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<EmptyMutagen>());
                 if (Main.rand.NextBool(4))
-                    player.QuickSpawnItem(ModContent.ItemType<FirstAidKit>());
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<FirstAidKit>());
                 if (Main.rand.NextBool(20))
-                    player.QuickSpawnItem(ItemID.AdhesiveBandage);
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ItemID.AdhesiveBandage);
                 if (Main.rand.NextBool(20))
-                    player.QuickSpawnItem(ItemID.Vitamins);
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ItemID.Vitamins);
                 if (Main.rand.NextBool(66666))
-                    player.QuickSpawnItem(ModContent.ItemType<Panacea>());
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<Panacea>());
             }
             for (int x = left; x < left + 2; x++)
             {

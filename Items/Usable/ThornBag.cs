@@ -45,21 +45,21 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(ModContent.ItemType<ThornMask>());
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<ThornMask>());
             }
             switch (Main.rand.Next(3))
             {
                 case 0:
-                    player.QuickSpawnItem(ModContent.ItemType<CursedGrassBlade>());
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<CursedGrassBlade>());
                     break;
                 case 1:
-                    player.QuickSpawnItem(ModContent.ItemType<CursedThornBow>());
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<CursedThornBow>());
                     break;
                 case 2:
-                    player.QuickSpawnItem(ModContent.ItemType<RootTendril>());
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<RootTendril>());
                     break;
             }
-            player.QuickSpawnItem(ModContent.ItemType<CircletOfBrambles>());
+            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<CircletOfBrambles>());
         }
 
         public override Color? GetAlpha(Color lightColor)

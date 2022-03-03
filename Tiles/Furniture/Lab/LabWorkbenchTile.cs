@@ -1,3 +1,4 @@
+using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Lab;
@@ -41,7 +42,7 @@ namespace Redemption.Tiles.Furniture.Lab
 
 		public override void KillMultiTile(int x, int y, int frameX, int frameY)
 		{
-			Item.NewItem(x * 16, y * 16, 32, 16, ModContent.ItemType<LabWorkbench>());
+			Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 32, 16, ModContent.ItemType<LabWorkbench>());
 		}
 	}
 }

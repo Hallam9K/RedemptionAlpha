@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Wasteland
                 {
                     for (int i = 0; i < 15; i++)
                     {
-                        Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ProjectileID.DD2BetsyFireball, 70, 3);
+                        Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ProjectileID.DD2BetsyFireball, 70, 3);
                     }
                 }
                 for (int i = 0; i < 30; i++)

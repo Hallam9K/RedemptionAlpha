@@ -60,7 +60,7 @@ namespace Redemption.Tiles.Furniture.Lab
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int index1 = NPC.NewNPC(i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());
+                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
                         Main.npc[index1].netUpdate2 = true;
@@ -78,7 +78,7 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 if (Main.tile[left, top].TileFrameX == 0)
                 {
-                    player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
+                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<HazmatSuit2>());
                 }
                 for (int x = left; x < left + 3; x++)
                 {
@@ -99,7 +99,7 @@ namespace Redemption.Tiles.Furniture.Lab
             {
                 Player player = Main.LocalPlayer;
                 //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
-                player.QuickSpawnItem(ModContent.ItemType<HazmatSuit2>());
+                player.QuickSpawnItem(new EntitySource_TileBreak(i, j), ModContent.ItemType<HazmatSuit2>());
             }
         }
         public override bool CanExplode(int i, int j) => false;

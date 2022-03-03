@@ -96,7 +96,6 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPC.value = Item.buyPrice(0, 1, 0, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
-            BossBag = ModContent.ItemType<ThornBag>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
         }
@@ -119,7 +118,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThornBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));

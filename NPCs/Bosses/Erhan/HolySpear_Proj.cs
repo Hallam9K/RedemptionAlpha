@@ -41,7 +41,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.position += Projectile.velocity * (Projectile.ai[0] == 1 ? 2000 : 1200);
-                DustHelper.DrawCircle(Projectile.Center, DustID.GoldFlame, 2, 2, 2, 1, 4, nogravity: true);
+                RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
+                RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.13f, 0.83f, 0);
                 Projectile.alpha = 0;
                 Projectile.localAI[0] = 1;
             }
@@ -55,8 +56,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
-                Color color = new Color(255, 255, 120) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale + 0.2f, SpriteEffects.None, 0);
+                Color color = new Color(255, 255, 120, 0) * 0.5f * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale + 0.2f, SpriteEffects.None, 0);
             }
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
