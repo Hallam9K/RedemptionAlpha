@@ -142,7 +142,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(7, 10); i++)
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
         }
         public override void HitEffect(int hitDirection, double damage)
         {

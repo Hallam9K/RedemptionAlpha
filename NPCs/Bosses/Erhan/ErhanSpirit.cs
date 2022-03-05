@@ -168,7 +168,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 CopyList.Remove(ID);
                 NPC.netUpdate = true;
 
-                if (ID == 3 && AttackNumber <= 5)
+                if (ID == 4 && AttackNumber <= 5)
                     continue;
 
                 AttackNumber++;
@@ -176,7 +176,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
         }
 
-        public List<int> AttackList = new() { 0, 1, 2, 3 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4 };
         public List<int> CopyList = null;
 
         private float move;
@@ -416,6 +416,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f),
                                     new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
                             }
+                            if (AttackNumber > 5 && AITimer >= 80 && AITimer % 80 == 0 && AITimer <= 360)
+                            {
+                                TeleGlow = true;
+                                TeleGlowTimer = 0;
+                                for (int i = 0; i < Main.rand.Next(4, 7); i++)
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
+                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), false, SoundID.Item101);
+                            }
                             if (AITimer == 340)
                             {
                                 HeadFrameY = 0;
@@ -493,8 +501,45 @@ namespace Redemption.NPCs.Bosses.Erhan
                             break;
                         #endregion
 
-                        #region Ray of Guidance
+                        #region Holy Phalanx
                         case 3:
+                            AITimer++;
+                            if (AITimer < 80)
+                                NPC.Move(new Vector2(player.Center.X + (40 * NPC.spriteDirection), player.Center.Y - 270), 10, 40, false);
+                            else
+                                NPC.velocity *= 0.5f;
+
+                            if (AITimer == 80)
+                                ArmType = 1;
+                            if (AITimer == 80)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                    NPC.Shoot(new Vector2(player.Center.X + 600 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                            }
+                            if (AITimer >= 90 && AITimer % 7 == 0 && AITimer <= 130 && Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), NPC.position);
+                                SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
+                                int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPC.damage / 4, 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
+                                Main.projectile[p].localAI[0] += TimerRand * 7;
+                                TimerRand++;
+                            }
+                            if (AttackNumber >= 5 ? AITimer == 130 : AITimer == 200)
+                                ArmType = 0;
+
+                            if (AttackNumber >= 5 ? AITimer == 150 : AITimer >= 220)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        #endregion
+
+                        #region Ray of Guidance
+                        case 4:
                             if (AITimer++ == 0)
                             {
                                 move = NPC.Center.X;
@@ -518,7 +563,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     ModContent.ProjectileType<RayOfGuidance>(), (int)(NPC.damage * 2f),
                                     Vector2.Zero, false, SoundID.Item162);
                             }
-                            if (AttackNumber > 10)
+                            if (AttackNumber > 7)
                             {
                                 if (AITimer >= 60 && AITimer % 60 == 0 && AITimer <= 360)
                                 {
@@ -767,12 +812,21 @@ namespace Redemption.NPCs.Bosses.Erhan
                 return false;
             }
 
+            int heightHead = HeadTex.Height / 3;
+            int yHead = heightHead * HeadFrameY;
+            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
+            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    spriteBatch.Draw(HeadTex, oldPos + NPC.Size / 2f - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
+                }
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
@@ -785,10 +839,6 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int heightHead = HeadTex.Height / 3;
-            int yHead = heightHead * HeadFrameY;
-            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
-            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
             spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
 
             int heightArms = ArmsTex.Height / 24;
@@ -838,6 +888,9 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (AIState is ActionState.Fallen && TimerRand == 2 && item.DamageType == DamageClass.Melee)
+                damage *= 2;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
@@ -852,6 +905,9 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
+                damage *= 2;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))

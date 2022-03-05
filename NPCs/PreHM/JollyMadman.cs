@@ -188,7 +188,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
 
                     TimerRand = Main.rand.Next(80, 280);
@@ -499,7 +499,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             for (int i = 0; i < 3; i++)
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

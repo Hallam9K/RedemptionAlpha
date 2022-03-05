@@ -252,7 +252,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 return;
 
             if (AIState != ActionState.Death && !NPC.AnyNPCs(ModContent.NPCType<PZ_Kari>()))
-                RedeHelper.SpawnNPC((int)NPC.Center.X + 3, (int)NPC.Center.Y + 149, ModContent.NPCType<PZ_Kari>(), NPC.whoAmI);
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 3, (int)NPC.Center.Y + 149, ModContent.NPCType<PZ_Kari>(), NPC.whoAmI);
 
             if (Phase == 0 && NPC.life <= (int)(NPC.lifeMax * 0.75f))
                 PhaseSwap();

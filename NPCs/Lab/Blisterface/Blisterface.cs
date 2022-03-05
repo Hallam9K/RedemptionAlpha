@@ -163,7 +163,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     if (NPC.CountNPCS(ModContent.NPCType<BlisteredFish2>()) <= 5)
                     {
                         if (Main.rand.NextBool(250))
-                            RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BlisteredFish2>());
+                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BlisteredFish2>());
                     }
                     break;
                 case 1:
