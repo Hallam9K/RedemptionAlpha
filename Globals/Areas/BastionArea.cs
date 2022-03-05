@@ -11,6 +11,7 @@ using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -30,7 +31,7 @@ namespace Redemption.Globals
 
             Vector2 NozaPos = new((RedeGen.BastionVector.X + 210) * 16, (RedeGen.BastionVector.Y + 64) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Noza_NPC>()) && RedeBossDowned.downedPZ)
-                Terraria.NPC.NewNPC((int)NozaPos.X, (int)NozaPos.Y, ModContent.NPCType<Noza_NPC>());
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)NozaPos.X, (int)NozaPos.Y, ModContent.NPCType<Noza_NPC>());
         }
     }
 }
