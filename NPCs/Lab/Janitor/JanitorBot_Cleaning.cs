@@ -1,6 +1,7 @@
 ﻿using Redemption.Globals;
 using Redemption.Items.Usable;
 using Terraria;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -61,10 +62,11 @@ namespace Redemption.NPCs.Lab.Janitor
                         CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Lost your access card huh? Have mine and get out of my sight.", true, false);
                     if (AITimer >= 400)
                     {
+                        EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
                         CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "*Grumbles* Those darn careless bots losing their cards...", true, false);
 
                         if (!LabArea.labAccess[0])
-                            Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
+                            Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
 
                         NPC.SetEventFlagCleared(ref RedeBossDowned.downedJanitor, -1);
                         if (Main.netMode == NetmodeID.Server)
@@ -82,7 +84,10 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AITimer == 180)
                         CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "...", false, false);
                     if (AITimer == 280)
+                    {
+                        EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
                         CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Wait... You're a trespasser!", true, false);
+                    }
                     if (AITimer >= 400)
                     {
                         NPC.SetDefaults(ModContent.NPCType<JanitorBot>());

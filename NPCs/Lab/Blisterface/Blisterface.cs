@@ -99,9 +99,9 @@ namespace Redemption.NPCs.Lab.Blisterface
         {
             Player player = Main.LocalPlayer;
             if (!LabArea.labAccess[2])
-                Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<ZoneAccessPanel3>());
+                Item.NewItem(NPC.GetItemSource_Loot(), (int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<ZoneAccessPanel3>());
 
-            Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<Keycard2>());
+            Item.NewItem(NPC.GetItemSource_Loot(), (int)player.position.X, (int)player.position.Y, player.width, player.height, ModContent.ItemType<Keycard2>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBlisterface, -1);
         }
@@ -163,7 +163,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     if (NPC.CountNPCS(ModContent.NPCType<BlisteredFish2>()) <= 5)
                     {
                         if (Main.rand.NextBool(250))
-                            RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BlisteredFish2>());
+                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BlisteredFish2>());
                     }
                     break;
                 case 1:

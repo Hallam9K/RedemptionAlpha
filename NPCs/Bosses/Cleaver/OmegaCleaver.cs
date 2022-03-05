@@ -94,9 +94,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
-            BossBag = ModContent.ItemType<OmegaCleaverBag>();
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -134,8 +133,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             if (!RedeBossDowned.downedVlitch1)
             {
-                Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OmegaCleaver_GirusTalk>(), 0, 0, Main.myPlayer);
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<UnconPetItem>());
+                Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OmegaCleaver_GirusTalk>(), 0, 0, Main.myPlayer);
+                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<UnconPetItem>());
             }
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
@@ -143,7 +142,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaCleaverBag>()));
 
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 

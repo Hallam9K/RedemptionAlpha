@@ -51,6 +51,7 @@ Mods: {
             MagmaCubeBuff: "Magma Cube"
             TeslaGeneratorBuff: "Tesla Field Generator"
             XeniumTurretBuff: "Xenium Autoturret"
+            MicroshieldCoreBuff: "Microshield Core"
             
             # Pets
             BouquetOfThornsBuff: "Bouquet of Thorns"
@@ -61,6 +62,7 @@ Mods: {
             OcciePetBuff: "Occie"
             PetChickenBuff: "Chicken Pet"
             XenomiteElementalPetBuff: "Xenomite Elemental"
+            TiedPetBuff: "Tied"
 		}
 		
 		BuffDescription: {
@@ -110,6 +112,7 @@ Mods: {
             MagmaCubeBuff: "The molten jelly cube will fight for you"
             TeslaGeneratorBuff: "A small generator is creating a tesla field"
             XeniumTurretBuff: "Pewpewpewpewpewpew"
+            MicroshieldCoreBuff: "A tiny shield core is defending you"
             
             # Pets
             BouquetOfThornsBuff: "A gift for the newly divorced"
@@ -120,6 +123,7 @@ Mods: {
             OcciePetBuff: "Octavia's kitty cat!"
             PetChickenBuff: "Cluck cluck"
             XenomiteElementalPetBuff: "Cute."
+            TiedPetBuff: '''"Spooked"'''
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

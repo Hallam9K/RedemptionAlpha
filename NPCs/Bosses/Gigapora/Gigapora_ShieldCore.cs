@@ -19,7 +19,24 @@ namespace Redemption.NPCs.Bosses.Gigapora
     public class Gigapora_ShieldCore : ModNPC
     {
         public static int BodyType() => ModContent.NPCType<Gigapora>();
+        public enum ActionState
+        {
+            Begin,
+            Idle,
+            Rapidfire,
+            Dualcast,
+            Zap
+        }
 
+        public ActionState AIState
+        {
+            get => (ActionState)NPC.ai[1];
+            set => NPC.ai[1] = (int)value;
+        }
+
+        public ref float AITimer => ref NPC.ai[2];
+
+        public ref float TimerRand => ref NPC.localAI[0];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shield Core");
@@ -46,7 +63,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 20000;
+            NPC.lifeMax = 5000;
             NPC.damage = 60;
             NPC.defense = 25;
             NPC.knockBackResist = 0;
@@ -60,11 +77,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.DeathSound = SoundID.NPCDeath14;
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
-
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.damage = (int)(NPC.damage * 0.6f);
+        }
         public override void OnKill()
         {
-            Item.NewItem(NPC.getRect(), ItemID.Heart);
-            Item.NewItem(NPC.getRect(), ItemID.Heart);
+            Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ItemID.Heart);
+            Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ItemID.Heart);
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (seg.active && seg.type == ModContent.NPCType<Gigapora_BodySegment>())
             {
@@ -78,6 +99,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (NPC.life <= 0)
             {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShieldCoreGore" + (i + 1)).Type);
                 for (int i = 0; i < 10; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, Scale: 2);
@@ -90,17 +116,96 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
             }
         }
-
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CheckActive() => false;
         public override void AI()
         {
+            Player player = Main.player[NPC.target];
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
                 NPC.active = false;
             DespawnHandler();
-            if (NPC.ai[1]++ >= 85)
-                NPC.Move(Vector2.Zero, 8, 60, true);
-            else
-                NPC.velocity *= 0.99f;
+
+            bool another = NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) > 1;
+
+            switch (AIState)
+            {
+                case ActionState.Begin:
+                    NPC.velocity *= 0.99f;
+                    if (AITimer++ >= 85)
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.Idle:
+                    if (NPC.DistanceSQ(player.Center) >= 300 * 300)
+                        NPC.Move(Vector2.Zero, NPC.DistanceSQ(player.Center) > 700 * 700 ? 18 : 10, 60, true);
+                    else
+                        NPC.velocity *= 0.98f;
+
+                    if (AITimer++ % (another ? 90 : 60) == 0)
+                    {
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, true, SoundID.Item1, "Sounds/Custom/Laser1");
+                    }
+                    if (AITimer >= (another ? 220 : 180) && NPC.DistanceSQ(player.Center) <= 600 * 600)
+                    {
+                        AITimer = 0;
+                        AIState = (ActionState)Main.rand.Next(2, 5);
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.Rapidfire:
+                    NPC.velocity *= 0.98f;
+                    if (AITimer++ == 0)
+                        NPC.velocity = player.Center.DirectionTo(NPC.Center) * 6;
+
+                    if (AITimer++ % 3 == 0 && AITimer < 30)
+                    {
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation() + TimerRand - MathHelper.ToRadians(another ? 50 : 25)), true, SoundID.Item1, "Sounds/Custom/Laser1");
+
+                        TimerRand += MathHelper.ToRadians(another ? 20 : 10);
+                        NPC.netUpdate = true;
+                    }
+                    if (AITimer >= 50)
+                    {
+                        AITimer = 0;
+                        TimerRand = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.Dualcast:
+                    NPC.velocity *= 0.98f;
+                    if (AITimer++ == 30)
+                    {
+                        NPC.velocity = player.Center.DirectionTo(NPC.Center) * 3;
+                        for (int i = -1; i <= 1; i += 2)
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_DualcastBall>(), (int)(NPC.damage * 1.15f), RedeHelper.PolarVector(14, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(80 * i)), true, SoundID.Item1, "Sounds/Custom/Zap2");
+                    }
+                    if (AITimer >= 60)
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case ActionState.Zap:
+                    NPC.Move(new Vector2(Main.rand.Next(-100, 100), -400), 18, 50, true);
+                    if (AITimer++ >= 20 && AITimer % (another ? 8 : 5) == 0 && AITimer <= 80)
+                    {
+                        NPC.Shoot(player.Center + player.velocity + RedeHelper.Spread(300), ModContent.ProjectileType<ShieldCore_Zap>(), NPC.damage, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/ElectricSlash", NPC.whoAmI);
+                    }
+                    if (AITimer >= 140)
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+            }
 
             if (NPC.ai[3] > 0)
             {
@@ -165,12 +270,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         private void DespawnHandler()
         {
+            NPC seg = Main.npc[(int)NPC.ai[0]];
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
+            if (!player.active || player.dead || seg.ai[0] == 2)
             {
                 NPC.TargetClosest(false);
                 player = Main.player[NPC.target];
-                if (!player.active || player.dead)
+                if (!player.active || player.dead || seg.ai[0] == 2)
                 {
                     NPC.velocity.Y = -10;
                     if (NPC.timeLeft > 10)

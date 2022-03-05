@@ -18,6 +18,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -98,7 +99,7 @@ namespace Redemption.NPCs.PreHM
             }
             if (Personality == PersonalityState.Greedy && CoinsDropped < 10 && Main.rand.NextBool(3))
             {
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
+                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
                 CoinsDropped++;
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, Personality == PersonalityState.Greedy ? DustID.GoldCoin : DustID.Bone,
@@ -161,6 +162,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     bool jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -195,6 +197,7 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X = 2 * NPC.spriteDirection;
                         AIState = ActionState.Stab;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     if (Personality == PersonalityState.Greedy && Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                     {
@@ -418,15 +421,15 @@ namespace Redemption.NPCs.PreHM
             if (HasEyes)
             {
                 if (Personality == PersonalityState.Soulful)
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.2f));
+                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.2f));
                 else
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
+                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
             }
             else if (Main.rand.NextBool(3))
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
             if (Personality == PersonalityState.Greedy)
             {
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
+                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

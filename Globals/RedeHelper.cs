@@ -575,7 +575,7 @@ namespace Redemption.Globals
             return new(rect.Width / 2f, rect.Height / frames / 2f);
         }
 
-        public static void ProjectileExplosion(IProjectileSource source, Vector2 pos, float startAngle, int streams,
+        public static void ProjectileExplosion(IEntitySource source, Vector2 pos, float startAngle, int streams,
             int type, int damage, float projSpeed, float ai0 = 0, float ai1 = 0)
         {
             float currentAngle = startAngle;
@@ -603,6 +603,10 @@ namespace Redemption.Globals
         public static bool DaerelActive()
         {
             return Terraria.NPC.AnyNPCs(ModContent.NPCType<Daerel>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<DaerelUnconscious>());
+        } 
+        public static bool TBotActive()
+        {
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<TBot>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>());
         }
         public static bool WayfarerActive()
         {
@@ -646,7 +650,7 @@ namespace Redemption.Globals
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetProjectileSpawnSource(), position, velocity, projType, damage / 4, 0,
+                Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
             }
         }
@@ -654,12 +658,12 @@ namespace Redemption.Globals
         /// <summary>
         /// For spawning NPCs from NPCs without any extra stuff.
         /// </summary>
-        public static void SpawnNPC(int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0,
+        public static void SpawnNPC(IEntitySource source, int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0,
             float ai3 = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int index = Terraria.NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
+                int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);
@@ -905,6 +909,8 @@ namespace Redemption.Globals
                 return false;
             if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
                 return false;
+            if (!canSeeHiding && codable is Projectile && (codable as Projectile).alpha >= 200)
+                return false;
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
@@ -930,6 +936,18 @@ namespace Redemption.Globals
             }
 
             return true;
+        }
+
+        public static void Dodge(this Terraria.NPC npc, Projectile proj, float vel = 6, float jumpVel = 2, float maxJump = 8)
+        {
+            npc.velocity = PolarVector(vel, npc.DirectionTo(proj.Center).ToRotation() + (proj.Center.X < npc.Center.X ? MathHelper.PiOver2 : -MathHelper.PiOver2));
+            npc.velocity.Y -= jumpVel;
+            npc.velocity.Y = MathHelper.Max(-maxJump, npc.velocity.Y);
+            if (npc.position.Y > proj.Bottom.Y && (proj.velocity.X > 2 || proj.velocity.X < -2) && proj.velocity.Y <= 1)
+            {
+                npc.velocity.Y = 1;
+                npc.velocity.X = -npc.velocity.X / 2;
+            }
         }
 
         /// <summary>

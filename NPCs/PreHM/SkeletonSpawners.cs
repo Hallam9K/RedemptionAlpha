@@ -7,6 +7,7 @@ using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Redemption.Tiles.Tiles;
 using System.Linq;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -64,12 +65,12 @@ namespace Redemption.NPCs.PreHM
                     if (Main.rand.NextBool(2))
                     {
                         pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
                     }
                     for (int i = 0; i < 2; i++)
                     {
                         pos = RedeHelper.FindGround(NPC, 5);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -77,22 +78,22 @@ namespace Redemption.NPCs.PreHM
                     if (!Main.rand.NextBool(3))
                     {
                         pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
                     }
                     for (int i = 0; i < 3; i++)
                     {
                         pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.LargeGroup:
                     pos = RedeHelper.FindGround(NPC, 10);
-                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
                     for (int i = 0; i < 5; i++)
                     {
                         pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -166,7 +167,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 5);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -174,7 +175,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(4, 6); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -182,7 +183,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(6, 8); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
                     break;
@@ -240,31 +241,31 @@ namespace Redemption.NPCs.PreHM
             {
                 case SpawnType.SmallGroup:
                     pos = RedeHelper.FindGround(NPC, 15);
-                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     for (int i = 0; i < 2; i++)
                     {
                         pos = RedeHelper.FindGround(NPC, 15);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.Group:
                     pos = RedeHelper.FindGround(NPC, 15);
-                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     for (int i = 0; i < 3; i++)
                     {
                         pos = RedeHelper.FindGround(NPC, 15);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.LargeGroup:
                     pos = RedeHelper.FindGround(NPC, 15);
-                    RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     for (int i = 0; i < 5; i++)
                     {
                         pos = RedeHelper.FindGround(NPC, 15);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
                     }
                     NPC.active = false;
                     break;

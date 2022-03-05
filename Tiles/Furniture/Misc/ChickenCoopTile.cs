@@ -39,7 +39,7 @@ namespace Redemption.Tiles.Furniture.Misc
             if (Main.rand.NextBool(8))
             {
                 SoundEngine.PlaySound(SoundID.Item16, i * 16, j * 16);
-                Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>());
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -48,7 +48,7 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenCoop>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenCoop>());
         }
     }
 }

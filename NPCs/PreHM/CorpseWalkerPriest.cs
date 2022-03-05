@@ -20,6 +20,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -141,6 +142,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     bool jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -163,6 +165,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                         Healing = false;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
@@ -441,9 +444,9 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             if (HasEyes)
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
             else if (Main.rand.NextBool(2))
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

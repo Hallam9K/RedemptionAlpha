@@ -330,7 +330,7 @@ namespace Redemption.Globals.NPC
                 if (ItemTags.Shadow.Has(item.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                        Item.NewItem(npc.GetItemSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
@@ -378,12 +378,12 @@ namespace Redemption.Globals.NPC
                 if (ProjectileTags.Shadow.Has(projectile.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                        Item.NewItem(npc.GetItemSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
 
-            if (RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IProjectileSource source) value))
+            if (RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
                 attacker = value.entity;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
@@ -391,7 +391,7 @@ namespace Redemption.Globals.NPC
         public override void OnKill(Terraria.NPC npc)
         {
             if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
-                RedeHelper.SpawnNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
         public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {
@@ -465,7 +465,6 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
                     pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
                     pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
-                    pool.Add(ModContent.NPCType<InfectionHive>(), tileCheck ? 0.3f : 0);
                     if (spawnInfo.water)
                         pool.Add(ModContent.NPCType<BlisteredFish>(), 0.4f);
                 }
@@ -492,6 +491,8 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<SicklyPenguin>(), 0.6f);
                 }
             }
+            if (spawnInfo.player.RedemptionScreen().cutscene)
+                pool.Clear();
         }
     }
 }

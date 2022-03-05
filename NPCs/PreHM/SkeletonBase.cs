@@ -7,6 +7,8 @@ using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Terraria.GameContent.UI;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -34,6 +36,7 @@ namespace Redemption.NPCs.PreHM
         public int VisionRange;
         public int VisionIncrease;
         public float SpeedMultiplier = 1f;
+        public float[] doorVars = new float[3];
 
         public virtual void SetSafeStaticDefaults() { }
         public override void SetStaticDefaults()
@@ -66,6 +69,55 @@ namespace Redemption.NPCs.PreHM
             else
                 NPC.friendly = false;
 
+            RedeNPC globalNPC = NPC.Redemption();
+            if (NPC.type == ModContent.NPCType<RaveyardSkeleton>() && Main.rand.NextBool(600))
+            {
+                switch (Main.rand.Next(4))
+                {
+                    case 0:
+                        EmoteBubble.NewBubble(15, new WorldUIAnchor(NPC), 120);
+                        break;
+                    case 1:
+                        EmoteBubble.NewBubble(136, new WorldUIAnchor(NPC), 120);
+                        break;
+                    case 2:
+                        EmoteBubble.NewBubble(139, new WorldUIAnchor(NPC), 120);
+                        break;
+                    case 3:
+                        EmoteBubble.NewBubble(17, new WorldUIAnchor(NPC), 120);
+                        break;
+                }
+            }
+            if (Main.rand.NextBool(1000) && NPC.alpha <= 10 && (globalNPC.attacker == null || !globalNPC.attacker.active))
+            {
+                WeightedRandom<int> emoteID = new(Main.rand);
+                switch (Personality)
+                {
+                    case PersonalityState.Aggressive:
+                        emoteID.Add(87);
+                        emoteID.Add(93);
+                        emoteID.Add(138);
+                        emoteID.Add(135);
+                        break;
+                    case PersonalityState.Calm:
+                        emoteID.Add(10);
+                        emoteID.Add(16);
+                        break;
+                    case PersonalityState.Greedy:
+                        emoteID.Add(85);
+                        break;
+                }
+                emoteID.Add(94, 0.5);
+                emoteID.Add(134, 0.5);
+                emoteID.Add(85, 0.3);
+                emoteID.Add(90, 0.3);
+                emoteID.Add(30, 0.4);
+                emoteID.Add(124, 0.3);
+                emoteID.Add(67, 0.4);
+                emoteID.Add(69, 0.4);
+                emoteID.Add(72, 0.4);
+                EmoteBubble.NewBubble(emoteID, new WorldUIAnchor(NPC), 120);
+            }
             return true;
         }
         public virtual void SetStats()

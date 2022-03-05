@@ -1,5 +1,6 @@
 using Redemption.NPCs.Critters;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Critters
 
         public override bool? UseItem(Player player)
         {
-            int index = NPC.NewNPC((int) (player.position.X + Main.rand.Next(-20, 20)), (int) (player.position.Y - 0f),
+            int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int) (player.position.X + Main.rand.Next(-20, 20)), (int) (player.position.Y - 0f),
                 ModContent.NPCType<Fly>());
 
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)

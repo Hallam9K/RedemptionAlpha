@@ -10,45 +10,73 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Plants
 {
+    public enum PlantStage : byte
+    {
+        Planted,
+        Growing,
+        Grown
+    }
     public class NightshadeTile : ModTile
     {
+        private const int FrameWidth = 18;
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileObsidianKill[Type] = true;
             Main.tileCut[Type] = true;
             Main.tileNoFail[Type] = true;
-            Main.tileWaterDeath[Type] = true;
-            Main.tileLavaDeath[Type] = true;
-            TileID.Sets.SwaysInWindBasic[Type] = true;
-            DustType = DustID.GrassBlades;
-            SoundType = SoundID.Grass;
             Main.tileLighted[Type] = true;
-            Main.tileSpelunker[Type] = true;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Nightshade");
-            AddMapEntry(Color.Purple, name);
-            TileObjectData.newTile.Width = 1;
-            TileObjectData.newTile.Height = 1;
-            TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
-            TileObjectData.newTile.CoordinateWidth = 16;
-            TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.AlternateTile, TileObjectData.newTile.Width, 0);
-            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
-            TileObjectData.newTile.LavaDeath = true;
-            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
-            TileObjectData.newTile.AnchorValidTiles = new int[]
-            {
+            TileID.Sets.SwaysInWindBasic[Type] = true;
+            TileID.Sets.ReplaceTileBreakUp[Type] = true;
+            TileID.Sets.IgnoredInHouseScore[Type] = true;
+            AddMapEntry(Color.Purple);
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
+            TileObjectData.newTile.AnchorValidTiles = new int[] {
                 TileID.Grass,
                 TileID.HallowedGrass
             };
-            TileObjectData.newTile.AnchorAlternateTiles = new int[]
-            {
+            TileObjectData.newTile.AnchorAlternateTiles = new int[] {
                 TileID.ClayPot,
                 TileID.PlanterBox
             };
             TileObjectData.addTile(Type);
+
+            SoundType = SoundID.Grass;
+            SoundStyle = 0;
+            DustType = DustID.GrassBlades;
+        }
+        public override bool CanPlace(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+
+            if (tile.HasTile)
+            {
+                int tileType = tile.TileType;
+                if (tileType == Type)
+                {
+                    PlantStage stage = GetStage(i, j);
+                    return stage == PlantStage.Grown;
+                }
+                else
+                {
+                    if (Main.tileCut[tileType] || TileID.Sets.BreakableWhenPlacing[tileType] || tileType == TileID.WaterDrip || tileType == TileID.LavaDrip || tileType == TileID.HoneyDrip || tileType == TileID.SandDrip)
+                    {
+                        bool foliageGrass = tileType == TileID.Plants || tileType == TileID.Plants2;
+                        bool moddedFoliage = tileType >= TileID.Count && (Main.tileCut[tileType] || TileID.Sets.BreakableWhenPlacing[tileType]);
+                        bool harvestableVanillaHerb = Main.tileAlch[tileType] && WorldGen.IsHarvestableHerbWithSeed(tileType, tile.TileFrameX / 18);
+                        if (foliageGrass || moddedFoliage || harvestableVanillaHerb)
+                        {
+                            WorldGen.KillTile(i, j);
+                            if (!tile.HasTile && Main.netMode == NetmodeID.MultiplayerClient)
+                                NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+            return true;
         }
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
         {
@@ -57,60 +85,96 @@ namespace Redemption.Tiles.Plants
                 spriteEffects = SpriteEffects.FlipHorizontally;
             }
         }
-        public override void NearbyEffects(int i, int j, bool closer)
-        {
-            int stage = Main.tile[i, j].TileFrameX / 18;
-            if (stage == 1 && !Main.dayTime)
-            {
-                Main.tile[i, j].TileFrameX += 18;
-            }
-            else if (stage == 2 && Main.dayTime)
-            {
-                Main.tile[i, j].TileFrameX -= 18;
-            }
-        }
         public override bool Drop(int i, int j)
         {
-            int stage = Main.tile[i, j].TileFrameX / 18;
-            switch (stage)
+            PlantStage stage = GetStage(i, j);
+
+            if (stage == PlantStage.Planted)
+                return false;
+
+            Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
+            Player nearestPlayer = Main.player[Player.FindClosest(worldPosition, 16, 16)];
+
+            int herbItemType = ModContent.ItemType<Nightshade>();
+            int herbItemStack = 1;
+
+            int seedItemType = ModContent.ItemType<NightshadeSeeds>();
+            int seedItemStack = 1;
+
+            if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth)
             {
-                case 1:
-                    if (Main.rand.NextBool(4))
-                    {
-                        Item.NewItem(i * 16, j * 16, 0, 0, ModContent.ItemType<NightshadeSeeds>());
-                    }
-                    break;
-                case 2:
-                    Item.NewItem(i * 16, j * 16, 0, 0, ModContent.ItemType<NightshadeSeeds>());
-                    Item.NewItem(i * 16, j * 16, 0, 0, ModContent.ItemType<Nightshade>());
-                    break;
+                herbItemStack = Main.rand.Next(1, 3);
+                seedItemStack = Main.rand.Next(1, 6);
             }
+            else if (stage == PlantStage.Grown)
+            {
+                herbItemStack = 1;
+                seedItemStack = Main.rand.Next(1, 4);
+            }
+            if (herbItemType > 0 && herbItemStack > 0)
+                Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, herbItemType, herbItemStack);
+            if (seedItemType > 0 && seedItemStack > 0)
+                Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, seedItemType, seedItemStack);
             return false;
         }
-
-        public override void RandomUpdate(int i, int j)
+        public override bool IsTileSpelunkable(int i, int j)
         {
-            if (Main.tile[i, j].TileFrameX == 0 && !Main.dayTime)
+            PlantStage stage = GetStage(i, j);
+            return stage == PlantStage.Grown;
+        }
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            PlantStage stage = GetStage(i, j);
+            if (stage == PlantStage.Growing && !Main.dayTime)
             {
-                Main.tile[i, j].TileFrameX += 18;
+                tile.TileFrameX += FrameWidth;
+
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendTileSquare(-1, i, j, 1);
+            }
+            else if (stage == PlantStage.Grown && Main.dayTime)
+            {
+                tile.TileFrameX -= FrameWidth;
+
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendTileSquare(-1, i, j, 1);
             }
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            int stage = Main.tile[i, j].TileFrameX / 18;
-            if (stage == 2)
+            PlantStage stage = GetStage(i, j);
+            if (stage == PlantStage.Grown)
             {
                 r = 0.2f;
-                g = 0.0f;
+                g = 0f;
                 b = 0.3f;
             }
-            if (stage < 2)
+            else
             {
-                r = 0.0f;
-                g = 0.0f;
-                b = 0.0f;
+                r = 0f;
+                g = 0f;
+                b = 0f;
+            }
+        }
+        public override void RandomUpdate(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            PlantStage stage = GetStage(i, j);
+
+            if (stage == PlantStage.Planted && !Main.dayTime)
+            {
+                tile.TileFrameX += FrameWidth;
+
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendTileSquare(-1, i, j, 1);
             }
         }
 
+        private static PlantStage GetStage(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            return (PlantStage)(tile.TileFrameX / FrameWidth);
+        }
     }
 }

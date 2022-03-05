@@ -19,7 +19,8 @@ namespace Redemption.Tiles.Tiles
             MineResist = 3f;
             SoundType = SoundID.Tink;
             AddMapEntry(new Color(255, 56, 13));
-		}
+        }
+        public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void NearbyEffects(int i, int j, bool closer)
         {

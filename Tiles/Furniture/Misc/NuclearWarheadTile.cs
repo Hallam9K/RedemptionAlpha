@@ -54,7 +54,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             if (!RedeWorld.nukeCountdownActive)
-                Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<NuclearWarhead>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NuclearWarhead>());
             else
             {
                 RedeWorld.nukeTimerInternal = 2;

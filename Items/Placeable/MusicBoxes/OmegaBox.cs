@@ -11,11 +11,11 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Omega Prototypes)");
-			Tooltip.SetDefault("musicman - Machinations of Annihilation");
+			Tooltip.SetDefault("musicman - Armageddon Interface");
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
-			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1"), ModContent.ItemType<OmegaBox>(), ModContent.TileType<OmegaBoxTile>());
+			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1"), ModContent.ItemType<OmegaBox>(), ModContent.TileType<OmegaBoxTile>());
 		}
 
 		public override void SetDefaults()
@@ -48,7 +48,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 
-			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch2"), ModContent.ItemType<OmegaBox2>(), ModContent.TileType<OmegaBoxTile2>());
+			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2"), ModContent.ItemType<OmegaBox2>(), ModContent.TileType<OmegaBoxTile2>());
 		}
 
 		public override void SetDefaults()

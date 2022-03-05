@@ -18,12 +18,11 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Redemption.Effects.RenderTargets.ShieldLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
     [AutoloadBossHead]
-    public class Gigapora : ModNPC , IShieldSprite
+    public class Gigapora : ModNPC
     {
         public float[] oldrot = new float[6];
         public enum ActionState
@@ -31,7 +30,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Intro,
             WormAILol,
             ProtectCore,
-            Gigabeam
+            Gigabeam,
+            Death
         }
 
         public ActionState AIState
@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.width = 120;
             NPC.height = 140;
             NPC.damage = 140;
-            NPC.defense = 80;
+            NPC.defense = 20;
             NPC.lifeMax = 50000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
@@ -100,9 +100,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.trapImmune = true;
             NPC.immortal = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossVlitch1G");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
-            //BossBag = ModContent.ItemType<OmegaGigaporaBag>();
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -112,19 +111,40 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void HitEffect(int hitDirection, double damage)
         {
+            if (NPC.life <= 0)
+            {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                if (NPC.type == ModContent.NPCType<Gigapora>())
+                {
+                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGore1").Type);
+                    for (int i = 0; i < 4; i++)
+                        Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGoreDrill" + (i + 1)).Type);
+                }
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC seg = Main.npc[i];
+                    if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
+                        continue;
+
+                    NPC.Shoot(seg.Center, ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/MissileExplosion");
+                }
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/MissileExplosion");
+            }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
         public override void OnKill()
         {
             if (!RedeBossDowned.downedVlitch2)
             {
-                //Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
             }
-            NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
+            NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch2, -1);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaGigaporaBag>()));
 
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
@@ -141,21 +161,19 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public override bool CheckActive()
-        {
-            Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime;
-        }
-
         private bool spawned;
         private float shieldAlpha;
+
+        private float BodyTimer;
+        private int BodyState;
+        private int Ejected;
         public override void AI()
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = NPC.rotation;
 
-            if (NPC.immortal)
+            if (NPC.immortal && AIState is not ActionState.Death)
                 shieldAlpha += 0.04f;
             else
                 shieldAlpha -= 0.04f;
@@ -169,8 +187,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !NPC.Hitbox.Intersects(target.Hitbox))
                     continue;
 
-                if (NPC.immortal)
-                    DustHelper.DrawCircle(target.Center, DustID.LifeDrain, 1, 2, 2, nogravity: true);
+                if (NPC.immortal && AIState is not ActionState.Death)
+                    RedeDraw.SpawnRing(target.Center, Color.Red, 0.13f, 0.7f);
                 target.Kill();
             }
 
@@ -179,7 +197,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!spawned)
             {
                 NPC.TargetClosest(false);
-                Redemption.Targets.ShieldLayer.Sprites.Add(this);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -188,7 +205,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     int[] Type = { 0, 1, -1, -2, 2, -3, -4, 3, -5, -6, 4, -7, -8, 5, -9, -10, 6, -11, 7 };
                     for (int i = 0; i < Type.Length; ++i)
                     {
-                        latestNPC = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
                         if (latestNPC != Main.maxNPCs)
                         {
                             Main.npc[latestNPC].realLife = NPC.whoAmI;
@@ -269,14 +286,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity.Y += 0.2f;
                     }
                     else if (TimerRand == 0)
-                        WormMovement(player, 18, 0.1f);
+                        WormMovement(player, 18, 0.05f);
                     if (++AITimer > 600)
                     {
                         TimerRand = 0;
                         AITimer = 0;
                         if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()) && Main.rand.NextBool(2))
                             AIState = ActionState.ProtectCore;
-                        else
+                        else if (BodyState >= 4)
                             AIState = ActionState.Gigabeam;
                     }
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
@@ -340,6 +357,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     break;
                 case ActionState.Gigabeam:
                     targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC core = Main.npc[i];
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                            continue;
+
+                        core.ai[1] = 1;
+                        core.ai[2] = 1;
+
+                    }
                     switch (TimerRand)
                     {
                         case 0:
@@ -375,7 +402,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                             break;
                         case 2:
-                            if (player.Center.Y + 60 > NPC.Center.Y)
+                            if (player.Center.Y + 100 > NPC.Center.Y)
                                 AITimer = 1;
                             if (AITimer > 0)
                             {
@@ -441,6 +468,151 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             break;
                     }
                     break;
+                case ActionState.Death:
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            AITimer = 0;
+                            if (player.Center.Y < NPC.Center.Y || Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                            {
+                                NPC.velocity.Y = -25;
+                                NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            }
+                            else
+                            {
+                                NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                                NPC.velocity.Y *= 0.8f;
+                                if (NPC.velocity.Y >= -3)
+                                {
+                                    NPC.velocity *= 0;
+                                    TimerRand = 1;
+                                }
+                            }
+                            NPC.velocity.X *= 0.98f;
+                            break;
+                        case 1:
+                            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                            player.RedemptionScreen().lockScreen = true;
+                            if (AITimer++ >= 180)
+                            {
+                                NPC.immortal = false;
+                                NPC.dontTakeDamage = false;
+                                player.ApplyDamageToNPC(NPC, 99999, 0, 0, false);
+                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                            }
+                            break;
+                    }
+                    break;
+            }
+            if (BodyState < 1)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC seg = Main.npc[i];
+                    if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] > 0 || seg.ai[0] == 2)
+                        continue;
+                    seg.ai[0] = 0;
+                }
+            }
+            switch (BodyState)
+            {
+                case 0:
+                    if (BodyTimer++ >= 600)
+                    {
+                        EjectCore();
+                        if (Ejected >= 1)
+                        {
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 1;
+                        }
+                    }
+                    break;
+                case 1:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 2;
+                    break;
+                case 2:
+                    if (BodyTimer++ >= 300)
+                    {
+                        EjectCore(2);
+                        if (Ejected >= 1)
+                        {
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 3;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 4;
+                    break;
+                case 4:
+                    if (BodyTimer++ >= 300)
+                    {
+                        EjectCore(3);
+                        EjectCore(4);
+                        if (Ejected >= 2)
+                        {
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 5;
+                        }
+                    }
+                    break;
+                case 5:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 6;
+                    break;
+                case 6:
+                    if (BodyTimer++ >= 400)
+                    {
+                        EjectCore(5);
+                        EjectCore(6);
+                        if (Ejected >= 2)
+                        {
+                            Ejected = 0;
+                            BodyTimer = 0;
+                            BodyState = 7;
+                        }
+                    }
+                    break;
+                case 7:
+                    if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
+                        BodyState = 8;
+                    break;
+                case 8:
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC seg = Main.npc[i];
+                        if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
+                            continue;
+
+                        seg.dontTakeDamage = true;
+                        seg.ai[0] = 2;
+                        if (Main.netMode == NetmodeID.Server && seg.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: seg.whoAmI);
+                    }
+                    AITimer = 0;
+                    TimerRand = 0;
+                    AIState = ActionState.Death;
+                    BodyState = 9;
+                    break;
+                case 9:
+                    if (Main.rand.NextBool(100))
+                        NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, false, SoundID.Item14);
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC seg = Main.npc[i];
+                        if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
+                            continue;
+
+                        if (Main.rand.NextBool(100))
+                            NPC.Shoot(new Vector2(seg.position.X + Main.rand.Next(seg.width), seg.position.Y + Main.rand.Next(seg.height)), ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, false, SoundID.Item14);
+                    }
+                    break;
             }
             if (AIState > ActionState.Intro && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
             {
@@ -455,83 +627,30 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             NPC.netUpdate = true;
         }
-        private float BodyTimer;
-        private int BodyState;
-        private int Ejected;
+        public override bool CheckDead()
+        {
+            if (NPC.type == ModContent.NPCType<Gigapora>())
+            {
+                if (AIState is ActionState.Death && AITimer >= 180 && TimerRand == 1)
+                    return true;
+                BodyState = 8;
+                NPC.dontTakeDamage = true;
+                NPC.life = 1;
+                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                return false;
+            }
+            NPC.dontTakeDamage = true;
+            NPC.life = 1;
+            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            return false;
+        }
         public override void PostAI()
         {
-            if (NPC.type == ModContent.NPCType<Gigapora_BodySegment>())
-            {
-                switch (BodyState)
-                {
-                    case 0:
-                        if (BodyTimer++ >= 600)
-                        {
-                            EjectCore();
-                            if (Ejected >= 1)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 1;
-                            }
-                        }
-                        break;
-                    case 1:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 2;
-                        break;
-                    case 2:
-                        if (BodyTimer++ >= 300)
-                        {
-                            EjectCore(2);
-                            if (Ejected >= 1)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 3;
-                            }
-                        }
-                        break;
-                    case 3:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 4;
-                        break;
-                    case 4:
-                        if (BodyTimer++ >= 300)
-                        {
-                            EjectCore(3);
-                            EjectCore(4);
-                            if (Ejected >= 2)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 5;
-                            }
-                        }
-                        break;
-                    case 5:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 6;
-                        break;
-                    case 6:
-                        if (BodyTimer++ >= 400)
-                        {
-                            EjectCore(5);
-                            EjectCore(6);
-                            if (Ejected >= 2)
-                            {
-                                Ejected = 0;
-                                BodyTimer = 0;
-                                BodyState = 7;
-                            }
-                        }
-                        break;
-                    case 7:
-                        if (NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) <= 0)
-                            BodyState = 8;
-                        break;
-                }
-            }
+            Player player = Main.player[NPC.target];
+            if (player.active && !player.dead && !Main.dayTime)
+                NPC.DiscourageDespawn(60);
         }
         public void EjectCore(int segID = 1)
         {
@@ -550,8 +669,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 seg.ai[0] = 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int index = NPC.NewNPC((int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
-                    Main.npc[index].velocity = Main.npc[(int)NPC.ai[3]].velocity;
+                    int index = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
+                    Main.npc[index].velocity = NPC.velocity;
                     Main.npc[index].frameCounter = -25;
                     if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                         NetMessage.SendData(MessageID.SyncNPC, number: index);
@@ -563,6 +682,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private bool DrillLaser;
         public override void FindFrame(int frameHeight)
         {
+            if (BodyState >= 8)
+            {
+                NPC.frame.Y = 2 * frameHeight;
+                return;
+            }
             NPC.frameCounter++;
             if (NPC.frameCounter >= 5)
             {
@@ -590,7 +714,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (NPC.immortal)
+            if (NPC.immortal && AIState is not ActionState.Death)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithVolume(0.5f).WithPitchVariance(0.1f), NPC.position);
@@ -740,100 +864,79 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             rotation = NPC.rotation;
         }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            if (NPC.type == ModContent.NPCType<Gigapora>())
-            {
-                if (!NPC.IsABestiaryIconDummy)
-                {
-                    Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Empty", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-                    Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
-                    Texture2D drillShoot = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill_Shoot").Value;
-
-                    ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
-                    ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
-                    ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
-                    ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * shieldAlpha).ToVector4());
-                    ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
-
-                    var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                    float pulse = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1, 0.2f, 1);
-
-                    ShieldEffect.Parameters["sinMult"].SetValue(10f);
-                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2 / HexagonTexture.Width, texture.Height / 3 / HexagonTexture.Height));
-                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
-                    ShieldEffect.Parameters["frameAmount"].SetValue(3f);
-                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, Color.White * shieldAlpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                    spriteBatch.End();
-
-                    ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
-                    ShieldEffect.Parameters["frameAmount"].SetValue(8f);
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    if (DrillFrame >= 8)
-                    {
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drillShoot.Width / 2 / HexagonTexture.Width, drillShoot.Height / 8 / HexagonTexture.Height));
-                        ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drillShoot.Width / 2), 1f / (drillShoot.Height / 2)));
-                        int height = drillShoot.Height / 8;
-                        int y = height * (DrillFrame - 8);
-                        spriteBatch.Draw(drillShoot, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
-                    }
-                    else
-                    {
-                        ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drill.Width / 2 / HexagonTexture.Width, drill.Height / 8 / HexagonTexture.Height));
-                        ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drill.Width / 2), 1f / (drill.Height / 2)));
-                        int height = drill.Height / 8;
-                        int y = height * DrillFrame;
-                        spriteBatch.Draw(drill, NPC.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, y, drill.Width, height)), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-2, 96), NPC.scale, effects, 0);
-                    }
-                }
-            }
-        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (NPC.type == ModContent.NPCType<Gigapora>())
             {
+                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
+                ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
+                ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+                ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * shieldAlpha).ToVector4());
+                ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
+
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
                 Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
                 Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
                 Texture2D drillShoot = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill_Shoot").Value;
                 Texture2D thrusterBlue = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterBlue").Value;
+                Texture2D thrusterOrange = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterOrange").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
                 thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
                 float thrusterScaleY = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.3f, 2f);
-                Vector2 pos = NPC.Center + new Vector2(0, 0);
+                Vector2 v = RedeHelper.Spread(4);
+                Vector2 pos = NPC.Center;
+                if (BodyState >= 9)
+                    pos = NPC.Center + v;
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                Vector2 thrusterBOrigin = new(thrusterBlue.Width / 2f, thrusterBlue.Height / 2f - 20);
+                Vector2 thrusterOrigin = new(thrusterBlue.Width / 2f, thrusterBlue.Height / 2f - 20);
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    spriteBatch.Draw(thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                    spriteBatch.Draw(thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
                 }
-                spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                spriteBatch.Draw(thrusterBlue, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterBOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
 
+                spriteBatch.End();
+                ShieldEffect.Parameters["sinMult"].SetValue(10f);
+                ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2f / HexagonTexture.Width, texture.Height / 3 / HexagonTexture.Height));
+                ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
+                ShieldEffect.Parameters["frameAmount"].SetValue(3f);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                ShieldEffect.CurrentTechnique.Passes[0].Apply();
+
+                spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 spriteBatch.Draw(glowMask, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.End();
+
+                ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
+                ShieldEffect.Parameters["frameAmount"].SetValue(8f);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                 if (DrillFrame >= 8)
                 {
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drillShoot.Width / 2f / HexagonTexture.Width, drillShoot.Height / 8 / HexagonTexture.Height));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drillShoot.Width / 2), 1f / (drillShoot.Height / 2)));
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     int height = drillShoot.Height / 8;
                     int y = height * (DrillFrame - 8);
                     spriteBatch.Draw(drillShoot, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
                 }
                 else
                 {
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drill.Width / 2f / HexagonTexture.Width, drill.Height / 8 / HexagonTexture.Height));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drill.Width / 2), 1f / (drill.Height / 2)));
+                    ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     int height = drill.Height / 8;
                     int y = height * DrillFrame;
                     spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-8, 96), NPC.scale, effects, 0);

@@ -213,7 +213,7 @@ namespace Redemption
                             return;
                         }
 
-                        int npcID = NPC.NewNPC(npcCenterX, npcCenterY, bossType);
+                        int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, bossType);
                         Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
                         Main.npc[npcID].netUpdate2 = true;
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcID].GetTypeNetName()), new Color(175, 75, 255));
@@ -231,7 +231,7 @@ namespace Redemption
                             return;
                         }
 
-                        int npcID = NPC.NewNPC(npcCenterX, npcCenterY, NPCType);
+                        int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, NPCType);
                         Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
                         Main.npc[npcID].netUpdate2 = true;
                     }
@@ -243,7 +243,7 @@ namespace Redemption
                         int npcCenterX = bb.ReadInt32();
                         int npcCenterY = bb.ReadInt32();
 
-                        int npcID = NPC.NewNPC(npcCenterX, npcCenterY, NPCType);
+                        int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, NPCType);
                         Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
                         Main.npc[npcID].netUpdate2 = true;
                     }

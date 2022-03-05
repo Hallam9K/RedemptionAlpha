@@ -36,12 +36,13 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(54, 193, 59));
             AnimationFrameHeight = 18;
         }
+        public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (!WorldGen.gen && !fail && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int k = 0; k < Main.rand.Next(1, 3); k++)
-                    NPC.NewNPC(i * 16 + 8, j * 16 + 8, ModContent.NPCType<OozeBlob>());
+                    NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 8, j * 16 + 8, ModContent.NPCType<OozeBlob>());
             }
         }
 

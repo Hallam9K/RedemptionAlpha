@@ -20,6 +20,8 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Usable;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Lore;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Terraria.GameContent.Personalities;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -33,16 +35,15 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.HatOffsetY[NPC.type] = -4;
             NPCID.Sets.ExtraFramesCount[Type] = 5;
 
-            NPC.Happiness.LoveBiome(PrimaryBiomeID.Forest);
-            NPC.Happiness.LikeBiome(PrimaryBiomeID.Hallow);
-            NPC.Happiness.DislikeBiome(PrimaryBiomeID.Jungle);
-            NPC.Happiness.DislikeBiome(PrimaryBiomeID.Desert);
-            NPC.Happiness.HateBiome(PrimaryBiomeID.Snow);
+            NPC.Happiness.SetBiomeAffection<HallowBiome>(AffectionLevel.Like);
+            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Love);
+            NPC.Happiness.SetBiomeAffection<DesertBiome>(AffectionLevel.Dislike);
+            NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Hate);
 
-            NPC.Happiness.HateNPC(NPCID.Cyborg);
-            NPC.Happiness.DislikeNPC(NPCID.Truffle);
-            NPC.Happiness.LoveNPC(NPCID.Nurse);
-            NPC.Happiness.LikeNPC(NPCID.Mechanic);
+            NPC.Happiness.SetNPCAffection(NPCID.Mechanic, AffectionLevel.Like);
+            NPC.Happiness.SetNPCAffection(NPCID.Nurse, AffectionLevel.Love);
+            NPC.Happiness.SetNPCAffection(NPCID.Truffle, AffectionLevel.Dislike);
+            NPC.Happiness.SetNPCAffection(NPCID.Cyborg, AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
@@ -106,7 +107,7 @@ namespace Redemption.NPCs.Friendly
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>());
+            return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()) && !NPC.AnyNPCs(ModContent.NPCType<TBot_Intro>()) && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<AdamPortal>());
         }
 
         public override string TownNPCName()

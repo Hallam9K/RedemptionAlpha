@@ -24,8 +24,6 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/Wasteland";
         public override string BackgroundPath => "Textures/MapBackgrounds/PurityWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
-
-        public override bool IsPrimaryBiome => true;
         public override void SpecialVisuals(Player player)
         {
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
@@ -86,8 +84,6 @@ namespace Redemption.Biomes
         public override string BackgroundPath => "Textures/MapBackgrounds/SnowWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
-        public override bool IsPrimaryBiome => false;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Snow Wasteland");
@@ -111,8 +107,6 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/WastelandDesert";
         public override string BackgroundPath => "Textures/MapBackgrounds/DesertWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
-
-        public override bool IsPrimaryBiome => false;
 
         public override void SetStaticDefaults()
         {
@@ -139,8 +133,6 @@ namespace Redemption.Biomes
         public override string BackgroundPath => "Textures/MapBackgrounds/CorruptionWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
 
-        public override bool IsPrimaryBiome => false;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Corrupt Wasteland");
@@ -165,8 +157,6 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/WastelandCrimson";
         public override string BackgroundPath => "Textures/MapBackgrounds/CrimsonWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
-
-        public override bool IsPrimaryBiome => false;
 
         public override void SetStaticDefaults()
         {

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ObjectData;
+using Terraria.DataStructures;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
@@ -62,7 +63,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<PetrifiedWoodLantern>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<PetrifiedWoodLantern>());
 			Chest.DestroyChest(i, j);
         }
     }

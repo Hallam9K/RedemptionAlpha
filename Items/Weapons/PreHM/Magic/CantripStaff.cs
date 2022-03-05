@@ -70,7 +70,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'A simple wooden staff with a white crystal on top, commonly given to appentices\n" +
+                    "'A simple wooden staff with a white crystal on top, commonly given to apprentices\n" +
                     "of sorcerers to practice storing and releasing their mana.\n" +
                     "An overload of mana from a stronger mage can easily break this.'")
                 {

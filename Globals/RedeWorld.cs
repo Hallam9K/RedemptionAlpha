@@ -289,7 +289,7 @@ namespace Redemption.Globals
                 }
                 if (nukeTimerInternal <= -60)
                 {
-                    RedeHelper.ProjectileExplosion(new ProjectileSource_TileBreak((int)nukeGroundZero.X, (int)nukeGroundZero.Y), nukeGroundZero, 0, 90, ModContent.ProjectileType<NukeShockwave>(), 1, 80, nukeGroundZero.X, nukeGroundZero.Y);
+                    RedeHelper.ProjectileExplosion(new EntitySource_TileBreak((int)nukeGroundZero.X, (int)nukeGroundZero.Y), nukeGroundZero, 0, 90, ModContent.ProjectileType<NukeShockwave>(), 1, 80, nukeGroundZero.X, nukeGroundZero.Y);
                     HandleNukeExplosion();
                     WorldGen.KillTile((int)(nukeGroundZero.X / 16), (int)(nukeGroundZero.Y / 16), false, false, true);
                     ConversionHandler.ConvertWasteland(nukeGroundZero, 287);

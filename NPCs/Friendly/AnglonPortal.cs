@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Friendly
             if (RedeWorld.DayNightCount >= 2 && !RedeHelper.WayfarerActive())
             {
                 int wayfarer = WorldGen.crimson ? ModContent.NPCType<DaerelUnconscious>() : ModContent.NPCType<ZephosUnconscious>();
-                RedeHelper.SpawnNPC((int)NPC.Center.X + 110, (int)NPC.Center.Y, wayfarer);
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 110, (int)NPC.Center.Y, wayfarer);
             }
 
             if (Vector2.Distance(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), NPC.Center) <= Main.screenWidth / 2 + 100)

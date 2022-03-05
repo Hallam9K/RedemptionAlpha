@@ -1,6 +1,7 @@
 using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +45,7 @@ namespace Redemption.Items.Usable.Summons
                 int type = ModContent.NPCType<Wielder>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.NewNPC((int)player.position.X + 200, (int)player.position.Y + 500, type);
+                    NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y + 500, type);
                 else
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
             }

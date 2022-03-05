@@ -154,7 +154,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         }
                     }
                     if (AITimer >= 240 && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()))
-                        RedeHelper.SpawnNPC((int)NPC.Center.X + 280, (int)NPC.Center.Y + 1400, ModContent.NPCType<Gigapora>());
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 280, (int)NPC.Center.Y + 1400, ModContent.NPCType<Gigapora>());
 
                     int n = NPC.FindFirstNPC(ModContent.NPCType<Gigapora>());
                     if (n != -1)

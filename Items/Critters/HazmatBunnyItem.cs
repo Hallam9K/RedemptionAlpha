@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Redemption.NPCs.Wasteland;
+using Terraria.DataStructures;
 
 namespace Redemption.Items.Critters
 {
@@ -28,7 +29,7 @@ namespace Redemption.Items.Critters
         }
         public override bool? UseItem(Player player)
         {
-            int index = NPC.NewNPC((int)(player.position.X + Main.rand.Next(-20, 20)), (int)player.position.Y,
+            int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)(player.position.X + Main.rand.Next(-20, 20)), (int)player.position.Y,
                 ModContent.NPCType<HazmatBunny>());
 
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)

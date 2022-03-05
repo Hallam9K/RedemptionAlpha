@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 16, ModContent.ItemType<TestTubes>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<TestTubes>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

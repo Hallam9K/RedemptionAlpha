@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.NPCs.Critters;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,8 +23,7 @@ namespace Redemption.Tiles.Tiles
             MineResist = 1.5f;
             AddMapEntry(new Color(128, 128, 128));
         }
-
-        public override bool Dangersense(int i, int j, Player player) => true;
+        public override bool IsTileDangerous(int i, int j, Player player) => true;
 
         public bool breakCheck;
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail && !WorldGen.gen)
             {
                 if (Main.rand.NextBool(2) && Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.NewNPC(i * 16 + 8, j * 16, ModContent.NPCType<SpiderSwarmer>());
+                    NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 8, j * 16, ModContent.NPCType<SpiderSwarmer>());
 
                 if (breakCheck)
                     return;

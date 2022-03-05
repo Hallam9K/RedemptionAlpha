@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -40,7 +41,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 
 		public override void KillMultiTile(int x, int y, int frameX, int frameY)
 		{
-			Item.NewItem(x * 16, y * 16, 32, 16, ModContent.ItemType<PetrifiedWoodWorkBench>());
+			Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 32, 16, ModContent.ItemType<PetrifiedWoodWorkBench>());
 		}
 	}
 }

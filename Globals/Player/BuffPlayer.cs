@@ -23,6 +23,7 @@ using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
 using Redemption.Items.Armor.PostML.Xenium;
 using Redemption.Items.Armor.PostML.Shinkite;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Globals.Player
 {
@@ -61,6 +62,7 @@ namespace Redemption.Globals.Player
         public bool snipped;
         public bool island;
         public bool trappedSoul;
+        public bool brokenBlade;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -73,6 +75,7 @@ namespace Redemption.Globals.Player
 
         public int MeleeDamageFlat;
         public int DruidDamageFlat;
+        public float TrueMeleeDamage = 1f;
 
         public float[] ElementalResistance = new float[14];
         public float[] ElementalDamage = new float[14];
@@ -122,6 +125,8 @@ namespace Redemption.Globals.Player
             island = false;
             trappedSoul = false;
             shinkiteHead = false;
+            brokenBlade = false;
+            TrueMeleeDamage = 1f;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -293,7 +298,7 @@ namespace Redemption.Globals.Player
                 PlayerDrawLayers.HairBack.Hide();
         }
 
-        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (thornCirclet && item.CountsAsClass(DamageClass.Magic))
             {
@@ -384,6 +389,7 @@ namespace Redemption.Globals.Player
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }
+            damage = (int)(damage * TrueMeleeDamage);
         }
         public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -420,6 +426,8 @@ namespace Redemption.Globals.Player
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }
+            if (proj.Redemption().TechnicallyMelee)
+                damage = (int)(damage * TrueMeleeDamage);
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -431,6 +439,10 @@ namespace Redemption.Globals.Player
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
             if (eldritchRoot && target.life <= 0)
                 Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
+            if (brokenBlade && proj.Redemption().TechnicallyMelee && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
+            {
+                Projectile.NewProjectile(Projectile.InheritSource(proj), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
+            }
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -442,6 +454,10 @@ namespace Redemption.Globals.Player
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
             if (eldritchRoot && target.life <= 0)
                 Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
+            if (brokenBlade && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
+            {
+                Projectile.NewProjectile(Player.GetProjectileSource_Item(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
+            }
         }
         public override void UpdateBadLifeRegen()
         {

@@ -115,7 +115,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
-            BossBag = ModContent.ItemType<SlayerBag>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
@@ -139,7 +138,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SlayerBag>()));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KS3Trophy>(), 10));
@@ -166,14 +165,14 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (!RedeBossDowned.downedSlayer)
             {
-                RedeWorld.alignment -= NPC.ai[0] == 12 ? 0 : 2;
+                RedeWorld.alignment -= NPC.ai[0] == 11 ? 0 : 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 12 ? "+0" : "-2", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 11 ? "+0" : "-2", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
@@ -199,30 +198,32 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             return AIState != ActionState.SpareCountdown;
         }
-
-        private bool strongHit;
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (item.DamageType == DamageClass.Melee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
-                strongHit = true;
+            if (item.DamageType == DamageClass.Melee)
+            {
+                if (AIState == ActionState.PhysicalAttacks)
+                    damage = (int)(damage * 1.65f);
+                else if (AIState == ActionState.SpecialAttacks)
+                    damage = (int)(damage * 1.25f);
+            }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (projectile.Redemption().TechnicallyMelee && (AIState == ActionState.PhysicalAttacks || AIState == ActionState.SpecialAttacks))
-                strongHit = true;
+            if (projectile.Redemption().TechnicallyMelee)
+            {
+                if (AIState == ActionState.PhysicalAttacks)
+                    damage = (int)(damage * 1.65f);
+                else if (AIState == ActionState.SpecialAttacks)
+                    damage = (int)(damage * 1.25f);
+            }
         }
-
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (strongHit && AIState == ActionState.PhysicalAttacks)
-                damage *= 1.65;
-            if (strongHit && AIState == ActionState.SpecialAttacks)
-                damage *= 1.25;
             if (phase >= 5)
                 damage *= 0.75;
             else
                 damage *= 0.85;
-            strongHit = false;
             return true;
         }
 
@@ -1294,7 +1295,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         for (int i = 0; i < Main.rand.Next(2, 5); i++)
                                         {
-                                            RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
+                                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
                                                 ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
                                         }
                                     }
@@ -1335,7 +1336,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         for (int i = 0; i < 2; i++)
                                         {
-                                            RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
+                                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
                                                 ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                         }
                                     }
@@ -1691,7 +1692,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 AttackChoice = -1;
                                 NPC.netUpdate = true;
                             }
-                          
+
                             break;
                         #endregion
 
@@ -1829,7 +1830,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
+                                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
                                 }
                             }
                         }
@@ -1881,7 +1882,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
+                                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
                                 }
                             }
                         }
@@ -1921,7 +1922,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 for (int i = 0; i < 2; i++)
                                 {
-                                    RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
+                                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                 }
                             }
                         }
@@ -1981,7 +1982,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 for (int i = 0; i < 2; i++)
                                 {
-                                    RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
+                                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800), ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                 }
                             }
                         }
@@ -2209,16 +2210,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I see how it is...", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
                     }
                     if (AITimer == 180)
-                        RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 0);
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 0);
 
                     if (AITimer == 190)
-                        RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 1);
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 1);
 
                     if (AITimer == 200)
-                        RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 2);
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 2);
 
                     if (AITimer == 210)
-                        RedeHelper.SpawnNPC((int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 3);
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 3);
 
                     if (AITimer > 400)
                     {

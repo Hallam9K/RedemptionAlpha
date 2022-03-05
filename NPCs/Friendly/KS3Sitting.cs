@@ -19,6 +19,8 @@ using Redemption.WorldGeneration;
 using Redemption.Tiles.Tiles;
 using Redemption.Biomes;
 using Redemption.BaseExtension;
+using Redemption.Items.Donator.Lizzy;
+using Terraria.GameContent.UI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -63,6 +65,7 @@ namespace Redemption.NPCs.Friendly
             if (RedeBossDowned.downedVlitch3) //|| RedeBossDowned.downedNebuleus)
                 NPC.active = false;
 
+            NPC.direction = 1;
             if (NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
                 for (int i = 0; i < 15; i++)
@@ -71,6 +74,18 @@ namespace Redemption.NPCs.Friendly
                     Main.dust[dustIndex].velocity *= 3f;
                 }
                 NPC.active = false;
+            }
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile lizzy = Main.projectile[i];
+                if (!lizzy.active || lizzy.type != ModContent.ProjectileType<LizzyPet>())
+                    continue;
+
+                if (lizzy.frame != 8)
+                    continue;
+
+                if (NPC.localAI[0]++ % 500 == 0)
+                    EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -170,7 +185,7 @@ namespace Redemption.NPCs.Friendly
                         chat.Add("Thanks... ?");
                         Main.npcChatText = chat;
 
-                        player.QuickSpawnItem(ItemID.SilverCoin, 20);
+                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.SilverCoin, 20);
                         ChatNumber++;
                         RedeWorld.slayerRep++;
                         if (Main.netMode == NetmodeID.Server)
@@ -201,7 +216,7 @@ namespace Redemption.NPCs.Friendly
 
                         Main.npcChatText = "You actually bothered to do it... Good job.";
 
-                        player.QuickSpawnItem(ItemID.GoldCoin, 4);
+                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.GoldCoin, 4);
                         RedeWorld.slayerRep++;
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
@@ -246,7 +261,7 @@ namespace Redemption.NPCs.Friendly
 
                         Main.npcChatText = "How can you even carry that? Uh, thanks, I suppose.";
 
-                        player.QuickSpawnItem(ItemID.GoldCoin, 8);
+                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.GoldCoin, 8);
                         RedeWorld.slayerRep++;
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
@@ -294,8 +309,8 @@ namespace Redemption.NPCs.Friendly
                         Main.npcChatCornerItem = ModContent.ItemType<MemoryChip>();
                         Main.npcChatText = "Was helping me with all that really necessary for you? You don't gain anything from it. But thank you regardless. I'll be leaving soon, but I want you to have this. I have yet to figure out a use for it, but take it.";
 
-                        player.QuickSpawnItem(ItemID.GoldCoin, 12);
-                        player.QuickSpawnItem(ModContent.ItemType<MemoryChip>());
+                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.GoldCoin, 12);
+                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ModContent.ItemType<MemoryChip>());
                         RedeWorld.slayerRep++;
                         RedeWorld.alignment += 2;
 

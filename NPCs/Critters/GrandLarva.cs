@@ -228,7 +228,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float cave = SpawnCondition.Cavern.Chance * 0.1f;
-            float desert = SpawnCondition.OverworldDayDesert.Chance * 0.2f;
+            float desert = SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.player.ZoneBeach ? 0f : 0.2f);
             float desertUG = SpawnCondition.DesertCave.Chance * 0.2f;
             return Math.Max(cave, Math.Max(desert, desertUG));
         }
@@ -248,7 +248,7 @@ namespace Redemption.NPCs.Critters
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
         public override bool? CanHitNPC(NPC target) => target.lifeMax > 5 ? null : false;

@@ -61,7 +61,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<LabCeilingMonitor>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<LabCeilingMonitor>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

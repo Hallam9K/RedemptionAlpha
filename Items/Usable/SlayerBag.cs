@@ -46,11 +46,11 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(ModContent.ItemType<KingSlayerMask>());
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<KingSlayerMask>());
             }
-            player.QuickSpawnItem(ModContent.ItemType<SlayerGun>());
-            player.QuickSpawnItem(ModContent.ItemType<SlayerMedal>());
-            player.QuickSpawnItem(ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12));
+            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<SlayerGun>());
+            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<SlayerMedal>());
+            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12));
         }
 
         public override Color? GetAlpha(Color lightColor)

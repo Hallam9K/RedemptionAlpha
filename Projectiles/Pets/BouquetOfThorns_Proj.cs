@@ -62,7 +62,6 @@ namespace Redemption.Projectiles.Pets
 				Projectile.velocity *= 0.1f;
 				Projectile.netUpdate = true;
 			}
-
 			BaseAI.AIMinionFighter(Projectile, ref Projectile.ai, player, true, 6, 8, 40, 1400, 2000, 0.1f, 5, 10);
 		}
 

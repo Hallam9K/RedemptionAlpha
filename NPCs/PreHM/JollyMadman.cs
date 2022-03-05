@@ -71,7 +71,7 @@ namespace Redemption.NPCs.PreHM
         public override void SetDefaults()
         {
             NPC.width = 30;
-            NPC.height = 52;
+            NPC.height = 48;
             NPC.damage = 28;
             NPC.friendly = false;
             NPC.defense = 10;
@@ -163,6 +163,8 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
+        private int dodgeCooldown;
+        private float[] doorVars = new float[3];
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -172,7 +174,8 @@ namespace Redemption.NPCs.PreHM
                 NPC.LookByVelocity();
 
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 45 : NPC.Center.X + 7), (int)(NPC.Center.Y - 34), 38, 60);
-
+            dodgeCooldown--;
+            dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -185,7 +188,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC((int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
 
                     TimerRand = Main.rand.Next(80, 280);
@@ -217,6 +220,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
                     bool jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -236,6 +240,29 @@ namespace Redemption.NPCs.PreHM
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
+
+                    if (dodgeCooldown <= 0 && NPC.velocity.Y == 0)
+                    {
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            Projectile proj = Main.projectile[i];
+                            if (!proj.active || !proj.friendly || proj.damage <= 0 || proj.velocity.Length() == 0)
+                                continue;
+
+                            if (!NPC.Sight(proj, 80 + (proj.velocity.Length() * 3), true, true))
+                                continue;
+
+                            for (int l = 0; l < 10; l++)
+                            {
+                                int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Wraith, Scale: 2);
+                                Main.dust[dust].velocity *= 0.2f;
+                                Main.dust[dust].noGravity = true;
+                            }
+                            NPC.Dodge(proj);
+                            dodgeCooldown = 90;
+                        }
+                    }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
                     if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 60 * 60)
                     {
@@ -440,7 +467,7 @@ namespace Redemption.NPCs.PreHM
                 GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
             }
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 4) - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -472,7 +499,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             for (int i = 0; i < 3; i++)
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

@@ -43,7 +43,10 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
 
             if (Projectile.localAI[0]++ == 0)
-                DustHelper.DrawCircle(Projectile.Center, DustID.GoldFlame, 2, 2, 2, 1, 4, nogravity: true);
+            {
+                RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4);
+                RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f);
+            }
 
             if (Projectile.localAI[0] == 200)
             {

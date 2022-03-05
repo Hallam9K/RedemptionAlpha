@@ -517,7 +517,7 @@ namespace Redemption.Globals.NPC
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 6; i++)
-                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
             if (iceFrozen)
@@ -540,14 +540,14 @@ namespace Redemption.Globals.NPC
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
-                        Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
             if (infected && infectedTime >= 360 && npc.lifeMax > 5)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(npc.GetProjectileSpawnSource(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
             }
             if (iceFrozen)
             {

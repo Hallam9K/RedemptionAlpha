@@ -51,7 +51,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'Given to Zephos by Draven, his uncle, during training. The slit in the middle is used to catch opponent's blades,\n" +
+                    "'Given to Zephos by Draven, his uncle, during training. The slit in the middle is used to catch the opponent's blades,\n" +
                     "one with great strength can use this advantage to twist the opponent's blade until it snaps, leaving them disarmed.'")
                 {
                     overrideColor = Color.LightGray

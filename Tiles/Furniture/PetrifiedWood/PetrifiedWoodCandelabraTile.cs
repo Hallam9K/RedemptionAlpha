@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
+using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -61,6 +62,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
                 b = 0.7f;
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<PetrifiedWoodCandelabra>());
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<PetrifiedWoodCandelabra>());
     }
 }

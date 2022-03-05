@@ -35,7 +35,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => RedeBossDowned.downedVlitch3;
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerChair>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerChair>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

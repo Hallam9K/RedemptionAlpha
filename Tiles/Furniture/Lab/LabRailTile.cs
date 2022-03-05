@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_L>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_L>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -69,7 +69,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_Mid>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_Mid>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -100,7 +100,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_R>());
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_R>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }

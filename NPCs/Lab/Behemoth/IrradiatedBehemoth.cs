@@ -122,7 +122,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public override void OnKill()
         {
             if (!LabArea.labAccess[1])
-                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
+                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBehemoth, -1);
         }

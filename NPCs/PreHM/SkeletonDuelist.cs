@@ -44,6 +44,8 @@ namespace Redemption.NPCs.PreHM
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 13;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 4;
+            NPCID.Sets.TrailingMode[NPC.type] = 1;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
@@ -102,7 +104,7 @@ namespace Redemption.NPCs.PreHM
             }
             if (Personality == PersonalityState.Greedy && CoinsDropped < 10 && Main.rand.NextBool(3))
             {
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
+                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
                 CoinsDropped++;
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, Personality == PersonalityState.Greedy ? DustID.GoldCoin : DustID.Bone,
@@ -119,6 +121,7 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
+        private int dodgeCooldown;
 
         private int AniFrameY;
         private int AniFrameX;
@@ -130,6 +133,8 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
             Rectangle SlashHitbox1 = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 66 : NPC.Center.X + 4), (int)(NPC.Center.Y - 60), 62, 86);
             Rectangle SlashHitbox2 = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 94 : NPC.Center.X), (int)(NPC.Center.Y - 40), 94, 84);
+            dodgeCooldown--;
+            dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
 
             if (Main.rand.NextBool(500) && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
@@ -183,6 +188,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
                     }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     bool jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -209,6 +215,29 @@ namespace Redemption.NPCs.PreHM
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
+
+                    if (dodgeCooldown <= 0 && NPC.velocity.Y == 0)
+                    {
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            Projectile proj = Main.projectile[i];
+                            if (!proj.active || !proj.friendly || proj.damage <= 0 || proj.velocity.Length() == 0)
+                                continue;
+
+                            if (!NPC.Sight(proj, 80 + (proj.velocity.Length() * 4), true, true))
+                                continue;
+
+                            for (int l = 0; l < 10; l++)
+                            {
+                                int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke);
+                                Main.dust[dust].velocity *= 0.2f;
+                                Main.dust[dust].noGravity = true;
+                            }
+                            NPC.Dodge(proj, 6, 2, 10);
+                            dodgeCooldown = 90;
+                        }
+                    }
+                    BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, interactDoorStyle: HasEyes ? 2 : 0);
 
                     if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 80 * 80)
                     {
@@ -472,6 +501,15 @@ namespace Redemption.NPCs.PreHM
             }
             else
             {
+                if (!NPC.IsABestiaryIconDummy)
+                {
+                    float fade = dodgeCooldown / 120f;
+                    for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                    {
+                        Vector2 oldPos = NPC.oldPos[i];
+                        Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, drawColor * MathHelper.Lerp(0, 1, fade) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    }
+                }
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
                 if (HasEyes)
@@ -486,15 +524,15 @@ namespace Redemption.NPCs.PreHM
             if (HasEyes)
             {
                 if (Personality == PersonalityState.Soulful)
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.6f));
+                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.6f));
                 else
-                    RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
+                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
             }
             else if (Main.rand.NextBool(3))
-                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
             if (Personality == PersonalityState.Greedy)
             {
-                Item.NewItem(NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
+                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

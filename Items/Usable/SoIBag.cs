@@ -44,19 +44,19 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(ModContent.ItemType<InfectedMask>());
+                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<InfectedMask>());
             }
             switch (Main.rand.Next(2))
             {
                 case 0:
-                    player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>());
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<XenomiteGlaive>());
                     break;
                 case 1:
-                    player.QuickSpawnItem(ModContent.ItemType<CystlingSummon>());
+                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<CystlingSummon>());
                     break;
                     // TODO: Xenomite Canister
             }
-            player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
+            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
         }
 
         public override Color? GetAlpha(Color lightColor)

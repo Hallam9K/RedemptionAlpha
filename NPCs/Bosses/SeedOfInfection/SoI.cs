@@ -89,7 +89,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.value = Item.buyPrice(0, 4, 0, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
-            BossBag = ModContent.ItemType<SoIBag>();
             NPC.netAlways = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             if (!Main.dedServ)
@@ -121,7 +120,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SoIBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SoITrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SoIRelic>()));
@@ -145,6 +144,10 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void OnKill()
         {
+            if (!RedeBossDowned.downedSeed && !RedeHelper.TBotActive())
+            {
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.target);
+            }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSeed, -1);
         }
 
@@ -474,7 +477,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             if (++AITimer >= 30 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 40 : 60) == 0 && AITimer <= 90)
                             {
                                 SoundEngine.PlaySound(SoundID.NPCDeath13, NPC.position);
-                                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
                             }
                             if (AITimer >= 130)
                             {

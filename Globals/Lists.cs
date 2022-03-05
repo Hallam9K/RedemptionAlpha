@@ -43,6 +43,9 @@ using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.NPCs.Bosses.Gigapora;
+using Redemption.Tiles.Furniture.AncientWood;
+using Redemption.Tiles.Furniture.PetrifiedWood;
+using Redemption.Tiles.Furniture.Lab;
 
 namespace Redemption.Globals
 {
@@ -247,6 +250,12 @@ namespace Redemption.Globals
 
         public static List<int> ModdedChests = new();
 
+        public static List<int> ModdedDoors = new()
+        {
+            ModContent.TileType<AncientWoodDoorClosed>(),
+            ModContent.TileType<LabDoorClosed>(),
+            ModContent.TileType<PetrifiedWoodDoorClosed>()
+        };
         #endregion
     }
 
@@ -302,14 +311,14 @@ namespace Redemption.Globals
         #endregion
 
         #region Infected
-        public static List<int> Infected = new() { ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>(), ModContent.NPCType<Blisterface>(), ModContent.NPCType<BlisteredFish>(), ModContent.NPCType<BlisteredFish2>(), ModContent.NPCType<SickenedDemonEye>(), ModContent.NPCType<SickenedBunny>(), ModContent.NPCType<MutatedLivingBloom>(), ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>(), ModContent.NPCType<PZ>(), ModContent.NPCType<PZ_Kari>() };
+        public static List<int> Infected = new() { ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<SoI>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>(), ModContent.NPCType<Blisterface>(), ModContent.NPCType<BlisteredFish>(), ModContent.NPCType<BlisteredFish2>(), ModContent.NPCType<SickenedDemonEye>(), ModContent.NPCType<SickenedBunny>(), ModContent.NPCType<MutatedLivingBloom>(), ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>(), ModContent.NPCType<PZ>(), ModContent.NPCType<PZ_Kari>() };
         #endregion
 
         #region Armed
         public static List<int> Armed = new() { NPCID.RedDevil, NPCID.Paladin, NPCID.GoblinThief, NPCID.DD2GoblinT1, NPCID.DD2GoblinT2, NPCID.DD2GoblinT3, NPCID.MisterStabby, NPCID.PirateCorsair, NPCID.PirateGhost, NPCID.Butcher, NPCID.Psycho, NPCID.Reaper, NPCID.SolarDrakomireRider, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.Pumpking, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesSword, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBones, NPCID.HellArmoredBonesSword, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<WraithSlayer_Samurai>() };
         #endregion
 
-        public static List<int> IsSlime = new() { NPCID.GreenSlime, NPCID.BlueSlime, NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.JungleSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.BabySlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.Pinky, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Slimer, NPCID.Slimer2, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<InfectionHive>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>() };
+        public static List<int> IsSlime = new() { NPCID.GreenSlime, NPCID.BlueSlime, NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.JungleSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.BabySlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.Pinky, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Slimer, NPCID.Slimer2, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>() };
 
         public static List<int> IsBunny = new()
         {
