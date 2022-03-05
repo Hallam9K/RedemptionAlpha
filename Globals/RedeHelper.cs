@@ -658,12 +658,12 @@ namespace Redemption.Globals
         /// <summary>
         /// For spawning NPCs from NPCs without any extra stuff.
         /// </summary>
-        public static void SpawnNPC(int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0,
+        public static void SpawnNPC(IEntitySource source, int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0,
             float ai3 = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int index = Terraria.NPC.NewNPC(null, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
+                int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 {
                     NetMessage.SendData(MessageID.SyncNPC, number: index);

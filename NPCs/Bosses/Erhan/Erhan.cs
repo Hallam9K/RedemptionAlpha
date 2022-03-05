@@ -923,25 +923,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
         }
 
-        private bool strongHit;
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
-        {
-            if (AIState is ActionState.Fallen && TimerRand == 2 && item.DamageType == DamageClass.Melee)
-                strongHit = true;
-        }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
-        {
-            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
-                strongHit = true;
-        }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
-        {
-            if (strongHit)
-                damage *= 2;
-            strongHit = false;
-            return true;
-        }
-
         public override bool CheckDead()
         {
             if (AIState is ActionState.Death)
@@ -1166,6 +1147,9 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (AIState is ActionState.Fallen && TimerRand == 2 && item.DamageType == DamageClass.Melee)
+                damage *= 2;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
@@ -1180,6 +1164,9 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
+                damage *= 2;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))

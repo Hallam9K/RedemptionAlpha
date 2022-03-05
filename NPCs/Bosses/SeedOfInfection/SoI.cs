@@ -477,7 +477,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             if (++AITimer >= 30 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 40 : 60) == 0 && AITimer <= 90)
                             {
                                 SoundEngine.PlaySound(SoundID.NPCDeath13, NPC.position);
-                                RedeHelper.SpawnNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
                             }
                             if (AITimer >= 130)
                             {
