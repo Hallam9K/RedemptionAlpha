@@ -677,26 +677,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                     break;
             }
         }
-
-        private bool strongHit;
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
-        {
-            if (AIState is ActionState.Fallen && TimerRand == 2 && item.DamageType == DamageClass.Melee)
-                strongHit = true;
-        }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
-        {
-            if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
-                strongHit = true;
-        }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
-        {
-            if (strongHit)
-                damage *= 2;
-            strongHit = false;
-            return true;
-        }
-
         private int ArmFrameY;
         private int ArmType;
         private int HeadFrameY;
