@@ -21,6 +21,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -190,6 +191,9 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void AI()
         {
+            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
+            if (MoRDialogueUI.Visible)
+                RedeSystem.Instance.DialogueUIElement.TextPos = text;
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
@@ -246,7 +250,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     if (AITimer == 1 && !Main.dedServ)
                                     {
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
                                     }
                                     if (AITimer >= 181)
                                     {
@@ -268,9 +272,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 else
                                 {
                                     if (AITimer == 1 && !Main.dedServ)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thou may inquire, how hath I returned...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thou may inquire, how hath I returned...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
                                     if (AITimer == 181 && !Main.dedServ)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I am but the holiest of men,\nthus the Lord has returned me to beat thine buttocks once more!", 300, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I am but the holiest of men,\nthus the Lord has returned me to beat thine buttocks once more!", 300, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
                                     if (AITimer >= 481)
                                     {
                                         if (!Main.dedServ)
@@ -292,7 +296,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             else
                             {
                                 if (AITimer++ == 0 && !Main.dedServ)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Guess whom'st've's back!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Guess whom'st've's back!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
 
                                 if (AITimer >= 120)
                                 {

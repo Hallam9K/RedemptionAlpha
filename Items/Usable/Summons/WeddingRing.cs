@@ -16,7 +16,7 @@ namespace Redemption.Items.Usable.Summons
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wedding Ring");
-			Tooltip.SetDefault("Summons The Keeper"
+			Tooltip.SetDefault("Attracts the attention of a sorrowful mistress"
 				+ "\nOnly usable at night"
 				+ "\nNot consumable" +
 				"\n[i:" + ModContent.ItemType<GoodRoute>() + "]");

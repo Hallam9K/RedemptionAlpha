@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Blade");
-            Tooltip.SetDefault("Summons Omega Cleaver" +
+            Tooltip.SetDefault("Summons the 1st Omega Prototype" +
                 "\n'The corrupted blade draws near the power, thus beginning the final hour'"
                 + "\nOnly usable at night"
                 + "\nNot consumable");
