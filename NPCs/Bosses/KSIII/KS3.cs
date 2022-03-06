@@ -113,6 +113,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.netAlways = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
+            NPC.rarity = 1;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
         }

@@ -80,6 +80,7 @@ namespace Redemption.Items.Usable
         {
             if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 1)
             {
+                RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed, DustID.Torch, 30, 0);
                 Projectile.friendly = true;
                 Projectile.hostile = true;
                 Projectile.tileCollide = false;
@@ -87,7 +88,6 @@ namespace Redemption.Items.Usable
                 Projectile.width = 500;
                 Projectile.height = 500;
                 Projectile.damage = 500;
-                RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed, DustID.Torch, 30, 0);
                 Rectangle boom = new((int)Projectile.Center.X - 250, (int)Projectile.Center.Y - 250, 500, 500);
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
@@ -118,7 +118,7 @@ namespace Redemption.Items.Usable
             Projectile.height = 10;
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Scale: 8f);
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Scale: 3f);
                 Main.dust[dustIndex].velocity *= 20f;
             }
             for (int i = 0; i < 80; i++)

@@ -69,7 +69,7 @@ namespace Redemption
                 EntitySource_Mount sourceMount = spawnSource as EntitySource_Mount;
                 attacker = sourceMount.Entity;
             }
-            else if (spawnSource is EntitySource_Parent && projectile.friendly && !projectile.hostile)
+            else if (spawnSource is EntitySource_Parent)
             {
                 EntitySource_Parent sourceParent = spawnSource as EntitySource_Parent;
                 attacker = sourceParent.Entity;
