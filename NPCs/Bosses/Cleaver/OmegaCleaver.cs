@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), NPC.position);
-                RedeDraw.SpawnExplosion(NPC.Center, Color.Orange);
+                RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
 
                 for (int i = 0; i < 80; i++)
                 {
@@ -780,7 +780,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (Main.rand.NextBool(20))
                         {
                             SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                            RedeDraw.SpawnExplosion(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), Color.Orange);
+                            RedeDraw.SpawnExplosion(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), Color.OrangeRed);
                         }
                         if (AITimer == 60)
                         {

@@ -130,11 +130,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), seg.position);
-                    RedeDraw.SpawnExplosion(seg.Center, Color.Orange);
+                    RedeDraw.SpawnExplosion(seg.Center, Color.OrangeRed);
                 }
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), NPC.position);
-                RedeDraw.SpawnExplosion(NPC.Center, Color.Orange);
+                RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
@@ -608,7 +608,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     if (Main.rand.NextBool(100))
                     {
                         SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                        RedeDraw.SpawnExplosion(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), Color.Orange);
+                        RedeDraw.SpawnExplosion(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), Color.OrangeRed);
                     }
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
@@ -619,7 +619,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         if (Main.rand.NextBool(100))
                         {
                             SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                            RedeDraw.SpawnExplosion(new Vector2(seg.position.X + Main.rand.Next(seg.width), seg.position.Y + Main.rand.Next(seg.height)), Color.Orange);
+                            RedeDraw.SpawnExplosion(new Vector2(seg.position.X + Main.rand.Next(seg.width), seg.position.Y + Main.rand.Next(seg.height)), Color.OrangeRed);
                         }
                     }
                     break;
