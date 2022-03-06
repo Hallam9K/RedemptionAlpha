@@ -8,9 +8,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 
-namespace Redemption.NPCs.Bosses.Gigapora
+namespace Redemption.Textures
 {
-    public class Gigapora_Explode : ModProjectile
+    public class Explosion_Visual : ModProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -30,6 +30,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         private float GlowTimer;
         private bool Glow;
+        public Color color;
+        public int dustID;
+        public float dustScale;
         public override void AI()
         {
             if (Glow)
@@ -45,24 +48,24 @@ namespace Redemption.NPCs.Bosses.Gigapora
             {
                 Glow = true;
                 Projectile.alpha = 255;
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 7;
+                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = Projectile.ai[0];
                 for (int i = 0; i < 15; i++)
                 {
                     int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), Scale: 2);
                     Main.dust[dust].velocity *= 6;
                     Main.dust[dust].noGravity = true;
-                    Color dustColor = new(Color.Orange.R, Color.Orange.G, Color.Orange.B) { A = 0 };
+                    Color dustColor = new(color.R, color.G, color.B) { A = 0 };
                     Main.dust[dust].color = dustColor;
                 }
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < Projectile.ai[1]; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
+                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustID, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: dustScale);
                     Main.dust[dust].velocity *= 10;
                     Main.dust[dust].noGravity = true;
                 }
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < Projectile.ai[1]; i++)
                 {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
+                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: dustScale);
                     Main.dust[dust].velocity *= 15;
                     Main.dust[dust].noGravity = true;
                 }
@@ -94,7 +97,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, Projectile.rotation, origin2, 4f, SpriteEffects.None, 0);
                 Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.4f, Projectile.rotation, origin2, 4f, SpriteEffects.None, 0);
             }
-
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
