@@ -109,6 +109,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             if (NPC.life <= 0)
             {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), NPC.position);
+                RedeDraw.SpawnExplosion(NPC.Center, Color.Orange);
+
                 for (int i = 0; i < 80; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain, 0f, 0f, 100, default, 3f);
@@ -773,6 +777,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         NPC.rotation = rot;
                         NPC.velocity *= .9f;
                         NPC.velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
+                        if (Main.rand.NextBool(20))
+                        {
+                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                            RedeDraw.SpawnExplosion(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), Color.Orange);
+                        }
                         if (AITimer == 60)
                         {
                             NPC.life = 1;

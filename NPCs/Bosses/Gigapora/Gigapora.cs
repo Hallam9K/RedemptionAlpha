@@ -128,9 +128,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
                         continue;
 
-                    NPC.Shoot(seg.Center, ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/MissileExplosion");
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), seg.position);
+                    RedeDraw.SpawnExplosion(seg.Center, Color.Orange);
                 }
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/MissileExplosion");
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), NPC.position);
+                RedeDraw.SpawnExplosion(NPC.Center, Color.Orange);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
@@ -602,7 +606,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     break;
                 case 9:
                     if (Main.rand.NextBool(100))
-                        NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, false, SoundID.Item14);
+                    {
+                        SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                        RedeDraw.SpawnExplosion(new Vector2(NPC.position.X + Main.rand.Next(NPC.width), NPC.position.Y + Main.rand.Next(NPC.height)), Color.Orange);
+                    }
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC seg = Main.npc[i];
@@ -610,7 +617,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             continue;
 
                         if (Main.rand.NextBool(100))
-                            NPC.Shoot(new Vector2(seg.position.X + Main.rand.Next(seg.width), seg.position.Y + Main.rand.Next(seg.height)), ModContent.ProjectileType<Gigapora_Explode>(), 0, Vector2.Zero, false, SoundID.Item14);
+                        {
+                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                            RedeDraw.SpawnExplosion(new Vector2(seg.position.X + Main.rand.Next(seg.width), seg.position.Y + Main.rand.Next(seg.height)), Color.Orange);
+                        }
                     }
                     break;
             }

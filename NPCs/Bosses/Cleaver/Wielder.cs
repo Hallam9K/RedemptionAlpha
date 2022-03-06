@@ -92,12 +92,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (item.DamageType == DamageClass.Melee)
-                damage *= 2;
+                damage = (int)(damage * 2.5f);
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.Redemption().TechnicallyMelee)
-                damage *= 2;
+                damage = (int)(damage * 2.5f);
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
