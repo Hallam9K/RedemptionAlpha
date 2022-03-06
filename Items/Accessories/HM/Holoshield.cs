@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -101,13 +103,7 @@ namespace Redemption.Items.Accessories.HM
 
                 if (ShieldHit < 0 && DashTimer > 15)
                 {
-                    Rectangle hitbox = new((int)(Player.position.X + Player.velocity.X * 0.5 - 4),
-                    (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4), Player.width + 8, Player.height + 8);
-                    if (DashTimer > 25)
-                    {
-                        Player.immune = true;
-                        Player.immuneTime = 10;
-                    }
+                    Rectangle hitbox = new((int)(Player.position.X + Player.velocity.X * 0.5 - 4), (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4), Player.width + 8, Player.height + 8);
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -133,7 +129,7 @@ namespace Redemption.Items.Accessories.HM
 
                         if (Player.whoAmI == Main.myPlayer)
                         {
-                            npc.StrikeNPC((int)damage, knockback, hitDirection, crit);
+                            BaseAI.DamageNPC(npc, (int)damage, knockback, hitDirection, Player, crit: crit);
                             if (Main.netMode != NetmodeID.SinglePlayer)
                                 NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
                                     0, 0);
@@ -149,7 +145,7 @@ namespace Redemption.Items.Accessories.HM
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         Projectile proj = Main.projectile[i];
-                        if (!proj.active || !proj.hostile || proj.friendly || proj.damage >= 200 || proj.velocity.Length() <= 0)
+                        if (!proj.active || !proj.hostile || proj.friendly || proj.damage >= 100 || proj.velocity.Length() <= 0)
                             continue;
 
                         if (!hitbox.Intersects(proj.Hitbox) || proj.tileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, proj.position, proj.width, proj.height))
@@ -157,7 +153,7 @@ namespace Redemption.Items.Accessories.HM
 
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Reflect").WithVolume(.5f).WithPitchVariance(.1f));
-                        proj.damage *= 2;
+                        proj.damage *= 8;
                         proj.velocity = -proj.velocity;
                         proj.friendly = true;
                         proj.hostile = false;
@@ -174,7 +170,12 @@ namespace Redemption.Items.Accessories.HM
                 DashTimer--;
             }
         }
-
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileIndex >= 0 && damage < 200)) && ShieldHit < 0 && DashTimer > 15)
+                return false;
+            return true;
+        }
         private bool CanUseDash()
         {
             return DashAccessoryEquipped

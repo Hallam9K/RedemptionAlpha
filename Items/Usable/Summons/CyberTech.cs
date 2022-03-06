@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cyber Radio");
-            Tooltip.SetDefault("Summons King Slayer III\nOnly usable at day\nNot consumable");
+            Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable");
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

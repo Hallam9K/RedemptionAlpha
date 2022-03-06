@@ -5,6 +5,7 @@ using Redemption.Items.Materials.HM;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -132,12 +133,6 @@ namespace Redemption.Items.Accessories.HM
                     int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenTorch);
                     Main.dust[d].noGravity = true;
                     Rectangle hitbox = new((int)(Player.position.X + Player.velocity.X * 0.5 - 4), (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4), Player.width + 8, Player.height + 8);
-
-                    if (DashTimer > 25)
-                    {
-                        Player.immune = true;
-                        Player.immuneTime = 10;
-                    }
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -184,7 +179,12 @@ namespace Redemption.Items.Accessories.HM
                 DashTimer--;
             }
         }
-
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (damageSource.SourceNPCIndex >= 0 && ShieldHit < 0 && DashTimer > 15)
+                return false;
+            return true;
+        }
         private bool CanUseDash()
         {
             return DashAccessoryEquipped

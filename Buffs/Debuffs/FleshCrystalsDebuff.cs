@@ -10,7 +10,7 @@ namespace Redemption.Buffs.Debuffs
         public override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
-            Main.debuff[Type] = false;
+            Main.debuff[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

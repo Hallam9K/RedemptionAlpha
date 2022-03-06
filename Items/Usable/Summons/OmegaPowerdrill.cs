@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Powerdrill");
-            Tooltip.SetDefault("Summons Omega Gigapora\n" +
+            Tooltip.SetDefault("Summons the 2nd Omega Prototype\n" +
                 "'Mechanical whirls beneath the ground, be wary of the deadly sound'"
                 + "\nOnly usable at night"
                 + "\nNot consumable");

@@ -206,6 +206,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
+            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
             Player player = Main.player[NPC.target];
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
@@ -276,15 +277,15 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         if (AITimer == 60)
                         {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                         }
                         if (AITimer == 220)
                         {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                         }
                         if (AITimer == 400)
                         {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                         }
                         if (AITimer == 420)
                         {
@@ -1240,7 +1241,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                         BaseAI.DamagePlayer(target, 120, 3, hitDirection, NPC);
-                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
+                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 30);
                                     }
                                 }
 
@@ -1456,15 +1457,17 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     break;
             }
-            if (MoRDialogueUI.Visible && RedeSystem.Instance.DialogueUIElement.PointPos == NPC.Center)
+            if (MoRDialogueUI.Visible)
             {
-                if (RedeSystem.Instance.DialogueUIElement.ID == 0)
+                if (RedeSystem.Instance.DialogueUIElement.ID == NPC.whoAmI)
                 {
+                    RedeSystem.Instance.DialogueUIElement.TextPos = text;
                     RedeSystem.Instance.DialogueUIElement.PointPos = NPC.Center;
                     RedeSystem.Instance.DialogueUIElement.TextColor = RedeColor.SlayerColour;
                 }
                 else
                 {
+                    RedeSystem.Instance.DialogueUIElement.TextPos = null;
                     RedeSystem.Instance.DialogueUIElement.PointPos = null;
                     RedeSystem.Instance.DialogueUIElement.TextColor = null;
                 }
