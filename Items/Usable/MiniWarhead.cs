@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -86,6 +87,7 @@ namespace Redemption.Items.Usable
                 Projectile.width = 500;
                 Projectile.height = 500;
                 Projectile.damage = 500;
+                RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed, DustID.Torch, 30, 0);
                 Rectangle boom = new((int)Projectile.Center.X - 250, (int)Projectile.Center.Y - 250, 500, 500);
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {

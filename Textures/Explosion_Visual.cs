@@ -91,7 +91,7 @@ namespace Redemption.Textures
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = Projectile.Center - Main.screenPosition;
-            Color colour2 = Color.Lerp(Color.OrangeRed, Color.OrangeRed, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
+            Color colour2 = Color.Lerp(color, color, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
             if (Glow)
             {
                 Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, Projectile.rotation, origin2, 4f, SpriteEffects.None, 0);
