@@ -70,7 +70,7 @@ namespace Redemption.NPCs.PreHM
                 NPC.friendly = false;
 
             RedeNPC globalNPC = NPC.Redemption();
-            if (NPC.type == ModContent.NPCType<RaveyardSkeleton>() && Main.rand.NextBool(600))
+            if (NPC.type == ModContent.NPCType<RaveyardSkeleton>() && Main.rand.NextBool(900))
             {
                 switch (Main.rand.Next(4))
                 {
@@ -88,7 +88,7 @@ namespace Redemption.NPCs.PreHM
                         break;
                 }
             }
-            if (Main.rand.NextBool(1000) && NPC.alpha <= 10 && (globalNPC.attacker == null || !globalNPC.attacker.active))
+            if (Main.rand.NextBool(2000) && NPC.alpha <= 10 && (globalNPC.attacker == null || !globalNPC.attacker.active))
             {
                 WeightedRandom<int> emoteID = new(Main.rand);
                 switch (Personality)

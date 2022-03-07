@@ -654,6 +654,21 @@ namespace Redemption.Globals
                     Main.myPlayer, ai0, ai1);
             }
         }
+        public static void Shoot(this Projectile proj, Vector2 position, int projType, int damage, Vector2 velocity,
+            bool customSound, LegacySoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
+        {
+            Mod mod = Redemption.Instance;
+            if (customSound && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(mod, soundString), proj.position);
+            else
+                SoundEngine.PlaySound(sound, (int)proj.position.X, (int)proj.position.Y);
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Projectile.NewProjectile(proj.GetProjectileSource_FromThis(), position, velocity, projType, damage / 4, 0,
+                    Main.myPlayer, ai0, ai1);
+            }
+        }
 
         /// <summary>
         /// For spawning NPCs from NPCs without any extra stuff.

@@ -35,7 +35,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             Idle,
             Attacks,
             Fallen,
-            Death
+            Death,
+            Bible,
+            BibleAttacks
         }
 
         public ActionState AIState
@@ -234,6 +236,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         private bool floatTimer;
         private float TimerRand2;
         private bool Spared;
+        private Vector2 playerOrigin;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -249,7 +252,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             DespawnHandler();
 
-            if (AIState is not ActionState.Fallen && AIState is not ActionState.Death)
+            if (AIState is not ActionState.Fallen && AIState is not ActionState.Death && AIState is not ActionState.Bible)
             {
                 NPC.LookAtEntity(player);
                 if (!floatTimer)
@@ -386,8 +389,15 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer > 80)
                     {
                         if (AttackNumber != 0 && AttackNumber % 5 == 0)
-                            AIState = ActionState.Fallen;
-
+                        {
+                            if (Main.expertMode)
+                            {
+                                TimerRand = 0;
+                                AIState = ActionState.Bible;
+                            }
+                            else
+                                AIState = ActionState.Fallen;
+                        }
                         else
                         {
                             AttackChoice();
@@ -655,7 +665,107 @@ namespace Redemption.NPCs.Bosses.Erhan
                             #endregion
                     }
                     break;
+                case ActionState.Bible:
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            if (AITimer++ == 0)
+                            {
+                                move = NPC.Center.X;
+                                speed = 9;
+                            }
+                            if (AITimer < 50)
+                            {
+                                NPC.Move(new Vector2(move, player.Center.Y - 250), speed, 50, false);
+                                MoveClamp();
+                                if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                                    speed *= 1.03f;
+                                else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                                    speed *= 0.96f;
+                            }
+                            else
+                                NPC.velocity *= 0.8f;
 
+                            if (AITimer == 60)
+                            {
+                                ArmType = 3;
+                                HeadFrameY = 2;
+                                NPC.Shoot(NPC.Center + new Vector2(80 * NPC.spriteDirection, 20), ModContent.ProjectileType<Erhan_Bible>(), NPC.damage, new Vector2(0, -1), true, SoundID.Item1, "Sounds/Custom/Choir", NPC.whoAmI);
+                            }
+                            if (AITimer == 180)
+                            {
+                                ArmType = 0;
+                                HeadFrameY = 0;
+                            }
+                            break;
+                        case 1:
+                            NPC.LookAtEntity(player);
+                            if (AITimer++ == 0)
+                            {
+                                move = NPC.Center.X;
+                                speed = 9;
+                            }
+                            NPC.Move(new Vector2(move, player.Center.Y - 300), speed, 50, false);
+                            MoveClamp();
+                            if (NPC.DistanceSQ(player.Center) > 800 * 800)
+                                speed *= 1.03f;
+                            else if (NPC.velocity.Length() > 9 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                                speed *= 0.96f;
+
+                            if (AITimer >= 460)
+                            {
+                                TimerRand = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Fallen;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 2:
+                            NPC.LookAtEntity(player);
+                            if (AITimer++ == 0)
+                            {
+                                playerOrigin = player.Center;
+                                for (int i = 0; i < 2; i++)
+                                    NPC.Shoot(new Vector2(player.Center.X + 800 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                            }
+                            if (AITimer == 100 || AITimer == 200 || AITimer == 300)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                    NPC.Shoot(new Vector2(playerOrigin.X + 800 * (i == 0 ? -1 : 1), playerOrigin.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), false, SoundID.Item162);
+                            }
+                            if (AITimer < 120)
+                                NPC.Move(new Vector2(playerOrigin.X + 600, player.Center.Y - 270), 18, 20, false);
+                            else if (AITimer >= 80 && AITimer < 220)
+                                NPC.velocity *= 0.5f;
+
+                            if (AITimer == 120)
+                                ArmType = 1;
+                            if (AITimer >= 130 && AITimer % 7 == 0 && AITimer <= 170 && Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), NPC.position);
+                                SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
+                                int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPC.damage / 4, 3, Main.myPlayer, NPC.whoAmI, TimerRand2 * 60);
+                                Main.projectile[p].localAI[0] += TimerRand2 * 7;
+                                TimerRand2++;
+                            }
+                            if (AITimer >= 220)
+                            {
+                                NPC.Move(new Vector2(playerOrigin.X - 600, player.Center.Y - 270), 6, 40, false);
+                            }
+                            if (AITimer == 240)
+                                ArmType = 0;
+                            if (AITimer >= 460)
+                            {
+                                TimerRand = 0;
+                                TimerRand2 = 0;
+                                AITimer = 0;
+                                AIState = ActionState.Fallen;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                    }
+                    break;
                 case ActionState.Fallen:
                     switch (TimerRand)
                     {
