@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'Tastes like black liquorice'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()

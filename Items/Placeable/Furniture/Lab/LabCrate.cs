@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         {
             DisplayName.SetDefault("Laboratory Crate");
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()

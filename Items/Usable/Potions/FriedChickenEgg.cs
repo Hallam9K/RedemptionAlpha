@@ -1,4 +1,5 @@
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,6 +11,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Tooltip.SetDefault("Minor improvements to all stats" +
                 "\n'Because eggs are tasty.'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()

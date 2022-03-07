@@ -57,8 +57,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemID.Shackle, 50));
-            npcLoot.Add(ItemDropRule.Common(ItemID.ZombieArm, 200));
+            var zombieDropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Zombie, false);
+            foreach (var zombieDropRule in zombieDropRules)
+            {
+                npcLoot.Add(zombieDropRule);
+            }
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

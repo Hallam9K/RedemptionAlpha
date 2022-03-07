@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Redemption.NPCs.Bosses.Erhan;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -44,7 +45,6 @@ namespace Redemption.Projectiles.Magic
         {
             Projectile.width = LaserWidth;
             Projectile.height = LaserWidth;
-            Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
@@ -55,6 +55,17 @@ namespace Redemption.Projectiles.Magic
         {
             Projectile proj = Main.projectile[(int)Projectile.ai[0]];
             Projectile.rotation = Projectile.velocity.ToRotation();
+            if (proj.type == ModContent.ProjectileType<Erhan_Bible>())
+            {
+                MaxLaserLength = 94;
+                Projectile.hostile = true;
+                Projectile.friendly = false;
+            }
+            else
+            {
+                Projectile.hostile = false;
+                Projectile.friendly = true;
+            }
             #region Beginning And End Effects
             if (AITimer == 0)
                 LaserScale = 0.1f;
@@ -125,8 +136,6 @@ namespace Redemption.Projectiles.Magic
             for (float i = transDist; i <= (maxDist * (1 / LaserScale)); i += LaserSegmentLength)
             {
                 //Color c = Color.White;
-
-
                 var origin = start + i * unit;
                 Main.EntitySpriteDraw(texture, origin - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                     new Rectangle((int)(LaserWidth * Frame), LaserEndSegmentLength, LaserWidth, LaserSegmentLength), color, r,
@@ -159,7 +168,7 @@ namespace Redemption.Projectiles.Magic
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
+                Projectile.Center + unit * (LaserLength - 32), 48 * LaserScale, ref point))
             {
                 return true;
             }

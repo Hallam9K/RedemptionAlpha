@@ -50,6 +50,14 @@ namespace Redemption.NPCs.Wasteland
                     "A bunny suited up in a Type 1 Hazmat Suit. Ain't no hazardous materials harming this little fuzzball!")
             });
         }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Bunny, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)

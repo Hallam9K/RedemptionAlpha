@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Minor improvements to all stats" +
                 "\n'Sluuuuuurp'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
