@@ -33,6 +33,9 @@ namespace Redemption.Textures
         public Color color;
         public int dustID;
         public float dustScale;
+        public float scale;
+        public bool noDust;
+        public Texture2D texture;
         public override void AI()
         {
             if (Glow)
@@ -49,33 +52,36 @@ namespace Redemption.Textures
                 Glow = true;
                 Projectile.alpha = 255;
                 Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = Projectile.ai[0];
-                for (int i = 0; i < 15; i++)
+                if (!noDust)
                 {
-                    int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), Scale: 2);
-                    Main.dust[dust].velocity *= 6;
-                    Main.dust[dust].noGravity = true;
-                    Color dustColor = new(color.R, color.G, color.B) { A = 0 };
-                    Main.dust[dust].color = dustColor;
-                }
-                for (int i = 0; i < Projectile.ai[1]; i++)
-                {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustID, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: dustScale);
-                    Main.dust[dust].velocity *= 10;
-                    Main.dust[dust].noGravity = true;
-                }
-                for (int i = 0; i < Projectile.ai[1]; i++)
-                {
-                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: dustScale);
-                    Main.dust[dust].velocity *= 15;
-                    Main.dust[dust].noGravity = true;
-                }
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    for (int g = 0; g < 6; g++)
+                    for (int i = 0; i < 15; i++)
                     {
-                        int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
-                        Main.gore[goreIndex].scale = 1.5f;
-                        Main.gore[goreIndex].velocity *= 2f;
+                        int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), Scale: 2);
+                        Main.dust[dust].velocity *= 6;
+                        Main.dust[dust].noGravity = true;
+                        Color dustColor = new(color.R, color.G, color.B) { A = 0 };
+                        Main.dust[dust].color = dustColor;
+                    }
+                    for (int i = 0; i < Projectile.ai[1]; i++)
+                    {
+                        int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustID, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: dustScale);
+                        Main.dust[dust].velocity *= 10;
+                        Main.dust[dust].noGravity = true;
+                    }
+                    for (int i = 0; i < Projectile.ai[1]; i++)
+                    {
+                        int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: dustScale);
+                        Main.dust[dust].velocity *= 15;
+                        Main.dust[dust].noGravity = true;
+                    }
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        for (int g = 0; g < 6; g++)
+                        {
+                            int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
+                            Main.gore[goreIndex].scale = 1.5f;
+                            Main.gore[goreIndex].velocity *= 2f;
+                        }
                     }
                 }
             }
@@ -84,18 +90,21 @@ namespace Redemption.Textures
         }
         public override void PostDraw(Color lightColor)
         {
+            if (texture == null)
+                texture = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D teleportGlow = texture;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = Projectile.Center - Main.screenPosition;
             Color colour2 = Color.Lerp(color, color, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
             if (Glow)
             {
-                Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, Projectile.rotation, origin2, 4f, SpriteEffects.None, 0);
-                Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.4f, Projectile.rotation, origin2, 4f, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2, Projectile.rotation, origin2, scale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(teleportGlow, position2, new Rectangle?(rect2), colour2 * 0.4f, Projectile.rotation, origin2, scale, SpriteEffects.None, 0);
             }
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

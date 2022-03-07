@@ -39,7 +39,7 @@ namespace Redemption.Globals
                 (Main.projectile[p].ModProjectile as Ring_Visual).color = color;
             }
         }
-        public static void SpawnExplosion(Vector2 center, Color color, int dustID = DustID.Torch, float shakeAmount = 7, int dustAmount = 30, float dustScale = 2)
+        public static void SpawnExplosion(Vector2 center, Color color, int dustID = DustID.Torch, float shakeAmount = 7, int dustAmount = 30, float dustScale = 2, float scale = 4f, bool noDust = false, Texture2D tex = null)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -50,6 +50,9 @@ namespace Redemption.Globals
                     explode.color = color;
                     explode.dustID = dustID;
                     explode.dustScale = dustScale;
+                    explode.scale = scale;
+                    explode.noDust = noDust;
+                    explode.texture = tex;
                 }
             }
         }
