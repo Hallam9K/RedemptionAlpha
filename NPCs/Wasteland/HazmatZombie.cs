@@ -247,6 +247,11 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GasMask>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit3>(), 20));
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Zombie, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
         }
 
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

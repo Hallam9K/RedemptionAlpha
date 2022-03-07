@@ -71,6 +71,11 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 2, 3, 9));
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Wolf, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
         }
         public override void HitEffect(int hitDirection, double damage)
         {

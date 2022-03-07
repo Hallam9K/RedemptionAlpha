@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -68,7 +69,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer++ >= 60)
                     {
                         AITimer = 0;
-                        Projectile.localAI[0] = Main.rand.Next(3, 5);
+                        Projectile.localAI[0] = Main.rand.Next(3, 6);
                     }
                     break;
                 case 3: // Seeds of Virtue
@@ -97,14 +98,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (TimerRand++ % 30 == 0)
                             {
                                 RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Seed>(), Projectile.damage, RedeHelper.SpreadUp(10), false, SoundID.Item42);
+                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Seed>(), Projectile.damage * 4, RedeHelper.SpreadUp(10), false, SoundID.Item42);
                             }
                             if (TimerRand >= 460)
-                            {
-                                SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
                                 Projectile.Kill();
-                            }
                             break;
                     }
                     break;
@@ -133,7 +130,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), Projectile.position);
                                 SoundEngine.PlaySound(SoundID.Item125, Projectile.Center);
-                                int p = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage / 4, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60);
+                                int p = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
                                 TimerRand++;
                             }
@@ -142,15 +139,39 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Projectile.Move(new Vector2(playerOrigin.X + 600, player.Center.Y - 270), 6, 40, false);
                             }
                             if (AITimer >= 580)
-                            {
-                                SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
                                 Projectile.Kill();
-                            }
                             break;
                     }
                     break;
                 case 5: // Crossrays
+                    Projectile.LookByVelocity();
+                    Projectile.rotation += Projectile.velocity.Length() / 50 * Projectile.spriteDirection;
+                    switch (Projectile.ai[1])
+                    {
+                        case 0:
+                            host.ai[1] = 0;
+                            host.ai[2] = 1;
+                            host.netUpdate = true;
+                            Projectile.ai[1]++;
+                            break;
+                        case 1:
+                            if (AITimer++ < 50)
+                                Projectile.Move(new Vector2(player.Center.X, player.Center.Y - 400), 10, 40, false);
+                            else
+                                Projectile.Move(player.Center, 18, 80);
+                            if (AITimer == 50)
+                            {
+                                SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(2, MathHelper.PiOver2 * i), ModContent.ProjectileType<HolyBible_Ray>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                                    Main.projectile[p].timeLeft = 390;
+                                }
+                            }
+                            if (AITimer >= 460)
+                                Projectile.Kill();
+                            break;
+                    }
                     break;
                 case 6: // Graceful Cover
                     break;
@@ -159,6 +180,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case 8: // Tough Read
                     break;
             }
+        }
+        public override void Kill(int timeLeft)
+        {
+            SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
+            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)

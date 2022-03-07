@@ -202,8 +202,11 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
-            npcLoot.Add(ItemDropRule.Common(ItemID.FlinxFur, 2, 1, 3));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Compass, 50));
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.SnowFlinx, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
