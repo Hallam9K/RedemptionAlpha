@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             break;
                         case 1:
                             if (AITimer++ < 50)
-                                Projectile.Move(new Vector2(player.Center.X, player.Center.Y - 400), 10, 40, false);
+                                Projectile.Move(new Vector2(player.Center.X + 400, player.Center.Y - 400), 10, 40, false);
                             else
                                 Projectile.Move(player.Center, 18, 80);
                             if (AITimer == 50)
