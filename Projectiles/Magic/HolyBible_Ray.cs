@@ -57,7 +57,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (proj.type == ModContent.ProjectileType<Erhan_Bible>())
             {
-                MaxLaserLength = 94;
+                MaxLaserLength = 64;
                 Projectile.hostile = true;
                 Projectile.friendly = false;
             }
