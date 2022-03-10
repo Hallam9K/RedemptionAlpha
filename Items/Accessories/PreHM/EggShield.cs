@@ -18,6 +18,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.width = 22;
             Item.height = 28;
             Item.value = Item.buyPrice(0, 0, 20, 0);
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;
             Item.defense = 2;

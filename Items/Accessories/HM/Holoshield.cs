@@ -4,6 +4,7 @@ using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,6 +19,7 @@ namespace Redemption.Items.Accessories.HM
                 + "\nDouble tap a direction to dash" +
                 "\nDashing into projectiles will reflect them" +
                 "\nCan't reflect projectiles exceeding 200 damage");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -28,6 +30,7 @@ namespace Redemption.Items.Accessories.HM
             Item.width = 22;
             Item.height = 26;
             Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;
             Item.defense = 2;
