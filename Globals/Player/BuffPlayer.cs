@@ -62,6 +62,7 @@ namespace Redemption.Globals.Player
         public bool snipped;
         public bool trappedSoul;
         public bool brokenBlade;
+        public bool shellCap;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -125,6 +126,7 @@ namespace Redemption.Globals.Player
             shinkiteHead = false;
             brokenBlade = false;
             TrueMeleeDamage = 1f;
+            shellCap = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -350,6 +352,21 @@ namespace Redemption.Globals.Player
                 if (ProjectileTags.Celestial.Has(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[13]));
                 #endregion
+            }
+            if (shellCap && proj.velocity.Y > 1 && proj.Bottom.Y < Player.Center.Y)
+            {
+                SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
+                Player.noKnockback = true;
+                damage = (int)(damage * 0.75f);
+            }
+        }
+        public override void ModifyHitByNPC(Terraria.NPC npc, ref int damage, ref bool crit)
+        {
+            if (shellCap && npc.velocity.Y > 1 && npc.Bottom.Y < Player.Center.Y)
+            {
+                SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
+                Player.noKnockback = true;
+                damage = (int)(damage * 0.75f);
             }
         }
         public override void ModifyHitNPC(Item item, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
