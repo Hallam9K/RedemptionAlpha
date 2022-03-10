@@ -23,6 +23,7 @@ namespace Redemption.Items.Accessories.HM
 			Item.height = 28;
 			Item.value = Item.sellPrice(0, 8, 0, 0);
 			Item.rare = ItemRarityID.Red;
+			Item.canBePlacedInVanityRegardlessOfConditions = true;
 			Item.accessory = true;
 		}
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)

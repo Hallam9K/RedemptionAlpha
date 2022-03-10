@@ -6,6 +6,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +22,7 @@ namespace Redemption.Items.Accessories.HM
                 + "\n8% increased melee critical strike chance"
                 + "\nInflicts Infection upon dashing into an enemy"
                 + "\nReleases acid-like sparks as you move");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -30,6 +32,7 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Lime;
             Item.value = 80000;
             Item.damage = 40;
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.DamageType = DamageClass.Melee;
             Item.accessory = true;
             Item.crit = 4;
