@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Items.Armor.Single;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
@@ -47,8 +48,8 @@ namespace Redemption.NPCs.Critters
             NPC.height = 20;
             NPC.defense = 5;
             NPC.lifeMax = 5;
-            NPC.HitSound = SoundID.NPCHit13;
-            NPC.DeathSound = SoundID.NPCDeath16;
+            NPC.HitSound = SoundID.NPCHit38;
+            NPC.DeathSound = SoundID.NPCDeath47;
             NPC.value = 0;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
@@ -62,6 +63,7 @@ namespace Redemption.NPCs.Critters
             NPC.TargetClosest();
             NPC.LookByVelocity();
             NPC.defense = 5;
+            NPC.knockBackResist = 0.5f;
             NPC.catchItem = (short)ModContent.ItemType<KabucraItem>();
             if (hopCooldown > 0)
                 hopCooldown--;
@@ -89,7 +91,7 @@ namespace Redemption.NPCs.Critters
 
                     if (HideCheck() && Main.rand.NextBool(60))
                     {
-                        NPC.velocity.Y = 0;
+                        NPC.velocity.X = 0;
                         AITimer = 0;
                         AIState = ActionState.Hide;
                     }
@@ -108,7 +110,7 @@ namespace Redemption.NPCs.Critters
 
                     if (HideCheck() && Main.rand.NextBool(100))
                     {
-                        NPC.velocity.Y = 0;
+                        NPC.velocity.X = 0;
                         AITimer = 0;
                         AIState = ActionState.Hide;
                     }
@@ -144,6 +146,7 @@ namespace Redemption.NPCs.Critters
 
                 case ActionState.Hide:
                     NPC.catchItem = ItemID.Seashell;
+                    NPC.velocity.X *= 0.9f;
                     if (!HideCheck() && Main.rand.NextBool(200))
                     {
                         AITimer = 0;
@@ -193,6 +196,16 @@ namespace Redemption.NPCs.Critters
         {
             switch (AIState)
             {
+                case ActionState.Begin:
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 2 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
+                    break;
                 case ActionState.Idle:
                     if (NPC.frame.Y > 2 * frameHeight)
                     {
@@ -235,13 +248,14 @@ namespace Redemption.NPCs.Critters
             if (NPC.frame.Y >= 4 * frameHeight)
             {
                 NPC.defense = 90;
-                NPC.velocity.X = 0;
+                NPC.knockBackResist = 0.1f;
             }
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KabucraShell>(), 5));
             npcLoot.Add(ItemDropRule.Common(ItemID.Seashell, 1, 1, 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -250,7 +264,7 @@ namespace Redemption.NPCs.Critters
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
                 new FlavorTextBestiaryInfoElement(
-                    "Kabucra, or Shell Crabs, find and use sturdy seashells as armour against predators. Due to their tiny size, they can escape by burying into the ground in case their shell isn't enough protection.")
+                    "Kabucra, or Shell Crabs, find and use sturdy seashells as armour against predators. Due to their tiny size, they can escape by burying into the ground in case their shells aren't enough protection.")
             });
         }
 
