@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer++ >= 60)
                     {
                         AITimer = 0;
-                        Projectile.localAI[0] = Main.rand.Next(3, 6);
+                        Projectile.localAI[0] = Main.rand.Next(3, 7);
                     }
                     break;
                 case 3: // Seeds of Virtue
@@ -173,9 +173,62 @@ namespace Redemption.NPCs.Bosses.Erhan
                             break;
                     }
                     break;
-                case 6: // Graceful Cover
+                case 7: // Graceful Cover
                     break;
-                case 7: // To The Heavens!
+                case 6: // To The Heavens!
+                    Projectile.rotation = Projectile.velocity.X * 0.05f;
+                    switch (Projectile.ai[1])
+                    {
+                        case 0:
+                            host.ai[1] = 0;
+                            host.ai[2] = 1;
+                            host.netUpdate = true;
+                            Projectile.ai[1]++;
+                            break;
+                        case 1:
+                            if (AITimer++ == 0)
+                            {
+                                int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(player.Center.X / 16), (int)(player.Center.Y / 16));
+                                playerOrigin = new Vector2(player.Center.X, (tilePosY * 16) + 38);
+                                SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                Projectile.position = playerOrigin + new Vector2(-600, 100);
+                                Projectile.netUpdate = true;
+                                SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 2, new Vector2(2, 0), false, SoundID.Item162, "", Projectile.whoAmI);
+                            }
+                            if (AITimer >= 80)
+                                Projectile.velocity.Y = -1.5f;
+                            Projectile.position.X = player.position.X - 600;
+                            if (AITimer != 0 && AITimer % 60 == 0 && AITimer <= 400)
+                            {
+                                playerOrigin.Y -= 100;
+                                playerOrigin.X += Main.rand.Next(-220, 220);
+                                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
+                                if (Main.rand.NextBool(4))
+                                {
+                                    RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X + 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
+                                    if (Main.rand.NextBool())
+                                        playerOrigin.X += 280;
+                                }
+                                if (Main.rand.NextBool(4))
+                                {
+                                    RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X - 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
+                                    if (Main.rand.NextBool())
+                                        playerOrigin.X -= 280;
+                                }
+                            }
+                            if (AITimer == 420)
+                            {
+                                playerOrigin.Y -= 100;
+                                playerOrigin.X += Main.rand.Next(-220, 220);
+                                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform2>());
+                            }
+                            if (AITimer >= 540)
+                                Projectile.Kill();
+                            break;
+                    }
                     break;
                 case 8: // Tough Read
                     break;
