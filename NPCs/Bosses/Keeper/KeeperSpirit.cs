@@ -19,7 +19,7 @@ using Terraria.Graphics.Shaders;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
@@ -28,6 +28,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using static Redemption.PrimitiveTrails.Trail;
 using static Redemption.Globals.RedeNet;
 
 namespace Redemption
@@ -43,6 +44,7 @@ namespace Redemption
 
         public static RenderTargetManager Targets;
         public static ParticleManager Particles;
+        public static TrailManager Trails;
 
         private List<ILoadable> _loadCache;
 
@@ -256,8 +258,8 @@ namespace Redemption
                         break;
                     }
 
-                    if (Main.projectile[projindex].ModProjectile is ITrailProjectile trailproj)
-                        trailproj.DoTrailCreation(RedeSystem.TrailManager);
+                    if (Main.projectile[projindex].ModProjectile is ITrailObject trailproj)
+                        trailproj.DrawTrail(Trails);
 
                     break;
                     /*case ModMessageType.StartChickArmy:
@@ -299,7 +301,6 @@ namespace Redemption
         public UserInterface AMemoryUILayer;
         public AMemoryUIState AMemoryUIElement;
 
-        public static TrailManager TrailManager;
         public bool Initialized;
 
         public override void Load()
@@ -307,8 +308,6 @@ namespace Redemption
             RedeDetours.Initialize();
             if (!Main.dedServ)
             {
-                On.Terraria.Main.Update += LoadTrailManager;
-
                 TitleUILayer = new UserInterface();
                 TitleCardUIElement = new TitleCard();
                 TitleUILayer.SetState(TitleCardUIElement);
@@ -330,21 +329,9 @@ namespace Redemption
                 AMemoryUILayer.SetState(AMemoryUIElement);
             }
         }
-        private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
-        {
-            if (!Initialized)
-            {
-                TrailManager = new TrailManager(Redemption.Instance);
-                Initialized = true;
-            }
-
-            orig(self, gameTime);
-        }
 
         public override void Unload()
         {
-            TrailManager = null;
-            On.Terraria.Main.Update -= LoadTrailManager;
         }
 
         public override void ModifyLightingBrightness(ref float scale)
@@ -378,7 +365,7 @@ namespace Redemption
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                TrailManager.UpdateTrails();
+                Redemption.Trails.UpdateTrails();
             }
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

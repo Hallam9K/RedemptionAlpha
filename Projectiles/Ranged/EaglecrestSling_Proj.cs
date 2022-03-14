@@ -9,12 +9,13 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.Projectiles.Ranged
 {
-    public class EaglecrestSling_Proj : ModProjectile, ITrailProjectile
+    public class EaglecrestSling_Proj : ModProjectile, ITrailObject
     {
         public override void SetStaticDefaults()
         {
@@ -32,9 +33,9 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 600;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(135, 122, 119), new Color(41, 36, 35)), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
+            manager.CreateTrail(this, new GradientTrail(new Color(135, 122, 119), new Color(41, 36, 35)), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
         }
 
         public override bool PreDraw(ref Color lightColor)

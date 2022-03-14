@@ -5,7 +5,7 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 

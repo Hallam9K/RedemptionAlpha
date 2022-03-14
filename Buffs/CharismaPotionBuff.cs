@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
+using Terraria.Localization;
 
 namespace Redemption.Buffs
 {

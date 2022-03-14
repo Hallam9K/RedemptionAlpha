@@ -9,7 +9,7 @@ using Redemption.Globals;
 using Redemption.Projectiles.Melee;
 using System;
 using Terraria.Graphics.Shaders;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {

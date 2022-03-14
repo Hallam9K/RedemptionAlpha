@@ -7,12 +7,13 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using static Redemption.PrimitiveTrails.Trail;
+using Redemption.PrimitiveTrails;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class Erhan_Lightmass : ModProjectile, ITrailProjectile
+    public class Erhan_Lightmass : ModProjectile, ITrailObject
     {
         public override string Texture => "Redemption/Textures/WhiteFlare";
         public override void SetStaticDefaults()
@@ -33,9 +34,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.Redemption().Unparryable = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            manager.CreateTrail(this, new GradientTrail(new Color(255, 255, 120), Color.White), new RoundCap(), new DefaultTrailPosition(), 50f, 80f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         public override void AI()

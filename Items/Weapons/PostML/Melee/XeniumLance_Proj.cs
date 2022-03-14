@@ -6,12 +6,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using ReLogic.Content;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using static Redemption.PrimitiveTrails.Trail;
+using Redemption.PrimitiveTrails;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
-    public class XeniumLance_Proj : ModProjectile, ITrailProjectile
+    public class XeniumLance_Proj : ModProjectile, ITrailObject
     {
         public override void SetStaticDefaults()
         {
@@ -33,9 +34,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.Redemption().TechnicallyMelee = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(136, 255, 255), new Color(105, 255, 255)), new NoCap(), new DefaultTrailPosition(), 150f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            manager.CreateTrail(this, new GradientTrail(new Color(136, 255, 255), new Color(105, 255, 255)), new NoCap(), new DefaultTrailPosition(), 150f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         private Vector2 vector;

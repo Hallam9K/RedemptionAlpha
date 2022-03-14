@@ -6,10 +6,10 @@ using Redemption.Globals.NPC;
 using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 
 namespace Redemption.NPCs.PreHM
 {

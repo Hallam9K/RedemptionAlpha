@@ -10,7 +10,7 @@ using Terraria.DataStructures;
 using System.IO;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Melee;
 

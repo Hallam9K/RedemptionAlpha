@@ -2,12 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_EnergyBolt : ModProjectile, ITrailProjectile
+    public class KS3_EnergyBolt : ModProjectile, ITrailObject
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
 
@@ -28,9 +29,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.Redemption().Unparryable = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(140, 255, 242), new Color(194, 255, 242)), new RoundCap(), new ArrowGlowPosition(), 10f, 200f);
+            manager.CreateTrail(this, new GradientTrail(new Color(140, 255, 242), new Color(194, 255, 242)), new RoundCap(), new ArrowGlowPosition(), 10f, 200f);
         }
 
 

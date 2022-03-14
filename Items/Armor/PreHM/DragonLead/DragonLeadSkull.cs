@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Armor.PreHM.DragonLead
 {

@@ -5,12 +5,13 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class WaterOrb : ModProjectile, ITrailProjectile
+    public class WaterOrb : ModProjectile, ITrailObject
     {
         public override void SetDefaults()
         {
@@ -25,9 +26,9 @@ namespace Redemption.Projectiles.Magic
             Projectile.Redemption().Unparryable = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.03f, 1f, 1f));
+            manager.CreateTrail(this, new GradientTrail(new Color(95, 220, 214), new Color(34, 78, 146)), new RoundCap(), new DefaultTrailPosition(), 100f, 260f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_1", AssetRequestMode.ImmediateLoad).Value, 0.03f, 1f, 1f));
         }
 
         float rot = 0.02f;

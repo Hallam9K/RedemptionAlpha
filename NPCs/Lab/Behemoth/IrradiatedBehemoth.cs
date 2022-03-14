@@ -16,7 +16,7 @@ using Redemption.WorldGeneration;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Lore;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {

@@ -8,7 +8,6 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Biomes
 {

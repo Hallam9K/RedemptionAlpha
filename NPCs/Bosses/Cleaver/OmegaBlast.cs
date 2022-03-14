@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {

@@ -20,7 +20,7 @@ using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.Items.Armor.PostML.Xenium;
 using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Accessories.HM;

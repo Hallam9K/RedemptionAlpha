@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

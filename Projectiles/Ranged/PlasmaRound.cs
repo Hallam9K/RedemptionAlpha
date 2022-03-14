@@ -6,12 +6,13 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.Projectiles.Ranged
 {
-    public class PlasmaRound : ModProjectile, ITrailProjectile
+    public class PlasmaRound : ModProjectile, ITrailObject
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -30,9 +31,9 @@ namespace Redemption.Projectiles.Ranged
             Projectile.Redemption().Unparryable = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 182, 49), new Color(255, 212, 140)), new RoundCap(), new ArrowGlowPosition(), 20f, 350f);
+            manager.CreateTrail(this, new GradientTrail(new Color(255, 182, 49), new Color(255, 212, 140)), new RoundCap(), new ArrowGlowPosition(), 20f, 350f);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

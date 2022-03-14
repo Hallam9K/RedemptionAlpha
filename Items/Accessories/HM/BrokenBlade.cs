@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;

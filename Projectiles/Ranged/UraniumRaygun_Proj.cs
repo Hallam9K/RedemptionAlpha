@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Base;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Ranged
 {

@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Globals.Player
 {

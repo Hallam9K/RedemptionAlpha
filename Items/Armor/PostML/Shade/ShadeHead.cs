@@ -6,7 +6,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.DamageClasses;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Armor.PostML.Shade
 {

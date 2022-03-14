@@ -2,12 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.Projectiles.Minions
 {
-    public class MicroshieldCore_Bolt : ModProjectile, ITrailProjectile
+    public class MicroshieldCore_Bolt : ModProjectile, ITrailObject
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -24,10 +25,6 @@ namespace Redemption.Projectiles.Minions
             Projectile.penetrate = 3;
             Projectile.timeLeft = 240;
             Projectile.Redemption().Unparryable = true;
-        }
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 14f, 160f);
         }
         public override void AI()
         {
@@ -49,6 +46,11 @@ namespace Redemption.Projectiles.Minions
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+        }
+
+		public void DrawTrail(TrailManager manager)
+		{
+            manager.CreateTrail(this, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 14f, 160f);
         }
     }
 }

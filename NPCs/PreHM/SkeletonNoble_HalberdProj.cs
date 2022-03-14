@@ -5,7 +5,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.PreHM
 {

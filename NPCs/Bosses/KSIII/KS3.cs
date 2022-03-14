@@ -24,7 +24,7 @@ using Redemption.Items;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Accessories.HM;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {

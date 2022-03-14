@@ -20,7 +20,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.Globals.NPC

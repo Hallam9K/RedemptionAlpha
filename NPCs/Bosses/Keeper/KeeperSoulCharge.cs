@@ -2,12 +2,13 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
-    public class KeeperSoulCharge : ModProjectile, ITrailProjectile
+    public class KeeperSoulCharge : ModProjectile, ITrailObject
     {
         public override void SetStaticDefaults()
         {
@@ -29,9 +30,9 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.Redemption().Unparryable = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
+            manager.CreateTrail(this, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
         }
 
         public override void AI()

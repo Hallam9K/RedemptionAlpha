@@ -8,7 +8,7 @@ using Redemption.Globals;
 using Terraria.ModLoader;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {

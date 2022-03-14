@@ -8,12 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
 using ReLogic.Content;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using static Redemption.PrimitiveTrails.Trail;
+using Redemption.PrimitiveTrails;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
-    public class CrystalGlaive_Proj : ModProjectile, ITrailProjectile
+    public class CrystalGlaive_Proj : ModProjectile, ITrailObject
     {
         public override void SetStaticDefaults()
         {
@@ -31,9 +32,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new RainbowTrail(saturation: 0.4f), new NoCap(), new DefaultTrailPosition(), 80f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            manager.CreateTrail(this, new RainbowTrail(saturation: 0.4f), new NoCap(), new DefaultTrailPosition(), 80f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         private Vector2 vector;

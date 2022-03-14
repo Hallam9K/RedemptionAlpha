@@ -7,7 +7,7 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {

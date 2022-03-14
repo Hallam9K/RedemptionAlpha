@@ -2,7 +2,7 @@ using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Hostile
 {

@@ -19,7 +19,7 @@ using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.UI;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger

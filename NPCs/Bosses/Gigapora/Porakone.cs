@@ -8,7 +8,7 @@ using Terraria.GameContent;
 using Terraria.DataStructures;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.Gigapora

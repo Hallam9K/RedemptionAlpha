@@ -6,12 +6,11 @@ using Microsoft.Xna.Framework;
 using System;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.Buffs.Cooldowns;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Terraria.DataStructures;
 using System.Collections.Generic;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.Base;
 using Terraria.GameContent;
 
 namespace Redemption.Items.Weapons.HM.Melee

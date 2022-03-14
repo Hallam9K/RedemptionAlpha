@@ -10,7 +10,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Globals;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Usable
 {

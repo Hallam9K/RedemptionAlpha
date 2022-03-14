@@ -6,12 +6,13 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Globals.Player;
 using Redemption.Projectiles.Ranged;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.Projectiles.Melee
 {
-    public class MiniSpaceship : ModProjectile, ITrailProjectile
+    public class MiniSpaceship : ModProjectile, ITrailObject
     {
         public override void SetStaticDefaults()
         {
@@ -33,9 +34,9 @@ namespace Redemption.Projectiles.Melee
             Projectile.Redemption().Unparryable = true;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
+            manager.CreateTrail(this, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
         }
 
         private Vector2 move;

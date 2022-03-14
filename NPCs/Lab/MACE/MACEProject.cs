@@ -20,7 +20,7 @@ using Redemption.Base;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Lab.MACE
 {

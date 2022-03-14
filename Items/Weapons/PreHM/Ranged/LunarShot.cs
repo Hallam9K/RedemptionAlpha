@@ -8,7 +8,7 @@ using Redemption.Projectiles.Ranged;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Terraria.Localization;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {

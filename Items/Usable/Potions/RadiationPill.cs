@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Redemption.Buffs.Debuffs;
 using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Usable.Potions
 {

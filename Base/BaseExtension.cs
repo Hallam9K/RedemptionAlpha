@@ -5,7 +5,7 @@ using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
 using Terraria;
 
-namespace Redemption.BaseExtension
+namespace Redemption.Base
 {
     public static class BaseExtension
     {

@@ -7,7 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Tiles.Furniture.Misc
 {

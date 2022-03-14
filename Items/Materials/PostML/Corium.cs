@@ -5,7 +5,7 @@ using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Materials.PostML
 {

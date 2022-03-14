@@ -7,7 +7,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.Audio;
 using Terraria.ID;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Minions
 {

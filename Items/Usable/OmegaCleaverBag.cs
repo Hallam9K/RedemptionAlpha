@@ -7,8 +7,8 @@ using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
+using Redemption.Base;
 
 namespace Redemption.Items.Usable
 {

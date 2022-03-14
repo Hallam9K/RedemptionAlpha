@@ -7,7 +7,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.ID;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {

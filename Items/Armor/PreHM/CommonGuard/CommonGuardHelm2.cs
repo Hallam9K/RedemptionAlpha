@@ -6,7 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Armor.PreHM.CommonGuard
 {

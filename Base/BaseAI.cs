@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Utilities;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.Globals;
 
 namespace Redemption.Base

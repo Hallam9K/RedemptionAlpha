@@ -18,7 +18,6 @@ using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.Tiles.Tiles;
 using Redemption.Biomes;
-using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
 

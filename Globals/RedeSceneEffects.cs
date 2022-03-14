@@ -1,5 +1,5 @@
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Globals
 {

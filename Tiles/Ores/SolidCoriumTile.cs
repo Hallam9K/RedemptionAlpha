@@ -6,7 +6,7 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Accessories.HM;
 using Redemption.Globals.Player;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Tiles.Ores
 {

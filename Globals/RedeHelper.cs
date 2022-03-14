@@ -14,7 +14,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Redemption.BaseExtension;
 
 namespace Redemption.Globals
 {

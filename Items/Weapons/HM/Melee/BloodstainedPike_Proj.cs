@@ -10,7 +10,6 @@ using Redemption.Base;
 using System;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
-using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {

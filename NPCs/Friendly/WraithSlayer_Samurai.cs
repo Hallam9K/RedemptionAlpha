@@ -12,8 +12,9 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -340,7 +341,7 @@ namespace Redemption.NPCs.Friendly
             });
         }
     }
-    public class WraithSlayer_Slash : ModProjectile, ITrailProjectile
+    public class WraithSlayer_Slash : ModProjectile, ITrailObject
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -360,7 +361,7 @@ namespace Redemption.NPCs.Friendly
             Projectile.alpha = 0;
             Projectile.extraUpdates = 3;
         }
-        public void DoTrailCreation(TrailManager tM) => tM.CreateTrail(Projectile, new StandardColorTrail(new Color(159, 127, 170, 200)), new RoundCap(), new DefaultTrailPosition(), 100f, 800f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+        public void DrawTrail(TrailManager manager) => manager.CreateTrail(this, new StandardColorTrail(new Color(159, 127, 170, 200)), new RoundCap(), new DefaultTrailPosition(), 100f, 800f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         public override void AI()
         {
             Projectile.alpha += 20;

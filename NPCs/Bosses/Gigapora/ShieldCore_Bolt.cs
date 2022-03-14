@@ -2,12 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    public class ShieldCore_Bolt : ModProjectile, ITrailProjectile
+    public class ShieldCore_Bolt : ModProjectile, ITrailObject
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
 
@@ -27,9 +28,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.timeLeft = 240;
             Projectile.Redemption().Unparryable = true;
         }
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 20f, 200f);
+            manager.CreateTrail(this, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 20f, 200f);
         }
         public override void AI()
         {

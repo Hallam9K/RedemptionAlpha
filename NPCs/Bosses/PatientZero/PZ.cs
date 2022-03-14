@@ -21,7 +21,7 @@ using ReLogic.Content;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

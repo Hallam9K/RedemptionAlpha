@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.PrimitiveTrails;
 using Redemption.Particles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using static Redemption.PrimitiveTrails.Trail;
 using static Redemption.Globals.RedeNet;
 
 namespace Redemption
@@ -38,7 +39,7 @@ namespace Redemption
         private static void Main_DrawProjectiles(On.Terraria.Main.orig_DrawProjectiles orig, Main self)
         {
             if (!Main.dedServ)
-                RedeSystem.TrailManager.DrawTrails(Main.spriteBatch);
+                Redemption.Trails.DrawTrails(Main.spriteBatch);
 
             orig(self);
         }
@@ -81,10 +82,10 @@ namespace Redemption
                 projOwners.Add(index, (attacker, spawnSource));
             }
 
-            if (projectile.ModProjectile is ITrailProjectile)
+            if (projectile.ModProjectile is ITrailObject)
             {
                 if (Main.netMode == NetmodeID.SinglePlayer)
-                    (projectile.ModProjectile as ITrailProjectile).DoTrailCreation(RedeSystem.TrailManager);
+                    (projectile.ModProjectile as ITrailObject).DrawTrail(Redemption.Trails);
 
                 else
                     Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, index).Send();

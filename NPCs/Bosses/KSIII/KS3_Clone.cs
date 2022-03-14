@@ -20,7 +20,7 @@ using Redemption.Items;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {

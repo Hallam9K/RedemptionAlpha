@@ -1,6 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Buffs.NPCBuffs
 {

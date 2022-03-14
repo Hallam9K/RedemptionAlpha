@@ -5,7 +5,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {

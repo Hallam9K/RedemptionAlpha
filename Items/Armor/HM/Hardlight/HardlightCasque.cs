@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.HM;
 using Redemption.DamageClasses;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {

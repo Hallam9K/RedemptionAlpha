@@ -20,7 +20,6 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 

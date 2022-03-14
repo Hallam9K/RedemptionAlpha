@@ -8,7 +8,7 @@ using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

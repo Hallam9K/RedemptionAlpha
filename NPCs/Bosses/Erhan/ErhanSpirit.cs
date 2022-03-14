@@ -20,7 +20,6 @@ using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.BaseExtension;
 using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.Erhan

@@ -3,7 +3,7 @@ using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Accessories.PreHM
 {

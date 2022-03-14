@@ -12,6 +12,7 @@ namespace Redemption.Effects.RenderTargets
         public BasicLayer BasicLayer;
         public EmberLayer EmberLayer;
         public ShieldLayer ShieldLayer;
+        public FlameLayer FlameLayer;
         public override void OnModLoad()
         {
             Instance = this;
@@ -19,6 +20,7 @@ namespace Redemption.Effects.RenderTargets
             BasicLayer = new BasicLayer();
             EmberLayer = new EmberLayer();
             ShieldLayer = new ShieldLayer();
+            FlameLayer = new FlameLayer();
             On.Terraria.Main.DrawNPCs += (orig, self, behindTiles) =>
             {
                 DrawLayers(Main.spriteBatch);
@@ -35,6 +37,7 @@ namespace Redemption.Effects.RenderTargets
             BasicLayer = null;
             EmberLayer = null;
             ShieldLayer = null;
+            FlameLayer = null;
             On.Terraria.Main.DrawNPCs -= (orig, self, behindTiles) =>
             {
                 DrawLayers(Main.spriteBatch);
@@ -60,6 +63,8 @@ namespace Redemption.Effects.RenderTargets
                     EmberLayer.EffectTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                     ShieldLayer.Target = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                     ShieldLayer.EffectTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
+                    FlameLayer.Target = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
+                    FlameLayer.EffectTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                 });
             }
         }
@@ -73,6 +78,8 @@ namespace Redemption.Effects.RenderTargets
                 EmberLayer.PreDrawLayer(spriteBatch, graphicsDevice);
             if (ShieldLayer?.Sprites.Count > 0)
                 ShieldLayer.PreDrawLayer(spriteBatch, graphicsDevice);
+            if (FlameLayer?.Sprites.Count > 0)
+                FlameLayer.PreDrawLayer(spriteBatch, graphicsDevice);
 
             graphicsDevice.SetRenderTargets(previousTargets);
         }
@@ -85,6 +92,8 @@ namespace Redemption.Effects.RenderTargets
                 EmberLayer.DrawLayer(spriteBatch);
             if (ShieldLayer?.Sprites.Count > 0)
                 ShieldLayer.DrawLayer(spriteBatch);
+            if (FlameLayer?.Sprites.Count > 0)
+                FlameLayer.DrawLayer(spriteBatch);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }

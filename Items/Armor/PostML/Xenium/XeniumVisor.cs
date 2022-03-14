@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Armor.PostML.Xenium
 {

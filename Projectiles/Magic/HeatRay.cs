@@ -9,7 +9,7 @@ using Terraria.ID;
 using Redemption.Globals;
 using System;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Magic
 {

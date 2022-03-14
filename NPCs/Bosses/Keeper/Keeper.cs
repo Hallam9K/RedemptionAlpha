@@ -25,7 +25,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

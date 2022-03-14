@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.Items.Armor.PreHM.PureIron;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Armor.Single
 {

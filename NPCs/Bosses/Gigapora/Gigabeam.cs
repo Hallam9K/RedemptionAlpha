@@ -7,7 +7,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Redemption.Globals;
 using System.Collections.Generic;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Gigapora

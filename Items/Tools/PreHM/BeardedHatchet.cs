@@ -4,7 +4,7 @@ using Terraria.ID;
 using Redemption.Globals;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.Creative;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Items.Tools.PreHM
 {

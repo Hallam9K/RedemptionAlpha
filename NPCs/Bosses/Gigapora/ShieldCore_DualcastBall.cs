@@ -7,14 +7,15 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
+using Redemption.PrimitiveTrails;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
+using static Redemption.PrimitiveTrails.Trail;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    public class ShieldCore_DualcastBall : ModProjectile, ITrailProjectile
+    public class ShieldCore_DualcastBall : ModProjectile, ITrailObject
     {
         public override void SetStaticDefaults()
         {
@@ -33,9 +34,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.timeLeft = 300;
             Projectile.Redemption().Unparryable = true;
         }
-        public void DoTrailCreation(TrailManager tManager)
+        public void DrawTrail(TrailManager manager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(223, 62, 55), new Color(150, 20, 54)), new RoundCap(), new DefaultTrailPosition(), 100f, 200f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            manager.CreateTrail(this, new GradientTrail(new Color(223, 62, 55), new Color(150, 20, 54)), new RoundCap(), new DefaultTrailPosition(), 100f, 200f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         public override void AI()

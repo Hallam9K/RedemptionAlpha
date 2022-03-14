@@ -1,4 +1,4 @@
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PreHM;

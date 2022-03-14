@@ -9,7 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Redemption.BaseExtension;
+using Redemption.Base;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.Lab;

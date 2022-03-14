@@ -9,7 +9,7 @@ using Terraria.DataStructures;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Tiles.Tiles
 {
