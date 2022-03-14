@@ -123,7 +123,7 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(500) && !Main.dedServ)
+            if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
             switch (AIState)
             {
@@ -225,6 +225,12 @@ namespace Redemption.NPCs.PreHM
                     PersonalityState.Greedy => NPC.frame.Width * 2,
                     _ => 0,
                 };
+                HeadX = Personality switch
+                {
+                    PersonalityState.Greedy => 1,
+                    _ => 0,
+                };
+                HeadOffset = SetHeadOffset(ref frameHeight);
 
                 if (NPC.collideY || NPC.velocity.Y == 0)
                 {
@@ -344,6 +350,21 @@ namespace Redemption.NPCs.PreHM
         }
         public void ChoosePersonality()
         {
+            WeightedRandom<int> head = new(Main.rand);
+            head.Add(0);
+            head.Add(1, 0.6);
+            head.Add(2, 0.6);
+            head.Add(3, 0.4);
+            head.Add(4, 0.4);
+            head.Add(5, 0.1);
+            head.Add(6, 0.1);
+            head.Add(7, 0.1);
+            head.Add(8, 0.06);
+            head.Add(9, 0.06);
+            head.Add(10, 0.06);
+            head.Add(11, 0.06);
+            HeadType = head;
+
             WeightedRandom<PersonalityState> choice = new(Main.rand);
             choice.Add(PersonalityState.Normal, 10);
             choice.Add(PersonalityState.Calm, 8);
@@ -360,10 +381,18 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads").Value;
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.IsABestiaryIconDummy ? drawColor : NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            int Height = head.Height / 12;
+            int Width = head.Width / 2;
+            int y = Height * HeadType;
+            int x = Width * HeadX;
+            Rectangle rect = new(x, y, Width, Height);
+            spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -4 : 2, 2 + HeadOffset), NPC.scale, effects, 0);
 
             if (HasEyes)
                 spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

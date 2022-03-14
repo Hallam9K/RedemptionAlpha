@@ -278,13 +278,11 @@ namespace Redemption.NPCs.Critters
             {
                 case (float)ActionState.Begin:
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
-
                     if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-
-                        if (NPC.frame.Y > 3 * frameHeight)
+                        if (NPC.frame.Y > 2 * frameHeight)
                             NPC.frame.Y = 0;
                     }
 
@@ -296,7 +294,6 @@ namespace Redemption.NPCs.Critters
 
                 case ActionState.Wander:
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
-
                     if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
