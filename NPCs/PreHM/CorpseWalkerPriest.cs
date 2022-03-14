@@ -101,7 +101,7 @@ namespace Redemption.NPCs.PreHM
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
 
-            if (Main.rand.NextBool(500) && !Main.dedServ)
+            if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
 
 

@@ -136,7 +136,7 @@ namespace Redemption.NPCs.PreHM
             dodgeCooldown--;
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
 
-            if (Main.rand.NextBool(500) && !Main.dedServ)
+            if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
 
             switch (AIState)

@@ -134,7 +134,7 @@ namespace Redemption.NPCs.PreHM
                 NPC.LookByVelocity();
             Rectangle KnifeHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 46 : NPC.Center.X + 10), (int)(NPC.Center.Y - 12), 36, 18);
 
-            if (Main.rand.NextBool(1500) && !Main.dedServ)
+            if (Main.rand.NextBool(3500) && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
 
             if (AIState is ActionState.Hiding or ActionState.Stalk)

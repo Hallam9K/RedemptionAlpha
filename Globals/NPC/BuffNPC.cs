@@ -174,7 +174,7 @@ namespace Redemption.Globals.NPC
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= dirtyWoundTime / 500;
 
-                if (npc.wet && !npc.lavaWet)
+                if (npc.wet && !npc.lavaWet && npc.HasBuff(ModContent.BuffType<DirtyWoundDebuff>()))
                     npc.DelBuff(ModContent.BuffType<DirtyWoundDebuff>());
             }
             if (moonflare)
