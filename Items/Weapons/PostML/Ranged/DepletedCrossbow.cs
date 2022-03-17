@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Ranged;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -15,9 +16,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             DisplayName.SetDefault("Depleted Crossbow");
             Tooltip.SetDefault("Fires depleted uranium rods that explode upon impact\n" +
                 "Consumes uranium as ammo\n" +
-                "No ammo cost if the user has at least 10 uranium\n" +
-                "'A sticky note on the weapon reads -\n" +
-                "\"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem.\"'");
+                "No ammo cost if the user has at least 10 uranium");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -54,6 +53,26 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             if (uranium >= 0 && player.inventory[uranium].stack >= 10)
                 return false;
             return true;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "\"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem.\"")
+                {
+                    overrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "There's a sticky note attached [Hold Shift to Read]")
+                {
+                    overrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
         public override Vector2? HoldoutOffset()
         {
