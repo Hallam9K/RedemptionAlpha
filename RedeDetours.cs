@@ -72,7 +72,10 @@ namespace Redemption
             else if (spawnSource is EntitySource_Parent)
             {
                 EntitySource_Parent sourceParent = spawnSource as EntitySource_Parent;
-                attacker = sourceParent.Entity;
+                if (sourceParent.Entity is Projectile)
+                    attacker = Main.player[(sourceParent.Entity as Projectile).owner];
+                else
+                    attacker = sourceParent.Entity;
             }
             if (attacker != null)
             {
