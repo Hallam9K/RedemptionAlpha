@@ -307,6 +307,7 @@ namespace Redemption.NPCs.PreHM
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
+        private int HeadOffsetX;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
@@ -324,6 +325,16 @@ namespace Redemption.NPCs.PreHM
                     PersonalityState.Greedy => 2,
                     _ => 0,
                 };
+                HeadX = Personality switch
+                {
+                    PersonalityState.Greedy => 1,
+                    _ => 0,
+                };
+                if (AIState is ActionState.Attack)
+                    HeadOffset = SetHeadOffsetY();
+                else
+                    HeadOffset = SetHeadOffset(ref frameHeight);
+                HeadOffsetX = SetHeadOffsetX();
                 if (AIState is ActionState.Attack)
                 {
                     if (++NPC.frameCounter >= 5)
@@ -339,6 +350,7 @@ namespace Redemption.NPCs.PreHM
                         {
                             AniFrameY = 0;
                             NPC.frame.Y = 0;
+                            HeadOffset = 0;
 
                             RedeNPC globalNPC = NPC.Redemption();
                             if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
@@ -385,6 +397,29 @@ namespace Redemption.NPCs.PreHM
                     NPC.frame.Y = 4 * frameHeight;
                 }
             }
+        }
+        public int SetHeadOffsetY()
+        {
+            return AniFrameY switch
+            {
+                1 => 2,
+                3 => -2,
+                4 => -2,
+                10 => 2,
+                _ => 0,
+            };
+        }
+        public int SetHeadOffsetX()
+        {
+            return AniFrameY switch
+            {
+                1 => 2,
+                6 => -6,
+                7 => -14,
+                8 => -14,
+                9 => -6,
+                _ => 0,
+            };
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool friendly = false)
         {
@@ -468,6 +503,21 @@ namespace Redemption.NPCs.PreHM
         }
         public void ChoosePersonality()
         {
+            WeightedRandom<int> head = new(Main.rand);
+            head.Add(0);
+            head.Add(1, 0.6);
+            head.Add(2, 0.6);
+            head.Add(3, 0.4);
+            head.Add(4, 0.4);
+            head.Add(5, 0.1);
+            head.Add(6, 0.1);
+            head.Add(7, 0.1);
+            head.Add(8, 0.06);
+            head.Add(9, 0.06);
+            head.Add(10, 0.06);
+            head.Add(11, 0.06);
+            HeadType = head;
+
             WeightedRandom<PersonalityState> choice = new(Main.rand);
             choice.Add(PersonalityState.Normal, 10);
             choice.Add(PersonalityState.Calm, 6);
@@ -484,7 +534,14 @@ namespace Redemption.NPCs.PreHM
             Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes").Value;
             Texture2D SlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes_Glow").Value;
+            Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads2").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            int HeightH = head.Height / 12;
+            int WidthH = head.Width / 2;
+            int yH = HeightH * HeadType;
+            int xH = WidthH * HeadX;
+            Rectangle rectH = new(xH, yH, WidthH, HeightH);
 
             if (AIState is ActionState.Attack)
             {
@@ -495,6 +552,8 @@ namespace Redemption.NPCs.PreHM
                 Rectangle rect = new(x, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
                 spriteBatch.Draw(SlashAni, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
+
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
                     spriteBatch.Draw(SlashGlow, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
@@ -511,6 +570,8 @@ namespace Redemption.NPCs.PreHM
                     }
                 }
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
                     spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
