@@ -331,11 +331,6 @@ namespace Redemption.NPCs.PreHM
                     _ => 0,
                 };
                 if (AIState is ActionState.Attack)
-                    HeadOffset = SetHeadOffsetY();
-                else
-                    HeadOffset = SetHeadOffset(ref frameHeight);
-                HeadOffsetX = SetHeadOffsetX();
-                if (AIState is ActionState.Attack)
                 {
                     if (++NPC.frameCounter >= 5)
                     {
@@ -396,6 +391,11 @@ namespace Redemption.NPCs.PreHM
                     NPC.rotation = NPC.velocity.X * 0.05f;
                     NPC.frame.Y = 4 * frameHeight;
                 }
+                if (AIState is ActionState.Attack)
+                    HeadOffset = SetHeadOffsetY();
+                else
+                    HeadOffset = SetHeadOffset(ref frameHeight);
+                HeadOffsetX = SetHeadOffsetX();
             }
         }
         public int SetHeadOffsetY()

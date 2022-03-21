@@ -230,7 +230,6 @@ namespace Redemption.NPCs.PreHM
                     PersonalityState.Greedy => 1,
                     _ => 0,
                 };
-                HeadOffset = SetHeadOffset(ref frameHeight);
 
                 if (NPC.collideY || NPC.velocity.Y == 0)
                 {
@@ -265,6 +264,7 @@ namespace Redemption.NPCs.PreHM
                     NPC.rotation = NPC.velocity.X * 0.05f;
                     NPC.frame.Y = 4 * frameHeight;
                 }
+                HeadOffset = SetHeadOffset(ref frameHeight);
             }
         }
 
@@ -387,7 +387,7 @@ namespace Redemption.NPCs.PreHM
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.IsABestiaryIconDummy ? drawColor : NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int Height = head.Height / 12;
+            int Height = head.Height / 14;
             int Width = head.Width / 2;
             int y = Height * HeadType;
             int x = Width * HeadX;

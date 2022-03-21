@@ -154,10 +154,16 @@ namespace Redemption.NPCs.PreHM
                     NPC.defense += 2;
                     break;
                 case 6:
-                    NPC.defense += 4;
+                    NPC.defense += 3;
                     break;
                 case 7:
                     NPC.value = (int)(NPC.value * 1.25f);
+                    break;
+                case 12:
+                    NPC.defense += 4;
+                    break;
+                case 13:
+                    NPC.defense += 4;
                     break;
             }
             switch (Personality)
