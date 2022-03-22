@@ -354,6 +354,11 @@ namespace Redemption.NPCs.PreHM
                                 AIState = ActionState.Alert;
                         }
                     }
+                    if (AIState is ActionState.Attack)
+                        HeadOffset = SetHeadOffsetY();
+                    else
+                        HeadOffset = SetHeadOffset(ref frameHeight);
+                    HeadOffsetX = SetHeadOffsetX();
                     return;
                 }
                 AniFrameY = 0;

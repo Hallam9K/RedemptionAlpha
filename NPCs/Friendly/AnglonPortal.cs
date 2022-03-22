@@ -54,10 +54,15 @@ namespace Redemption.NPCs.Friendly
             NPC.dontTakeDamage = true;
             NPC.rotation += .02f;
 
-            if (RedeWorld.DayNightCount >= 2 && !RedeHelper.WayfarerActive())
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (RedeQuest.wayfarerVars[0] == 1 && NPC.DistanceSQ(player.Center) < 200 * 200)
             {
-                int wayfarer = WorldGen.crimson ? ModContent.NPCType<DaerelUnconscious>() : ModContent.NPCType<ZephosUnconscious>();
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 110, (int)NPC.Center.Y, wayfarer);
+                if (player.active && !player.dead && !RedeHelper.BossActive() && !NPC.AnyNPCs(ModContent.NPCType<Daerel_Intro>()) && !NPC.AnyNPCs(ModContent.NPCType<Zephos_Intro>()))
+                {
+                    int wayfarer = WorldGen.crimson ? ModContent.NPCType<Daerel_Intro>() : ModContent.NPCType<Zephos_Intro>();
+                    SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, NPC.position);
+                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, wayfarer, ai3: NPC.whoAmI);
+                }
             }
 
             if (Vector2.Distance(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), NPC.Center) <= Main.screenWidth / 2 + 100)

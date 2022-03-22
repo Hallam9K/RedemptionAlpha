@@ -139,7 +139,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return true;
+            return !WorldGen.crimson && RedeQuest.wayfarerVars[0] >= 2 && !RedeHelper.ZephosActive();
         }
 
         public override string TownNPCName()

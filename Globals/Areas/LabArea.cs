@@ -69,17 +69,13 @@ namespace Redemption.Globals
         public override void OnWorldLoad()
         {
             for (int k = 0; k < labAccess.Length; k++)
-            {
                 labAccess[k] = false;
-            }
         }
 
         public override void OnWorldUnload()
         {
             for (int k = 0; k < labAccess.Length; k++)
-            {
                 labAccess[k] = false;
-            }
         }
 
         public override void SaveWorldData(TagCompound tag)
