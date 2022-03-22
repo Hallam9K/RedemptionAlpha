@@ -32,7 +32,6 @@ namespace Redemption.Globals
         public static int tbotDownedTimer;
         public static int daerelDownedTimer;
         public static int zephosDownedTimer;
-        public static bool spawnWayfarer;
         public static float RotTime;
         public static int slayerRep;
         public static bool labSafe;
@@ -66,19 +65,6 @@ namespace Redemption.Globals
         {
             if (Main.time == 1)
                 DayNightCount++;
-
-            #region Wayfarer Event
-            if (DayNightCount >= 2 && Main.time == 1 && !RedeHelper.WayfarerActive())
-            {
-                spawnWayfarer = true;
-
-                string status = "Someone travelled through the surface portal...";
-                if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGreen);
-                else if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue(status), Color.LightGreen);
-            }
-            #endregion
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.fastForwardTime)
@@ -347,7 +333,6 @@ namespace Redemption.Globals
             tbotDownedTimer = 0;
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
-            spawnWayfarer = false;
             slayerRep = 0;
             labSafe = false;
         }
@@ -362,7 +347,6 @@ namespace Redemption.Globals
             tbotDownedTimer = 0;
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
-            spawnWayfarer = false;
             slayerRep = 0;
             labSafe = false;
         }

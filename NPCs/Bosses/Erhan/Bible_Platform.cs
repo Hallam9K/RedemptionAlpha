@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
@@ -13,6 +14,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Platform");
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public CollisionSurface[] colliders = null;
         public override void SetDefaults()
@@ -108,6 +111,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Platform");
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public CollisionSurface[] colliders = null;
         public override void SetDefaults()
@@ -146,7 +151,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 NPC.velocity.Y = 3;
                 if (NPC.ai[0]++ >= 160)
-                NPC.alpha++;
+                    NPC.alpha++;
                 if (NPC.alpha >= 255)
                     NPC.active = false;
             }
