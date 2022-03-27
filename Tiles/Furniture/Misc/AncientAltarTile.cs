@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Misc
             name.SetDefault("Ancient Altar");
             AddMapEntry(new Color(120, 190, 40), name);
         }
-        public override bool HasSmartInteract() => true;
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override void MouseOver(int i, int j)
         {

@@ -45,7 +45,7 @@ namespace Redemption.Tiles.Furniture.AncientWood
 			DustType = DustID.t_BorealWood;
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override bool RightClick(int i, int j)
 		{

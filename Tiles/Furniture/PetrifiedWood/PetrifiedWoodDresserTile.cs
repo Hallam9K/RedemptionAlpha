@@ -45,7 +45,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			DustType = DustID.Ash;
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override bool RightClick(int i, int j)
 		{

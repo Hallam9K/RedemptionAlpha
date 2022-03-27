@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Containers
             TileObjectData.addTile(Type);
         }
 
-        public override bool HasSmartInteract() => true;
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override bool IsLockedChest(int i, int j) => false;
 
