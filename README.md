@@ -8,7 +8,6 @@ TODO
 - Code Steampunk Minigun, just a minigun that replaces normal bullets with high velocity ones
 - Code Hyper-Tech Revolver, twin revolvers, player can throw one in the air with right-click and catching it will increase shot speed or something
 - Reduced player knockback effect from the Egg Shelld accessory (player knockback changing is wack)
-- Rework Erhan's expert mode changes, which will involve him reading from the Holy Bible now, and improving his empowered attacks
 
 MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - (Potentially fixed) Erhan text repeats and the fight doesnt begin
