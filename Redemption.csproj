@@ -14,5 +14,8 @@
     <Reference Include="CollisionLib">
       <HintPath>..\..\Mod Reader\CollisionLib\CollisionLib.dll</HintPath>
     </Reference>
+    <Reference Include="SubworldLibrary">
+      <HintPath>..\..\Mod Reader\SubworldLibrary\SubworldLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
