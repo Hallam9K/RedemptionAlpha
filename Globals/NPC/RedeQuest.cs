@@ -21,7 +21,7 @@ namespace Redemption.Globals
 {
     public class RedeQuest : ModSystem
     {
-        public static byte[] wayfarerVars = new byte[2];
+        public static int[] wayfarerVars = new int[2];
         public override void PostUpdateWorld()
         {
             #region Wayfarer Event
@@ -56,7 +56,7 @@ namespace Redemption.Globals
         public override void LoadWorldData(TagCompound tag)
         {
             for (int k = 0; k < wayfarerVars.Length; k++)
-                wayfarerVars[k] = tag.GetByte("WV" + k);
+                wayfarerVars[k] = tag.GetInt("WV" + k);
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -68,7 +68,7 @@ namespace Redemption.Globals
         public override void NetReceive(BinaryReader reader)
         {
             for (int k = 0; k < wayfarerVars.Length; k++)
-                wayfarerVars[k] = reader.ReadByte();
+                wayfarerVars[k] = reader.ReadInt32();
         }
     }
 }

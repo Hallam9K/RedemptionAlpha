@@ -150,7 +150,7 @@ namespace Redemption.NPCs.Friendly
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            if (RedeQuest.wayfarerVars[0] < 3)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
                 chat.Add("Hey there, sorry for the intrusion but I've lost my friend beyond that portal! Mind if I stay here to get some supplies? I'm sure I'll find him eventually.");
             }
@@ -173,15 +173,15 @@ namespace Redemption.NPCs.Friendly
         private static int ChatNumber = 0;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (RedeQuest.wayfarerVars[0] < 5)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 3:
+                    case 2:
                         button = "Feel free to stay here";
                         button2 = "Who are you?";
                         break;
-                    case 4:
+                    case 3:
                         button = "Feel free to stay here";
                         button2 = "";
                         break;
@@ -214,27 +214,27 @@ namespace Redemption.NPCs.Friendly
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
-            if (RedeQuest.wayfarerVars[0] < 5)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 3:
+                    case 2:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Pleasure to meet ya.";
-                            RedeQuest.wayfarerVars[0] = 5;
+                            RedeQuest.wayfarerVars[0] = 4;
                         }
                         else
                         {
                             Main.npcChatText = "Where are my manners! M'name is Zephos, I hold no grand title to my name yet, but once I figure out the blade I'm certain your humble abode shall have a fine swordsman one day! As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't annoy ya.";
-                            RedeQuest.wayfarerVars[0] = 4;
+                            RedeQuest.wayfarerVars[0] = 3;
                         }
                         break;
-                    case 4:
+                    case 3:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? Pleasure to meet ya.";
-                            RedeQuest.wayfarerVars[0] = 5;
+                            RedeQuest.wayfarerVars[0] = 4;
                         }
                         break;
                 }

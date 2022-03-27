@@ -149,7 +149,7 @@ namespace Redemption.NPCs.Friendly
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            if (RedeQuest.wayfarerVars[0] < 3)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
                 chat.Add("Hello again, sorry for the intrusion but I've lost my friend through that portal. Mind if I stay here to get some supplies? I'm sure I'll find him eventually.");
             }
@@ -180,15 +180,15 @@ namespace Redemption.NPCs.Friendly
         private static int ChatNumber = 0;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (RedeQuest.wayfarerVars[0] < 5)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 3:
+                    case 2:
                         button = "Feel free to stay here";
                         button2 = "Who are you?";
                         break;
-                    case 4:
+                    case 3:
                         button = "Feel free to stay here";
                         button2 = "";
                         break;
@@ -221,27 +221,27 @@ namespace Redemption.NPCs.Friendly
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
-            if (RedeQuest.wayfarerVars[0] < 5)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 3:
+                    case 2:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. I'm Daerel, by the way. Nice to meet you.";
-                            RedeQuest.wayfarerVars[0] = 5;
+                            RedeQuest.wayfarerVars[0] = 4;
                         }
                         else
                         {
                             Main.npcChatText = "Oh yes, sorry, I'm Daerel. I'm decent with a bow and that's about it right now. Soon I hope to be more skilled in my craft, once I do, I'm certain your humble little island will have a fine archer one day. As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't intrude on anything.";
-                            RedeQuest.wayfarerVars[0] = 4;
+                            RedeQuest.wayfarerVars[0] = 3;
                         }
                         break;
-                    case 4:
+                    case 3:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. Nice to meet you.";
-                            RedeQuest.wayfarerVars[0] = 5;
+                            RedeQuest.wayfarerVars[0] = 4;
                         }
                         break;
                 }

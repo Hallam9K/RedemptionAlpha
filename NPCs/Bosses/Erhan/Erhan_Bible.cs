@@ -192,7 +192,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 playerOrigin = new Vector2(player.Center.X, (tilePosY * 16) + 38);
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
                                 RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                Projectile.position = playerOrigin + new Vector2(-600, 100);
+                                Projectile.position = playerOrigin + new Vector2(-600, 120);
                                 Projectile.netUpdate = true;
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
                                 RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
