@@ -14,6 +14,7 @@ namespace Redemption.Globals
         public int WastelandDesertTileCount;
         public int WastelandCorruptTileCount;
         public int WastelandCrimsonTileCount;
+        public int SoullessTileCount;
 
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
@@ -29,6 +30,7 @@ namespace Redemption.Globals
             WastelandDesertTileCount = tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()];
             WastelandCorruptTileCount = tileCounts[ModContent.TileType<IrradiatedCorruptGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedEbonstoneTile>()];
             WastelandCrimsonTileCount = tileCounts[ModContent.TileType<IrradiatedCrimsonGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()];
+            SoullessTileCount = tileCounts[ModContent.TileType<ShadestoneTile>()] + tileCounts[ModContent.TileType<ShadestoneMossyTile>()];
         }
     }
 }

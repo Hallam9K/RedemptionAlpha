@@ -82,6 +82,8 @@ namespace Redemption
                     PremultiplyTexture(ref bubbleTex);
                     Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref portalTex);
+                    Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref soullessPortal);
                     Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
                     Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", AssetRequestMode.ImmediateLoad).Value;
