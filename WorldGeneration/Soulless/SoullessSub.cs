@@ -60,7 +60,6 @@ namespace Redemption.WorldGeneration.Soulless
         /*public override void DrawMenu(GameTime gameTime)
         {
             Texture2D soullessBackground = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessSubworldTex").Value;
-            Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Main.UIScaleMatrix);
             Main.spriteBatch.Draw
             (

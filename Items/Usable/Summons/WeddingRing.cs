@@ -8,6 +8,7 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Globals;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -64,7 +65,14 @@ namespace Redemption.Items.Usable.Summons
 			}
 			return true;
 		}
-
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<GraveSteelAlloy>(), 6)
+				.AddIngredient(ItemID.Ruby)
+				.AddTile(TileID.Anvils)
+				.Register();
+		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			if (RedeBossDowned.keeperSaved)
