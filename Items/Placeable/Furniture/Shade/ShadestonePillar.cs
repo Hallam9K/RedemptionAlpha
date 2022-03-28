@@ -7,7 +7,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 {
     public class ShadestonePillar1 : ModItem
     {
-        public override string Texture => "Redemption/Tiles/Furniture/Shade/ShadestonePillar";
+        public override string Texture => "Redemption/Items/Placeable/Furniture/Shade/ShadestonePillar";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadestone Pillar");
@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     }
     public class ShadestonePillar2 : ModItem
     {
-        public override string Texture => "Redemption/Tiles/Furniture/Shade/ShadestonePillar";
+        public override string Texture => "Redemption/Items/Placeable/Furniture/Shade/ShadestonePillar";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadestone Pillar");

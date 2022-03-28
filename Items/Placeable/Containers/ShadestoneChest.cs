@@ -18,6 +18,7 @@ namespace Redemption.Items.Placeable.Containers
 			Item.height = 28;
 			Item.maxStack = 99;
 			Item.value = 500;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes()
 		{
