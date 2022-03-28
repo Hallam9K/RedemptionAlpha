@@ -30,7 +30,7 @@ namespace Redemption.Globals
             WastelandDesertTileCount = tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()];
             WastelandCorruptTileCount = tileCounts[ModContent.TileType<IrradiatedCorruptGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedEbonstoneTile>()];
             WastelandCrimsonTileCount = tileCounts[ModContent.TileType<IrradiatedCrimsonGrassTile>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()];
-            SoullessTileCount = tileCounts[ModContent.TileType<ShadestoneTile>()] + tileCounts[ModContent.TileType<ShadestoneMossyTile>()];
+            SoullessTileCount = tileCounts[ModContent.TileType<ShadestoneTile>()] + tileCounts[ModContent.TileType<ShadestoneBrickTile>()] + tileCounts[ModContent.TileType<ShadestoneMossyTile>()] + tileCounts[ModContent.TileType<ShadestoneBrickMossyTile>()];
         }
     }
 }

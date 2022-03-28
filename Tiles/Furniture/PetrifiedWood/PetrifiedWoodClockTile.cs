@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.Clock[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
 			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.GrandfatherClocks };
