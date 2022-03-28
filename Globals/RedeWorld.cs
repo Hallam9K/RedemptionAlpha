@@ -1,8 +1,11 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +24,31 @@ namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
+        #region Soulless Subworld
+        public override void PreUpdateWorld()
+        {
+            if (SubworldSystem.IsActive<SoullessSub>())
+            {
+                Wiring.UpdateMech();
+                Liquid.skipCount++;
+                if (Liquid.skipCount > 1)
+                {
+                    Liquid.UpdateLiquid();
+                    Liquid.skipCount = 0;
+                }
+                for (int num = 0; num < 20; num++)
+                {
+                    int i = Main.rand.Next(10, 1800 - 10);
+                    int j = Main.rand.Next(10, 1800 - 10);
+                    ModTile tile = TileLoader.GetTile(Main.tile[i, j].TileType);
+
+                    if (tile != null)
+                        tile.RandomUpdate(i, j);
+                }
+            }
+        }
+        #endregion
+
         public static bool blobbleSwarm;
         public static int blobbleSwarmTimer;
         public static int blobbleSwarmCooldown;
@@ -44,12 +72,6 @@ namespace Redemption.Globals
         public static bool nukeCountdownActive = false;
         public static Vector2 nukeGroundZero = Vector2.Zero;
         #endregion
-
-        public override void PreUpdateWorld()
-        {
-            RotTime += (float)Math.PI / 60;
-            if (RotTime >= Math.PI * 2) RotTime = 0;
-        }
 
         public override void PostUpdateNPCs()
         {
@@ -199,6 +221,14 @@ namespace Redemption.Globals
                     Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position);
                 }
                 Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity((Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer);
+            }
+            if (Main.player[Main.myPlayer].InModBiome(ModContent.GetInstance<SoullessBiome>()))
+            {
+                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
+                {
+                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position, Array.Empty<object>());
+                }
+                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.3f);
             }
 
             if (blobbleSwarm)

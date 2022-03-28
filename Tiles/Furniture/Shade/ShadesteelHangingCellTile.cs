@@ -1,0 +1,136 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.Enums;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+using Terraria.DataStructures;
+using Redemption.Dusts;
+using Redemption.Dusts.Tiles;
+using Redemption.Globals;
+
+namespace Redemption.Tiles.Furniture.Shade
+{
+    public class ShadesteelHangingCellTile : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileLighted[Type] = false;
+            Main.tileNoAttach[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileSolid[Type] = false;
+            TileObjectData.newTile.Width = 2;
+            TileObjectData.newTile.Height = 4;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
+            TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.RandomStyleRange = 3;
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.addTile(Type);
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Hanging Cell");
+            AddMapEntry(new Color(83, 87, 123), name);
+            DustType = ModContent.DustType<ShadesteelDust>();
+            MinPick = 310;
+            MineResist = 11f;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+    }
+    public class ShadesteelHangingCell2Tile : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileLighted[Type] = false;
+            Main.tileNoAttach[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileSolid[Type] = false;
+            TileObjectData.newTile.Width = 2;
+            TileObjectData.newTile.Height = 4;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
+            TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.addTile(Type);
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Hanging Cell");
+            AddMapEntry(new Color(83, 87, 123), name);
+            DustType = ModContent.DustType<ShadesteelDust>();
+            AnimationFrameHeight = 72;
+            MinPick = 310;
+            MineResist = 11f;
+        }
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            if (frame == 0)
+            {
+                if (frameCounter > Main.rand.Next(120, 300))
+                {
+                    if (Main.rand.Next(3) != 0)
+                    {
+                        frame = 1;
+                    }
+                    frameCounter = 0;
+                }
+            }
+            else if (frame >= 1 && frame <= 5)
+            {
+                frameCounter++;
+                if (frameCounter >= 10)
+                {
+                    frameCounter = 0;
+                    frame++;
+                }
+            }
+            else if (frame >= 6)
+            {
+                if (frameCounter > Main.rand.Next(100, 200))
+                {
+                    if (Main.rand.Next(3) != 0)
+                    {
+                        frame = 7;
+                    }
+                    frameCounter = 0;
+                }
+            }
+            else if (frame >= 7 && frame <= 8)
+            {
+                frameCounter++;
+                if (frameCounter >= 10)
+                {
+                    frameCounter = 0;
+                    frame++;
+                    if (frame >= 9)
+                    {
+                        frame = 0;
+                    }
+                }
+            }
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            //int index = NPC.NewNPC(new EntitySource_TileBreak(i, j), (int)((i + 1.5f) * 16), (int)((j + 3.5f) * 16), ModContent.NPCType<Echo>()); // TODO: Echo
+            //if (index < Main.maxNPCs && Main.netMode == NetmodeID.MultiplayerClient)
+            //{
+            //    NetMessage.SendData(MessageID.SyncNPC, number: index);
+            //}
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+    }
+    public class ShadesteelHangingCell2 : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Hanging Shadesteel Cell (With Echo)");
+        }
+        public override void SetDefaults()
+        {
+            Item.createTile = ModContent.TileType<ShadesteelHangingCell2Tile>();
+        }
+    }
+}
