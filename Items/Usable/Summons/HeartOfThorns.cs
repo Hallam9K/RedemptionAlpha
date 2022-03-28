@@ -58,7 +58,6 @@ namespace Redemption.Items.Usable.Summons
 			}
 			return true;
 		}
-
 		public override void AddRecipes()
 		{
 			CreateRecipe()
