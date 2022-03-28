@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Tiles.Furniture.Lab;
+using Redemption.Tiles.Bars;
 
 namespace Redemption.Items.Materials.PostML
 {
@@ -15,17 +16,12 @@ namespace Redemption.Items.Materials.PostML
         }
         public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<XeniumAlloyTile>(), 0);
             Item.width = 28;
             Item.height = 24;
             Item.maxStack = 99;
             Item.value = Item.sellPrice(0, 1, 50, 0);
             Item.rare = ItemRarityID.Purple;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
         }
 
         public override void PostUpdate()

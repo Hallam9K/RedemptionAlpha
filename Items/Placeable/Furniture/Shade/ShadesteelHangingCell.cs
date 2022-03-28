@@ -7,7 +7,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Placeable.Furniture.Misc
+namespace Redemption.Items.Placeable.Furniture.Shade
 {
     public class ShadesteelHangingCell : ModItem
 	{

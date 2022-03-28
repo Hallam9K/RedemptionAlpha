@@ -28,6 +28,18 @@ namespace Redemption.Tiles.Furniture.Shade
             ItemDrop = ModContent.ItemType<ShadestoneCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = ModContent.DustType<ShadestoneDust>();
+            AnimationFrameHeight = 20;
+        }
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            frameCounter++;
+            if (frameCounter > 4)
+            {
+                frameCounter = 0;
+                frame++;
+                if (frame > 2)
+                    frame = 0;
+            }
         }
         public override void HitWire(int i, int j)
         {

@@ -38,6 +38,18 @@ namespace Redemption.Tiles.Furniture.Misc
             AddMapEntry(new Color(204, 223, 224), name);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            AnimationFrameHeight = 54;
+        }
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            frameCounter++;
+            if (frameCounter > 4)
+            {
+                frameCounter = 0;
+                frame++;
+                if (frame > 2)
+                    frame = 0;
+            }
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
@@ -70,7 +82,7 @@ namespace Redemption.Tiles.Furniture.Misc
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Tiles/Furniture/Misc/SoulCandlesTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/SoulCandlesTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
     public class SoulCandles_Proj : ModProjectile
