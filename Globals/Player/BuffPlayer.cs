@@ -21,8 +21,6 @@ using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
-using Redemption.Items.Armor.PostML.Xenium;
-using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Globals.Player

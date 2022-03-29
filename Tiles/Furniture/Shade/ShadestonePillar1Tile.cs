@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Dusts;
 using Redemption.Dusts.Tiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 

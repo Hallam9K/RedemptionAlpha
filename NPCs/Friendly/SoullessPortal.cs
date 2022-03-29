@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
-using Redemption.Dusts;
 using Terraria.Utilities;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -105,13 +104,16 @@ namespace Redemption.NPCs.Friendly
             if (firstButton)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath52, NPC.position);
-                if (!SubworldSystem.AnyActive<Redemption>())
+                if (SubworldSystem.IsActive<SoullessSub>())
+                {
+                    SubworldSystem.Exit();
+                    return;
+                }
+                else if (!SubworldSystem.AnyActive<Redemption>())
                 {
                     Main.rand = new UnifiedRandom();
                     SubworldSystem.Enter<SoullessSub>();
                 }
-                if (SubworldSystem.IsActive<SoullessSub>())
-                    SubworldSystem.Exit();
             }
         }
         public override string GetChat()

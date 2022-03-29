@@ -5,8 +5,6 @@ using Redemption.Globals;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
-using Redemption.Tiles.Tiles;
-using System.Linq;
 using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Critters

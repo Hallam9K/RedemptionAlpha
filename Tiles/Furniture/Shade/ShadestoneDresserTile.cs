@@ -7,7 +7,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Dusts;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria.Audio;
 using Redemption.Dusts.Tiles;

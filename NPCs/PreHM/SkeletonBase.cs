@@ -9,7 +9,6 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Terraria.Utilities;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.NPCs.PreHM
 {

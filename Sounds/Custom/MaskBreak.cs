@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework.Audio;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace Redemption.Sounds.Custom

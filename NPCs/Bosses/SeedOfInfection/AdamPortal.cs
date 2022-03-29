@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
-using Redemption.UI;
 using System;
 using Terraria;
 using Terraria.Audio;

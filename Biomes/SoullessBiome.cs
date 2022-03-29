@@ -1,14 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Items.Accessories.HM;
 using ReLogic.Content;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Biomes
 {
@@ -31,6 +26,7 @@ namespace Redemption.Biomes
         }
         public override void OnLeave(Player player)
         {
+            player.ManageSpecialBiomeVisuals("MoR:SoullessSky", false, player.Center);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
         }
         public override void SetStaticDefaults()

@@ -5,7 +5,6 @@ using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Dusts;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
@@ -82,9 +81,14 @@ namespace Redemption.Tiles.Furniture.Shade
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
+            int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
+            int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneLanternTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneLanternTile_Glow").Value;
+            Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero;
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
+
+            spriteBatch.Draw(texture, drawPosition, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

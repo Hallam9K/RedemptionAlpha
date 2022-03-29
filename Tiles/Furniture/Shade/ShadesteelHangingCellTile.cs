@@ -1,13 +1,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Dusts;
 using Redemption.Dusts.Tiles;
-using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -68,7 +65,7 @@ namespace Redemption.Tiles.Furniture.Shade
         {
             if (frame == 0)
             {
-                if (frameCounter > Main.rand.Next(120, 300))
+                if (frameCounter++ > Main.rand.Next(120, 300))
                 {
                     if (Main.rand.Next(3) != 0)
                     {
@@ -86,9 +83,9 @@ namespace Redemption.Tiles.Furniture.Shade
                     frame++;
                 }
             }
-            else if (frame >= 6)
+            else if (frame == 6)
             {
-                if (frameCounter > Main.rand.Next(100, 200))
+                if (frameCounter++ > Main.rand.Next(100, 200))
                 {
                     if (Main.rand.Next(3) != 0)
                     {
@@ -97,14 +94,14 @@ namespace Redemption.Tiles.Furniture.Shade
                     frameCounter = 0;
                 }
             }
-            else if (frame >= 7 && frame <= 8)
+            else if (frame >= 7)
             {
                 frameCounter++;
                 if (frameCounter >= 10)
                 {
                     frameCounter = 0;
                     frame++;
-                    if (frame >= 9)
+                    if (frame >= 8)
                     {
                         frame = 0;
                     }
@@ -130,6 +127,7 @@ namespace Redemption.Tiles.Furniture.Shade
         }
         public override void SetDefaults()
         {
+            base.SetDefaults();
             Item.createTile = ModContent.TileType<ShadesteelHangingCell2Tile>();
         }
     }

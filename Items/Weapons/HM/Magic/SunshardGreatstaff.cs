@@ -10,7 +10,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Dusts;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
