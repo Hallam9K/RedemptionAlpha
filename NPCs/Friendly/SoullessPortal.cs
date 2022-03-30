@@ -11,16 +11,18 @@ using Terraria.GameContent;
 
 namespace Redemption.NPCs.Friendly
 {
-    [AutoloadBossHead]
     public class SoullessPortal : ModNPC
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadesoul Gateway");
+            NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.SavesAndLoads[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()
         {
-            NPC.townNPC = true;
             NPC.friendly = true;
             NPC.width = 188;
             NPC.height = 188;
@@ -28,7 +30,7 @@ namespace Redemption.NPCs.Friendly
             NPC.immortal = true;
             NPC.noGravity = true;
             NPC.aiStyle = -1;
-            NPC.lifeMax = 999;
+            NPC.lifeMax = 250;
             NPC.damage = 0;
             NPC.defense = 0;
             NPC.knockBackResist = 0;
@@ -36,7 +38,9 @@ namespace Redemption.NPCs.Friendly
             NPC.alpha = 255;
             NPC.npcSlots = 0;
         }
-        public override bool UsesPartyHat() { return false; }
+        public override bool UsesPartyHat() => false;
+        public override bool CheckActive() => false;
+        public override bool CanChat() => true;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -61,6 +65,8 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
                 case 2:
+                    NPC.scale = 1;
+                    NPC.alpha = 0;
                     NPC.ai[1]++;
                     if (NPC.ai[1] > 18000)
                     {

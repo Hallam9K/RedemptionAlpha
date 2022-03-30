@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,10 +30,24 @@ namespace Redemption.Items.Usable
             Item.maxStack = 1;
             Item.rare = ItemRarityID.Blue;
         }
-
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.Purple.ToVector3() * 0.6f * Main.essScale);
+        }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            Texture2D texture = TextureAssets.Item[Item.type].Value;
+            Rectangle frame;
+            if (Main.itemAnimations[Item.type] != null)
+                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+            else
+                frame = texture.Frame();
+
+            Vector2 origin = frame.Size() / 2f;
+
+            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

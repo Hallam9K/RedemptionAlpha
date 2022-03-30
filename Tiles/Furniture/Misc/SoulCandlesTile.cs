@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Furniture.Misc;
 using System;
 using System.Linq;
@@ -118,13 +119,13 @@ namespace Redemption.Tiles.Furniture.Misc
             for (int n = 0; n < Main.maxNPCs; n++)
             {
                 NPC target = Main.npc[n];
-                if (!target.boss && target.Distance(Projectile.Center) <= 100)
-                {
-                    //if (NPCLists.IsSoulless.Contains(target.type)) // TODO: Soul Candles kill enemy
-                    //{
-                    //    player.ApplyDamageToNPC(target, 9999, 0, 0, false);
-                    //}
-                }
+                if (!target.active || target.boss || target.DistanceSQ(Projectile.Center) > 100 * 100)
+                    continue;
+
+                if (!NPCLists.Soulless.Contains(target.type))
+                    continue;
+
+                player.ApplyDamageToNPC(target, 9999, 0, 0, false);
             }
             for (int p = 0; p < Main.maxPlayers; p++)
             {

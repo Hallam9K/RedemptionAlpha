@@ -19,7 +19,7 @@ namespace Redemption.WorldGeneration.Soulless
         public override int Width => 2200;
         public override int Height => 1800;
         public override bool NormalUpdates => false;
-        public override bool ShouldSave => true;
+        public override bool ShouldSave => false;
         public override bool NoPlayerSaving => false;
         public override List<GenPass> Tasks => new()
         {

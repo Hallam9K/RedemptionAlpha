@@ -22,6 +22,7 @@ using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
+using Terraria.ModLoader.IO;
 
 namespace Redemption.Globals.Player
 {
@@ -61,6 +62,12 @@ namespace Redemption.Globals.Player
         public bool trappedSoul;
         public bool brokenBlade;
         public bool shellCap;
+        public bool anglerPot;
+        public bool zapField;
+        public bool dreamsong;
+        public bool shadowBinder;
+        public int shadowBinderCharge;
+        public bool lacerated;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -77,6 +84,20 @@ namespace Redemption.Globals.Player
 
         public float[] ElementalResistance = new float[14];
         public float[] ElementalDamage = new float[14];
+
+        public override void Initialize()
+        {
+            shadowBinderCharge = 0;
+        }
+        public override void SaveData(TagCompound tag)
+        {
+            tag["sbCharge"] = shadowBinderCharge;
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            shadowBinderCharge = tag.GetInt("sbCharge");
+        }
 
         public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
         {
@@ -125,6 +146,11 @@ namespace Redemption.Globals.Player
             brokenBlade = false;
             TrueMeleeDamage = 1f;
             shellCap = false;
+            anglerPot = false;
+            zapField = false;
+            dreamsong = false;
+            shadowBinder = false;
+            lacerated = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -161,6 +187,7 @@ namespace Redemption.Globals.Player
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
+            lacerated = false;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -173,7 +200,7 @@ namespace Redemption.Globals.Player
                     Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
-                    Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);              
+                    Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
                 }
 
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
@@ -234,7 +261,7 @@ namespace Redemption.Globals.Player
                 Player.wingTimeMax /= 2;
                 if (Player.wingTime > Player.wingTimeMax)
                     Player.wingTime = Player.wingTimeMax;
-            }         
+            }
         }
 
         public override void PostUpdateBuffs()
@@ -456,6 +483,20 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(Projectile.InheritSource(proj), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
+            if (shadowBinder)
+            {
+                if (target.life <= 0 && target.lifeMax >= 5000)
+                {
+                    for (int i = 0; i < 10; ++i)
+                    {
+                        Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.DungeonSpirit, Scale: 2f);
+                        dust.velocity = -Player.DirectionTo(dust.position) * 20;
+                        dust.noGravity = true;
+                    }
+                    if (shadowBinderCharge < 100)
+                        shadowBinderCharge += 1;
+                }
+            }
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -470,6 +511,20 @@ namespace Redemption.Globals.Player
             if (brokenBlade && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
                 Projectile.NewProjectile(Player.GetProjectileSource_Item(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
+            }
+            if (shadowBinder)
+            {
+                if (target.life <= 0 && target.lifeMax >= 5000)
+                {
+                    for (int i = 0; i < 10; ++i)
+                    {
+                        Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.DungeonSpirit, Scale: 2f);
+                        dust.velocity = -Player.DirectionTo(dust.position) * 20;
+                        dust.noGravity = true;
+                    }
+                    if (shadowBinderCharge < 100)
+                        shadowBinderCharge += 1;
+                }
             }
         }
         public override void UpdateBadLifeRegen()
@@ -522,6 +577,13 @@ namespace Redemption.Globals.Player
 
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 60;
+            }
+            if (lacerated)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= (int)(Player.statLifeMax2 * 0.04f);
             }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

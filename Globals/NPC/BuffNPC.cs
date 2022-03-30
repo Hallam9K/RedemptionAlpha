@@ -43,6 +43,9 @@ namespace Redemption.Globals.NPC
         public bool stunned;
         public bool infected;
         public int infectedTime;
+        public bool dreamsong;
+        public bool smashed;
+        public bool lacerated;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -60,6 +63,9 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
+            dreamsong = false;
+            smashed = false;
+            lacerated = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -113,7 +119,8 @@ namespace Redemption.Globals.NPC
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>() });
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>() });
                 }
                 if (NPCLists.Dragonlike.Contains(i))
                 {
@@ -126,7 +133,8 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>() });
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>() });
                 }
                 if (NPCLists.Infected.Contains(i))
                 {
@@ -141,7 +149,8 @@ namespace Redemption.Globals.NPC
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>() });
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>() });
                 }
             }
         }
@@ -265,6 +274,24 @@ namespace Redemption.Globals.NPC
                 if (damage < 6)
                     damage = 6;
             }
+            if (dreamsong)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 5000;
+                if (damage < 1000)
+                    damage = 1000;
+            }
+            if (lacerated)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= (int)(npc.lifeMax * 0.02f);
+                if (damage < (int)(npc.lifeMax * 0.02f))
+                    damage = (int)(npc.lifeMax * 0.02f);
+            }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
@@ -292,6 +319,8 @@ namespace Redemption.Globals.NPC
             }
             if (rallied)
                 damage *= 0.85;
+            if (smashed)
+                damage *= 1.15;
             return true;
         }
         public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int damage, ref bool crit)
@@ -406,6 +435,20 @@ namespace Redemption.Globals.NPC
                 {
                     DustHelper.DrawElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), DustID.Electric, 0.5f, 10, default, 0.2f);
                 }
+            }
+            if (dreamsong)
+            {
+                if (Main.rand.Next(3) < 3)
+                {
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.AncientLight);
+                    dust.noGravity = true;
+                    dust.velocity = -npc.DirectionTo(dust.position) * 3;
+                }
+            }
+            if (lacerated)
+            {
+                if (Main.rand.NextBool(3) && npc.alpha < 200)
+                    Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
             }
         }
 

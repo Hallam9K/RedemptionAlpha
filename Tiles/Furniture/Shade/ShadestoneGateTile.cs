@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Items.Usable;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -50,7 +52,7 @@ namespace Redemption.Tiles.Furniture.Shade
         {
             num = 1;
         }
-        /*public override bool RightClick(int i, int j) // TODO: Warden key unlock
+        public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
             if (player.HasItem(ModContent.ItemType<WardensKey>()) && !_activated)
@@ -66,7 +68,7 @@ namespace Redemption.Tiles.Furniture.Shade
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<WardensKey>();
-        }*/
+        }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
         public override bool CanExplode(int i, int j) => false;
         public override void NearbyEffects(int i, int j, bool closer)
