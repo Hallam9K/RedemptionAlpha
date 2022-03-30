@@ -98,9 +98,9 @@ namespace Redemption.Items.Usable
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = Projectile.Center - Main.screenPosition;
-            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 0.8f, 1.2f);
+            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1f, 0.8f, 1f);
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.White, Color.White * 0.8f, Color.White);
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), color, Projectile.rotation, origin, scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), color * 0.5f, Projectile.rotation, origin, scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

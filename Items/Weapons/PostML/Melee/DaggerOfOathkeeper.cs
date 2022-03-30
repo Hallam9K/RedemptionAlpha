@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dagger of the Oathkeeper");
+            DisplayName.SetDefault("Dagger of the Oathkeeper"); // TODO: change attack to stabby stab
             Tooltip.SetDefault("Inflicts soulless");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

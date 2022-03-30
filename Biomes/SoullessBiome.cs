@@ -14,7 +14,7 @@ namespace Redemption.Biomes
 
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/SoullessUndergroundBackgroundStyle");
 
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SoullessCaverns2");
+        public override int Music => Main.LocalPlayer.RedemptionPlayerBuff().dreamsong ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SoullessCaverns") : MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SoullessCaverns2");
 
         public override string BestiaryIcon => "Textures/Bestiary/SoullessCaverns";
         public override string BackgroundPath => "Textures/MapBackgrounds/SoullessCavernsMap";
