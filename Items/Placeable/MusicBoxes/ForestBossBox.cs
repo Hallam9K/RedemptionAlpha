@@ -33,7 +33,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
-				.AddIngredient(ModContent.ItemType<AncientWood>(), 40)
+				.AddIngredient(ModContent.ItemType<ElderWood>(), 40)
 				.AddRecipeGroup(RedeRecipe.GathicStoneRecipeGroup, 20)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();

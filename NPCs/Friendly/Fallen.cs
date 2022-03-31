@@ -283,7 +283,7 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot].shopCustomPrice = new int?(1);
             shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             nextSlot++;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientWood>());
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElderWood>());
             shop.item[nextSlot].shopCustomPrice = new int?(2);
             shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             nextSlot++;
