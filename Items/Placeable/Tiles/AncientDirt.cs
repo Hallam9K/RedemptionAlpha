@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Can grow Ancient Trees");
+            Tooltip.SetDefault("Can grow Elder Trees");
             ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;

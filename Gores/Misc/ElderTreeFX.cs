@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Gores.Misc
 {
-	public class AncientTreeFX : ModGore
+	public class ElderTreeFX : ModGore
 	{
 		public override void OnSpawn(Gore gore)
 		{
