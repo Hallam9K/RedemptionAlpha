@@ -23,7 +23,7 @@ using Redemption.Tiles.Natural;
 using Terraria.ModLoader.IO;
 using System.IO;
 using Redemption.NPCs.Friendly;
-using Redemption.Tiles.Furniture.AncientWood;
+using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Walls;
 using Redemption.Tiles.Bars;
 using Redemption.Items.Accessories.PreHM;
@@ -438,7 +438,7 @@ namespace Redemption.WorldGeneration
 
                     Point originPoint = newbCaveVector.ToPoint();
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 25, originPoint.Y + 9, (ushort)ModContent.TileType<AncientWoodWorkbenchTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 25, originPoint.Y + 9, (ushort)ModContent.TileType<ElderWoodWorkbenchTile>());
                     GenUtils.ObjectPlace(originPoint.X + 26, originPoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>());
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 64, (ushort)ModContent.TileType<NewbMound>());
 
@@ -574,16 +574,16 @@ namespace Redemption.WorldGeneration
 
                     Point originPoint = gathicPortalVector.ToPoint();
                     GenUtils.ObjectPlace(originPoint.X + 45, originPoint.Y + 21, (ushort)ModContent.TileType<GathuramPortalTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 16, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodTableTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 18, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodChairTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 12, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 21, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 69, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 78, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 71, originPoint.Y + 22, (ushort)ModContent.TileType<AncientWoodClockTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 16, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodTableTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 18, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodChairTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 12, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 21, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 69, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 78, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 71, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodClockTile>());
 
-                    AncientWoodChest(originPoint.X + 73, originPoint.Y + 22, 2);
-                    AncientWoodChest(originPoint.X + 62, originPoint.Y + 36);
+                    ElderWoodChest(originPoint.X + 73, originPoint.Y + 22, 2);
+                    ElderWoodChest(originPoint.X + 62, originPoint.Y + 36);
 
                     for (int i = originPoint.X; i < originPoint.X + 88; i++)
                     {
@@ -613,7 +613,7 @@ namespace Redemption.WorldGeneration
                         [new Color(200, 0, 0)] = ModContent.TileType<GathicGladestoneBrickTile>(),
                         [new Color(0, 255, 0)] = ModContent.TileType<GathicStoneTile>(),
                         [new Color(0, 200, 0)] = ModContent.TileType<GathicGladestoneTile>(),
-                        [new Color(100, 80, 80)] = ModContent.TileType<AncientWoodTile>(),
+                        [new Color(100, 80, 80)] = ModContent.TileType<ElderWoodTile>(),
                         [new Color(100, 90, 70)] = ModContent.TileType<AncientDirtTile>(),
                         [new Color(0, 255, 255)] = TileID.AmethystGemspark,
                         [new Color(0, 0, 255)] = TileID.DiamondGemspark,
@@ -628,7 +628,7 @@ namespace Redemption.WorldGeneration
                         [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
                         [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
                         [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
-                        [new Color(0, 255, 0)] = ModContent.WallType<AncientWoodWallTile>(),
+                        [new Color(0, 255, 0)] = ModContent.WallType<ElderWoodWallTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
@@ -695,15 +695,15 @@ namespace Redemption.WorldGeneration
                         placed = true;
                     }
 
-                    GenUtils.ObjectPlace(origin.X + 17, origin.Y + 11, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
-                    GenUtils.ObjectPlace(origin.X + 26, origin.Y + 12, (ushort)ModContent.TileType<AncientWoodDoorClosed>());
-                    GenUtils.ObjectPlace(origin.X + 10, origin.Y + 3, (ushort)ModContent.TileType<AncientWoodBedTile>());
-                    GenUtils.ObjectPlace(origin.X + 6, origin.Y + 13, (ushort)ModContent.TileType<AncientWoodClockTile>());
-                    GenUtils.ObjectPlace(origin.X + 22, origin.Y + 12, (ushort)ModContent.TileType<AncientWoodTableTile>());
-                    GenUtils.ObjectPlace(origin.X + 20, origin.Y + 12, (ushort)ModContent.TileType<AncientWoodChairTile>(), 0, 1);
+                    GenUtils.ObjectPlace(origin.X + 17, origin.Y + 11, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(origin.X + 26, origin.Y + 12, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(origin.X + 10, origin.Y + 3, (ushort)ModContent.TileType<ElderWoodBedTile>());
+                    GenUtils.ObjectPlace(origin.X + 6, origin.Y + 13, (ushort)ModContent.TileType<ElderWoodClockTile>());
+                    GenUtils.ObjectPlace(origin.X + 22, origin.Y + 12, (ushort)ModContent.TileType<ElderWoodTableTile>());
+                    GenUtils.ObjectPlace(origin.X + 20, origin.Y + 12, (ushort)ModContent.TileType<ElderWoodChairTile>(), 0, 1);
                     GenUtils.ObjectPlace(origin.X + 14, origin.Y + 17, (ushort)ModContent.TileType<DoppelsSwordTile>());
 
-                    AncientWoodChest(origin.X + 4, origin.Y + 13, 1);
+                    ElderWoodChest(origin.X + 4, origin.Y + 13, 1);
 
                     for (int i = origin.X; i < origin.X + 88; i++)
                     {
@@ -718,12 +718,12 @@ namespace Redemption.WorldGeneration
                                     break;
                                 case TileID.DiamondGemspark:
                                     Main.tile[i, j].ClearTile();
-                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1, 0);
                                     WorldGen.SlopeTile(i, j, 2);
                                     break;
                                 case TileID.AmethystGemspark:
                                     Main.tile[i, j].ClearTile();
-                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1, 0);
                                     break;
                             }
                             if (WorldGen.genRand.NextBool(3))
@@ -742,7 +742,7 @@ namespace Redemption.WorldGeneration
                         [new Color(255, 0, 0)] = ModContent.TileType<GathicStoneBrickTile>(),
                         [new Color(200, 0, 0)] = ModContent.TileType<GathicGladestoneBrickTile>(),
                         [new Color(0, 0, 255)] = ModContent.TileType<AncientHallBrickTile>(),
-                        [new Color(100, 80, 80)] = ModContent.TileType<AncientWoodTile>(),
+                        [new Color(100, 80, 80)] = ModContent.TileType<ElderWoodTile>(),
                         [new Color(200, 200, 50)] = ModContent.TileType<AncientGoldCoinPileTile>(),
                         [new Color(200, 200, 200)] = TileID.Cobweb,
                         [new Color(0, 255, 0)] = TileID.AmberGemspark,
@@ -833,8 +833,8 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(HallPoint.X + 49, HallPoint.Y + 13, (ushort)ModContent.TileType<ArchclothBannerTile>());
                     GenUtils.ObjectPlace(HallPoint.X + 30, HallPoint.Y + 13, (ushort)ModContent.TileType<ArchclothBannerTile>());
 
-                    AncientWoodChest(HallPoint.X + 2, HallPoint.Y + 30);
-                    AncientWoodChest(HallPoint.X + 75, HallPoint.Y + 30);
+                    ElderWoodChest(HallPoint.X + 2, HallPoint.Y + 30);
+                    ElderWoodChest(HallPoint.X + 75, HallPoint.Y + 30);
 
                     for (int i = HallPoint.X; i < HallPoint.X + 88; i++)
                     {
@@ -844,17 +844,17 @@ namespace Redemption.WorldGeneration
                             {
                                 case TileID.AmberGemspark:
                                     Main.tile[i, j].ClearTile();
-                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1, 0);
                                     WorldGen.SlopeTile(i, j, 2);
                                     break;
                                 case TileID.AmethystGemspark:
                                     Main.tile[i, j].ClearTile();
-                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1, 0);
                                     WorldGen.SlopeTile(i, j, 1);
                                     break;
                                 case TileID.DiamondGemspark:
                                     Main.tile[i, j].ClearTile();
-                                    WorldGen.PlaceTile(i, j, ModContent.TileType<AncientWoodPlatformTile>(), true, false, -1, 0);
+                                    WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1, 0);
                                     break;
                             }
                             if (WorldGen.genRand.NextBool(3))
@@ -997,9 +997,9 @@ namespace Redemption.WorldGeneration
             }
 
         }
-        public static void AncientWoodChest(int x, int y, int ID = 0)
+        public static void ElderWoodChest(int x, int y, int ID = 0)
         {
-            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<AncientWoodChestTile>(), false);
+            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ElderWoodChestTile>(), false);
 
             int[] ChestLoot = new int[] {
                 ModContent.ItemType<PouchBelt>(), ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>() };
@@ -1030,7 +1030,7 @@ namespace Redemption.WorldGeneration
                 }
                 if (RedeHelper.GenChance(.6f))
                 {
-                    chest.item[slot].SetDefaults(ModContent.ItemType<AncientWood>());
+                    chest.item[slot].SetDefaults(ModContent.ItemType<ElderWood>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(5, 15);
                 }
                 if (RedeHelper.GenChance(.6f))
