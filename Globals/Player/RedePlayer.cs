@@ -71,11 +71,11 @@ namespace Redemption.Globals.Player
                 else
                 {
                     WeightedRandom<int> choice = new(Main.rand);
-                    choice.Add(ModContent.ItemType<AbyssBloskus>(), 2);
-                    choice.Add(ModContent.ItemType<SlumberEel>(), 2);
-                    choice.Add(ModContent.ItemType<ChakrogAngler>(), 4);
-                    choice.Add(ModContent.ItemType<AbyssStinger>(), 4);
-                    choice.Add(ModContent.ItemType<DarkStar>(), 4);
+                    choice.Add(ModContent.ItemType<AbyssBloskus>(), 1);
+                    choice.Add(ModContent.ItemType<SlumberEel>(), 1);
+                    choice.Add(ModContent.ItemType<ChakrogAngler>(), 3);
+                    choice.Add(ModContent.ItemType<AbyssStinger>(), 3);
+                    choice.Add(ModContent.ItemType<DarkStar>(), 1);
                     choice.Add(ModContent.ItemType<LurkingKetred>(), 10);
                     choice.Add(ModContent.ItemType<JagboneFish>(), 8);
                     choice.Add(ModContent.ItemType<ShadeFish>(), 9);

@@ -68,6 +68,7 @@ namespace Redemption.Globals.Player
         public bool shadowBinder;
         public int shadowBinderCharge;
         public bool lacerated;
+        public bool shadevision;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -151,6 +152,7 @@ namespace Redemption.Globals.Player
             dreamsong = false;
             shadowBinder = false;
             lacerated = false;
+            shadevision = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {

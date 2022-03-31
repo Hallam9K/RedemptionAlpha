@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
@@ -228,7 +229,8 @@ namespace Redemption.Globals
                 {
                     Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position, Array.Empty<object>());
                 }
-                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.3f);
+                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader()
+                    .UseIntensity(Main.player[Main.myPlayer].RedemptionPlayerBuff().shadevision ? 0 : 0.3f);
             }
 
             if (blobbleSwarm)
