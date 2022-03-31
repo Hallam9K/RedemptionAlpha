@@ -28,7 +28,7 @@ namespace Redemption.Items.Placeable.Tiles
         {
             if (Main.rand.Next(5) == 0)
             {
-                resultType = ModContent.ItemType<AncientWood>();
+                resultType = ModContent.ItemType<ElderWood>();
                 resultStack = 14;
             }
             else

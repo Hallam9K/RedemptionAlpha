@@ -43,7 +43,7 @@ using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.NPCs.Bosses.Gigapora;
-using Redemption.Tiles.Furniture.AncientWood;
+using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Items.Tools.PostML;
@@ -253,7 +253,7 @@ namespace Redemption.Globals
 
         public static List<int> ModdedDoors = new()
         {
-            ModContent.TileType<AncientWoodDoorClosed>(),
+            ModContent.TileType<ElderWoodDoorClosed>(),
             ModContent.TileType<LabDoorClosed>(),
             ModContent.TileType<PetrifiedWoodDoorClosed>()
         };
