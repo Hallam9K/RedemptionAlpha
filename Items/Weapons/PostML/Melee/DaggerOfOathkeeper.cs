@@ -17,8 +17,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dagger of the Oathkeeper"); // TODO: change attack to stabby stab
-            Tooltip.SetDefault("Inflicts soulless");
+            DisplayName.SetDefault("Dagger of the Oathkeeper");
+            Tooltip.SetDefault("Inflicts soulless\n" +
+                "Slashes up and down, hold down left-click to follow up with a rapid flurry of stabs");
+            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -28,32 +30,26 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 40;
-            Item.noUseGraphic = false;
-            Item.noMelee = false;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.channel = true;
             Item.useTime = 7;
             Item.useAnimation = 7;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<DaggerStab_Proj>();
+            Item.shoot = ModContent.ProjectileType<DaggerOfOathkeeper_Proj>();
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
-        public override bool AltFunctionUse(Player player) => true;
-        public override bool CanUseItem(Player player)
+        public override bool AltFunctionUse(Player player) => player.RedemptionPlayerBuff().shadowBinder && player.RedemptionPlayerBuff().shadowBinderCharge >= 2 && !player.HasBuff(ModContent.BuffType<OathkeeperDaggerBuff>());
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (player.altFunctionUse == 2 && player.RedemptionPlayerBuff().shadowBinder && player.RedemptionPlayerBuff().shadowBinderCharge >= 2 && !player.HasBuff(ModContent.BuffType<OathkeeperDaggerBuff>()))
-            {
-                Item.noUseGraphic = true;
-                Item.noMelee = true;
-            }
+                type = ModContent.ProjectileType<DaggerStab_Proj>();
             else
-            {
-                Item.noUseGraphic = false;
-                Item.noMelee = false;
-            }
-            return base.CanUseItem(player);
+                type = ModContent.ProjectileType<DaggerOfOathkeeper_Proj>();
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -63,13 +59,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 player.itemTime = Item.useTime * 10;
                 player.itemAnimation = Item.useTime * 10;
                 player.RedemptionPlayerBuff().shadowBinderCharge -= 2;
-                return true;
             }
-            return false;
-        }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
+            return true;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

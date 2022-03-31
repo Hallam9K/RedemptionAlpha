@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.noUseGraphic = true;
             Item.shoot = ModContent.ProjectileType<CageFlail_Ball>();
             Item.shootSpeed = 32f;
-            Item.UseSound = SoundID.Item1;
+            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing");
             Item.DamageType = DamageClass.Melee;
             Item.autoReuse = false;
             Item.channel = true;
@@ -89,7 +89,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
+            if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 1)
             {
                 for (int i = 0; i < Main.rand.Next(6, 14); i++)
                 {
@@ -97,11 +97,19 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(Main.rand.Next(3, 14), Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<Echo_Friendly>(), Projectile.damage, 0, Main.myPlayer);
                 }
                 SoundEngine.PlaySound(SoundID.Zombie, Projectile.position, 81);
-                Projectile.localAI[0] = 1;
+                Projectile.localAI[0] = 2;
             }
         }
         public override void PostAI()
         {
+            if (Projectile.ai[0] == 0 && Projectile.localAI[1]++ % 30 == 0 && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithVolume(0.5f), Projectile.position);
+
+            if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
+            {
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing"), Projectile.position);
+                Projectile.localAI[0] = 1;
+            }
             Vector2 position = Projectile.Center;
             Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
             Vector2 vector2_4 = mountedCenter - position;

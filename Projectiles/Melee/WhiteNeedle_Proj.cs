@@ -34,6 +34,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 80;
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
             Projectile.Redemption().Unparryable = true;
         }
         public void DoTrailCreation(TrailManager tManager)

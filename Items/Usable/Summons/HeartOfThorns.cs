@@ -48,13 +48,9 @@ namespace Redemption.Items.Usable.Summons
 				int type = ModContent.NPCType<Thorn>();
 
 				if (Main.netMode != NetmodeID.MultiplayerClient)
-				{
 					NPC.SpawnOnPlayer(player.whoAmI, type);
-				}
 				else
-				{
 					NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-				}
 			}
 			return true;
 		}

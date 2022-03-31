@@ -38,17 +38,12 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer)
-            {
-                SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+            SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
 
-                int type = ModContent.NPCType<Porakone>();
+            int type = ModContent.NPCType<Porakone>();
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y - 500, type);
-                else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-            }
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y - 500, type);
             return true;
         }
     }

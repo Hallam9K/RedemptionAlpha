@@ -4,6 +4,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.Localization;
 
 namespace Redemption.Globals.NPC
 {
@@ -90,6 +91,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
                 GuardBreakCheck(npc, DustID.Gold, SoundID.Item37);

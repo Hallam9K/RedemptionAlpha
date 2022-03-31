@@ -55,13 +55,9 @@ namespace Redemption.Items.Usable.Summons
 					type = ModContent.NPCType<KeeperSpirit>();
 
 				if (Main.netMode != NetmodeID.MultiplayerClient)
-				{
 					NPC.SpawnOnPlayer(player.whoAmI, type);
-				}
 				else
-				{
 					NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-				}
 			}
 			return true;
 		}
