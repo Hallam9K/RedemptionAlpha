@@ -10,6 +10,10 @@ using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Weapons.PostML.Melee;
+using Terraria.Utilities;
 
 namespace Redemption.Globals.Player
 {
@@ -59,6 +63,24 @@ namespace Redemption.Globals.Player
             {
                 if (Player.InModBiome(ModContent.GetInstance<LabBiome>()) && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
                     itemDrop = ModContent.ItemType<LabCrate>();
+            }
+            if (Player.InModBiome(ModContent.GetInstance<SoullessBiome>()))
+            {
+                if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
+                    itemDrop = ModContent.ItemType<ShadestoneCrate>();
+                else
+                {
+                    WeightedRandom<int> choice = new(Main.rand);
+                    choice.Add(ModContent.ItemType<AbyssBloskus>(), 2);
+                    choice.Add(ModContent.ItemType<SlumberEel>(), 2);
+                    choice.Add(ModContent.ItemType<ChakrogAngler>(), 4);
+                    choice.Add(ModContent.ItemType<AbyssStinger>(), 4);
+                    choice.Add(ModContent.ItemType<DarkStar>(), 4);
+                    choice.Add(ModContent.ItemType<LurkingKetred>(), 10);
+                    choice.Add(ModContent.ItemType<JagboneFish>(), 8);
+                    choice.Add(ModContent.ItemType<ShadeFish>(), 9);
+                    itemDrop = choice;
+                }
             }
         }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
