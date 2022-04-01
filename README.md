@@ -21,7 +21,7 @@ MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - KS3 teleporting a bunch in general
 - KS3 beam attack just doesnt work 
 - Infected zombies moonwalk a bunch
-- Abandoned lab minibosses do not spawn naturally at all
+- (Potentially fixed) Abandoned lab minibosses do not spawn naturally at all
 - MACE project despawns upon entering guard phase 2 
 - PZ attacks just dont happen, it is sound effects and nothing else, despawns upon being hit
 - Volt challenge button doesnt work
@@ -29,8 +29,8 @@ MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - Irradiated behemoth fires a bunch of gas behind him, and has incorrect sound occassionally, likely due to desync, also is invulnerable 
 - Janitor has drifty movement, and doesnt slip, and attacking himself doesnt break his guard, constantly replenishes his health, making him essentially immortal (canon strength janitor)
 - Wayfarers and newb (and assumingly other npcs) fall through the world before rubberbanding back to their position 
-- King Slayer III is not at his rightful throne
-- Scrap that, most summons are bugged, wielder bot spawned super offset from the player
+- (Potentially fixed) King Slayer III is not at his rightful throne
+- (Potentially fixed) Scrap that, most summons are bugged, wielder bot spawned super offset from the player
 - Wielder bot on gigapora just stays there as the screen gets increasingly shaky, with gigapora never spawning
 - Skeleton assassins just go invisible and never attack the player, or walk around
 - Skeleton team stuff just doesnt work in general
@@ -43,7 +43,7 @@ MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - Cursed samurais dont spawn with wrath slayer (tested on a ton of enemies, almost statistically impossible for it not to spawn)
 - Gigapora suprisingly fine, but makes core sounds every once in a while
 - Epidotran skeletons are invisible 
-- Portals dont spawn on portal tiles
+- (Potentially fixed) Portals dont spawn on portal tiles
 - SoI attacks are offset sometimes
 - SoI laser beam offset 
 - SoI suprisingly isnt really that buggy
