@@ -157,6 +157,20 @@ namespace Redemption.Globals.NPC
                     damage = (int)(damage * 1.15f);
                 if (ItemTags.Wind.Has(item.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
+                if (NPCLists.Soulless.Contains(npc.type))
+                {
+                    if (ItemTags.Blood.Has(item.type))
+                        damage = (int)(damage * 0.75f);
+
+                    if (ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if ( ItemTags.Psychic.Has(item.type))
+                        damage = (int)(damage * 1.75f);
+
+                    if (ItemTags.Shadow.Has(item.type))
+                        damage = (int)(damage * 0.75f);
+                }
                 #endregion
             }
 
@@ -282,6 +296,20 @@ namespace Redemption.Globals.NPC
                     damage = (int)(damage * 1.15f);
                 if (ProjectileTags.Wind.Has(projectile.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
+                if (NPCLists.Soulless.Contains(npc.type))
+                {
+                    if (ProjectileTags.Blood.Has(projectile.type))
+                        damage = (int)(damage * 0.75f);
+
+                    if (ProjectileTags.Celestial.Has(projectile.type) || ItemTags.Holy.Has(projectile.type))
+                        damage = (int)(damage * 1.25f);
+
+                    if (ProjectileTags.Psychic.Has(projectile.type))
+                        damage = (int)(damage * 1.75f);
+
+                    if (ProjectileTags.Shadow.Has(projectile.type))
+                        damage = (int)(damage * 0.75f);
+                }
                 #endregion
             }
         }

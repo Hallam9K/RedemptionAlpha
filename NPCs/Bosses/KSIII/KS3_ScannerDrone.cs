@@ -29,7 +29,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);

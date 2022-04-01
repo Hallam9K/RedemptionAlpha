@@ -35,7 +35,8 @@ namespace Redemption.NPCs.PreHM
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<DevilScentedDebuff>(),
                     BuffID.Confused,
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);

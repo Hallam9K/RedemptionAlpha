@@ -51,7 +51,8 @@ namespace Redemption.NPCs.PreHM
                     BuffID.Bleeding,
                     BuffID.Poisoned,
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
 

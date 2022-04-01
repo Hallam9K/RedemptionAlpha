@@ -53,7 +53,8 @@ namespace Redemption.NPCs.Wasteland
                     ModContent.BuffType<BileDebuff>(),
                     ModContent.BuffType<GreenRashesDebuff>(),
                     ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
+                    ModContent.BuffType<FleshCrystalsDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
 

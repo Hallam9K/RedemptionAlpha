@@ -63,7 +63,8 @@ namespace Redemption.NPCs.Lab.Volt
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
