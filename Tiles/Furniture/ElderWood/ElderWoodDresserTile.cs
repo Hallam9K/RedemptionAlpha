@@ -9,6 +9,7 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria.Audio;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -45,7 +46,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			DustType = DustID.t_BorealWood;
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override bool RightClick(int i, int j)
 		{

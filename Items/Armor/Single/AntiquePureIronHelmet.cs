@@ -59,7 +59,7 @@ namespace Redemption.Items.Armor.Single
                     "Discovered in the Catacombs of Gathuram by Happins, a fallen.\n" +
                     "This design has fur to keep the neck and shoulders warm in the harsh environment.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -67,7 +67,7 @@ namespace Redemption.Items.Armor.Single
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

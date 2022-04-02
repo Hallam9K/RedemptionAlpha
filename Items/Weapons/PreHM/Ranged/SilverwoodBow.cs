@@ -64,7 +64,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                     "'Given to Daerel by Syllessa, a half-Forest Nymph, during training. The wood is beyond ancient,\n" +
                     "and the string is made from a golden flexible thread. It is capable of shooting arrows at high velocities.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

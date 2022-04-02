@@ -182,7 +182,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
             {
-                overrideColor = Color.LightCyan,
+                OverrideColor = Color.LightCyan,
             };
             tooltips.Add(line);
         }

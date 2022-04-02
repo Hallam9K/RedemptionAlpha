@@ -74,7 +74,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                     "of sorcerers to practice storing and releasing their mana.\n" +
                     "An overload of mana from a stronger mage can easily break this.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -82,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

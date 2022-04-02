@@ -332,7 +332,7 @@ namespace Redemption.NPCs.Critters
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            return SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.player.ZoneBeach ? 0f : 1.8f);
+            return SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.Player.ZoneBeach ? 0f : 1.8f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

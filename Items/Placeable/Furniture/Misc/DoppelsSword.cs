@@ -31,7 +31,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
                     "'A strange sword from the Silver Age, made of shining steel. Marks of battle are scarce,\n" +
                     "as it was seldom used by its wielder. It feels oddly nostalgic.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -39,7 +39,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

@@ -95,7 +95,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     "He imbued the blade with part of his permanent soul to keep it holy far past his own death.\n" +
                     "Eymen treated his weapon like his own flesh, and used it to smite numerous demons of high calibre.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -103,7 +103,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

@@ -76,7 +76,7 @@ namespace Redemption.Items.Usable.Summons
 				TooltipLine line = new(Mod, "SpiritLine",
 					"The ring still glows a faint blue...")
 				{
-					overrideColor = Color.LightSkyBlue
+					OverrideColor = Color.LightSkyBlue
 				};
 				tooltips.Insert(tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip2")), line);
 			}
