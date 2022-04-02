@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -54,7 +55,7 @@ namespace Redemption.Tiles.Containers
             TileObjectData.addTile(Type);
         }
 
-        public override bool HasSmartInteract() => true;
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override bool IsLockedChest(int i, int j) => false;
 

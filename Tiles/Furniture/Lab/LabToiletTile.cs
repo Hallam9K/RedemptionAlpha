@@ -69,21 +69,21 @@ namespace Redemption.Tiles.Furniture.Lab
 		public override void ModifySittingTargetInfo(int i, int j, ref TileRestingInfo info)
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
-			info.targetDirection = -1;
+			info.TargetDirection = -1;
 			if (tile.TileFrameX != 0)
 			{
-				info.targetDirection = 1;
+				info.TargetDirection = 1;
 			}
 
-			info.anchorTilePosition.X = i;
-			info.anchorTilePosition.Y = j;
+			info.AnchorTilePosition.X = i;
+			info.AnchorTilePosition.Y = j;
 			if (tile.TileFrameY % NextStyleHeight == 0)
 			{
-				info.anchorTilePosition.Y++;
+				info.AnchorTilePosition.Y++;
 			}
-			if (info.restingEntity is Player player && player.HasBuff(BuffID.Stinky))
+			if (info.RestingEntity is Player player && player.HasBuff(BuffID.Stinky))
 			{
-				info.visualOffset = Main.rand.NextVector2Circular(2, 2);
+				info.VisualOffset = Main.rand.NextVector2Circular(2, 2);
 			}
 		}
 

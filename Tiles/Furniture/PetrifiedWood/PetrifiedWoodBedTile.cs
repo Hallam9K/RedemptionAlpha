@@ -41,7 +41,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		}
 		public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info)
 		{
-			info.visualOffset.Y += 4f;
+			info.VisualOffset.Y += 4f;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;

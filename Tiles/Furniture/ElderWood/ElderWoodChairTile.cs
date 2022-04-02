@@ -61,17 +61,17 @@ namespace Redemption.Tiles.Furniture.ElderWood
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
 
-			info.targetDirection = -1;
+			info.TargetDirection = -1;
 			if (tile.TileFrameX != 0)
 			{
-				info.targetDirection = 1;
+				info.TargetDirection = 1;
 			}
 
-			info.anchorTilePosition.X = i;
-			info.anchorTilePosition.Y = j;
+			info.AnchorTilePosition.X = i;
+			info.AnchorTilePosition.Y = j;
 			if (tile.TileFrameY % NextStyleHeight == 0)
 			{
-				info.anchorTilePosition.Y++;
+				info.AnchorTilePosition.Y++;
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
 
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<AncientWoodChair>();
+			player.cursorItemIconID = ModContent.ItemType<ElderWoodChair>();
 
 			if (Main.tile[i, j].TileFrameX / 18 < 1)
 			{
