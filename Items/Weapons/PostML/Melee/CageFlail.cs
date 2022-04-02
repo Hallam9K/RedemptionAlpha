@@ -100,9 +100,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Projectile.localAI[0] = 2;
             }
         }
+        private int soundTimer;
         public override void PostAI()
         {
-            if (Projectile.ai[0] == 0 && Projectile.localAI[1]++ % 30 == 0 && !Main.dedServ)
+            if (Projectile.ai[0] == 0 && soundTimer++ % 30 == 0 && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithVolume(0.5f), Projectile.position);
 
             if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
