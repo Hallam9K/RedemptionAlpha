@@ -22,6 +22,7 @@ namespace Redemption.Tiles.Plants
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.ReplaceTileBreakUp[Type] = true;
             TileID.Sets.IgnoredInHouseScore[Type] = true;
+            TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
             AddMapEntry(Color.DarkOliveGreen);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -74,7 +75,7 @@ namespace Redemption.Tiles.Plants
         }
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
         {
-            if (i % 2 == 1)
+            if (i % 2 == 0)
             {
                 spriteEffects = SpriteEffects.FlipHorizontally;
             }
