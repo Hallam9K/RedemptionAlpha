@@ -119,7 +119,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
             {
-                overrideColor = Color.LightCyan,
+                OverrideColor = Color.LightCyan,
             };
             tooltips.Add(line);
             if (Main.keyState.PressingShift())
@@ -127,7 +127,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 TooltipLine line2 = new(Mod, "Lore",
                     "\"Alright, who's dumb enough to confuse a chainsaw and a hacksaw, seriously guys.\"")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line2);
             }
@@ -135,7 +135,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 TooltipLine line2 = new(Mod, "HoldShift", "There's a sticky note attached [Hold Shift to Read]")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line2);
             }

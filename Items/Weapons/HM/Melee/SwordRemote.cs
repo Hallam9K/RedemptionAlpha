@@ -128,7 +128,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
             {
-                overrideColor = Color.Red,
+                OverrideColor = Color.Red,
             };
             tooltips.Add(line);
         }

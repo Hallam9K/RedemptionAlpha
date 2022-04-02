@@ -57,7 +57,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     "of Gathuram's undead residents for his unforgiving command over his skeletal servants.\n" +
                     "The Tormenter met an ironic end by his own weapon when his minions revolted against his control.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -65,7 +65,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

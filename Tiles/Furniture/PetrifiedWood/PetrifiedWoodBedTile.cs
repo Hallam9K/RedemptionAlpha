@@ -6,6 +6,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -29,7 +30,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			AdjTiles = new int[] { TileID.Beds };
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
 

@@ -53,7 +53,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
                     "The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,\n" +
                     "nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -61,7 +61,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

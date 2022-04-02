@@ -77,7 +77,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     "'A famous greatsword of Madmount. A lot of strength is needed to use such a grand weapon,\n" +
                     "but for most Warriors of the Iron Realm this was a trivial issue.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -85,12 +85,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
 
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
             tooltips.Add(axeLine);
         }
     }

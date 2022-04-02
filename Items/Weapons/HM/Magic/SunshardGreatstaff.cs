@@ -110,7 +110,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                     "Imbued with holy magic, it was primarily revered for its healing capabilities,\n" +
                     "with numerous quantities of people pursuing its power to heal themselves or their loved ones.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -118,7 +118,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

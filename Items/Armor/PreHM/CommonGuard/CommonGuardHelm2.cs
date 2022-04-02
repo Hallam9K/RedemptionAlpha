@@ -78,7 +78,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
                     "They now guard cities and landmarks of great importance. Despite being stronger than the average\n" +
                     "knight, they don't get involved in wars.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -86,7 +86,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

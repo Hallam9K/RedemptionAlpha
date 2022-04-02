@@ -37,7 +37,7 @@ namespace Redemption.Items.Lore
                 + "\nlogs every day until I return, and preserve my encounters for when I get back."
                 + "\nBut that's a million years from now. I just hope I won't regret it.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -45,7 +45,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -76,7 +76,7 @@ namespace Redemption.Items.Lore
                 + "\nI transferred my human mind into a robotic body so I can save an infinite number of memories with ease,"
                 + "\nand I won't need to worry about thirst, hunger, or sleep.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -84,7 +84,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -116,7 +116,7 @@ namespace Redemption.Items.Lore
                 + "\nI'm still 2 years from reaching the nearest planet - Nabu III"
                 + "\nActually, I should come up with a new name for my robotic body... Something other than Survival Robot Mk. 78.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -124,7 +124,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -156,7 +156,7 @@ namespace Redemption.Items.Lore
                 + "\nIf only I had more time back then! I could've looked through this body's code and easily discovered the error!"
                 + "\nGuess I'll just have to deal with it.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -164,7 +164,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -194,7 +194,7 @@ namespace Redemption.Items.Lore
                 + "\nI can't even bloody die from fatigue, I can't starve to death either,"
                 + "\nI'm just stuck like this... For a million damn years!'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -202,7 +202,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -235,7 +235,7 @@ namespace Redemption.Items.Lore
                 + "\nThe atmosphere is 78.4% sulphur dioxide, and the average temperature is -10°C."
                 + "\nBasically, an uninhabitable frozen planet... Great.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -243,7 +243,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -274,7 +274,7 @@ namespace Redemption.Items.Lore
                 + "\nProbably because I used to look up at the moon of my world a lot"
                 + "\nwhen I was human... I wish I still was.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -282,7 +282,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -311,7 +311,7 @@ namespace Redemption.Items.Lore
                 + "\nI'm getting real sick of snow, the old world was nothing but snow as well, I just want some greenery for once."
                 + "\nUnfortunately my next planet is even further from the sun so I'm not really hopeful...'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -319,7 +319,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -348,7 +348,7 @@ namespace Redemption.Items.Lore
                 + "\nI'm certain I wouldn't have made that mistake if I just didn't feel so terrible!"
                 + "\nLiving like this is absolute hell. I'll write down this planet's statistics next data log.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -356,7 +356,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -387,7 +387,7 @@ namespace Redemption.Items.Lore
                 + "\nOh god. 100% of the surface is just ice. The atmosphere is toxic, with a pressure of 91.63 kPa."
                 + "\nThe temperature is -223°C... I don't think even my robotic body can handle that! Oh whatever.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -395,7 +395,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -427,7 +427,7 @@ namespace Redemption.Items.Lore
                 + "\nThe water under there must be freezing, but curiosity is getting the better of me here."
                 + "\nI have found an entrance, inside is just as cold though, so I should go back up into my ship before exploring further.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -435,7 +435,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -467,7 +467,7 @@ namespace Redemption.Items.Lore
                 + "\nI have 999,493.8 years to go... And my overwhelming pain still hasn't settled."
                 + "\nI'll just have to live with it forever now.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -475,7 +475,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -505,7 +505,7 @@ namespace Redemption.Items.Lore
                 + "\nand I haven't encountered another moving thing for 506 years."
                 + "\nHaving robots going about the SoS would be nice, and I'll be less lonely.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -513,7 +513,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -543,7 +543,7 @@ namespace Redemption.Items.Lore
                 + "\nI'll go to the planet nearest the habitable zone, 'cos robots have become pretty boring now,"
                 + "\nand I'm dying to see actual greenery, not some dull frozen wasteland.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -551,7 +551,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -582,7 +582,7 @@ namespace Redemption.Items.Lore
                 + "\nWell I've found life here, only problem is they look ugly as hell."
                 + "\n2.01 million of these intelligent creatures have been scanned, so they've been around for a while.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -590,7 +590,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -620,7 +620,7 @@ namespace Redemption.Items.Lore
                 + "\nWell... Onto the next planet, I just hope THIS one will be lush and green."
                 + "\nAll the planets I've been to were either frozen or barren.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -628,7 +628,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -658,7 +658,7 @@ namespace Redemption.Items.Lore
                 + "\nNot like I got anything better to do."
                 + "\nI'll be leaving this planet soon and moving onto the next solar system.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -666,7 +666,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -696,7 +696,7 @@ namespace Redemption.Items.Lore
                 + "\nGod it was boring, but I had the androids to keep me company. Unfortunately, I don't know where I am now."
                 + "\nI can't tell how far away I am from home, but I see a nearby star, so hopefully there's some planets.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -704,7 +704,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -734,7 +734,7 @@ namespace Redemption.Items.Lore
                 + "\nEvery day is a pain, I just want to eat, I want to sleep..."
                 + "\nI would say I want to be human again, but to be honest... I don't even want to be alive anymore.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -742,7 +742,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -771,7 +771,7 @@ namespace Redemption.Items.Lore
                 + "\nBut anyway, it looks like this planet has intelligent life, so I'll land and see if they're friendly."
                 + "\nIf they're not, I'll just shoot them. Simple.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -779,7 +779,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -809,7 +809,7 @@ namespace Redemption.Items.Lore
                 + "\nhuman mind and get rid of this STUPID HUNGER. I DON'T HAVE A STOMACH, WHY AM I HUNGRY!?"
                 + "\nI DON'T HAVE EYES, WHY AM I SO TIRED!? WHY DO I HAVE TO LIVE THROUGH THIS DAMN IT!?'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -817,7 +817,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -845,7 +845,7 @@ namespace Redemption.Items.Lore
                 + "\nThe SoS's scanner picked up a lifeform in the engine room, so I should probably check it out."
                 + "\nI can't be asked to do anything really. But whatever.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -853,7 +853,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -879,7 +879,7 @@ namespace Redemption.Items.Lore
                 TooltipLine line = new(Mod, "Lore",
                     "'Nice'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -887,7 +887,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -915,7 +915,7 @@ namespace Redemption.Items.Lore
                 + "\nI have explored... 2853 planets now, and they are starting to all look the same."
                 + "\nI'm sick of ice planets, sick of lush green ones, sick of barren ones... I guess I'm not satisfied anymore.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -923,7 +923,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -952,7 +952,7 @@ namespace Redemption.Items.Lore
                 + "\nexplosions all around, it was generally a fun time. But something tells me he only let me"
                 + "\nfight him to cheer me up, and I'm sorry Xehito, but that moment didn't last, I still feel empty.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -960,7 +960,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -990,7 +990,7 @@ namespace Redemption.Items.Lore
                 + "\nThe next reset would've already started, and I'd have to wait another million years..."
                 + "\nIf that happens, I won't try anymore, I'll just give up.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -998,7 +998,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -1025,7 +1025,7 @@ namespace Redemption.Items.Lore
                 + "\nUnfortunately, I won't be able to see the new Great Era for some time."
                 + "\nI'm still lost in space.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -1033,7 +1033,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
@@ -1058,7 +1058,7 @@ namespace Redemption.Items.Lore
                 TooltipLine line = new(Mod, "Lore",
                     "'I've made it back, I'm home again.'")
                 {
-                    overrideColor = Color.LightCyan
+                    OverrideColor = Color.LightCyan
                 };
                 tooltips.Add(line);
             }
@@ -1066,7 +1066,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view datalog")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

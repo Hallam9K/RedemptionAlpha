@@ -77,7 +77,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                     "The sorcerer used the element of water to play harmless pranks on the barons of the capital,\n" +
                     "until they grew weary of her antics and ordered the duke to exile her.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -85,7 +85,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

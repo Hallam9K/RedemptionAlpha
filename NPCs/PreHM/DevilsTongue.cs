@@ -127,7 +127,7 @@ namespace Redemption.NPCs.PreHM
                     NPC.frame.Y = 0;
             }
         }
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) => SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.player.ZoneBeach ? 0f : 0.3f);
+        public override float SpawnChance(NPCSpawnInfo spawnInfo) => SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.Player.ZoneBeach ? 0f : 0.3f);
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]

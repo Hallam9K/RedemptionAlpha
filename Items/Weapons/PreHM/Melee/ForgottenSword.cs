@@ -44,7 +44,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
             tooltips.Add(axeLine);
         }
     }

@@ -59,7 +59,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     "This holy blade's slice is said to strip the light out of one's body, which would travel to corpses\n" +
                     "and bring the slain's life into them. This was what the ancient world thought birthed undead.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -67,7 +67,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

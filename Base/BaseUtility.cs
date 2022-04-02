@@ -130,7 +130,7 @@ namespace Redemption.Base
             }
         }
 
-        public static void DisplayTime(double time = -1, Color? overrideColor = null, bool sync = false)
+        public static void DisplayTime(double time = -1, Color? OverrideColor = null, bool sync = false)
         {
             string text = "AM";
             if (time <= -1) time = Main.time;
@@ -151,7 +151,7 @@ namespace Redemption.Base
             if (intTime > 12) intTime -= 12;
             if (intTime == 0) intTime = 12;
             string newText = string.Concat("Time: ", intTime, ":", text2, " ", text);
-            Chat(newText, overrideColor != null ? (Color)overrideColor : new Color(255, 240, 20), sync);
+            Chat(newText, OverrideColor != null ? (Color)OverrideColor : new Color(255, 240, 20), sync);
         }
 
         public static int CalcValue(int plat, int gold, int silver, int copper, bool sellPrice = false)
