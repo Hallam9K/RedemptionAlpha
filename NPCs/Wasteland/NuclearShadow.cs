@@ -60,6 +60,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.knockBackResist = 0f;
             NPC.alpha = 150;
             NPC.rarity = 2;
+            NPC.chaseable = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<NuclearShadowBanner>();

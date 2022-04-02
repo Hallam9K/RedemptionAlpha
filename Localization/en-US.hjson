@@ -136,6 +136,7 @@ Mods: {
 			LidenBiome: Liden
 			LidenBiomeAlpha: The Alpha
 			LidenBiomeOmega: The Omega
+			SoullessBiome: Soulless Caverns
 		}
 		TownNPCMood: {
 			Daerel: {

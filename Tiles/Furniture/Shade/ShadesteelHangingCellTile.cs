@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
+using Redemption.NPCs.Soulless;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -110,11 +112,9 @@ namespace Redemption.Tiles.Furniture.Shade
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            //int index = NPC.NewNPC(new EntitySource_TileBreak(i, j), (int)((i + 1.5f) * 16), (int)((j + 3.5f) * 16), ModContent.NPCType<Echo>()); // TODO: Echo
-            //if (index < Main.maxNPCs && Main.netMode == NetmodeID.MultiplayerClient)
-            //{
-            //    NetMessage.SendData(MessageID.SyncNPC, number: index);
-            //}
+            int index = NPC.NewNPC(new EntitySource_TileBreak(i, j), (int)((i + 1.5f) * 16), (int)((j + 3.5f) * 16), ModContent.NPCType<Echo>());
+            if (index < Main.maxNPCs && Main.netMode == NetmodeID.MultiplayerClient)
+                NetMessage.SendData(MessageID.SyncNPC, number: index);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
