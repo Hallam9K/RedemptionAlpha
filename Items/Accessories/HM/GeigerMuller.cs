@@ -69,7 +69,7 @@ namespace Redemption.Items.Accessories.HM
             string text1 = rad + " doses of radiation detected on self, " + rad2;
             TooltipLine line = new(Mod, "text1", text1)
             {
-                overrideColor = Color.LimeGreen
+                OverrideColor = Color.LimeGreen
             };
             tooltips.Insert(2, line);
         }

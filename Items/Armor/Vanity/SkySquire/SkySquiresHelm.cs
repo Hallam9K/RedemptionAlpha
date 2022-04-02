@@ -46,7 +46,7 @@ namespace Redemption.Items.Armor.Vanity.SkySquire
                     "The Sky Squires are a unit of southern Ithon, protecting the kingdoms of Yln, Klycub, and Norapass.\n" +
                     "The armour they wear allows better flexibility than most, useful for marching to the rescue swiftly.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -54,7 +54,7 @@ namespace Redemption.Items.Armor.Vanity.SkySquire
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

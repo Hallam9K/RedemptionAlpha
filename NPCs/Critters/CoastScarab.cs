@@ -75,7 +75,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Sand && !spawnInfo.water && spawnInfo.player.ZoneBeach ? 3f : 0;
+            float multiplier = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType == TileID.Sand && !spawnInfo.Water && spawnInfo.Player.ZoneBeach ? 3f : 0;
 
             return baseChance * multiplier;
         }

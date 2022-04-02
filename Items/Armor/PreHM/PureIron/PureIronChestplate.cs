@@ -60,7 +60,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
                     "The Warriors of the Iron Realm are Gathuram's main military force,\n" +
                     "with units spanning all across the domain.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -68,7 +68,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

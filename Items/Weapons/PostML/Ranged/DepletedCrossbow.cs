@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 TooltipLine line = new(Mod, "Lore",
                     "\"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem.\"")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -69,7 +69,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             {
                 TooltipLine line = new(Mod, "HoldShift", "There's a sticky note attached [Hold Shift to Read]")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

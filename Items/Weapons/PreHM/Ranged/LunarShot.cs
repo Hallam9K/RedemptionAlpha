@@ -65,7 +65,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             {
                 TooltipLine line = new(Mod, "text", text)
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Insert(2, line);
             }
