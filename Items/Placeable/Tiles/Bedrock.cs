@@ -1,4 +1,3 @@
-using Redemption.Items.Placeable.Furniture.AncientWood;
 using Redemption.Tiles.Tiles;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
