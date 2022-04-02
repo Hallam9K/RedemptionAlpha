@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
+using Terraria.GameContent;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -20,6 +21,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileID.Sets.CanBeSleptIn[Type] = true;
+			TileID.Sets.InteractibleByNPCs[Type] = true;
 			TileID.Sets.IsValidSpawnPoint[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
@@ -36,13 +38,21 @@ namespace Redemption.Tiles.Furniture.Lab
 			name.SetDefault("Hospital Bed");
 			AddMapEntry(new Color(57, 62, 162), name);
 			DustType = ModContent.DustType<LabPlatingDust>();
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AdjTiles = new int[] { TileID.Beds };
 		}
-
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+		public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY)
+		{
+			width = 2;
+			height = 2;
+		}
+		public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info)
+		{
+			info.visualOffset.Y += 4f;
+		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<HospitalBed>());
 
 		public override bool RightClick(int i, int j)
@@ -50,7 +60,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			Player player = Main.LocalPlayer;
 
 			Tile tile = Main.tile[i, j];
-			int spawnX = i - (tile.TileFrameX / 18) + (tile.TileFrameX >= 72 ? 5 : 2);
+			int spawnX = (i - (tile.TileFrameX / 18)) + (tile.TileFrameX >= 72 ? 5 : 2);
 			int spawnY = j + 2;
 			if (tile.TileFrameY % 38 != 0)
 			{
@@ -58,8 +68,8 @@ namespace Redemption.Tiles.Furniture.Lab
 			}
 
 			if (!Player.IsHoveringOverABottomSideOfABed(i, j))
-			{
-				if (player.IsWithinSnappngRangeToTile(i, j, 96))
+			{ // This assumes your bed is 4x2 with 2x2 sections. You have to write your own code here otherwise
+				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance))
 				{
 					player.GamepadEnableGrappleCooldown();
 					player.sleeping.StartSleeping(player, i, j);
@@ -79,7 +89,6 @@ namespace Redemption.Tiles.Furniture.Lab
 					Main.NewText(Language.GetTextValue("Game.SpawnPointSet"), byte.MaxValue, 240, 20);
 				}
 			}
-
 			return true;
 		}
 
@@ -89,11 +98,11 @@ namespace Redemption.Tiles.Furniture.Lab
 
 			if (!Player.IsHoveringOverABottomSideOfABed(i, j))
 			{
-				if (player.IsWithinSnappngRangeToTile(i, j, 96))
+				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance))
 				{
 					player.noThrow = 2;
 					player.cursorItemIconEnabled = true;
-					player.cursorItemIconID = 5013;
+					player.cursorItemIconID = ItemID.SleepingIcon;
 				}
 			}
 			else

@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Plants
             Main.tileSolid[Type] = false;
             Main.tileNoAttach[Type] = true;
             Main.tileCut[Type] = true;
+            TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.UsesCustomCanPlace = true;
