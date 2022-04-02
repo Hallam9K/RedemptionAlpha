@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria.Audio;
 using Redemption.Dusts.Tiles;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -47,9 +48,9 @@ namespace Redemption.Tiles.Furniture.Shade
 			DustType = ModContent.DustType<ShadestoneDust>();
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-		public override bool RightClick(int i, int j)
+        public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)

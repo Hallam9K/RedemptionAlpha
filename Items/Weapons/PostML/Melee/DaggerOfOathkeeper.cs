@@ -71,7 +71,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 text = "Right-clicking will give you a damage buff at the cost of decreased max life for 2 minutes (Consumes 2 Shadowbound Souls)";
             else
                 text = "Has a special ability if Sielukaivo Shadowbinder is equipped";
-            TooltipLine line = new(Mod, "text", text) { overrideColor = Color.DarkGray };
+            TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.DarkGray };
             tooltips.Insert(tooltipLocation, line);
         }
     }

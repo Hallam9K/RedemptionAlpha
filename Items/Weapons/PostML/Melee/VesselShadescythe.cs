@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 text = "Enemies slain by melee swings grant you an additional Shadowbound Soul";
             else
                 text = "Has a special ability if Sielukaivo Shadowbinder is equipped";
-            TooltipLine line = new(Mod, "text", text) { overrideColor = Color.DarkGray };
+            TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.DarkGray };
             tooltips.Insert(tooltipLocation, line);
         }
         public override void AddRecipes()

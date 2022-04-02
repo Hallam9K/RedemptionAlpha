@@ -86,7 +86,7 @@ namespace Redemption.Items.Tools.PostML
                 text = "Right-clicking will give this tool a boost in mining speed for 10 seconds (Consumes 4 Shadowbound Souls)";
             else
                 text = "Has a special ability if Sielukaivo Shadowbinder is equipped";
-            TooltipLine line = new(Mod, "text", text) { overrideColor = Color.DarkGray };
+            TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.DarkGray };
             tooltips.Insert(tooltipLocation, line);
         }
         public override void AddRecipes()

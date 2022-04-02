@@ -50,15 +50,15 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             foreach (TooltipLine line in tooltips)
             {
-                if (line.mod == "Terraria" && line.Name == "Damage")
+                if (line.Mod == "Terraria" && line.Name == "Damage")
                 {
-                    string[] strings = line.text.Split(' ');
+                    string[] strings = line.Text.Split(' ');
                     int dmg = int.Parse(strings[0]);
                     dmg *= 2;
-                    line.text = dmg + "";
+                    line.Text = dmg + "";
                     for (int i = 1; i < strings.Length; i++)
                     {
-                        line.text += " " + strings[i];
+                        line.Text += " " + strings[i];
                     }
                 }
             }

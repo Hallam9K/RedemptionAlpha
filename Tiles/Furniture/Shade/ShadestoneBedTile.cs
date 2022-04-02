@@ -7,6 +7,7 @@ using Terraria.Localization;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Redemption.Dusts.Tiles;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -30,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			AdjTiles = new int[] { TileID.Beds };
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
 

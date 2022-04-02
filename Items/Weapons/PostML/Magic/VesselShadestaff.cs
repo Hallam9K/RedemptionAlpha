@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 text = "Right-clicking will summon a ring of shade around you that grows bigger the longer it is active, damaging enemies (Consumes all Shadowbound Souls over time)";
             else
                 text = "Has a special ability if Sielukaivo Shadowbinder is equipped";
-            TooltipLine line = new(Mod, "text", text) { overrideColor = Color.DarkGray };
+            TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.DarkGray };
             tooltips.Insert(tooltipLocation, line);
         }
         public override void AddRecipes()

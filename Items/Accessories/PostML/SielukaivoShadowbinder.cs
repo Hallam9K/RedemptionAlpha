@@ -45,7 +45,7 @@ namespace Redemption.Items.Accessories.PostML
         {
             Player player = Main.player[Main.myPlayer];
             string text = "Souls Captured: " + player.RedemptionPlayerBuff().shadowBinderCharge + "/100";
-            TooltipLine line = new(Mod, "text", text) { overrideColor = Color.DarkGray };
+            TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.DarkGray };
             tooltips.Insert(2, line);
         }
     }

@@ -77,7 +77,7 @@ namespace Redemption.Items.Tools.PostML
                 text = "Right-clicking will swing with extreme knockback (Consumes 1 Shadowbound Soul)";
             else
                 text = "Has a special ability if Sielukaivo Shadowbinder is equipped";
-            TooltipLine line = new(Mod, "text", text) { overrideColor = Color.DarkGray };
+            TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.DarkGray };
             tooltips.Insert(tooltipLocation, line);
         }
         public override void AddRecipes()
