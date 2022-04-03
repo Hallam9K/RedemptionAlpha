@@ -15,7 +15,7 @@ namespace Redemption.Globals
         public override void PostUpdateWorld()
         {
             #region Wayfarer Event
-            if (wayfarerVars[0] == 0 && Main.time == 1 && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
+            if (wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
             {
                 wayfarerVars[0] = 1;
 

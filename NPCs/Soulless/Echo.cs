@@ -31,8 +31,8 @@ namespace Redemption.NPCs.Soulless
             NPC.damage = 0;
             NPC.defense = 0;
             NPC.knockBackResist = 0f;
-            NPC.HitSound = SoundID.NPCHit54;
-            NPC.DeathSound = SoundID.NPCHit54;
+            NPC.HitSound = SoundID.NPCHit3;
+            NPC.DeathSound = SoundID.NPCDeath6;
             NPC.width = 16;
             NPC.height = 32;
             NPC.rarity = 2;
@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Soulless
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 30; i++)
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Wraith);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
