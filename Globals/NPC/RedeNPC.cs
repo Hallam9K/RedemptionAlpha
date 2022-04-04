@@ -22,6 +22,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Magic;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
+using Redemption.NPCs.PostML;
+using Redemption.NPCs.Soulless;
 
 namespace Redemption.Globals.NPC
 {
@@ -536,6 +540,22 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSpikeShield, 0.2f);
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
+            }
+            if (SubworldSystem.IsActive<SoullessSub>() && spawnInfo.Player.InModBiome(ModContent.GetInstance<SoullessBiome>()))
+            {
+                pool.Clear();
+                //if (NPC.AnyNPCs(ModContent.NPCType<WardenIdle>()) || NPC.AnyNPCs(ModContent.NPCType<WardenSaved>()))
+                //    return;
+                pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
+                pool.Add(ModContent.NPCType<Shadebug>(), .02f);
+                if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))
+                    pool.Add(ModContent.NPCType<SoullessMarionette_Doll>(), .007f);
+
+                pool.Add(ModContent.NPCType<LaughingMaskSmall>(), .01f);
+                pool.Add(ModContent.NPCType<LaughingMaskMedium>(), .01f);
+                pool.Add(ModContent.NPCType<LaughingMaskBig>(), .01f);
+                pool.Add(ModContent.NPCType<SpookyEyes>(), .02f);
+                pool.Add(ModContent.NPCType<Echo>(), .02f);
             }
             if (spawnInfo.Player.RedemptionScreen().cutscene)
                 pool.Clear();

@@ -94,6 +94,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(110, 115, 157)] = ModContent.TileType<PrisonBarsTile>(),
                 [new Color(77, 81, 110)] = ModContent.TileType<PrisonBarsBeamTile>(),
                 [new Color(22, 26, 35)] = ModContent.TileType<ShadestoneMossyTile>(),
+                [new Color(0, 26, 35)] = ModContent.TileType<ShadestoneBrickMossyTile>(),
                 [new Color(0, 255, 255)] = ModContent.TileType<ShadestoneSlabTile>(),
                 [new Color(150, 150, 150)] = -2,
                 [Color.Black] = -1
@@ -141,6 +142,58 @@ namespace Redemption.WorldGeneration.Soulless
         {
             progress.Message = "Furnishing Caverns";
             Mod mod = Redemption.Instance;
+
+            #region Platforms
+            Dictionary<Color, int> colorToTile2 = new()
+            {
+                [new Color(255, 0, 0)] = TileID.RedStucco,
+                [new Color(0, 255, 0)] = TileID.YellowStucco,
+                [new Color(255, 0, 255)] = TileID.GreenStucco,
+                [Color.Black] = -1
+            };
+            Texture2D platTex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsPlatforms", AssetRequestMode.ImmediateLoad).Value;
+            bool genned2 = false;
+            bool placed2 = false;
+            while (!genned2)
+            {
+                if (placed2)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    TexGen gen = BaseWorldGenTex.GetTexGenerator(platTex, colorToTile2);
+                    gen.Generate(0, 0, true, true);
+
+                    genned2 = true;
+                });
+
+                placed2 = true;
+            }
+            for (int x = 0; x < 0 + platTex.Width; x++)
+            {
+                for (int y = 0; y < 0 + platTex.Height; y++)
+                {
+                    switch (Main.tile[x, y].TileType)
+                    {
+                        case TileID.RedStucco:
+                            Main.tile[x, y].ClearTile();
+                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
+                            WorldGen.SlopeTile(x, y, 1);
+                            break;
+                        case TileID.YellowStucco:
+                            Main.tile[x, y].ClearTile();
+                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
+                            WorldGen.SlopeTile(x, y, 2);
+                            break;
+                        case TileID.GreenStucco:
+                            Main.tile[x, y].ClearTile();
+                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
+                            break;
+                    }
+                }
+            }
+            #endregion
+
             Texture2D ObjectTex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsObjects", AssetRequestMode.ImmediateLoad).Value;
             Dictionary<Color, int> colorToObj = new()
             {
@@ -169,6 +222,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(100, 120, 255)] = TileID.HayBlock,
                 [new Color(233, 120, 233)] = TileID.SandStoneSlab,
                 [new Color(220, 0, 0)] = TileID.StoneSlab,
+                [new Color(200, 0, 0)] = TileID.AccentSlab,
                 [Color.Black] = -1
             };
             bool genned = false;
@@ -199,6 +253,10 @@ namespace Redemption.WorldGeneration.Soulless
                         case TileID.AmberGemspark:
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChairTile>(), 0, 1);
+                            break;
+                        case TileID.AccentSlab:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChairTile>());
                             break;
                         case TileID.AmethystGemspark:
                             Main.tile[x2, y2].ClearTile();
@@ -290,7 +348,7 @@ namespace Redemption.WorldGeneration.Soulless
                             break;
                         case TileID.SandStoneSlab:
                             Main.tile[x2, y2].ClearTile();
-                            GenUtils.ObjectPlace(x2, y2, TileID.Switches);
+                            GenUtils.ObjectPlace(x2, y2, TileID.Books);
                             break;
                         case TileID.StoneSlab:
                             Main.tile[x2, y2].ClearTile();
@@ -301,59 +359,17 @@ namespace Redemption.WorldGeneration.Soulless
             }
             #endregion
 
-            #region Platforms
-            Dictionary<Color, int> colorToTile2 = new()
-            {
-                [new Color(255, 0, 0)] = TileID.RedStucco,
-                [new Color(0, 255, 0)] = TileID.YellowStucco,
-                [new Color(255, 0, 255)] = TileID.GreenStucco,
-                [Color.Black] = -1
-            };
-            Texture2D platTex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsPlatforms", AssetRequestMode.ImmediateLoad).Value;
-            bool genned2 = false;
-            bool placed2 = false;
-            while (!genned2)
-            {
-                if (placed2)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(platTex, colorToTile2);
-                    gen.Generate(0, 0, true, true);
-
-                    genned2 = true;
-                });
-
-                placed2 = true;
-            }
-            for (int x = 0; x < 0 + platTex.Width; x++)
-            {
-                for (int y = 0; y < 0 + platTex.Height; y++)
-                {
-                    switch (Main.tile[x, y].TileType)
-                    {
-                        case TileID.RedStucco:
-                            Main.tile[x, y].ClearTile();
-                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
-                            WorldGen.SlopeTile(x, y, 1);
-                            break;
-                        case TileID.YellowStucco:
-                            Main.tile[x, y].ClearTile();
-                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
-                            WorldGen.SlopeTile(x, y, 2);
-                            break;
-                        case TileID.GreenStucco:
-                            Main.tile[x, y].ClearTile();
-                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
-                            break;
-                    }
-                }
-            }
-            #endregion
-
             GenUtils.ObjectPlace(440, 797, ModContent.TileType<ShadestoneCandleTile>());
             //Chests
+
+            for (int i = 0; i < 1800; i++)
+            {
+                for (int j = 0; j < 1800; j++)
+                {
+                    if (Framing.GetTileSafely(i, j).TileType == TileID.Books && WorldGen.InWorld(i, j))
+                        Framing.GetTileSafely(i, j).TileColor = PaintID.WhitePaint;
+                }
+            }
         }
         public SoullessPass2(string name, float loadWeight) : base(name, loadWeight)
         {
