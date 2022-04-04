@@ -11,6 +11,11 @@ using Terraria.WorldBuilding;
 using Terraria.IO;
 using ReLogic.Content;
 using Redemption.Base;
+using Terraria.ID;
+using Redemption.Tiles.Furniture.Shade;
+using Redemption.Tiles.Natural;
+using Redemption.Tiles.Plants;
+using System.Linq;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -23,7 +28,13 @@ namespace Redemption.WorldGeneration.Soulless
         public override bool NoPlayerSaving => false;
         public override List<GenPass> Tasks => new()
         {
-            new SoullessPass1("Loading", 1)
+            new SoullessPass1("Loading", 1),
+            new SoullessPass2("Furnishing Caverns", 0.3f),
+            new SoullessPass3("Sprinkling Spooky Pots", 0.1f),
+            new SoullessPass4("Growing Cysts", 0.1f),
+            new SoullessPass5("Sprinkling Spooky Objects", 0.1f),
+            new SoullessPass6("Here, Have a Fungus", 0.01f),
+            new SoullessPass7("Smoothing Tiles", 0.01f)
         };
 
         public override void Load()
@@ -67,7 +78,7 @@ namespace Redemption.WorldGeneration.Soulless
         {
             progress.Message = "Loading";
             WorldGen.noTileActions = true;
-            Main.spawnTileY = 827;
+            Main.spawnTileY = 799;
             Main.spawnTileX = 432;
             Main.worldSurface = 635;
             Main.rockLayer = 635;
@@ -81,6 +92,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(255, 255, 255)] = ModContent.TileType<MasksTile>(),
                 [new Color(20, 20, 20)] = ModContent.TileType<BedrockTile>(),
                 [new Color(110, 115, 157)] = ModContent.TileType<PrisonBarsTile>(),
+                [new Color(77, 81, 110)] = ModContent.TileType<PrisonBarsBeamTile>(),
                 [new Color(22, 26, 35)] = ModContent.TileType<ShadestoneMossyTile>(),
                 [new Color(0, 255, 255)] = ModContent.TileType<ShadestoneSlabTile>(),
                 [new Color(150, 150, 150)] = -2,
@@ -98,6 +110,9 @@ namespace Redemption.WorldGeneration.Soulless
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCaverns", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsWalls", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsSlopes", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texPlatforms = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsPlatforms", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsLiquids", AssetRequestMode.ImmediateLoad).Value;
             bool genned = false;
             bool placed = false;
             while (!genned)
@@ -107,7 +122,7 @@ namespace Redemption.WorldGeneration.Soulless
 
                 Main.QueueMainThreadAction(() =>
                 {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
+                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
                     gen.Generate(0, 0, true, true);
 
                     genned = true;
@@ -117,6 +132,420 @@ namespace Redemption.WorldGeneration.Soulless
             }
         }
         public SoullessPass1(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass2 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Furnishing Caverns";
+            Mod mod = Redemption.Instance;
+            Texture2D ObjectTex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsObjects", AssetRequestMode.ImmediateLoad).Value;
+            Dictionary<Color, int> colorToObj = new()
+            {
+                [new Color(255, 0, 0)] = TileID.AmberGemspark,
+                [new Color(150, 0, 0)] = TileID.AmethystGemspark,
+                [new Color(0, 0, 255)] = TileID.AmethystGemsparkOff,
+                [new Color(100, 0, 0)] = TileID.DiamondGemspark,
+                [new Color(0, 255, 0)] = TileID.EmeraldGemspark,
+                [new Color(0, 150, 0)] = TileID.EmeraldGemsparkOff,
+                [new Color(0, 100, 0)] = TileID.RubyGemspark,
+                [new Color(255, 255, 0)] = TileID.RubyGemsparkOff,
+                [new Color(255, 0, 255)] = TileID.SapphireGemspark,
+                [new Color(0, 255, 255)] = TileID.TopazGemspark,
+                [new Color(0, 100, 100)] = TileID.TopazGemsparkOff,
+                [new Color(100, 0, 100)] = TileID.AmberGemsparkOff,
+                [new Color(120, 120, 120)] = TileID.DiamondGemsparkOff,
+                [new Color(180, 180, 180)] = TileID.SapphireGemsparkOff,
+                [new Color(141, 134, 135)] = TileID.TeamBlockBlue,
+                [new Color(247, 245, 213)] = TileID.TeamBlockGreen,
+                [new Color(203, 185, 151)] = TileID.TeamBlockPink,
+                [new Color(255, 66, 0)] = TileID.TeamBlockRed,
+                [new Color(255, 66, 66)] = TileID.TeamBlockWhite,
+                [new Color(255, 200, 66)] = TileID.TeamBlockYellow,
+                [new Color(255, 66, 200)] = TileID.GrayStucco,
+                [new Color(255, 120, 255)] = TileID.GreenStucco,
+                [new Color(100, 120, 255)] = TileID.HayBlock,
+                [new Color(233, 120, 233)] = TileID.SandStoneSlab,
+                [new Color(220, 0, 0)] = TileID.StoneSlab,
+                [Color.Black] = -1
+            };
+            bool genned = false;
+            bool placed = false;
+            while (!genned)
+            {
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    TexGen gen = BaseWorldGenTex.GetTexGenerator(ObjectTex, colorToObj);
+                    gen.Generate(0, 0, true, true);
+
+                    genned = true;
+                });
+
+                placed = true;
+            }
+
+            #region Objects
+            for (int x2 = 0; x2 < 0 + ObjectTex.Width; x2++)
+            {
+                for (int y2 = 0; y2 < 0 + ObjectTex.Height; y2++)
+                {
+                    switch (Main.tile[x2, y2].TileType)
+                    {
+                        case TileID.AmberGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChairTile>(), 0, 1);
+                            break;
+                        case TileID.AmethystGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneTableTile>());
+                            break;
+                        case TileID.AmethystGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneTable2Tile>());
+                            break;
+                        case TileID.DiamondGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneBookcaseTile>());
+                            break;
+                        case TileID.EmeraldGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneLanternTile>());
+                            break;
+                        case TileID.EmeraldGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChandelierTile>());
+                            break;
+                        case TileID.RubyGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneCandelabraTile>());
+                            break;
+                        case TileID.RubyGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneLampTile>());
+                            break;
+                        case TileID.SapphireGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestonePillar1Tile>());
+                            break;
+                        case TileID.TopazGemspark:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneSofaTile>());
+                            break;
+                        case TileID.TopazGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneWorkbenchTile>());
+                            break;
+                        case TileID.AmberGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestonePillar2Tile>());
+                            break;
+                        case TileID.DiamondGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneSinkTile>());
+                            break;
+                        case TileID.SapphireGemsparkOff:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneCandleTile>());
+                            break;
+                        case TileID.TeamBlockBlue:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneDoorClosed>());
+                            break;
+                        case TileID.TeamBlockGreen:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneDresserTile>());
+                            break;
+                        case TileID.TeamBlockPink:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelHangingCell2Tile>());
+                            break;
+                        case TileID.TeamBlockRed:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneBathtubTile>());
+                            break;
+                        case TileID.TeamBlockWhite:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneBedTile>(), 0, 1);
+                            break;
+                        case TileID.TeamBlockYellow:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneClockTile>());
+                            break;
+                        case TileID.GrayStucco:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestonePianoTile>());
+                            break;
+                        case TileID.GreenStucco:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelHangingCellTile>(), Main.rand.Next(3));
+                            break;
+                        case TileID.HayBlock:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelPortcullisClose>());
+                            break;
+                        case TileID.SandStoneSlab:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, TileID.Switches);
+                            break;
+                        case TileID.StoneSlab:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChairTile>(), 0, 1);
+                            break;
+                    }
+                }
+            }
+            #endregion
+
+            #region Platforms
+            Dictionary<Color, int> colorToTile2 = new()
+            {
+                [new Color(255, 0, 0)] = TileID.RedStucco,
+                [new Color(0, 255, 0)] = TileID.YellowStucco,
+                [new Color(255, 0, 255)] = TileID.GreenStucco,
+                [Color.Black] = -1
+            };
+            Texture2D platTex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsPlatforms", AssetRequestMode.ImmediateLoad).Value;
+            bool genned2 = false;
+            bool placed2 = false;
+            while (!genned2)
+            {
+                if (placed2)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    TexGen gen = BaseWorldGenTex.GetTexGenerator(platTex, colorToTile2);
+                    gen.Generate(0, 0, true, true);
+
+                    genned2 = true;
+                });
+
+                placed2 = true;
+            }
+            for (int x = 0; x < 0 + platTex.Width; x++)
+            {
+                for (int y = 0; y < 0 + platTex.Height; y++)
+                {
+                    switch (Main.tile[x, y].TileType)
+                    {
+                        case TileID.RedStucco:
+                            Main.tile[x, y].ClearTile();
+                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
+                            WorldGen.SlopeTile(x, y, 1);
+                            break;
+                        case TileID.YellowStucco:
+                            Main.tile[x, y].ClearTile();
+                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
+                            WorldGen.SlopeTile(x, y, 2);
+                            break;
+                        case TileID.GreenStucco:
+                            Main.tile[x, y].ClearTile();
+                            WorldGen.PlaceTile(x, y, ModContent.TileType<ShadestonePlatformTile>(), true, false, -1, 0);
+                            break;
+                    }
+                }
+            }
+            #endregion
+
+            GenUtils.ObjectPlace(440, 797, ModContent.TileType<ShadestoneCandleTile>());
+            //Chests
+        }
+        public SoullessPass2(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass3 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Sprinkling Spooky Pots";
+            #region Pots for Soulless Caverns
+            for (int num = 0; num < 1800; num++)
+            {
+                int xAxis = WorldGen.genRand.Next(1800 - 45);
+                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
+                {
+                    for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
+                    {
+                        if (Framing.GetTileSafely(DecoX, DecoY).TileType == ModContent.TileType<ShadestoneBrickTile>() && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
+                        {
+                            if (WorldGen.genRand.NextBool(20))
+                                WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadePots>(), true, Main.rand.Next(3));
+                        }
+                        if (Framing.GetTileSafely(DecoX, DecoY).TileType == ModContent.TileType<ShadestoneTile>() && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
+                        {
+                            if (WorldGen.genRand.NextBool(40))
+                                WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadePots>(), true, Main.rand.Next(3));
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
+        public SoullessPass3(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass4 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Growing Cysts";
+            #region Ambient Tiles
+            for (int i = 0; i < 1800; i++)
+            {
+                for (int j = 0; j < 1800; j++)
+                {
+                    ushort type = Framing.GetTileSafely(i, j).TileType;
+                    if ((type == ModContent.TileType<ShadestoneTile>() || type == ModContent.TileType<ShadestoneMossyTile>()) && !Framing.GetTileSafely(i, j - 1).HasTile && WorldGen.InWorld(i, j))
+                    {
+                        if (WorldGen.genRand.NextBool(10))
+                            WorldGen.PlaceObject(i, j - 1, ModContent.TileType<ShadeCyst>(), true);
+                    }
+                }
+            }
+            #endregion
+        }
+        public SoullessPass4(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass5 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Sprinkling Spooky Objects";
+            #region Random Deco for Soulless Caverns
+            for (int num = 0; num < 1800; num++)
+            {
+                int xAxis = WorldGen.genRand.Next(1800 - 45);
+                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
+                {
+                    for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
+                    {
+                        ushort type = Framing.GetTileSafely(DecoX, DecoY).TileType;
+                        if ((type == ModContent.TileType<ShadestoneTile>() || type == ModContent.TileType<ShadestoneMossyTile>()) && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
+                        {
+                            if (WorldGen.genRand.NextBool(3))
+                            {
+                                switch (WorldGen.genRand.Next(9))
+                                {
+                                    case 0:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco1>(), true);
+                                        break;
+                                    case 1:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco2>(), true);
+                                        break;
+                                    case 2:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco3>(), true);
+                                        break;
+                                    case 3:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco4>(), true);
+                                        break;
+                                    case 4:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco6>(), true);
+                                        break;
+                                    case 5:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco7>(), true);
+                                        break;
+                                    case 6:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco8>(), true);
+                                        break;
+                                    case 7:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco9>(), true);
+                                        break;
+                                    case 8:
+                                        WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco10>(), true);
+                                        break;
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (int num = 0; num < 1200; num++)
+            {
+                int xAxis = WorldGen.genRand.Next(1800 - 45);
+                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
+                {
+                    for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
+                    {
+                        if (Framing.GetTileSafely(DecoX, DecoY).WallType == ModContent.WallType<ShadestoneBrickWallTile>())
+                        {
+                            if (WorldGen.genRand.NextBool(1400))
+                                WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadeDeco5>(), true, Main.rand.Next(3));
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
+        public SoullessPass5(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass6 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Here, Have a Fungus";
+            #region Let it Grow  
+            //WorldGen.AddTrees();
+            for (int num = 0; num < 1800; num++)
+            {
+                int xAxis = WorldGen.genRand.Next(1800 - 45);
+                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
+                {
+                    for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
+                    {
+                        ushort type = Framing.GetTileSafely(DecoX, DecoY).TileType;
+                        if ((type == ModContent.TileType<ShadestoneMossyTile>() || type == ModContent.TileType<ShadestoneBrickMossyTile>()) && !Framing.GetTileSafely(DecoX, DecoY + 1).HasTile)
+                        {
+                            if (WorldGen.genRand.NextBool(15))
+                                WorldGen.PlaceObject(DecoX, DecoY + 1, ModContent.TileType<Nooseroot_Large>(), true, Main.rand.Next(3));
+                            if (WorldGen.genRand.NextBool(15))
+                                WorldGen.PlaceObject(DecoX, DecoY + 1, ModContent.TileType<Nooseroot_Medium>(), true, Main.rand.Next(3));
+                            if (WorldGen.genRand.NextBool(15))
+                                WorldGen.PlaceObject(DecoX, DecoY + 1, ModContent.TileType<Nooseroot_Small>(), true, Main.rand.Next(3));
+                        }
+                    }
+                }
+            }
+            #endregion
+        }
+        public SoullessPass6(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass7 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
+            progress.Message = "Smoothing Tiles";
+            int[] TileArray = { ModContent.TileType<ShadestoneTile>(),
+                ModContent.TileType<MasksTile>(),
+                ModContent.TileType<ShadestoneMossyTile>() };
+            for (int i = 0; i < 1800; i++)
+            {
+                for (int j = 0; j < 1800; j++)
+                {
+                    if (TileArray.Contains(Framing.GetTileSafely(i, j).TileType) && WorldGen.InWorld(i, j))
+                        BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
+                }
+            }
+            WorldGen.noTileActions = false;
+        }
+        public SoullessPass7(string name, float loadWeight) : base(name, loadWeight)
         {
         }
     }

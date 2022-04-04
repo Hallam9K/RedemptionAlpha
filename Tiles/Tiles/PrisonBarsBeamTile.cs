@@ -7,13 +7,15 @@ using Redemption.Items.Tools.PostML;
 
 namespace Redemption.Tiles.Tiles
 {
-    public class PrisonBarsTile : ModTile
+    public class PrisonBarsBeamTile : ModTile
     {
         public override void SetStaticDefaults()
         {
-            Main.tileSolid[Type] = true;
+            Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = false;
-            Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = false;
+            Main.tileBlockLight[Type] = false;
+            TileID.Sets.IsBeam[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneMossyTile>()] = true;
