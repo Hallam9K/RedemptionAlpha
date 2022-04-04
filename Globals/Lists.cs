@@ -47,6 +47,9 @@ using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Items.Tools.PostML;
+using Redemption.Items.Materials.PostML;
+using Redemption.NPCs.PostML;
+using Redemption.NPCs.Soulless;
 
 namespace Redemption.Globals
 {
@@ -320,9 +323,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Soulless
-        public static List<int> Soulless = new()
-        {
-        };
+        public static List<int> Soulless = new() { ModContent.NPCType<ShadesoulNPC>(), ModContent.NPCType<Shadebug>(), ModContent.NPCType<LaughingMaskBig>(), ModContent.NPCType<LaughingMaskMedium>(), ModContent.NPCType<LaughingMaskSmall>(), ModContent.NPCType<SoullessMarionette_Cross>(), ModContent.NPCType<SoullessMarionette_Doll>(), ModContent.NPCType<Echo>() };
         #endregion
 
         public static List<int> IsSlime = new() { NPCID.GreenSlime, NPCID.BlueSlime, NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.JungleSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.BabySlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.Pinky, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Slimer, NPCID.Slimer2, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>() };
