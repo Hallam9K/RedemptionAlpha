@@ -48,7 +48,6 @@ namespace Redemption.Globals.Player
         public bool necrosisDebuff;
         public bool shockDebuff;
         public bool antibodiesBuff;
-        public bool antiXenomiteBuff;
         public int infectionTimer;
         public bool eldritchRoot;
         public bool ensnared;
@@ -127,7 +126,6 @@ namespace Redemption.Globals.Player
             necrosisDebuff = false;
             shockDebuff = false;
             antibodiesBuff = false;
-            antiXenomiteBuff = false;
             pureIronBonus = false;
             dragonLeadBonus = false;
             eldritchRoot = false;
@@ -185,7 +183,6 @@ namespace Redemption.Globals.Player
             necrosisDebuff = false;
             shockDebuff = false;
             antibodiesBuff = false;
-            antiXenomiteBuff = false;
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;

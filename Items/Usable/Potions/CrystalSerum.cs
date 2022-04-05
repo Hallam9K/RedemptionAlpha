@@ -1,4 +1,6 @@
 using Redemption.Buffs;
+using Redemption.Buffs.Debuffs;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,26 +12,42 @@ namespace Redemption.Items.Usable.Potions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Anti-Crystallizer Serum");
-            Tooltip.SetDefault("Makes you immune to Xenomite for a while"
+            Tooltip.SetDefault("Reverts xenomite infection to a previous stage\n" +
+                "Cures green rashes\n"
                 + "\n'Label says 'Do not swallow.' Why would you do that?'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
         public override void SetDefaults()
         {
-            Item.UseSound = SoundID.Item3;           
-            Item.useStyle = ItemUseStyleID.EatFood;               
+            Item.UseSound = SoundID.Item3;
+            Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
-            Item.maxStack = 30;                
-            Item.consumable = true;          
+            Item.maxStack = 30;
+            Item.consumable = true;
             Item.width = 12;
             Item.height = 38;
             Item.value = 100;
-            Item.rare = ItemRarityID.Lime;
-            Item.buffType = ModContent.BuffType<AntiXenomiteBuff>();    
-            Item.buffTime = 500;    
-            return;
+            Item.rare = ItemRarityID.Green;
+            Item.buffType = ModContent.BuffType<SerumWithdrawalDebuff>();
+            Item.buffTime = 900;
+        }
+        public override bool CanUseItem(Player player) => !player.HasBuff<SerumWithdrawalDebuff>();
+        public override void OnConsumeItem(Player player)
+        {
+            if (player.HasBuff<GreenRashesDebuff>())
+                player.ClearBuff(ModContent.BuffType<GreenRashesDebuff>());
+            else if (player.HasBuff<GlowingPustulesDebuff>())
+            {
+                player.ClearBuff(ModContent.BuffType<GlowingPustulesDebuff>());
+                player.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 1800);
+            }
+            else if (player.HasBuff<FleshCrystalsDebuff>())
+            {
+                player.ClearBuff(ModContent.BuffType<FleshCrystalsDebuff>());
+                player.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 3600);
+            }
         }
     }
 }
