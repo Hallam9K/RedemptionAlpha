@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.ID;
 
-namespace Redemption.Buffs
+namespace Redemption.Buffs.Debuffs
 {
     public class SerumWithdrawalDebuff : ModBuff
     {
