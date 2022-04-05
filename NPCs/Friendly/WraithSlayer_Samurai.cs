@@ -329,18 +329,6 @@ namespace Redemption.NPCs.Friendly
 
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
-            {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-
-                new FlavorTextBestiaryInfoElement(
-                    "")
-            });
-        }
     }
     public class WraithSlayer_Slash : ModProjectile, ITrailProjectile
     {

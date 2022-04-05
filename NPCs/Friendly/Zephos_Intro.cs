@@ -138,7 +138,11 @@ namespace Redemption.NPCs.Friendly
                         NPC.velocity.X = -3;
                     }
                     if (AITimer >= 1200)
-                        NPC.Move(portal.Center, 6, 30);
+                    {
+                        NPC.noTileCollide = true;
+                        NPC.Move(portal.Center, 20, 30);
+                        NPC.alpha += 5;
+                    }
                     if (AITimer >= 1140)
                     {
                         NPC.rotation -= 0.1f;

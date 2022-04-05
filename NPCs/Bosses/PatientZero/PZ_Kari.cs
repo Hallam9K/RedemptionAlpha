@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.friendly = false;
             NPC.damage = 140;
             NPC.defense = 10;
-            NPC.lifeMax = 200000;
+            NPC.lifeMax = 120000;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath19;
             NPC.value = Item.buyPrice(0, 10, 0, 0);

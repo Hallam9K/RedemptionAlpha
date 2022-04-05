@@ -1,21 +1,11 @@
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.Erhan;
-using Redemption.NPCs.Bosses.Keeper;
-using Redemption.NPCs.Friendly;
-using Redemption.Projectiles.Misc;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Chat;
-using Terraria.DataStructures;
-using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.Utilities;
 
 namespace Redemption.Globals
 {
@@ -25,7 +15,7 @@ namespace Redemption.Globals
         public override void PostUpdateWorld()
         {
             #region Wayfarer Event
-            if (wayfarerVars[0] == 0 && Main.time == 1 && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
+            if (wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
             {
                 wayfarerVars[0] = 1;
 
