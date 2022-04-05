@@ -11,7 +11,7 @@ using Terraria.Audio;
 
 namespace Redemption.Sounds
 {
-    public class SoundLooper
+    public class SoundLooper // Code from Spirit Mod
     {
         private SoundEffectInstance _instance;
         private Mod _mod;
