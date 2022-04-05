@@ -35,7 +35,10 @@ namespace Redemption.Biomes
         {
             DisplayName.SetDefault("Soulless Caverns");
         }
-
+        public override void OnInBiome(Player player)
+        {
+            SoullessArea.Active = true;
+        }
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override bool IsBiomeActive(Player player)

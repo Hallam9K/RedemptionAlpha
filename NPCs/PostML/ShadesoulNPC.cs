@@ -14,9 +14,7 @@ namespace Redemption.NPCs.PostML
     public class ShadesoulNPC : ModNPC
     {
         public ref float Scale => ref NPC.ai[0];
-
         public ref float AITimer => ref NPC.ai[1];
-
         public ref float ThrowTimer => ref NPC.ai[2];
 
         public override void SetStaticDefaults()
@@ -70,7 +68,8 @@ namespace Redemption.NPCs.PostML
         public override void AI()
         {
             int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(),
-                NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2 + Scale);
+                0, 0, Scale: 2 + Scale);
+            Main.dust[dust].velocity *= 0;
             Main.dust[dust].noGravity = true;
 
             NPC.scale = 1 + Scale;

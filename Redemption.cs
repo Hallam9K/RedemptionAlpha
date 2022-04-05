@@ -12,6 +12,7 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.Particles;
+using Redemption.Sounds;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -123,7 +124,6 @@ namespace Redemption
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
-
         public override void PostSetupContent()
         {
             if (!Main.dedServ)
@@ -304,6 +304,7 @@ namespace Redemption
 
         public static TrailManager TrailManager;
         public bool Initialized;
+        public static SoundLooper soullessAmbience;
 
         public override void Load()
         {
@@ -343,9 +344,17 @@ namespace Redemption
 
             orig(self, gameTime);
         }
-
+        public override void PostUpdateInput()
+        {
+            soullessAmbience?.Update();
+        }
+        public override void PostSetupContent()
+        {
+            soullessAmbience = new SoundLooper(Mod, "Sounds/Custom/SoullessAmbient");
+        }
         public override void Unload()
         {
+            soullessAmbience = null;
             TrailManager = null;
             On.Terraria.Main.Update -= LoadTrailManager;
         }

@@ -14,6 +14,8 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Redemption.Items.Weapons.PostML.Melee;
 using Terraria.Utilities;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
 
 namespace Redemption.Globals.Player
 {
@@ -63,6 +65,16 @@ namespace Redemption.Globals.Player
                 "You are using the Spoiler branch, which as you can guess, contains spoilers we don't yet want to reveal to public.\n" +
                 "Keep your findings in this branch to yourself please.\n" +
                 "===============", 244, 71, 255);
+        }
+        public override void PreUpdate()
+        {
+            if (!Main.dedServ)
+            {
+                if (SubworldSystem.IsActive<SoullessSub>() && Player.InModBiome(ModContent.GetInstance<SoullessBiome>()))
+                    RedeSystem.soullessAmbience.SetTo(Main.ambientVolume);
+                else
+                    RedeSystem.soullessAmbience.Stop();
+            }
         }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
