@@ -1,4 +1,3 @@
-using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -20,7 +19,7 @@ namespace Redemption.Items.Usable.Potions
         public override void SetDefaults()
         {
             Item.UseSound = SoundID.Item3;
-            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
