@@ -26,7 +26,7 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.Falling[Type] = true;
             ItemDrop = ModContent.ItemType<ShadestoneRubble>();
             DustType = ModContent.DustType<ShadestoneDust>();
-            MinPick = 300;
+            MinPick = 225;
             MineResist = 6f;
             SoundType = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();

@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Soulless
             NPC.height = 14;
             NPC.damage = 60;
             NPC.defense = 30;
-            NPC.lifeMax = 1000;
+            NPC.lifeMax = 450;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath32;
             NPC.value = 0f;

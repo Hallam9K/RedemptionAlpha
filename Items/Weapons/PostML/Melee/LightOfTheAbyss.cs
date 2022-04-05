@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
         public override void SetDefaults()
         {
-            Item.damage = 690;
+            Item.damage = 310;
             Item.width = 66;
             Item.height = 70;
             Item.value = Item.sellPrice(0, 35, 0, 0);

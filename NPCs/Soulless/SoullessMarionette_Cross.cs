@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Soulless
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 16500;
+            NPC.lifeMax = 7425;
             NPC.damage = 0;
             NPC.defense = 0;
             NPC.knockBackResist = 0f;
