@@ -57,6 +57,13 @@ namespace Redemption.Globals.Player
         {
             Player.statLifeMax2 += medKit ? 50 : 0;
         }
+        public override void OnEnterWorld(Terraria.Player player)
+        {
+            Main.NewText("===IMPORTANT===\n" +
+                "You are using the Spoiler branch, which as you can guess, contains spoilers we don't yet want to reveal to public.\n" +
+                "Keep your findings in this branch to yourself please.\n" +
+                "===============", 244, 71, 255);
+        }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
