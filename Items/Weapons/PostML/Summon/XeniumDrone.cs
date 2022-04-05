@@ -26,7 +26,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
 
         public override void SetDefaults()
         {
-            Item.damage = 100;
+            Item.damage = 60;
             Item.DamageType = DamageClass.Summon;
             Item.width = 30;
             Item.height = 28;
