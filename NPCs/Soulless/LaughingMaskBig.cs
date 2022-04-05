@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Redemption.Globals;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -18,6 +19,7 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Laughing Mask");
             Main.npcFrameCount[NPC.type] = 3;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

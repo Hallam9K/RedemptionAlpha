@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -17,6 +18,7 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Soulless Marionette");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
