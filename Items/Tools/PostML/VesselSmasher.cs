@@ -21,7 +21,7 @@ namespace Redemption.Items.Tools.PostML
         }
         public override void SetDefaults()
         {
-            Item.damage = 1200;
+            Item.damage = 540;
             Item.DamageType = DamageClass.Melee;
             Item.width = 64;
             Item.height = 64;

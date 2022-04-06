@@ -96,6 +96,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(22, 26, 35)] = ModContent.TileType<ShadestoneMossyTile>(),
                 [new Color(0, 26, 35)] = ModContent.TileType<ShadestoneBrickMossyTile>(),
                 [new Color(0, 255, 255)] = ModContent.TileType<ShadestoneSlabTile>(),
+                [new Color(70, 70, 70)] = ModContent.TileType<ShadesteelChainTile>(),
                 [new Color(150, 150, 150)] = -2,
                 [Color.Black] = -1
             };
@@ -220,6 +221,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(255, 66, 200)] = TileID.GrayStucco,
                 [new Color(255, 120, 255)] = TileID.GreenStucco,
                 [new Color(100, 120, 255)] = TileID.HayBlock,
+                [new Color(100, 120, 200)] = TileID.AntiPortalBlock,
                 [new Color(233, 120, 233)] = TileID.SandStoneSlab,
                 [new Color(220, 0, 0)] = TileID.StoneSlab,
                 [new Color(200, 0, 0)] = TileID.AccentSlab,
@@ -345,6 +347,10 @@ namespace Redemption.WorldGeneration.Soulless
                         case TileID.HayBlock:
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelPortcullisClose>());
+                            break;
+                        case TileID.AntiPortalBlock:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelGateClose>());
                             break;
                         case TileID.SandStoneSlab:
                             Main.tile[x2, y2].ClearTile();

@@ -27,6 +27,7 @@ namespace Redemption.Tiles.Furniture.Shade
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
+			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newTile.CoordinateHeights = new[] { 18 };
 			TileObjectData.addTile(Type);
 

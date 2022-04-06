@@ -26,6 +26,7 @@ namespace Redemption.Tiles.Furniture.Shade
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = 5;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
             TileObjectData.newTile.Origin = new Point16(0, 4);
             TileObjectData.addTile(Type);

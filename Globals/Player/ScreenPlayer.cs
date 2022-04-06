@@ -89,6 +89,7 @@ namespace Redemption
 
                 ScreenShakeIntensity *= 0.9f;
             }
+            ScreenShakeIntensity = MathHelper.Clamp(ScreenShakeIntensity, 0, 100);
         }
     }
 }
