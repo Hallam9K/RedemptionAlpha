@@ -8,6 +8,7 @@ using Terraria.Enums;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Usable;
 using Terraria.Audio;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -19,6 +20,8 @@ namespace Redemption.Tiles.Furniture.Shade
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.NotReallySolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;
             TileObjectData.newTile.Width = 1;
@@ -56,6 +59,7 @@ namespace Redemption.Tiles.Furniture.Shade
             NetMessage.SendTileSquare(-1, left, top + 1, 2);
             return true;
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
         public override bool CanExplode(int i, int j) => false;
     }
@@ -67,6 +71,8 @@ namespace Redemption.Tiles.Furniture.Shade
             Main.tileBlockLight[Type] = false;
             Main.tileSolid[Type] = false;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.NotReallySolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;
             TileObjectData.newTile.Width = 1;
@@ -95,6 +101,7 @@ namespace Redemption.Tiles.Furniture.Shade
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
         public override bool RightClick(int i, int j)
         {

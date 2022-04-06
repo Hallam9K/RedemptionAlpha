@@ -97,6 +97,9 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(0, 26, 35)] = ModContent.TileType<ShadestoneBrickMossyTile>(),
                 [new Color(0, 255, 255)] = ModContent.TileType<ShadestoneSlabTile>(),
                 [new Color(70, 70, 70)] = ModContent.TileType<ShadesteelChainTile>(),
+                [new Color(200, 200, 100)] = ModContent.TileType<AncientAlloyBrickTile>(),
+                [new Color(200, 100, 200)] = ModContent.TileType<AncientAlloyPipeTile>(),
+                [new Color(100, 200, 200)] = ModContent.TileType<EvergoldBrickTile>(),
                 [new Color(150, 150, 150)] = -2,
                 [Color.Black] = -1
             };
@@ -366,6 +369,7 @@ namespace Redemption.WorldGeneration.Soulless
             #endregion
 
             GenUtils.ObjectPlace(440, 797, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(300, 749, ModContent.TileType<GiantShadesteelChainTile>());
             //Chests
 
             for (int i = 0; i < 1800; i++)
