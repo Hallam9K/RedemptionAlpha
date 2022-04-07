@@ -72,13 +72,11 @@ namespace Redemption.Globals
             for (int k = 0; k < labAccess.Length; k++)
                 labAccess[k] = false;
         }
-
         public override void OnWorldUnload()
         {
             for (int k = 0; k < labAccess.Length; k++)
                 labAccess[k] = false;
         }
-
         public override void SaveWorldData(TagCompound tag)
         {
             var lists = new List<string>();
@@ -90,14 +88,12 @@ namespace Redemption.Globals
             }
             tag["lists"] = lists;
         }
-
         public override void LoadWorldData(TagCompound tag)
         {
             var lists = tag.GetList<string>("lists");
             for (int k = 0; k < labAccess.Length; k++)
                 labAccess[k] = lists.Contains("LB" + k);
         }
-
         public override void NetSend(BinaryWriter writer)
         {
             var flags = new BitsByte();
@@ -105,7 +101,6 @@ namespace Redemption.Globals
                 flags[k] = labAccess[k];
             writer.Write(flags);
         }
-
         public override void NetReceive(BinaryReader reader)
         {
             BitsByte flags = reader.ReadByte();

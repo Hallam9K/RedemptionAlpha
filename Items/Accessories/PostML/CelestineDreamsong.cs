@@ -47,14 +47,11 @@ namespace Redemption.Items.Accessories.PostML
             player.AddBuff(ModContent.BuffType<DreamsongBuff>(), 10);
             if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {
-                for (int k = 0; k < 1; k++)
-                {
-                    int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, DustID.AncientLight);
-                    Main.dust[index].noGravity = true;
-                    Dust dust = Main.dust[index];
-                    dust.velocity.X -= player.velocity.X * 0.5f;
-                    dust.velocity.Y -= player.velocity.Y * 0.5f;
-                }
+                int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, DustID.AncientLight);
+                Main.dust[index].noGravity = true;
+                Dust dust = Main.dust[index];
+                dust.velocity.X -= player.velocity.X * 0.5f;
+                dust.velocity.Y -= player.velocity.Y * 0.5f;
             }
             if (player.ownedProjectileCounts[ModContent.ProjectileType<DreamsongLight_Visual>()] == 0)
                 Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), player.position, Vector2.Zero, ModContent.ProjectileType<DreamsongLight_Visual>(), 0, 0, player.whoAmI);

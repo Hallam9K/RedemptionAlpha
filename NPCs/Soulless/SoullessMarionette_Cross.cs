@@ -15,7 +15,6 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Marionette Cross");
             Main.npcFrameCount[NPC.type] = 4;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true};
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -80,6 +79,8 @@ namespace Redemption.NPCs.Soulless
                     }
                 }
             }
+            if (NPC.life <= NPC.lifeMax / 2)
+                doll.ai[1] = 2;
             if (NPC.DistanceSQ(doll.Center) > 800 * 800)
                 doll.velocity = doll.DirectionTo(NPC.position) * 4;
         }

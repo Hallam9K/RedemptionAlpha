@@ -16,6 +16,8 @@ using Redemption.Tiles.Furniture.Shade;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using System.Linq;
+using Redemption.NPCs.Soulless;
+using Terraria.DataStructures;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -39,6 +41,10 @@ namespace Redemption.WorldGeneration.Soulless
 
         public override void Load()
         {
+            Vector2 LostLight1Pos = new(378 * 16, 776 * 16);
+            if (!NPC.AnyNPCs(ModContent.NPCType<LostLight>()) && Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LostLight1Pos.X, (int)LostLight1Pos.Y, ModContent.NPCType<LostLight>());
+
             Main.cloudAlpha = 0;
             Main.numClouds = 0;
             Main.rainTime = 0;
@@ -49,7 +55,7 @@ namespace Redemption.WorldGeneration.Soulless
             Main.dayTime = true;
             Main.time = 40000;
         }
-        private double animationTimer = 0;
+        //private double animationTimer = 0;
         /*public override void DrawMenu(GameTime gameTime)
         {
             Texture2D soullessBackground = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessSubworldTex").Value;
@@ -369,7 +375,9 @@ namespace Redemption.WorldGeneration.Soulless
             #endregion
 
             GenUtils.ObjectPlace(440, 797, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(240, 765, ModContent.TileType<ShadestoneCandleTile>());
             GenUtils.ObjectPlace(300, 749, ModContent.TileType<GiantShadesteelChainTile>());
+            GenUtils.ObjectPlace(291, 763, ModContent.TileType<ShadestoneMirrorTile>());
             //Chests
 
             for (int i = 0; i < 1800; i++)

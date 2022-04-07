@@ -16,6 +16,8 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<AncientAlloyBrickTile>()] = true;
+            Main.tileMerge[ModContent.TileType<AncientDirtTile>()][Type] = true;
+            Main.tileMerge[ModContent.TileType<AncientAlloyBrickTile>()][Type] = true;
             DustType = DustID.GoldCoin;
             ItemDrop = ModContent.ItemType<EvergoldBrick>();
             MinPick = 500;

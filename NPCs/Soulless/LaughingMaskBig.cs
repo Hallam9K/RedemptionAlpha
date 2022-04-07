@@ -19,7 +19,6 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Laughing Mask");
             Main.npcFrameCount[NPC.type] = 3;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -76,7 +75,7 @@ namespace Redemption.NPCs.Soulless
                 vector.X = (float)(Math.Sin(angle) * 700);
                 vector.Y = (float)(Math.Cos(angle) * 700);
             }
-            if (NPC.DistanceSQ(player.Center) < 90 * 90 && NPC.ai[1] == 0)
+            if (NPC.ai[2] >= 60 && NPC.ai[1] == 0)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MaskLaugh3").WithVolume(.5f).WithPitchVariance(0.1f));
@@ -84,7 +83,7 @@ namespace Redemption.NPCs.Soulless
                 NPC.Shoot(NPC.Center, ProjectileID.LostSoulHostile, NPC.damage, RedeHelper.PolarVector(15, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item1.WithVolume(0));
                 NPC.ai[1] = 1;
             }
-            if (NPC.ai[1] == 1)
+            else if (NPC.ai[1] == 1)
             {
                 NPC.velocity = -NPC.DirectionTo(player.Center) * 7;
                 if (NPC.DistanceSQ(player.Center) > 2000 * 2000)
@@ -92,6 +91,9 @@ namespace Redemption.NPCs.Soulless
             }
             else
             {
+                if (NPC.Sight(player, 90, false, true))
+                    NPC.ai[2]++;
+
                 float speed = 14;
                 if (NPC.DistanceSQ(player.Center) < 1000 * 1000)
                     speed = 2;

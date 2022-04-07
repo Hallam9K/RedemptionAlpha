@@ -18,7 +18,6 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Soulless Marionette");
             Main.npcFrameCount[NPC.type] = 4;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -64,12 +63,18 @@ namespace Redemption.NPCs.Soulless
             if (NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Cross>()))
                 speed = 2;
 
-            NPC.Move(player.Center, speed, 40);
             if (NPC.ai[1] == 0)
             {
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y - 20, ModContent.NPCType<SoullessMarionette_Cross>(), NPC.whoAmI);
+                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y - 32, ModContent.NPCType<SoullessMarionette_Cross>(), NPC.whoAmI);
                 NPC.ai[1] = 1;
             }
+            else if (NPC.ai[1] == 1)
+            {
+                if (NPC.Sight(player, 600, false, true))
+                    NPC.ai[1] = 2;
+            }
+            else
+                NPC.Move(player.Center, speed, 40);
         }
         public override void FindFrame(int frameHeight)
         {
