@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
-using Redemption.Effects.PrimitiveTrails;
-using Redemption.Particles;
+﻿using Redemption.Effects.PrimitiveTrails;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;

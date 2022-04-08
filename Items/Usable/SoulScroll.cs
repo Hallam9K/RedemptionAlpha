@@ -8,7 +8,6 @@ using Redemption.Buffs.Cooldowns;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 using Terraria.DataStructures;
-using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Terraria.GameContent;
 using System.Collections.Generic;

@@ -1,7 +1,6 @@
 using CollisionLib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.BaseExtension;
 using Terraria;
 using Terraria.Audio;

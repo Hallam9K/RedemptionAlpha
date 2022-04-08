@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Kingdom;
 
 namespace Redemption.Items.Placeable.Furniture.Kingdom

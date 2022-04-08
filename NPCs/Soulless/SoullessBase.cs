@@ -7,8 +7,6 @@ using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
-using Terraria.GameContent.UI;
-using Terraria.Utilities;
 
 namespace Redemption.NPCs.Soulless
 {

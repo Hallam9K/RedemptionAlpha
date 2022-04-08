@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
-using Redemption.Items.Usable.Potions;
 using Redemption.Rarities;
 using Redemption.Textures;
 using Redemption.Tiles.Furniture.Shade;

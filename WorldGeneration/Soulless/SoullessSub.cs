@@ -16,8 +16,6 @@ using Redemption.Tiles.Furniture.Shade;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using System.Linq;
-using Redemption.NPCs.Soulless;
-using Terraria.DataStructures;
 
 namespace Redemption.WorldGeneration.Soulless
 {

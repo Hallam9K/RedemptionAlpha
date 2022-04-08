@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.Collections.Generic;
 using Redemption.Buffs;
-using Redemption.Buffs.Debuffs;
 using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 using Redemption.BaseExtension;

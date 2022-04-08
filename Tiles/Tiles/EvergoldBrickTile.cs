@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Tiles.Ores;
 
 namespace Redemption.Tiles.Tiles
 {

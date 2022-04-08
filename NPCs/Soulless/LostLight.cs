@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using Redemption.Base;
-using Redemption.Effects.PrimitiveTrails;
 using Terraria.GameContent.Bestiary;
 using Redemption.Biomes;
 using ParticleLibrary;

@@ -8,8 +8,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using ParticleLibrary;
-using Redemption.Particles;
 
 namespace Redemption.Projectiles.Magic
 {

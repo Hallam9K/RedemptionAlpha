@@ -50,6 +50,7 @@ namespace Redemption.Items.Usable
             }
             player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<SlayerGun>());
             player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<SlayerMedal>());
+            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<Holokey>());
             player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12));
         }
 

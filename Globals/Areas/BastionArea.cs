@@ -1,20 +1,10 @@
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.NPCs.Friendly;
-using Redemption.NPCs.Lab;
-using Redemption.NPCs.Lab.Behemoth;
-using Redemption.NPCs.Lab.Blisterface;
-using Redemption.NPCs.Lab.Janitor;
-using Redemption.NPCs.Lab.MACE;
-using Redemption.NPCs.Lab.Volt;
 using Redemption.WorldGeneration;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace Redemption.Globals
 {

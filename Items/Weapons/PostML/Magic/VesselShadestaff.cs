@@ -5,7 +5,6 @@ using Redemption.Projectiles.Magic;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Dusts;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;

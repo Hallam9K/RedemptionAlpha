@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
-using Redemption.Buffs.Debuffs;
 using Redemption.Projectiles.Magic;
 using Redemption.Rarities;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -4,7 +4,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Terraria.Localization;
 
 namespace Redemption.Globals.NPC
 {

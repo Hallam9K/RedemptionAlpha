@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Biomes;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Tools.PostML;
 using Redemption.NPCs.Critters;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Natural;

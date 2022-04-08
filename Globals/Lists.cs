@@ -47,7 +47,6 @@ using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Items.Tools.PostML;
-using Redemption.Items.Materials.PostML;
 using Redemption.NPCs.PostML;
 using Redemption.NPCs.Soulless;
 

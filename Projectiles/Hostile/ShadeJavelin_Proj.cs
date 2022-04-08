@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Redemption.Dusts;
 using Terraria.Audio;
 using Redemption.BaseExtension;

@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable

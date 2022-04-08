@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ParticleLibrary;
 using Redemption.Backgrounds.Skies;
+using Redemption.CrossMod;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
@@ -134,6 +134,7 @@ namespace Redemption
                     OnBodyDraw.ReigsterBodies();
                 });
             }
+            WeakReferences.PerformModSupport();
         }
 
         public static void PremultiplyTexture(ref Texture2D texture)

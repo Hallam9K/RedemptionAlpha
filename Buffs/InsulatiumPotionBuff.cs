@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Projectiles.Minions;
-using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

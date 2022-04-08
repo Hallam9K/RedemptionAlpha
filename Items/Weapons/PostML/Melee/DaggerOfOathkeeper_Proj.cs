@@ -6,7 +6,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Redemption.NPCs.Friendly;
 using Redemption.BaseExtension;
 using Redemption.Projectiles.Melee;
 using Redemption.Buffs.Debuffs;

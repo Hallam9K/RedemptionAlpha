@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Redemption.Buffs;
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Rarities;
 using Terraria.GameContent.Creative;
 using Redemption.Textures;
