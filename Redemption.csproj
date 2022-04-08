@@ -14,6 +14,12 @@
     <Reference Include="CollisionLib">
       <HintPath>..\..\ModReader\CollisionLib\CollisionLib.dll</HintPath>
     </Reference>
+    <Reference Include="ParticleLibrary">
+      <HintPath>..\Mod Libraries\ParticleLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureHelper">
+      <HintPath>..\Mod Libraries\StructureHelper_v2.0.0.dll</HintPath>
+    </Reference>
     <Reference Include="SubworldLibrary">
       <HintPath>..\..\ModReader\SubworldLibrary\SubworldLibrary.dll</HintPath>
     </Reference>

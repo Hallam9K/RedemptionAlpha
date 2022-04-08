@@ -14,6 +14,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Particles;
+using ParticleLibrary;
 
 namespace Redemption.Globals.NPC
 {
@@ -389,11 +391,9 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
             {
                 drawColor = new Color(220, 150, 150);
-                if (Main.rand.NextBool(5))
+                if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
-                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.FlameBurst, Scale: 2);
-                    Main.dust[sparkle].velocity *= 0.3f;
-                    Main.dust[sparkle].noGravity = true;
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
                 }
             }
             if (iceFrozen)
@@ -438,11 +438,9 @@ namespace Redemption.Globals.NPC
             }
             if (dreamsong)
             {
-                if (Main.rand.Next(3) < 3)
+                if (Main.rand.NextBool(10) && !Main.gamePaused)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.AncientLight);
-                    dust.noGravity = true;
-                    dust.velocity = -npc.DirectionTo(dust.position) * 3;
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new SoulParticle(), Color.White, 0.2f);
                 }
             }
             if (lacerated)

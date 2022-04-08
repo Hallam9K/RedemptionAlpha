@@ -11,6 +11,8 @@ using Redemption.Base;
 using Redemption.Effects.PrimitiveTrails;
 using Terraria.GameContent.Bestiary;
 using Redemption.Biomes;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -29,13 +31,14 @@ namespace Redemption.NPCs.Soulless
             NPC.lifeMax = 250;
             NPC.damage = 0;
             NPC.knockBackResist = 0f;
-            NPC.width = 8;
-            NPC.height = 8;
+            NPC.width = 30;
+            NPC.height = 30;
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
             NPC.immortal = true;
+            NPC.rarity = 3;
             NPC.alpha = 255;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
         }
@@ -52,6 +55,8 @@ namespace Redemption.NPCs.Soulless
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
+
+            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC), RedeHelper.Spread(1) - NPC.velocity / 4, new SoulParticle(), Color.White * 0.02f, 2, 0, -0.9f);
 
             Vector2 vector;
             double angle2 = Main.rand.NextDouble() * 2d * Math.PI;
@@ -135,6 +140,8 @@ namespace Redemption.NPCs.Soulless
                             NPC.alpha += 2;
                             if (NPC.alpha >= 255)
                             {
+                                for (int i = 0; i < 50; i++)
+                                    Main.BestiaryTracker.Kills.RegisterKill(NPC);
                                 CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Kliq...", true, false);
                                 NPC.active = false;
                             }
@@ -179,33 +186,8 @@ namespace Redemption.NPCs.Soulless
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(".")
+                new FlavorTextBestiaryInfoElement("Spirits of those freed of sorrow. They offer light to the misplaced and misfortuned, a miracle in the darkest depths. Their guidance, however, is seldom understood for newcomers, for the ancient tongue of which they speak has been lost to the ages.")
             });
-        }
-    }
-    public class LostLight_Trail : ModProjectile, ITrailProjectile
-    {
-        public override string Texture => Redemption.EMPTY_TEXTURE;
-        public override void SetDefaults()
-        {
-            Projectile.width = 8;
-            Projectile.height = 8;
-            Projectile.friendly = false;
-            Projectile.hostile = false;
-            Projectile.penetrate = -1;
-            Projectile.ignoreWater = true;
-        }
-        public override void AI()
-        {
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<LostLight>())
-                Projectile.Kill();
-            Projectile.Center = npc.Center;
-            Projectile.timeLeft = 10;
-        }
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 60f, 450f);
         }
     }
 }

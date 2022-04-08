@@ -9,6 +9,10 @@ using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
 using Terraria.DataStructures;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Particles;
+using ParticleLibrary;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -18,6 +22,17 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Soulless Marionette");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Bleeding,
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>(),
+                    ModContent.BuffType<BlackenedHeartDebuff>()
+                }
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -26,7 +41,7 @@ namespace Redemption.NPCs.Soulless
             NPC.aiStyle = -1;
             NPC.lifeMax = 2475;
             NPC.damage = 90;
-            NPC.defense = 0;
+            NPC.defense = 12;
             NPC.knockBackResist = 0f;
             NPC.width = 36;
             NPC.height = 92;
@@ -43,6 +58,9 @@ namespace Redemption.NPCs.Soulless
         {
             if (NPC.life <= 0)
             {
+                for (int i = 0; i < 6; i++)
+                    ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(4), new SoulParticle(), Color.White, 1);
+
                 for (int i = 0; i < 30; i++)
                 {
                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(), Scale: 2);

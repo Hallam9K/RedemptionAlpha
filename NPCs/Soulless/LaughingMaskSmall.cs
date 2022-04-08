@@ -10,6 +10,10 @@ using Redemption.Globals;
 using Terraria.GameContent.Bestiary;
 using Redemption.Biomes;
 using Terraria.DataStructures;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Particles;
+using ParticleLibrary;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -19,6 +23,17 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Laughing Mask");
             Main.npcFrameCount[NPC.type] = 3;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Bleeding,
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>(),
+                    ModContent.BuffType<BlackenedHeartDebuff>()
+                }
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -28,7 +43,7 @@ namespace Redemption.NPCs.Soulless
             NPC.aiStyle = -1;
             NPC.lifeMax = 1800;
             NPC.damage = 80;
-            NPC.defense = 0;
+            NPC.defense = 12;
             NPC.knockBackResist = 0f;
             NPC.width = 20;
             NPC.height = 26;
@@ -44,6 +59,9 @@ namespace Redemption.NPCs.Soulless
         {
             if (NPC.life <= 0)
             {
+                for (int i = 0; i < 6; i++)
+                    ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(4), new SoulParticle(), Color.White, 1);
+
                 for (int i = 0; i < 20; i++)
                 {
                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<MaskDust>(), Scale: 2);

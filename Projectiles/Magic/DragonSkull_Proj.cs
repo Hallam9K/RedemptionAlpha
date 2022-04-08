@@ -8,6 +8,8 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -71,9 +73,11 @@ namespace Redemption.Projectiles.Magic
                 if (Projectile.ai[0] == 40)
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
+                {
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center,
                         RedeHelper.PolarVector(8, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ProjectileID.Flames,
                         Projectile.damage, Projectile.knockBack, Projectile.owner);
+                }
 
                 if (Projectile.ai[0] == 180)
                 {

@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Biomes;
 using Terraria.DataStructures;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -15,6 +17,17 @@ namespace Redemption.NPCs.Soulless
         {
             DisplayName.SetDefault("Marionette Cross");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Bleeding,
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>(),
+                    ModContent.BuffType<BlackenedHeartDebuff>()
+                }
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true};
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

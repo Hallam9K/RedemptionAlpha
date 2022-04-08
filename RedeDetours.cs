@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Particles;
 using System.Collections.Generic;
@@ -18,22 +19,11 @@ namespace Redemption
         {
             On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
             On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float += Projectile_NewProjectile;
-            On.Terraria.Main.DrawDust += Main_DrawDust;
         }
         public static void Unload()
         {
             On.Terraria.Main.DrawProjectiles -= Main_DrawProjectiles;
             On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float -= Projectile_NewProjectile;
-            On.Terraria.Main.DrawDust -= Main_DrawDust;
-        }
-        private static void Main_DrawDust(On.Terraria.Main.orig_DrawDust orig, Main self)
-        {
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-            ParticleManager.PreUpdate(Main.spriteBatch);
-            ParticleManager.Update(Main.spriteBatch);
-            ParticleManager.PostUpdate(Main.spriteBatch);
-            Main.spriteBatch.End();
-            orig(self);
         }
         private static void Main_DrawProjectiles(On.Terraria.Main.orig_DrawProjectiles orig, Main self)
         {
@@ -93,10 +83,6 @@ namespace Redemption
                     Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, index).Send();
             }
             return index;
-        }
-        public static void NewParticle(Vector2 Position, Vector2 Velocity, Particle Type, Color Color, float Scale, float AI0 = 0, float AI1 = 0, float AI2 = 0, float AI3 = 0, float AI4 = 0, float AI5 = 0, float AI6 = 0, float AI7 = 0)
-        {
-
         }
     }
 }

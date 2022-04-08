@@ -5334,7 +5334,11 @@ namespace Redemption.Base
                 npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
 
                 if (damager is NPC)
+                {
+                    NPCLoader.ModifyHitNPC(damager as NPC, npc, ref parsedDamage, ref knockback, ref crit);
+                    NPCLoader.OnHitNPC(damager as NPC, npc, parsedDamage, knockback, crit);
                     npc.Redemption().attacker = damager;
+                }
 
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {

@@ -41,10 +41,6 @@ namespace Redemption.WorldGeneration.Soulless
 
         public override void Load()
         {
-            Vector2 LostLight1Pos = new(378 * 16, 776 * 16);
-            if (!NPC.AnyNPCs(ModContent.NPCType<LostLight>()) && Main.netMode != NetmodeID.MultiplayerClient)
-                NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LostLight1Pos.X, (int)LostLight1Pos.Y, ModContent.NPCType<LostLight>());
-
             Main.cloudAlpha = 0;
             Main.numClouds = 0;
             Main.rainTime = 0;

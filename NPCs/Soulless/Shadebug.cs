@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework;
+using ParticleLibrary;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Particles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -40,6 +43,17 @@ namespace Redemption.NPCs.Soulless
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Bleeding,
+                    BuffID.Poisoned,
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>(),
+                    ModContent.BuffType<BlackenedHeartDebuff>()
+                }
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1
@@ -206,7 +220,7 @@ namespace Redemption.NPCs.Soulless
                 if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
                     continue;
 
-                if (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                if (target.lifeMax <= 5)
                     continue;
 
                 if (nearestNPCDist != -1 && !(target.Distance(NPC.Center) < nearestNPCDist))
@@ -253,6 +267,9 @@ namespace Redemption.NPCs.Soulless
             }
             if (NPC.life <= 0)
             {
+                for (int i = 0; i < 2; i++)
+                    ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(4), new SoulParticle(), Color.White, 0.5f);
+
                 for (int i = 0; i < 8; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(), Scale: 2);
             }
