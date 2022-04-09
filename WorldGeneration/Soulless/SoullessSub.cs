@@ -36,8 +36,7 @@ namespace Redemption.WorldGeneration.Soulless
             new SoullessPass6("Here, Have a Fungus", 0.01f),
             new SoullessPass7("Smoothing Tiles", 0.01f)
         };
-
-        public override void Load()
+        public override void OnLoad()
         {
             Main.cloudAlpha = 0;
             Main.numClouds = 0;
@@ -68,7 +67,7 @@ namespace Redemption.WorldGeneration.Soulless
             if (animationTimer > 5)
                 animationTimer = 5;
         }*/
-        public override void Unload()
+        public override void OnUnload()
         {
         }
     }
