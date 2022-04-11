@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false ? null : false;
+        public override bool? CanHitNPC(NPC target) => false;
 
         public override void HitEffect(int hitDirection, double damage)
         {

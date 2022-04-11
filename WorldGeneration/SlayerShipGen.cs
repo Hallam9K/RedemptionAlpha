@@ -28,11 +28,23 @@ namespace Redemption.WorldGeneration
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipClear", AssetRequestMode.ImmediateLoad).Value;
-            Main.QueueMainThreadAction(() =>
+            bool genned = false;
+            bool placed = false;
+            while (!genned)
             {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
+                    gen.Generate(origin.X, origin.Y, true, true);
+
+                    genned = true;
+                });
+
+                placed = true;
+            }
             return true;
         }
     }
@@ -63,11 +75,23 @@ namespace Redemption.WorldGeneration
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShip", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWalls", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipSlopes", AssetRequestMode.ImmediateLoad).Value;
-            Main.QueueMainThreadAction(() =>
+            bool genned = false;
+            bool placed = false;
+            while (!genned)
             {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
+                    gen.Generate(origin.X, origin.Y, true, true);
+
+                    genned = true;
+                });
+
+                placed = true;
+            }
             return true;
         }
     }

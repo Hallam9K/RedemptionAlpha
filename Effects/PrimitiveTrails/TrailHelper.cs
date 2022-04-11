@@ -603,8 +603,8 @@ namespace Redemption.Effects.PrimitiveTrails
             position -= Main.screenPosition;
 
             //create initial vertices
-            VertexPositionColorTexture center = new VertexPositionColorTexture(new Vector3(position.X, position.Y, 0f), colour, Vector2.One * 0.5f);
-            VertexPositionColorTexture prev = new VertexPositionColorTexture(new Vector3(position.X + x, position.Y + y, 0f), colour, Vector2.One);
+            VertexPositionColorTexture center = new(new Vector3(position.X, position.Y, 0f), colour, Vector2.One * 0.5f);
+            VertexPositionColorTexture prev = new(new Vector3(position.X + x, position.Y + y, 0f), colour, Vector2.One);
 
             for (int i = 0; i < segments; i++)
             {
@@ -613,7 +613,7 @@ namespace Redemption.Effects.PrimitiveTrails
                 x = cos * x - sin * y;
                 y = sin * t + cos * y;
 
-                VertexPositionColorTexture next = new VertexPositionColorTexture(new Vector3(position.X + x, position.Y + y, 0f), colour, Vector2.One);
+                VertexPositionColorTexture next = new(new Vector3(position.X + x, position.Y + y, 0f), colour, Vector2.One);
 
                 //Add triangle vertices
                 array[currentIndex++] = center;
