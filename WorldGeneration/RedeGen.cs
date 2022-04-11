@@ -37,7 +37,7 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Tiles.MusicBoxes;
 using Redemption.Tiles.Furniture.Archcloth;
 using Redemption.NPCs.Bosses.KSIII;
-using StructureHelper;
+using Redemption.StructureHelper;
 
 namespace Redemption.WorldGeneration
 {
@@ -402,14 +402,14 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Vector2 origin = new(tilesX, tilesY);
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomR", origin.ToPoint16(), Mod);
+                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomRRede", origin.ToPoint16(), Mod);
                             for (int i = 0; i < roomNum - 2; i++)
                             {
                                 origin.X += 25;
-                                Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomLR", origin.ToPoint16(), Mod);
+                                Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomLRRede", origin.ToPoint16(), Mod);
                             }
                             origin.X += 25;
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomL", origin.ToPoint16(), Mod);
+                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomLRede", origin.ToPoint16(), Mod);
 
                             for (int x = 0; x < 25 * roomNum; x++)
                             {
@@ -443,27 +443,6 @@ namespace Redemption.WorldGeneration
             }
             if (ShiniesIndex2 != -1)
             {
-                tasks.Insert(ShiniesIndex2 - 10, new PassLegacy("Waiting", delegate (GenerationProgress progress, GameConfiguration configuration)
-                {
-                    progress.Message = "Beep Boop";
-                    while (timer++ < 5000000)
-                        continue;
-                    timer = 0;
-                }));
-                tasks.Insert(ShiniesIndex2 - 1, new PassLegacy("Waiting 2", delegate (GenerationProgress progress, GameConfiguration configuration)
-                {
-                    progress.Message = "Beep Boop";
-                    while (timer++ < 5000000)
-                        continue;
-                    timer = 0;
-                }));
-                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Waiting 3", delegate (GenerationProgress progress, GameConfiguration configuration)
-                {
-                    progress.Message = "Beep Boop";
-                    while (timer++ < 5000000)
-                        continue;
-                    timer = 0;
-                }));
                 tasks.Insert(ShiniesIndex2, new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Placing the Abandoned Lab in the island which is not\nactually canonically meant to be there but that'll change in 0.9";
@@ -903,7 +882,7 @@ namespace Redemption.WorldGeneration
                         {
                             new Actions.SetLiquid(0, 0)
                         }));
-                        Generator.GenerateStructure("WorldGeneration/HallOfHeroes", origin2, Mod);
+                        Generator.GenerateStructure("WorldGeneration/HallOfHeroesRede", origin2, Mod);
 
                         HallOfHeroesVector = origin2.ToVector2();
                         placed = true;

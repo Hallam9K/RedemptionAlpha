@@ -12,6 +12,7 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.Particles;
+using Redemption.StructureHelper;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -122,6 +123,10 @@ namespace Redemption
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
+        }
+        public override void Unload()
+        {
+            Generator.StructureDataCache.Clear();
         }
 
         public override void PostSetupContent()
@@ -477,74 +482,6 @@ namespace Redemption
                 Utils.DrawBorderString(spriteBatch, "Raveyard", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, 0.8f, 0.3f, 0.4f);
             }
         }
-        #endregion
-
-        #region StructureHelper Draw
-        /*public override void PostDrawInterface(SpriteBatch spriteBatch)
-        {
-            if (Main.LocalPlayer.HeldItem.ModItem is CopyWand)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Texture2D tex = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/corner");
-                Texture2D tex2 = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/box1");
-                Point16 TopLeft = (Main.LocalPlayer.HeldItem.ModItem as CopyWand).TopLeft;
-                int Width = (Main.LocalPlayer.HeldItem.ModItem as CopyWand).Width;
-                int Height = (Main.LocalPlayer.HeldItem.ModItem as CopyWand).Height;
-
-                float tileScale = 16 * Main.GameViewMatrix.Zoom.Length() * 0.707106688737f;
-                Vector2 pos = (Main.MouseWorld / tileScale).ToPoint16().ToVector2() * tileScale - Main.screenPosition;
-                pos = Vector2.Transform(pos, Matrix.Invert(Main.GameViewMatrix.ZoomMatrix));
-                pos = Vector2.Transform(pos, Main.UIScaleMatrix);
-
-                spriteBatch.Draw(tex, pos, tex.Frame(), Color.White * 0.5f, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                if (Width != 0)
-                {
-                    spriteBatch.Draw(tex2, new Rectangle((int)(TopLeft.X * 16 - Main.screenPosition.X), (int)(TopLeft.Y * 16 - Main.screenPosition.Y), Width * 16 + 16, Height * 16 + 16), tex2.Frame(), Color.White * 0.15f);
-                    spriteBatch.Draw(tex, (TopLeft.ToVector2() + new Vector2(Width + 1, Height + 1)) * 16 - Main.screenPosition, tex.Frame(), Color.Red, 0, tex.Frame().Size() / 2, 1, 0, 0);
-                }
-                spriteBatch.Draw(tex, TopLeft.ToVector2() * 16 - Main.screenPosition, tex.Frame(), Color.Cyan, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
-            }
-
-            if (Main.LocalPlayer.HeldItem.ModItem is MultiWand)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Texture2D tex = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/corner");
-                Texture2D tex2 = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/box1");
-                Point16 TopLeft = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).TopLeft;
-                int Width = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).Width;
-                int Height = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).Height;
-                int count = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).StructureCache.Count;
-
-                float tileScale = 16 * Main.GameViewMatrix.Zoom.Length() * 0.707106688737f;
-                Vector2 pos = (Main.MouseWorld / tileScale).ToPoint16().ToVector2() * tileScale - Main.screenPosition;
-                pos = Vector2.Transform(pos, Matrix.Invert(Main.GameViewMatrix.ZoomMatrix));
-                pos = Vector2.Transform(pos, Main.UIScaleMatrix);
-
-                spriteBatch.Draw(tex, pos, tex.Frame(), Color.White * 0.5f, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                if (Width != 0)
-                {
-                    spriteBatch.Draw(tex2, new Rectangle((int)(TopLeft.X * 16 - Main.screenPosition.X), (int)(TopLeft.Y * 16 - Main.screenPosition.Y), Width * 16 + 16, Height * 16 + 16), tex2.Frame(), Color.White * 0.15f);
-                    spriteBatch.Draw(tex, (TopLeft.ToVector2() + new Vector2(Width + 1, Height + 1)) * 16 - Main.screenPosition, tex.Frame(), Color.Yellow, 0, tex.Frame().Size() / 2, 1, 0, 0);
-                }
-                spriteBatch.Draw(tex, TopLeft.ToVector2() * 16 - Main.screenPosition, tex.Frame(), Color.LimeGreen, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                spriteBatch.End();
-                spriteBatch.Begin();
-                Utils.DrawBorderString(spriteBatch, "Structures to save: " + count, Main.MouseScreen + new Vector2(0, 30), Color.White);
-
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
-            }
-        }*/
         #endregion
     }
 }
