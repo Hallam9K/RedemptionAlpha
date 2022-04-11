@@ -96,6 +96,7 @@ namespace Redemption.Items.Donator.Rain
         {
             DisplayName.SetDefault("Tail of a Living Weapon");
             Tooltip.SetDefault("'You can feel every twitch, even the slightest breeze'");
+            ArmorIDs.Back.Sets.DrawInTailLayer[Mod.GetEquipSlot(Name, EquipType.Back)] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

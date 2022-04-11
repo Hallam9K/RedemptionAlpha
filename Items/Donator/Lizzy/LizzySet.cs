@@ -114,6 +114,7 @@ namespace Redemption.Items.Donator.Lizzy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Beezard Abdomen");
+            ArmorIDs.Back.Sets.DrawInTailLayer[Mod.GetEquipSlot(Name, EquipType.Back)] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
