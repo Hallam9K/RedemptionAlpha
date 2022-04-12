@@ -54,7 +54,7 @@ namespace Redemption.Tiles.Natural
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int p = Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2((i + Main.rand.NextFloat(1, 4)) * 16f, (j + Main.rand.NextFloat(1, 2.5f)) * 16f), RedeHelper.PolarVector(Main.rand.Next(3, 14), Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<Echo_Friendly>(), 300, 0, Main.myPlayer);
-                    Main.projectile[p].DamageType = DamageClass.NoScaling;
+                    Main.projectile[p].DamageType = DamageClass.Default;
                     Main.projectile[p].netUpdate2 = true;
                 }
             }

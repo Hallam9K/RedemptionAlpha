@@ -16,7 +16,7 @@ namespace Redemption.Buffs
 		{
             player.statLifeMax2 -= (int)(player.statLifeMax2 * 0.4f);
             player.GetDamage(DamageClass.Generic) += 0.15f;
-            player.meleeSpeed += 0.08f;
+            player.GetAttackSpeed(DamageClass.Melee) += 0.08f;
             player.bleed = true;
         }
     }

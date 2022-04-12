@@ -13,6 +13,7 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.Particles;
+using Redemption.Sounds;
 using Redemption.StructureHelper;
 using Redemption.UI;
 using ReLogic.Content;
