@@ -42,7 +42,7 @@ namespace Redemption.Globals
         public float SetSwingSpeed(float speed)
         {
             Terraria.Player player = Main.player[Projectile.owner];
-            return speed * player.meleeSpeed;
+            return speed * player.GetAttackSpeed(DamageClass.Melee);
         }
 
         public virtual void SetSafeDefaults() { }

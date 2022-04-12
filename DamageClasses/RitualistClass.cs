@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.DamageClasses
@@ -8,12 +9,20 @@ namespace Redemption.DamageClasses
         {
             ClassName.SetDefault("ritual damage");
         }
-        protected override float GetBenefitFrom(DamageClass damageClass)
+        public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
         {
-            
             if (damageClass == Generic)
-                return 1f;
-            return 0f;
+                return StatInheritanceData.Full;
+
+            return StatInheritanceData.None;
         }
+
+        public override bool GetEffectInheritance(DamageClass damageClass) => false;
+
+        public override void SetDefaultStats(Player player)
+        {
+            player.GetCritChance<RitualistClass>() += 4;
+        }
+        public override bool UseStandardCritCalcs => true;
     }
 }

@@ -177,7 +177,7 @@ namespace Redemption.Globals
                 if (item.CountsAsClass(DamageClass.Ranged))
                 {
                     if (item.damage > 0)
-                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged));
+                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged).Multiplicative);
                 }
                 else
                     damage += item.damage;
@@ -328,7 +328,7 @@ namespace Redemption.Globals
         public static bool HeldItemCrit(this Projectile projectile)
         {
             Terraria.Player player = Main.player[projectile.owner];
-            int critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
+            float critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
             ItemLoader.ModifyWeaponCrit(player.HeldItem, player, ref critChance);
             PlayerLoader.ModifyWeaponCrit(player, player.HeldItem, ref critChance);
             if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
