@@ -269,17 +269,17 @@ namespace Redemption.Globals.NPC
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (bileDebuff)
-                player.armorPenetration += 15;
+                player.GetArmorPenetration(DamageClass.Generic) += 15;
             if (infected)
-                player.armorPenetration += 20;
+                player.GetArmorPenetration(DamageClass.Generic) += 20;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Terraria.Player player = Main.player[projectile.owner];
             if (bileDebuff)
-                player.armorPenetration += 15;
+                player.GetArmorPenetration(DamageClass.Generic) += 15;
             if (infected)
-                player.armorPenetration += 20;
+                player.GetArmorPenetration(DamageClass.Generic) += 20;
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {

@@ -72,20 +72,10 @@ namespace Redemption.Globals.Player
         public bool MetalSet;
         public bool WastelandWaterImmune;
 
-        public int MeleeDamageFlat;
-        public int DruidDamageFlat;
         public float TrueMeleeDamage = 1f;
 
         public float[] ElementalResistance = new float[14];
         public float[] ElementalDamage = new float[14];
-
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
-        {
-            if (item.CountsAsClass(DamageClass.Melee))
-                flat += MeleeDamageFlat;
-            if (item.CountsAsClass<DruidClass>())
-                flat += DruidDamageFlat;
-        }
 
         public override void ResetEffects()
         {
@@ -95,8 +85,6 @@ namespace Redemption.Globals.Player
             thornCirclet = false;
             skeletonFriendly = false;
             heartInsignia = false;
-            MeleeDamageFlat = 0;
-            DruidDamageFlat = 0;
             MetalSet = false;
             spiderSwarmed = false;
             greenRashes = false;

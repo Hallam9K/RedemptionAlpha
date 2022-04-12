@@ -13,7 +13,7 @@ namespace Redemption.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.armorPenetration += 16;
+            player.GetArmorPenetration(DamageClass.Generic) += 16;
         }
     }
 }

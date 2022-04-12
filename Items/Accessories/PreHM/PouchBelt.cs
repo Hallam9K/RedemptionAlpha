@@ -34,7 +34,7 @@ namespace Redemption.Items.Accessories.PreHM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-            player.RedemptionPlayerBuff().DruidDamageFlat += 2;
+            player.GetDamage<DruidClass>().Flat += 2;
             player.GetCritChance<DruidClass>() += 2;
 		}
 	}

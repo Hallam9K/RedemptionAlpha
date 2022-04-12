@@ -1,19 +1,28 @@
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.DamageClasses
 {
     public class DruidClass : DamageClass
     {
-        public override void SetStaticDefaults()
-        {
-            ClassName.SetDefault("druidic damage");
-        }
-        protected override float GetBenefitFrom(DamageClass damageClass)
-        {
+		public override void SetStaticDefaults()
+		{
+			ClassName.SetDefault("druidic damage");
+		}
+		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
+		{
+			if (damageClass == Generic)
+				return StatInheritanceData.Full;
 
-            if (damageClass == Generic)
-                return 1f;
-            return 0f;
-        }
-    }
+			return StatInheritanceData.None;
+		}
+
+		public override bool GetEffectInheritance(DamageClass damageClass) => false;
+
+		public override void SetDefaultStats(Player player)
+		{
+			player.GetCritChance<DruidClass>() += 4;
+		}
+		public override bool UseStandardCritCalcs => true;
+	}
 }
