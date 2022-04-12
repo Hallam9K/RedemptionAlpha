@@ -12,7 +12,7 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.Particles;
-using Redemption.StructureHelper;
+using Redemption.Sounds;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -123,10 +123,6 @@ namespace Redemption
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
-        }
-        public override void Unload()
-        {
-            Generator.StructureDataCache.Clear();
         }
 
         public override void PostSetupContent()

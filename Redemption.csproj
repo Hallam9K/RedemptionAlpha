@@ -23,6 +23,9 @@
     <Reference Include="ParticleLibrary">
       <HintPath>..\Mod Libraries\ParticleLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="StructureHelper">
+      <HintPath>..\Mod Libraries\StructureHelper.dll</HintPath>
+    </Reference>
     <Reference Include="SubworldLibrary">
       <HintPath>..\..\ModReader\SubworldLibrary\SubworldLibrary.dll</HintPath>
     </Reference>
