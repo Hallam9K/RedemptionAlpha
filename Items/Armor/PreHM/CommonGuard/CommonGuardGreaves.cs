@@ -29,7 +29,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
 		public override void UpdateEquip(Player player)
 		{
-			player.meleeSpeed += .07f;
+			player.GetAttackSpeed(DamageClass.Melee) += .07f;
 		}
 
 		public override void AddRecipes()

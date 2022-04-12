@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using System;
 using Redemption.BaseExtension;
+using Redemption.DamageClasses;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -36,7 +37,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.RedemptionPlayerBuff().DruidDamageFlat += 1;
+            player.GetDamage<DruidClass>().Flat += 1;
         }
 
         public override void UpdateArmorSet(Player player)

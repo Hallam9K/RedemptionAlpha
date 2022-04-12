@@ -38,7 +38,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateEquip(Player player)
         {
-            player.RedemptionPlayerBuff().MeleeDamageFlat += 2;
+            player.GetDamage(DamageClass.Melee).Flat += 2;
         }
 
         public override void UpdateArmorSet(Player player)

@@ -1183,7 +1183,7 @@ namespace Redemption.Base
         {
             bool playerYoyo = owner is Player;
             Player powner = playerYoyo ? (Player)owner : null;
-            float meleeSpeed = playerYoyo ? powner.meleeSpeed : 1f;
+            float meleeSpeed = playerYoyo ? powner.GetAttackSpeed(DamageClass.Melee) : 1f;
             Vector2 targetP = targetPos;
             if (playerYoyo && Main.myPlayer == p.owner && targetPos == default) targetP = Main.ReverseGravitySupport(Main.MouseScreen) + Main.screenPosition;
 
@@ -2102,7 +2102,7 @@ namespace Redemption.Base
                 Main.player[p.owner].itemAnimation = 10;
                 Main.player[p.owner].itemTime = 10;
             }
-            AIFlail(p, ref ai, Main.player[p.owner].Center, Main.player[p.owner].velocity, Main.player[p.owner].meleeSpeed, Main.player[p.owner].channel, noKill, chainDistance);
+            AIFlail(p, ref ai, Main.player[p.owner].Center, Main.player[p.owner].velocity, Main.player[p.owner].GetAttackSpeed(DamageClass.Melee), Main.player[p.owner].channel, noKill, chainDistance);
             Main.player[p.owner].direction = p.direction;
         }
 
@@ -2112,7 +2112,7 @@ namespace Redemption.Base
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * connectedPoint : The point for the flail to be 'attached' to, and rebound to, etc.
          * connectedPointVelocity : The velocity of the connected point, if it is moving.
-         * meleeSpeed : the meleeSpeed of whatever is using the flail.
+         * GetAttackSpeed(DamageClass.Melee) : the GetAttackSpeed(DamageClass.Melee) of whatever is using the flail.
          * channel : Wether or not the source is 'channeling' (holding down the fire button) projectile flail.
          * noKill : If true, do not kill the projectile when it returns to the connected point.
          * chainDistance : How far for the flail to actually go.

@@ -116,7 +116,7 @@ namespace Redemption.Items.Accessories.HM
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
                             continue;
 
-                        float damage = 20 * Player.GetDamage(DamageClass.Melee);
+                        float damage = 20 * Player.GetDamage(DamageClass.Melee).Multiplicative;
                         float knockback = 8;
                         bool crit = false;
 
