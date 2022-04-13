@@ -287,7 +287,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     NPC.alpha -= 2;
                     if (NPC.alpha <= 0)
                     {
-                        if (teddy && !RedeConfigClient.Instance.NoLoreElements)
+                        if (teddy)
                             AIState = ActionState.Teddy;
                         else
                             AIState = ActionState.Idle;
@@ -681,7 +681,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
 
-                    if (AITimer >= (RedeConfigClient.Instance.NoLoreElements ? 200 : 660))
+                    if (AITimer >= 660)
                     {
                         AITimer = 0;
                         AIState = ActionState.Idle;

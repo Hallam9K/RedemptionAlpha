@@ -253,57 +253,34 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     gunRot = NPC.spriteDirection == 1 ? 0f : (float)Math.PI;
                     AITimer++;
-                    if (RedeConfigClient.Instance.NoLoreElements)
+                    if (AITimer == 60)
                     {
-                        if (AITimer == 60)
-                        {
-                            ArmsFrameY = 1;
-                            ArmsFrameX = 0;
-                            BodyState = (int)BodyAnim.Gun;
-                        }
-                        if (AITimer >= 160)
-                        {
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
-                            AITimer = 0;
-                            NPC.dontTakeDamage = false;
-                            AIState = ActionState.GunAttacks;
-                            NPC.netUpdate = true;
-                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                        }
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                     }
-                    else
+                    if (AITimer == 220)
                     {
-                        if (AITimer == 60)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                        }
-                        if (AITimer == 220)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                        }
-                        if (AITimer == 400)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                        }
-                        if (AITimer == 420)
-                        {
-                            ArmsFrameY = 1;
-                            ArmsFrameX = 0;
-                            BodyState = (int)BodyAnim.Gun;
-                        }
-                        if (AITimer >= 500)
-                        {
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), ai0: NPC.whoAmI);
-                            AITimer = 0;
-                            NPC.dontTakeDamage = false;
-                            AIState = ActionState.GunAttacks;
-                            NPC.netUpdate = true;
-                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                        }
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                    }
+                    if (AITimer == 400)
+                    {
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                    }
+                    if (AITimer == 420)
+                    {
+                        ArmsFrameY = 1;
+                        ArmsFrameX = 0;
+                        BodyState = (int)BodyAnim.Gun;
+                    }
+                    if (AITimer >= 500)
+                    {
+                        ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), ai0: NPC.whoAmI);
+                        AITimer = 0;
+                        NPC.dontTakeDamage = false;
+                        AIState = ActionState.GunAttacks;
+                        NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     #endregion
                     break;
