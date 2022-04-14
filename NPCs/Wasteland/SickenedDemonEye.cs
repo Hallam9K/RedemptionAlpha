@@ -1,6 +1,7 @@
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
@@ -93,6 +94,8 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 2, 3, 5));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCorruption(), ModContent.ItemType<Bioweapon>(), 4, 1, 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.DemonEye, false);
             foreach (var dropRule in dropRules)
             {
