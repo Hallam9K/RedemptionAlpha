@@ -139,7 +139,7 @@ namespace Redemption.Projectiles.Hostile
                 Projectile.Kill();
             }
         }
-
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

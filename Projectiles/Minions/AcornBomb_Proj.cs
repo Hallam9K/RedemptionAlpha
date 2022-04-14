@@ -67,7 +67,7 @@ namespace Redemption.Projectiles.Minions
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.friendly || target.whoAmI == (int)Projectile.localAI[1])
+                    if (!target.active || !target.CanBeChasedBy() || target.whoAmI == (int)Projectile.localAI[1])
                         continue;
 
                     if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))

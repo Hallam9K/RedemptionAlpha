@@ -43,7 +43,6 @@ namespace Redemption
         public static ModKeybind RedeSpecialAbility;
 
         public static RenderTargetManager Targets;
-        public static ParticleManager Particles;
 
         private List<ILoadable> _loadCache;
 

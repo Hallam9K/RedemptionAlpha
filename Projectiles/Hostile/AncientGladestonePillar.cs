@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Hostile
         {
             return Projectile.velocity.Length() != 0 && target.type != ModContent.NPCType<AncientGladestoneGolem>() ? null : false;
         }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
             behindNPCsAndTiles.Add(index);

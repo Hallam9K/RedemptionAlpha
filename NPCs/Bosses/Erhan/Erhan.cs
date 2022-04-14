@@ -292,7 +292,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             NPC.netUpdate = true;
                             break;
                         case 1:
-                            if (RedeBossDowned.erhanDeath <= 0 && !RedeConfigClient.Instance.NoLoreElements)
+                            if (RedeBossDowned.erhanDeath <= 0)
                             {
                                 if (!Main.dedServ)
                                 {
@@ -821,7 +821,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         SoundID.Item29, "", NPC.whoAmI, i);
                             }
 
-                            if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ && !RedeConfigClient.Instance.NoLoreElements)
+                            if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
                             {
                                 if (AITimer == 60)
                                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Huzzah! *pant* A shield!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
@@ -857,7 +857,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    if (RedeBossDowned.downedErhan || RedeConfigClient.Instance.NoLoreElements)
+                    if (RedeBossDowned.downedErhan)
                     {
                         if (AITimer++ == 0)
                         {

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Particles;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -44,8 +45,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             if (Projectile.alpha < 200 && Main.rand.NextBool(3))
             {
-                DustHelper.DrawElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), DustID.Electric, 1, 20, default, 0.2f);
-                DustHelper.DrawElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), DustID.Electric, 1, 20, default, 0.2f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
             }
 
             Projectile.alpha += 10;

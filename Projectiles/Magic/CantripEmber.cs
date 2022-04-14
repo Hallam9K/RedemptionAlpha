@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -53,6 +55,9 @@ namespace Redemption.Projectiles.Magic
         }
         public override void Kill(int timeLeft)
         {
+            for (int i = 0; i < 3; i++)
+                ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+
             for (int i = 0; i < 6; i++)
             {
                 int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);

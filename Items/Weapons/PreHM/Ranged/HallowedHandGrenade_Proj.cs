@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.friendly)
+                    if (!target.active || !target.CanBeChasedBy())
                         continue;
 
                     if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))

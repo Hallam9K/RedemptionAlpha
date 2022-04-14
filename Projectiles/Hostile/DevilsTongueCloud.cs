@@ -56,7 +56,7 @@ namespace Redemption.Projectiles.Hostile
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active)
+                if (!target.active || target.dontTakeDamage)
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))

@@ -24,6 +24,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.timeLeft = 200;
         }
         public override bool? CanHitNPC(NPC target) => target.whoAmI != Projectile.ai[0] ? null : false;
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)

@@ -265,16 +265,9 @@ namespace Redemption.Globals
                 nukeTimerShown = nukeTimerInternal / 60;
                 if (nukeTimerInternal % 60 == 0 && nukeTimerInternal > 0)
                 {
-                    if (RedeConfigClient.Instance.NoLoreElements)
+                    if (!Main.dedServ)
                     {
-                        Main.NewText(nukeTimerShown.ToString(), Color.Red);
-                    }
-                    else
-                    {
-                        if (!Main.dedServ)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
-                        }
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
                     }
                 }
                 --nukeTimerInternal;

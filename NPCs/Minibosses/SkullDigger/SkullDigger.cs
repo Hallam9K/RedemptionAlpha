@@ -266,9 +266,19 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             break;
                         case 1:
                             AITimer++;
-                            if (RedeConfigClient.Instance.NoLoreElements)
+                            if (NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
                             {
-                                if (AITimer >= 100)
+                                KeeperSpawn = true;
+                                if (!Main.dedServ)
+                                {
+                                    if (AITimer == 40)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Mistress Octavia, are you harmed?", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                    if (AITimer == 220)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My lady, you need not worry, I shall crush this vermin.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                                    if (AITimer == 400)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                                }
+                                if (AITimer >= 580)
                                 {
                                     NPC.dontTakeDamage = false;
                                     AITimer = 0;
@@ -281,48 +291,22 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             }
                             else
                             {
-                                if (NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
+                                if (!Main.dedServ)
                                 {
-                                    KeeperSpawn = true;
-                                    if (!Main.dedServ)
-                                    {
-                                        if (AITimer == 40)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Mistress Octavia, are you harmed?", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
-                                        if (AITimer == 220)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My lady, you need not worry, I shall crush this vermin.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
-                                        if (AITimer == 400)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
-                                    }
-                                    if (AITimer >= 580)
-                                    {
-                                        NPC.dontTakeDamage = false;
-                                        AITimer = 0;
-                                        TimerRand = 0;
-                                        AIState = ActionState.Idle;
-                                        NPC.netUpdate = true;
-                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                                    }
+                                    if (AITimer == 40)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I have finally found you, vermin...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                    if (AITimer == 220)
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
                                 }
-                                else
+                                if (AITimer >= 400)
                                 {
-                                    if (!Main.dedServ)
-                                    {
-                                        if (AITimer == 40)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I have finally found you, vermin...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
-                                        if (AITimer == 220)
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
-                                    }
-                                    if (AITimer >= 400)
-                                    {
-                                        NPC.dontTakeDamage = false;
-                                        AITimer = 0;
-                                        TimerRand = 0;
-                                        AIState = ActionState.Idle;
-                                        NPC.netUpdate = true;
-                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                                    }
+                                    NPC.dontTakeDamage = false;
+                                    AITimer = 0;
+                                    TimerRand = 0;
+                                    AIState = ActionState.Idle;
+                                    NPC.netUpdate = true;
+                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
                             break;
@@ -516,7 +500,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
                 SoundEngine.PlaySound(SoundID.NPCDeath51, NPC.position);
                 NPC.life = 1;
-                AITimer = RedeConfigClient.Instance.NoLoreElements ? 220 : 0;
+                AITimer = 0;
                 AIState = ActionState.Death;
                 return false;
             }

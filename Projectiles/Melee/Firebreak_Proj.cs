@@ -9,6 +9,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -56,6 +58,8 @@ namespace Redemption.Projectiles.Melee
         {
             if (!Projectile.wet)
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(0.4f), Projectile.position);
+            for (int i = 0; i < 6; i++)
+                ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
             for (int i = 0; i < 12; i++)
             {
                 int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
