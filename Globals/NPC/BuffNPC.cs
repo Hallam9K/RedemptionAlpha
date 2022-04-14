@@ -459,6 +459,7 @@ namespace Redemption.Globals.NPC
                 drawColor = new Color(52, 178, 108);
                 if (Main.rand.NextBool(4))
                     Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.ToxicBubble, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Alpha: 100);
+            }
         }
 
         public override bool PreAI(Terraria.NPC npc)
