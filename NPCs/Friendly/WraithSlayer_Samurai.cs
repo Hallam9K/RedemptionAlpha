@@ -234,7 +234,7 @@ namespace Redemption.NPCs.Friendly
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
-                            if (!target.active || target.whoAmI == NPC.whoAmI || target.friendly)
+                            if (!target.active || !target.CanBeChasedBy() || target.whoAmI == NPC.whoAmI)
                                 continue;
 
                             if (!target.Hitbox.Intersects(SlashHitbox))
