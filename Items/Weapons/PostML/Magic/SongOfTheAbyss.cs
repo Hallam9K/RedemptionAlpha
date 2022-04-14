@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Magic;
 using Redemption.Rarities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -65,6 +66,28 @@ namespace Redemption.Items.Weapons.PostML.Magic
                     break;
             }
             return false;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A lyre crafted before the Soulless came, yet altered by their presence.\n" +
+                    "It supposedly attracted a great beast of the lakes that ate man and fish alike,\n" +
+                    "yet not many used it out of fear of the creature being summoned.'")
+                {
+                    OverrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    OverrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
     }
 }
