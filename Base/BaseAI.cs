@@ -5372,6 +5372,8 @@ namespace Redemption.Base
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     NPCLoader.ModifyHitByItem(npc, player, item, ref parsedDamage, ref knockback, ref crit);
                     NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
+                    PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
+                    PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                     {
