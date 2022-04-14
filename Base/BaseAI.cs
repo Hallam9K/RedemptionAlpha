@@ -5334,7 +5334,11 @@ namespace Redemption.Base
                 npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
 
                 if (damager is NPC)
+                {
+                    NPCLoader.ModifyHitNPC(damager as NPC, npc, ref parsedDamage, ref knockback, ref crit);
+                    NPCLoader.OnHitNPC(damager as NPC, npc, parsedDamage, knockback, crit);
                     npc.Redemption().attacker = damager;
+                }
 
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {
@@ -5349,6 +5353,10 @@ namespace Redemption.Base
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     NPCLoader.ModifyHitByProjectile(npc, p, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     NPCLoader.OnHitByProjectile(npc, p, parsedDamage, knockback, crit);
+                    PlayerLoader.ModifyHitNPCWithProj(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
+                    PlayerLoader.OnHitNPCWithProj(p, npc, parsedDamage, knockback, crit);
+                    ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
+                    ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);

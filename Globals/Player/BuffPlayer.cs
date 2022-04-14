@@ -431,6 +431,9 @@ namespace Redemption.Globals.Player
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
+            if (RedeDetours.projOwners.TryGetValue(proj.whoAmI, out (Entity entity, IEntitySource source) value) && value.entity is Terraria.NPC)
+                return;
+
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
             if (pureIronBonus && Main.rand.NextBool(3))
