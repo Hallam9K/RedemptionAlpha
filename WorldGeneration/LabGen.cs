@@ -43,23 +43,11 @@ namespace Redemption.WorldGeneration
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabClear", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                    gen.Generate(origin.X, origin.Y, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
             return true;
         }
     }
@@ -111,23 +99,11 @@ namespace Redemption.WorldGeneration
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLab", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabWalls", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabLiquids", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids);
-                    gen.Generate(origin.X, origin.Y, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
 
             // Doors
             GenUtils.ObjectPlace(origin.X + 135, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());

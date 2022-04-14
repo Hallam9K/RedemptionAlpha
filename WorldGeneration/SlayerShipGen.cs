@@ -28,23 +28,11 @@ namespace Redemption.WorldGeneration
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipClear", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                    gen.Generate(origin.X, origin.Y, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
             return true;
         }
     }
@@ -75,23 +63,12 @@ namespace Redemption.WorldGeneration
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShip", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWalls", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipSlopes", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
 
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                    gen.Generate(origin.X, origin.Y, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
             WorldGen.PlaceObject(origin.X + 90, origin.Y + 23, (ushort)ModContent.TileType<SlayerChairTile>());
             NetMessage.SendObjectPlacment(-1, origin.X + 90, origin.Y + 23, (ushort)ModContent.TileType<SlayerChairTile>(), 0, 0, -1, -1);
             WorldGen.PlaceObject(origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>());

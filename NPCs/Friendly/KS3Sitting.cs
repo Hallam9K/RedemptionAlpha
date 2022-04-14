@@ -232,7 +232,7 @@ namespace Redemption.NPCs.Friendly
 
                         Point origin = RedeGen.slayerShipVector.ToPoint();
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                             gen.Generate(origin.X, origin.Y, true, true);
@@ -279,7 +279,7 @@ namespace Redemption.NPCs.Friendly
 
                         Point origin = RedeGen.slayerShipVector.ToPoint();
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                             gen.Generate(origin.X, origin.Y, true, true);
@@ -338,7 +338,7 @@ namespace Redemption.NPCs.Friendly
 
                         Point origin = RedeGen.slayerShipVector.ToPoint();
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
                             gen.Generate(origin.X, origin.Y, true, true);
@@ -404,6 +404,7 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog24>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog25>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog26>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog27>());
         }
 
         public static string QuestChat()
