@@ -6,6 +6,8 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Melee;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -55,6 +57,28 @@ namespace Redemption.Items.Weapons.HM.Melee
                 .AddIngredient(ItemID.Ectoplasm, 10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A blade crafted in the mountains of Erellon, imbued with shadow magic by an unknown source.\n" +
+                    "It was used by a rebel to assassinate the heir of Erellon. Afterwards the assassin was soon caught,\n" +
+                    "and the weapon was held in a museum'")
+                {
+                    OverrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    OverrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
     }
 }

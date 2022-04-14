@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -239,6 +240,8 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 2, 1, 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCorruption(), ModContent.ItemType<Bioweapon>(), 4, 1, 2));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 2));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.CorruptPenguin, false);
             foreach (var dropRule in dropRules)
             {

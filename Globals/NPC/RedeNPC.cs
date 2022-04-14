@@ -111,7 +111,7 @@ namespace Redemption.Globals.NPC
                         damage = (int)(damage * 1.25f);
 
                     if (ItemTags.Ice.Has(item.type))
-                        damage = (int)(damage * 0.5f);
+                        damage = (int)(damage * 0.75f);
 
                     if (ItemTags.Thunder.Has(item.type))
                         damage = (int)(damage * 1.1f);
