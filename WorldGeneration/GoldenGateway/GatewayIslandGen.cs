@@ -31,21 +31,11 @@ namespace Redemption.WorldGeneration
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Clear", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                    gen.Generate(origin.X, origin.Y, true, true);
-                    genned = true;
-                });
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
             return true;
         }
     }
@@ -88,21 +78,11 @@ namespace Redemption.WorldGeneration
             Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Walls", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Slopes", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Liquids", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
-                    gen.Generate(origin.X, origin.Y, true, true);
-                    genned = true;
-                });
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
             GenUtils.ObjectPlace(origin.X + 74, origin.Y + 30, ModContent.TileType<GoldenGatewayTile>());
             GenUtils.ObjectPlace(origin.X + 48, origin.Y + 33, TileID.Lamps, 30);
             GenUtils.ObjectPlace(origin.X + 101, origin.Y + 33, TileID.Lamps, 30);
