@@ -68,7 +68,7 @@ namespace Redemption.Projectiles.Magic
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.friendly)
+                    if (!target.active || !target.CanBeChasedBy())
                         continue;
 
                     if (!Projectile.Hitbox.Intersects(target.Hitbox))

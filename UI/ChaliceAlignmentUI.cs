@@ -30,7 +30,7 @@ namespace Redemption.UI
 
         public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, int font = 0, int id = 0)
         {
-            if (!RedeConfigClient.Instance.NoLoreElements && !Main.dedServ)
+            if (!Main.dedServ)
             {
                 Text = text;
                 Title = "Chalice of Alignment:";

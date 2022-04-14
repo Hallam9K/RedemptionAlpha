@@ -288,7 +288,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 AIState = ActionState.PhaseChange;
             else if (NPC.life < NPC.lifeMax / 4 && phase < 3)
                 AIState = ActionState.PhaseChange;
-            else if (NPC.life < (int)(NPC.lifeMax * 0.05f) && phase < 4 && !RedeConfigClient.Instance.NoLoreElements)
+            else if (NPC.life < (int)(NPC.lifeMax * 0.05f) && phase < 4)
                 AIState = ActionState.PhaseChange;
 
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
@@ -302,7 +302,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (RedeConfigClient.Instance.NoLoreElements && !Main.dedServ)
+                    if (!Main.dedServ)
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
 
                     NPC.LookAtEntity(player);
@@ -322,22 +322,107 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     gunRot = NPC.spriteDirection == 1 ? 0f : (float)Math.PI;
                     AITimer++;
-                    if (RedeConfigClient.Instance.NoLoreElements)
+                    player.RedemptionScreen().lockScreen = true;
+                    NPC.LockMoveRadius(player);
+                    if (RedeBossDowned.slayerDeath < 3)
                     {
-                        if (AITimer == 60)
+                        if (AITimer == 30)
+                        {
+                            HeadType = 2;
+                            if (!Main.dedServ)
+                            {
+                                if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Did you seriously just destroy my drones?", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                else
+                                {
+                                    if (RedeWorld.alignment >= 0)
+                                    {
+                                        if (player.IsFullTBot())
+                                        {
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little scrap of metal.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        }
+                                        /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                                        {
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little chicken nugget.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0);
+                                        }*/
+                                        else
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little fleshbag.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                    }
+                                    else
+                                    {
+                                        if (player.IsFullTBot())
+                                        {
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little scrap of metal decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        }
+                                        /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                                        {
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little chicken nugget decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, 0, NPC.whoAmI);
+                                        }*/
+                                        else
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little fleshbag decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                    }
+                                }
+                            }
+                        }
+                        if (AITimer == 310)
+                        {
+                            HeadType = 1;
+                            if (!Main.dedServ)
+                            {
+                                if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Eh, not like I got a shortage of them, but I'm still gonna blast ya for it!", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                else
+                                {
+                                    if (RedeWorld.alignment >= 0)
+                                    {
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I warned you, so don't go crying to your mummy when I crush you into the ground!", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                    }
+                                    else
+                                    {
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You were on my hitlist, so lets skip the small talk and get on with it!", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                    }
+                                }
+                            }
+                        }
+                        if (AITimer == 590)
+                        {
+                            BodyState = (int)BodyAnim.Idle;
+                            HeadType = 0;
+                            if (RedeBossDowned.downedKeeper && !Main.dedServ)
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Actually... You were the one that fought the Keeper, weren't you!", 240, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                            else
+                                AITimer = 1140;
+                        }
+                        if (AITimer == 830)
+                        {
+                            HeadType = 2;
+                            if (!Main.dedServ)
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("That was my job!", 120, 1, 0.6f, "King Slayer III:", 2, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                        }
+                        if (AITimer == 950)
+                        {
+                            HeadType = 0;
+                            if (!Main.dedServ)
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Great, now I have even more reason to pummel you to ash!", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                        }
+                        if (AITimer == 1150)
                         {
                             ArmsFrameY = 1;
                             ArmsFrameX = 0;
                             BodyState = (int)BodyAnim.Gun;
+                            HeadType = 0;
+                            NPC.netUpdate = true;
                         }
-                        NPC.netUpdate = true;
-                        if (AITimer >= 160)
+                        if (AITimer >= 1250)
                         {
+                            if (!Main.dedServ)
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
+
+                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
                             if (RedeBossDowned.slayerDeath < 3)
                                 RedeBossDowned.slayerDeath = 3;
 
                             NPC.dontTakeDamage = false;
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
                             HeadType = 0;
                             AITimer = 0;
@@ -349,182 +434,69 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     else
                     {
-                        player.RedemptionScreen().lockScreen = true;
-                        NPC.LockMoveRadius(player);
-                        if (RedeBossDowned.slayerDeath < 3)
+                        if (AITimer == 30 && !Main.dedServ)
                         {
-                            if (AITimer == 30)
+                            if (RedeBossDowned.downedSlayer)
                             {
-                                HeadType = 2;
-                                if (!Main.dedServ)
+                                switch (Main.rand.Next(4))
                                 {
-                                    if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Did you seriously just destroy my drones?", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                    else
-                                    {
-                                        if (RedeWorld.alignment >= 0)
-                                        {
-                                            if (player.IsFullTBot())
-                                            {
-                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little scrap of metal.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            }
-                                            /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
-                                            {
-                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little chicken nugget.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0);
-                                            }*/
-                                            else
-                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little fleshbag.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                        }
-                                        else
-                                        {
-                                            if (player.IsFullTBot())
-                                            {
-                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little scrap of metal decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            }
-                                            /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
-                                            {
-                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little chicken nugget decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, 0, NPC.whoAmI);
-                                            }*/
-                                            else
-                                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little fleshbag decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                        }
-                                    }
+                                    case 0:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("What? Do you want to fight me again?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 1:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Why must you summon me again?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 2:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Could you maybe possibly probably potentially LEAVE ME ALONE?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 3:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Really, a rematch? Fine.", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
                                 }
                             }
-                            if (AITimer == 310)
+                            else
                             {
-                                HeadType = 1;
-                                if (!Main.dedServ)
+                                switch (Main.rand.Next(5))
                                 {
-                                    if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Eh, not like I got a shortage of them, but I'm still gonna blast ya for it!", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                    else
-                                    {
-                                        if (RedeWorld.alignment >= 0)
-                                        {
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I warned you, so don't go crying to your mummy when I crush you into the ground!", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                        }
-                                        else
-                                        {
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You were on my hitlist, so lets skip the small talk and get on with it!", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                        }
-                                    }
+                                    case 0:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You're quite a resilient fellow...", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 1:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Could've sworn you died...", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 2:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ready for a rematch?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 3:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Welp, time to win again!", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 4:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Still wanna fight?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
                                 }
-                            }
-                            if (AITimer == 590)
-                            {
-                                BodyState = (int)BodyAnim.Idle;
-                                HeadType = 0;
-                                if (RedeBossDowned.downedKeeper && !Main.dedServ)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Actually... You were the one that fought the Keeper, weren't you!", 240, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                else
-                                    AITimer = 1140;
-                            }
-                            if (AITimer == 830)
-                            {
-                                HeadType = 2;
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("That was my job!", 120, 1, 0.6f, "King Slayer III:", 2, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                            }
-                            if (AITimer == 950)
-                            {
-                                HeadType = 0;
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Great, now I have even more reason to pummel you to ash!", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                            }
-                            if (AITimer == 1150)
-                            {
-                                ArmsFrameY = 1;
-                                ArmsFrameX = 0;
-                                BodyState = (int)BodyAnim.Gun;
-                                HeadType = 0;
-                                NPC.netUpdate = true;
-                            }
-                            if (AITimer >= 1250)
-                            {
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
-
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                                if (RedeBossDowned.slayerDeath < 3)
-                                    RedeBossDowned.slayerDeath = 3;
-
-                                NPC.dontTakeDamage = false;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
-                                HeadType = 0;
-                                AITimer = 0;
-                                AIState = ActionState.GunAttacks;
-                                NPC.netUpdate = true;
-                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                         }
-                        else
+                        if (AITimer == 180)
                         {
-                            if (AITimer == 30 && !Main.dedServ)
-                            {
-                                if (RedeBossDowned.downedSlayer)
-                                {
-                                    switch (Main.rand.Next(4))
-                                    {
-                                        case 0:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("What? Do you want to fight me again?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 1:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Why must you summon me again?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 2:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Could you maybe possibly probably potentially LEAVE ME ALONE?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 3:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Really, a rematch? Fine.", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    switch (Main.rand.Next(5))
-                                    {
-                                        case 0:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You're quite a resilient fellow...", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 1:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Could've sworn you died...", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 2:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ready for a rematch?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 3:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Welp, time to win again!", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                        case 4:
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Still wanna fight?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                                            break;
-                                    }
-                                }
-                            }
-                            if (AITimer == 180)
-                            {
-                                ArmsFrameY = 1;
-                                ArmsFrameX = 0;
-                                BodyState = (int)BodyAnim.Gun;
-                                NPC.netUpdate = true;
-                            }
-                            if (AITimer >= 240)
-                            {
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
+                            ArmsFrameY = 1;
+                            ArmsFrameX = 0;
+                            BodyState = (int)BodyAnim.Gun;
+                            NPC.netUpdate = true;
+                        }
+                        if (AITimer >= 240)
+                        {
+                            if (!Main.dedServ)
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
 
-                                NPC.dontTakeDamage = false;
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
-                                HeadType = 0;
-                                AITimer = 0;
-                                AIState = ActionState.GunAttacks;
-                                NPC.netUpdate = true;
-                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                            }
+                            NPC.dontTakeDamage = false;
+                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
+                            HeadType = 0;
+                            AITimer = 0;
+                            AIState = ActionState.GunAttacks;
+                            NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                         }
                     }
                     #endregion
@@ -1824,7 +1796,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer++ == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
-                    if (RedeConfigClient.Instance.NoLoreElements || RedeBossDowned.slayerDeath >= 4)
+                    if (RedeBossDowned.slayerDeath >= 4)
                     {
                         if (AITimer == 30)
                         {
@@ -1916,7 +1888,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer++ == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
-                    if (RedeConfigClient.Instance.NoLoreElements || RedeBossDowned.slayerDeath >= 5)
+                    if (RedeBossDowned.slayerDeath >= 5)
                     {
                         if (AITimer == 30)
                         {
@@ -2016,7 +1988,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer++ == 5)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
 
-                    if (RedeConfigClient.Instance.NoLoreElements || RedeBossDowned.slayerDeath >= 6)
+                    if (RedeBossDowned.slayerDeath >= 6)
                     {
                         if (AITimer == 30)
                         {
@@ -2381,7 +2353,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override bool CheckDead()
         {
-            if (phase >= 5 || RedeConfigClient.Instance.NoLoreElements || AIState is ActionState.Spared)
+            if (phase >= 5 || AIState is ActionState.Spared)
                 return true;
             else
             {

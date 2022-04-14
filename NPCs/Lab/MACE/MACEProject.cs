@@ -75,7 +75,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.width = 92;
             NPC.height = 164;
             NPC.damage = 100;
-            NPC.lifeMax = 125000;
+            NPC.lifeMax = 75000;
             NPC.knockBackResist = 0;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;

@@ -48,6 +48,7 @@ namespace Redemption.Globals.NPC
         public bool dreamsong;
         public bool smashed;
         public bool lacerated;
+        public bool stomachAcid;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -68,6 +69,7 @@ namespace Redemption.Globals.NPC
             dreamsong = false;
             smashed = false;
             lacerated = false;
+            stomachAcid = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -256,10 +258,10 @@ namespace Redemption.Globals.NPC
                     npc.lifeRegen = 0;
 
                 npc.lifeRegen -= 400;
-                if (damage < 2)
-                    damage = 2;
+                if (damage < 20)
+                    damage = 20;
             }
-            if (bileDebuff)
+            if (bileDebuff || stomachAcid)
             {
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
@@ -297,6 +299,8 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (stomachAcid)
+                player.GetArmorPenetration(DamageClass.Generic) += 8;
             if (bileDebuff)
                 player.GetArmorPenetration(DamageClass.Generic) += 15;
             if (infected)
@@ -305,6 +309,8 @@ namespace Redemption.Globals.NPC
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Terraria.Player player = Main.player[projectile.owner];
+            if (stomachAcid)
+                player.GetArmorPenetration(DamageClass.Generic) += 8;
             if (bileDebuff)
                 player.GetArmorPenetration(DamageClass.Generic) += 15;
             if (infected)
@@ -433,7 +439,7 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(5))
                 {
-                    DustHelper.DrawElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), DustID.Electric, 0.5f, 10, default, 0.2f);
+                    DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), 0.1f, 10, 0.2f);
                 }
             }
             if (dreamsong)
@@ -448,6 +454,11 @@ namespace Redemption.Globals.NPC
                 if (Main.rand.NextBool(3) && npc.alpha < 200)
                     Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
             }
+            if (stomachAcid)
+            {
+                drawColor = new Color(52, 178, 108);
+                if (Main.rand.NextBool(4))
+                    Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.ToxicBubble, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Alpha: 100);
         }
 
         public override bool PreAI(Terraria.NPC npc)
@@ -506,7 +517,7 @@ namespace Redemption.Globals.NPC
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     Terraria.NPC target = Main.npc[i];
-                    if (!target.active || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().moonflare)
+                    if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().moonflare)
                         continue;
 
                     if (!target.Hitbox.Intersects(npc.Hitbox))
@@ -527,7 +538,7 @@ namespace Redemption.Globals.NPC
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         Terraria.NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI == npc.whoAmI || target.friendly || target.RedemptionNPCBuff().infected)
+                        if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().infected)
                             continue;
 
                         if (!target.Hitbox.Intersects(npc.Hitbox))

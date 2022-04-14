@@ -27,7 +27,6 @@ namespace Redemption.Particles
 
 		public override void AI()
 		{
-			// You can pass in a number to determine how long until it starts its ember movement.
 			if (ai[0] <= 0)
 			{
 				float sineX = (float)Math.Sin(Main.GlobalTimeWrappedHourly * speedX);

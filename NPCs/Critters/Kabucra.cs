@@ -159,8 +159,7 @@ namespace Redemption.NPCs.Critters
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI ||
-                    target.friendly || target.lifeMax <= 5 || target.type == ModContent.NPCType<DevilsTongue>())
+                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<DevilsTongue>())
                     continue;
 
                 if (NPC.Sight(target, 200, false, true) && BaseAI.HitTileOnSide(NPC, 3))

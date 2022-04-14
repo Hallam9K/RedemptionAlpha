@@ -48,9 +48,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 0:
                     if (RedeWorld.alignment >= 0)
                     {
-                        if (RedeBossDowned.slayerDeath <= 1 && !RedeConfigClient.Instance.NoLoreElements)
+                        if (RedeBossDowned.slayerDeath <= 1)
                             NPC.ai[0] = 1;
-                        else if (RedeBossDowned.slayerDeath > 1 || RedeConfigClient.Instance.NoLoreElements)
+                        else if (RedeBossDowned.slayerDeath > 1)
                             NPC.ai[0] = 4;
 
                         NPC.netUpdate = true;

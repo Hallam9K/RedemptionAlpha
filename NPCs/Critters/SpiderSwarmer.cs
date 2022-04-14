@@ -72,6 +72,10 @@ namespace Redemption.NPCs.Critters
         {
             target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
         }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
+        }
 
         public NPC npcTarget;
         public Vector2 moveTo;
@@ -165,24 +169,11 @@ namespace Redemption.NPCs.Critters
                     if (hopCooldown == 0 && BaseAI.HitTileOnSide(NPC, 3) && NPC.Sight(globalNPC.attacker, 60, false, true))
                     {
                         NPC.velocity.X *= 2f;
-                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f); 
+                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
                         hopCooldown = 80;
                     }
 
-                    for (int i = 0; i < Main.maxNPCs; i++)
-                    {
-                        NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI == NPC.whoAmI || target != NPC.Redemption().attacker)
-                            continue;
-
-                        if (target.immune[NPC.whoAmI] > 0 || !NPC.Hitbox.Intersects(target.Hitbox))
-                            continue;
-
-                        target.immune[NPC.whoAmI] = 30;
-                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
-                        BaseAI.DamageNPC(target, NPC.damage, 0, hitDirection, NPC);
-                        target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
-                    }
+                    NPC.DamageHostileAttackers();
 
                     if (!NPC.Sight(globalNPC.attacker, 150, false, true))
                         runCooldown++;

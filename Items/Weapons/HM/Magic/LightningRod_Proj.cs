@@ -8,6 +8,8 @@ using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
 using Redemption.Base;
+using Redemption.Particles;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -46,6 +48,9 @@ namespace Redemption.Items.Weapons.HM.Magic
                         if (Projectile.ai[1]++ >= 60)
                             glow += 0.01f;
 
+                        if (Projectile.ai[1] >= 30 && (Projectile.ai[1] >= 60 ? Main.rand.NextBool(6) : Main.rand.NextBool(10)))
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 0.2f, 5, 0.1f);
+
                         if (!player.channel || glow >= 0.8f)
                         {
                             Projectile.ai[0]++;
@@ -63,7 +68,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricNoise"), Projectile.position);
                         DustHelper.DrawCircle(Projectile.Center + new Vector2(36 * player.direction, -36), DustID.Electric, 3, 2, 1, 1, 1, nogravity: true);
                         int dmg = (int)Projectile.ai[1] * 2;
-                        DustHelper.DrawElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, DustID.Electric, 1f, 30, default, 0.2f);
+                        DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, new LightningParticle(), 1, 30, 0.05f);
+                        DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, new LightningParticle(), 1, 30, 0.05f);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC npc = Main.npc[i];
@@ -74,7 +80,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                                 continue;
 
                             int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(npc, Projectile.damage + dmg, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                            BaseAI.DamageNPC(npc, Projectile.damage + dmg * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                         }
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
@@ -92,12 +98,13 @@ namespace Redemption.Items.Weapons.HM.Magic
                                 if (Projectile.DistanceSQ(npc.Center) > 400 * 400 || Main.rand.NextBool((int)Projectile.ai[1] / 10))
                                     continue;
                             }
-                            DustHelper.DrawElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, DustID.Electric, 1f, 30, default, 0.2f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, new LightningParticle(), 1, 30, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, new LightningParticle(), 1, 30, 0.05f);
                             int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
                             if (glow >= 0.8f)
-                                BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                                BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                             else
-                                BaseAI.DamageNPC(npc, Projectile.damage + dmg, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                                BaseAI.DamageNPC(npc, Projectile.damage + dmg * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                         }
                         Projectile.ai[1] = 0;
                         Projectile.ai[0]++;
@@ -115,6 +122,10 @@ namespace Redemption.Items.Weapons.HM.Magic
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
         }
         public override bool PreDraw(ref Color lightColor)
         {

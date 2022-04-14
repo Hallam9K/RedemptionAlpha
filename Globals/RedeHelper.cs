@@ -1177,7 +1177,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Terraria.NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
+                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
@@ -1198,7 +1198,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Terraria.NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
+                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (DontDmgNPC.Contains(target.type))

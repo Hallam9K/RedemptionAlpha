@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -111,8 +112,8 @@ namespace Redemption.NPCs.Lab.MACE
 
             if (Projectile.timeLeft > 30 && Main.rand.NextBool(10))
             {
-                DustHelper.DrawElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, Main.rand.NextFloat(0, MathHelper.TwoPi)), DustID.Electric, 1, 20, default, 0.2f);
-                DustHelper.DrawElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, Main.rand.NextFloat(0, MathHelper.TwoPi)), DustID.Electric, 1, 20, default, 0.2f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
             }
 
             if (Projectile.timeLeft <= 60)
