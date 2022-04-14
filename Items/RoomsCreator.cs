@@ -45,7 +45,7 @@ namespace Redemption.Items.Usable
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Misc/RoomLayouts", AssetRequestMode.ImmediateLoad).Value;
             Point origin = player.Center.ToPoint();
-            Main.QueueMainThreadAction(() =>
+            GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                 gen.Generate(origin.X / 16, origin.Y / 16, true, true);

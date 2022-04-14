@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.Tiles.Ores;
 using Redemption.Tiles.Tiles;
 using Redemption.Walls;
+using Redemption.WorldGeneration;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
@@ -39,7 +40,7 @@ namespace Redemption
                         [Color.Black] = -1
                     };
 
-                    Main.QueueMainThreadAction(() =>
+                    GenUtils.InvokeOnMainThread(() =>
                     {
                         TexGen gen = BaseWorldGenTex.GetTexGenerator(texSnow, colorToTile, texWall, colorToWall);
                         gen.Generate((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46, true, true);
@@ -60,7 +61,7 @@ namespace Redemption
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
-                    Main.QueueMainThreadAction(() =>
+                    GenUtils.InvokeOnMainThread(() =>
                     {
                         TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
                         gen.Generate((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46, true, true);
@@ -81,7 +82,7 @@ namespace Redemption
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
-                    Main.QueueMainThreadAction(() =>
+                    GenUtils.InvokeOnMainThread(() =>
                     {
                         TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
                         gen.Generate((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46, true, true);
