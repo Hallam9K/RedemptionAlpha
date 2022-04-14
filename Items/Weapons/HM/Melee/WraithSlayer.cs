@@ -63,7 +63,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "''") // TODO: Wraith Slayer lore
+                    "'An old sword found in a mansion of Northern Ithon. Said to be possessed by its creator's spirit.\n" +
+                    "It is told that a man had once bought the blade, driving him to madness while in his possession,\n" +
+                    "and ending with him slaughtering his family.'")
                 {
                     OverrideColor = Color.LightGray
                 };

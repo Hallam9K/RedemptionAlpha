@@ -156,10 +156,8 @@ namespace Redemption.NPCs.Friendly
             }
             else
             {
-                int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
-                if (DryadID >= 0)
-                    chat.Add("Doesn't " + Main.npc[DryadID].GivenName + " know how to dress properly? Whatever, I like it!");
-
+                if (!Main.LocalPlayer.Male)
+                    chat.Add("Wow! I've never talked to a girl before.");
                 chat.Add("How's it goin' bro!");
                 chat.Add("Hey I came from the mainland through that portal, but you don't mind me staying here, right?");
                 chat.Add("Yo, I have some pretty cool things, you can have them if you got the money.");
@@ -306,8 +304,9 @@ namespace Redemption.NPCs.Friendly
             chat.Add("How about I tell you the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remeber a lot about being a pirate. I was very young at the time.");
             chat.Add("I'm doin' good, although I've lost someone, his name is Daerel and wears a cloak. I'm sure I'll find him eventually.");
             chat.Add("Did I ever tell you about my victory against a powerful undead druid? It was a close match, it was giant, and its magic was insane! But yeah, I beat it, pretty cool huh? It had flowers growing everywhere on it!");
-            chat.Add("How did I get here, I hear you asking? Me and Daerel were lookin' around a spiky forest until we found a portal and jumped in, don't know where Daerel went.");
+            chat.Add("When encountering skeletons and undead, using holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
             chat.Add("This island's gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens, called Anglonic Forest Hens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast!");
+            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : "(wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
             chat.Add("I swear I saw a Blobble around here. I didn't expect them to be here, they're native to, uh, Ithon I think. Don't quote me on that though, Daerel's a lot better at remembering useless info than I.");
             if (!Main.dayTime)
             {

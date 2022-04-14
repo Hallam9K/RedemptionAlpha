@@ -275,6 +275,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     break;
                 case ActionState.Intro2:
+                    player.RedemptionScreen().lockScreen = true;
                     if (AIHost == 1)
                     {
                         AITimer++;
