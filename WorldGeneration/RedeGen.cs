@@ -38,6 +38,8 @@ using Redemption.Tiles.MusicBoxes;
 using Redemption.Tiles.Furniture.Archcloth;
 using Redemption.NPCs.Bosses.KSIII;
 using StructureHelper;
+using System;
+using System.Threading;
 
 namespace Redemption.WorldGeneration
 {
@@ -309,13 +311,9 @@ namespace Redemption.WorldGeneration
                     for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 2E-05); k++)
                     {
                         bool placed = false;
-                        bool genned = false;
                         int attempts = 0;
-                        while (!genned && attempts < 10000)
+                        while (!placed && attempts < 10000)
                         {
-                            if (placed)
-                                continue;
-
                             attempts++;
                             int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
                             int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .65f), (int)(Main.maxTilesY * .8));
@@ -350,11 +348,10 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Point16 origin = new(tilesX, tilesY);
-                            Main.QueueMainThreadAction(() =>
+                            GenUtils.InvokeOnMainThread(() =>
                             {
                                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                                 gen.Generate(origin.X, origin.Y, true, true);
-                                genned = true;
                             });
                             placed = true;
                         }
@@ -481,13 +478,9 @@ namespace Redemption.WorldGeneration
                     };
 
                     bool placed = false;
-                    bool genned = false;
 
-                    while (!genned)
+                    while (!placed)
                     {
-                        if (placed)
-                            continue;
-
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
                         int placeY = (int)Main.worldSurface - 160;
@@ -531,16 +524,14 @@ namespace Redemption.WorldGeneration
                         if (whitelist)
                             continue;
 
-                        Main.QueueMainThreadAction(() =>
-                            {
-                                TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
-                                genC.Generate(origin.X, origin.Y, true, true);
+                        GenUtils.InvokeOnMainThread(() =>
+                        {
+                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
+                            genC.Generate(origin.X, origin.Y, true, true);
 
-                                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
-                                gen.Generate(origin.X, origin.Y, true, true);
-
-                                genned = true;
-                            });
+                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
+                            gen.Generate(origin.X, origin.Y, true, true);
+                        });
 
                         newbCaveVector = origin.ToVector2();
                         placed = true;
@@ -621,13 +612,9 @@ namespace Redemption.WorldGeneration
                     };
 
                     bool placed = false;
-                    bool genned = false;
 
-                    while (!genned)
+                    while (!placed)
                     {
-                        if (placed)
-                            continue;
-
                         int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
 
                         int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7));
@@ -667,15 +654,13 @@ namespace Redemption.WorldGeneration
                             new Actions.SetLiquid(0, 0)
                         }));
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
                             genC.Generate(origin.X, origin.Y, true, true);
 
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
                             gen.Generate(origin.X, origin.Y, true, true);
-
-                            genned = true;
                         });
 
                         gathicPortalVector = origin.ToVector2();
@@ -744,14 +729,10 @@ namespace Redemption.WorldGeneration
                     };
 
                     bool placed = false;
-                    bool genned = false;
                     Point origin = Point.Zero;
 
-                    while (!genned)
+                    while (!placed)
                     {
-                        if (placed)
-                            continue;
-
                         int placeX = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
 
                         int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7));
@@ -791,15 +772,13 @@ namespace Redemption.WorldGeneration
                             new Actions.SetLiquid(0, 0)
                         }));
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
                             genC.Generate(origin.X, origin.Y, true, true);
 
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
                             gen.Generate(origin.X, origin.Y, true, true);
-
-                            genned = true;
                         });
 
                         placed = true;
@@ -869,12 +848,8 @@ namespace Redemption.WorldGeneration
                         [Color.Black] = -1
                     };
                     bool placed = false;
-                    bool genned = false;
-                    while (!genned)
+                    while (!placed)
                     {
-                        if (placed)
-                            continue;
-
                         int placeX2 = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
                         int placeY2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .6));
 
@@ -910,15 +885,13 @@ namespace Redemption.WorldGeneration
                         {
                             new Actions.SetLiquid(0, 0)
                         }));
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
                             genC.Generate(origin2.X, origin2.Y, true, true);
 
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
                             gen.Generate(origin2.X, origin2.Y, true, true);
-
-                            genned = true;
                         });
                         HallOfHeroesVector = origin2.ToVector2();
                         placed = true;
@@ -991,14 +964,10 @@ namespace Redemption.WorldGeneration
                     };
 
                     bool placed = false;
-                    bool genned = false;
                     Point origin = Point.Zero;
 
-                    while (!genned)
+                    while (!placed)
                     {
-                        if (placed)
-                            continue;
-
                         int placeX = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
 
                         int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .5f), (int)(Main.maxTilesY * .7));
@@ -1037,15 +1006,13 @@ namespace Redemption.WorldGeneration
                             new Actions.SetLiquid(0, 0)
                         }));
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
                             genC.Generate(origin.X, origin.Y, true, true);
 
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
                             gen.Generate(origin.X, origin.Y, true, true);
-
-                            genned = true;
                         });
 
                         placed = true;
@@ -1230,6 +1197,23 @@ namespace Redemption.WorldGeneration
         {
             WorldGen.PlaceObject(x, y, TileType, true, style, 0, -1, direction);
             NetMessage.SendObjectPlacment(-1, x, y, TileType, style, 0, -1, direction);
+        }
+        public static void InvokeOnMainThread(Action action)
+        {
+            if (!AssetRepository.IsMainThread)
+            {
+                ManualResetEvent evt = new(false);
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    action();
+                    evt.Set();
+                });
+
+                evt.WaitOne();
+            }
+            else
+                action();
         }
     }
 }
