@@ -117,23 +117,11 @@ namespace Redemption.WorldGeneration.Soulless
             Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsSlopes", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texPlatforms = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsPlatforms", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsLiquids", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
-                    gen.Generate(0, 0, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
+                gen.Generate(0, 0, true, true);
+            });
         }
         public SoullessPass1(string name, float loadWeight) : base(name, loadWeight)
         {
@@ -155,23 +143,11 @@ namespace Redemption.WorldGeneration.Soulless
                 [Color.Black] = -1
             };
             Texture2D platTex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsPlatforms", AssetRequestMode.ImmediateLoad).Value;
-            bool genned2 = false;
-            bool placed2 = false;
-            while (!genned2)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed2)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(platTex, colorToTile2);
-                    gen.Generate(0, 0, true, true);
-
-                    genned2 = true;
-                });
-
-                placed2 = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(platTex, colorToTile2);
+                gen.Generate(0, 0, true, true);
+            });
             for (int x = 0; x < 0 + platTex.Width; x++)
             {
                 for (int y = 0; y < 0 + platTex.Height; y++)
@@ -229,23 +205,11 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(200, 0, 0)] = TileID.AccentSlab,
                 [Color.Black] = -1
             };
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
+            GenUtils.InvokeOnMainThread(() =>
             {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(ObjectTex, colorToObj);
-                    gen.Generate(0, 0, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(ObjectTex, colorToObj);
+                gen.Generate(0, 0, true, true);
+            });
 
             #region Objects
             for (int x2 = 0; x2 < 0 + ObjectTex.Width; x2++)
