@@ -47,6 +47,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                     case 0:
                         if (Projectile.ai[1]++ >= 60)
                             glow += 0.01f;
+                        if (Projectile.ai[1] == 30 && !Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Spark1"), Projectile.position);
 
                         if (Projectile.ai[1] >= 30 && (Projectile.ai[1] >= 60 ? Main.rand.NextBool(6) : Main.rand.NextBool(10)))
                             DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 0.2f, 5, 0.1f);
@@ -73,7 +75,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC npc = Main.npc[i];
-                            if (!npc.active || npc.friendly || npc.dontTakeDamage)
+                            if (!npc.active || !npc.CanBeChasedBy())
                                 continue;
 
                             if (npc.DistanceSQ(Main.MouseWorld) > 60 * 60)
@@ -85,7 +87,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC npc = Main.npc[i];
-                            if (!npc.active || npc.friendly || npc.dontTakeDamage)
+                            if (!npc.active || !npc.CanBeChasedBy())
                                 continue;
 
                             if (glow >= 0.8f)

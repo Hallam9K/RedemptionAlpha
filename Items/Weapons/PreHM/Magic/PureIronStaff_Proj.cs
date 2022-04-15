@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Projectiles.Magic;
 using Redemption.Globals;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
 {
@@ -29,6 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Projectile.DamageType = DamageClass.Magic;
             Projectile.ownerHitCheck = true;
             Projectile.ignoreWater = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public bool glow;
         public float glowTimer;
