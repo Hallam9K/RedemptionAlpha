@@ -157,8 +157,9 @@ namespace Redemption.NPCs.Friendly
             else
             {
                 if (!Main.LocalPlayer.Male)
-                    chat.Add("Wow! I've never talked to a girl before.");
-                chat.Add("How's it goin' bro!");
+                    chat.Add("So... You like... pirates?");
+                else
+                    chat.Add("How's it goin' bro!");
                 chat.Add("Hey I came from the mainland through that portal, but you don't mind me staying here, right?");
                 chat.Add("Yo, I have some pretty cool things, you can have them if you got the money.");
                 chat.Add("My favourite colour is orange! Donno why I'm tellin' ya though...");

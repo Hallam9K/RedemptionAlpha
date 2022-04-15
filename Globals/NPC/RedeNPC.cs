@@ -26,6 +26,7 @@ using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
 using Redemption.NPCs.PostML;
 using Redemption.NPCs.Soulless;
+using Redemption.Items.Weapons.HM.Magic;
 
 namespace Redemption.Globals.NPC
 {
@@ -42,6 +43,8 @@ namespace Redemption.Globals.NPC
         {
             if (type == NPCID.SkeletonMerchant)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
+            if (type == NPCID.Cyborg)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GlobalDischarge>());
         }
         public override void ResetEffects(Terraria.NPC npc)
         {

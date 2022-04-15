@@ -60,14 +60,5 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             type = ModContent.ProjectileType<GlobalDischarge_Proj>();
         }
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.MagnetSphere)
-                .AddIngredient<Capacitator>(2)
-                .AddIngredient<Plating>(6)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-        }
     }
 }
