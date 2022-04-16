@@ -27,6 +27,7 @@ using Redemption.WorldGeneration.Soulless;
 using Redemption.NPCs.PostML;
 using Redemption.NPCs.Soulless;
 using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Donator.Megaswave;
 
 namespace Redemption.Globals.NPC
 {
@@ -447,6 +448,8 @@ namespace Redemption.Globals.NPC
 
             if (npc.type == NPCID.EaterofSouls || npc.type == NPCID.LittleEater || npc.type == NPCID.BigEater || npc.type == NPCID.CorruptGoldfish || npc.type == NPCID.DevourerHead || npc.type == NPCID.Corruptor || npc.type == NPCID.CorruptSlime || npc.type == NPCID.Slimeling || npc.type == NPCID.Slimer2 || npc.type == NPCID.BloodCrawler || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.BigCrimera || npc.type == NPCID.LittleCrimera || npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BigCrimslime || npc.type == NPCID.LittleCrimslime || npc.type == NPCID.BloodFeeder || npc.type == NPCID.BloodJelly)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EldritchRoot>(), 500));
+            if (npc.type == NPCID.BoneSerpentHead)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
