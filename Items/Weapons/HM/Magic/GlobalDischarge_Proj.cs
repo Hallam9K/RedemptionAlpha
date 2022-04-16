@@ -165,13 +165,13 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
             if (Main.rand.NextBool(10))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
             }
             if (Projectile.ai[1] < 0 && Main.rand.NextBool(2))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
             }
 
             switch (Projectile.ai[1])
@@ -197,14 +197,14 @@ namespace Redemption.Items.Weapons.HM.Magic
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC npc = Main.npc[i];
-                            if (!npc.active || !npc.CanBeChasedBy())
+                            if (!npc.active || npc.friendly || npc.dontTakeDamage)
                                 continue;
 
                             if (Projectile.DistanceSQ(npc.Center) > 600 * 600)
                                 continue;
 
-                            DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 1, 20, 0.05f);
-                            DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 1, 20, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
                             int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
                             BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                         }
@@ -243,8 +243,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                             if (Projectile.localAI[1] > 5)
                                 Projectile.localAI[1]--;
 
-                            DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1, 20, 0.05f);
-                            DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1, 20, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
                             int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
                             BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
 

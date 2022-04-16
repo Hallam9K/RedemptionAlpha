@@ -10,6 +10,7 @@ using Redemption.Buffs.NPCBuffs;
 using Terraria.Graphics.Shaders;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Particles;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -113,7 +114,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,
                         -Projectile.velocity.X * 0.01f, -Projectile.velocity.Y * 0.6f, Scale: 2);
                 for (int i = 0; i < 3; i++)
-                    DustHelper.DrawElectricity(Projectile.Center, Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 2, 30, default, 0.1f);
+                    DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(0, 400), Projectile.Center, new LightningParticle(), 2f, 30, 0.1f, 1);
                 DustHelper.DrawCircle(Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
 
                 if (!Main.dedServ)

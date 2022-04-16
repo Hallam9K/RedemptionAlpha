@@ -439,7 +439,7 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
-                    DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), 0.1f, 10, 0.2f);
+                    DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), 1f, 10, 0.2f);
                 }
             }
             if (dreamsong)

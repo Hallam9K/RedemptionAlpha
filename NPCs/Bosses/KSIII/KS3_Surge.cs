@@ -45,8 +45,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             if (Projectile.alpha < 200 && Main.rand.NextBool(3))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 2f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(280, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 2f, 20, 0.1f);
             }
 
             Projectile.alpha += 10;
