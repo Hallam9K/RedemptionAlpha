@@ -11,6 +11,7 @@ using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -59,7 +60,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap2"), Projectile.position);
-                DustHelper.DrawElectricity(host.Center, Projectile.Center, DustID.LifeDrain, 1, 20);
+                DustHelper.DrawParticleElectricity(host.Center, Projectile.Center, new LightningParticle(), 2f, 20, 0.1f, 2);
+                DustHelper.DrawParticleElectricity(host.Center, Projectile.Center, new LightningParticle(), 2f, 20, 0.1f, 2);
                 Flare = true;
             }
             if (Flare)
