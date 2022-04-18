@@ -19,7 +19,6 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Shadesoul");
             Main.projFrames[Projectile.type] = 8;
-            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
