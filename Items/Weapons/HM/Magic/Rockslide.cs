@@ -33,7 +33,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.autoReuse = true;
             Item.knockBack = 8;
             Item.channel = true;
-            Item.value = Item.sellPrice(0, 7, 50, 0);
+            Item.value = Item.buyPrice(0, 70, 0, 0);
             Item.rare = ItemRarityID.Lime;
             Item.shootSpeed = 0;
             Item.shoot = ModContent.ProjectileType<Rockslide_Proj>();
