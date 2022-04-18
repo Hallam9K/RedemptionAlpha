@@ -453,7 +453,7 @@ namespace Redemption.Globals
 
             #region Earth
 
-            Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ModContent.ProjectileType<AncientGladestonePillar>(), ModContent.ProjectileType<EaglecrestSling_Throw>(), ModContent.ProjectileType<EaglecrestJavelin_Proj>(), ModContent.ProjectileType<CalciteWand_Proj>());
+            Earth.SetMultiple(ProjectileID.Boulder, ProjectileID.BoulderStaffOfEarth, ProjectileID.GolemFist, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.SandnadoFriendly, ProjectileID.SandnadoHostile, ProjectileID.DD2OgreStomp, ProjectileID.DD2OgreSmash, ProjectileID.MonkStaffT1Explosion, ProjectileID.RollingCactus, ProjectileID.RockGolemRock, ModContent.ProjectileType<AncientGladestonePillar>(), ModContent.ProjectileType<EaglecrestSling_Throw>(), ModContent.ProjectileType<EaglecrestJavelin_Proj>(), ModContent.ProjectileType<CalciteWand_Proj>(), ModContent.ProjectileType<Rockslide_Proj>(), ModContent.ProjectileType<RockslidePebble_Proj>());
 
             #endregion
 
@@ -501,7 +501,7 @@ namespace Redemption.Globals
 
             #region Psychic
 
-            Psychic.SetMultiple(ProjectileID.BrainScramblerBolt, ProjectileID.MedusaHeadRay, ProjectileID.BookStaffShot, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly, ModContent.ProjectileType<Cystling>());
+            Psychic.SetMultiple(ProjectileID.BrainScramblerBolt, ProjectileID.MedusaHeadRay, ProjectileID.BookStaffShot, ProjectileID.InsanityShadowHostile, ProjectileID.InsanityShadowFriendly, ModContent.ProjectileType<Cystling>(), ModContent.ProjectileType<Rockslide_Proj>());
 
             #endregion
 
