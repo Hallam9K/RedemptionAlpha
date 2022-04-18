@@ -174,86 +174,89 @@ namespace Redemption.Items.Weapons.HM.Magic
                 DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
             }
 
-            switch (Projectile.ai[1])
+            if (Projectile.owner == Main.myPlayer)
             {
-                case -2:
-                    godrayFade += 0.04f;
-                    Projectile.scale += 0.01f;
-                    Projectile.alpha -= 1;
-                    Projectile.velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
-                    if (godrayFade >= 1f)
-                    {
-                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, DustID.Electric, 28, 40);
-                        Projectile.Kill();
-                    }
-                    break;
-                case -1:
-                    godrayFade += 0.02f;
-                    Projectile.scale += 0.01f;
-                    Projectile.alpha -= 1;
-                    Projectile.velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
-                    if (godrayFade >= 1.2f)
-                    {
-                        for (int i = 0; i < Main.maxNPCs; i++)
+                switch (Projectile.ai[1])
+                {
+                    case -2:
+                        godrayFade += 0.04f;
+                        Projectile.scale += 0.01f;
+                        Projectile.alpha -= 1;
+                        Projectile.velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
+                        if (godrayFade >= 1f)
                         {
-                            NPC npc = Main.npc[i];
-                            if (!npc.active || npc.friendly || npc.dontTakeDamage)
-                                continue;
-
-                            if (Projectile.DistanceSQ(npc.Center) > 600 * 600)
-                                continue;
-
-                            DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
-                            DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
-                            int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, DustID.Electric, 28, 40);
+                            Projectile.Kill();
                         }
-                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, DustID.Electric, 60, 40, 2, 5);
-                        Projectile.Kill();
-                    }
-                    break;
-                case 0:
-                    Projectile.scale += 0.03f;
-                    if (Projectile.alpha > 0)
-                        Projectile.alpha -= 8;
-                    if (Projectile.scale >= 1)
-                    {
-                        Projectile.localAI[1] = 30;
-                        Projectile.scale = 1;
-                        if (player.channel)
-                            Projectile.ai[1] = 1;
-                        else
+                        break;
+                    case -1:
+                        godrayFade += 0.02f;
+                        Projectile.scale += 0.01f;
+                        Projectile.alpha -= 1;
+                        Projectile.velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
+                        if (godrayFade >= 1.2f)
                         {
-                            if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Spark1"), Projectile.position);
-                            Projectile.ai[1] = -1;
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                NPC npc = Main.npc[i];
+                                if (!npc.active || npc.friendly || npc.dontTakeDamage)
+                                    continue;
+
+                                if (Projectile.DistanceSQ(npc.Center) > 600 * 600)
+                                    continue;
+
+                                DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
+                                DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
+                                int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                                BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                            }
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, DustID.Electric, 60, 40, 2, 5);
+                            Projectile.Kill();
                         }
-                        Projectile.netUpdate = true;
-                    }
-                    break;
-                case 1:
-                    Projectile.localAI[0]++;
-                    if (RedeHelper.ClosestNPC(ref target, 80, Main.MouseWorld, true))
-                    {
-                        if (Projectile.localAI[0] >= Projectile.localAI[1])
+                        break;
+                    case 0:
+                        Projectile.scale += 0.03f;
+                        if (Projectile.alpha > 0)
+                            Projectile.alpha -= 8;
+                        if (Projectile.scale >= 1)
                         {
-                            if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap2").WithPitchVariance(0.1f), Projectile.position);
-
-                            if (Projectile.localAI[1] > 5)
-                                Projectile.localAI[1]--;
-
-                            DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
-                            DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
-                            int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-
-                            Projectile.localAI[0] = 0;
+                            Projectile.localAI[1] = 30;
+                            Projectile.scale = 1;
+                            if (player.channel)
+                                Projectile.ai[1] = 1;
+                            else
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Spark1"), Projectile.position);
+                                Projectile.ai[1] = -1;
+                            }
+                            Projectile.netUpdate = true;
                         }
-                    }
-                    if (Projectile.localAI[1] <= 5)
-                        player.AddBuff(BuffID.Electrified, 120);
-                    break;
+                        break;
+                    case 1:
+                        Projectile.localAI[0]++;
+                        if (RedeHelper.ClosestNPC(ref target, 80, Main.MouseWorld, true))
+                        {
+                            if (Projectile.localAI[0] >= Projectile.localAI[1])
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap2").WithPitchVariance(0.1f), Projectile.position);
+
+                                if (Projectile.localAI[1] > 5)
+                                    Projectile.localAI[1]--;
+
+                                DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
+                                DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
+                                int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                                BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+
+                                Projectile.localAI[0] = 0;
+                            }
+                        }
+                        if (Projectile.localAI[1] <= 5)
+                            player.AddBuff(BuffID.Electrified, 120);
+                        break;
+                }
             }
         }
         public override void Kill(int timeLeft)

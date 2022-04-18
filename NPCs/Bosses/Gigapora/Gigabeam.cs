@@ -9,6 +9,7 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -34,7 +35,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public int MaxLaserLength = 2400;
         // >
-
         public override void SetDefaults()
         {
             Projectile.width = 100;
