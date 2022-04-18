@@ -257,23 +257,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 RedeDraw.DrawGodrays(Main.spriteBatch, Projectile.Center - Main.screenPosition, godrayColor * godrayFade, 100 * modifiedScale * Projectile.Opacity, 30 * modifiedScale * Projectile.Opacity, 16);
             }
 
-            float time = Main.GlobalTimeWrappedHourly;
-            float timer = drawTimer / 240f + time * 0.04f;
-            time %= 4f;
-            time /= 2f;
-            if (time >= 1f)
-                time = 2f - time;
-            time = time * 0.5f + 0.5f;
-            for (float i = 0f; i < 1f; i += 0.25f)
-            {
-                float radians = (i + timer) * MathHelper.TwoPi;
-                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0f, 8f).RotatedBy(radians) * time, null, new Color(255, 255, 120, 50) * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
-            }
-            for (float i = 0f; i < 1f; i += 0.34f)
-            {
-                float radians = (i + timer) * MathHelper.TwoPi;
-                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0f, 4f).RotatedBy(radians) * time, null, new Color(255, 255, 120, 77) * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
-            }
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 120), Projectile.rotation, drawOrigin, Projectile.scale);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }

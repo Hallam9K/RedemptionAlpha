@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.noMelee = true;
             Item.autoReuse = false;
             Item.noUseGraphic = true;
-            Item.value = Item.sellPrice(0, 7, 50, 0);
+            Item.value = Item.buyPrice(0, 65, 50, 0);
             Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricSlash2");
             Item.shootSpeed = 16f;
             Item.shoot = ModContent.ProjectileType<GlobalDischarge_Sphere>();
