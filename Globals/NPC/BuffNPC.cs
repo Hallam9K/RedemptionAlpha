@@ -283,9 +283,9 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                npc.lifeRegen -= 5000;
-                if (damage < 1000)
-                    damage = 1000;
+                npc.lifeRegen -= 1000;
+                if (damage < 100)
+                    damage = 100;
             }
             if (lacerated)
             {
