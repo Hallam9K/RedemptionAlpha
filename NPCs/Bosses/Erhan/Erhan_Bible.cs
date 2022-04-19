@@ -257,7 +257,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 RedeDraw.DrawGodrays(Main.spriteBatch, Projectile.Center - Main.screenPosition, godrayColor * godrayFade, 100 * modifiedScale * Projectile.Opacity, 30 * modifiedScale * Projectile.Opacity, 16);
             }
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 120), Projectile.rotation, drawOrigin, Projectile.scale);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 120) * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
