@@ -39,10 +39,10 @@ namespace Redemption.NPCs.Soulless
             if (colliders == null || colliders.Length != 4)
             {
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }) };
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true) };
             }
             return true;
         }
