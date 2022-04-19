@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CollisionLib">
-      <HintPath>..\..\ModReader\CollisionLib\CollisionLib.dll</HintPath>
+      <HintPath>..\Mod Libraries\CollisionLib_v2.0.dll</HintPath>
     </Reference>
     <Reference Include="ParticleLibrary">
       <HintPath>..\Mod Libraries\ParticleLibrary.dll</HintPath>

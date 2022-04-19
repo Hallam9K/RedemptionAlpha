@@ -75,7 +75,7 @@ namespace Redemption.Projectiles.Magic
             {
                 if (Projectile.ai[0] == 0)
                 {
-                    Projectile.timeLeft = 60;
+                    Projectile.timeLeft = 200;
                     Projectile.position = player.Center + MoveVector2;
                     MoveVector2 += pos;
                     if (!player.channel && Main.rand.NextBool(10) && Projectile.alpha <= 0)
