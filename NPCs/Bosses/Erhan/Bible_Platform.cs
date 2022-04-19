@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 NPC.velocity.Y -= 4;
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 2, 0, 0, 0 }) };
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 2, 0, 0, 0 }, true) };
             }
             /*
              * CollisionStyles controls which sides of the player can collide with each surface,
@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 NPC.velocity.Y -= 4;
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 2, 0, 0, 0 }) };
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 2, 0, 0, 0 }, true) };
             }
             return true;
         }
