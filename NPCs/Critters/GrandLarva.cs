@@ -248,7 +248,7 @@ namespace Redemption.NPCs.Critters
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
         public override bool? CanHitNPC(NPC target) => target.lifeMax > 5 ? null : false;

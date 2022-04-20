@@ -118,9 +118,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                 if (NPC.type == ModContent.NPCType<Gigapora>())
                 {
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGore1").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGore1").Type);
                     for (int i = 0; i < 4; i++)
-                        Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGoreDrill" + (i + 1)).Type);
+                        Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGoreDrill" + (i + 1)).Type);
                 }
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
@@ -142,7 +142,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (!RedeBossDowned.downedVlitch2)
             {
-                Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch2, -1);
         }
@@ -209,7 +209,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     int[] Type = { 0, 1, -1, -2, 2, -3, -4, 3, -5, -6, 4, -7, -8, 5, -9, -10, 6, -11, 7 };
                     for (int i = 0; i < Type.Length; ++i)
                     {
-                        latestNPC = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Gigapora_BodySegment>(), NPC.whoAmI, 0, latestNPC);
                         if (latestNPC != Main.maxNPCs)
                         {
                             Main.npc[latestNPC].realLife = NPC.whoAmI;
@@ -679,7 +679,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 seg.ai[0] = 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int index = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
+                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
                     Main.npc[index].velocity = NPC.velocity;
                     Main.npc[index].frameCounter = -25;
                     if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)

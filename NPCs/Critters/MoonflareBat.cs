@@ -197,9 +197,9 @@ namespace Redemption.NPCs.Critters
                 int gore2 = ModContent.Find<ModGore>("Redemption/MoonflareBatGore2").Type;
 
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, gore1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, gore1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, gore2);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, gore2);
 
                 for (int i = 0; i < 8; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<MoonflareDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);

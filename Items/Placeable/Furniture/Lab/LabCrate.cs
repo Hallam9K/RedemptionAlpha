@@ -59,15 +59,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
                 ModContent.ItemType<CarbonMyofibre>(),
                 ModContent.ItemType<XenomiteShard>()
             };
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot));
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot2), Main.rand.Next(1, 3));
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot3), Main.rand.Next(8, 12));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot2), Main.rand.Next(1, 3));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot3), Main.rand.Next(8, 12));
 
             if (Main.rand.NextBool(4))
-                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), Utils.Next(Main.rand, FloppyDiskLoot));
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, FloppyDiskLoot));
 
             if (Main.rand.NextBool(4))
-                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ItemID.GoldCoin, Main.rand.Next(2, 5));
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.GoldCoin, Main.rand.Next(2, 5));
         }
     }
 }

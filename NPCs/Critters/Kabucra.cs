@@ -280,7 +280,7 @@ namespace Redemption.NPCs.Critters
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/KabucraGore").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/KabucraGore").Type);
 
                 for (int i = 0; i < 2; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,

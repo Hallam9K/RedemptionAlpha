@@ -109,7 +109,7 @@ namespace Redemption.NPCs.Lab.Volt
         public override void OnKill()
         {
             if (!LabArea.labAccess[3])
-                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
+                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVolt, -1);
         }
@@ -253,7 +253,7 @@ namespace Redemption.NPCs.Lab.Volt
 
                     if (AITimer >= 40 && AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int proj = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
                         Main.projectile[proj].netUpdate2 = true;
@@ -479,7 +479,7 @@ namespace Redemption.NPCs.Lab.Volt
                             break;
                         case 3:
                             if (!LabArea.labAccess[3])
-                                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
+                                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
 
                             Main.BestiaryTracker.Kills.RegisterKill(NPC);
 

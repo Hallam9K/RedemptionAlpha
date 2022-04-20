@@ -477,7 +477,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             if (++AITimer >= 30 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 40 : 60) == 0 && AITimer <= 90)
                             {
                                 SoundEngine.PlaySound(SoundID.NPCDeath13, NPC.position);
-                                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SeedGrowth>(), NPC.whoAmI);
                             }
                             if (AITimer >= 130)
                             {
@@ -583,7 +583,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         if (Main.netMode != NetmodeID.Server)
                         {
                             for (int i = 0; i < 7; i++)
-                                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SoIGore" + (i + 1)).Type, 1);
+                                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SoIGore" + (i + 1)).Type, 1);
                         }
 
                         for (int i = 0; i < 20; i++)

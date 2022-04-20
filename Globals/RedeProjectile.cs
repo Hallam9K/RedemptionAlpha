@@ -8,7 +8,6 @@ namespace Redemption.Globals
     public class RedeProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
         public bool TechnicallyMelee;
         public bool IsHammer;
         public bool IsAxe;

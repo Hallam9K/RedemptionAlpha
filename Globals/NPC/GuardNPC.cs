@@ -10,7 +10,6 @@ namespace Redemption.Globals.NPC
     public class GuardNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
         public int GuardPoints;
         public bool IgnoreArmour;
         public bool GuardBroken;

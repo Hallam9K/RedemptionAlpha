@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 SoundEngine.PlaySound(SoundID.Tink);
                 Projectile.frame = 1;
                 if (Main.netMode != NetmodeID.Server)
-                    Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/HolyGrenadePin").Type);
             }
             if (Projectile.localAI[0] == 320)

@@ -44,7 +44,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Vector2 spawn = new(target.Center.X + Main.rand.Next(-300, 301), target.Center.Y - Main.rand.Next(800, 861));
 
-                Projectile.NewProjectile(player.GetProjectileSource_Item(Item), spawn,
+                Projectile.NewProjectile(player.GetSource_ItemUse(Item), spawn,
                     RedeHelper.PolarVector(30, (target.Center + target.velocity * 20f - spawn).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)),
                     ModContent.ProjectileType<Firebreak_Proj>(), 13, knockBack, Main.myPlayer);
             }

@@ -49,7 +49,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                Gore.NewGore(new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
+                Gore.NewGore(player.GetSource_FromThis(), new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
             }
         }
     }

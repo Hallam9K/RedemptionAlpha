@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     int wayfarer = WorldGen.crimson ? ModContent.NPCType<Daerel_Intro>() : ModContent.NPCType<Zephos_Intro>();
                     SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, NPC.position);
-                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, wayfarer, ai3: NPC.whoAmI);
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, wayfarer, ai3: NPC.whoAmI);
                 }
             }
 

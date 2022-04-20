@@ -17,7 +17,7 @@ namespace Redemption.Buffs.Pets
 			player.buffTime[buffIndex] = 18000;
 			int projType = ModContent.ProjectileType<KS3Pet_Proj>();
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-				Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
+				Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
 		}
 	}
 }

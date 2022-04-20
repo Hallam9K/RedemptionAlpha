@@ -85,8 +85,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnKill()
         {
-            Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ItemID.Heart);
-            Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ItemID.Heart);
+            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
+            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (seg.active && seg.type == ModContent.NPCType<Gigapora_BodySegment>())
             {
@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     return;
 
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShieldCoreGore" + (i + 1)).Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShieldCoreGore" + (i + 1)).Type);
                 for (int i = 0; i < 10; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, Scale: 2);

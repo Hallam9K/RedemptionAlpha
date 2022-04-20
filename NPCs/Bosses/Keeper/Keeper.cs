@@ -173,11 +173,11 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void OnKill()
         {
-            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), -0.6f);
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), -0.6f);
 
             if (!RedeBossDowned.downedKeeper)
             {
-                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<SorrowfulEssence>());
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<SorrowfulEssence>());
 
                 RedeWorld.alignment++;
                 for (int p = 0; p < Main.maxPlayers; p++)
@@ -674,7 +674,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                     if (AITimer++ == 0)
                     {
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>(), ai3: NPC.whoAmI);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)(NPC.Center.X + 120 * NPC.spriteDirection), (int)(NPC.Center.Y + 180), ModContent.NPCType<SkullDigger>(), ai3: NPC.whoAmI);
 
                         NPC.dontTakeDamage = true;
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -763,8 +763,8 @@ namespace Redemption.NPCs.Bosses.Keeper
                             Main.dust[dustIndex2].velocity *= 2.6f;
                         }
                         Main.NewText("The Keeper's Spirit fades away... ?", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
-                        Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeepersCirclet>());
-                        Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeeperTrophy>());
+                        Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeepersCirclet>());
+                        Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeeperTrophy>());
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
                         if (!RedeBossDowned.keeperSaved)
                         {
