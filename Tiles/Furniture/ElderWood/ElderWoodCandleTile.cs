@@ -9,20 +9,20 @@ using Redemption.Items.Placeable.Furniture.ElderWood;
 namespace Redemption.Tiles.Furniture.ElderWood
 {
     public class ElderWoodCandleTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
             TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Elder Wood Candle");
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Elder Wood Candle");
             AddMapEntry(new Color(109, 87, 78), name);
-			AdjTiles = new int[]{ TileID.Candles };
+            AdjTiles = new int[] { TileID.Candles };
             ItemDrop = ModContent.ItemType<ElderWoodCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.t_BorealWood;
@@ -68,7 +68,15 @@ namespace Redemption.Tiles.Furniture.ElderWood
                 zero = Vector2.Zero;
             }
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodCandleTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
+            Color color = new(100, 100, 100, 0);
+            for (int k = 0; k < 7; k++)
+            {
+                float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
+                float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
+
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodCandleTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
         }
     }
 }

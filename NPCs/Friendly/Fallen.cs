@@ -19,6 +19,7 @@ using Redemption.Items.Accessories.PreHM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Single;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -148,14 +149,9 @@ namespace Redemption.NPCs.Friendly
             return RedeBossDowned.downedKeeper;
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return WorldGen.genRand.Next(3) switch
-            {
-                0 => "Happins",
-                1 => "Tenvon",
-                _ => "Okvot",
-            };
+            return new List<string> { "Happins, Tenvon, Okvot" };
         }
 
         public override string GetChat()

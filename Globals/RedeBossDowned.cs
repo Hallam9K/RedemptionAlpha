@@ -24,6 +24,7 @@ namespace Redemption.Globals
         public static bool downedErhan;
         public static int erhanDeath;
         public static int slayerDeath;
+        public static int nebDeath;
         public static bool nukeDropped;
         public static bool downedJanitor;
         public static bool downedBehemoth;
@@ -32,6 +33,7 @@ namespace Redemption.Globals
         public static bool downedMACE;
         public static bool voltBegin;
         public static bool downedPZ;
+        public static bool downedNebuleus;
 
         public override void OnWorldLoad()
         {
@@ -51,6 +53,7 @@ namespace Redemption.Globals
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
+            nebDeath = 0;
             nukeDropped = false;
             downedJanitor = false;
             downedBehemoth = false;
@@ -59,6 +62,7 @@ namespace Redemption.Globals
             downedMACE = false;
             voltBegin = false;
             downedPZ = false;
+            downedNebuleus = false;
         }
 
         public override void OnWorldUnload()
@@ -79,6 +83,7 @@ namespace Redemption.Globals
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
+            nebDeath = 0;
             nukeDropped = false;
             downedJanitor = false;
             downedBehemoth = false;
@@ -87,6 +92,7 @@ namespace Redemption.Globals
             downedMACE = false;
             voltBegin = false;
             downedPZ = false;
+            downedNebuleus = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -137,10 +143,13 @@ namespace Redemption.Globals
                 downed.Add("voltBegin");
             if (downedPZ)
                 downed.Add("downedPZ");
+            if (downedNebuleus)
+                downed.Add("downedNebuleus");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
             tag["slayerDeath"] = slayerDeath;
+            tag["nebDeath"] = nebDeath;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -163,6 +172,7 @@ namespace Redemption.Globals
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
             slayerDeath = tag.GetInt("slayerDeath");
+            nebDeath = tag.GetInt("nebDeath");
             nukeDropped = downed.Contains("nukeDropped");
             downedJanitor = downed.Contains("downedJanitor");
             downedBehemoth = downed.Contains("downedBehemoth");
@@ -171,6 +181,7 @@ namespace Redemption.Globals
             downedMACE = downed.Contains("downedMACE");
             voltBegin = downed.Contains("voltBegin");
             downedPZ = downed.Contains("downedPZ");
+            downedNebuleus = downed.Contains("downedNebuleus");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -202,10 +213,12 @@ namespace Redemption.Globals
             flags3[3] = downedMACE;
             flags3[4] = voltBegin;
             flags3[5] = downedPZ;
+            flags3[6] = downedNebuleus;
             writer.Write(flags3);
 
             writer.Write(erhanDeath);
             writer.Write(slayerDeath);
+            writer.Write(nebDeath);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -235,9 +248,11 @@ namespace Redemption.Globals
             downedMACE = flags3[3];
             voltBegin = flags3[4];
             downedPZ = flags3[5];
+            downedNebuleus = flags3[6];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();
+            nebDeath = reader.ReadInt32();
         }
     }
 }
