@@ -21,7 +21,7 @@ namespace Redemption.Buffs
             player.buffImmune[BuffID.Electrified] = true;
             int projType = ModContent.ProjectileType<ZapField_Proj>();
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
-                Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 500, 0f, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 500, 0f, player.whoAmI);
         }
     }
     public class ZapField_Proj : ModProjectile

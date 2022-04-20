@@ -140,13 +140,13 @@ namespace Redemption.Tiles.Natural
                 return;
 
             Vector2 v = new(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
-            Gore.NewGore(new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore1").Type);
+            Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore1").Type);
             if (Main.rand.NextBool(2))
-                Gore.NewGore(new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore2").Type);
+                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore2").Type);
             if (Main.rand.NextBool(2))
-                Gore.NewGore(new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore3").Type);
+                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore3").Type);
             if (Main.rand.NextBool(2))
-                Gore.NewGore(new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore4").Type);
+                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore4").Type);
         }
     }
     public class ShadePotsItem : PlaceholderTile

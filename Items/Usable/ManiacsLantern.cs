@@ -25,7 +25,7 @@ namespace Redemption.Items.Usable
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<ManiacsLantern_Proj>()] == 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(Item), new Vector2(player.Center.X + (40 * player.direction), player.Center.Y - 40), Vector2.Zero, ModContent.ProjectileType<ManiacsLantern_Proj>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_ItemUse(Item), new Vector2(player.Center.X + (40 * player.direction), player.Center.Y - 40), Vector2.Zero, ModContent.ProjectileType<ManiacsLantern_Proj>(), 0, 0, player.whoAmI);
             }
         }
     }

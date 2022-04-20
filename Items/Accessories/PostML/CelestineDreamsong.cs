@@ -53,7 +53,7 @@ namespace Redemption.Items.Accessories.PostML
                 dust.velocity.Y -= player.velocity.Y * 0.5f;
             }
             if (player.ownedProjectileCounts[ModContent.ProjectileType<DreamsongLight_Visual>()] == 0)
-                Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), player.position, Vector2.Zero, ModContent.ProjectileType<DreamsongLight_Visual>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.position, Vector2.Zero, ModContent.ProjectileType<DreamsongLight_Visual>(), 0, 0, player.whoAmI);
         }
     }
 }

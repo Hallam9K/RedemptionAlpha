@@ -82,7 +82,7 @@ namespace Redemption.NPCs.Soulless
 
             if (NPC.ai[1] == 0)
             {
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y - 32, ModContent.NPCType<SoullessMarionette_Cross>(), NPC.whoAmI);
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y - 32, ModContent.NPCType<SoullessMarionette_Cross>(), NPC.whoAmI);
                 NPC.ai[1] = 1;
             }
             else if (NPC.ai[1] == 1)

@@ -24,7 +24,7 @@ namespace Redemption.Items.Materials.PostML
         public override bool CanRightClick() => true;
         public override void RightClick(Player player)
         {
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<VesselFragment>(), Main.rand.Next(3, 8));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<VesselFragment>(), Main.rand.Next(3, 8));
         }
     }
 }
