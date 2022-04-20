@@ -83,7 +83,7 @@ namespace Redemption.Projectiles.Ranged
             {
                 for (int g = 0; g < 3; g++)
                 {
-                    int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
+                    int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Main.rand.Next(61, 64));
                     Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
                     Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
                 }

@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Wasteland
                 for (int i = 0; i < 25; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood);
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SneezyFlinxGore").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SneezyFlinxGore").Type, 1);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

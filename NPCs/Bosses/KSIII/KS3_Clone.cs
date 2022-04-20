@@ -929,7 +929,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         for (int i = 0; i < Main.rand.Next(2, 5); i++)
                                         {
-                                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
+                                            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
                                                 ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
                                         }
                                     }
@@ -970,7 +970,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         for (int i = 0; i < 2; i++)
                                         {
-                                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
+                                            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
                                                 ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                         }
                                     }

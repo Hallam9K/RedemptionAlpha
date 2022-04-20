@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int index = NPC.NewNPC(Projectile.GetNPCSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, ModContent.NPCType<EaglecrestRockPile>());
+                int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, ModContent.NPCType<EaglecrestRockPile>());
 
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                     NetMessage.SendData(MessageID.SyncNPC, number: index);

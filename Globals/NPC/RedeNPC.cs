@@ -30,7 +30,6 @@ namespace Redemption.Globals.NPC
     public class RedeNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
         public bool decapitated;
         public bool invisible;
         public Entity attacker = Main.LocalPlayer;
@@ -336,7 +335,7 @@ namespace Redemption.Globals.NPC
                 if (ItemTags.Shadow.Has(item.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.GetItemSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
@@ -384,7 +383,7 @@ namespace Redemption.Globals.NPC
                 if (ProjectileTags.Shadow.Has(projectile.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.GetItemSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
@@ -397,7 +396,7 @@ namespace Redemption.Globals.NPC
         public override void OnKill(Terraria.NPC npc)
         {
             if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
-                RedeHelper.SpawnNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
         public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {

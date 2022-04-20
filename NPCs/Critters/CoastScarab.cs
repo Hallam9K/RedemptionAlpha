@@ -251,8 +251,8 @@ namespace Redemption.NPCs.Critters
             {
                 int gore1 = ModContent.Find<ModGore>("Redemption/CoastScarabGore1").Type;
                 int gore2 = ModContent.Find<ModGore>("Redemption/CoastScarabGore2").Type;
-                Gore.NewGore(NPC.position, NPC.velocity, gore1);
-                Gore.NewGore(NPC.position, NPC.velocity, gore2);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, gore1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, gore2);
 
                 for (int i = 0; i < 4; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,

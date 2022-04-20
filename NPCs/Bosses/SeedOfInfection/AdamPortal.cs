@@ -77,7 +77,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     if (Projectile.localAI[0]++ == 60)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, Projectile.position);
-                        RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<TBot_Intro>());
+                        RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<TBot_Intro>());
                     }
                     if (Projectile.localAI[0] >= 120)
                     {

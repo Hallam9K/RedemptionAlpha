@@ -206,7 +206,7 @@ namespace Redemption.NPCs.Lab
             if (consumed > 2)
             {
                 for (int i = 0; i < consumed / 2; i++)
-                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.position.X + Main.rand.Next(0, NPC.width), (int)NPC.position.Y + Main.rand.Next(0, NPC.height), ModContent.NPCType<OozeBlob>());
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + Main.rand.Next(0, NPC.width), (int)NPC.position.Y + Main.rand.Next(0, NPC.height), ModContent.NPCType<OozeBlob>());
             }
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

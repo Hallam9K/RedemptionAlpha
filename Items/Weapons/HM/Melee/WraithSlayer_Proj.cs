@@ -134,7 +134,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     Dust.NewDust(target.position, target.width, target.height, DustID.Wraith);
 
                 Player player = Main.player[Projectile.owner];
-                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: player.whoAmI);
+                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: player.whoAmI);
             }
         }
 

@@ -54,7 +54,7 @@ namespace Redemption.Items.Accessories.HM
             {
                 if (Main.rand.NextBool(10))
                 {
-                    Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), new Vector2(player.position.X + Main.rand.NextFloat(player.width), player.position.Y + Main.rand.NextFloat(player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<InfectionShield_AcidSpark>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(player.GetSource_Accessory(Item), new Vector2(player.position.X + Main.rand.NextFloat(player.width), player.position.Y + Main.rand.NextFloat(player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<InfectionShield_AcidSpark>(), 0, 0, Main.myPlayer);
                 }
             }
             player.GetModPlayer<ThornshieldDashPlayer>().DashAccessoryEquipped = true;

@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Wasteland
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood);
 
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/HazmatBunnyGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/HazmatBunnyGore" + (i + 1)).Type, 1);
             }
         }
     }

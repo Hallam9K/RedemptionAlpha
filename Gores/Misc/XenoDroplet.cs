@@ -9,7 +9,7 @@ namespace Redemption.Gores.Misc
 {
 	public class XenoDroplet : ModGore
 	{
-		public override void OnSpawn(Gore gore)
+		public override void OnSpawn(Gore gore, IEntitySource source)
 		{
 			gore.Frame = new SpriteFrame(1, 15, 0, 0);
 			gore.behindTiles = true;
@@ -44,7 +44,7 @@ namespace Redemption.Gores.Misc
 					gore.Frame.CurrentRow++;
 					if (gore.Frame.CurrentRow == 5)
 					{
-						int droplet = Gore.NewGore(gore.position, gore.velocity, gore.type, 1f);
+						int droplet = Gore.NewGore(new EntitySource_Misc("Gore"), gore.position, gore.velocity, gore.type, 1f);
 						Main.gore[droplet].Frame.CurrentRow = 9;
 						Main.gore[droplet].velocity *= 0f;
 					}

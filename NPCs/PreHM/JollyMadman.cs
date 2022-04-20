@@ -99,7 +99,7 @@ namespace Redemption.NPCs.PreHM
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 5; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/JollyMadmanGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/JollyMadmanGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Lead, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -190,7 +190,7 @@ namespace Redemption.NPCs.PreHM
                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                     {
                         Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
 
                     TimerRand = Main.rand.Next(80, 280);
@@ -501,7 +501,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             for (int i = 0; i < 3; i++)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

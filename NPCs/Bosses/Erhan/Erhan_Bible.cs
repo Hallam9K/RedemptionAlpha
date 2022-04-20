@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), Projectile.position);
                                 SoundEngine.PlaySound(SoundID.Item125, Projectile.Center);
-                                int p = Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60);
+                                int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
                                 TimerRand++;
                             }
@@ -205,16 +205,16 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 playerOrigin.Y -= 100;
                                 playerOrigin.X += Main.rand.Next(-220, 220);
-                                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
+                                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                 if (Main.rand.NextBool(4))
                                 {
-                                    RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X + 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
+                                    RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X + 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                     if (Main.rand.NextBool())
                                         playerOrigin.X += 280;
                                 }
                                 if (Main.rand.NextBool(4))
                                 {
-                                    RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X - 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
+                                    RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X - 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                     if (Main.rand.NextBool())
                                         playerOrigin.X -= 280;
                                 }
@@ -223,7 +223,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 playerOrigin.Y -= 100;
                                 playerOrigin.X += Main.rand.Next(-220, 220);
-                                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform2>());
+                                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform2>());
                             }
                             if (AITimer >= 540)
                                 Projectile.Kill();

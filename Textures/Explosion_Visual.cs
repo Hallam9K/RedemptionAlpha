@@ -78,7 +78,7 @@ namespace Redemption.Textures
                     {
                         for (int g = 0; g < 6; g++)
                         {
-                            int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
+                            int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Main.rand.Next(61, 64));
                             Main.gore[goreIndex].scale = 1.5f;
                             Main.gore[goreIndex].velocity *= 2f;
                         }

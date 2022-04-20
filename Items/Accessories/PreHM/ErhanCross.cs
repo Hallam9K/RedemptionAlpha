@@ -45,7 +45,7 @@ namespace Redemption.Items.Accessories.PreHM
             modPlayer.erhanCross = true;
             if (player.whoAmI == Main.myPlayer && player.active && !player.dead && player.ownedProjectileCounts[ModContent.ProjectileType<ErhanCross_Shield>()] < 1 &&
                 !player.HasBuff<ErhanCrossCooldown>())
-                Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<ErhanCross_Shield>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_Accessory(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<ErhanCross_Shield>(), 0, 0, player.whoAmI);
         }
 	}
     public class ErhanCross_Shield : ModProjectile

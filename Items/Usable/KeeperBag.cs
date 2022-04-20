@@ -46,23 +46,23 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<KeepersVeil>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<KeepersVeil>());
             }
 
             switch (Main.rand.Next(3))
             {
                 case 0:
-                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<SoulScepter>());
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SoulScepter>());
                     break;
                 case 1:
-                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<KeepersClaw>());
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<KeepersClaw>());
                     break;
                 case 2:
-                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<FanOShivs>());
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<FanOShivs>());
                     break;
             }
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<GrimShard>(), Main.rand.Next(3, 5));
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<HeartInsignia>());
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<GrimShard>(), Main.rand.Next(3, 5));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HeartInsignia>());
         }
 
         public override Color? GetAlpha(Color lightColor)

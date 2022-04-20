@@ -460,7 +460,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele2>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele2>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -473,7 +473,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele2>(), 120 / 3, 0, Main.myPlayer, phase > 1 ? 1.002f : 1.01f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele2>(), 120 / 3, 0, Main.myPlayer, phase > 1 ? 1.002f : 1.01f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -938,7 +938,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
-                                            int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
+                                            int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
                                             Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                             Main.projectile[projID].netUpdate = true;
                                         }
@@ -951,7 +951,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
-                                            int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.002f, 1);
+                                            int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.002f, 1);
                                             Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                             Main.projectile[projID].netUpdate = true;
                                         }
@@ -1103,7 +1103,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -1116,7 +1116,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.002f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.002f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -1165,8 +1165,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                     }
                     if (NPC.ai[2] == 40)
                     {
-                        Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Heart);
-                        Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Heart);
+                        Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Heart);
+                        Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.Heart);
                         NPC.netUpdate = true;
                     }
                     if (NPC.ai[2] > 250)

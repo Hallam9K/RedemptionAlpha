@@ -189,7 +189,7 @@ namespace Redemption.Tiles.Tiles
                     }
                     else
                     {
-                        Item.NewItem(Projectile.GetItemSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
+                        Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
                     }
 
                     if (!onMinecartTrack && tile.HasTile && tile.TileType == tileType)
@@ -208,7 +208,7 @@ namespace Redemption.Tiles.Tiles
                 }
                 else
                 {
-                    Item.NewItem(Projectile.GetItemSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
+                    Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<AncientGoldCoin>());
                 }
             }
         }

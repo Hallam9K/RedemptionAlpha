@@ -132,7 +132,7 @@ namespace Redemption.NPCs.Wasteland
                 {
                     for (int i = 0; i < 15; i++)
                     {
-                        Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ProjectileID.DD2BetsyFireball, 70, 3);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ProjectileID.DD2BetsyFireball, 70, 3);
                     }
                 }
                 for (int i = 0; i < 30; i++)
@@ -155,7 +155,7 @@ namespace Redemption.NPCs.Wasteland
 
                 for (int g = 0; g < 8; g++)
                 {
-                    int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64));
+                    int goreIndex = Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, default, Main.rand.Next(61, 64));
                     Main.gore[goreIndex].scale = 1.5f;
                     Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
                     Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;

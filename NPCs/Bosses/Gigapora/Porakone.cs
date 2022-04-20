@@ -154,7 +154,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         }
                     }
                     if (AITimer >= 240 && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()))
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 280, (int)NPC.Center.Y + 1400, ModContent.NPCType<Gigapora>());
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 280, (int)NPC.Center.Y + 1400, ModContent.NPCType<Gigapora>());
 
                     int n = NPC.FindFirstNPC(ModContent.NPCType<Gigapora>());
                     if (n != -1)
@@ -172,7 +172,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 return;
 
                             for (int i = 0; i < 4; i++)
-                                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PorakoneGore" + (i + 1)).Type, 1);
+                                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PorakoneGore" + (i + 1)).Type, 1);
                         }
                     }
                     break;

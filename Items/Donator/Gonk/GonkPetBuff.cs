@@ -23,7 +23,7 @@ namespace Redemption.Items.Donator.Gonk
 
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
 			{
-				Projectile.NewProjectile(player.GetProjectileSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
+				Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
 			}
 		}
 	}

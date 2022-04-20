@@ -84,7 +84,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (RedeBossDowned.erhanDeath > 0)
                     {
                         int summon = RedeBossDowned.erhanDeath < 3 ? ModContent.NPCType<Erhan>() : ModContent.NPCType<ErhanSpirit>();
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)player.Center.X + 180, (int)player.Center.Y - 80, summon);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + 180, (int)player.Center.Y - 80, summon);
                         NPC.active = false;
                     }
                     else
@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     if (AITimer >= 90)
                     {
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 180, (int)NPC.Center.Y - 80, ModContent.NPCType<Erhan>());
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 180, (int)NPC.Center.Y - 80, ModContent.NPCType<Erhan>());
                         NPC.dontTakeDamage = false;
                         player.ApplyDamageToNPC(NPC, NPC.life, 0, 0, true);
                     }

@@ -4047,7 +4047,7 @@ namespace Redemption.Base
                             float ai2 = 0;
                             float ai3 = npc.ai[3];
 
-                            int newnpcID = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
+                            int newnpcID = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
                             Main.npc[npcID].ai[0] = newnpcID;
                             Main.npc[npcID].netUpdate = true;
                             //Main.npc[newnpcID].ai[3] = (float)npc.whoAmI;
@@ -4081,16 +4081,16 @@ namespace Redemption.Base
 
                         if (isHead)
                         {
-                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         else
                         if (isBody && npc.ai[2] > 0f)
                         {
-                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         else
                         {
-                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         /*if (!split)
 						{
@@ -5403,43 +5403,6 @@ namespace Redemption.Base
             int npcID = npc.whoAmI;
             Main.npc[npcID] = new NPC();
             if (Main.netMode == NetmodeID.Server) NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npcID);
-        }
-
-        /*
-         * Spawns a cloud of smoke given the start, width and height positions.
-         * 
-         * loopAmount : the amount of loops to do. Each loop produces 4 smoke gore.
-         * scale : Scalar for the smoke gore.
-         */
-        public static void SpawnSmoke(Vector2 start, float width, float height, int loopAmount = 2, float scale = 1f)
-        {
-            Vector2 center = start + new Vector2(width * 0.5F, height * 0.5F);
-            UnifiedRandom rand = Main.rand;
-            for (int m = 0; m < loopAmount; m++)
-            {
-                Vector2 gorePos = new(center.X - 24f, center.Y - 24f);
-                Vector2 velocityDefault = default;
-                int goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                Gore gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-                goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-                goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-                goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-            }
         }
 
         public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, float distance = -1, Func<Projectile, bool> canAdd = null)

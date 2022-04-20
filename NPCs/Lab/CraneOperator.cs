@@ -142,7 +142,7 @@ namespace Redemption.NPCs.Lab
                         {
                             for (int g = 0; g < 4; g++)
                             {
-                                int goreIndex = Gore.NewGore(NPC.Center, default, Main.rand.Next(61, 64), 2f);
+                                int goreIndex = Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, default, Main.rand.Next(61, 64), 2f);
                                 Main.gore[goreIndex].velocity.X += 1.5f;
                                 Main.gore[goreIndex].velocity.Y += 1.5f;
                             }

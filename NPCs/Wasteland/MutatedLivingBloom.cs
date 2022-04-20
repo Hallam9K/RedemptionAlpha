@@ -317,7 +317,7 @@ namespace Redemption.NPCs.Wasteland
                     return;
 
                 for (int i = 0; i < 3; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/MutatedLivingBloomGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/MutatedLivingBloomGore" + (i + 1)).Type, 1);
 
                 for (int i = 0; i < 8; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Ash,

@@ -289,7 +289,7 @@ namespace Redemption.NPCs.Friendly
                             break;
                     }
                     if (Main.rand.NextBool(60))
-                        Gore.NewGore(new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
+                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
 
                     if (NPC.frame.Y < 4 * frameHeight)
                         NPC.frame.Y = 4 * frameHeight;
