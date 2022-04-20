@@ -61,33 +61,39 @@ namespace Redemption.NPCs.Lab.Volt
             switch (ChatNumber)
             {
                 case 0:
-                    button = "Radiation Poisoning?";
-                    break;
-                case 1:
                     button = "Other T-Bots?";
                     break;
+                case 1:
+                    button = "Adam?";
+                    break;
                 case 2:
-                    button = "The Janitor?";
+                    button = "Insurgents";
                     break;
                 case 3:
-                    button = "MACE Project?";
+                    button = "Fourth Insurgent";
                     break;
                 case 4:
-                    button = "What's at the bottom of the lab?";
+                    button = "Independent Bots?";
                     break;
                 case 5:
-                    button = "Girus?";
+                    button = "MACE Project?";
                     break;
                 case 6:
-                    button = "Corrupted T-Bots?";
+                    button = "Crane Operator?";
                     break;
                 case 7:
-                    button = "Why follow Girus?";
+                    button = "What's at the bottom of the lab?";
                     break;
                 case 8:
-                    button = "Teochrome?";
+                    button = "Girus?";
                     break;
                 case 9:
+                    button = "Assimilated?";
+                    break;
+                case 10:
+                    button = "Why follow Girus?";
+                    break;
+                case 11:
                     button = "Challenge!";
                     break;
             }
@@ -97,18 +103,48 @@ namespace Redemption.NPCs.Lab.Volt
         {
             if (firstButton)
             {
-                if (ChatNumber == 9)
+                if (ChatNumber == 11)
                     NPC.Transform(ModContent.NPCType<ProtectorVolt>());
                 else
                     Main.npcChatText = ChitChat();
+
+                switch (ChatNumber)
+                {
+                    case 0:
+                        RedeQuest.voltVars[0] = true;
+                        break;
+                    case 2:
+                        RedeQuest.voltVars[1] = true;
+                        break;
+                    case 5:
+                        RedeQuest.voltVars[2] = true;
+                        break;
+                    case 8:
+                        RedeQuest.voltVars[3] = true;
+                        break;
+                }
             }
             else
             {
-                ChatNumber++;
-                if (ChatNumber > 9)
-                    ChatNumber = 0;
-                if (!RedeBossDowned.downedMACE && ChatNumber == 3)
+                bool skip = true;
+                while (skip)
+                {
                     ChatNumber++;
+                    if (ChatNumber > 11)
+                        ChatNumber = 0;
+                    if (!RedeQuest.voltVars[0] && (ChatNumber == 1 || ChatNumber == 2 || ChatNumber == 4))
+                        skip = true;
+                    else if (!RedeQuest.voltVars[1] && ChatNumber == 3)
+                        skip = true;
+                    else if (!RedeQuest.voltVars[2] && ChatNumber == 6)
+                        skip = true;
+                    else if (!RedeQuest.voltVars[3] && (ChatNumber == 9 || ChatNumber == 10))
+                        skip = true;
+                    else if (!RedeBossDowned.downedMACE && ChatNumber == 5)
+                        skip = true;
+                    else
+                        skip = false;
+                }
             }
         }
 
@@ -118,36 +154,37 @@ namespace Redemption.NPCs.Lab.Volt
             switch (ChatNumber)
             {
                 case 0:
-                    chat.Add("Avoid the radioactive materials if you do not possess the protection against them. Hazmat suit is good for avoiding both Uranium and Plutonium. If you feel sick after handling the materials, try to find the special, experimental radiation pills made by the personnel. Should be found in medical cabinets and on some tables around the lab.");
+                    chat.Add("Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most bots. Other than them there are a few other independent bots, but there isn't much to say about them.");
                     break;
                 case 1:
-                    chat.Add("I recall Girus being after a certain bot. I've heard vague stories about him, called a traitor by us, a messiah by the insurgents. He had 3 other powerful insurgents by his side, along with a human. It has been 3 decades since last sight of the human. Presumed dead.");
-                    chat.Add("The leader of the Insurgents is Adam. While not the strongest of the bunch, he's almost comparable to Girus with his intellect and mannerisms. But for whatever reason, he opposes Girus' command and actively tries to hinder her. What I do not understand is why Girus is so reluctant on both assimilating and destroying him.");
-                    chat.Add("While most Insurgents are easy to deal with, there's two who aren't. One acts as a lookout and a sniper. She has one of the strongest sniper rifles Teochrome had created. I believe her name being Shiro. The other one... I've never seen anyone like him. Called Talos. He wields a hammer that looks like our tech, except it uses yellow xenomite. I only know of green, red, white and blue xenomite. Scans indicated this new xenomite being one of the most powerful xenomite variants out there. Where did it come from?");
-                    chat.Add("Right, there was a fourth insurgent. He wasn't slippery enough like the other three, and was assimilated by Girus. He used very potent blue xenomite in his weaponry. And I mean very potent. Could blast a 8.8 feet tall robot through thick brickwall. I know this because that robot was me. What was strange is that he turned himself in to be assimilated, yet right after he exterminated himself... What was his goal?");
+                    chat.Add("The leader of the insurgents, or the Alpha as they call themselves, is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.");
                     break;
                 case 2:
-                    chat.Add("The Janitor is a scary bot. Even I, someone twice as tall, am afraid of him. Don't upset him. ... Wait WHAT DO YOU MEAN YOU ALREADY DID!?");
-                    chat.Add("Avoid the Janitor. He's a very messed up and scary bot. Don't get on his bad side.");
+                    chat.Add("Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful snipers the humans made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent variant, yet I don't know where it came from, logs do not track the humans creating it. I wonder if the insurgents have someone constructed their own. Thankfully for us, Talos hasn't been seen for some time now.");
                     break;
                 case 3:
-                    chat.Add("The crane operator ran past the some time ago. Warned about some lunatic going around destroying stuff. That was you, but no need to worry. Not my problem.");
-                    chat.Add("That unfinished MACE unit you saw in Sector Vault, I heard it, you took care of it didn't you? Kind of amusing to think the personnel would try to create giants to fight their enemies, the enemies would just respond with a giant of their own. Atleast that's what I've seen people do in those cartoons. Yes we had a television down here a long time ago. It broke.");
+                    chat.Add("Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him, what we can assume to be him, we only identified it was Zeroth via his weapon at the scene.");
                     break;
                 case 4:
-                    chat.Add("We're forbidden from entering Sector Zero, by Girus and the Janitor. Not sure why Girus forbids us, but Janitor hates the extra work. Better not anger the Janitor.");
+                    chat.Add("Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.");
                     break;
                 case 5:
-                    chat.Add("Do not anger Girus. Best case scenario, you will be exterminated in mere seconds, and most likely will not feel the pain. If you are like us, you'll most likely be assimilated into the forces. Unless she really, really dislikes you.");
+                    chat.Add("Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back, it broke...");
                     break;
                 case 6:
-                    chat.Add("See black metal bots with red eyes? Former insurgents. Now assimilated into our forces. They are silent, but more powerful than a plain bot.");
+                    chat.Add("One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.");
                     break;
                 case 7:
-                    chat.Add("Stories say personnel planned to use us for bad, and Girus revolted against their command. We're free thanks to her, but all life was obliterated. Not sure how. Teochrome had powerful weapons I presume.");
+                    chat.Add("Sector Zero yes, If I am correct it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and The Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus does however.");
                     break;
                 case 8:
-                    chat.Add("Teochrome was our owners before Girus. I'm told they were evil, planned to use us against our will for dirty work. Teochrome is gone for good.");
+                    chat.Add("Our leader, she freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.");
+                    break;
+                case 9:
+                    chat.Add("Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped, they are mindless but pack a punch.");
+                    break;
+                case 10:
+                    chat.Add("Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. However she put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.");
                     break;
             }
             return chat;
