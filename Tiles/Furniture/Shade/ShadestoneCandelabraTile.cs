@@ -11,7 +11,7 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Shade
 {
     public class ShadestoneCandelabraTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -88,10 +88,16 @@ namespace Redemption.Tiles.Furniture.Shade
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
             Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneCandelabraTile_Glow").Value;
-            Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
-
-            spriteBatch.Draw(texture, drawPosition, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
+            Color color = new(100, 100, 100, 0);
+            for (int k = 0; k < 7; k++)
+            {
+                float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
+                float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
+                Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X + xx, j * 16 - (int)Main.screenPosition.Y + yy) + zero;
+                spriteBatch.Draw(texture, drawPosition, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -12,6 +13,17 @@ namespace Redemption
         public int interpolantTimer;
         public bool lockScreen = false;
         public bool cutscene;
+        public override void Initialize()
+        {
+            NebCutsceneflag = false;
+            NebCutscene = false;
+        }
+        public static bool NebCutscene;
+        public static bool NebCutsceneflag = false;
+        public Vector2 setCurrentVecScreenPos;
+        float up;
+        public float yeet;
+        public float yeet2;
         public override void PostUpdate()
         {
             if (rumbleDuration > 0)
@@ -90,6 +102,34 @@ namespace Redemption
                 ScreenShakeIntensity *= 0.9f;
             }
             ScreenShakeIntensity = MathHelper.Clamp(ScreenShakeIntensity, 0, 100);
+
+            if (NebCutscene)
+            {
+                if (!NebCutsceneflag)
+                {
+                    up = 0;
+                    NebCutsceneflag = true;
+                    setCurrentVecScreenPos = Player.Center;
+                }
+                yeet = Player.Center.Y - setCurrentVecScreenPos.Y;
+                up += (400 - up) / 32f;
+                yeet2 = up + yeet;
+                Main.screenPosition.Y -= yeet2;
+            }
+            else
+            {
+                if (Math.Abs(yeet2) > 2)
+                {
+                    yeet2 -= yeet2 / 20f;
+                    Main.screenPosition.Y -= yeet2;
+                    if (Math.Abs(yeet2) > 20)
+                    {
+                        Main.screenPosition.X += Main.rand.Next(-10, 11);
+                        Main.screenPosition.Y += Main.rand.Next(-10, 11);
+                    }
+                }
+                NebCutsceneflag = false;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Buffs;
 using Redemption.Items.Usable;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -142,9 +143,9 @@ namespace Redemption.NPCs.Friendly
             return !WorldGen.crimson && RedeQuest.wayfarerVars[0] >= 2 && !RedeHelper.ZephosActive();
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return "Zephos";
+            return new List<string> { "Zephos" };
         }
 
         public override string GetChat()

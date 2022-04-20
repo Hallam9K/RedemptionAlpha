@@ -139,28 +139,5 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
         }
         #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            StopsOnTiles = reader.ReadBoolean();
-        }
-        #endregion
     }
 }

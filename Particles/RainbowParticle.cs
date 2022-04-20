@@ -9,7 +9,8 @@ namespace Redemption.Particles
 {
 	public class RainbowParticle : Particle
 	{
-		int frameCount;
+		public override string Texture => "Redemption/Particles/RainbowParticle1";
+        int frameCount;
 		int frameTick;
 		public override void SetDefaults()
 		{
