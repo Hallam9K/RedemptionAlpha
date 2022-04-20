@@ -11,9 +11,9 @@ using Redemption.Items.Placeable.Furniture.ElderWood;
 namespace Redemption.Tiles.Furniture.ElderWood
 {
     public class ElderWoodChandelierTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -26,8 +26,8 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Elder Wood Chandelier");
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Elder Wood Chandelier");
             AddMapEntry(new Color(109, 87, 78), name);
             AdjTiles = new int[] { TileID.Chandeliers };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
@@ -59,9 +59,9 @@ namespace Redemption.Tiles.Furniture.ElderWood
             NetMessage.SendTileSquare(-1, left, top + 1, 2);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
+        {
+            num = fail ? 1 : 3;
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
@@ -73,9 +73,9 @@ namespace Redemption.Tiles.Furniture.ElderWood
             }
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<ElderWoodChandelier>());
-			Chest.DestroyChest(i, j);
+        {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<ElderWoodChandelier>());
+            Chest.DestroyChest(i, j);
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
@@ -87,7 +87,15 @@ namespace Redemption.Tiles.Furniture.ElderWood
                 zero = Vector2.Zero;
             }
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodChandelierTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
+            Color color = new(100, 100, 100, 0);
+            for (int k = 0; k < 7; k++)
+            {
+                float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
+                float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
+
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodChandelierTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
         }
     }
 }

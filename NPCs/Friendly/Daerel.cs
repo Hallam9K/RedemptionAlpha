@@ -16,6 +16,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Usable;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -141,9 +142,9 @@ namespace Redemption.NPCs.Friendly
             return WorldGen.crimson && RedeQuest.wayfarerVars[0] >= 2 && !RedeHelper.DaerelActive();
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return "Daerel";
+            return new List<string> { "Daerel" };
         }
 
         public override string GetChat()
