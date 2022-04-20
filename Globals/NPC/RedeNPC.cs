@@ -388,7 +388,7 @@ namespace Redemption.Globals.NPC
                 #endregion
             }
 
-            if (RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
+            if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
                 attacker = value.entity;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
