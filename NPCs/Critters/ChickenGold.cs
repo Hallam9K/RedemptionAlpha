@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Critters
                     if (AITimer == TimerRand - 60)
                     {
                         SoundEngine.PlaySound(SoundID.Item16, NPC.position);
-                        Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<GoldChickenEgg>());
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<GoldChickenEgg>());
                     }
                     if (AITimer >= TimerRand)
                     {

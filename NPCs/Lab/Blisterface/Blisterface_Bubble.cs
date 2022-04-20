@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                 Main.dust[dustIndex].velocity *= 2f;
             }
             if (skrongle == 2)
-                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<BlisteredFish>());
+                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<BlisteredFish>());
         }
         private int skrongle;
         public override void PostAI()

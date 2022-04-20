@@ -68,9 +68,9 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
             }
 
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone,
@@ -224,9 +224,9 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             if (HasEyes)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.5f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.5f));
             else if (Main.rand.NextBool(7))
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.3f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.3f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

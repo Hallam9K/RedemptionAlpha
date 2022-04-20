@@ -137,8 +137,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             if (!RedeBossDowned.downedVlitch1)
             {
-                Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OmegaCleaver_GirusTalk>(), 0, 0, Main.myPlayer);
-                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<UnconPetItem>());
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OmegaCleaver_GirusTalk>(), 0, 0, Main.myPlayer);
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<UnconPetItem>());
             }
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);

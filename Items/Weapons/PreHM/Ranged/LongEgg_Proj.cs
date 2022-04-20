@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y, 1);
             if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4))
             {
-                int index = NPC.NewNPC(Projectile.GetNPCSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, ModContent.NPCType<Chicken>());
+                int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, ModContent.NPCType<Chicken>());
 
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                     NetMessage.SendData(MessageID.SyncNPC, number: index);

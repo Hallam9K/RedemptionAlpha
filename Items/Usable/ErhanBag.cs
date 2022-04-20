@@ -45,24 +45,24 @@ namespace Redemption.Items.Usable
         {
             if (Main.rand.NextBool(7))
             {
-                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<ErhanHelmet>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ErhanHelmet>());
             }
             switch (Main.rand.Next(3))
             {
                 case 0:
-                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<Bindeklinge>());
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Bindeklinge>());
                     break;
                 case 1:
-                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<HolyBible>());
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HolyBible>());
                     break;
                 case 2:
-                    player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<HallowedHandGrenade>());
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HallowedHandGrenade>());
                     break;
             }
             if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<ErhanMagnifyingGlass>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ErhanMagnifyingGlass>());
 
-            player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<ErhanCross>());
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ErhanCross>());
         }
 
         public override Color? GetAlpha(Color lightColor)

@@ -142,7 +142,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             for (int i = 0; i < Main.rand.Next(7, 10); i++)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -152,7 +152,7 @@ namespace Redemption.NPCs.PreHM
                     return;
 
                 int goreType = ModContent.Find<ModGore>("Redemption/DevilsTongueGore").Type;
-                Gore.NewGore(new Vector2(NPC.Center.X, NPC.position.Y), RedeHelper.SpreadUp(6), goreType);
+                Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X, NPC.position.Y), RedeHelper.SpreadUp(6), goreType);
 
                 for (int i = 0; i < 20; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DesertWater2,

@@ -419,7 +419,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -432,7 +432,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -466,7 +466,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 {
                                     for (int i = 0; i < 4; i++)
                                     {
-                                        Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2 * i),
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2 * i),
                                             ModContent.ProjectileType<CurvingStar_Tele2>(), 120 / 3, 0f, Main.myPlayer, 1.005f);
                                     }
                                 }
@@ -503,13 +503,13 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 4;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -522,13 +522,13 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 4;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(9f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(9f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -541,13 +541,13 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(3f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(3f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -640,7 +640,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 }
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
                                         ModContent.ProjectileType<CosmicEye3>(), 150 / 3, 0f, Main.myPlayer);
                                 }
                             }
@@ -651,7 +651,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -720,7 +720,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.02f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.02f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -733,7 +733,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.02f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.02f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -1240,7 +1240,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 }
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, new Vector2(2f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(2f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
                                         ModContent.ProjectileType<StarBolt>(), 150 / 3, 0f, Main.myPlayer);
                                 }
                             }
@@ -1278,7 +1278,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, RedeHelper.PolarVector(2, (vector - NPC.Center).ToRotation()), ModContent.ProjectileType<StarBolt>(), 150 / 3, 0, Main.myPlayer, NPC.whoAmI);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(2, (vector - NPC.Center).ToRotation()), ModContent.ProjectileType<StarBolt>(), 150 / 3, 0, Main.myPlayer, NPC.whoAmI);
                                         Main.projectile[p].timeLeft = 155;
                                     }
                                 }

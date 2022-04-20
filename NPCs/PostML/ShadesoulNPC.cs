@@ -115,7 +115,7 @@ namespace Redemption.NPCs.PostML
         public override void OnKill()
         {
             int dropAmount = (int)(Scale / 2 * 10);
-            Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<Shadesoul>(), 1 + dropAmount);
+            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<Shadesoul>(), 1 + dropAmount);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;

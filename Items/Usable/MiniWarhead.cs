@@ -131,7 +131,7 @@ namespace Redemption.Items.Usable
             }
             for (int g = 0; g < 18; g++)
             {
-                int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64), 2f);
+                int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Main.rand.Next(61, 64), 2f);
                 Main.gore[goreIndex].velocity.X *= 15f;
             }
 

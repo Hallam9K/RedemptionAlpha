@@ -7,7 +7,7 @@ namespace Redemption.Gores.Misc
 {
 	public class ElderTreeFX : ModGore
 	{
-		public override void OnSpawn(Gore gore)
+		public override void OnSpawn(Gore gore, IEntitySource source)
 		{
 			gore.velocity = new Vector2(Main.rand.NextFloat() - 0.5f, Main.rand.NextFloat() * MathHelper.TwoPi);
 			gore.Frame = new SpriteFrame(1, 8, 0, (byte)Main.rand.Next(8));

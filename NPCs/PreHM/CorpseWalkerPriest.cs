@@ -78,9 +78,9 @@ namespace Redemption.NPCs.PreHM
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, Color.SandyBrown);
 
                 for (int i = 0; i < 6; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore").Type, 1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore2").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CorpseWalkerGore2").Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, Color.SandyBrown);
 
@@ -444,9 +444,9 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             if (HasEyes)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.8f));
             else if (Main.rand.NextBool(2))
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

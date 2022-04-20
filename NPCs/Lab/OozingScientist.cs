@@ -260,7 +260,7 @@ namespace Redemption.NPCs.Lab
                     Main.dust[dustIndex].velocity *= 2f;
                 }
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SludgeScientistGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SludgeScientistGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 

@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Friendly
                 for (int i = 0; i < 20; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.PurpleTorch, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
                 for (int i = 0; i < 5; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/WraithSamuraiGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/WraithSamuraiGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Wraith, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 

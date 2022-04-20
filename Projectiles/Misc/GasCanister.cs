@@ -43,9 +43,9 @@ namespace Redemption.Projectiles.Misc
                 Projectile.frame = 1;
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/GasCanister1").Type);
-                    Gore.NewGore(Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/GasCanister2").Type);
                 }
 

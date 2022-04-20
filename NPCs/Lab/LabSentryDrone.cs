@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Lab
                         NPC.ai[2]++;
                         if (NPC.ai[2] % 30 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int proj = Projectile.NewProjectile(NPC.GetSpawnSource_ForProjectile(), NPC.Center, RedeHelper.PolarVector(20, (player.Center - NPC.Center).ToRotation()), ProjectileID.MartianTurretBolt, 100, 0, Main.myPlayer);
+                            int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(20, (player.Center - NPC.Center).ToRotation()), ProjectileID.MartianTurretBolt, 100, 0, Main.myPlayer);
                             SoundEngine.PlaySound(SoundID.Item91, NPC.position);
                             Main.projectile[proj].tileCollide = false;
                             Main.projectile[proj].timeLeft = 200;

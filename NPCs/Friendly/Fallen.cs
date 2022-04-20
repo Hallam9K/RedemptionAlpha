@@ -243,7 +243,7 @@ namespace Redemption.NPCs.Friendly
 
                     Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
                     Main.npcChatText = "All done and repaired, here you go.";
-                    player.QuickSpawnItem(NPC.GetItemSource_Loot(), ModContent.ItemType<Zweihander>());
+                    player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<Zweihander>());
 
                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                     return;

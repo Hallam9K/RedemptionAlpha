@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override void OnKill()
         {
             for (int i = 0; i < 6; i++)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0f, 0.4f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0f, 0.4f));
 
             if (!RedeBossDowned.downedSkullDigger)
             {
