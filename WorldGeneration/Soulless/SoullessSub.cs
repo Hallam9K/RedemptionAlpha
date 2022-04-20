@@ -203,6 +203,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(233, 120, 233)] = TileID.SandStoneSlab,
                 [new Color(220, 0, 0)] = TileID.StoneSlab,
                 [new Color(200, 0, 0)] = TileID.AccentSlab,
+                [new Color(141, 132, 172)] = TileID.Palladium,
                 [Color.Black] = -1
             };
             GenUtils.InvokeOnMainThread(() =>
@@ -325,6 +326,10 @@ namespace Redemption.WorldGeneration.Soulless
                         case TileID.StoneSlab:
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChairTile>(), 0, 1);
+                            break;
+                        case TileID.Palladium:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<WaxCandlesTile>(), Main.rand.Next(5));
                             break;
                     }
                 }
