@@ -2,6 +2,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
+using System.Collections.Generic;
+using Redemption.Effects.PrimitiveTrails;
+using Terraria.ID;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Globals
 {
@@ -33,6 +38,54 @@ namespace Redemption.Globals
                     damage = damage < target.life ? target.life : damage;
                     crit = true;
                 }
+            }
+        }
+        public static Dictionary<int, (Entity entity, IEntitySource source)> projOwners = new();
+        public override void OnSpawn(Projectile projectile, IEntitySource source)
+        {
+            Entity attacker = null;
+            if (source is EntitySource_ItemUse && projectile.friendly && !projectile.hostile)
+            {
+                EntitySource_ItemUse sourceItem = source as EntitySource_ItemUse;
+                attacker = sourceItem.Entity;
+            }
+            else if (source is EntitySource_Buff && projectile.friendly && !projectile.hostile)
+            {
+                EntitySource_Buff sourceBuff = source as EntitySource_Buff;
+                attacker = sourceBuff.Entity;
+            }
+            else if (source is EntitySource_ItemUse_WithAmmo && projectile.friendly && !projectile.hostile)
+            {
+                EntitySource_ItemUse_WithAmmo sourceItemAmmo = source as EntitySource_ItemUse_WithAmmo;
+                attacker = sourceItemAmmo.Entity;
+            }
+            else if (source is EntitySource_Mount && projectile.friendly && !projectile.hostile)
+            {
+                EntitySource_Mount sourceMount = source as EntitySource_Mount;
+                attacker = sourceMount.Entity;
+            }
+            else if (source is EntitySource_Parent)
+            {
+                EntitySource_Parent sourceParent = source as EntitySource_Parent;
+                if (sourceParent.Entity is Projectile)
+                    attacker = Main.player[(sourceParent.Entity as Projectile).owner];
+                else
+                    attacker = sourceParent.Entity;
+            }
+            if (attacker != null)
+            {
+                if (projOwners.ContainsKey(projectile.whoAmI))
+                    projOwners.Remove(projectile.whoAmI);
+                projOwners.Add(projectile.whoAmI, (attacker, source));
+            }
+
+            if (projectile.ModProjectile is ITrailProjectile)
+            {
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    (projectile.ModProjectile as ITrailProjectile).DoTrailCreation(RedeSystem.TrailManager);
+
+                else
+                    Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, projectile.whoAmI).Send();
             }
         }
     }
