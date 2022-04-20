@@ -73,8 +73,7 @@ namespace Redemption.Projectiles.Magic
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
                 {
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center,
-                        RedeHelper.PolarVector(8, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ProjectileID.Flames,
-                        Projectile.damage, Projectile.knockBack, Projectile.owner);
+                        RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
 
                 if (Projectile.ai[0] == 180)

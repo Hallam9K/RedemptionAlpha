@@ -1047,6 +1047,21 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             else
             {
+                for (int k = 0; k < NPC.buffImmune.Length; k++)
+                    NPC.buffImmune[k] = true;
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < NPC.buffTime.Length; i++)
+                    {
+                        NPC.buffTime[i] = 0;
+                        NPC.buffType[i] = 0;
+                    }
+
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
+                }
+
                 NPC.dontTakeDamage = true;
                 NPC.velocity *= 0;
                 NPC.alpha = 0;

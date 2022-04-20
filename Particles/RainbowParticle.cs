@@ -17,7 +17,7 @@ namespace Redemption.Particles
 			width = 34;
 			height = 34;
 			scale = 1f;
-			timeLeft = 120;
+			timeLeft = 50;
 			oldPos = new Vector2[10];
 			oldRot = new float[10];
 		}
