@@ -61,8 +61,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void AI()
         {
-            // TODO: Add neb check
-            if (RedeBossDowned.downedVlitch3) //|| RedeBossDowned.downedNebuleus)
+            if (RedeBossDowned.downedVlitch3 || RedeBossDowned.downedNebuleus)
                 NPC.active = false;
 
             NPC.direction = 1;
