@@ -19,6 +19,7 @@ using Redemption.Biomes;
 using Redemption.Projectiles.Hostile;
 using ParticleLibrary;
 using Redemption.Particles;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -26,7 +27,6 @@ namespace Redemption.NPCs.Soulless
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -87,6 +87,14 @@ namespace Redemption.NPCs.Soulless
 
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            ChoosePersonality();
+            SetStats();
+
+            TimerRand = Main.rand.Next(80, 280);
+            NPC.alpha = 0;
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -97,15 +105,6 @@ namespace Redemption.NPCs.Soulless
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    ChoosePersonality();
-                    SetStats();
-
-                    TimerRand = Main.rand.Next(80, 280);
-                    AIState = ActionState.Idle;
-                    NPC.alpha = 0;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
