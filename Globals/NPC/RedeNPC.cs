@@ -553,6 +553,7 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 //if (NPC.AnyNPCs(ModContent.NPCType<WardenIdle>()) || NPC.AnyNPCs(ModContent.NPCType<WardenSaved>()))
                 //    return;
+                pool.Add(ModContent.NPCType<SoullessWanderer>(), .1f);
                 pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
                 pool.Add(ModContent.NPCType<Shadebug>(), .02f);
                 if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))

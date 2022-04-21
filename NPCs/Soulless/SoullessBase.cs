@@ -19,6 +19,7 @@ namespace Redemption.NPCs.Soulless
 
         public bool HasEyes;
         public int HeadY;
+        public int HeadX;
         public int HeadOffsetX;
         public int HeadOffsetY;
 
@@ -62,17 +63,11 @@ namespace Redemption.NPCs.Soulless
         }
         public virtual int SetHeadOffsetY(ref int frameHeight)
         {
-            return (NPC.frame.Y / frameHeight) switch
-            {
-                _ => 0,
-            };
+            return 0;
         }
         public virtual int SetHeadOffsetX(ref int frameHeight)
         {
-            return (NPC.frame.Y / frameHeight) switch
-            {
-                _ => 0,
-            };
+            return 0;
         }
         public virtual void SetStats()
         {

@@ -41,6 +41,8 @@ namespace Redemption.NPCs.Soulless
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 3;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 4;
+            NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -189,18 +191,26 @@ namespace Redemption.NPCs.Soulless
                     }
                     break;
             }
+            if (HasEyes && Main.rand.NextBool(18))
+            {
+                int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit, Scale: 2);
+                Main.dust[dust].velocity.Y = -2;
+                Main.dust[dust].velocity.X = 0;
+                Main.dust[dust].noGravity = true;
+
+            }
         }
         private int AniFrameY;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                /*HeadY = MaskType switch
+                HeadY = MaskType switch
                 {
                     MaskState.Angry => 1,
                     MaskState.Happy => 2,
                     _ => 0,
-                };*/
+                };
 
                 if (AIState is ActionState.Throw)
                 {
@@ -230,6 +240,8 @@ namespace Redemption.NPCs.Soulless
                                 AIState = ActionState.Alert;
                         }
                     }
+                    HeadOffsetY = SetHeadOffsetY(ref frameHeight);
+                    HeadOffsetX = SetHeadOffsetX(ref frameHeight);
                     return;
                 }
                 AniFrameY = 0;
@@ -257,6 +269,44 @@ namespace Redemption.NPCs.Soulless
                     NPC.frame.Y = 2 * frameHeight;
                 }
             }
+            HeadOffsetY = SetHeadOffsetY(ref frameHeight);
+            HeadOffsetX = SetHeadOffsetX(ref frameHeight);
+        }
+        public override int SetHeadOffsetY(ref int frameHeight)
+        {
+            if (AIState is ActionState.Throw)
+            {
+                return AniFrameY switch
+                {
+                    4 => -2,
+                    5 => -2,
+                    _ => 0,
+                };
+            }
+            else
+            {
+                return (NPC.frame.Y / frameHeight) switch
+                {
+                    1 => -2,
+                    _ => 0,
+                };
+            }
+        }
+        public override int SetHeadOffsetX(ref int frameHeight)
+        {
+            if (AIState is ActionState.Throw)
+            {
+                return AniFrameY switch
+                {
+                    0 => 2,
+                    1 => 2,
+                    3 => -2,
+                    4 => -4,
+                    5 => -4,
+                    _ => 0,
+                };
+            }
+            return 0;
         }
 
         public int GetNearestNPC()
@@ -322,11 +372,16 @@ namespace Redemption.NPCs.Soulless
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/Soulless/Soulless_Masks").Value;
-            //Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D throwAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Throw").Value;
-            //Texture2D throwGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Throw_Glow").Value;
+            Texture2D throwGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Throw_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            int HeightH = head.Height / 3;
+            int WidthH = head.Width / 3;
+            int yH = HeightH * (int)MaskType;
+            int xH = WidthH * HeadX;
+            Rectangle rectH = new(xH, yH, WidthH, HeightH);
             if (AIState is ActionState.Throw)
             {
                 int Height = throwAni.Height / 6;
@@ -335,26 +390,34 @@ namespace Redemption.NPCs.Soulless
                 Vector2 origin = new(throwAni.Width / 2f, Height / 2f);
                 spriteBatch.Draw(throwAni, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
 
-                //spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
+                if (HasEyes)
+                {
+                    for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                    {
+                        Vector2 oldPos = NPC.oldPos[i];
+                        spriteBatch.Draw(throwGlow, oldPos + NPC.Size / 2f - screenPos - new Vector2(0, 5), new Rectangle?(rect), Color.White * 0.5f, NPC.rotation, origin, NPC.scale, effects, 0);
+                    }
+                    spriteBatch.Draw(throwGlow, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+                }
 
-                //if (HasEyes)
-                //   spriteBatch.Draw(SlashGlow, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -32 : -26) + (HeadOffsetX * NPC.spriteDirection), -8 + HeadOffsetY), NPC.scale, effects, 0);
             }
             else
             {
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 2) - screenPos, NPC.frame, NPC.IsABestiaryIconDummy ? drawColor : NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                //if (HasEyes)
-                //    spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            }
-            /*int Height = head.Height / 3;
-            int Width = head.Width / 3;
-            int y = Height * MaskType;
-            int x = Width * MaskX;
-            Rectangle rect = new(x, y, Width, Height);
-            spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -4 : 2, 2 + HeadOffset), NPC.scale, effects, 0);
+                if (HasEyes)
+                {
+                    for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                    {
+                        Vector2 oldPos = NPC.oldPos[i];
+                        spriteBatch.Draw(glow, oldPos - new Vector2(0, 2) + NPC.Size / 2f - screenPos, NPC.frame, Color.White * 0.5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    }
+                    spriteBatch.Draw(glow, NPC.Center - new Vector2(0, 2) - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                }
 
-            */
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -32 : -26, -8 + HeadOffsetY), NPC.scale, effects, 0);
+            }
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;
