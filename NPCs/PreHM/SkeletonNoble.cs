@@ -22,6 +22,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -29,7 +30,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -141,6 +141,13 @@ namespace Redemption.NPCs.PreHM
 
         private int AniFrameY;
         private int AniFrameX;
+        public override void OnSpawn(IEntitySource source)
+        {
+            ChoosePersonality();
+            SetStats();
+
+            TimerRand = Main.rand.Next(80, 280);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -156,14 +163,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    ChoosePersonality();
-                    SetStats();
-
-                    TimerRand = Main.rand.Next(80, 280);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;

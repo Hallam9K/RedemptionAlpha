@@ -24,7 +24,6 @@ namespace Redemption.NPCs.Wasteland
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert
@@ -82,6 +81,11 @@ namespace Redemption.NPCs.Wasteland
 
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            Variant = Main.rand.Next(2);
+            TimerRand = Main.rand.Next(80, 120);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -94,12 +98,6 @@ namespace Redemption.NPCs.Wasteland
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    Variant = Main.rand.Next(2);
-                    TimerRand = Main.rand.Next(80, 120);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;

@@ -148,7 +148,7 @@ namespace Redemption.NPCs.Lab.Volt
             }
         }
 
-        public static string ChitChat()
+        public static string ChitChat() // TODO: Custom dialogue UI since text too long
         {
             WeightedRandom<string> chat = new(Main.rand);
             switch (ChatNumber)

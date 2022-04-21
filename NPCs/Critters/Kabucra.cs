@@ -6,6 +6,7 @@ using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -18,7 +19,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Hop,
@@ -58,6 +58,10 @@ namespace Redemption.NPCs.Critters
         public NPC npcTarget;
         public Vector2 moveTo;
         public int hopCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -70,11 +74,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -193,18 +192,20 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                NPC.frameCounter += NPC.velocity.X * 0.5f;
+                if (NPC.frameCounter is >= 3 or <= -3)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 2 * frameHeight)
+                        NPC.frame.Y = 0;
+                }
+                return;
+            }
             switch (AIState)
             {
-                case ActionState.Begin:
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 2 * frameHeight)
-                            NPC.frame.Y = 0;
-                    }
-                    break;
                 case ActionState.Idle:
                     if (NPC.frame.Y > 2 * frameHeight)
                     {

@@ -7,6 +7,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -19,7 +20,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Trumpet,
             Dancing
         }
@@ -84,7 +84,16 @@ namespace Redemption.NPCs.PreHM
                 NPC.ai[2] = 1;
             }
         }
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Main.rand.NextBool(4))
+                HasEyes = true;
+            SetStats();
+            DanceType = Main.rand.Next(6);
+            DanceSpeed = Main.rand.Next(4, 11);
 
+            AIState = TimerRand == 0 ? ActionState.Trumpet : ActionState.Dancing;
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -94,15 +103,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    if (Main.rand.NextBool(4))
-                        HasEyes = true;
-                    SetStats();
-                    DanceType = Main.rand.Next(6);
-                    DanceSpeed = Main.rand.Next(4, 11);
-
-                    AIState = TimerRand == 0 ? ActionState.Trumpet : ActionState.Dancing;
-                    break;
                 case ActionState.Trumpet:
                     if (Main.rand.NextBool(500) && !Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Doot").WithPitchVariance(0.3f), NPC.position);

@@ -11,6 +11,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Critters
 {
@@ -18,7 +19,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -79,7 +79,10 @@ namespace Redemption.NPCs.Critters
         public Vector2 moveTo;
         private int runCooldown;
         private int waterCooldown;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -94,11 +97,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
