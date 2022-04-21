@@ -6,6 +6,7 @@ using Redemption.Items.Critters;
 using Redemption.Items.Placeable.Banners;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,7 +18,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Hop
@@ -68,7 +68,10 @@ namespace Redemption.NPCs.Critters
         public Vector2 moveTo;
         public int hopCooldown;
         public int hitCooldown;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             NPC.GetNearestAlivePlayer();
@@ -80,11 +83,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -177,52 +175,33 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
-            switch (AIState)
+            if (AIState is ActionState.Hop)
             {
-                case ActionState.Begin:
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 5 * frameHeight;
+                return;
+            }
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
+                else
+                {
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
-
                     if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
                         if (NPC.frame.Y > 3 * frameHeight)
-                        {
                             NPC.frame.Y = 0;
-                        }
                     }
-
-                    break;
-
-                case ActionState.Idle:
-                    if (NPC.velocity.Y == 0)
-                        NPC.frame.Y = 0;
-                    else
-                        NPC.frame.Y = 4 * frameHeight;
-                    break;
-
-                case ActionState.Wander:
-                    if (NPC.collideY || NPC.velocity.Y == 0)
-                    {
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-
-                            if (NPC.frame.Y > 3 * frameHeight)
-                                NPC.frame.Y = 0;
-                        }
-                    }
-                    else
-                        NPC.frame.Y = 4 * frameHeight;
-
-                    break;
-
-                case ActionState.Hop:
-                    NPC.frame.Y = 5 * frameHeight;
-                    break;
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
             }
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

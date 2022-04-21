@@ -21,7 +21,6 @@ namespace Redemption.NPCs.Lab
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Bounce
         }
@@ -84,6 +83,10 @@ namespace Redemption.NPCs.Lab
         }
         public int Xvel;
         public int consumed;
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(10, 30);
+        }
         public override void AI()
         {
             if (LabArea.Active)
@@ -93,11 +96,6 @@ namespace Redemption.NPCs.Lab
             NPC.width = (int)(16 * NPC.scale);
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(10, 30);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     NPC.LookByVelocity();
                     if (NPC.velocity.Y == 0)

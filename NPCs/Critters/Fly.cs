@@ -19,7 +19,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Flying,
             Landed
         }
@@ -72,7 +71,14 @@ namespace Redemption.NPCs.Critters
         public NPC npcTarget;
         public Vector2 moveTo;
         public int hitCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Aggressive == 1)
+                NPC.scale = 1.2f;
 
+            TimerRand = Main.rand.Next(240, 600);
+            NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
@@ -92,15 +98,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    if (Aggressive == 1)
-                        NPC.scale = 1.2f;
-
-                    TimerRand = Main.rand.Next(240, 600);
-                    AIState = ActionState.Flying;
-                    NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
-                    break;
-
                 case ActionState.Flying:
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;

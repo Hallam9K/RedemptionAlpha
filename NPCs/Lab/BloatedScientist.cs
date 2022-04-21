@@ -21,7 +21,6 @@ namespace Redemption.NPCs.Lab
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -76,6 +75,10 @@ namespace Redemption.NPCs.Lab
         }
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 280);
+        }
         public override void AI()
         {
             if (LabArea.Active)
@@ -92,11 +95,6 @@ namespace Redemption.NPCs.Lab
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 280);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;

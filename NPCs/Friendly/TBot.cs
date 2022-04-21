@@ -262,7 +262,7 @@ namespace Redemption.NPCs.Friendly
                 Main.npcChatText = DiskChat();
             }
         }
-        public static string DiskChat()
+        public static string DiskChat() // TODO: floppy disk dialogue color thing no work!?!?!?!?!?!?!
         {
             return FDisk switch
             {

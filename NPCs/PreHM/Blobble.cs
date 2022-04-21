@@ -20,7 +20,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Bounce
         }
@@ -101,6 +100,14 @@ namespace Redemption.NPCs.PreHM
         }
 
         public int Xvel;
+        public override void OnSpawn(IEntitySource source)
+        {
+            PickHat();
+            if (HatType is HatState.Serb)
+                NPC.GivenName = "Serbble";
+
+            TimerRand = Main.rand.Next(30, 120);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
@@ -108,15 +115,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    PickHat();
-                    if (HatType is HatState.Serb)
-                        NPC.GivenName = "Serbble";
-
-                    TimerRand = Main.rand.Next(30, 120);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     NPC.LookAtEntity(player);
                     if (NPC.velocity.Y == 0)

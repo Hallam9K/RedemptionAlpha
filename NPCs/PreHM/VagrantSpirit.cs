@@ -21,7 +21,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Wander,
             Vanish
         }
@@ -93,7 +92,10 @@ namespace Redemption.NPCs.PreHM
         }
 
         private int vanishCounter;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(180, 420);
+        }
         public override void AI()
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -127,12 +129,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-
-                    TimerRand = Main.rand.Next(180, 420);
-                    AIState = ActionState.Wander;
-                    break;
-
                 case ActionState.Wander:
                     if (NPC.velocity.X == 0)
                     {
