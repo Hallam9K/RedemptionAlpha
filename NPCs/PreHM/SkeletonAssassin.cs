@@ -20,6 +20,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -27,7 +28,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Hiding,
@@ -125,6 +125,14 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            ChoosePersonality();
+            SetStats();
+
+            TimerRand = Main.rand.Next(80, 280);
+            AIState = Main.rand.NextBool(2) ? ActionState.Hiding : ActionState.Idle;
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -152,14 +160,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    ChoosePersonality();
-                    SetStats();
-
-                    TimerRand = Main.rand.Next(80, 280);
-                    AIState = Main.rand.NextBool(2) ? ActionState.Hiding : ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;

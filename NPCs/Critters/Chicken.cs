@@ -16,6 +16,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Critters
 {
@@ -23,7 +24,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -98,7 +98,19 @@ namespace Redemption.NPCs.Critters
         private int hopCooldown;
         private int runCooldown;
         private int waterCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (AITimer == 0)
+            {
+                if (Main.rand.NextBool(2000))
+                    NPC.SetDefaults(ModContent.NPCType<LongChicken>());
+                else
+                    ChickType = (ChickenType)Main.rand.Next(4);
+            }
 
+            TimerRand = Main.rand.Next(80, 180);
+            NPC.alpha = 0;
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -119,21 +131,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-
-                    if (AITimer == 0)
-                    {
-                        if (Main.rand.NextBool(2000))
-                            NPC.SetDefaults(ModContent.NPCType<LongChicken>());
-                        else
-                            ChickType = (ChickenType)Main.rand.Next(4);
-                    }
-
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    NPC.alpha = 0;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;

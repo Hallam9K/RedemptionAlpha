@@ -23,7 +23,6 @@ namespace Redemption.NPCs.Wasteland
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Bounce
         }
@@ -112,6 +111,10 @@ namespace Redemption.NPCs.Wasteland
         }
 
         public int Xvel;
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(10, 60);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
@@ -121,11 +124,6 @@ namespace Redemption.NPCs.Wasteland
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(10, 60);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     NPC.LookAtEntity(player);
                     if (NPC.velocity.Y == 0)
