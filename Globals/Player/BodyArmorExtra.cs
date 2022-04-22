@@ -205,7 +205,7 @@ namespace Redemption.Globals.Player
             this.useShader = useShader;
             this.cycleFrameCount = cycleFrameCount;
         }
-        public static void ReigsterBodies()
+        public static void RegisterBodies()
         {
             var immediate = AssetRequestMode.ImmediateLoad;
             Mod mod = Redemption.Instance;
