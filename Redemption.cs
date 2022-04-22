@@ -133,7 +133,7 @@ namespace Redemption
                 {
                     OnHeadDraw.RegisterHeads();
                     OnLegDraw.RegisterLegs();
-                    OnBodyDraw.ReigsterBodies();
+                    OnBodyDraw.RegisterBodies();
                 });
             }
             WeakReferences.PerformModSupport();
