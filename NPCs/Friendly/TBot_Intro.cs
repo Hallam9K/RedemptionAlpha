@@ -98,10 +98,15 @@ namespace Redemption.NPCs.Friendly
                     if (playerTBot)
                     {
                         if (AITimer++ == 18)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("HUH?", 150, 1, 0.5f, "Adam:", 0.5f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer == 168)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("How- Wh- I-", 180, 1, 0.5f, "Adam:", 0.4f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer >= 348)
+                        {
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "HUH?", 3, 100, 0, false); // 112
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "How- Wh- I-", 3, 100, 30, true); // 163
+
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.AddDialogue(d1);
+                            TextBubbleUI.AddDialogue(d2);
+                        }
+                        if (AITimer >= 275)
                         {
                             AITimer = 0;
                             TimerRand = 4;
@@ -111,10 +116,15 @@ namespace Redemption.NPCs.Friendly
                     else
                     {
                         if (AITimer++ == 18)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("AH!", 150, 1, 0.5f, "Adam:", 0.5f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer == 168)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...I-I thought you were someone else. Sorry about that.", 240, 1, 0.5f, "Adam:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer >= 408)
+                        {
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "AH!", 3, 100, 0, false); // 109
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "...I-I thought you were someone else. Sorry about that.", 3, 100, 30, true); // 295
+
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.AddDialogue(d1);
+                            TextBubbleUI.AddDialogue(d2);
+                        }
+                        if (AITimer >= 404)
                         {
                             AITimer = 0;
                             TimerRand = 4;
@@ -125,23 +135,27 @@ namespace Redemption.NPCs.Friendly
                 case 4:
                     if (playerTBot)
                     {
-                        if (AITimer < 700)
+                        if (AITimer < 508)
                             NPC.LookAtEntity(player);
                         if (AITimer++ == 5)
                         {
-                            EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 240);
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("*Sigh* I wasn't expecting to see the likes of us here.", 240, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "*Sigh* I wasn't expecting to see the likes of us here.", 3, 100, 0, false); // 262
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "Not going back there now. Since you're here and not there, I can safely assume you're not with Her..?", 3, 100, 30, true); // 433
+                            Dialogue d3 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d2, "...Alright. We can safely ignore each other then.", 3, 100, 30, true); // 277
+
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.AddDialogue(d1);
+                            TextBubbleUI.AddDialogue(d2);
+                            TextBubbleUI.AddDialogue(d3);
+
+                            EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 262);
                         }
-                        if (AITimer == 245)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Not going back there now. Since you're here and not there,\nI can safely assume you're not with Her..?", 360, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer == 605)
-                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 335);
-                        if (AITimer == 700)
+                        if (AITimer == 695)
                         {
+                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 277);
                             NPC.spriteDirection = -NPC.spriteDirection;
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...Alright. We can safely ignore each other then.", 240, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
                         }
-                        if (AITimer >= 940)
+                        if (AITimer >= 972)
                         {
                             NPC.SetDefaults(ModContent.NPCType<TBot>());
                             NPC.GivenName = "Adam";
@@ -150,24 +164,29 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
-                        if (AITimer < 830)
+                        if (AITimer < 884)
                             NPC.LookAtEntity(player);
                         if (AITimer++ == 5)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Anyways, hello. I'm Adam, and I'm an Android originating from a faraway snowy wasteland.", 300, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer == 305)
                         {
-                            EmoteBubble.NewBubble(98, new WorldUIAnchor(NPC), 240);
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Seeing as I won't be returning to that frozen hell for a good while,", 240, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "Anyways, hello. I'm Adam, and I'm an Android originating from a faraway snowy wasteland.", 3, 100, 0, false); // 364
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "Seeing as I won't be returning to that frozen hell for a good while, mind if I stay here? I assume you've some shelter to stay at.", 3, 100, 30, true); // 520
+
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.AddDialogue(d1);
+                            TextBubbleUI.AddDialogue(d2);
                         }
-                        if (AITimer == 545)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("mind if I stay here? I assume you've some shelter to stay at.", 240, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                        if (AITimer == 830)
+                        if (AITimer == 364)
+                            EmoteBubble.NewBubble(98, new WorldUIAnchor(NPC), 204);
+                        if (AITimer == 884)
                         {
-                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 180);
+                            Dialogue d4 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "...The resemblance between them is uncanny...", 3, 100, 30, true); // 265
+
+                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
                             NPC.spriteDirection = -NPC.spriteDirection;
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...The resemblance between them is uncanny...", 180, 1, 0.5f, "Adam:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.AddDialogue(d4);
                         }
-                        if (AITimer >= 1010)
+                        if (AITimer >= 1149)
                         {
                             NPC.SetDefaults(ModContent.NPCType<TBot>());
                             NPC.GivenName = "Adam";
@@ -179,7 +198,7 @@ namespace Redemption.NPCs.Friendly
             if (MoRDialogueUI.Visible)
                 RedeSystem.Instance.DialogueUIElement.TextPos = NPC.Center + new Vector2(0, -80) - Main.screenPosition;
 
-            if (!playerTBot && AITimer >= 785 && TimerRand == 4)
+            if (!playerTBot && AITimer >= 884 && TimerRand == 4)
                 return;
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             player.RedemptionScreen().lockScreen = true;
