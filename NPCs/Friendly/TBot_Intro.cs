@@ -195,8 +195,6 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
-            if (MoRDialogueUI.Visible)
-                RedeSystem.Instance.DialogueUIElement.TextPos = NPC.Center + new Vector2(0, -80) - Main.screenPosition;
 
             if (!playerTBot && AITimer >= 884 && TimerRand == 4)
                 return;
