@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Friendly
                             Main.dust[dust].color = dustColor;
                             Main.dust[dust].velocity *= 3f;
                         }
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "WAH!", 1, 30, 30, false); // 64
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "WAH!", 1, 30, 30, true); // 64
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
