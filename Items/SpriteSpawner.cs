@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
+using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Particles;
 using Redemption.UI;
 using System;
@@ -38,13 +39,16 @@ namespace Redemption.Items
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool? UseItem(Player player)
 		{
-			NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
-			npc.position = player.Center;
-			Dialogue dialogue1 = new Dialogue(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your hair in no time.", 6, 120, 30, true);
-			Dialogue dialogue2 = new Dialogue(npc, null, null, null, Color.LightGreen, Color.DarkCyan, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
-			TextBubbleUI.Visible = true;
-			TextBubbleUI.AddDialogue(dialogue1);
-			TextBubbleUI.AddDialogue(dialogue2);
+			//NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
+			//npc.position = player.Center;
+			//Dialogue dialogue1 = new Dialogue(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, "Hey there, don't mind me, I'm just testing this UI. ^3 I'll be out of your hair in no time.", 6, 120, 30, true);
+			//Dialogue dialogue2 = new Dialogue(npc, null, null, null, Color.LightGreen, Color.DarkCyan, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
+			//TextBubbleUI.Visible = true;
+			//TextBubbleUI.AddDialogue(dialogue1);
+			//TextBubbleUI.AddDialogue(dialogue2);
+			
+			Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<AdamPortal>(), 0, 0f);
+			
 			if (player.altFunctionUse == 2)
 			{
 				x = 0;

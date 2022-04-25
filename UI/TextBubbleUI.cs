@@ -53,24 +53,30 @@ namespace Redemption.UI
 
 				if (dialogue.leader != null)
 					continue;
-				
-				Console.WriteLine("Proc: " + dialogue.npc.whoAmI + " --- ");
 
 				// Measure our progress via a modulo between our char time and
 				// our timer, allowing us to decide how many chars to display
-				int progress = dialogue.timer / dialogue.charTime;
-				if (dialogue.timer >= 6 && dialogue.timer < dialogue.charTime * dialogue.text.Length)
-					dialogue.displayingText = dialogue.text[..(progress + 1)];
+				if (dialogue.displayingText.Length != dialogue.text.Length && dialogue.timer % dialogue.charTime == 0)
+					dialogue.displayingText += dialogue.text[dialogue.displayingText.Length];
 
-				dialogue.timer++;
+				InterpretSymbols(ref dialogue);
 
-				if (dialogue.timer >= dialogue.charTime * dialogue.text.Length + dialogue.pauseTime + dialogue.fadeTime)
+				if (dialogue.displayingText.Length == dialogue.text.Length)
+					dialogue.textFinished = true;
+
+				if (dialogue.textFinished && dialogue.pauseTime <= 0 && dialogue.fadeTime <= 0)
 				{
 					for (int k = 0; k < Dialogue.Count; k++)
 						if (Dialogue[k].leader == dialogue)
 							Dialogue[k].leader = null;
 					Dialogue.Remove(dialogue);
 				}
+				
+				dialogue.timer++;
+				if (dialogue.textFinished)
+					dialogue.pauseTime--;
+				if (dialogue.pauseTime <= 0)
+					dialogue.fadeTime--;
 			}
 		}
 		public override void Draw(SpriteBatch spriteBatch)
@@ -85,8 +91,6 @@ namespace Redemption.UI
 				if (dialogue.leader != null)
 					continue;
 
-				Console.WriteLine("Draw: " + dialogue.npc.whoAmI + " --- ");
-
 				string[] drawnText = FormatText(dialogue.displayingText, dialogue.font, out int width, out int height);
 				Vector2 pos = dialogue.npc != null ? dialogue.npc.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.npc.height) : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f);
 
@@ -96,11 +100,11 @@ namespace Redemption.UI
 				float alpha = 1f;
 				if (dialogue.boxFade)
 				{
-					float quotient = dialogue.timer < dialogue.charTime * dialogue.text.Length + dialogue.pauseTime ? 0f : (dialogue.timer - ((float)dialogue.charTime * dialogue.text.Length + dialogue.pauseTime)) / dialogue.fadeTime;
+					float quotient = !dialogue.textFinished ? 0f : MathHelper.Lerp(1f, 0f, (float)dialogue.fadeTime / dialogue.fadeTimeMax);
 					alpha = MathHelper.Lerp(1f, 0f, quotient);
 				}
 
-				DrawPanel(spriteBatch, dialogue.bubble, pos, Color.Multiply(Color.White, alpha), width, height);
+				DrawPanel(spriteBatch, LidenTex, pos, Color.Multiply(Color.White, alpha), width, height);
 
 				Vector2 textPos = pos + new Vector2(17f, 17f);
 				for (int k = 0; k < drawnText.Length; k++)
@@ -110,7 +114,7 @@ namespace Redemption.UI
 						continue;
 
 					DrawStringEightWay(spriteBatch, text, 1, textPos, Color.Multiply(dialogue.textColor, alpha), Color.Multiply(dialogue.shadowColor, alpha));
-					
+
 					textPos.Y += dialogue.font.MeasureString(text).Y - 6;
 				}
 			}
@@ -134,17 +138,17 @@ namespace Redemption.UI
 
 
 			// Middle Left
-			Rectangle middleLeftDest = new((int)topLeftPos.X, (int)topLeftPos.Y + topLeftRect.Height, 34, height);
+			Rectangle middleLeftDest = new((int)topLeftPos.X, (int)topLeftPos.Y + topLeftRect.Height, 34, height - 34);
 			Rectangle middleLeftRect = new(0, 34, 34, 2);
 			spriteBatch.Draw(texture, middleLeftDest, middleLeftRect, color, 0f, Vector2.Zero, SpriteEffects.None, 0f);
 
 			// Middle Middle
-			Rectangle middleMiddleDest = new((int)topLeftPos.X + topLeftRect.Width, (int)topLeftPos.Y + topLeftRect.Height, width, height);
+			Rectangle middleMiddleDest = new((int)topLeftPos.X + topLeftRect.Width, (int)topLeftPos.Y + topLeftRect.Height, width, height - 34);
 			Rectangle middleMiddleRect = new(34, 34, 2, 2);
 			spriteBatch.Draw(texture, middleMiddleDest, middleMiddleRect, color, 0f, Vector2.Zero, SpriteEffects.None, 0f);
 
 			// Middle Right
-			Rectangle middleRightDest = new((int)topRightPos.X, (int)topRightPos.Y + topRightRect.Height, 34, height);
+			Rectangle middleRightDest = new((int)topRightPos.X, (int)topRightPos.Y + topRightRect.Height, 34, height - 34);
 			Rectangle middleRightRect = new(36, 34, 34, 2);
 			spriteBatch.Draw(texture, middleRightDest, middleRightRect, color, 0f, Vector2.Zero, SpriteEffects.None, 0f);
 
@@ -183,7 +187,7 @@ namespace Redemption.UI
 				Vector2 stringSize = font.MeasureString(displayingText[i]);
 				if (stringSize.X > largestWidth)
 					largestWidth = (int)stringSize.X;
-				height += (int)stringSize.Y - 17;
+				height += (int)stringSize.Y - 6;
 			}
 
 			width = largestWidth - 34;
@@ -191,6 +195,24 @@ namespace Redemption.UI
 				height = 22;
 
 			return displayingText;
+		}
+		public static void InterpretSymbols(ref Dialogue dialogue)
+		{
+			if (dialogue.displayingText.Length == 0)
+				return;
+			
+			char trigger = dialogue.displayingText[^1];
+			
+			if (trigger == '^')
+			{
+				int displayPos = dialogue.displayingText.Length - 1;
+				int index = dialogue.text.IndexOf(' ', displayPos) - dialogue.displayingText.Length;
+				string text = dialogue.text.Substring(displayPos + 1, index + 1);
+				int.TryParse(text, out int result);
+				dialogue.charTime = result;
+				dialogue.text = dialogue.text.Remove(displayPos, index + 1);
+				dialogue.displayingText = dialogue.displayingText[0..^1];
+			}	
 		}
 		public static void DrawStringEightWay(SpriteBatch spriteBatch, string text, int thickness, Vector2 position, Color textColor, Color shadowColor)
 		{
@@ -219,12 +241,15 @@ namespace Redemption.UI
 		public Dialogue leader;
 
 		public string text;
-		public string displayingText;
 		public int timer;
 		public int charTime;
 		public int pauseTime;
 		public int fadeTime;
 		public bool boxFade;
+
+		public string displayingText;
+		public bool textFinished;
+		public int fadeTimeMax;
 
 		public Dialogue(string text)
 		{
@@ -240,6 +265,7 @@ namespace Redemption.UI
 			charTime = 6;
 			pauseTime = 60;
 			fadeTime = 60;
+			fadeTimeMax = fadeTime;
 			boxFade = true;
 		}
 		public Dialogue(Dialogue dialogue)
@@ -255,6 +281,7 @@ namespace Redemption.UI
 			charTime = dialogue.charTime;
 			pauseTime = dialogue.pauseTime;
 			fadeTime = dialogue.fadeTime;
+			fadeTimeMax = dialogue.fadeTime;
 			boxFade = dialogue.boxFade;
 		}
 		public Dialogue(NPC npc, Texture2D icon, Texture2D bubble, DynamicSpriteFont font, Color textColor, Color shadowColor, Dialogue leader, string text, int charTime, int pauseTime, int fadeTime, bool boxFade)
@@ -271,6 +298,7 @@ namespace Redemption.UI
 			this.charTime = charTime;
 			this.pauseTime = pauseTime;
 			this.fadeTime = fadeTime;
+			fadeTimeMax = fadeTime;
 			this.boxFade = boxFade;
 		}
 	}
