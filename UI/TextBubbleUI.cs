@@ -56,7 +56,7 @@ namespace Redemption.UI
 
 				// Measure our progress via a modulo between our char time and
 				// our timer, allowing us to decide how many chars to display
-				if (dialogue.displayingText.Length != dialogue.text.Length && dialogue.timer % dialogue.charTime == 0)
+				if (dialogue.pauseTime <= 0 && dialogue.displayingText.Length != dialogue.text.Length && dialogue.timer % dialogue.charTime == 0)
 					dialogue.displayingText += dialogue.text[dialogue.displayingText.Length];
 
 				InterpretSymbols(ref dialogue);
@@ -64,7 +64,7 @@ namespace Redemption.UI
 				if (dialogue.displayingText.Length == dialogue.text.Length)
 					dialogue.textFinished = true;
 
-				if (dialogue.textFinished && dialogue.pauseTime <= 0 && dialogue.fadeTime <= 0)
+				if (dialogue.textFinished && dialogue.endPauseTime <= 0 && dialogue.fadeTime <= 0)
 				{
 					for (int k = 0; k < Dialogue.Count; k++)
 						if (Dialogue[k].leader == dialogue)
@@ -72,10 +72,12 @@ namespace Redemption.UI
 					Dialogue.Remove(dialogue);
 				}
 				
-				dialogue.timer++;
+				dialogue.pauseTime--;
+				if(dialogue.pauseTime <= 0)
+					dialogue.timer++;
 				if (dialogue.textFinished)
-					dialogue.pauseTime--;
-				if (dialogue.pauseTime <= 0)
+					dialogue.endPauseTime--;
+				if (dialogue.endPauseTime <= 0)
 					dialogue.fadeTime--;
 			}
 		}
@@ -200,19 +202,34 @@ namespace Redemption.UI
 		{
 			if (dialogue.displayingText.Length == 0)
 				return;
-			
+
 			char trigger = dialogue.displayingText[^1];
-			
+
+			if (trigger == '[')
+			{
+				int index = dialogue.text.IndexOf(']', dialogue.displayingText.Length);
+				int length = dialogue.displayingText.Length - 1;
+				string text = dialogue.text[length..(index + 1)];
+				string numbers = text[1..^1];
+				int.TryParse(numbers, out int result);
+
+				dialogue.pauseTime = result;
+				dialogue.text = dialogue.text.Replace(text, "");
+				dialogue.displayingText = dialogue.displayingText[0..^1];
+			}
+
 			if (trigger == '^')
 			{
-				int displayPos = dialogue.displayingText.Length - 1;
-				int index = dialogue.text.IndexOf(' ', displayPos) - dialogue.displayingText.Length;
-				string text = dialogue.text.Substring(displayPos + 1, index + 1);
-				int.TryParse(text, out int result);
+				int index = dialogue.text.IndexOf('^', dialogue.displayingText.Length);
+				int length = dialogue.displayingText.Length - 1;
+				string text = dialogue.text[length..(index + 1)];
+				string numbers = text[1..^1];
+				int.TryParse(numbers, out int result);
+
 				dialogue.charTime = result;
-				dialogue.text = dialogue.text.Remove(displayPos, index + 1);
+				dialogue.text = dialogue.text.Replace(text, "");
 				dialogue.displayingText = dialogue.displayingText[0..^1];
-			}	
+			}
 		}
 		public static void DrawStringEightWay(SpriteBatch spriteBatch, string text, int thickness, Vector2 position, Color textColor, Color shadowColor)
 		{
@@ -243,13 +260,14 @@ namespace Redemption.UI
 		public string text;
 		public int timer;
 		public int charTime;
-		public int pauseTime;
+		public int endPauseTime;
 		public int fadeTime;
 		public bool boxFade;
 
 		public string displayingText;
 		public bool textFinished;
 		public int fadeTimeMax;
+		public int pauseTime;
 
 		public Dialogue(string text)
 		{
@@ -263,7 +281,7 @@ namespace Redemption.UI
 			this.text = text ?? "";
 			displayingText ??= "";
 			charTime = 6;
-			pauseTime = 60;
+			endPauseTime = 60;
 			fadeTime = 60;
 			fadeTimeMax = fadeTime;
 			boxFade = true;
@@ -279,7 +297,7 @@ namespace Redemption.UI
 			leader = dialogue.leader;
 			displayingText ??= "";
 			charTime = dialogue.charTime;
-			pauseTime = dialogue.pauseTime;
+			endPauseTime = dialogue.endPauseTime;
 			fadeTime = dialogue.fadeTime;
 			fadeTimeMax = dialogue.fadeTime;
 			boxFade = dialogue.boxFade;
@@ -296,7 +314,7 @@ namespace Redemption.UI
 			this.text = text ?? "";
 			displayingText ??= "";
 			this.charTime = charTime;
-			this.pauseTime = pauseTime;
+			this.endPauseTime = pauseTime;
 			this.fadeTime = fadeTime;
 			fadeTimeMax = fadeTime;
 			this.boxFade = boxFade;
