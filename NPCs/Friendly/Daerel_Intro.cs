@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Friendly
                             Main.dust[dust].color = dustColor;
                             Main.dust[dust].velocity *= 3f;
                         }
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Woah!", 1, 100, 30, false); // 135
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Woah!", 1, 30, 30, false); // 65
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
@@ -76,7 +76,6 @@ namespace Redemption.NPCs.Friendly
                     NPC.velocity.X *= 0.99f;
                     if (BaseAI.HitTileOnSide(NPC, 3))
                     {
-                        TextBubbleUI.Visible = false;
                         NPC.rotation = 0;
                         SoundEngine.PlaySound(SoundID.Dig, NPC.position);
                         player.RedemptionScreen().ScreenShakeIntensity = 3;
@@ -118,12 +117,12 @@ namespace Redemption.NPCs.Friendly
                 case 3:
                     if (AITimer++ == 5)
                     {
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Hey Zephos, do you know where we are?", 3, 100, 0, false); // 211
-                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, d1, "Uh.. Zephos?", 3, 100, 0, false); // 136
-                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Oh, hi there! Didn't notice you.", 3, 100, 0, false); // 196
-                        Dialogue d4 = new(NPC, null, bubble, null, Color.White, Color.Gray, d3, "You haven't seen my friend around here, have you?", 3, 100, 0, false); // 247
-                        Dialogue d5 = new(NPC, null, bubble, null, Color.White, Color.Gray, d4, "Guess he didn't jump in. Oh well, I'll head back to get him.", 3, 100, 0, false); // 280
-                        Dialogue d6 = new(NPC, null, bubble, null, Color.White, Color.Gray, d5, "I'll come back once I find him, so, see you soon I suppose.", 3, 100, 30, true); // 307
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Hey Zephos,[10] do you know where we are?", 3, 100, 0, false); // 221
+                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, d1, "Uh..[30] Zephos?", 3, 100, 0, false); // 166
+                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Oh, hi there![10] Didn't notice you.", 3, 100, 0, false); // 206
+                        Dialogue d4 = new(NPC, null, bubble, null, Color.White, Color.Gray, d3, "You haven't seen my friend around here,[10] have you?", 3, 100, 0, false); // 257
+                        Dialogue d5 = new(NPC, null, bubble, null, Color.White, Color.Gray, d4, "Guess he didn't jump in.[30] Oh well,[10] I'll head back to get him.", 3, 100, 0, false); // 320
+                        Dialogue d6 = new(NPC, null, bubble, null, Color.White, Color.Gray, d5, "I'll come back once I find him,[10] so, see you soon I suppose.", 3, 100, 30, true); // 317
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
@@ -133,29 +132,29 @@ namespace Redemption.NPCs.Friendly
                         TextBubbleUI.AddDialogue(d5);
                         TextBubbleUI.AddDialogue(d6);
                     }
-                    if (AITimer >= 216 && AITimer % 30 == 0 && AITimer < 352)
+                    if (AITimer >= 226 && AITimer % 30 == 0 && AITimer < 392)
                         NPC.spriteDirection *= -1;
-                    if (AITimer == 216)
-                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 136);
-                    if (AITimer >= 352)
+                    if (AITimer == 226)
+                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 166);
+                    if (AITimer >= 392)
                         NPC.LookAtEntity(player);
-                    if (AITimer == 352)
+                    if (AITimer == 392)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
                         NPC.velocity.Y = -3;
                     }
-                    if (AITimer == 1352)
+                    if (AITimer == 1492)
                     {
                         NPC.velocity.Y = -8;
                         NPC.velocity.X = -3;
                     }
-                    if (AITimer >= 1412)
+                    if (AITimer >= 1552)
                     {
                         NPC.noTileCollide = true;
                         NPC.Move(portal.Center, 20, 30);
                         NPC.alpha += 5;
                     }
-                    if (AITimer >= 1352)
+                    if (AITimer >= 1492)
                     {
                         NPC.rotation -= 0.1f;
                         NPC.velocity.X *= 0.99f;

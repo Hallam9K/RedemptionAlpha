@@ -106,7 +106,7 @@ namespace Redemption.UI
 					alpha = MathHelper.Lerp(1f, 0f, quotient);
 				}
 
-				DrawPanel(spriteBatch, LidenTex, pos, Color.Multiply(Color.White, alpha), width, height);
+				DrawPanel(spriteBatch, dialogue.bubble, pos, Color.Multiply(Color.White, alpha), width, height);
 
 				Vector2 textPos = pos + new Vector2(17f, 17f);
 				for (int k = 0; k < drawnText.Length; k++)
