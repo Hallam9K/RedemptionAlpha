@@ -74,6 +74,7 @@ namespace Redemption.Globals.Player
         public int xeniumBonus;
         public int hardlightBonus;
         public bool shinkiteHead;
+        public bool vortiHead;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -116,6 +117,7 @@ namespace Redemption.Globals.Player
             snipped = false;
             trappedSoul = false;
             shinkiteHead = false;
+            vortiHead = false;
             brokenBlade = false;
             TrueMeleeDamage = 1f;
             shellCap = false;

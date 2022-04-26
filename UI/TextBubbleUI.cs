@@ -17,7 +17,6 @@ namespace Redemption.UI
 
 		public Texture2D LidenTex;
 		public Texture2D EpidotraTex;
-		public Texture2D KingdomTex;
 		public Texture2D BoxTex;
 
 		public static bool Visible = true;
@@ -28,7 +27,6 @@ namespace Redemption.UI
 
 			LidenTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Liden", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			EpidotraTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-			KingdomTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Kingdom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 		}
 		public static void AddDialogue(Dialogue dialogue)
 		{

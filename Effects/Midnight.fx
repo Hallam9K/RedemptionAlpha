@@ -1,14 +1,29 @@
-﻿float2 offset;
+﻿float4 border = (1.0, 1.0, 1.0, 1.0);
+float4 mask;
+float2 offset;
+float2 spriteRatio;
 float2 conversion;
-float4 innerColor;
-float4 borderColor;
 
-matrix transformMatrix;
+sampler2D samplerTex;
 
 texture sampleTexture;
-sampler2D samplerTex = sampler_state
+sampler2D samplerTex1 = sampler_state
 {
 	texture = <sampleTexture>;
+	AddressU = wrap;
+	AddressV = wrap;
+};
+texture sampleTexture2;
+sampler2D samplerTex2 = sampler_state
+{
+	texture = <sampleTexture2>;
+	AddressU = wrap;
+	AddressV = wrap;
+};
+texture sampleTexture3;
+sampler2D samplerTex3 = sampler_state
+{
+	texture = <sampleTexture3>;
 	AddressU = wrap;
 	AddressV = wrap;
 };
@@ -27,50 +42,41 @@ struct VertexShaderOutput
 	float4 Color : COLOR0;
 };
 
-//VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
-//{
-//    VertexShaderOutput output;
-    
-//    output.Color = input.Color;
-//    output.TexCoords = input.TexCoords;
-//    output.Position = mul(input.Position, transformMatrix);
-
-//    return output;
-//}
-
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float4 color = tex2D(samplerTex, input.TexCoords);
-	if (color.g != 1.0f)
-		return color;
 	float4 up = tex2D(samplerTex, input.TexCoords + float2(0.0f, conversion.y));
 	float4 down = tex2D(samplerTex, input.TexCoords - float2(0.0f, conversion.y));
 	float4 left = tex2D(samplerTex, input.TexCoords + float2(conversion.x, 0.0f));
 	float4 right = tex2D(samplerTex, input.TexCoords - float2(conversion.x, 0.0f));
-	if (up.g < 1.0f)
+
+	float2 coords = input.TexCoords;
+	coords.x *= spriteRatio.x;
+	coords.y *= spriteRatio.y;
+	
+	if ((up.a == 0.0 || down.a == 0.0 || left.a == 0.0 || right.a == 0.0) && color.a == 1.0)
+		return border;
+	
+	if (all(color == mask))
 	{
-		return borderColor;
+		float4 color1 = tex2D(samplerTex1, coords + offset);
+		float4 color2 = tex2D(samplerTex2, coords + offset * 1.1f);
+		float4 color3 = tex2D(samplerTex3, coords + offset * 1.3f);
+		if (!all(color3 > 0.0f))
+		{
+			if (!all(color2 > 0.0f))
+				return color1;
+			return color2;
+		}
+		return color3;
 	}
-	else if (down.g < 1.0f)
-	{
-		return borderColor;
-	}
-	else if (left.g < 1.0f)
-	{
-		return borderColor;
-	}
-	else if (right.g < 1.0f)
-	{
-		return borderColor;
-	}
-	return innerColor;
+	return color;
 }
 
 technique Technique1
 {
 	pass Parallax
 	{
-        //VertexShader = compile vs_2_0 VertexShaderFunction();
 		PixelShader = compile ps_2_0 PixelShaderFunction();
 	}
 };

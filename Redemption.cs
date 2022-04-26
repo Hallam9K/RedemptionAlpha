@@ -292,6 +292,7 @@ namespace Redemption
 
         public UserInterface DialogueUILayer;
         public MoRDialogueUI DialogueUIElement;
+		
         public UserInterface ChaliceUILayer;
         public ChaliceAlignmentUI ChaliceUIElement;
 
@@ -303,6 +304,9 @@ namespace Redemption
 
         public UserInterface AMemoryUILayer;
         public AMemoryUIState AMemoryUIElement;
+
+        public UserInterface TextBubbleUILayer;
+        public TextBubbleUI TextBubbleUIElement;
 
         public static TrailManager TrailManager;
         public bool Initialized;
@@ -334,7 +338,11 @@ namespace Redemption
                 AMemoryUILayer = new UserInterface();
                 AMemoryUIElement = new AMemoryUIState();
                 AMemoryUILayer.SetState(AMemoryUIElement);
-            }
+				
+				TextBubbleUILayer = new UserInterface();
+				TextBubbleUIElement = new TextBubbleUI();
+                TextBubbleUILayer.SetState(TextBubbleUIElement);
+			}
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
         {
@@ -425,7 +433,8 @@ namespace Redemption
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
-            }
+				AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
+			}
         }
 
         public static void AddInterfaceLayer(List<GameInterfaceLayer> layers, UserInterface userInterface, UIState state, int index, bool visible, string customName = null) //Code created by Scalie
