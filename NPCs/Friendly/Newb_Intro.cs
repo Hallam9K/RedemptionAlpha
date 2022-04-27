@@ -69,13 +69,13 @@ namespace Redemption.NPCs.Friendly
                 case 1:
                     if (AITimer++ == 30)
                     {
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Zamn, shes a placeholder?!", 3, 100, 30, true); // 187
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "What do you think, Jo-", 3, 30, 100, true); // 196
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
                     }
-                    if (AITimer >= 200)
+                    if (AITimer >= 209)
                     {
-                        EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
+                        EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
                         AITimer = 0;
                         TimerRand = 2;
                     }
@@ -83,9 +83,10 @@ namespace Redemption.NPCs.Friendly
                 case 2:
                     if (AITimer++ == 60)
                     {
+                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                         Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Who you?!", 3, 100, 0, false); // 166
                         Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, d1, "Where am I?", 3, 100, 0, false); // 166
-                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Heyo, I'm Newb![60] Want to be friends?", 3, 100, 0, false); // 166
+                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Heyo, I'm Newb![60] Want to be friends?", 3, 100, 30, true); // 196
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
@@ -95,7 +96,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer >= 30)
                         NPC.LookAtEntity(player);
 
-                    if (AITimer >= 500)
+                    if (AITimer >= 530)
                     {
                         NPC.SetDefaults(ModContent.NPCType<Newb>());
                         NPC.GivenName = "Newb";
@@ -120,13 +121,13 @@ namespace Redemption.NPCs.Friendly
                 switch (TimerRand)
                 {
                     case 0:
-                        NPC.frame.X = NPC.frame.Width * 1;
+                        NPC.frame.X = NPC.frame.Width;
                         break;
                     case 1:
-                        NPC.frame.X = NPC.frame.Width * 1;
+                        NPC.frame.X = NPC.frame.Width;
                         break;
                     case 2:
-                        NPC.frame.X = NPC.frame.Width * 0;
+                        NPC.frame.X = 0;
                         break;
                 }
             }
@@ -134,7 +135,7 @@ namespace Redemption.NPCs.Friendly
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 2) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
 
