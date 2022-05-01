@@ -63,7 +63,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             if (Main.myPlayer == Projectile.owner)
             {
-                player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                 if (Timer++ == 0)
                 {
                     startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() + (MathHelper.PiOver2 * Projectile.spriteDirection));

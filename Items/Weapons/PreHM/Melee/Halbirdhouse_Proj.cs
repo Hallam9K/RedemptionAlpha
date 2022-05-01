@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
-            player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+            player.SetCompositeArmFront(true, Length >= 20 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
             if (Timer++ == 0)
             {
                 if (HitCount >= 3 && Projectile.owner == Main.myPlayer)
