@@ -96,7 +96,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             player.itemTime = 2;
             player.itemAnimation = 2;
 
-            player.itemRotation = (player.Center - Projectile.Center).ToRotation() + (player.direction == 1 ? MathHelper.Pi : 0);
+            player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
         }
 
         public override bool PreDraw(ref Color lightColor)

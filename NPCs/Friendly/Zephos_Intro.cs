@@ -47,6 +47,7 @@ namespace Redemption.NPCs.Friendly
 
             Player player = Main.player[NPC.target];
             NPC portal = Main.npc[(int)NPC.ai[3]];
+            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
 
             if (NPC.alpha > 0 && TimerRand < 3)
                 NPC.alpha -= 10;
@@ -66,13 +67,15 @@ namespace Redemption.NPCs.Friendly
                             Main.dust[dust].color = dustColor;
                             Main.dust[dust].velocity *= 3f;
                         }
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("WAH!", 200, 1, 0.5f, "Zephos:", 0, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "WAH!", 1, 30, 30, true); // 64
+
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.AddDialogue(d1);
                     }
                     NPC.rotation += 0.1f;
                     NPC.velocity.X *= 0.99f;
                     if (BaseAI.HitTileOnSide(NPC, 3))
                     {
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("", 1, 1);
                         NPC.rotation = 0;
                         SoundEngine.PlaySound(SoundID.Dig, NPC.position);
                         player.RedemptionScreen().ScreenShakeIntensity = 3;
@@ -97,9 +100,12 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 40)
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Jeez, bad landing.", 180, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Jeez,[10] bad landing.", 3, 100, 30, true); // 194
+
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.AddDialogue(d1);
                     }
-                    if (AITimer >= 220)
+                    if (AITimer >= 234)
                     {
                         ExtraFrames = 0;
                         ExtraTexs = 0;
@@ -110,40 +116,45 @@ namespace Redemption.NPCs.Friendly
                     break;
                 case 3:
                     if (AITimer++ == 5)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ey Daerel, know where we are?", 185, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                    if (AITimer >= 190 && AITimer % 30 == 0 && AITimer < 330)
-                        NPC.spriteDirection *= -1;
-                    if (AITimer == 190)
                     {
-                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 140);
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Uh.. Daerel?", 140, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Ey Daerel,[10] know where we are?", 3, 100, 0, false); // 197
+                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, d1, "Uh..[30] Daerel?", 3, 100, 0, false); // 166
+                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Oh,[10] hey there![10] Didn't notice you.", 3, 100, 0, false); // 219
+                        Dialogue d4 = new(NPC, null, bubble, null, Color.White, Color.Gray, d3, "You haven't happened upon a boy cloaked in black,[10] have you?", 3, 100, 0, false); // 287
+                        Dialogue d5 = new(NPC, null, bubble, null, Color.White, Color.Gray, d4, "Guess he didn't jump in.[30] Oh well![10] I'll head back to get him.", 3, 100, 0, false); // 320
+                        Dialogue d6 = new(NPC, null, bubble, null, Color.White, Color.Gray, d5, "I'll come back once I find him,[10] so see ya later!", 3, 100, 30, true); // 284
+
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.AddDialogue(d1);
+                        TextBubbleUI.AddDialogue(d2);
+                        TextBubbleUI.AddDialogue(d3);
+                        TextBubbleUI.AddDialogue(d4);
+                        TextBubbleUI.AddDialogue(d5);
+                        TextBubbleUI.AddDialogue(d6);
                     }
-                    if (AITimer >= 330)
+                    if (AITimer >= 202 && AITimer % 30 == 0 && AITimer < 368)
+                        NPC.spriteDirection *= -1;
+                    if (AITimer == 202)
+                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 197);
+                    if (AITimer >= 368)
                         NPC.LookAtEntity(player);
-                    if (AITimer == 330)
+                    if (AITimer == 368)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
                         NPC.velocity.Y = -3;
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Oh, hey there! Didn't notice you.", 180, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
                     }
-                    if (AITimer == 510)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You haven't happened upon a boy cloaked in black, have you?", 240, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                    if (AITimer == 750)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Guess he didn't jump in. Oh well! I'll head back to get him.", 240, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                    if (AITimer == 990)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I'll come back once I find him, so see ya later!", 200, 1, 0.5f, "Zephos:", 0.2f, null, null, NPC.Center + new Vector2(0, -80) - Main.screenPosition, null, 0, sound: true);
-                    if (AITimer == 1140)
+                    if (AITimer == 1478)
                     {
                         NPC.velocity.Y = -8;
                         NPC.velocity.X = -3;
                     }
-                    if (AITimer >= 1200)
+                    if (AITimer >= 1538)
                     {
                         NPC.noTileCollide = true;
                         NPC.Move(portal.Center, 20, 30);
                         NPC.alpha += 5;
                     }
-                    if (AITimer >= 1140)
+                    if (AITimer >= 1478)
                     {
                         NPC.rotation -= 0.1f;
                         NPC.velocity.X *= 0.99f;
@@ -167,8 +178,6 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
-            if (MoRDialogueUI.Visible)
-                RedeSystem.Instance.DialogueUIElement.TextPos = NPC.Center + new Vector2(0, -80) - Main.screenPosition;
 
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             player.RedemptionScreen().lockScreen = true;
