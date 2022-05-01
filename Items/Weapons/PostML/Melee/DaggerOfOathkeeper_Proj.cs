@@ -59,7 +59,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 switch (Projectile.ai[0])
                 {
                     case 0:
-                        player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ == 0)
                         {
                             SoundEngine.PlaySound(SoundID.Item1, player.position);
@@ -87,7 +87,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         }
                         break;
                     case 1:
-                        player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ < 5 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
@@ -174,7 +174,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
-            player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+            player.SetCompositeArmFront(true, Length >= 30 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
             if (Timer++ == 0 && Projectile.owner == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
