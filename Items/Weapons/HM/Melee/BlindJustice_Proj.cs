@@ -134,7 +134,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 player.bodyFrame.Y = 5 * player.bodyFrame.Height;
             }
             else
-                player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
