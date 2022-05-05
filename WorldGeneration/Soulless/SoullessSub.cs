@@ -16,6 +16,19 @@ using Redemption.Tiles.Furniture.Shade;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using System.Linq;
+using Terraria.DataStructures;
+using Redemption.NPCs.Soulless;
+using Redemption.Tiles.Containers;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Furniture.Shade;
+using Terraria.Utilities;
+using Redemption.Items.Usable;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Globals;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -38,6 +51,11 @@ namespace Redemption.WorldGeneration.Soulless
         };
         public override void OnLoad()
         {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                NPC.NewNPC(new EntitySource_WorldGen(), 474 * 16, 759 * 16, ModContent.NPCType<LostLight>());
+            }
+
             Main.cloudAlpha = 0;
             Main.numClouds = 0;
             Main.rainTime = 0;
@@ -299,6 +317,10 @@ namespace Redemption.WorldGeneration.Soulless
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneBedTile>(), 0, 1);
                             break;
+                        case TileID.StoneSlab:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneBedTile>());
+                            break;
                         case TileID.TeamBlockYellow:
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneClockTile>());
@@ -323,10 +345,6 @@ namespace Redemption.WorldGeneration.Soulless
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, TileID.Books);
                             break;
-                        case TileID.StoneSlab:
-                            Main.tile[x2, y2].ClearTile();
-                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadestoneChairTile>(), 0, 1);
-                            break;
                         case TileID.Palladium:
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<WaxCandlesTile>(), Main.rand.Next(5));
@@ -338,9 +356,29 @@ namespace Redemption.WorldGeneration.Soulless
 
             GenUtils.ObjectPlace(440, 797, ModContent.TileType<ShadestoneCandleTile>());
             GenUtils.ObjectPlace(240, 765, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(524, 874, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(554, 833, ModContent.TileType<ShadestoneCandelabraTile>());
+            GenUtils.ObjectPlace(276, 853, ModContent.TileType<ShadestoneCandelabraTile>());
             GenUtils.ObjectPlace(300, 749, ModContent.TileType<GiantShadesteelChainTile>());
             GenUtils.ObjectPlace(291, 763, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(327, 786, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(285, 870, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(540, 843, ModContent.TileType<ShadestoneToiletTile>());
+
+            GenUtils.ObjectPlace(352, 813, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(289, 870, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(335, 883, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(550, 835, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(398, 794, ModContent.TileType<SoullessRemainsTile>());
             //Chests
+            SpookChest(265, 854);
+            SpookChest(254, 880);
+            SpookChest(289, 763);
+            SpookChest(404, 789);
+            SpookChest(277, 804);
+            SpookChest(370, 871);
+            SpookChest(559, 834);
+            SpookChest(658, 799);
 
             for (int i = 0; i < 1800; i++)
             {
@@ -354,6 +392,49 @@ namespace Redemption.WorldGeneration.Soulless
         public SoullessPass2(string name, float loadWeight) : base(name, loadWeight)
         {
         }
+        #region Chest Contents
+        public static void SpookChest(int x, int y, int chestID = 0)
+        {
+            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ShadestoneChestTile>(), false);
+
+            int[] ChestLoot2 = new int[] {
+                ItemID.MiningPotion, ItemID.BattlePotion, ModContent.ItemType<LurkingKetredPotion>(), ItemID.InvisibilityPotion };
+            int[] ChestLoot3 = new int[] {
+                ItemID.EndurancePotion, ItemID.WrathPotion, ModContent.ItemType<InsulatiumPotion>(), ModContent.ItemType<ChakrogAnglerPotion>(), };
+
+            if (PlacementSuccess >= 0)
+            {
+                int slot = 0;
+                Chest chest = Main.chest[PlacementSuccess];
+
+                int[] ChestLoot1 = new int[]
+                { ModContent.ItemType<SoulScroll>(), ModContent.ItemType<MaskOfGrief>(),  ModContent.ItemType<StatuetteOfFaith>(),  ModContent.ItemType<ManiacsLantern>(), ModContent.ItemType<CageFlail>(), ModContent.ItemType<SoulCandles>() };
+
+                chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot1));
+
+                chest.item[slot].SetDefaults(ModContent.ItemType<Shadesoul>());
+                chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
+
+                //if (WorldGen.genRand.NextBool(2))
+                //{
+                //    chest.item[slot].SetDefaults(ModContent.ItemType<ShadeKnife>());
+                //    chest.item[slot++].stack = WorldGen.genRand.Next(100, 600);
+                //}
+                if (RedeHelper.GenChance(.66f))
+                {
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                }
+                if (RedeHelper.GenChance(.33f))
+                {
+                    chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot3));
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                }
+                if (WorldGen.genRand.NextBool(6))
+                    chest.item[slot++].SetDefaults(ModContent.ItemType<BlackenedHeart>());
+            }
+        }
+        #endregion
     }
     public class SoullessPass3 : GenPass
     {

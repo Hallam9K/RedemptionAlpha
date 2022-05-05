@@ -2,6 +2,7 @@ using CollisionLib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -63,7 +64,7 @@ namespace Redemption.NPCs.Soulless
 
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Switch1").WithVolume(0.5f), NPC.position);
-                if (NPC.position.Y < 838 * 16)
+                if (NPC.position.Y < (NPC.ai[2] - ((NPC.ai[2] / 2) - (NPC.ai[3] / 2))) * 16)
                     buttonPressed = 1;
                 else
                     buttonPressed = 2;
@@ -87,7 +88,7 @@ namespace Redemption.NPCs.Soulless
                     {
                         velY += 0.01f;
                         NPC.velocity.Y += velY / 10;
-                        if (NPC.position.Y >= 863 * 16)
+                        if (NPC.position.Y >= NPC.ai[2] * 16)
                         {
                             if (NPC.ai[1]++ == 0)
                             {
@@ -125,7 +126,7 @@ namespace Redemption.NPCs.Soulless
                     {
                         velY += 0.01f;
                         NPC.velocity.Y -= velY / 10;
-                        if (NPC.position.Y <= 821 * 16)
+                        if (NPC.position.Y <= NPC.ai[3] * 16)
                         {
                             if (NPC.ai[1]++ == 0)
                             {
@@ -190,5 +191,9 @@ namespace Redemption.NPCs.Soulless
             Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, NPC.velocity.Y * 2) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
+    }
+    public class ShadestoneLift2 : ShadestoneLift
+    {
+        public override string Texture => "Redemption/NPCs/Soulless/ShadestoneLift";
     }
 }

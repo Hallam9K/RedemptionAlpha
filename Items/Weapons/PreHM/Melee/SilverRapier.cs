@@ -9,6 +9,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("Causes armor penetration");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -35,6 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
+            Item.ArmorPenetration = 6;
 
             // Projectile Properties
             Item.shootSpeed = 3.7f;

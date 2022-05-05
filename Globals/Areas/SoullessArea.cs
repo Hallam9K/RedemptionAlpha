@@ -25,8 +25,11 @@ namespace Redemption.Globals
                 return;
 
             Vector2 LiftPos = new(608 * 16, (822 * 16) + 8);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift2>()))
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos.X, (int)LiftPos.Y, ModContent.NPCType<ShadestoneLift2>(), 0, 0, 0, 863, 821);
+            Vector2 LiftPos2 = new(334 * 16, (763 * 16) + 8);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift>()))
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos.X, (int)LiftPos.Y, ModContent.NPCType<ShadestoneLift>());
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos2.X, (int)LiftPos2.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 787, 762);
         }
         public override void OnWorldLoad()
         {
