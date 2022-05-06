@@ -5274,7 +5274,7 @@ namespace Redemption.Base
             }
             else if (damager is Projectile p)
             {
-                if (p.friendly)
+                if (p.friendly && !p.hostile)
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
@@ -5284,6 +5284,14 @@ namespace Redemption.Base
                     PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
                 }
                 else if (p.hostile)
+                {
+                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
+                    bool crit = false;
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
+                }
+                else
                 {
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
