@@ -20,6 +20,7 @@ using Redemption.Projectiles.Hostile;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;
+using System;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -37,7 +38,12 @@ namespace Redemption.NPCs.Soulless
             get => (ActionState)NPC.ai[0];
             set => NPC.ai[0] = (int)value;
         }
-
+        public static void UnloadChain()
+        {
+            Tendril1 = null;
+            Tendril2 = null;
+            Tendril3 = null;
+        }
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 5;
@@ -64,7 +70,16 @@ namespace Redemption.NPCs.Soulless
             // TODO: Banner for soulless wanderer
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
+
+            NPC.GetGlobalNPC<NPCPhysChain>().glowChain = true;
+            Tendril1 = new LightTendrilScarfPhys();
+            Tendril2 = new LightTendrilScarfPhys();
+            Tendril3 = new LightTendrilScarfPhys();
         }
+        private static IPhysChain Tendril1;
+        private static IPhysChain Tendril2;
+        private static IPhysChain Tendril3;
+
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
@@ -101,6 +116,22 @@ namespace Redemption.NPCs.Soulless
         }
         public override void AI()
         {
+            if (HasEyes)
+            {
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[0] = Tendril1;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[1] = Tendril2;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[2] = Tendril3;
+
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[0] = -NPC.spriteDirection;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[1] = -NPC.spriteDirection;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[2] = -NPC.spriteDirection;
+
+                NPCPhysChain chains = NPC.GetGlobalNPC<NPCPhysChain>();
+                NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[0], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[0], NPC), new Vector2(-5, -16f));
+                NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[1], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[1], NPC), new Vector2(0, 0));
+                NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[2], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[2], NPC), new Vector2(-9, 16f));
+            }
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
@@ -509,7 +540,7 @@ namespace Redemption.NPCs.Soulless
                     spriteBatch.Draw(glow, NPC.Center - new Vector2(0, 5) - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -34 : -26, -9 - HeadOffsetY), NPC.scale, effects, 0);
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -34 : -26) + (HeadOffsetX * NPC.spriteDirection), -9 - HeadOffsetY), NPC.scale, effects, 0);
             }
             return false;
         }
@@ -535,6 +566,73 @@ namespace Redemption.NPCs.Soulless
                 new FlavorTextBestiaryInfoElement(
                     ".")
             });
+        }
+    }
+    internal class LightTendrilScarfPhys : IPhysChain
+    {
+        public Texture2D GetTexture(Mod mod)
+        {
+            return ModContent.Request<Texture2D>("Redemption/NPCs/Soulless/Soulless_LightTendril").Value;
+        }
+
+        public int NumberOfSegments => 11;
+
+        public Color GetColor(PlayerDrawSet drawInfo, Color baseColour)
+        {
+            return baseColour;
+        }
+
+        public Vector2 AnchorOffset => new(-8, -6);
+
+        public Vector2 OriginOffset(int index) //padding
+        {
+            switch (index)
+            {
+                case 0:
+                    return new Vector2(0, 0);
+
+                case 1:
+                    return new Vector2(0, 0);
+
+                case 2:
+                    return new Vector2(0, 0);
+
+                default:
+                    return new Vector2(0, 0);
+            }
+        }
+
+        public int Length(int index)
+        {
+            switch (index)
+            {
+                default:
+                    return 5;
+            }
+        }
+
+        public Rectangle GetSourceRect(Texture2D texture, int index)
+        {
+            return texture.Frame(NumberOfSegments, 1, NumberOfSegments - 1 - index, 0);
+        }
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        {
+            Vector2 force = new(
+                -dir * 0.5f,
+                Player.defaultGravity * (0.5f + NumberOfSegments * NumberOfSegments * 0.5f / (1 + index)) // Apply scaling gravity that weakens at the tip of the chain
+                );
+
+            if (!Main.gameMenu)
+            {
+                float windPower = 0.7f * dir * -10;
+
+                // Wave in the wind
+                force.X += 16f * -npc.spriteDirection;
+                force.Y -= 10;
+                force -= npc.velocity * 2;
+                force.Y += (float)(Math.Sin(time * 1f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
+            }
+            return force;
         }
     }
 }

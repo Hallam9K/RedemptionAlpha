@@ -37,7 +37,12 @@ namespace Redemption.NPCs.Soulless
             get => (ActionState)NPC.ai[0];
             set => NPC.ai[0] = (int)value;
         }
-
+        public static void UnloadChain()
+        {
+            Tendril1 = null;
+            Tendril2 = null;
+            Tendril3 = null;
+        }
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 3;
@@ -64,7 +69,16 @@ namespace Redemption.NPCs.Soulless
             // TODO: Banner for soulless wanderer
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
+
+            NPC.GetGlobalNPC<NPCPhysChain>().glowChain = true;
+            Tendril1 = new LightTendrilScarfPhys();
+            Tendril2 = new LightTendrilScarfPhys();
+            Tendril3 = new LightTendrilScarfPhys();
         }
+        private static IPhysChain Tendril1;
+        private static IPhysChain Tendril2;
+        private static IPhysChain Tendril3;
+
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
@@ -100,6 +114,22 @@ namespace Redemption.NPCs.Soulless
         }
         public override void AI()
         {
+            if (HasEyes)
+            {
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[0] = Tendril1;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[1] = Tendril2;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[2] = Tendril3;
+
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[0] = -NPC.spriteDirection;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[1] = -NPC.spriteDirection;
+                NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[2] = -NPC.spriteDirection;
+
+                NPCPhysChain chains = NPC.GetGlobalNPC<NPCPhysChain>();
+                NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[0], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[0], NPC), new Vector2(-5, -16f));
+                NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[1], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[1], NPC), new Vector2(0, 0));
+                NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[2], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[2], NPC), new Vector2(-9, 16f));
+            }
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
