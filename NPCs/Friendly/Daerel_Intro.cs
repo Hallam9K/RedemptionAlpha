@@ -174,6 +174,8 @@ namespace Redemption.NPCs.Friendly
                             }
                             RedeQuest.wayfarerVars[0] = 2;
                             NPC.active = false;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                     }
                     break;

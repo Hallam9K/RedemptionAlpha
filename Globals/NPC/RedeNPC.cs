@@ -553,15 +553,20 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 //if (NPC.AnyNPCs(ModContent.NPCType<WardenIdle>()) || NPC.AnyNPCs(ModContent.NPCType<WardenSaved>()))
                 //    return;
-                pool.Add(ModContent.NPCType<SoullessWanderer>(), .05f);
-                pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
-                pool.Add(ModContent.NPCType<Shadebug>(), .02f);
-                if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))
-                    pool.Add(ModContent.NPCType<SoullessMarionette_Doll>(), .009f);
+                if (SoullessArea.soullessBools[0])
+                {
+                    pool.Add(ModContent.NPCType<SoullessWanderer>(), .03f);
+                    pool.Add(ModContent.NPCType<SoullessDuelist>(), .03f);
+                    pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
+                    pool.Add(ModContent.NPCType<Shadebug>(), .02f);
+                    if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))
+                        pool.Add(ModContent.NPCType<SoullessMarionette_Doll>(), .009f);
 
-                pool.Add(ModContent.NPCType<LaughingMaskSmall>(), .01f);
-                pool.Add(ModContent.NPCType<LaughingMaskMedium>(), .01f);
-                pool.Add(ModContent.NPCType<LaughingMaskBig>(), .01f);
+                    pool.Add(ModContent.NPCType<LaughingMaskSmall>(), .01f);
+                    pool.Add(ModContent.NPCType<LaughingMaskMedium>(), .01f);
+                    pool.Add(ModContent.NPCType<LaughingMaskBig>(), .01f);
+                }
+
                 pool.Add(ModContent.NPCType<SpookyEyes>(), .02f);
                 pool.Add(ModContent.NPCType<Echo>(), .02f);
             }

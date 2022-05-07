@@ -51,9 +51,12 @@ namespace Redemption.WorldGeneration.Soulless
         };
         public override void OnLoad()
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (Main.netMode != NetmodeID.MultiplayerClient && SoullessArea.soullessInts[0] < 2)
             {
-                NPC.NewNPC(new EntitySource_WorldGen(), 474 * 16, 759 * 16, ModContent.NPCType<LostLight>());
+                if (SoullessArea.soullessInts[0] < 1)
+                    NPC.NewNPC(new EntitySource_WorldGen(), 478 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>());
+                else
+                    NPC.NewNPC(new EntitySource_WorldGen(), 534 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>(), 0, 1, 0, Main.rand.Next(80, 280));
             }
 
             Main.cloudAlpha = 0;

@@ -48,6 +48,8 @@ namespace Redemption.Items
             RedeBossDowned.voltBegin = false;
             RedeBossDowned.downedPZ = false;
             RedeQuest.wayfarerVars[0] = 1;
+            SoullessArea.soullessBools[0] = false;
+            SoullessArea.soullessInts[0] = 0;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
