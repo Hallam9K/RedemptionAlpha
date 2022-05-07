@@ -81,7 +81,9 @@ namespace Redemption.NPCs.PreHM
                 int life = NPC.life;
                 NPC.Transform(ModContent.NPCType<EpidotrianSkeleton>());
                 NPC.life = life;
-                NPC.ai[2] = 1;
+                (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).HasEyes = HasEyes;
+                TimerRand = Main.rand.Next(80, 280);
+                NPC.alpha = 0;
             }
         }
         public override void OnSpawn(IEntitySource source)
