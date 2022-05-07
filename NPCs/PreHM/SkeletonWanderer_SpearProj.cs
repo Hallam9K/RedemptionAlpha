@@ -54,7 +54,7 @@ namespace Redemption.NPCs.PreHM
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (host.ai[0] != 4 || !host.active)
+            if (host.ai[0] != 3 || !host.active)
                 Projectile.Kill();
 
             if (Projectile.ai[1] == 1)
