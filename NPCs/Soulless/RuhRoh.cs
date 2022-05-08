@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Soulless
         public CollisionSurface[] colliders = null;
         public override void SetDefaults()
         {
-            NPC.width = 118;
+            NPC.width = 90;
             NPC.height = 320;
             NPC.lifeMax = 1000;
             NPC.damage = 100;
