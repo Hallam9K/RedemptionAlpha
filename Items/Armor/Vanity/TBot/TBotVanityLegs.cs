@@ -12,7 +12,7 @@ namespace Redemption.Items.Armor.Vanity.TBot
         {
             DisplayName.SetDefault("T-Bot Legs");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Legs.Sets.OverridesLegs[Mod.GetEquipSlot(Name, EquipType.Legs)] = true;
+            ArmorIDs.Legs.Sets.OverridesLegs[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
         }
 
         public override void SetDefaults()

@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
             "5% increased magic critical strike chance\n" +
             "+50 max mana");
 
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

@@ -42,7 +42,7 @@ namespace Redemption.Items.Donator.Rain
             DisplayName.SetDefault("Horns of a Living Weapon");
             Tooltip.SetDefault("'Strange, you can't seem to smile'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()
@@ -96,7 +96,7 @@ namespace Redemption.Items.Donator.Rain
         {
             DisplayName.SetDefault("Tail of a Living Weapon");
             Tooltip.SetDefault("'You can feel every twitch, even the slightest breeze'");
-            ArmorIDs.Back.Sets.DrawInTailLayer[Mod.GetEquipSlot(Name, EquipType.Back)] = true;
+            ArmorIDs.Back.Sets.DrawInTailLayer[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Back)] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

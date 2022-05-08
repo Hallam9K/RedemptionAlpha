@@ -17,7 +17,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         {
             DisplayName.SetDefault("Common Guard Helm");
             Tooltip.SetDefault("+2 increased melee damage");
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

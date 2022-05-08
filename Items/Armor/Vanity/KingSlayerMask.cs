@@ -12,7 +12,7 @@ namespace Redemption.Items.Armor.Vanity
             DisplayName.SetDefault("King Slayer III Mask");
             Tooltip.SetDefault("'Was he a slayer of kings or the king of slayers?'"
                 + "\n'Or maybe he thought it was a cool name'");
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

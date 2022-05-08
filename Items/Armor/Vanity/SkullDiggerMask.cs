@@ -11,7 +11,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             DisplayName.SetDefault("Skull Digger's Mask");
             Tooltip.SetDefault("'Made of bone'");
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

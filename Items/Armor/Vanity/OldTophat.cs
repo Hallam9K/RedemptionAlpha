@@ -10,7 +10,7 @@ namespace Redemption.Items.Armor.Vanity
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawHatHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
         }
 
         public override void SetDefaults()
