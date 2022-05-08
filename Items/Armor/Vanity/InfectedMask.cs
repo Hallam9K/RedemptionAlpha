@@ -11,7 +11,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             Tooltip.SetDefault("'Become infected... Cosmetically'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()

@@ -13,8 +13,8 @@ namespace Redemption.Items.Donator.Lizzy
         {
             DisplayName.SetDefault("Beezard Outfit");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Body.Sets.HidesTopSkin[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
-            ArmorIDs.Body.Sets.HidesArms[Mod.GetEquipSlot(Name, EquipType.Body)] = true;
+            ArmorIDs.Body.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
+            ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
         public override void SetDefaults()
 		{
@@ -47,7 +47,7 @@ namespace Redemption.Items.Donator.Lizzy
         {
             DisplayName.SetDefault("Beezard Hood");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()
@@ -81,7 +81,7 @@ namespace Redemption.Items.Donator.Lizzy
         {
             DisplayName.SetDefault("Beezard Pants");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Legs.Sets.HidesBottomSkin[Mod.GetEquipSlot(Name, EquipType.Legs)] = true;
+            ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
         }
 
         public override void SetDefaults()
@@ -114,7 +114,7 @@ namespace Redemption.Items.Donator.Lizzy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Beezard Abdomen");
-            ArmorIDs.Back.Sets.DrawInTailLayer[Mod.GetEquipSlot(Name, EquipType.Back)] = true;
+            ArmorIDs.Back.Sets.DrawInTailLayer[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Back)] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

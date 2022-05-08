@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.PostML.Vorti
             base.SetStaticDefaults();
         }
 
-        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.head == Mod.GetEquipSlot(nameof(VortiHat), EquipType.Head);
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.head == EquipLoader.GetEquipSlot(Mod, nameof(VortiHat), EquipType.Head);
         public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
         protected override void Draw(ref PlayerDrawSet drawInfo)
         {

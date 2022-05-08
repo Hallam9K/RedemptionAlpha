@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor.Vanity.SkySquire
         {
             DisplayName.SetDefault("Sky Squire's Helm");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()

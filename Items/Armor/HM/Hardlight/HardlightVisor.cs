@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
             Tooltip.SetDefault("13% increased ranged damage\n" +
             "5% increased ranged critical strike chance");
 
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
