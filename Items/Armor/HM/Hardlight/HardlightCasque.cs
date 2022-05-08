@@ -17,7 +17,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
             "5% increased ritual critical strike chance\n" +
             "+2 max spirit level");
 
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

@@ -16,8 +16,8 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             DisplayName.SetDefault("Dragon-Lead Ribplate");
             Tooltip.SetDefault("7% increased damage\n" +
                 "Immunity to most ice-related debuffs");
-            ArmorIDs.Body.Sets.IncludedCapeBack[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
-            ArmorIDs.Body.Sets.IncludedCapeBackFemale[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBack[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBackFemale[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

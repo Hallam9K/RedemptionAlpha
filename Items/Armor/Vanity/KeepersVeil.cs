@@ -11,7 +11,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             DisplayName.SetDefault("Keeper's Veil");
             Tooltip.SetDefault("'For a wedding that never came to be...'");
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

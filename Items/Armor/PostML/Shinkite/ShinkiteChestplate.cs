@@ -11,8 +11,8 @@ namespace Redemption.Items.Armor.PostML.Shinkite
     {
         public override void SetStaticDefaults()
         {
-            ArmorIDs.Body.Sets.IncludedCapeBack[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.shinkiteCapeID;
-            ArmorIDs.Body.Sets.IncludedCapeBackFemale[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.shinkiteCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBack[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.shinkiteCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBackFemale[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.shinkiteCapeID;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
