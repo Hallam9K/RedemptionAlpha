@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Soulless
             if (colliders == null || colliders.Length != 1)
             {
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }, true) };
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }) };
             }
             return true;
         }
@@ -70,6 +70,8 @@ namespace Redemption.NPCs.Soulless
                     }
                     break;
                 case 1:
+                    Flare = true;
+                    FlareTimer = MathHelper.Min(30, FlareTimer);
                     NPC.velocity.X -= 0.01f;
                     NPC.velocity.X = MathHelper.Clamp(NPC.velocity.X, -10, 0);
                     break;

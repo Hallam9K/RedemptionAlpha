@@ -54,7 +54,7 @@ namespace Redemption.WorldGeneration.Soulless
             if (Main.netMode != NetmodeID.MultiplayerClient && SoullessArea.soullessInts[0] < 2)
             {
                 if (SoullessArea.soullessInts[0] < 1)
-                    NPC.NewNPC(new EntitySource_WorldGen(), 478 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>());
+                    NPC.NewNPC(new EntitySource_WorldGen(), 496 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>());
                 else
                     NPC.NewNPC(new EntitySource_WorldGen(), 534 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>(), 0, 1, 0, Main.rand.Next(80, 280));
             }
@@ -382,6 +382,7 @@ namespace Redemption.WorldGeneration.Soulless
             SpookChest(370, 871);
             SpookChest(559, 834);
             SpookChest(658, 799);
+            SpookChest(462, 841);
 
             for (int i = 0; i < 1800; i++)
             {

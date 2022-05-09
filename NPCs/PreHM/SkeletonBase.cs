@@ -81,6 +81,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
+            NPC.noTileCollide = false;
+
             Player player = Main.player[NPC.target];
             if (player.RedemptionPlayerBuff().skeletonFriendly)
                 NPC.friendly = true;

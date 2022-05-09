@@ -92,6 +92,7 @@ namespace Redemption.NPCs.Soulless
                     }
                 }
             }
+            NPC.velocity *= 0;
             if (NPC.life <= NPC.lifeMax / 2)
                 doll.ai[1] = 2;
             if (NPC.DistanceSQ(doll.Center) > 800 * 800)

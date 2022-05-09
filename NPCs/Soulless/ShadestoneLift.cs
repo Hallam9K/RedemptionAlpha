@@ -40,16 +40,16 @@ namespace Redemption.NPCs.Soulless
             if (colliders == null || colliders.Length != 4)
             {
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }, true),
-                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }, true),
-                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true),
-                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true) };
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }),
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }),
+                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }),
+                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }) };
             }
             return true;
         }
-        private float buttonY = 14;
-        private float velY;
-        private int buttonPressed;
+        public float buttonY = 14;
+        public float velY;
+        public int buttonPressed;
         public override void AI()
         {
             Rectangle buttonRect = new((int)NPC.position.X + 32, (int)NPC.position.Y - 14, 32, 18);
@@ -195,5 +195,125 @@ namespace Redemption.NPCs.Soulless
     public class ShadestoneLift2 : ShadestoneLift
     {
         public override string Texture => "Redemption/NPCs/Soulless/ShadestoneLift";
+    }
+    public class ShadestoneLift3 : ShadestoneLift
+    {
+        public override string Texture => "Redemption/NPCs/Soulless/ShadestoneLift";
+        public override bool PreAI()
+        {
+            if (colliders == null || colliders.Length != 4)
+            {
+                colliders = new CollisionSurface[] {
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }),
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }),
+                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }),
+                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }) };
+            }
+            return true;
+        }
+        public override void AI()
+        {
+            Rectangle buttonRect = new((int)NPC.position.X + 32, (int)NPC.position.Y - 14, 32, 18);
+            for (int i = 0; i < Main.maxPlayers; i++)
+            {
+                Player player = Main.player[i];
+                if (!player.active || player.dead || buttonPressed != 0 || buttonY < 14)
+                    continue;
+
+                if (!player.Hitbox.Intersects(buttonRect))
+                    continue;
+
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Switch1").WithVolume(0.5f), NPC.position);
+                buttonPressed = 1;
+            }
+            switch (buttonPressed)
+            {
+                case 0:
+                    buttonY += 0.2f;
+                    NPC.ai[0] = 0;
+                    NPC.ai[1] = 0;
+                    break;
+                case 1:
+                    buttonY -= 0.2f;
+                    if (NPC.ai[0]++ == 50)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slam1").WithVolume(0.5f), NPC.position);
+                        Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
+                    }
+                    if (NPC.ai[0] >= 50)
+                    {
+                        velY += 0.01f;
+                        NPC.velocity.Y += velY / 10;
+                        if (NPC.ai[0] == 380)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                            if (Main.netMode != NetmodeID.Server)
+                            {
+                                for (int g = 0; g < 6; g++)
+                                {
+                                    int goreIndex = Gore.NewGore(NPC.GetSource_FromThis(), RedeHelper.RandAreaInEntity(NPC), default, Main.rand.Next(61, 64));
+                                    Main.gore[goreIndex].velocity *= 0.1f;
+                                }
+                            }
+                            Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 6 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
+                        }
+                        if (NPC.ai[0] >= 380)
+                        {
+                            NPC.velocity.Y += 0.1f;
+                            NPC.rotation += 0.004f;
+                        }
+                        if (NPC.position.Y >= NPC.ai[2] * 16)
+                        {
+                            SoullessArea.soullessBools[2] = true;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slam2").WithVolume(0.5f), NPC.position);
+                            Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 14 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
+                            if (Main.netMode != NetmodeID.Server)
+                            {
+                                for (int g = 0; g < 6; g++)
+                                {
+                                    int goreIndex = Gore.NewGore(NPC.GetSource_FromThis(), RedeHelper.RandAreaInEntity(NPC), default, Main.rand.Next(61, 64));
+                                    Main.gore[goreIndex].velocity *= 2f;
+                                }
+                            }
+                            NPC.active = false;
+                        }
+                    }
+                    break;
+            }
+            buttonY = MathHelper.Clamp(buttonY, 11, 14);
+            velY = MathHelper.Clamp(velY, -0.03f, 0.03f);
+            if (colliders != null && colliders.Length == 4)
+            {
+                colliders[0].Update();
+                colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
+                colliders[0].endPoints[1] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
+
+                colliders[1].Update();
+                colliders[1].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
+                colliders[1].endPoints[1] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+
+                colliders[2].Update();
+                colliders[2].endPoints[0] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
+                colliders[2].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
+
+                colliders[3].Update();
+                colliders[3].endPoints[0] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+                colliders[3].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
+            }
+        }
+        public override void PostAI()
+        {
+            if (colliders != null)
+            {
+                foreach (CollisionSurface collider in colliders)
+                    collider.PostUpdate();
+            }
+        }
     }
 }

@@ -52,7 +52,11 @@ namespace Redemption.NPCs.Soulless
                 }
             });
         }
-
+        public override bool PreAI()
+        {
+            NPC.noTileCollide = false;
+            return true;
+        }
         public bool AttackerIsSoulless()
         {
             RedeNPC globalNPC = NPC.Redemption();

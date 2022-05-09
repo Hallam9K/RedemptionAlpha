@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.WorldGeneration.Soulless;
 using ReLogic.Content;
+using SubworldLibrary;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -43,7 +45,7 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<RedeTileCount>().SoullessTileCount >= 200;
+            return ModContent.GetInstance<RedeTileCount>().SoullessTileCount >= 200 && SubworldSystem.IsActive<SoullessSub>();
         }
     }
 }
