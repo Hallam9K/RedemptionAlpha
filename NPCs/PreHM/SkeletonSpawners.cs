@@ -54,12 +54,21 @@ namespace Redemption.NPCs.PreHM
             {
                 case SpawnType.Noble:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonNoble>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonNoble).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonNoble).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.Warden:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonWarden>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWarden).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWarden).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.Flagbearer:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonFlagbearer>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonFlagbearer).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonFlagbearer).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.SmallGroup:
                     if (Main.rand.NextBool(2))
@@ -128,7 +137,7 @@ namespace Redemption.NPCs.PreHM
         }
         public enum SpawnType
         {
-            Normal, Wanderer, Assassin, Duelist, SmallGroup, Group, LargeGroup
+            Normal, Wanderer, Assassin, Duelist, SmallGroup, Group, LargeGroup, Dance
         }
         public override bool PreAI()
         {
@@ -140,6 +149,8 @@ namespace Redemption.NPCs.PreHM
             choice.Add(SpawnType.SmallGroup, 6);
             choice.Add(SpawnType.Group, 3);
             choice.Add(SpawnType.LargeGroup, 1);
+            if (Main.player[RedeHelper.GetNearestAlivePlayer(NPC)].ZoneRockLayerHeight)
+                choice.Add(SpawnType.Dance, 0.001);
 
             WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
@@ -151,15 +162,29 @@ namespace Redemption.NPCs.PreHM
             {
                 case SpawnType.Normal:
                     NPC.SetDefaults(ModContent.NPCType<EpidotrianSkeleton>());
+                    (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.alpha = 0;
                     break;
                 case SpawnType.Wanderer:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonWanderer>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWanderer).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWanderer).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.Assassin:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonAssassin>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonAssassin).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonAssassin).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.ai[0] = Main.rand.NextBool(2) ? 0 : 2;
                     break;
                 case SpawnType.Duelist:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonDuelist>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonDuelist).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonDuelist).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.SmallGroup:
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
@@ -184,6 +209,10 @@ namespace Redemption.NPCs.PreHM
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
                     }
                     NPC.active = false;
+                    break;
+                case SpawnType.Dance:
+                    NPC.SetDefaults(ModContent.NPCType<DancingSkeleton>());
+                    NPC.ai[3] = 1;
                     break;
             }
             return true;

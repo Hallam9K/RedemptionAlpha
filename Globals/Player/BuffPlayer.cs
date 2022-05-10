@@ -58,6 +58,7 @@ namespace Redemption.Globals.Player
         public bool hazmatSuit;
         public bool HEVSuit;
         public bool snipped;
+        public bool island;
         public bool trappedSoul;
         public bool brokenBlade;
         public bool shellCap;
@@ -115,6 +116,7 @@ namespace Redemption.Globals.Player
             hardlightBonus = 0;
             xeniumBonus = 0;
             snipped = false;
+            island = false;
             trappedSoul = false;
             shinkiteHead = false;
             vortiHead = false;
