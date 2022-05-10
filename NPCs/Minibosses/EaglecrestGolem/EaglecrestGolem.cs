@@ -25,7 +25,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Slash,
             Roll,
@@ -155,6 +154,14 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         private int summonTimer;
         private float FlareTimer;
         private bool Flare;
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (!Main.dedServ)
+                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, Color.Gray, "Guardian of Eaglecrest Meadows");
+
+            TimerRand = Main.rand.Next(300, 700);
+            NPC.netUpdate = true;
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -176,15 +183,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, Color.Gray, "Guardian of Eaglecrest Meadows");
-
-                    AIState = ActionState.Idle;
-                    TimerRand = Main.rand.Next(300, 700);
-                    NPC.netUpdate = true;
-                    break;
-
                 case ActionState.Idle:
                     if (++AITimer >= TimerRand)
                     {
@@ -460,13 +458,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     Main.dust[dustIndex2].velocity *= 5f;
                 }
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore2").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore2").Type, 1);
                 for (int i = 0; i < 6; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore4").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore4").Type, 1);
                 for (int i = 0; i < 12; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore5").Type, 1);
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore1").Type, 1);
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore3").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore5").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore1").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EaglecrestGolemGore3").Type, 1);
             }
             int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone);
             Main.dust[dustIndex].velocity *= 2f;

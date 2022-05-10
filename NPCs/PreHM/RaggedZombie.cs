@@ -49,7 +49,7 @@ namespace Redemption.NPCs.PreHM
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 3; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ZomGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ZomGore" + (i + 1)).Type, 1);
 
             }
             for (int i = 0; i < 12; i++)
@@ -57,8 +57,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemID.Shackle, 50));
-            npcLoot.Add(ItemDropRule.Common(ItemID.ZombieArm, 200));
+            var zombieDropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Zombie, false);
+            foreach (var zombieDropRule in zombieDropRules)
+            {
+                npcLoot.Add(zombieDropRule);
+            }
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

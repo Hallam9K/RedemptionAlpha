@@ -13,8 +13,7 @@ namespace Redemption.Items.Accessories.PreHM
         {
             DisplayName.SetDefault("Heart Insignia");
             Tooltip.SetDefault("Picking up hearts give a short boost to life regen" +
-                "\n15% increased Shadow and Blood elemental damage" +
-                "\n15% increased Shadow and Blood elemental resistance");
+                "\n15% increased Shadow and Blood elemental damage and resistance");
         }
 
         public override void SetDefaults()
@@ -26,9 +25,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.expert = true;
             Item.accessory = true;
             if (!Main.dedServ)
-            {
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
-            }
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

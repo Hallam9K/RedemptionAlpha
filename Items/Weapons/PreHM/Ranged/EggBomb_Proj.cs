@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 {
                     for (int g = 0; g < 3; g++)
                     {
-                        int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64));
+                        int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Main.rand.Next(61, 64));
                         Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
                         Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
                     }
@@ -70,7 +70,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.friendly || target.whoAmI == (int)Projectile.localAI[1])
+                    if (!target.active || !target.CanBeChasedBy() || target.whoAmI == (int)Projectile.localAI[1])
                         continue;
 
                     if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))

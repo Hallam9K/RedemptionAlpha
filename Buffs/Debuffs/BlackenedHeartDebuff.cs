@@ -16,7 +16,7 @@ namespace Redemption.Buffs.Debuffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.statLifeMax2 -= 400;
+            player.statLifeMax2 -= 100;
             player.lifeRegen -= 400;
             player.blind = true;
         }

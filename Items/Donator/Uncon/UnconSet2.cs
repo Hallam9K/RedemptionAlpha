@@ -36,7 +36,7 @@ namespace Redemption.Items.Donator.Uncon
         {
             DisplayName.SetDefault("Dominator Visage (Skinless)");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            ArmorIDs.Head.Sets.DrawFullHair[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
         public override void SetDefaults()

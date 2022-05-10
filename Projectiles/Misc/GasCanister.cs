@@ -43,9 +43,9 @@ namespace Redemption.Projectiles.Misc
                 Projectile.frame = 1;
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    Gore.NewGore(Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/GasCanister1").Type);
-                    Gore.NewGore(Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(-13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/GasCanister2").Type);
                 }
 
@@ -138,7 +138,7 @@ namespace Redemption.Projectiles.Misc
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.friendly)
+                    if (!target.active || !target.CanBeChasedBy())
                         continue;
 
                     if (!Projectile.Hitbox.Intersects(target.Hitbox))

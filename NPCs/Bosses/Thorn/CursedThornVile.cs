@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             endTex = null;
         }
 
-        public static Color lightColor = new Color(0, 40, 0);
+        public static Color lightColor = new(0, 40, 0);
         public bool spineEnd = false;
 
         public override void SetStaticDefaults()

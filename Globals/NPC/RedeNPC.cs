@@ -22,13 +22,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Donator.Megaswave;
 
 namespace Redemption.Globals.NPC
 {
     public class RedeNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
         public bool decapitated;
         public bool invisible;
         public Entity attacker = Main.LocalPlayer;
@@ -38,6 +39,10 @@ namespace Redemption.Globals.NPC
         {
             if (type == NPCID.SkeletonMerchant)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
+            if (type == NPCID.Cyborg)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GlobalDischarge>());
+            if (type == NPCID.Wizard && Terraria.NPC.downedGolemBoss)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Rockslide>());
         }
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -111,7 +116,7 @@ namespace Redemption.Globals.NPC
                         damage = (int)(damage * 1.25f);
 
                     if (ItemTags.Ice.Has(item.type))
-                        damage = (int)(damage * 0.5f);
+                        damage = (int)(damage * 0.75f);
 
                     if (ItemTags.Thunder.Has(item.type))
                         damage = (int)(damage * 1.1f);
@@ -330,7 +335,7 @@ namespace Redemption.Globals.NPC
                 if (ItemTags.Shadow.Has(item.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.GetItemSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
@@ -378,12 +383,12 @@ namespace Redemption.Globals.NPC
                 if (ProjectileTags.Shadow.Has(projectile.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
-                        Item.NewItem(npc.GetItemSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
                 #endregion
             }
 
-            if (RedeDetours.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
+            if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
                 attacker = value.entity;
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
@@ -391,7 +396,7 @@ namespace Redemption.Globals.NPC
         public override void OnKill(Terraria.NPC npc)
         {
             if (NPCID.Sets.Skeletons[npc.type] && Main.rand.NextBool(3) && !npc.SpawnedFromStatue)
-                RedeHelper.SpawnNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
         public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {
@@ -412,6 +417,8 @@ namespace Redemption.Globals.NPC
 
             if (npc.type == NPCID.EaterofSouls || npc.type == NPCID.LittleEater || npc.type == NPCID.BigEater || npc.type == NPCID.CorruptGoldfish || npc.type == NPCID.DevourerHead || npc.type == NPCID.Corruptor || npc.type == NPCID.CorruptSlime || npc.type == NPCID.Slimeling || npc.type == NPCID.Slimer2 || npc.type == NPCID.BloodCrawler || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.BigCrimera || npc.type == NPCID.LittleCrimera || npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BigCrimslime || npc.type == NPCID.LittleCrimslime || npc.type == NPCID.BloodFeeder || npc.type == NPCID.BloodJelly)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EldritchRoot>(), 500));
+            if (npc.type == NPCID.BoneSerpentHead)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
@@ -439,7 +446,7 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
             }
-            if (RedeWorld.SkeletonInvasion && spawnInfo.player.ZoneOverworldHeight)
+            if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight)
             {
                 pool.Clear();
                 pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 3);
@@ -449,7 +456,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
             }
-            if (spawnInfo.player.InModBiome(ModContent.GetInstance<LabBiome>()))
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<LabBiome>()))
             {
                 if (!RedeWorld.labSafe)
                 {
@@ -459,20 +466,20 @@ namespace Redemption.Globals.NPC
                 else
                 {
                     int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
-                    bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType);
+                    bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
 
                     pool.Clear();
                     pool.Add(ModContent.NPCType<BlisteredScientist>(), tileCheck ? 1 : 0);
                     pool.Add(ModContent.NPCType<OozingScientist>(), tileCheck ? 0.7f : 0);
                     pool.Add(ModContent.NPCType<BloatedScientist>(), tileCheck ? 0.2f : 0);
-                    if (spawnInfo.water)
+                    if (spawnInfo.Water)
                         pool.Add(ModContent.NPCType<BlisteredFish>(), 0.4f);
                 }
             }
-            if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
             {
                 int[] GrassTileArray = { ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>(), ModContent.TileType<IrradiatedGrassTile>() };
-                bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType);
+                bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
 
                 pool.Clear();
                 pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
@@ -484,14 +491,14 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
                 pool.Add(ModContent.NPCType<NuclearShadow>(), 0.2f);
                 pool.Add(ModContent.NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
-                if (spawnInfo.player.InModBiome(ModContent.GetInstance<WastelandSnowBiome>()))
+                if (spawnInfo.Player.InModBiome(ModContent.GetInstance<WastelandSnowBiome>()))
                 {
                     pool.Add(ModContent.NPCType<SneezyFlinx>(), 0.8f);
                     pool.Add(ModContent.NPCType<SicklyWolf>(), 0.7f);
                     pool.Add(ModContent.NPCType<SicklyPenguin>(), 0.6f);
                 }
             }
-            if (spawnInfo.player.RedemptionScreen().cutscene)
+            if (spawnInfo.Player.RedemptionScreen().cutscene)
                 pool.Clear();
         }
     }

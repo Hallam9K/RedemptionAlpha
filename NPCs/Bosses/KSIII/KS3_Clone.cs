@@ -206,6 +206,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
+            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
             Player player = Main.player[NPC.target];
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
@@ -252,57 +253,34 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     gunRot = NPC.spriteDirection == 1 ? 0f : (float)Math.PI;
                     AITimer++;
-                    if (RedeConfigClient.Instance.NoLoreElements)
+                    if (AITimer == 60)
                     {
-                        if (AITimer == 60)
-                        {
-                            ArmsFrameY = 1;
-                            ArmsFrameX = 0;
-                            BodyState = (int)BodyAnim.Gun;
-                        }
-                        if (AITimer >= 160)
-                        {
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f), ai0: NPC.whoAmI);
-                            AITimer = 0;
-                            NPC.dontTakeDamage = false;
-                            AIState = ActionState.GunAttacks;
-                            NPC.netUpdate = true;
-                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                        }
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                     }
-                    else
+                    if (AITimer == 220)
                     {
-                        if (AITimer == 60)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
-                        }
-                        if (AITimer == 220)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
-                        }
-                        if (AITimer == 400)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, sound: true);
-                        }
-                        if (AITimer == 420)
-                        {
-                            ArmsFrameY = 1;
-                            ArmsFrameX = 0;
-                            BodyState = (int)BodyAnim.Gun;
-                        }
-                        if (AITimer >= 500)
-                        {
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), ai0: NPC.whoAmI);
-                            AITimer = 0;
-                            NPC.dontTakeDamage = false;
-                            AIState = ActionState.GunAttacks;
-                            NPC.netUpdate = true;
-                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                        }
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                    }
+                    if (AITimer == 400)
+                    {
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                    }
+                    if (AITimer == 420)
+                    {
+                        ArmsFrameY = 1;
+                        ArmsFrameX = 0;
+                        BodyState = (int)BodyAnim.Gun;
+                    }
+                    if (AITimer >= 500)
+                    {
+                        ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), ai0: NPC.whoAmI);
+                        AITimer = 0;
+                        NPC.dontTakeDamage = false;
+                        AIState = ActionState.GunAttacks;
+                        NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     #endregion
                     break;
@@ -951,7 +929,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         for (int i = 0; i < Main.rand.Next(2, 5); i++)
                                         {
-                                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
+                                            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
                                                 ModContent.NPCType<KS3_MissileDrone>(), NPC.whoAmI);
                                         }
                                     }
@@ -992,7 +970,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     {
                                         for (int i = 0; i < 2; i++)
                                         {
-                                            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
+                                            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(750, 800),
                                                 ModContent.NPCType<KS3_Magnet>(), NPC.whoAmI);
                                         }
                                     }
@@ -1240,7 +1218,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                         BaseAI.DamagePlayer(target, 120, 3, hitDirection, NPC);
-                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
+                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 30);
                                     }
                                 }
 
@@ -1456,15 +1434,17 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     break;
             }
-            if (MoRDialogueUI.Visible && RedeSystem.Instance.DialogueUIElement.PointPos == NPC.Center)
+            if (MoRDialogueUI.Visible)
             {
-                if (RedeSystem.Instance.DialogueUIElement.ID == 0)
+                if (RedeSystem.Instance.DialogueUIElement.ID == NPC.whoAmI)
                 {
+                    RedeSystem.Instance.DialogueUIElement.TextPos = text;
                     RedeSystem.Instance.DialogueUIElement.PointPos = NPC.Center;
                     RedeSystem.Instance.DialogueUIElement.TextColor = RedeColor.SlayerColour;
                 }
                 else
                 {
+                    RedeSystem.Instance.DialogueUIElement.TextPos = null;
                     RedeSystem.Instance.DialogueUIElement.PointPos = null;
                     RedeSystem.Instance.DialogueUIElement.TextColor = null;
                 }

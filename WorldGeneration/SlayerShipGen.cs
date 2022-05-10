@@ -28,7 +28,7 @@ namespace Redemption.WorldGeneration
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipClear", AssetRequestMode.ImmediateLoad).Value;
-            Main.QueueMainThreadAction(() =>
+            GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                 gen.Generate(origin.X, origin.Y, true, true);
@@ -63,18 +63,12 @@ namespace Redemption.WorldGeneration
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShip", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWalls", AssetRequestMode.ImmediateLoad).Value;
             Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipSlopes", AssetRequestMode.ImmediateLoad).Value;
-            Main.QueueMainThreadAction(() =>
+            GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
                 gen.Generate(origin.X, origin.Y, true, true);
             });
-            return true;
-        }
-    }
-    public class SlayerShipDeco : MicroBiome
-    {
-        public override bool Place(Point origin, StructureMap structures)
-        {
+
             WorldGen.PlaceObject(origin.X + 90, origin.Y + 23, (ushort)ModContent.TileType<SlayerChairTile>());
             NetMessage.SendObjectPlacment(-1, origin.X + 90, origin.Y + 23, (ushort)ModContent.TileType<SlayerChairTile>(), 0, 0, -1, -1);
             WorldGen.PlaceObject(origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>());
@@ -93,7 +87,6 @@ namespace Redemption.WorldGeneration
             ShipChest(origin.X + 100, origin.Y + 47);
             return true;
         }
-
         public static void ShipChest(int x, int y)
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<HolochestTile>(), false, 1);

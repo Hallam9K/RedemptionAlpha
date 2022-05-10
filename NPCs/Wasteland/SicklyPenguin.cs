@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -22,7 +23,6 @@ namespace Redemption.NPCs.Wasteland
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert
@@ -80,6 +80,11 @@ namespace Redemption.NPCs.Wasteland
 
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            Variant = Main.rand.Next(3);
+            TimerRand = Main.rand.Next(80, 120);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -89,12 +94,6 @@ namespace Redemption.NPCs.Wasteland
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    Variant = Main.rand.Next(3);
-                    TimerRand = Main.rand.Next(80, 120);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
@@ -239,6 +238,13 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 2, 1, 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCorruption(), ModContent.ItemType<Bioweapon>(), 4, 1, 2));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 2));
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.CorruptPenguin, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
         }
 
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
@@ -259,10 +265,10 @@ namespace Redemption.NPCs.Wasteland
                     Main.dust[dustIndex].velocity *= 2f;
                 }
                 if (Variant == 0)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SicklyPenguinGore5").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SicklyPenguinGore5").Type, 1);
                 else 
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SicklyPenguinGore4").Type, 1);
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SicklyPenguinGore" + (Variant + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SicklyPenguinGore4").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SicklyPenguinGore" + (Variant + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 

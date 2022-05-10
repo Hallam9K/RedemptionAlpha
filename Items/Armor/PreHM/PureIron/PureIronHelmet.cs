@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
         {
             DisplayName.SetDefault("Pure-Iron Helmet");
             Tooltip.SetDefault("7% increased damage");
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -69,7 +69,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
                     "The Warriors of the Iron Realm are Gathuram's main military force,\n" +
                     "with units spanning all across the domain.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -77,7 +77,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

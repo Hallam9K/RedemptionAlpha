@@ -16,6 +16,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Usable;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -34,15 +35,15 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 8;
 
-            NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Like);
-            NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Love);
-            NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike);
-            NPC.Happiness.SetBiomeAffection<JungleBiome>(AffectionLevel.Hate);
-
-            NPC.Happiness.SetNPCAffection<Zephos>(AffectionLevel.Love);
-            NPC.Happiness.SetNPCAffection(NPCID.Stylist, AffectionLevel.Like);
-            NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike);
-            NPC.Happiness.SetNPCAffection(NPCID.Merchant, AffectionLevel.Hate);
+            NPC.Happiness
+                .SetBiomeAffection<SnowBiome>(AffectionLevel.Like)
+                .SetBiomeAffection<ForestBiome>(AffectionLevel.Love)
+                .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike)
+                .SetBiomeAffection<JungleBiome>(AffectionLevel.Hate)
+                .SetNPCAffection<Zephos>(AffectionLevel.Love)
+                .SetNPCAffection(NPCID.Stylist, AffectionLevel.Like)
+                .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike)
+                .SetNPCAffection(NPCID.Merchant, AffectionLevel.Hate);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
@@ -138,111 +139,162 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return true;
+            return WorldGen.crimson && RedeQuest.wayfarerVars[0] >= 2 && !RedeHelper.DaerelActive();
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return "Daerel";
+            return new List<string> { "Daerel" };
         }
 
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-
-            int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
-            if (DryadID >= 0)
-                chat.Add("Is " + Main.npc[DryadID].GivenName + " a half-Nymph? Or just a weirdo who doesn't wear actual clothes?");
-
-            int PartyGirlID = NPC.FindFirstNPC(NPCID.PartyGirl);
-            if (PartyGirlID >= 0)
-                chat.Add("I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...", 0.2);
-
-            chat.Add("Need anything? I can restring your bow, or poison your weapon. It'll cost you though.");
-            if (!NPC.homeless)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
-                chat.Add("You don't mind me staying here, right?");
-                chat.Add("I've been travelling this land for a while, but staying in a house is nice.");
+                chat.Add("Hello again, sorry for the intrusion but I've lost my friend through that portal. Mind if I stay here to get some supplies? I'm sure I'll find him eventually.");
             }
-            chat.Add("I got some pretty nice loot I can sell you, I kinda need money right now.");
-            chat.Add("My favourite colour is green, not sure why I'm telling you though...");
-            chat.Add("Cats are obviously superior to dogs.");
-            chat.Add("Have you seen a guy with slicked back, hazel hair? He carries a sword and wears a green tunic last I saw. I lost him before travelling through the portal, hope he's doing alright.");
+            else
+            {
+                int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
+                if (DryadID >= 0)
+                    chat.Add("Is " + Main.npc[DryadID].GivenName + " a half-Nymph? Or just a weirdo who doesn't wear actual clothes?");
+
+                int PartyGirlID = NPC.FindFirstNPC(NPCID.PartyGirl);
+                if (PartyGirlID >= 0)
+                    chat.Add("I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...", 0.2);
+
+                chat.Add("Need anything? I can restring your bow, or poison your weapon. It'll cost you though.");
+                if (!NPC.homeless)
+                {
+                    chat.Add("You don't mind me staying here, right?");
+                    chat.Add("I've been travelling this land for a while, but staying in a house is nice.");
+                }
+                chat.Add("I got some pretty nice loot I can sell you, I kinda need money right now.");
+                chat.Add("My favourite colour is green, not sure why I'm telling you though...");
+                chat.Add("Cats are obviously superior to dogs.");
+                chat.Add("Have you seen a guy with slicked back, hazel hair? He carries a sword and wears a green tunic last I saw. I lost him before travelling through the portal, hope he's doing alright.");
+            }
             return chat;
         }
 
         private static int ChatNumber = 0;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button2 = "Cycle Options";
-
-            switch (ChatNumber)
+            if (RedeQuest.wayfarerVars[0] < 4)
             {
-                case 0:
-                    button = "Shop";
-                    break;
-                case 1:
-                    button = "Talk";
-                    break;
-                case 2:
-                    button = "Restring Bow (10 silver)";
-                    break;
-                case 3:
-                    button = "Poison Weapon (25 silver)";
-                    break;
-                case 4:
-                    button = "Quest";
-                    break;
-            }
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
-        {
-            if (firstButton)
-            {
-                switch (ChatNumber)
+                switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 0:
-                        shop = true;
-                        break;
-                    case 1:
-                        Main.npcChatText = ChitChat();
-                        break;
                     case 2:
-                        if (Main.LocalPlayer.BuyItem(1000))
-                        {
-                            SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 37);
-                            Main.LocalPlayer.AddBuff(BuffID.Archery, 36000);
-                        }
-                        else
-                        {
-                            Main.npcChatText = NoCoinsChat();
-                            SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
-                        }
+                        button = "Feel free to stay here";
+                        button2 = "Who are you?";
                         break;
                     case 3:
-                        if (Main.LocalPlayer.BuyItem(2500))
-                        {
-                            SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 37);
-                            Main.LocalPlayer.AddBuff(BuffID.WeaponImbuePoison, 36000);
-                        }
-                        else
-                        {
-                            Main.npcChatText = NoCoinsChat();
-                            SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
-                        }
-                        break;
-                    case 4:
-                        Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                        SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                        button = "Feel free to stay here";
+                        button2 = "";
                         break;
                 }
             }
             else
             {
-                ChatNumber++;
-                if (ChatNumber > 4)
-                    ChatNumber = 0;
+                button2 = "Cycle Options";
+
+                switch (ChatNumber)
+                {
+                    case 0:
+                        button = "Shop";
+                        break;
+                    case 1:
+                        button = "Talk";
+                        break;
+                    case 2:
+                        button = "Restring Bow (10 silver)";
+                        break;
+                    case 3:
+                        button = "Poison Weapon (25 silver)";
+                        break;
+                    case 4:
+                        button = "Quest";
+                        break;
+                }
+            }
+        }
+
+        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        {
+            if (RedeQuest.wayfarerVars[0] < 4)
+            {
+                switch (RedeQuest.wayfarerVars[0])
+                {
+                    case 2:
+                        if (firstButton)
+                        {
+                            Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. I'm Daerel, by the way. Nice to meet you.";
+                            RedeQuest.wayfarerVars[0] = 4;
+                        }
+                        else
+                        {
+                            Main.npcChatText = "Oh yes, sorry, I'm Daerel. I'm decent with a bow and that's about it right now. Soon I hope to be more skilled in my craft, once I do, I'm certain your humble little island will have a fine archer one day. As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't intrude on anything.";
+                            RedeQuest.wayfarerVars[0] = 3;
+                        }
+                        break;
+                    case 3:
+                        if (firstButton)
+                        {
+                            Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. Nice to meet you.";
+                            RedeQuest.wayfarerVars[0] = 4;
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                if (firstButton)
+                {
+                    switch (ChatNumber)
+                    {
+                        case 0:
+                            shop = true;
+                            break;
+                        case 1:
+                            Main.npcChatText = ChitChat();
+                            break;
+                        case 2:
+                            if (Main.LocalPlayer.BuyItem(1000))
+                            {
+                                SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 37);
+                                Main.LocalPlayer.AddBuff(BuffID.Archery, 36000);
+                            }
+                            else
+                            {
+                                Main.npcChatText = NoCoinsChat();
+                                SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                            }
+                            break;
+                        case 3:
+                            if (Main.LocalPlayer.BuyItem(2500))
+                            {
+                                SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 37);
+                                Main.LocalPlayer.AddBuff(BuffID.WeaponImbuePoison, 36000);
+                            }
+                            else
+                            {
+                                Main.npcChatText = NoCoinsChat();
+                                SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                            }
+                            break;
+                        case 4:
+                            Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
+                            SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                            break;
+                    }
+                }
+                else
+                {
+                    ChatNumber++;
+                    if (ChatNumber > 4)
+                        ChatNumber = 0;
+                }
             }
         }
 
@@ -264,9 +316,9 @@ namespace Redemption.NPCs.Friendly
             chat.Add("If you wanna find Leaf Beetles, or Tree Bugs as they're called here, then chop down some trees. They live on tree tops, their leaf-green shell camouflaging them in the foliage. They eat the bark off of trees, and if their tree is destroyed or rotted, it will climb down and find another suitable tree to live on.");
             chat.Add("Cool Bug Fact: Coast Scarabs are small beetles that live on sandy beaches and eat grains of sand as their primary diet. When wet, their cyan shells will shine. Their shell is normally used to make cyan dyes.");
             chat.Add("Cool Bug Fact: Sandskin Spiders live in deserts, roaming around at night when other tiny insects come out to eat. When the hot day arrives, the spider will borrow a feet under the sand to sleep. Yes, I like bugs.");
-            chat.Add("How did I get here? Me and Zephos were wandering around a spooky forest until we came across a portal which lead here.");
-            chat.Add("Moonflare Bats have thin wings, causing moonlight to pass through, creating the illusion that they glow. They store the light of the moon within them and convert it to weak energy. They are relatively harmless. Cool Mammal Fact of the day. Yes, bats are mammals.");
-            chat.Add("Living Blooms roam this island? They are native to Anglon's lush forests. Living Blooms are more plant than animal, it doesn't eat, it photosynthesises sunlight. Seems like many creatures got to this island from the portal.");
+            chat.Add("When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
+            chat.Add("Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!");
+            chat.Add("Living Blooms roam this island? They are native to Anglon's lush forests. Living Blooms are more plant than animal. Seems like many creatures got to this island from the portal.");
             if (!Main.dayTime)
                 chat.Add("There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.");
             return chat;

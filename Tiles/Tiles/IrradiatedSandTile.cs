@@ -222,7 +222,7 @@ namespace Redemption.Tiles.Tiles
                     }
                     else
                     {
-                        Item.NewItem(Projectile.GetItemSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
+                        Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
                     }
 
                     if (!onMinecartTrack && tile.HasTile && tile.TileType == tileType)
@@ -241,7 +241,7 @@ namespace Redemption.Tiles.Tiles
                 }
                 else
                 {
-                    Item.NewItem(Projectile.GetItemSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
+                    Item.NewItem(Projectile.GetSource_DropAsItem(), (int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height, ModContent.ItemType<IrradiatedSand>());
                 }
             }
         }

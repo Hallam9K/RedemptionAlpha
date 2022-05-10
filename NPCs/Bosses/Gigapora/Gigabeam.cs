@@ -9,6 +9,7 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -34,7 +35,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public int MaxLaserLength = 2400;
         // >
-
         public override void SetDefaults()
         {
             Projectile.width = 100;
@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
         public override void PostDraw(Color lightColor)

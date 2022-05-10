@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Globals
 {
@@ -127,6 +129,28 @@ namespace Redemption.Globals
                 {
                     Dust d = Dust.NewDustPerfect(Vector2.Lerp(prevPos, nodes[k], i), dusttype, Vector2.Zero, 0, color, scale);
                     d.noGravity = true;
+                }
+            }
+        }
+        public static void DrawParticleElectricity(Vector2 point1, Vector2 point2, Particle particle, float scale = 1, int armLength = 30, float density = 0.05f, float ai0 = 0)
+        {
+            int nodeCount = (int)Vector2.Distance(point1, point2) / armLength;
+            Vector2[] nodes = new Vector2[nodeCount + 1];
+
+            nodes[nodeCount] = point2; //adds the end as the last point
+
+            for (int k = 1; k < nodes.Length; k++)
+            {
+                //Sets all intermediate nodes to their appropriate randomized dot product positions
+                nodes[k] = Vector2.Lerp(point1, point2, k / (float)nodeCount) +
+                    (k == nodes.Length - 1 ? Vector2.Zero : Vector2.Normalize(point1 - point2).RotatedBy(1.58f) * Main.rand.NextFloat(-armLength / 2, armLength / 2));
+
+                //Spawns the dust between each node
+                Vector2 prevPos = k == 1 ? point1 : nodes[k - 1];
+                for (float i = 0; i < 1; i += density)
+                {
+                    float size = MathHelper.Lerp(scale, 0f, (float)k / nodes.Length);
+                    ParticleManager.NewParticle(Vector2.Lerp(prevPos, nodes[k], i), Vector2.Zero, particle, Color.White, size, ai0);
                 }
             }
         }

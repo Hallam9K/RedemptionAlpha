@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sword of the Forgotten");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
@@ -23,19 +23,23 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetSafeDefaults()
         {
-            Projectile.width = 68;
-            Projectile.height = 68;
+            Projectile.width = 46;
+            Projectile.height = 46;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 25;
+            Length = 66;
+            Rot = MathHelper.ToRadians(3);
         }
-
-        float oldRotation = 0f;
-        int directionLock = 0;
+        private Vector2 startVector;
+        private Vector2 vector;
+        public ref float Length => ref Projectile.localAI[0];
+        public ref float Rot => ref Projectile.localAI[1];
+        public float Timer;
+        private float speed;
         private float SwingSpeed;
-
         public override void AI()
         {
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
@@ -44,61 +48,48 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
-            {
                 Projectile.Kill();
-            }
 
             SwingSpeed = SetSwingSpeed(1);
-
-            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
-            float swordRotation = 0f;
-            if (Main.myPlayer == Projectile.owner)
-            {
-                if (Projectile.ai[0] == 0)
-                {
-                    swordRotation = MathHelper.ToRadians(130f * player.direction - 90f);
-
-                    Projectile.ai[0] = 1;
-                    oldRotation = swordRotation;
-                    directionLock = player.direction;
-                }
-                if (Projectile.ai[0] >= 1)
-                {
-                    if (Projectile.ai[0] > 4)
-                        Projectile.alpha = 0;
-                    player.direction = directionLock;
-
-                    Projectile.ai[0]++;
-
-                    float timer = Projectile.ai[0] - 1;
-
-                    swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(180f * player.direction - 90f), -timer / 9f / SwingSpeed);
-
-                    if (Projectile.ai[0] >= 30 * SwingSpeed)
-                        Projectile.Kill();
-                }
-            }
-
-            Projectile.velocity = swordRotation.ToRotationVector2();
-
-            Projectile.spriteDirection = player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-
-            Projectile.Center = playerCenter + Projectile.velocity * 40f;
-
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
 
-            if (Projectile.ai[0] == 0)
-            {
-                player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
-            }
+            Projectile.spriteDirection = player.direction;
+            if (Projectile.spriteDirection == 1)
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
             else
-                player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                if (Timer++ == 0)
+                {
+                    startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() + (MathHelper.PiOver2 * Projectile.spriteDirection));
+                    speed = MathHelper.ToRadians(-0.1f);
+                }
+                if (Timer < 7 * SwingSpeed)
+                {
+                    Rot -= speed / SwingSpeed * Projectile.spriteDirection;
+                    speed += 0.08f;
+                    vector = startVector.RotatedBy(Rot) * Length;
+                }
+                else
+                {
+                    Rot -= speed / SwingSpeed * Projectile.spriteDirection;
+                    speed *= 0.6f;
+                    vector = startVector.RotatedBy(Rot) * Length;
+                }
+                if (Timer > 16 * SwingSpeed)
+                    Projectile.friendly = false;
+                if (Timer >= 28 * SwingSpeed)
+                    Projectile.Kill();
+            }
+            if (Timer > 1)
+                Projectile.alpha = 0;
+
+            Projectile.Center = player.MountedCenter + vector;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -111,18 +102,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Player player = Main.player[Projectile.owner];
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Vector2 v = RedeHelper.PolarVector(20, (Projectile.Center - player.Center).ToRotation());
 
-            for (int k = 0; k < Projectile.oldPos.Length; k++)
-            {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = lightColor * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, Projectile.GetAlpha(color), oldrot[k], origin, Projectile.scale, spriteEffects, 0);
-            }
-
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }

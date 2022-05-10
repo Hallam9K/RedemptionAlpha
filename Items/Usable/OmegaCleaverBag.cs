@@ -53,8 +53,8 @@ namespace Redemption.Items.Usable
 			{
 				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}*/
-			player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<OmegaBattery>(), Main.rand.Next(1, 4));
-			player.QuickSpawnItem(player.GetItemSource_OpenItem(Type), ModContent.ItemType<BrokenBlade>());
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<OmegaBattery>(), Main.rand.Next(1, 4));
+			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<BrokenBlade>());
 		}
 
         public override void PostUpdate()

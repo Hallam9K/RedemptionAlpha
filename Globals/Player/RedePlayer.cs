@@ -55,19 +55,6 @@ namespace Redemption.Globals.Player
         public override void PostUpdateMiscEffects()
         {
             Player.statLifeMax2 += medKit ? 50 : 0;
-
-            if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
-            {
-                ReLogic.Content.Asset<Texture2D> rain = ModContent.Request<Texture2D>("Redemption/Textures/RainOriginal", ReLogic.Content.AssetRequestMode.ImmediateLoad);
-                ReLogic.Content.Asset<Texture2D> rainWasteland = ModContent.Request<Texture2D>("Redemption/Textures/Rain2", ReLogic.Content.AssetRequestMode.ImmediateLoad);
-
-                if (Main.bloodMoon)
-                    TextureAssets.Rain = rain;
-                else if (Main.raining && Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
-                    TextureAssets.Rain = rainWasteland;
-                else
-                    TextureAssets.Rain = rain;
-            }
         }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

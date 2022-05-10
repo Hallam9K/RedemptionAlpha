@@ -1,4 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -23,6 +26,14 @@ namespace Redemption.Waters
 		public override Color BiomeHairColor()
 		{
 			return Color.LimeGreen;
+		}
+		public override byte GetRainVariant()
+		{
+			return (byte)Main.rand.Next(3);
+		}
+		public override Asset<Texture2D> GetRainTexture()
+		{
+			return Request<Texture2D>("Redemption/Water/WastelandRain");
 		}
 	}
 }

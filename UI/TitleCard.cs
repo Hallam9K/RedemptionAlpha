@@ -81,8 +81,8 @@ namespace Redemption.UI
             int textHeight = (int)(font.MeasureString(Text).Y * FontScale);
 
             float opacity = FadeTimer / (float)MaxFadeTime;
-            Color drawColor = new Color(255, 255, 255);
-            Color shadowColor = new Color(25, 25, 25);
+            Color drawColor = new(255, 255, 255);
+            Color shadowColor = new(25, 25, 25);
             int totalLength = textLength;
             int totalHeight = textHeight;
 

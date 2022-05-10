@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
             Tooltip.SetDefault("13% increased melee damage\n" +
             "5% increased melee critical strike chance");
 
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

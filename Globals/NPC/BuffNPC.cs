@@ -14,13 +14,14 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Particles;
+using ParticleLibrary;
 
 namespace Redemption.Globals.NPC
 {
     public class BuffNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
 
         public bool infested;
         public bool devilScented;
@@ -43,6 +44,7 @@ namespace Redemption.Globals.NPC
         public bool stunned;
         public bool infected;
         public int infectedTime;
+        public bool stomachAcid;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -60,6 +62,7 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
+            stomachAcid = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -174,8 +177,8 @@ namespace Redemption.Globals.NPC
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= dirtyWoundTime / 500;
 
-                if (npc.wet && !npc.lavaWet)
-                    npc.DelBuff(ModContent.BuffType<DirtyWoundDebuff>());
+                //if (npc.wet && !npc.lavaWet && npc.HasBuff(ModContent.BuffType<DirtyWoundDebuff>()))
+                //    npc.DelBuff(ModContent.BuffType<DirtyWoundDebuff>());
             }
             if (moonflare)
             {
@@ -245,10 +248,10 @@ namespace Redemption.Globals.NPC
                     npc.lifeRegen = 0;
 
                 npc.lifeRegen -= 400;
-                if (damage < 2)
-                    damage = 2;
+                if (damage < 20)
+                    damage = 20;
             }
-            if (bileDebuff)
+            if (bileDebuff || stomachAcid)
             {
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
@@ -268,18 +271,22 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (stomachAcid)
+                player.GetArmorPenetration(DamageClass.Generic) += 8;
             if (bileDebuff)
-                player.armorPenetration += 15;
+                player.GetArmorPenetration(DamageClass.Generic) += 15;
             if (infected)
-                player.armorPenetration += 20;
+                player.GetArmorPenetration(DamageClass.Generic) += 20;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Terraria.Player player = Main.player[projectile.owner];
+            if (stomachAcid)
+                player.GetArmorPenetration(DamageClass.Generic) += 8;
             if (bileDebuff)
-                player.armorPenetration += 15;
+                player.GetArmorPenetration(DamageClass.Generic) += 15;
             if (infected)
-                player.armorPenetration += 20;
+                player.GetArmorPenetration(DamageClass.Generic) += 20;
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -360,11 +367,9 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
             {
                 drawColor = new Color(220, 150, 150);
-                if (Main.rand.NextBool(5))
+                if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
-                    int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.FlameBurst, Scale: 2);
-                    Main.dust[sparkle].velocity *= 0.3f;
-                    Main.dust[sparkle].noGravity = true;
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
                 }
             }
             if (iceFrozen)
@@ -402,10 +407,16 @@ namespace Redemption.Globals.NPC
             }
             if (electrified)
             {
-                if (Main.rand.NextBool(5))
+                if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
-                    DustHelper.DrawElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), DustID.Electric, 0.5f, 10, default, 0.2f);
+                    DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), 1f, 10, 0.2f);
                 }
+            }
+            if (stomachAcid)
+            {
+                drawColor = new Color(52, 178, 108);
+                if (Main.rand.NextBool(4))
+                    Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.ToxicBubble, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Alpha: 100);
             }
         }
 
@@ -465,7 +476,7 @@ namespace Redemption.Globals.NPC
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     Terraria.NPC target = Main.npc[i];
-                    if (!target.active || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().moonflare)
+                    if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().moonflare)
                         continue;
 
                     if (!target.Hitbox.Intersects(npc.Hitbox))
@@ -486,7 +497,7 @@ namespace Redemption.Globals.NPC
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         Terraria.NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI == npc.whoAmI || target.friendly || target.RedemptionNPCBuff().infected)
+                        if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target.RedemptionNPCBuff().infected)
                             continue;
 
                         if (!target.Hitbox.Intersects(npc.Hitbox))
@@ -517,7 +528,7 @@ namespace Redemption.Globals.NPC
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 6; i++)
-                        Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
             if (iceFrozen)
@@ -540,14 +551,14 @@ namespace Redemption.Globals.NPC
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
-                        Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
             if (infected && infectedTime >= 360 && npc.lifeMax > 5)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Main.myPlayer);
             }
             if (iceFrozen)
             {

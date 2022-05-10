@@ -289,7 +289,7 @@ namespace Redemption.NPCs.Friendly
                             break;
                     }
                     if (Main.rand.NextBool(60))
-                        Gore.NewGore(new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
+                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
 
                     if (NPC.frame.Y < 4 * frameHeight)
                         NPC.frame.Y = 4 * frameHeight;
@@ -349,14 +349,14 @@ namespace Redemption.NPCs.Friendly
             {
                 for (int y = -40; y <= 40; y++)
                 {
-                    int type = Framing.GetTileSafely(spawnInfo.spawnTileX + x, spawnInfo.spawnTileY + y).TileType;
+                    int type = Framing.GetTileSafely(spawnInfo.SpawnTileX + x, spawnInfo.SpawnTileY + y).TileType;
                     if (type == TileID.Trees || type == TileID.PalmTree || type == TileID.VanityTreeSakura || type == TileID.VanityTreeYellowWillow)
                         score++;
                 }
             }
 
             float baseChance = SpawnCondition.OverworldDay.Chance * (!NPC.AnyNPCs(NPC.type) ? 1 : 0);
-            float multiplier = Framing.GetTileSafely(spawnInfo.spawnTileX, spawnInfo.spawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.01f : 0.005f) : 0f;
+            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.01f : 0.005f) : 0f;
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;

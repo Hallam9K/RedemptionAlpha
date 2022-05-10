@@ -7,6 +7,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -19,7 +20,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Trumpet,
             Dancing
         }
@@ -68,9 +68,9 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
             }
 
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone,
@@ -81,10 +81,21 @@ namespace Redemption.NPCs.PreHM
                 int life = NPC.life;
                 NPC.Transform(ModContent.NPCType<EpidotrianSkeleton>());
                 NPC.life = life;
-                NPC.ai[2] = 1;
+                (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).HasEyes = HasEyes;
+                TimerRand = Main.rand.Next(80, 280);
+                NPC.alpha = 0;
             }
         }
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Main.rand.NextBool(4))
+                HasEyes = true;
+            SetStats();
+            DanceType = Main.rand.Next(6);
+            DanceSpeed = Main.rand.Next(4, 11);
 
+            AIState = TimerRand == 0 ? ActionState.Trumpet : ActionState.Dancing;
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -94,15 +105,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    if (Main.rand.NextBool(4))
-                        HasEyes = true;
-                    SetStats();
-                    DanceType = Main.rand.Next(6);
-                    DanceSpeed = Main.rand.Next(4, 11);
-
-                    AIState = TimerRand == 0 ? ActionState.Trumpet : ActionState.Dancing;
-                    break;
                 case ActionState.Trumpet:
                     if (Main.rand.NextBool(500) && !Main.dedServ)
                         SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Doot").WithPitchVariance(0.3f), NPC.position);
@@ -224,9 +226,9 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             if (HasEyes)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.5f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.5f));
             else if (Main.rand.NextBool(7))
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.3f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.3f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

@@ -22,6 +22,7 @@ using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Lore;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -110,9 +111,9 @@ namespace Redemption.NPCs.Friendly
             return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()) && !NPC.AnyNPCs(ModContent.NPCType<TBot_Intro>()) && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<AdamPortal>());
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return "Adam";
+            return new List<string> { "Adam" };
         }
 
         public override string GetChat()
@@ -261,7 +262,7 @@ namespace Redemption.NPCs.Friendly
                 Main.npcChatText = DiskChat();
             }
         }
-        public static string DiskChat()
+        public static string DiskChat() // TODO: floppy disk dialogue color thing no work!?!?!?!?!?!?!
         {
             return FDisk switch
             {

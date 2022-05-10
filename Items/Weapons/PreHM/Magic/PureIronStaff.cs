@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                     "'A staff made of Pure-Iron with a diamond gemstone.\n" +                    
                     "It is cold to the touch, and can channel ice magic abnormally well.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -74,7 +74,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

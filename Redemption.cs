@@ -12,6 +12,7 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.Particles;
+using Redemption.Sounds;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -42,7 +43,6 @@ namespace Redemption
         public static ModKeybind RedeSpecialAbility;
 
         public static RenderTargetManager Targets;
-        public static ParticleManager Particles;
 
         private List<ILoadable> _loadCache;
 
@@ -67,14 +67,14 @@ namespace Redemption
 
             if (!Main.dedServ)
             {
-                dragonLeadCapeID = AddEquipTexture(ModContent.GetInstance<DragonLeadRibplate>(), EquipType.Back, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back");
-                shinkiteCapeID = AddEquipTexture(ModContent.GetInstance<ShinkiteChestplate>(), EquipType.Back, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back");
-                archeMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs");
-                archeFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()), EquipType.Legs, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs");
-                unconMaleLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs_Legs");
-                unconFemLegID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs");
-                unconMaleLeg2ID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs");
-                unconFemLeg2ID = AddEquipTexture(ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()), EquipType.Legs, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs");
+                dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
+                shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
+                archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
+                archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
+                unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs>()));
+                unconFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs>()));
+                unconMaleLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
+                unconFemLeg2ID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs2_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
 
                 Main.QueueMainThreadAction(() =>
                 {
@@ -82,6 +82,8 @@ namespace Redemption
                     PremultiplyTexture(ref bubbleTex);
                     Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref portalTex);
+                    Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref soullessPortal);
                     Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
                     Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", AssetRequestMode.ImmediateLoad).Value;
@@ -117,6 +119,7 @@ namespace Redemption
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
             SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
+            Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.55f), EffectPriority.High);
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.R);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
@@ -130,7 +133,7 @@ namespace Redemption
                 {
                     OnHeadDraw.RegisterHeads();
                     OnLegDraw.RegisterLegs();
-                    OnBodyDraw.ReigsterBodies();
+                    OnBodyDraw.RegisterBodies();
                 });
             }
         }
@@ -288,6 +291,7 @@ namespace Redemption
 
         public UserInterface DialogueUILayer;
         public MoRDialogueUI DialogueUIElement;
+		
         public UserInterface ChaliceUILayer;
         public ChaliceAlignmentUI ChaliceUIElement;
 
@@ -299,6 +303,9 @@ namespace Redemption
 
         public UserInterface AMemoryUILayer;
         public AMemoryUIState AMemoryUIElement;
+
+        public UserInterface TextBubbleUILayer;
+        public TextBubbleUI TextBubbleUIElement;
 
         public static TrailManager TrailManager;
         public bool Initialized;
@@ -329,7 +336,11 @@ namespace Redemption
                 AMemoryUILayer = new UserInterface();
                 AMemoryUIElement = new AMemoryUIState();
                 AMemoryUILayer.SetState(AMemoryUIElement);
-            }
+				
+				TextBubbleUILayer = new UserInterface();
+				TextBubbleUIElement = new TextBubbleUI();
+                TextBubbleUILayer.SetState(TextBubbleUIElement);
+			}
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
         {
@@ -412,7 +423,8 @@ namespace Redemption
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
-            }
+				AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
+			}
         }
 
         public static void AddInterfaceLayer(List<GameInterfaceLayer> layers, UserInterface userInterface, UIState state, int index, bool visible, string customName = null) //Code created by Scalie
@@ -475,74 +487,6 @@ namespace Redemption
                 Utils.DrawBorderString(spriteBatch, "Raveyard", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, 0.8f, 0.3f, 0.4f);
             }
         }
-        #endregion
-
-        #region StructureHelper Draw
-        /*public override void PostDrawInterface(SpriteBatch spriteBatch)
-        {
-            if (Main.LocalPlayer.HeldItem.ModItem is CopyWand)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Texture2D tex = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/corner");
-                Texture2D tex2 = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/box1");
-                Point16 TopLeft = (Main.LocalPlayer.HeldItem.ModItem as CopyWand).TopLeft;
-                int Width = (Main.LocalPlayer.HeldItem.ModItem as CopyWand).Width;
-                int Height = (Main.LocalPlayer.HeldItem.ModItem as CopyWand).Height;
-
-                float tileScale = 16 * Main.GameViewMatrix.Zoom.Length() * 0.707106688737f;
-                Vector2 pos = (Main.MouseWorld / tileScale).ToPoint16().ToVector2() * tileScale - Main.screenPosition;
-                pos = Vector2.Transform(pos, Matrix.Invert(Main.GameViewMatrix.ZoomMatrix));
-                pos = Vector2.Transform(pos, Main.UIScaleMatrix);
-
-                spriteBatch.Draw(tex, pos, tex.Frame(), Color.White * 0.5f, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                if (Width != 0)
-                {
-                    spriteBatch.Draw(tex2, new Rectangle((int)(TopLeft.X * 16 - Main.screenPosition.X), (int)(TopLeft.Y * 16 - Main.screenPosition.Y), Width * 16 + 16, Height * 16 + 16), tex2.Frame(), Color.White * 0.15f);
-                    spriteBatch.Draw(tex, (TopLeft.ToVector2() + new Vector2(Width + 1, Height + 1)) * 16 - Main.screenPosition, tex.Frame(), Color.Red, 0, tex.Frame().Size() / 2, 1, 0, 0);
-                }
-                spriteBatch.Draw(tex, TopLeft.ToVector2() * 16 - Main.screenPosition, tex.Frame(), Color.Cyan, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
-            }
-
-            if (Main.LocalPlayer.HeldItem.ModItem is MultiWand)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-
-                Texture2D tex = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/corner");
-                Texture2D tex2 = (Texture2D)ModContent.Request<Texture2D>("Redemption/StructureHelper/box1");
-                Point16 TopLeft = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).TopLeft;
-                int Width = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).Width;
-                int Height = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).Height;
-                int count = (Main.LocalPlayer.HeldItem.ModItem as MultiWand).StructureCache.Count;
-
-                float tileScale = 16 * Main.GameViewMatrix.Zoom.Length() * 0.707106688737f;
-                Vector2 pos = (Main.MouseWorld / tileScale).ToPoint16().ToVector2() * tileScale - Main.screenPosition;
-                pos = Vector2.Transform(pos, Matrix.Invert(Main.GameViewMatrix.ZoomMatrix));
-                pos = Vector2.Transform(pos, Main.UIScaleMatrix);
-
-                spriteBatch.Draw(tex, pos, tex.Frame(), Color.White * 0.5f, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                if (Width != 0)
-                {
-                    spriteBatch.Draw(tex2, new Rectangle((int)(TopLeft.X * 16 - Main.screenPosition.X), (int)(TopLeft.Y * 16 - Main.screenPosition.Y), Width * 16 + 16, Height * 16 + 16), tex2.Frame(), Color.White * 0.15f);
-                    spriteBatch.Draw(tex, (TopLeft.ToVector2() + new Vector2(Width + 1, Height + 1)) * 16 - Main.screenPosition, tex.Frame(), Color.Yellow, 0, tex.Frame().Size() / 2, 1, 0, 0);
-                }
-                spriteBatch.Draw(tex, TopLeft.ToVector2() * 16 - Main.screenPosition, tex.Frame(), Color.LimeGreen, 0, tex.Frame().Size() / 2, 1, 0, 0);
-
-                spriteBatch.End();
-                spriteBatch.Begin();
-                Utils.DrawBorderString(spriteBatch, "Structures to save: " + count, Main.MouseScreen + new Vector2(0, 30), Color.White);
-
-                spriteBatch.End();
-                spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
-            }
-        }*/
         #endregion
     }
 }

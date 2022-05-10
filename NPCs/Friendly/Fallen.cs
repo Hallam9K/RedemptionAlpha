@@ -19,6 +19,7 @@ using Redemption.Items.Accessories.PreHM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Single;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -104,7 +105,10 @@ namespace Redemption.NPCs.Friendly
                 }
 
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = NPC.frame.Width * FallenType;
+                if (NPC.IsABestiaryIconDummy)
+                    NPC.frame.X = 0;
+                else
+                    NPC.frame.X = NPC.frame.Width * FallenType;
 
                 if (NPC.IsABestiaryIconDummy)
                 {
@@ -145,14 +149,9 @@ namespace Redemption.NPCs.Friendly
             return RedeBossDowned.downedKeeper;
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return WorldGen.genRand.Next(3) switch
-            {
-                0 => "Happins",
-                1 => "Tenvon",
-                _ => "Okvot",
-            };
+            return new List<string> { "Happins, Tenvon, Okvot" };
         }
 
         public override string GetChat()
@@ -244,7 +243,7 @@ namespace Redemption.NPCs.Friendly
 
                     Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
                     Main.npcChatText = "All done and repaired, here you go.";
-                    player.QuickSpawnItem(NPC.GetItemSource_Loot(), ModContent.ItemType<Zweihander>());
+                    player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<Zweihander>());
 
                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                     return;
@@ -280,7 +279,7 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot].shopCustomPrice = new int?(1);
             shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             nextSlot++;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientWood>());
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElderWood>());
             shop.item[nextSlot].shopCustomPrice = new int?(2);
             shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             nextSlot++;

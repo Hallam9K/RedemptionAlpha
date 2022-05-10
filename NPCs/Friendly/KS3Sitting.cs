@@ -61,8 +61,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void AI()
         {
-            // TODO: Add neb check
-            if (RedeBossDowned.downedVlitch3) //|| RedeBossDowned.downedNebuleus)
+            if (RedeBossDowned.downedVlitch3 || RedeBossDowned.downedNebuleus)
                 NPC.active = false;
 
             NPC.direction = 1;
@@ -185,7 +184,7 @@ namespace Redemption.NPCs.Friendly
                         chat.Add("Thanks... ?");
                         Main.npcChatText = chat;
 
-                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.SilverCoin, 20);
+                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.SilverCoin, 20);
                         ChatNumber++;
                         RedeWorld.slayerRep++;
                         if (Main.netMode == NetmodeID.Server)
@@ -216,7 +215,7 @@ namespace Redemption.NPCs.Friendly
 
                         Main.npcChatText = "You actually bothered to do it... Good job.";
 
-                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.GoldCoin, 4);
+                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 4);
                         RedeWorld.slayerRep++;
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
@@ -232,7 +231,7 @@ namespace Redemption.NPCs.Friendly
 
                         Point origin = RedeGen.slayerShipVector.ToPoint();
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                             gen.Generate(origin.X, origin.Y, true, true);
@@ -261,7 +260,7 @@ namespace Redemption.NPCs.Friendly
 
                         Main.npcChatText = "How can you even carry that? Uh, thanks, I suppose.";
 
-                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.GoldCoin, 8);
+                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 8);
                         RedeWorld.slayerRep++;
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
@@ -279,7 +278,7 @@ namespace Redemption.NPCs.Friendly
 
                         Point origin = RedeGen.slayerShipVector.ToPoint();
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                             gen.Generate(origin.X, origin.Y, true, true);
@@ -309,8 +308,8 @@ namespace Redemption.NPCs.Friendly
                         Main.npcChatCornerItem = ModContent.ItemType<MemoryChip>();
                         Main.npcChatText = "Was helping me with all that really necessary for you? You don't gain anything from it. But thank you regardless. I'll be leaving soon, but I want you to have this. I have yet to figure out a use for it, but take it.";
 
-                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ItemID.GoldCoin, 12);
-                        player.QuickSpawnItem(NPC.GetItemSource_Loot(), ModContent.ItemType<MemoryChip>());
+                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 12);
+                        player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<MemoryChip>());
                         RedeWorld.slayerRep++;
                         RedeWorld.alignment += 2;
 
@@ -338,7 +337,7 @@ namespace Redemption.NPCs.Friendly
 
                         Point origin = RedeGen.slayerShipVector.ToPoint();
 
-                        Main.QueueMainThreadAction(() =>
+                        GenUtils.InvokeOnMainThread(() =>
                         {
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
                             gen.Generate(origin.X, origin.Y, true, true);
@@ -404,6 +403,7 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog24>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog25>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog26>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog27>());
         }
 
         public static string QuestChat()

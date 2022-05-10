@@ -78,22 +78,22 @@ namespace Redemption.Globals.Player
             var immediate = AssetRequestMode.ImmediateLoad;
             Mod mod = Redemption.Instance;
             OnHeadDraw head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightCasque_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("HardlightCasque", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightCasque", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightCowl_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("HardlightCowl", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightCowl", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightHelm_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("HardlightHelm", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightHelm", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightHood_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("HardlightHood", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightHood", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightRegalia_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("HardlightRegalia", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightRegalia", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightVisor_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("HardlightVisor", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightVisor", EquipType.Head), head);
 
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Xenomite/XenomiteHelmet_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("XenomiteHelmet", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "XenomiteHelmet", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/Vanity/KingSlayerMask_Head_Glow", immediate).Value);
-            HeadDictionary.Add(mod.GetEquipSlot("KingSlayerMask", EquipType.Head), head);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "KingSlayerMask", EquipType.Head), head);
         }
     }
 }

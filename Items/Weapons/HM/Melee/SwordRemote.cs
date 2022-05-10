@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             Item.damage = 1;
-            Item.DamageType = DamageClass.NoScaling;
+            Item.DamageType = DamageClass.Default;
             Item.width = 28;
             Item.height = 28;
             Item.useTime = 20;
@@ -128,7 +128,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
             {
-                overrideColor = Color.Red,
+                OverrideColor = Color.Red,
             };
             tooltips.Add(line);
         }

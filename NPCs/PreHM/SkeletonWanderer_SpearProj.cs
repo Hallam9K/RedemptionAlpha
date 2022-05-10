@@ -36,6 +36,7 @@ namespace Redemption.NPCs.PreHM
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
         public override bool CanHitPlayer(Player target)
         {
             return !target.RedemptionPlayerBuff().skeletonFriendly;
@@ -53,7 +54,7 @@ namespace Redemption.NPCs.PreHM
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (host.ai[0] != 4 || !host.active)
+            if (host.ai[0] != 3 || !host.active)
                 Projectile.Kill();
 
             if (Projectile.ai[1] == 1)

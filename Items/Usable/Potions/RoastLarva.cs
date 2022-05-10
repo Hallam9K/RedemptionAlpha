@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Medium improvements to all stats" +
                                "\n'The forbidden croissant'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()

@@ -30,7 +30,7 @@ namespace Redemption.UI
 
         public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, int font = 0, int id = 0)
         {
-            if (!RedeConfigClient.Instance.NoLoreElements && !Main.dedServ)
+            if (!Main.dedServ)
             {
                 Text = text;
                 Title = "Chalice of Alignment:";
@@ -106,8 +106,8 @@ namespace Redemption.UI
             int textHeight = (int)(font.MeasureString(Text).Y * FontScale);
 
             float opacity = FadeTimer / (float)MaxFadeTime;
-            Color drawColor = new Color(255, 255, 255);
-            Color shadowColor = new Color(25, 25, 25);
+            Color drawColor = new(255, 255, 255);
+            Color shadowColor = new(25, 25, 25);
 
             Texture2D arrowTexture = ModContent.Request<Texture2D>("Redemption/Textures/MoRDialogueArrow").Value;
             Texture2D darkTexture = ModContent.Request<Texture2D>("Redemption/Textures/BlackSquare").Value;

@@ -164,7 +164,7 @@ namespace Redemption.NPCs.Critters
             Texture2D Trail = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Trail").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            if (!Main.dayTime && Main.moonPhase != 4)
+            if (!Main.dayTime && Main.moonPhase != 4 && !NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -197,9 +197,9 @@ namespace Redemption.NPCs.Critters
                 int gore2 = ModContent.Find<ModGore>("Redemption/MoonflareBatGore2").Type;
 
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, gore1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, gore1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, gore2);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, gore2);
 
                 for (int i = 0; i < 8; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<MoonflareDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);

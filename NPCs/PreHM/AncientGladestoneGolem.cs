@@ -27,7 +27,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Threatened,
@@ -95,7 +94,7 @@ namespace Redemption.NPCs.PreHM
                 for (int i = 0; i < 10; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
                 for (int i = 0; i < 8; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AncientGladestoneGolemGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AncientGladestoneGolemGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
             if (AIState is ActionState.Idle or ActionState.Wander)
@@ -111,6 +110,8 @@ namespace Redemption.NPCs.PreHM
             if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.DD2_WitherBeastCrystalImpact);
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, SoundID.Item37, 20, 2, 10);
@@ -122,6 +123,10 @@ namespace Redemption.NPCs.PreHM
         public NPC npcTarget;
         public Vector2 moveTo;
         public int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(120, 280);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -131,11 +136,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case (float)ActionState.Begin:
-                    TimerRand = Main.rand.Next(120, 280);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -342,7 +342,7 @@ namespace Redemption.NPCs.PreHM
             int[] AncientTileArray = { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>() };
 
             float baseChance = SpawnCondition.Cavern.Chance;
-            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType) ? .03f : 0.006f;
+            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType) ? .03f : 0.006f;
 
             return baseChance * multiplier;
         }

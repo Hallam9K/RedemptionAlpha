@@ -7,7 +7,7 @@ namespace Redemption.Gores.Friendly
 {
     public class DevilsTongueGore : ModGore
     {
-        public override void OnSpawn(Gore gore)
+        public override void OnSpawn(Gore gore, IEntitySource source)
         {
             gore.Frame = new SpriteFrame(1, 12, 0, (byte)Main.rand.Next(12));
             gore.timeLeft = 60;

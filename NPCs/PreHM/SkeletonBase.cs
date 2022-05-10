@@ -9,6 +9,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Terraria.Utilities;
+using Microsoft.Xna.Framework;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -20,6 +21,9 @@ namespace Redemption.NPCs.PreHM
         }
 
         public bool HasEyes;
+        public int HeadType;
+        public int HeadX;
+        public int HeadOffset;
         public int CoinsDropped;
         public string SoundString = "Skeleton";
 
@@ -61,6 +65,20 @@ namespace Redemption.NPCs.PreHM
 
             return false;
         }
+        public virtual int SetHeadOffset(ref int frameHeight)
+        {
+            return (NPC.frame.Y / frameHeight) switch
+            {
+                1 => -2,
+                2 => -2,
+                3 => -2,
+                4 => 2,
+                5 => -2,
+                9 => -2,
+                14 => -2,
+                _ => 0,
+            };
+        }
         public override bool PreAI()
         {
             Player player = Main.player[NPC.target];
@@ -70,7 +88,7 @@ namespace Redemption.NPCs.PreHM
                 NPC.friendly = false;
 
             RedeNPC globalNPC = NPC.Redemption();
-            if (NPC.type == ModContent.NPCType<RaveyardSkeleton>() && Main.rand.NextBool(600))
+            if (NPC.type == ModContent.NPCType<RaveyardSkeleton>() && Main.rand.NextBool(900))
             {
                 switch (Main.rand.Next(4))
                 {
@@ -88,7 +106,7 @@ namespace Redemption.NPCs.PreHM
                         break;
                 }
             }
-            if (Main.rand.NextBool(1000) && NPC.alpha <= 10 && (globalNPC.attacker == null || !globalNPC.attacker.active))
+            if (Main.rand.NextBool(2000) && NPC.alpha <= 10 && (globalNPC.attacker == null || !globalNPC.attacker.active))
             {
                 WeightedRandom<int> emoteID = new(Main.rand);
                 switch (Personality)
@@ -122,6 +140,32 @@ namespace Redemption.NPCs.PreHM
         }
         public virtual void SetStats()
         {
+            switch (HeadType)
+            {
+                case 3:
+                    NPC.lifeMax = (int)(NPC.lifeMax * 0.9f);
+                    NPC.life = (int)(NPC.life * 0.9f);
+                    break;
+                case 4:
+                    NPC.lifeMax = (int)(NPC.lifeMax * 0.9f);
+                    NPC.life = (int)(NPC.life * 0.9f);
+                    break;
+                case 5:
+                    NPC.defense += 2;
+                    break;
+                case 6:
+                    NPC.defense += 3;
+                    break;
+                case 7:
+                    NPC.value = (int)(NPC.value * 1.25f);
+                    break;
+                case 12:
+                    NPC.defense += 4;
+                    break;
+                case 13:
+                    NPC.defense += 4;
+                    break;
+            }
             switch (Personality)
             {
                 case PersonalityState.Calm:

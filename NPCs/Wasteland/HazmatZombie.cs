@@ -16,6 +16,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -23,7 +24,6 @@ namespace Redemption.NPCs.Wasteland
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert
@@ -81,6 +81,11 @@ namespace Redemption.NPCs.Wasteland
 
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            Variant = Main.rand.Next(2);
+            TimerRand = Main.rand.Next(80, 120);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -93,12 +98,6 @@ namespace Redemption.NPCs.Wasteland
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    Variant = Main.rand.Next(2);
-                    TimerRand = Main.rand.Next(80, 120);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
@@ -245,8 +244,15 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCorruption(), ModContent.ItemType<Bioweapon>(), 4, 1, 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GasMask>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit3>(), 20));
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Zombie, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
         }
 
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
@@ -267,7 +273,7 @@ namespace Redemption.NPCs.Wasteland
                     Main.dust[dustIndex].velocity *= 2f;
                 }
                 for (int i = 0; i < 3; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/HazmatZombieGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/HazmatZombieGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -283,7 +289,7 @@ namespace Redemption.NPCs.Wasteland
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "")
+                    "Even the undead dislike the radiation left from a nuclear blast. Although the suits they wear don't help much, seeing as they're quite torn.")
             });
         }
     }

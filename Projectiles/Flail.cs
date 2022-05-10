@@ -48,7 +48,7 @@ namespace Redemption.Projectiles
 			int num17 = throwTime + 5;
 
 			SetStats(ref throwTime, ref throwSpeed, ref recoverDistance, ref recoverDistance2, ref attackCooldown);
-			float meleeSpeed = player.meleeSpeed;
+			float meleeSpeed = player.GetAttackSpeed(DamageClass.Melee);
 			float num18 = 1f / meleeSpeed;
 			throwSpeed *= num18;
 			num11 *= num18;

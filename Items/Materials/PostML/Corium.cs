@@ -19,18 +19,12 @@ namespace Redemption.Items.Materials.PostML
 
         public override void SetDefaults()
         {
-            Item.width = 16;
-            Item.height = 16;
+            Item.DefaultToPlaceableTile(ModContent.TileType<SolidCoriumTile>(), 0);
+            Item.width = 24;
+            Item.height = 26;
             Item.maxStack = 999;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.rare = ItemRarityID.Red;
             Item.value = 40000;
-            Item.consumable = true;
-            Item.createTile = ModContent.TileType<SolidCoriumTile>();
+            Item.rare = ItemRarityID.Red;
         }
         public override void HoldItem(Player player)
         {

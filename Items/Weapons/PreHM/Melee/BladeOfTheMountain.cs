@@ -80,7 +80,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     "The icy blood of the bear fused with the blade, chilling it with an enchanting glow.\n" +
                     "The blade laid to rest besides it's owner, until another warrior discovered it many years later.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -88,12 +88,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
 
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
             tooltips.Add(axeLine);
         }
     }

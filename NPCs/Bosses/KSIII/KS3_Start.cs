@@ -48,9 +48,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 0:
                     if (RedeWorld.alignment >= 0)
                     {
-                        if (RedeBossDowned.slayerDeath <= 1 && !RedeConfigClient.Instance.NoLoreElements)
+                        if (RedeBossDowned.slayerDeath <= 1)
                             NPC.ai[0] = 1;
-                        else if (RedeBossDowned.slayerDeath > 1 || RedeConfigClient.Instance.NoLoreElements)
+                        else if (RedeBossDowned.slayerDeath > 1)
                             NPC.ai[0] = 4;
 
                         NPC.netUpdate = true;
@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1:
                     if (NPC.ai[2]++ == 10 || NPC.ai[2] == 30)
                     {
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), ModContent.NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), ModContent.NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
                     }
                     if (NPC.ai[2] > 30 && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()))
                     {

@@ -17,18 +17,12 @@ namespace Redemption.Items.Materials.HM
 
         public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<UraniumTile>(), 0);
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = 999;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.rare = ItemRarityID.Lime;
             Item.value = 2000;
-            Item.consumable = true;
-            Item.createTile = ModContent.TileType<UraniumTile>();
+            Item.rare = ItemRarityID.Lime;
             Item.ammo = Item.type;
         }
     }

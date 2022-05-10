@@ -65,7 +65,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 switch (Projectile.ai[0])
                 {
                     case 0:
-                        player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ == 0)
                         {
                             if (!Main.dedServ)
@@ -94,7 +94,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         }
                         break;
                     case 1:
-                        player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ < 5 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
@@ -134,7 +134,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     Dust.NewDust(target.position, target.width, target.height, DustID.Wraith);
 
                 Player player = Main.player[Projectile.owner];
-                RedeHelper.SpawnNPC(Projectile.GetNPCSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: player.whoAmI);
+                RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: player.whoAmI);
             }
         }
 

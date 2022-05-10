@@ -34,7 +34,7 @@ namespace Redemption.Items.Usable
         public override void HoldItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<HallPointer>()] < 1)
-                Projectile.NewProjectile(player.GetProjectileSource_Item(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<HallPointer>(), 0, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, ModContent.ProjectileType<HallPointer>(), 0, 0, player.whoAmI);
         }
 
         public override void PostUpdate()

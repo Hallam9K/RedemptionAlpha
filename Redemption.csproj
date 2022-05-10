@@ -7,7 +7,27 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CollisionLib">
+      <HintPath>..\Mod Libraries\CollisionLib_v2.0.dll</HintPath>
+    </Reference>
+    <Reference Include="ParticleLibrary">
+      <HintPath>..\Mod Libraries\ParticleLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureHelper">
+      <HintPath>..\Mod Libraries\StructureHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="SubworldLibrary">
+      <HintPath>..\..\ModReader\SubworldLibrary\SubworldLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

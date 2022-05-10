@@ -16,8 +16,8 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             DisplayName.SetDefault("Dragon-Lead Ribplate");
             Tooltip.SetDefault("7% increased damage\n" +
                 "Immunity to most ice-related debuffs");
-            ArmorIDs.Body.Sets.IncludedCapeBack[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
-            ArmorIDs.Body.Sets.IncludedCapeBackFemale[Mod.GetEquipSlot(Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBack[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
+            ArmorIDs.Body.Sets.IncludedCapeBackFemale[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.dragonLeadCapeID;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -60,7 +60,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
                     "The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,\n" +
                     "nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -68,7 +68,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

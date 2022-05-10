@@ -19,6 +19,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Base;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -26,7 +27,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -87,19 +87,19 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore2").Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore2").Type, 1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore").Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/" + SkeleType + "SkeletonGore").Type, 1);
 
                 if (Personality == PersonalityState.Greedy)
                 {
                     for (int i = 0; i < 8; i++)
-                        Gore.NewGore(NPC.position, RedeHelper.Spread(2), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
+                        Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, RedeHelper.Spread(2), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                 }
             }
             if (Personality == PersonalityState.Greedy && CoinsDropped < 10 && Main.rand.NextBool(3))
             {
-                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>());
                 CoinsDropped++;
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, Personality == PersonalityState.Greedy ? DustID.GoldCoin : DustID.Bone,
@@ -116,6 +116,13 @@ namespace Redemption.NPCs.PreHM
 
         private Vector2 moveTo;
         private int runCooldown;
+        public override void OnSpawn(IEntitySource source)
+        {
+            ChoosePersonality();
+            SetStats();
+
+            TimerRand = Main.rand.Next(80, 280);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -124,19 +131,11 @@ namespace Redemption.NPCs.PreHM
             if (AIState != ActionState.Stab)
                 NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(500) && !Main.dedServ)
+            if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    ChoosePersonality();
-                    SetStats();
-
-                    TimerRand = Main.rand.Next(80, 280);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
@@ -203,7 +202,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         SoundEngine.PlaySound(SoundID.CoinPickup, (int)NPC.position.X, (int)NPC.position.Y, 1, 0.3f);
                         if (Main.netMode != NetmodeID.Server)
-                            Gore.NewGore(NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
+                            Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                     }
                     jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -246,6 +245,7 @@ namespace Redemption.NPCs.PreHM
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
+        private int HeadOffsetX;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
@@ -255,6 +255,11 @@ namespace Redemption.NPCs.PreHM
                 {
                     PersonalityState.Soulful => NPC.frame.Width,
                     PersonalityState.Greedy => NPC.frame.Width * 2,
+                    _ => 0,
+                };
+                HeadX = Personality switch
+                {
+                    PersonalityState.Greedy => 1,
                     _ => 0,
                 };
                 if (AIState is ActionState.Stab)
@@ -307,7 +312,18 @@ namespace Redemption.NPCs.PreHM
                     NPC.rotation = NPC.velocity.X * 0.05f;
                     NPC.frame.Y = 4 * frameHeight;
                 }
+                HeadOffset = SetHeadOffset(ref frameHeight);
+                HeadOffsetX = SetHeadOffsetX(ref frameHeight);
             }
+        }
+        public int SetHeadOffsetX(ref int frameHeight)
+        {
+            return (NPC.frame.Y / frameHeight) switch
+            {
+                13 => 2,
+                14 => -4,
+                _ => 0,
+            };
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool friendly = false)
         {
@@ -391,6 +407,21 @@ namespace Redemption.NPCs.PreHM
         }
         public void ChoosePersonality()
         {
+            WeightedRandom<int> head = new(Main.rand);
+            head.Add(0);
+            head.Add(1, 0.6);
+            head.Add(2, 0.6);
+            head.Add(3, 0.4);
+            head.Add(4, 0.4);
+            head.Add(5, 0.1);
+            head.Add(6, 0.1);
+            head.Add(7, 0.1);
+            head.Add(8, 0.06);
+            head.Add(9, 0.06);
+            head.Add(10, 0.06);
+            head.Add(11, 0.06);
+            HeadType = head;
+
             WeightedRandom<PersonalityState> choice = new(Main.rand);
             choice.Add(PersonalityState.Normal, 10);
             choice.Add(PersonalityState.Calm, 8);
@@ -404,10 +435,18 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads").Value;
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos - new Vector2(0, 2), NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            int Height = head.Height / 14;
+            int Width = head.Width / 2;
+            int y = Height * HeadType;
+            int x = Width * HeadX;
+            Rectangle rect = new(x, y, Width, Height);
+            spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -26 : -20) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
 
             if (HasEyes)
                 spriteBatch.Draw(glow, NPC.Center - screenPos - new Vector2(0, 2), NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
@@ -421,15 +460,15 @@ namespace Redemption.NPCs.PreHM
             if (HasEyes)
             {
                 if (Personality == PersonalityState.Soulful)
-                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.2f));
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.2f));
                 else
-                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.6f));
             }
             else if (Main.rand.NextBool(3))
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));
             if (Personality == PersonalityState.Greedy)
             {
-                Item.NewItem(NPC.GetItemSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<AncientGoldCoin>(), Main.rand.Next(6, 12));
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

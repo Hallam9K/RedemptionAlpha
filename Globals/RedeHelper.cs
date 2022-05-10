@@ -78,7 +78,7 @@ namespace Redemption.Globals
                 Terraria.NPC npc = Main.npc[i];
                 float distance = (npc.Center - position).Length();
                 if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
-                    npc.lifeMax <= 5 || npc.Redemption().invisible || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[npc.type] || npc.immortal ||
+                    npc.lifeMax <= 5 || npc.Redemption().invisible || npc.immortal ||
                     !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles ||
                     !specialCondition(npc))
                     continue;
@@ -177,7 +177,7 @@ namespace Redemption.Globals
                 if (item.CountsAsClass(DamageClass.Ranged))
                 {
                     if (item.damage > 0)
-                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged));
+                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged).Multiplicative);
                 }
                 else
                     damage += item.damage;
@@ -328,7 +328,7 @@ namespace Redemption.Globals
         public static bool HeldItemCrit(this Projectile projectile)
         {
             Terraria.Player player = Main.player[projectile.owner];
-            int critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
+            float critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
             ItemLoader.ModifyWeaponCrit(player.HeldItem, player, ref critChance);
             PlayerLoader.ModifyWeaponCrit(player, player.HeldItem, ref critChance);
             if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
@@ -650,7 +650,22 @@ namespace Redemption.Globals
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetSpawnSource_ForProjectile(), position, velocity, projType, damage / 4, 0,
+                Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage / 4, 0,
+                    Main.myPlayer, ai0, ai1);
+            }
+        }
+        public static void Shoot(this Projectile proj, Vector2 position, int projType, int damage, Vector2 velocity,
+            bool customSound, LegacySoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
+        {
+            Mod mod = Redemption.Instance;
+            if (customSound && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(mod, soundString), proj.position);
+            else
+                SoundEngine.PlaySound(sound, (int)proj.position.X, (int)proj.position.Y);
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Projectile.NewProjectile(proj.GetSource_FromThis(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
             }
         }
@@ -1162,7 +1177,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Terraria.NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
+                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
@@ -1183,7 +1198,7 @@ namespace Redemption.Globals
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Terraria.NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
+                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
                 if (DontDmgNPC.Contains(target.type))

@@ -5,6 +5,8 @@ using Redemption.Items.Materials.HM;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +22,7 @@ namespace Redemption.Items.Accessories.HM
                 + "\n8% increased melee critical strike chance"
                 + "\nInflicts Infection upon dashing into an enemy"
                 + "\nReleases acid-like sparks as you move");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
@@ -29,6 +32,7 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Lime;
             Item.value = 80000;
             Item.damage = 40;
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.DamageType = DamageClass.Melee;
             Item.accessory = true;
             Item.crit = 4;
@@ -50,7 +54,7 @@ namespace Redemption.Items.Accessories.HM
             {
                 if (Main.rand.NextBool(10))
                 {
-                    Projectile.NewProjectile(player.GetProjectileSource_Accessory(Item), new Vector2(player.position.X + Main.rand.NextFloat(player.width), player.position.Y + Main.rand.NextFloat(player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<InfectionShield_AcidSpark>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(player.GetSource_Accessory(Item), new Vector2(player.position.X + Main.rand.NextFloat(player.width), player.position.Y + Main.rand.NextFloat(player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<InfectionShield_AcidSpark>(), 0, 0, Main.myPlayer);
                 }
             }
             player.GetModPlayer<ThornshieldDashPlayer>().DashAccessoryEquipped = true;
@@ -132,12 +136,6 @@ namespace Redemption.Items.Accessories.HM
                     int d = Dust.NewDust(Player.position, Player.width, Player.height, DustID.GreenTorch);
                     Main.dust[d].noGravity = true;
                     Rectangle hitbox = new((int)(Player.position.X + Player.velocity.X * 0.5 - 4), (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4), Player.width + 8, Player.height + 8);
-
-                    if (DashTimer > 25)
-                    {
-                        Player.immune = true;
-                        Player.immuneTime = 10;
-                    }
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -147,7 +145,7 @@ namespace Redemption.Items.Accessories.HM
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
                             continue;
 
-                        float damage = 40 * Player.GetDamage(DamageClass.Melee);
+                        float damage = 40 * Player.GetDamage(DamageClass.Melee).Multiplicative;
                         float knockback = 10;
                         bool crit = false;
 
@@ -184,7 +182,12 @@ namespace Redemption.Items.Accessories.HM
                 DashTimer--;
             }
         }
-
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (damageSource.SourceNPCIndex >= 0 && ShieldHit < 0 && DashTimer > 15)
+                return false;
+            return true;
+        }
         private bool CanUseDash()
         {
             return DashAccessoryEquipped

@@ -21,7 +21,6 @@ namespace Redemption.NPCs.Lab
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Bounce
         }
@@ -84,6 +83,10 @@ namespace Redemption.NPCs.Lab
         }
         public int Xvel;
         public int consumed;
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(10, 30);
+        }
         public override void AI()
         {
             if (LabArea.Active)
@@ -93,11 +96,6 @@ namespace Redemption.NPCs.Lab
             NPC.width = (int)(16 * NPC.scale);
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(10, 30);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     NPC.LookByVelocity();
                     if (NPC.velocity.Y == 0)
@@ -206,7 +204,7 @@ namespace Redemption.NPCs.Lab
             if (consumed > 2)
             {
                 for (int i = 0; i < consumed / 2; i++)
-                    RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.position.X + Main.rand.Next(0, NPC.width), (int)NPC.position.Y + Main.rand.Next(0, NPC.height), ModContent.NPCType<OozeBlob>());
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.position.X + Main.rand.Next(0, NPC.width), (int)NPC.position.Y + Main.rand.Next(0, NPC.height), ModContent.NPCType<OozeBlob>());
             }
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

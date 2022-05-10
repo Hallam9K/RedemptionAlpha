@@ -9,6 +9,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Critters
 {
@@ -16,7 +17,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Hop,
@@ -72,12 +72,19 @@ namespace Redemption.NPCs.Critters
         {
             target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
         }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
+        }
 
         public NPC npcTarget;
         public Vector2 moveTo;
         private int runCooldown;
         public int hopCooldown;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -89,11 +96,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -165,24 +167,11 @@ namespace Redemption.NPCs.Critters
                     if (hopCooldown == 0 && BaseAI.HitTileOnSide(NPC, 3) && NPC.Sight(globalNPC.attacker, 60, false, true))
                     {
                         NPC.velocity.X *= 2f;
-                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f); 
+                        NPC.velocity.Y = Main.rand.NextFloat(-2f, -5f);
                         hopCooldown = 80;
                     }
 
-                    for (int i = 0; i < Main.maxNPCs; i++)
-                    {
-                        NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI == NPC.whoAmI || target != NPC.Redemption().attacker)
-                            continue;
-
-                        if (target.immune[NPC.whoAmI] > 0 || !NPC.Hitbox.Intersects(target.Hitbox))
-                            continue;
-
-                        target.immune[NPC.whoAmI] = 30;
-                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
-                        BaseAI.DamageNPC(target, NPC.damage, 0, hitDirection, NPC);
-                        target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
-                    }
+                    NPC.DamageHostileAttackers();
 
                     if (!NPC.Sight(globalNPC.attacker, 150, false, true))
                         runCooldown++;
@@ -274,29 +263,14 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
-            switch (AIState)
+            if (NPC.collideY || NPC.velocity.Y == 0)
             {
-                case (float)ActionState.Begin:
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-
-                        if (NPC.frame.Y > 3 * frameHeight)
-                            NPC.frame.Y = 0;
-                    }
-
-                    break;
-
-                case ActionState.Idle:
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
                     NPC.frame.Y = 0;
-                    break;
-
-                case ActionState.Wander:
+                else
+                {
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
-
                     if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
@@ -304,12 +278,12 @@ namespace Redemption.NPCs.Critters
                         if (NPC.frame.Y > 2 * frameHeight)
                             NPC.frame.Y = 0;
                     }
-
-                    break;
-
-                case ActionState.Hop:
-                    NPC.frame.Y = frameHeight;
-                    break;
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = frameHeight;
             }
         }
 

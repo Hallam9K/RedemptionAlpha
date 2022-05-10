@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Lab.Volt
 
                                 Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/VoltDestroy", AssetRequestMode.ImmediateLoad).Value;
                                 Point origin = RedeGen.LabVector.ToPoint();
-                                Main.QueueMainThreadAction(() =>
+                                GenUtils.InvokeOnMainThread(() =>
                                 {
                                     TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                                     gen.Generate(origin.X, origin.Y, true, true);
@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Lab.Volt
                         if (AITimer > 560)
                         {
                             if (!LabArea.labAccess[3])
-                                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
+                                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
 
                             NPC nPC = new();
                             nPC.SetDefaults(ModContent.NPCType<ProtectorVolt>());

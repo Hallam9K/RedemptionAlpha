@@ -1183,7 +1183,7 @@ namespace Redemption.Base
         {
             bool playerYoyo = owner is Player;
             Player powner = playerYoyo ? (Player)owner : null;
-            float meleeSpeed = playerYoyo ? powner.meleeSpeed : 1f;
+            float meleeSpeed = playerYoyo ? powner.GetAttackSpeed(DamageClass.Melee) : 1f;
             Vector2 targetP = targetPos;
             if (playerYoyo && Main.myPlayer == p.owner && targetPos == default) targetP = Main.ReverseGravitySupport(Main.MouseScreen) + Main.screenPosition;
 
@@ -2102,7 +2102,7 @@ namespace Redemption.Base
                 Main.player[p.owner].itemAnimation = 10;
                 Main.player[p.owner].itemTime = 10;
             }
-            AIFlail(p, ref ai, Main.player[p.owner].Center, Main.player[p.owner].velocity, Main.player[p.owner].meleeSpeed, Main.player[p.owner].channel, noKill, chainDistance);
+            AIFlail(p, ref ai, Main.player[p.owner].Center, Main.player[p.owner].velocity, Main.player[p.owner].GetAttackSpeed(DamageClass.Melee), Main.player[p.owner].channel, noKill, chainDistance);
             Main.player[p.owner].direction = p.direction;
         }
 
@@ -2112,7 +2112,7 @@ namespace Redemption.Base
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * connectedPoint : The point for the flail to be 'attached' to, and rebound to, etc.
          * connectedPointVelocity : The velocity of the connected point, if it is moving.
-         * meleeSpeed : the meleeSpeed of whatever is using the flail.
+         * GetAttackSpeed(DamageClass.Melee) : the GetAttackSpeed(DamageClass.Melee) of whatever is using the flail.
          * channel : Wether or not the source is 'channeling' (holding down the fire button) projectile flail.
          * noKill : If true, do not kill the projectile when it returns to the connected point.
          * chainDistance : How far for the flail to actually go.
@@ -4047,7 +4047,7 @@ namespace Redemption.Base
                             float ai2 = 0;
                             float ai3 = npc.ai[3];
 
-                            int newnpcID = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
+                            int newnpcID = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai1, ai2, ai3);
                             Main.npc[npcID].ai[0] = newnpcID;
                             Main.npc[npcID].netUpdate = true;
                             //Main.npc[newnpcID].ai[3] = (float)npc.whoAmI;
@@ -4081,16 +4081,16 @@ namespace Redemption.Base
 
                         if (isHead)
                         {
-                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         else
                         if (isBody && npc.ai[2] > 0f)
                         {
-                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         else
                         {
-                            npc.ai[0] = NPC.NewNPC(npc.GetSpawnSourceForNPCFromNPCAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
+                            npc.ai[0] = NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, wormTypes[^1], npc.whoAmI, ai0, ai1, ai2, ai3);
                         }
                         /*if (!split)
 						{
@@ -5334,7 +5334,11 @@ namespace Redemption.Base
                 npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
 
                 if (damager is NPC)
+                {
+                    NPCLoader.ModifyHitNPC(damager as NPC, npc, ref parsedDamage, ref knockback, ref crit);
+                    NPCLoader.OnHitNPC(damager as NPC, npc, parsedDamage, knockback, crit);
                     npc.Redemption().attacker = damager;
+                }
 
                 if (Main.netMode != NetmodeID.SinglePlayer)
                 {
@@ -5349,6 +5353,10 @@ namespace Redemption.Base
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     NPCLoader.ModifyHitByProjectile(npc, p, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     NPCLoader.OnHitByProjectile(npc, p, parsedDamage, knockback, crit);
+                    PlayerLoader.ModifyHitNPCWithProj(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
+                    PlayerLoader.OnHitNPCWithProj(p, npc, parsedDamage, knockback, crit);
+                    ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
+                    ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
@@ -5364,6 +5372,8 @@ namespace Redemption.Base
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     NPCLoader.ModifyHitByItem(npc, player, item, ref parsedDamage, ref knockback, ref crit);
                     NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
+                    PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
+                    PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
 
                     if (Main.netMode != NetmodeID.SinglePlayer)
                     {
@@ -5393,43 +5403,6 @@ namespace Redemption.Base
             int npcID = npc.whoAmI;
             Main.npc[npcID] = new NPC();
             if (Main.netMode == NetmodeID.Server) NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npcID);
-        }
-
-        /*
-         * Spawns a cloud of smoke given the start, width and height positions.
-         * 
-         * loopAmount : the amount of loops to do. Each loop produces 4 smoke gore.
-         * scale : Scalar for the smoke gore.
-         */
-        public static void SpawnSmoke(Vector2 start, float width, float height, int loopAmount = 2, float scale = 1f)
-        {
-            Vector2 center = start + new Vector2(width * 0.5F, height * 0.5F);
-            UnifiedRandom rand = Main.rand;
-            for (int m = 0; m < loopAmount; m++)
-            {
-                Vector2 gorePos = new(center.X - 24f, center.Y - 24f);
-                Vector2 velocityDefault = default;
-                int goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                Gore gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-                goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-                goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-                goreID = Gore.NewGore(gorePos, velocityDefault, Main.rand.Next(61, 64));
-                gore = Main.gore[goreID];
-                gore.scale = scale * 1.5f;
-                gore.velocity.X = rand.Next(2) == 0 ? -(gore.velocity.X + 1.5f) : gore.velocity.X + 1.5f;
-                gore.velocity.Y += 1.5f;
-            }
         }
 
         public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, float distance = -1, Func<Projectile, bool> canAdd = null)

@@ -12,7 +12,7 @@ namespace Redemption.Items.Usable.Summons
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Heart of Thorns");
-			Tooltip.SetDefault("Summons Thorn, Bane of the Forest" 
+			Tooltip.SetDefault("Summons an unfortunate curse-bearer" 
 				+ "\nOnly usable at day"
 				+ "\nNot consumable" +
 				"\n[i:" + ModContent.ItemType<GoodRoute>() + "]");
@@ -58,7 +58,6 @@ namespace Redemption.Items.Usable.Summons
 			}
 			return true;
 		}
-
 		public override void AddRecipes()
 		{
 			CreateRecipe()

@@ -22,8 +22,8 @@ namespace Redemption.Buffs
             player.wellFed = true;
             player.moveSpeed *= 1.5f;
             player.statDefense += 6;
-            player.meleeSpeed *= 1.2f;
-            player.minionKB += 1.5f;
+            player.GetAttackSpeed(DamageClass.Melee) *= 1.2f;
+            player.GetKnockback(DamageClass.Summon).Base += 1.5f;
             player.pickSpeed *= 0.7f;    
         }
     }

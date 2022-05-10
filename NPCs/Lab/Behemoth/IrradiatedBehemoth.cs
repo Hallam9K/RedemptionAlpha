@@ -110,19 +110,19 @@ namespace Redemption.NPCs.Lab.Behemoth
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, default, 4f);
                 }
                 for (int i = 0; i < 3; i++)
-                    Gore.NewGore(new Vector2(NPC.position.X + (i * (NPC.width / 3)), NPC.Center.Y), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreFlesh").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X + (i * (NPC.width / 3)), NPC.Center.Y), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreFlesh").Type);
                 for (int i = 0; i < 10; i++)
-                    Gore.NewGore(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreGoo").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreGoo").Type);
 
-                Gore.NewGore(new Vector2(NPC.Center.X - 60, NPC.Center.Y), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHand").Type);
-                Gore.NewGore(new Vector2(NPC.Center.X + 60, NPC.Center.Y), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHand1").Type);
-                Gore.NewGore(NPC.Center, NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHead").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 60, NPC.Center.Y), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHand").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X + 60, NPC.Center.Y), NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHand1").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHead").Type);
             }
         }
         public override void OnKill()
         {
             if (!LabArea.labAccess[1])
-                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
+                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBehemoth, -1);
         }

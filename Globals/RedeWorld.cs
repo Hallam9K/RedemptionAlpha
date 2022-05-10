@@ -1,9 +1,12 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
 using Redemption.Globals.Player;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +25,31 @@ namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
+        #region Soulless Subworld
+        public override void PreUpdateWorld()
+        {
+            if (SubworldSystem.IsActive<SoullessSub>())
+            {
+                Wiring.UpdateMech();
+                Liquid.skipCount++;
+                if (Liquid.skipCount > 1)
+                {
+                    Liquid.UpdateLiquid();
+                    Liquid.skipCount = 0;
+                }
+                for (int num = 0; num < 20; num++)
+                {
+                    int i = Main.rand.Next(10, 1800 - 10);
+                    int j = Main.rand.Next(10, 1800 - 10);
+                    ModTile tile = TileLoader.GetTile(Main.tile[i, j].TileType);
+
+                    if (tile != null)
+                        tile.RandomUpdate(i, j);
+                }
+            }
+        }
+        #endregion
+
         public static bool blobbleSwarm;
         public static int blobbleSwarmTimer;
         public static int blobbleSwarmCooldown;
@@ -33,7 +61,6 @@ namespace Redemption.Globals
         public static int tbotDownedTimer;
         public static int daerelDownedTimer;
         public static int zephosDownedTimer;
-        public static bool spawnWayfarer;
         public static float RotTime;
         public static int slayerRep;
         public static bool labSafe;
@@ -46,12 +73,6 @@ namespace Redemption.Globals
         public static bool nukeCountdownActive = false;
         public static Vector2 nukeGroundZero = Vector2.Zero;
         #endregion
-
-        public override void PreUpdateWorld()
-        {
-            RotTime += (float)Math.PI / 60;
-            if (RotTime >= Math.PI * 2) RotTime = 0;
-        }
 
         public override void PostUpdateNPCs()
         {
@@ -67,19 +88,6 @@ namespace Redemption.Globals
         {
             if (Main.time == 1)
                 DayNightCount++;
-
-            #region Wayfarer Event
-            if (DayNightCount >= 2 && Main.time == 1 && !RedeHelper.WayfarerActive())
-            {
-                spawnWayfarer = true;
-
-                string status = "Someone travelled through the surface portal...";
-                if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGreen);
-                else if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue(status), Color.LightGreen);
-            }
-            #endregion
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.fastForwardTime)
@@ -223,6 +231,14 @@ namespace Redemption.Globals
                 }
                 Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.5f);
             }
+            if (Main.player[Main.myPlayer].InModBiome(ModContent.GetInstance<SoullessBiome>()))
+            {
+                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
+                {
+                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position, Array.Empty<object>());
+                }
+                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.3f);
+            }
             if (blobbleSwarm)
             {
                 blobbleSwarmTimer++;
@@ -257,16 +273,9 @@ namespace Redemption.Globals
                 nukeTimerShown = nukeTimerInternal / 60;
                 if (nukeTimerInternal % 60 == 0 && nukeTimerInternal > 0)
                 {
-                    if (RedeConfigClient.Instance.NoLoreElements)
+                    if (!Main.dedServ)
                     {
-                        Main.NewText(nukeTimerShown.ToString(), Color.Red);
-                    }
-                    else
-                    {
-                        if (!Main.dedServ)
-                        {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
-                        }
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
                     }
                 }
                 --nukeTimerInternal;
@@ -355,7 +364,6 @@ namespace Redemption.Globals
             tbotDownedTimer = 0;
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
-            spawnWayfarer = false;
             slayerRep = 0;
             labSafe = false;
         }
@@ -370,7 +378,6 @@ namespace Redemption.Globals
             tbotDownedTimer = 0;
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
-            spawnWayfarer = false;
             slayerRep = 0;
             labSafe = false;
         }

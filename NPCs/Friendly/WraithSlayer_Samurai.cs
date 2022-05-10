@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Friendly
                 for (int i = 0; i < 20; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.PurpleTorch, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
                 for (int i = 0; i < 5; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/WraithSamuraiGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/WraithSamuraiGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Wraith, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -100,6 +100,8 @@ namespace Redemption.NPCs.Friendly
             if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Wraith, SoundID.Item37, 10, 1, 150);
@@ -232,7 +234,7 @@ namespace Redemption.NPCs.Friendly
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
-                            if (!target.active || target.whoAmI == NPC.whoAmI || target.friendly)
+                            if (!target.active || !target.CanBeChasedBy() || target.whoAmI == NPC.whoAmI)
                                 continue;
 
                             if (!target.Hitbox.Intersects(SlashHitbox))
@@ -327,18 +329,6 @@ namespace Redemption.NPCs.Friendly
 
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
-            {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-
-                new FlavorTextBestiaryInfoElement(
-                    "")
-            });
-        }
     }
     public class WraithSlayer_Slash : ModProjectile, ITrailProjectile
     {

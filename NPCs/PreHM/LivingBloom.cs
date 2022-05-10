@@ -22,7 +22,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Threatened,
@@ -82,7 +81,10 @@ namespace Redemption.NPCs.PreHM
         public NPC npcTarget;
         public Vector2 moveTo;
         public int runCooldown;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
@@ -99,11 +101,6 @@ namespace Redemption.NPCs.PreHM
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -381,7 +378,7 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Grass ? (Main.raining ? 0.4f : 0.2f) : 0f;
+            float multiplier = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType == TileID.Grass ? (Main.raining ? 0.4f : 0.2f) : 0f;
 
             return baseChance * multiplier;
         }
@@ -415,8 +412,8 @@ namespace Redemption.NPCs.PreHM
                 int goreType1 = ModContent.Find<ModGore>("Redemption/LivingBloomGore1").Type;
                 int goreType2 = ModContent.Find<ModGore>("Redemption/LivingBloomGore2").Type;
 
-                Gore.NewGore(NPC.position, NPC.velocity, goreType1);
-                Gore.NewGore(NPC.position, NPC.velocity, goreType2);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, goreType1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, goreType2);
 
                 for (int i = 0; i < 8; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Grass,

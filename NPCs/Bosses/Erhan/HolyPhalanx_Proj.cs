@@ -30,11 +30,11 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.timeLeft = 600;
             Projectile.Redemption().Unparryable = true;
         }
-        private float rot;
-        private float speed = 1;
-        private float dist;
-        private float dist2 = 0.2f;
-        private bool s;
+        public float rot;
+        public float speed = 1;
+        public float dist;
+        public float dist2 = 0.2f;
+        public bool s;
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
         public override void Kill(int timeLeft)
@@ -132,6 +132,78 @@ namespace Redemption.NPCs.Bosses.Erhan
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
                 Main.dust[dust].noGravity = true;
             }
+        }
+    }
+    public class HolyPhalanx_Proj2 : HolyPhalanx_Proj
+    {
+        public override string Texture => "Redemption/NPCs/Bosses/Erhan/HolyPhalanx_Proj";
+        public override void SetStaticDefaults() => base.SetStaticDefaults();
+        public override void SetDefaults() => base.SetDefaults();
+        public override bool PreAI()
+        {
+            Projectile host = Main.projectile[(int)Projectile.ai[0]];
+            if (!host.active || host.type != ModContent.ProjectileType<Erhan_Bible>())
+                Projectile.Kill();
+            switch (Projectile.localAI[1])
+            {
+                case 0:
+                    Projectile.rotation = -MathHelper.PiOver4;
+                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1])) * 80;
+                    if (!s)
+                    {
+                        RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
+                        RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.13f, 0.83f, 0);
+                        s = true;
+                    }
+                    if (Projectile.localAI[0]++ >= 50)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice2"), Projectile.position);
+                        rot = host.Center.ToRotation();
+                        Projectile.localAI[0] = 0;
+                        Projectile.localAI[1] = 1;
+                        Projectile.netUpdate = true;
+                    }
+                    break;
+                case 1:
+                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1] + rot)) * (80 + dist);
+                    if (Projectile.localAI[0]++ >= 40)
+                    {
+                        Projectile.rotation = Projectile.DirectionTo(host.Center).ToRotation() - MathHelper.PiOver4;
+                        rot += speed;
+                        dist += dist2;
+                        if (Projectile.localAI[0] >= 160)
+                            speed *= 0.98f;
+                        else
+                            speed *= 1.02f;
+                        speed = MathHelper.Min(speed, 3);
+                        if (Projectile.localAI[0] >= 160)
+                            dist2 *= 0.98f;
+                        else
+                            dist2 *= 1.03f;
+                        dist2 = MathHelper.Min(dist2, 10);
+                    }
+                    else
+                        Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() - MathHelper.PiOver4, MathHelper.Pi / 10);
+                    if (Projectile.localAI[0] >= 240)
+                    {
+                        Projectile.velocity *= 0;
+                        Projectile.localAI[0] = 0;
+                        Projectile.localAI[1] = 2;
+                        Projectile.netUpdate = true;
+                    }
+                    break;
+                case 2:
+                    Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() + MathHelper.PiOver4, MathHelper.Pi / 10);
+                    if (Projectile.localAI[0]++ == 40 && !Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice1"), host.Center);
+                    if (Projectile.localAI[0] >= 40)
+                        Projectile.velocity = Projectile.DirectionTo(host.Center) * 20;
+                    if (Projectile.DistanceSQ(host.Center) <= 60 * 60)
+                        Projectile.Kill();
+                    break;
+            }
+            return false;
         }
     }
 }

@@ -48,8 +48,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
-            player.itemRotation = (player.Center - Projectile.Center).ToRotation() * -player.direction;
-            if (Timer++ == 0)
+            player.SetCompositeArmFront(true, Length >= 95 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+            if (Timer++ == 0 && Projectile.owner == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
                 startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());

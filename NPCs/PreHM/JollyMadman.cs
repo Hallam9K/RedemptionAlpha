@@ -32,7 +32,6 @@ namespace Redemption.NPCs.PreHM
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Alert,
@@ -99,7 +98,7 @@ namespace Redemption.NPCs.PreHM
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 5; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/JollyMadmanGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/JollyMadmanGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Lead, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -117,6 +116,8 @@ namespace Redemption.NPCs.PreHM
             if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, ModContent.DustType<VoidFlame>(), SoundID.Item37, 10, 2);
@@ -164,7 +165,23 @@ namespace Redemption.NPCs.PreHM
         private Vector2 moveTo;
         private int runCooldown;
         private int dodgeCooldown;
-        private float[] doorVars = new float[3];
+        private readonly float[] doorVars = new float[3];
+        public override void OnSpawn(IEntitySource source)
+        {
+            WeightedRandom<int> NPCType = new(Main.rand);
+            NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
+            NPCType.Add(ModContent.NPCType<SkeletonAssassin>());
+            NPCType.Add(ModContent.NPCType<SkeletonDuelist>());
+            NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
+
+            for (int i = 0; i < Main.rand.Next(3, 6); i++)
+            {
+                Vector2 pos = RedeHelper.FindGround(NPC, 8);
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+            }
+
+            TimerRand = Main.rand.Next(80, 280);
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -178,23 +195,6 @@ namespace Redemption.NPCs.PreHM
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
             switch (AIState)
             {
-                case ActionState.Begin:
-                    WeightedRandom<int> NPCType = new(Main.rand);
-                    NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
-                    NPCType.Add(ModContent.NPCType<SkeletonAssassin>());
-                    NPCType.Add(ModContent.NPCType<SkeletonDuelist>());
-                    NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
-
-                    for (int i = 0; i < Main.rand.Next(3, 6); i++)
-                    {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
-                    }
-
-                    TimerRand = Main.rand.Next(80, 280);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
@@ -499,7 +499,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnKill()
         {
             for (int i = 0; i < 3; i++)
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.6f));
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -516,7 +516,7 @@ namespace Redemption.NPCs.PreHM
             int[] AncientTileArray = { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>() };
 
             float baseChance = SpawnCondition.Cavern.Chance;
-            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType) ? .01f : 0.002f;
+            float multiplier = AncientTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType) ? .01f : 0.002f;
 
             return baseChance * multiplier;
         }

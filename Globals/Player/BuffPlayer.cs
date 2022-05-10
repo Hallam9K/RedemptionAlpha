@@ -49,7 +49,6 @@ namespace Redemption.Globals.Player
         public bool necrosisDebuff;
         public bool shockDebuff;
         public bool antibodiesBuff;
-        public bool antiXenomiteBuff;
         public int infectionTimer;
         public bool eldritchRoot;
         public bool ensnared;
@@ -63,30 +62,22 @@ namespace Redemption.Globals.Player
         public bool island;
         public bool trappedSoul;
         public bool brokenBlade;
+        public bool shellCap;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
         public int xeniumBonus;
         public int hardlightBonus;
         public bool shinkiteHead;
+        public bool vortiHead;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
 
-        public int MeleeDamageFlat;
-        public int DruidDamageFlat;
         public float TrueMeleeDamage = 1f;
 
         public float[] ElementalResistance = new float[14];
         public float[] ElementalDamage = new float[14];
-
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage, ref float flat)
-        {
-            if (item.CountsAsClass(DamageClass.Melee))
-                flat += MeleeDamageFlat;
-            if (item.CountsAsClass<DruidClass>())
-                flat += DruidDamageFlat;
-        }
 
         public override void ResetEffects()
         {
@@ -96,8 +87,6 @@ namespace Redemption.Globals.Player
             thornCirclet = false;
             skeletonFriendly = false;
             heartInsignia = false;
-            MeleeDamageFlat = 0;
-            DruidDamageFlat = 0;
             MetalSet = false;
             spiderSwarmed = false;
             greenRashes = false;
@@ -107,7 +96,6 @@ namespace Redemption.Globals.Player
             necrosisDebuff = false;
             shockDebuff = false;
             antibodiesBuff = false;
-            antiXenomiteBuff = false;
             pureIronBonus = false;
             dragonLeadBonus = false;
             eldritchRoot = false;
@@ -125,8 +113,10 @@ namespace Redemption.Globals.Player
             island = false;
             trappedSoul = false;
             shinkiteHead = false;
+            vortiHead = false;
             brokenBlade = false;
             TrueMeleeDamage = 1f;
+            shellCap = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -159,7 +149,6 @@ namespace Redemption.Globals.Player
             necrosisDebuff = false;
             shockDebuff = false;
             antibodiesBuff = false;
-            antiXenomiteBuff = false;
             ensnared = false;
             hairLoss = false;
             bileDebuff = false;
@@ -175,7 +164,7 @@ namespace Redemption.Globals.Player
                     Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
-                    Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(xeniumBonus), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
                 }
 
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
@@ -191,24 +180,24 @@ namespace Redemption.Globals.Player
 
                             break;
                         case 2: // Magic
-                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_ManaDrone>(), 0, 0, Main.myPlayer);
+                            Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_ManaDrone>(), 0, 0, Main.myPlayer);
                             break;
                         case 3: // Melee
                             for (int i = 0; i < 2; i++)
                             {
                                 Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
 
-                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
+                                Projectile.NewProjectile(Player.GetSource_FromThis(), spawn2, Vector2.Zero, ModContent.ProjectileType<MiniSpaceship>(), 50, 1, Main.myPlayer, i);
                             }
                             break;
                         case 4: // Summoner
-                            Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
+                            Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, Vector2.Zero, ModContent.ProjectileType<Hardlight_Magnet>(), 0, 0, Main.myPlayer);
 
                             for (int i = 0; i < 2; i++)
                             {
                                 Vector2 spawn2 = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);
 
-                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
+                                Projectile.NewProjectile(Player.GetSource_FromThis(), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
                             }
                             break;
                         case 5: // Druid
@@ -216,7 +205,7 @@ namespace Redemption.Globals.Player
                             break;
                         case 6: // Ranger
                             if (Player.whoAmI == Main.myPlayer)
-                                Projectile.NewProjectile(Player.GetProjectileSource_SetBonus(hardlightBonus), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
+                                Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
                             break;
 
                     }
@@ -353,6 +342,21 @@ namespace Redemption.Globals.Player
                     damage = (int)(damage * (1 - ElementalResistance[13]));
                 #endregion
             }
+            if (shellCap && proj.velocity.Y > 1 && proj.Bottom.Y < Player.Center.Y)
+            {
+                SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
+                Player.noKnockback = true;
+                damage = (int)(damage * 0.75f);
+            }
+        }
+        public override void ModifyHitByNPC(Terraria.NPC npc, ref int damage, ref bool crit)
+        {
+            if (shellCap && npc.velocity.Y > 1 && npc.Bottom.Y < Player.Center.Y)
+            {
+                SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
+                Player.noKnockback = true;
+                damage = (int)(damage * 0.75f);
+            }
         }
         public override void ModifyHitNPC(Item item, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
@@ -431,6 +435,9 @@ namespace Redemption.Globals.Player
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
+            if (RedeProjectile.projOwners.TryGetValue(proj.whoAmI, out (Entity entity, IEntitySource source) value) && value.entity is Terraria.NPC)
+                return;
+
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
             if (pureIronBonus && Main.rand.NextBool(3))
@@ -456,7 +463,7 @@ namespace Redemption.Globals.Player
                 Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
             if (brokenBlade && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
-                Projectile.NewProjectile(Player.GetProjectileSource_Item(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
+                Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
             }
         }
         public override void UpdateBadLifeRegen()
@@ -581,7 +588,7 @@ namespace Redemption.Globals.Player
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < MathHelper.Clamp(larvaCount, 1, 8); i++)
-                        Projectile.NewProjectile(Player.GetProjectileSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(Player.GetSource_Buff(Player.FindBuffIndex(ModContent.BuffType<InfestedDebuff>())), Player.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<GrandLarvaFall>(), 0, 0, Main.myPlayer);
                 }
             }
             if (dirtyWound && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)

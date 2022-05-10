@@ -5,6 +5,7 @@ using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +17,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Hop,
@@ -68,7 +68,10 @@ namespace Redemption.NPCs.Critters
         public NPC npcTarget;
         public Vector2 moveTo;
         public int hopCooldown;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -81,11 +84,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -247,8 +245,7 @@ namespace Redemption.NPCs.Critters
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI ||
-                    target.friendly || target.lifeMax <= 5 || target.type == ModContent.NPCType<DevilsTongue>())
+                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == NPC.whoAmI || target.type == ModContent.NPCType<DevilsTongue>())
                     continue;
 
                 if (NPC.Sight(target, 300, false, true) && BaseAI.HitTileOnSide(NPC, 3))
@@ -280,51 +277,41 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
-            switch (AIState)
-            {
-                case (float)ActionState.Begin:
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
-                        {
-                            NPC.frame.Y = 0;
-                        }
-                    }
-                    break;
-                case ActionState.Idle:
-                    NPC.frame.Y = 0;
-                    break;
-                case ActionState.Wander:
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
-                        {
-                            NPC.frame.Y = 0;
-                        }
-                    }
-                    break;
-                case ActionState.Hop:
-                    NPC.frame.Y = frameHeight;
-                    break;
-            }
             if (AIState is ActionState.DigDown or ActionState.DigUp)
             {
+                NPC.rotation = 0;
                 NPC.frameCounter++;
                 if (NPC.frameCounter >= 3)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y > 3 * frameHeight)
-                    {
                         NPC.frame.Y = 0;
+                }
+                return;
+            }
+
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
+                else
+                {
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0;
                     }
                 }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = frameHeight;
             }
         }
 
@@ -332,7 +319,7 @@ namespace Redemption.NPCs.Critters
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            return SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.player.ZoneBeach ? 0f : 1.8f);
+            return SpawnCondition.OverworldDayDesert.Chance * (spawnInfo.Player.ZoneBeach ? 0f : 1.8f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -365,8 +352,8 @@ namespace Redemption.NPCs.Critters
                 int goreType1 = ModContent.Find<ModGore>("Redemption/SandskinSpiderGore1").Type;
                 int goreType2 = ModContent.Find<ModGore>("Redemption/SandskinSpiderGore2").Type;
 
-                Gore.NewGore(NPC.position, NPC.velocity, goreType1);
-                Gore.NewGore(NPC.position, NPC.velocity, goreType2);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, goreType1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, goreType2);
 
                 for (int i = 0; i < 4; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,

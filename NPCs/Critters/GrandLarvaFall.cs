@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Critters
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return true;
 
-            int index = NPC.NewNPC(Projectile.GetNPCSource_FromThis(), (int) Projectile.Center.X, (int) Projectile.Center.Y,
+            int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int) Projectile.Center.X, (int) Projectile.Center.Y,
                 ModContent.NPCType<GrandLarva>());
 
             if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)

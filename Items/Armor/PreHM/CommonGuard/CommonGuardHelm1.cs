@@ -17,7 +17,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         {
             DisplayName.SetDefault("Common Guard Helm");
             Tooltip.SetDefault("+2 increased melee damage");
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -38,13 +38,13 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateEquip(Player player)
         {
-            player.RedemptionPlayerBuff().MeleeDamageFlat += 2;
+            player.GetDamage(DamageClass.Melee).Flat += 2;
         }
 
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = "12% increased melee speed";
-            player.meleeSpeed += .12f;
+            player.GetAttackSpeed(DamageClass.Melee) += .12f;
             player.RedemptionPlayerBuff().MetalSet = true;
 
             if (Main.rand.NextBool(10) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
@@ -78,7 +78,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
                     "They now guard cities and landmarks of great importance. Despite being stronger than the average\n" +
                     "knight, they don't get involved in wars.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -86,7 +86,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

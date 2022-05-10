@@ -10,7 +10,6 @@ namespace Redemption.Globals.NPC
     public class GuardNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
         public int GuardPoints;
         public bool IgnoreArmour;
         public bool GuardBroken;
@@ -103,6 +102,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
                 GuardBreakCheck(npc, DustID.Bone, SoundID.Item37, damage: 50);
@@ -113,6 +114,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
                 GuardBreakCheck(npc, DustID.Torch, SoundID.Item37, damage: 50);
@@ -122,6 +125,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
                 GuardBreakCheck(npc, DustID.Demonite, SoundID.Item37, damage: 10);
@@ -131,6 +136,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
                 GuardBreakCheck(npc, DustID.Iron, SoundID.Item37, damage: 10);
@@ -140,6 +147,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.2f);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
                 GuardBreakCheck(npc, DustID.GoldCoin, SoundID.Item37, damage: npc.lifeMax / 3);

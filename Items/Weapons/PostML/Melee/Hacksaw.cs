@@ -13,9 +13,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Automated Hacksaw");
-            Tooltip.SetDefault("Right-click to change attack modes\n" +
-                "'A sticky note on the weapon reads - \"Alright, who's dumb enough to confuse a chainsaw and a hacksaw, seriously guys.\"'");
-
+            Tooltip.SetDefault("Right-click to change attack modes");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -35,7 +33,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 200;
+            Item.damage = 120;
             Item.knockBack = 4;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -121,9 +119,26 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
             {
-                overrideColor = Color.LightCyan,
+                OverrideColor = Color.LightCyan,
             };
             tooltips.Add(line);
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line2 = new(Mod, "Lore",
+                    "\"Alright, who's dumb enough to confuse a chainsaw and a hacksaw, seriously guys.\"")
+                {
+                    OverrideColor = Color.LightGray
+                };
+                tooltips.Add(line2);
+            }
+            else
+            {
+                TooltipLine line2 = new(Mod, "HoldShift", "There's a sticky note attached [Hold Shift to Read]")
+                {
+                    OverrideColor = Color.Gray,
+                };
+                tooltips.Add(line2);
+            }
         }
     }
 }

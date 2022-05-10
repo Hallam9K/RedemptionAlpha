@@ -92,12 +92,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (item.DamageType == DamageClass.Melee)
-                damage *= 2;
+                damage = (int)(damage * 2.5f);
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.Redemption().TechnicallyMelee)
-                damage *= 2;
+                damage = (int)(damage * 2.5f);
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -194,7 +194,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 if (!barrierSpawn)
                 {
                     for (int i = 0; i < 36; i++)
-                        RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WielderShield>(), NPC.whoAmI, i * 10);
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WielderShield>(), NPC.whoAmI, i * 10);
                     barrierSpawn = true;
                     NPC.netUpdate = true;
                 }
@@ -253,7 +253,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer > 261)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
-                                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
                             aniType = 4;
                             AITimer = 0;
                             AIState = ActionState.Intro2;
@@ -265,7 +265,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer > 60)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
-                                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
+                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
 
                             aniType = 4;
                             AITimer = 0;
@@ -275,6 +275,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     break;
                 case ActionState.Intro2:
+                    player.RedemptionScreen().lockScreen = true;
                     if (AIHost == 1)
                     {
                         AITimer++;

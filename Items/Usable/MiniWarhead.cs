@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -79,6 +80,7 @@ namespace Redemption.Items.Usable
         {
             if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 1)
             {
+                RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed, DustID.Torch, 30, 0);
                 Projectile.friendly = true;
                 Projectile.hostile = true;
                 Projectile.tileCollide = false;
@@ -90,7 +92,7 @@ namespace Redemption.Items.Usable
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.friendly)
+                    if (!target.active || !target.CanBeChasedBy())
                         continue;
 
                     if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
@@ -116,7 +118,7 @@ namespace Redemption.Items.Usable
             Projectile.height = 10;
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Scale: 8f);
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Scale: 3f);
                 Main.dust[dustIndex].velocity *= 20f;
             }
             for (int i = 0; i < 80; i++)
@@ -129,7 +131,7 @@ namespace Redemption.Items.Usable
             }
             for (int g = 0; g < 18; g++)
             {
-                int goreIndex = Gore.NewGore(Projectile.Center, default, Main.rand.Next(61, 64), 2f);
+                int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Main.rand.Next(61, 64), 2f);
                 Main.gore[goreIndex].velocity.X *= 15f;
             }
 

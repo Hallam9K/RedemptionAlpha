@@ -55,7 +55,7 @@ namespace Redemption.Globals
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { overrideColor = Colors.RarityOrange };
+            TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { OverrideColor = Colors.RarityOrange };
 
             if ((item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {
@@ -64,7 +64,7 @@ namespace Redemption.Globals
 
                 else if (!ItemTags.BluntSwing.Has(item.type) && item.hammer == 0 && item.pick == 0)
                 {
-                    TooltipLine slashLine = new(Mod, "SlashBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+                    TooltipLine slashLine = new(Mod, "SlashBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
                     tooltips.Add(slashLine);
                 }
             }
@@ -73,7 +73,7 @@ namespace Redemption.Globals
 
             if (item.hammer > 0 || item.type == ItemID.PaladinsHammer || TechnicallyHammer)
             {
-                TooltipLine hammerLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { overrideColor = Colors.RarityOrange };
+                TooltipLine hammerLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(hammerLine);
             }
 
@@ -81,78 +81,78 @@ namespace Redemption.Globals
             {
                 if (ItemTags.Arcane.Has(item.type) || ProjectileTags.Arcane.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Arcane Bonus: Can hit enemies from the spirit realm") { overrideColor = Color.LightBlue };
+                    TooltipLine line = new(Mod, "Element", "Arcane Bonus: Can hit enemies from the spirit realm") { OverrideColor = Color.LightBlue };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Blood.Has(item.type) || ProjectileTags.Blood.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Blood Bonus: Increased damage to organic enemies, but decreased to robotic") { overrideColor = Color.IndianRed };
+                    TooltipLine line = new(Mod, "Element", "Blood Bonus: Increased damage to organic enemies, but decreased to robotic") { OverrideColor = Color.IndianRed };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Celestial.Has(item.type) || ProjectileTags.Celestial.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Celestial") { overrideColor = Color.Pink };
+                    TooltipLine line = new(Mod, "Element", "Celestial") { OverrideColor = Color.Pink };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Earth.Has(item.type) || ProjectileTags.Earth.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Earth Bonus: Deals extra damage and has a chance to stun grounded enemies") { overrideColor = Color.SandyBrown };
+                    TooltipLine line = new(Mod, "Element", "Earth Bonus: Deals extra damage and has a chance to stun grounded enemies") { OverrideColor = Color.SandyBrown };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Fire.Has(item.type) || ProjectileTags.Fire.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Fire Bonus: Chance to inflict a strong 'On Fire!' debuff on flammable enemies") { overrideColor = Color.Orange };
+                    TooltipLine line = new(Mod, "Element", "Fire Bonus: Chance to inflict a strong 'On Fire!' debuff on flammable enemies") { OverrideColor = Color.Orange };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Holy.Has(item.type) || ProjectileTags.Holy.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Holy Bonus: Increased damage to undead and demons") { overrideColor = Color.LightGoldenrodYellow };
+                    TooltipLine line = new(Mod, "Element", "Holy Bonus: Increased damage to undead and demons") { OverrideColor = Color.LightGoldenrodYellow };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Ice.Has(item.type) || ProjectileTags.Ice.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Ice Bonus: Chance to freeze slimes and slow down infected enemies") { overrideColor = Color.LightCyan };
+                    TooltipLine line = new(Mod, "Element", "Ice Bonus: Chance to freeze slimes and slow down infected enemies") { OverrideColor = Color.LightCyan };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Nature.Has(item.type) || ProjectileTags.Nature.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Nature") { overrideColor = Color.LawnGreen };
+                    TooltipLine line = new(Mod, "Element", "Nature") { OverrideColor = Color.LawnGreen };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Poison.Has(item.type) || ProjectileTags.Poison.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned enemies") { overrideColor = Color.MediumPurple };
+                    TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned enemies") { OverrideColor = Color.MediumPurple };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Psychic.Has(item.type) || ProjectileTags.Psychic.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Psychic Bonus: Ignores enemy Guard Points") { overrideColor = Color.LightPink };
+                    TooltipLine line = new(Mod, "Element", "Psychic Bonus: Ignores enemy Guard Points") { OverrideColor = Color.LightPink };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Shadow.Has(item.type) || ProjectileTags.Shadow.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage") { overrideColor = Color.MediumSlateBlue };
+                    TooltipLine line = new(Mod, "Element", "Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage") { OverrideColor = Color.MediumSlateBlue };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Thunder.Has(item.type) || ProjectileTags.Thunder.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Thunder Bonus: Electrifies and deals extra damage if the target is in water") { overrideColor = Color.LightYellow };
+                    TooltipLine line = new(Mod, "Element", "Thunder Bonus: Electrifies and deals extra damage if the target is in water") { OverrideColor = Color.LightYellow };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Water.Has(item.type) || ProjectileTags.Water.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Water Bonus: Increased damage to demons and can electrify robotic targets") { overrideColor = Color.SkyBlue };
+                    TooltipLine line = new(Mod, "Element", "Water Bonus: Increased damage to demons and can electrify robotic targets") { OverrideColor = Color.SkyBlue };
                     tooltips.Add(line);
                 }
                 if (ItemTags.Wind.Has(item.type) || ProjectileTags.Wind.Has(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Wind Bonus: Deals extra knockback to airborne targets") { overrideColor = Color.LightGray };
+                    TooltipLine line = new(Mod, "Element", "Wind Bonus: Deals extra knockback to airborne targets") { OverrideColor = Color.LightGray };
                     tooltips.Add(line);
                 }
             }
             if (item.rare == ModContent.RarityType<DonatorRarity>())
             {
-                TooltipLine donatorLine = new(Mod, "DonatorLine", "-Donator Item-") { overrideColor = Color.SpringGreen };
+                TooltipLine donatorLine = new(Mod, "DonatorLine", "-Donator Item-") { OverrideColor = Color.SpringGreen };
                 tooltips.Add(donatorLine);
             }
         }

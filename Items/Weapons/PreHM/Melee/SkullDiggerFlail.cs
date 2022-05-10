@@ -10,6 +10,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.Audio;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -48,15 +49,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             foreach (TooltipLine line in tooltips)
             {
-                if (line.mod == "Terraria" && line.Name == "Damage")
+                if (line.Mod == "Terraria" && line.Name == "Damage")
                 {
-                    string[] strings = line.text.Split(' ');
+                    string[] strings = line.Text.Split(' ');
                     int dmg = int.Parse(strings[0]);
                     dmg *= 2;
-                    line.text = dmg + "";
-                    for(int i = 1; i < strings.Length; i++)
+                    line.Text = dmg + "";
+                    for (int i = 1; i < strings.Length; i++)
                     {
-                        line.text += " " + strings[i];
+                        line.Text += " " + strings[i];
                     }
                 }
             }
@@ -91,10 +92,20 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
 
         private int timer;
+        private int soundTimer;
         public override void ExtraAI()
         {
             Player player = Main.player[Projectile.owner];
             Projectile.rotation = (player.Center - Projectile.Center).ToRotation() + (float)Math.PI / 2;
+            if (Projectile.ai[0] == 0 && soundTimer++ % 30 == 0 && !Main.dedServ)
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithVolume(0.5f), Projectile.position);
+
+            if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
+            {
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing"), Projectile.position);
+                Projectile.localAI[0] = 1;
+            }
+
             if (Projectile.ai[0] == 0)
             {
                 if (++timer % 30 == 0 && Main.myPlayer == player.whoAmI)

@@ -10,6 +10,8 @@ using Redemption.Globals;
 using System;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.Particles;
+using ParticleLibrary;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -74,9 +76,7 @@ namespace Redemption.Projectiles.Magic
             Projectile host = Main.projectile[(int)Projectile.ai[0]];
             Projectile.rotation = host.rotation + (host.spriteDirection == -1 ? (float)Math.PI : 0);
 
-            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Scale: 2);
-            Main.dust[dust].velocity = RedeHelper.PolarVector(30, Projectile.rotation);
-            Main.dust[dust].noGravity = true;
+            ParticleManager.NewParticle(Projectile.position + new Vector2(Main.rand.Next(0, Projectile.width), Main.rand.Next(0, Projectile.height)), RedeHelper.PolarVector(5, Projectile.rotation), new EmberParticle(), Color.White, 1);
 
             #region Beginning And End Effects
             if (AITimer == 0)
@@ -181,7 +181,7 @@ namespace Redemption.Projectiles.Magic
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Color.White, (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
         #endregion

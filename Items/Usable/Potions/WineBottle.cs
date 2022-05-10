@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'A reward for a long days work'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()

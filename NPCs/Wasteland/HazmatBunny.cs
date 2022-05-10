@@ -50,6 +50,14 @@ namespace Redemption.NPCs.Wasteland
                     "A bunny suited up in a Type 1 Hazmat Suit. Ain't no hazardous materials harming this little fuzzball!")
             });
         }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Bunny, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
@@ -61,7 +69,7 @@ namespace Redemption.NPCs.Wasteland
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood);
 
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/HazmatBunnyGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/HazmatBunnyGore" + (i + 1)).Type, 1);
             }
         }
     }

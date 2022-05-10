@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using System;
 using Redemption.BaseExtension;
+using Redemption.DamageClasses;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -15,7 +16,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
         {
             DisplayName.SetDefault("Living Wood Helmet");
             Tooltip.SetDefault("+1 increased druidic damage");
-            ArmorIDs.Head.Sets.DrawHead[Mod.GetEquipSlot(Name, EquipType.Head)] = false;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -36,7 +37,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.RedemptionPlayerBuff().DruidDamageFlat += 1;
+            player.GetDamage<DruidClass>().Flat += 1;
         }
 
         public override void UpdateArmorSet(Player player)
@@ -48,7 +49,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                Gore.NewGore(new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
+                Gore.NewGore(player.GetSource_FromThis(), new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
             }
         }
     }

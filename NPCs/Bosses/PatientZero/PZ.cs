@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.friendly = false;
             NPC.damage = 140;
             NPC.defense = 80;
-            NPC.lifeMax = 330000;
+            NPC.lifeMax = 198000;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             NPC.HitSound = SoundID.NPCHit13;
@@ -117,27 +117,27 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 for (int i = 0; i < 8; i++)
                 {
                     for (int k = 0; k < 3; k++)
-                        Gore.NewGore(new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreFlesh" + (k + 1)).Type);
+                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreFlesh" + (k + 1)).Type);
                 }
                 for (int i = 0; i < 6; i++)
                 {
                     for (int k = 0; k < 3; k++)
-                        Gore.NewGore(new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreShard" + (k + 1)).Type);
+                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreShard" + (k + 1)).Type);
                 }
                 for (int i = 0; i < 3; i++)
-                    Gore.NewGore(new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGoo1").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGoo1").Type);
                 for (int i = 0; i < 8; i++)
-                    Gore.NewGore(new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGoop").Type);
-                Gore.NewGore(new Vector2(NPC.position.X, NPC.Center.Y + 26), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreKari").Type);
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreEye").Type);
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGooEye").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGoop").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X, NPC.Center.Y + 26), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreKari").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreEye").Type);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGooEye").Type);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<SludgeDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 1f);
         }
         public override void OnKill()
         {
             if (!LabArea.labAccess[5])
-                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
+                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedPZ, -1);
         }
@@ -252,7 +252,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 return;
 
             if (AIState != ActionState.Death && !NPC.AnyNPCs(ModContent.NPCType<PZ_Kari>()))
-                RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 3, (int)NPC.Center.Y + 149, ModContent.NPCType<PZ_Kari>(), NPC.whoAmI);
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 3, (int)NPC.Center.Y + 149, ModContent.NPCType<PZ_Kari>(), NPC.whoAmI);
 
             if (Phase == 0 && NPC.life <= (int)(NPC.lifeMax * 0.75f))
                 PhaseSwap();

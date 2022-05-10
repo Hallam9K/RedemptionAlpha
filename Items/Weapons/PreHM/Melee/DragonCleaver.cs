@@ -65,7 +65,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     "'A cleaver cast in melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.\n" +
                     "This weapon is a great catalyst for fire magic, shooting out a wave of burning heat by channelling a swing.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -73,12 +73,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }
 
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { overrideColor = Colors.RarityOrange };
+            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
             tooltips.Add(axeLine);
         }
     }

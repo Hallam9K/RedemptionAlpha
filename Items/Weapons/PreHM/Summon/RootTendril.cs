@@ -11,8 +11,6 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            ItemID.Sets.SummonerWeaponThatScalesWithAttackSpeed[Item.type] = true;
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -21,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.width = 28;
             Item.height = 24;
             Item.value = Item.buyPrice(0, 0, 45, 0);
-            Item.DamageType = DamageClass.Summon;
+            Item.DamageType = DamageClass.SummonMeleeSpeed;
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 30;

@@ -75,7 +75,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     "nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype\n" +
                     "created, and the death toll from radiation exposure has been surprisingly miniscule.'")
                 {
-                    overrideColor = Color.LightGray
+                    OverrideColor = Color.LightGray
                 };
                 tooltips.Add(line);
             }
@@ -83,7 +83,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             {
                 TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
                 {
-                    overrideColor = Color.Gray,
+                    OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line);
             }

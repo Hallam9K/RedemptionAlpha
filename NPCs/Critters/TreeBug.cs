@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Critters
 {
@@ -18,7 +19,6 @@ namespace Redemption.NPCs.Critters
     {
         public enum ActionState
         {
-            Begin,
             Idle,
             Wander,
             Hop,
@@ -69,7 +69,10 @@ namespace Redemption.NPCs.Critters
         public NPC npcTarget;
         public Vector2 moveTo;
         public int hopCooldown;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            TimerRand = Main.rand.Next(80, 180);
+        }
         public override void AI()
         {
             NPC.TargetClosest();
@@ -80,11 +83,6 @@ namespace Redemption.NPCs.Critters
 
             switch (AIState)
             {
-                case ActionState.Begin:
-                    TimerRand = Main.rand.Next(80, 180);
-                    AIState = ActionState.Idle;
-                    break;
-
                 case ActionState.Idle:
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.5f;
@@ -185,50 +183,39 @@ namespace Redemption.NPCs.Critters
 
         public override void FindFrame(int frameHeight)
         {
-            switch (AIState)
+            if (AIState is ActionState.Eat)
             {
-                case (float)ActionState.Begin:
-                    NPC.frameCounter += NPC.velocity.X * 0.5f;
-                    if (NPC.frameCounter is >= 3 or <= -3)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
-                        {
-                            NPC.frame.Y = 0;
-                        }
-                    }
-
-                    break;
-                case ActionState.Idle:
+                NPC.rotation = 0;
+                NPC.frameCounter++;
+                if (NPC.frameCounter < 20)
+                    NPC.frame.Y = 4 * frameHeight;
+                else if (NPC.frameCounter < 40)
+                    NPC.frame.Y = 5 * frameHeight;
+                else
+                    NPC.frameCounter = 0;
+                return;
+            }
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
                     NPC.frame.Y = 0;
-                    break;
-                case ActionState.Wander:
+                else
+                {
                     NPC.frameCounter += NPC.velocity.X * 0.5f;
                     if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
                         if (NPC.frame.Y > 3 * frameHeight)
-                        {
                             NPC.frame.Y = 0;
-                        }
                     }
-
-                    break;
-                case ActionState.Hop:
-                    NPC.frame.Y = frameHeight;
-                    break;
-                case ActionState.Eat:
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter < 20)
-                        NPC.frame.Y = 4 * frameHeight;
-                    else if (NPC.frameCounter < 40)
-                        NPC.frame.Y = 5 * frameHeight;
-                    else
-                        NPC.frameCounter = 0;
-
-                    break;
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = frameHeight;
             }
         }
 
@@ -243,7 +230,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDayGrassCritter.Chance;
-            float multiplier = Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType == TileID.Grass ? 1.7f : 0f;
+            float multiplier = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType == TileID.Grass ? 1.7f : 0f;
 
             return baseChance * multiplier;
         }
@@ -278,8 +265,8 @@ namespace Redemption.NPCs.Critters
                 int goreType1 = ModContent.Find<ModGore>("Redemption/TreeBugGore1").Type;
                 int goreType2 = ModContent.Find<ModGore>("Redemption/TreeBugGore2").Type;
 
-                Gore.NewGore(NPC.position, NPC.velocity, goreType1);
-                Gore.NewGore(NPC.position, NPC.velocity, goreType2);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, goreType1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, goreType2);
 
                 for (int i = 0; i < 4; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,

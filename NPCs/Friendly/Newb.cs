@@ -12,6 +12,7 @@ using Redemption.Dusts;
 using Redemption.Base;
 using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -107,9 +108,9 @@ namespace Redemption.NPCs.Friendly
             return RedeBossDowned.foundNewb;
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            return "Newb";
+            return new List<string> { "Newb" };
         }
 
         public override string GetChat()
@@ -164,7 +165,7 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ItemID.Sapphire);
                 shop.item[nextSlot++].SetDefaults(ItemID.Emerald);
             }
-            if (NPC.downedBoss3) 
+            if (NPC.downedBoss3)
             {
                 shop.item[nextSlot++].SetDefaults(ItemID.Ruby);
                 shop.item[nextSlot++].SetDefaults(ItemID.Diamond);
