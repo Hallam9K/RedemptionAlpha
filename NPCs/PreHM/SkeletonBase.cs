@@ -106,7 +106,7 @@ namespace Redemption.NPCs.PreHM
                         break;
                 }
             }
-            if (Main.rand.NextBool(2000) && NPC.alpha <= 10 && (globalNPC.attacker == null || !globalNPC.attacker.active))
+            if (Main.rand.NextBool(2000) && NPC.alpha <= 10 && NPC.type != ModContent.NPCType<DancingSkeleton>() && (globalNPC.attacker == null || !globalNPC.attacker.active))
             {
                 WeightedRandom<int> emoteID = new(Main.rand);
                 switch (Personality)

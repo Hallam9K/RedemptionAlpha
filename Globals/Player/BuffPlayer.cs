@@ -59,6 +59,7 @@ namespace Redemption.Globals.Player
         public bool hazmatSuit;
         public bool HEVSuit;
         public bool snipped;
+        public bool island;
         public bool trappedSoul;
         public bool brokenBlade;
         public bool shellCap;
@@ -109,6 +110,7 @@ namespace Redemption.Globals.Player
             hardlightBonus = 0;
             xeniumBonus = 0;
             snipped = false;
+            island = false;
             trappedSoul = false;
             shinkiteHead = false;
             vortiHead = false;
@@ -162,7 +164,7 @@ namespace Redemption.Globals.Player
                     Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);              
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
                 }
 
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
@@ -223,7 +225,7 @@ namespace Redemption.Globals.Player
                 Player.wingTimeMax /= 2;
                 if (Player.wingTime > Player.wingTimeMax)
                     Player.wingTime = Player.wingTimeMax;
-            }         
+            }
         }
 
         public override void PostUpdateBuffs()
