@@ -54,12 +54,21 @@ namespace Redemption.NPCs.PreHM
             {
                 case SpawnType.Noble:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonNoble>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonNoble).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonNoble).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.Warden:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonWarden>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWarden).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWarden).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.Flagbearer:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonFlagbearer>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonFlagbearer).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonFlagbearer).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.SmallGroup:
                     if (Main.rand.NextBool(2))
@@ -153,15 +162,29 @@ namespace Redemption.NPCs.PreHM
             {
                 case SpawnType.Normal:
                     NPC.SetDefaults(ModContent.NPCType<EpidotrianSkeleton>());
+                    (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.alpha = 0;
                     break;
                 case SpawnType.Wanderer:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonWanderer>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWanderer).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonWanderer).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.Assassin:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonAssassin>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonAssassin).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonAssassin).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.ai[0] = Main.rand.NextBool(2) ? 0 : 2;
                     break;
                 case SpawnType.Duelist:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonDuelist>());
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonDuelist).ChoosePersonality();
+                    (Main.npc[NPC.whoAmI].ModNPC as SkeletonDuelist).SetStats();
+                    NPC.ai[2] = Main.rand.Next(80, 280);
                     break;
                 case SpawnType.SmallGroup:
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)

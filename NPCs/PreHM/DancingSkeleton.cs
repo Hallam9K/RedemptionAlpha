@@ -70,9 +70,9 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
                 for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
+                    Gore.NewGore(NPC.GetSource_OnHit(NPC), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore2").Type, 1);
 
-                Gore.NewGore(NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
+                Gore.NewGore(NPC.GetSource_OnHit(NPC), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/EpidotrianSkeletonGore").Type, 1);
             }
 
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone,
@@ -128,6 +128,8 @@ namespace Redemption.NPCs.PreHM
         }
         private int StartFrame;
         private int EndFrame;
+        private int AniFrameY;
+        private int AniCounter;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
@@ -175,10 +177,17 @@ namespace Redemption.NPCs.PreHM
                         NPC.frame.Y = StartFrame * frameHeight;
                 }
             }
+            if (AniCounter++ >= 2)
+            {
+                AniCounter = 0;
+                if (AniFrameY++ > 27)
+                    AniFrameY = 0;
+            }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D soulless = ModContent.Request<Texture2D>("Redemption/Textures/Misc/TheSoulless").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.VoidDye);
 
@@ -197,13 +206,26 @@ namespace Redemption.NPCs.PreHM
             }
 
             spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.life < NPC.lifeMax ? Color.Red : Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            if (NPC.life < NPC.lifeMax)
+            {
+                float opacity = (float)NPC.life / NPC.lifeMax;
+
+                int Height = soulless.Height / 28;
+                int y = Height * AniFrameY;
+                Rectangle rect = new(0, y, soulless.Width, Height);
+                Vector2 origin = new(soulless.Width / 2f, Height / 2f);
+                spriteBatch.Draw(soulless, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.6f, 0f, opacity), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(soulless, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.1f, 0f, opacity), NPC.rotation, origin, NPC.scale * 10, effects, 0);
+                spriteBatch.Draw(soulless, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.05f, 0f, opacity), NPC.rotation, origin, NPC.scale * 20, effects, 0);
+            }
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {
-            RedeHelper.SpawnNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.2f));
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.2f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
