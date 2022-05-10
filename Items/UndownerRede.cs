@@ -49,6 +49,8 @@ namespace Redemption.Items
             RedeBossDowned.downedPZ = false;
             RedeQuest.wayfarerVars[0] = 1;
             SoullessArea.soullessBools[0] = false;
+            SoullessArea.soullessBools[1] = false;
+            SoullessArea.soullessBools[2] = false;
             SoullessArea.soullessInts[0] = 0;
 
             if (Main.netMode == NetmodeID.Server)

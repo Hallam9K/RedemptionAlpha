@@ -8,6 +8,7 @@ using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Armor.PostML.Shinkite;
+using Redemption.Items.Armor.PostML.Vorti;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
@@ -50,6 +51,7 @@ namespace Redemption
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
         public static int shinkiteCapeID;
+        public static int vortiCapeID;
         public static int archeFemLegID;
         public static int archeMaleLegID;
         public static int unconFemLegID;
@@ -70,6 +72,7 @@ namespace Redemption
             {
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
+                vortiCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Vorti/VortiRobes_Back", EquipType.Back, ModContent.GetInstance<VortiRobes>());
                 archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
                 archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
                 unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs>()));
