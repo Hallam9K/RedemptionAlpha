@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -275,10 +276,28 @@ namespace Redemption.NPCs.Soulless
                     {
                         velY += 0.01f;
                         NPC.velocity.Y += velY / 10;
-                        if (NPC.ai[0] == 160 && !Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElevatorBreak"), NPC.position);
-                        if (NPC.ai[0] == 380)
+                        if (NPC.ai[0] == 160 && NPC.ai[0] < 260)
                         {
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElevatorLoop"), NPC.position);
+                        }
+                        if (NPC.ai[0] == 260 && !Main.dedServ)
+                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElevatorBreak"), NPC.position);
+                        if (NPC.ai[0] == 480)
+                        {
+                            Rectangle fallRect = new((int)NPC.position.X, (int)NPC.position.Y - 40, NPC.width, NPC.height + 40);
+                            for (int i = 0; i < Main.maxPlayers; i++)
+                            {
+                                Player player = Main.player[i];
+                                if (!player.active || player.dead)
+                                    continue;
+
+                                if (!player.Hitbox.Intersects(fallRect))
+                                    continue;
+
+                                player.RedemptionScreen().cutscene = true;
+                                player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 260);
+                            }
                             if (Main.netMode != NetmodeID.Server)
                             {
                                 for (int g = 0; g < 6; g++)
@@ -287,9 +306,10 @@ namespace Redemption.NPCs.Soulless
                                     Main.gore[goreIndex].velocity *= 0.1f;
                                 }
                             }
+                            NPC.velocity.Y += 7;
                             Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                         }
-                        if (NPC.ai[0] >= 380)
+                        if (NPC.ai[0] >= 480)
                         {
                             NPC.velocity.Y += 0.1f;
                             NPC.rotation += 0.004f;
@@ -318,23 +338,37 @@ namespace Redemption.NPCs.Soulless
             }
             buttonY = MathHelper.Clamp(buttonY, 11, 14);
             velY = MathHelper.Clamp(velY, -0.03f, 0.03f);
-            if (colliders != null && colliders.Length == 4)
+            for (int i = 0; i < Main.maxPlayers; i++)
             {
-                colliders[0].Update();
-                colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
-                colliders[0].endPoints[1] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
+                Player player = Main.player[i];
+                if (!player.active || player.dead)
+                    continue;
 
-                colliders[1].Update();
-                colliders[1].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
-                colliders[1].endPoints[1] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+                if (!player.HasBuff<StunnedDebuff>())
+                    continue;
 
-                colliders[2].Update();
-                colliders[2].endPoints[0] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
-                colliders[2].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
+                player.RedemptionScreen().cutscene = true;
+            }
+            if (NPC.ai[0] < 480)
+            {
+                if (colliders != null && colliders.Length == 4)
+                {
+                    colliders[0].Update();
+                    colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
+                    colliders[0].endPoints[1] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
 
-                colliders[3].Update();
-                colliders[3].endPoints[0] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
-                colliders[3].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
+                    colliders[1].Update();
+                    colliders[1].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
+                    colliders[1].endPoints[1] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+
+                    colliders[2].Update();
+                    colliders[2].endPoints[0] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
+                    colliders[2].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
+
+                    colliders[3].Update();
+                    colliders[3].endPoints[0] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+                    colliders[3].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
+                }
             }
         }
         public override void PostAI()

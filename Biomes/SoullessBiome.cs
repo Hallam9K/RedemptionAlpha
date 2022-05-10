@@ -40,6 +40,8 @@ namespace Redemption.Biomes
         public override void OnInBiome(Player player)
         {
             SoullessArea.Active = true;
+            Lighting.AddLight(player.Center, 0.5f, 0.5f, 0.5f);
+            player.maxFallSpeed += 4;
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
