@@ -373,6 +373,7 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(335, 883, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(550, 835, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(398, 794, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(505, 851, ModContent.TileType<SoullessRemainsTile>());
             //Chests
             SpookChest(265, 854);
             SpookChest(254, 880);

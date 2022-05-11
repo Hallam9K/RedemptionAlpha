@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Soulless;
 using Redemption.Tiles.Tiles;
 using SubworldLibrary;
@@ -17,8 +18,9 @@ namespace Redemption.Globals
     public class SoullessArea : ModSystem
     {
         public static bool Active;
-        public static bool[] soullessBools = new bool[3];
+        public static bool[] soullessBools = new bool[4];
         public static int[] soullessInts = new int[3];
+        public static Rectangle stalkerZone = new(200 * 16, 925 * 16, 410 * 16, 150 * 16);
         public override void PreUpdateEntities()
         {
             Active = false;
@@ -50,6 +52,37 @@ namespace Redemption.Globals
                         }
                     }
                     soullessBools[1] = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                    break;
+                }
+                Rectangle b2 = new(347 * 16, 988 * 16, 7 * 16, 7 * 16);
+                if (!soullessBools[3] && player.Hitbox.Intersects(b2))
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2").WithVolume(0.5f), b2.Center.ToVector2());
+
+                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b2.Center.ToVector2()) / 64);
+                    for (int x = 347; x < 354; x++)
+                    {
+                        for (int y = 991; y < 999; y++)
+                        {
+                            if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
+                                WorldGen.KillTile(x, y, false, false, true);
+                        }
+                    }
+                    soullessBools[3] = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                    break;
+                }
+                Rectangle b3 = new(295 * 16, 993 * 16, 45 * 16, 26 * 16);
+                if (soullessInts[1] == 0 && player.Hitbox.Intersects(b3))
+                {
+                    player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 180);
+                    soullessInts[1] = 1;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
                     break;
                 }
             }
@@ -63,6 +96,12 @@ namespace Redemption.Globals
             Vector2 LiftPos3 = new(510 * 16, (863 * 16) + 8);
             if (!soullessBools[2] && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift3>()))
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos3.X, (int)LiftPos3.Y, ModContent.NPCType<ShadestoneLift3>(), 0, 0, 0, 1026, 862);
+            Vector2 GMaskPos = new(573 * 16, 1036 * 16);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<RuhRoh>()))
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)GMaskPos.X, (int)GMaskPos.Y, ModContent.NPCType<RuhRoh>(), 0, 10);
+            Vector2 StalkerPos = new(316 * 16, 1013 * 16);
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)StalkerPos.X, (int)StalkerPos.Y, ModContent.NPCType<TheStalker>());
         }
         public override void OnWorldLoad()
         {

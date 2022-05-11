@@ -169,6 +169,12 @@ namespace Redemption.NPCs.Soulless
             float scale2 = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.4f, 0.8f, 0.4f);
             Vector2 drawOrigin = new(LightGlow.Width / 2, LightGlow.Height / 2);
 
+            if (NPC.IsABestiaryIconDummy)
+            {
+                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, Color.White * alpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                return true;
+            }
+
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 

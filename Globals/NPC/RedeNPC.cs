@@ -553,7 +553,7 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 //if (NPC.AnyNPCs(ModContent.NPCType<WardenIdle>()) || NPC.AnyNPCs(ModContent.NPCType<WardenSaved>()))
                 //    return;
-                if (SoullessArea.soullessBools[0])
+                if (SoullessArea.soullessBools[0] && !spawnInfo.Player.Hitbox.Intersects(SoullessArea.stalkerZone))
                 {
                     pool.Add(ModContent.NPCType<SoullessWanderer>(), .03f);
                     pool.Add(ModContent.NPCType<SoullessDuelist>(), .03f);

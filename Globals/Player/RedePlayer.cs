@@ -27,11 +27,13 @@ namespace Redemption.Globals.Player
         public int hitTarget = -1;
         public int hitTarget2 = -1;
         public bool medKit;
-
+        public bool stalkerSilence;
+        public float musicVolume;
         public override void ResetEffects()
         {
             hitTarget = -1;
             hitTarget2 = -1;
+            stalkerSilence = false;
         }
         public override void Initialize()
         {
@@ -71,7 +73,16 @@ namespace Redemption.Globals.Player
             if (!Main.dedServ)
             {
                 if (SubworldSystem.IsActive<SoullessSub>() && Player.InModBiome(ModContent.GetInstance<SoullessBiome>()))
-                    RedeSystem.soullessAmbience.SetTo(Main.ambientVolume);
+                {
+                    if (stalkerSilence)
+                    {
+                        RedeSystem.soullessAmbience.SetTo(MathHelper.Min(0.05f, Main.ambientVolume), -0.5f);
+                    }
+                    else
+                    {
+                        RedeSystem.soullessAmbience.SetTo(Main.ambientVolume);
+                    }
+                }
                 else
                     RedeSystem.soullessAmbience.Stop();
             }

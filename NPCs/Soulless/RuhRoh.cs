@@ -32,9 +32,12 @@ namespace Redemption.NPCs.Soulless
             NPC.dontTakeDamage = true;
             NPC.noGravity = true;
             NPC.knockBackResist = 0;
+            NPC.noTileCollide = true;
             NPC.aiStyle = -1;
+            NPC.behindTiles = true;
         }
         public override bool CheckActive() => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.X < -2;
         public override bool PreAI()
         {
             if (colliders == null || colliders.Length != 1)
