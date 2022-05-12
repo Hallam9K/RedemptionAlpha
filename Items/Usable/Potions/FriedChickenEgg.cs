@@ -1,4 +1,7 @@
+using Microsoft.Xna.Framework;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,24 +14,21 @@ namespace Redemption.Items.Usable.Potions
         {
             Tooltip.SetDefault("Minor improvements to all stats" +
                 "\n'Because eggs are tasty.'");
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+            ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
+                new Color(247, 226, 199),
+                new Color(242, 183, 111),
+                new Color(235, 161, 31)
+            };
+            ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.UseSound = SoundID.Item2;
-            Item.useStyle = ItemUseStyleID.EatFood;
-            Item.useTurn = true;
-            Item.useAnimation = 17;
-            Item.useTime = 17;
-            Item.maxStack = 30;
-            Item.consumable = true;
-            Item.width = 12;
-            Item.height = 38;
+            Item.DefaultToFood(28, 18, BuffID.WellFed, 3600);
             Item.value = 100;
             Item.rare = ItemRarityID.Blue;
-            Item.buffType = BuffID.WellFed;
-            Item.buffTime = 3600;
         }
         public override void AddRecipes()
         {

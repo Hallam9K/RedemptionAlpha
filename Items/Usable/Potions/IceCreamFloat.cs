@@ -1,3 +1,6 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,25 +13,21 @@ namespace Redemption.Items.Usable.Potions
         {
             Tooltip.SetDefault("Minor improvements to all stats" +
                 "\n'Sluuuuuurp'");
-
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+            ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
+                new Color(247, 226, 199),
+                new Color(242, 183, 111),
+                new Color(235, 161, 31)
+            };
+            ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.UseSound = SoundID.Item3;
-            Item.useStyle = ItemUseStyleID.DrinkLiquid;
-            Item.useTurn = true;
-            Item.useAnimation = 14;
-            Item.useTime = 14;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 24;
-            Item.height = 40;
+            Item.DefaultToFood(24, 40, BuffID.WellFed, 16000, true);
             Item.value = 80;
             Item.rare = ItemRarityID.Blue;
-            Item.buffType = BuffID.WellFed;
-            Item.buffTime = 16000;
         }
     }
 }
