@@ -106,7 +106,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("gigagigiaigiaiiga.")
+                new FlavorTextBestiaryInfoElement("A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside the shield.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
