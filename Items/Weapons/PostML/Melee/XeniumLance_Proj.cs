@@ -44,8 +44,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public ref float Rot => ref Projectile.localAI[1];
         public int Timer;
         private float speed;
-        private int directionLock;
-
 
         public override bool PreAI()
         {
@@ -142,7 +140,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     Length = MathHelper.Clamp(Length, 60, 120);
                     break;
                 case 3:
-                    directionLock = player.direction;
                     if (Timer++ == 0)
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());

@@ -134,8 +134,8 @@ namespace Redemption.NPCs.Bosses.Neb
         public int floatTimer;
         public int floatTimer2;
         public int[] armFrames = new int[6];
-        private Vector2[] ChainPos = new Vector2[4];
-        private Vector2[] getGrad = new Vector2[4];
+        private readonly Vector2[] ChainPos = new Vector2[4];
+        private readonly Vector2[] getGrad = new Vector2[4];
         public Vector2[] temp = new Vector2[4];
         private readonly Rectangle[] ChainHitBoxArea = new Rectangle[4];
         private Rectangle PlayerSafeHitBox;
@@ -143,7 +143,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public int phase;
         public int circleTimer;
         public int circleRadius;
-        public List<int> AttackList = new List<int> { 0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
         void AttackChoice()

@@ -320,7 +320,7 @@ namespace Redemption.Projectiles
 				Point scanAreaStart = Projectile.TopLeft.ToTileCoordinates();
 				Point scanAreaEnd = Projectile.BottomRight.ToTileCoordinates();
 				i = 2;
-				CreateImpactExplosion(2, Projectile.Center, ref scanAreaStart, ref scanAreaEnd, Projectile.width, out var causedShockwaves);
+                CreateImpactExplosion(2, Projectile.Center, ref scanAreaStart, ref scanAreaEnd, Projectile.width, out var causedShockwaves);
 				CreateImpactExplosion2_FlailTileCollision(Projectile.Center, causedShockwaves, velocity);
 				Projectile.position -= velocity;
 			}
@@ -346,7 +346,7 @@ namespace Redemption.Projectiles
 			*/
 			return false;
         }
-		private void CreateImpactExplosion(int dustAmountMultiplier, Vector2 explosionOrigin, ref Point scanAreaStart, ref Point scanAreaEnd, int explosionRange, out bool causedShockwaves)
+		private static void CreateImpactExplosion(int dustAmountMultiplier, Vector2 explosionOrigin, ref Point scanAreaStart, ref Point scanAreaEnd, int explosionRange, out bool causedShockwaves)
 		{
 			causedShockwaves = false;
 			int num = 4;
