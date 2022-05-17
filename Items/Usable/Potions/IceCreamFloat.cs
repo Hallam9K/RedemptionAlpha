@@ -15,9 +15,9 @@ namespace Redemption.Items.Usable.Potions
                 "\n'Sluuuuuurp'");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
-                new Color(247, 226, 199),
-                new Color(242, 183, 111),
-                new Color(235, 161, 31)
+                new Color(247, 232, 222),
+                new Color(193, 147, 120),
+                new Color(119, 84, 73)
             };
             ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
