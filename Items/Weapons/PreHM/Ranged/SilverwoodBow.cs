@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             return new Vector2(-4, 0);
         }
-        public override bool CanConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
 			return Main.rand.NextFloat() >= .2f;
         }
