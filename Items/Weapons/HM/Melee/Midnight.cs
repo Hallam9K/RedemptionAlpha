@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Melee;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -16,7 +15,9 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Midnight, Defiler of the Prince");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Slams down in a blaze of twilight, releasing nebula stars" +
+                "\nNebula stars slowly chase targets while spewing nebula sparks" +
+                "\nCan't create nebula stars while some are already active");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

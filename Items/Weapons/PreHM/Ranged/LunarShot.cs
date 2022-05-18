@@ -34,7 +34,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.useAnimation = 21;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.knockBack = 0;
+            Item.knockBack = 1;
             Item.value = Item.sellPrice(0, 0, 2, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item5;

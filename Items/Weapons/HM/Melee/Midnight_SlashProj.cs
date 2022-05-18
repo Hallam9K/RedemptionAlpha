@@ -8,6 +8,9 @@ using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader;
+using Redemption.Projectiles.Melee;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -91,6 +94,20 @@ namespace Redemption.Items.Weapons.HM.Melee
 								SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
 							}
 							player.velocity.X += 2 * player.direction;
+
+							for (int i = 0; i < 12; i++)
+								ParticleManager.NewParticle(RedeHelper.RandomPointInArea(projHitbox), RedeHelper.Spread(4), new RainbowParticle(), Color.White, 0.2f);
+
+							if (player.ownedProjectileCounts[ModContent.ProjectileType<NebulaStar>()] < 3)
+							{
+								if (!Main.dedServ)
+									SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Teleport1").WithVolume(0.5f), Projectile.position);
+								for (int i = 0; i < Main.rand.Next(3, 5); i++)
+								{
+									if (Projectile.owner == Main.myPlayer)
+										Projectile.NewProjectile(Projectile.GetSource_FromThis(), RedeHelper.RandomPointInArea(projHitbox), RedeHelper.SpreadUp(10), ModContent.ProjectileType<NebulaStar>(), Projectile.damage, 2, player.whoAmI);
+								}
+							}
 						}
 						if (Projectile.frame > 8)
 						{

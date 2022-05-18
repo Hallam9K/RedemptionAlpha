@@ -24,6 +24,7 @@ namespace Redemption.Globals
         public static bool downedErhan;
         public static int erhanDeath;
         public static int slayerDeath;
+        public static int oblitDeath;
         public static int nebDeath;
         public static bool nukeDropped;
         public static bool downedJanitor;
@@ -53,6 +54,7 @@ namespace Redemption.Globals
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
+            oblitDeath = 0;
             nebDeath = 0;
             nukeDropped = false;
             downedJanitor = false;
@@ -83,6 +85,7 @@ namespace Redemption.Globals
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
+            oblitDeath = 0;
             nebDeath = 0;
             nukeDropped = false;
             downedJanitor = false;
@@ -149,6 +152,7 @@ namespace Redemption.Globals
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
             tag["slayerDeath"] = slayerDeath;
+            tag["oblitDeath"] = oblitDeath;
             tag["nebDeath"] = nebDeath;
         }
 
@@ -172,6 +176,7 @@ namespace Redemption.Globals
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
             slayerDeath = tag.GetInt("slayerDeath");
+            oblitDeath = tag.GetInt("oblitDeath");
             nebDeath = tag.GetInt("nebDeath");
             nukeDropped = downed.Contains("nukeDropped");
             downedJanitor = downed.Contains("downedJanitor");
@@ -218,6 +223,7 @@ namespace Redemption.Globals
 
             writer.Write(erhanDeath);
             writer.Write(slayerDeath);
+            writer.Write(oblitDeath);
             writer.Write(nebDeath);
         }
 
@@ -252,6 +258,7 @@ namespace Redemption.Globals
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();
+            oblitDeath = reader.ReadInt32();
             nebDeath = reader.ReadInt32();
         }
     }

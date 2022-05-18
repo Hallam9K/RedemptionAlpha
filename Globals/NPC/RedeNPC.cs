@@ -24,6 +24,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Donator.Megaswave;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Globals.NPC
 {
@@ -419,6 +420,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EldritchRoot>(), 500));
             if (npc.type == NPCID.BoneSerpentHead)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
+            if (npc.type == NPCID.Ghost || npc.type == NPCID.Wraith)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {

@@ -18,6 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.width = 16;
             Item.height = 20;
             Item.damage = 3;
+            Item.knockBack = 3;
             Item.maxStack = 99;
             Item.value = 50;
             Item.rare = ItemRarityID.White;

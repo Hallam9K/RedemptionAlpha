@@ -109,7 +109,6 @@ namespace Redemption.UI
             Color drawColor = new(255, 255, 255);
             Color shadowColor = new(25, 25, 25);
 
-            Texture2D arrowTexture = ModContent.Request<Texture2D>("Redemption/Textures/MoRDialogueArrow").Value;
             Texture2D darkTexture = ModContent.Request<Texture2D>("Redemption/Textures/BlackSquare").Value;
 
             int titleDrawX = centerX - (textLength / 2);

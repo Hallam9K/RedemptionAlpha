@@ -22,7 +22,8 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         {
             DisplayName.SetDefault("Laboratory Crate");
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            ItemID.Sets.IsFishingCrate[Type] = true;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
         }
 
         public override void SetDefaults()
@@ -33,9 +34,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             Item.rare = ItemRarityID.Lime;
             Item.maxStack = 999;
         }
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
+        {
+            itemGroup = ContentSamples.CreativeHelper.ItemGroup.Crates;
+        }
         public override bool CanRightClick() => true;
         public override void RightClick(Player player)
         {
+            var entitySource = player.GetSource_OpenItem(Type);
             int[] LabChestLoot = new int[]
 {
                 ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), ModContent.ItemType<GravityHammer>(), ModContent.ItemType<TeslaGenerator>(), ModContent.ItemType<LightningRod>()
@@ -59,15 +65,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
                 ModContent.ItemType<CarbonMyofibre>(),
                 ModContent.ItemType<XenomiteShard>()
             };
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot));
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot2), Main.rand.Next(1, 3));
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, LabChestLoot3), Main.rand.Next(8, 12));
+            player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, LabChestLoot));
+            player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, LabChestLoot2), Main.rand.Next(1, 3));
+            player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, LabChestLoot3), Main.rand.Next(8, 12));
 
             if (Main.rand.NextBool(4))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), Utils.Next(Main.rand, FloppyDiskLoot));
+                player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, FloppyDiskLoot));
 
             if (Main.rand.NextBool(4))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.GoldCoin, Main.rand.Next(2, 5));
+                player.QuickSpawnItem(entitySource, ItemID.GoldCoin, Main.rand.Next(2, 5));
         }
     }
 }
