@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             return true;
         }
 
-        public override bool CanConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
             return player.altFunctionUse != 2;
         }
