@@ -1,4 +1,7 @@
+using Microsoft.Xna.Framework;
 using Redemption.Buffs;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,28 +13,23 @@ namespace Redemption.Items.Usable.Potions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bottle of Wine");
-
             Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'A reward for a long days work'");
-
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+            ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
+                new Color(212, 75, 104),
+                new Color(155, 26, 53),
+                new Color(104, 17, 36)
+            };
+            ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.UseSound = SoundID.Item3;
-            Item.useStyle = ItemUseStyleID.DrinkLiquid;
-            Item.useTurn = true;
-            Item.useAnimation = 14;
-            Item.useTime = 14;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 24;
-            Item.height = 58;
+            Item.DefaultToFood(24, 58, ModContent.BuffType<WellFed4>(), 20000, true);
             Item.value = 80;
-            Item.rare = ItemRarityID.Cyan;
-            Item.buffType = ModContent.BuffType<WellFed4>();
-            Item.buffTime = 20000;
+            Item.rare = ItemRarityID.Blue;
         }
     }
 }
