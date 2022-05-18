@@ -1,5 +1,8 @@
+using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Rarities;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,26 +15,21 @@ namespace Redemption.Items.Usable.Potions
         {
             Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'Tastes like black liquorice'");
-
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+            ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
+                new Color(10, 14, 23),
+                new Color(24, 28, 38),
+                new Color(210, 200, 191)
+            };
+            ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.UseSound = SoundID.Item3;
-            Item.useStyle = ItemUseStyleID.DrinkLiquid;
-            Item.useTurn = true;
-            Item.useAnimation = 14;
-            Item.useTime = 14;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 22;
-            Item.height = 36;
+            Item.DefaultToFood(22, 38, ModContent.BuffType<WellFed4>(), 30000, true);
             Item.value = 80;
-            Item.rare = ModContent.RarityType<SoullessRarity>();
-            Item.buffType = ModContent.BuffType<WellFed4>();
-            //also give positive soulless
-            Item.buffTime = 30000;
+            Item.rare = ItemRarityID.Blue;
         }
     }
 }

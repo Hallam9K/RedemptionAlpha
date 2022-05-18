@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -8,17 +8,17 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Potions
 {
-    public class FriedChickenEgg : ModItem
+    public class Olives : ModItem
     {
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Minor improvements to all stats" +
-                "\n'Because eggs are tasty.'");
+                "\n'Picked fresh from a Garden'");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
-                new Color(247, 226, 199),
-                new Color(242, 183, 111),
-                new Color(235, 161, 31)
+                new Color(110, 100, 146),
+                new Color(65, 63, 72),
+                new Color(50, 44, 70)
             };
             ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
@@ -26,16 +26,9 @@ namespace Redemption.Items.Usable.Potions
 
         public override void SetDefaults()
         {
-            Item.DefaultToFood(28, 18, BuffID.WellFed, 3600);
-            Item.value = 100;
+            Item.DefaultToFood(24, 30, BuffID.WellFed, 18000);
+            Item.value = 20;
             Item.rare = ItemRarityID.Blue;
-        }
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<ChickenEgg>())
-                .AddTile(TileID.CookingPots)
-                .Register();
         }
     }
 }

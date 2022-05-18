@@ -41,8 +41,8 @@ namespace Redemption.Items
 		{
 			NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
 			npc.position = player.Center;
-			Dialogue dialogue1 = new Dialogue(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", 6, 120, 30, true);
-			Dialogue dialogue2 = new Dialogue(npc, null, null, null, Color.LightGreen, Color.DarkCyan, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
+			Dialogue dialogue1 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", 6, 120, 30, true);
+			Dialogue dialogue2 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
 			TextBubbleUI.Visible = true;
 			TextBubbleUI.AddDialogue(dialogue1);
 			TextBubbleUI.AddDialogue(dialogue2);
@@ -54,7 +54,7 @@ namespace Redemption.Items
 				x = 0;
 				y = 0;
 				progress = 0f;
-				Talk("Coordinates cleared.", new Color(218, 70, 70));
+                Talk("Coordinates cleared.", new Color(218, 70, 70));
 				if (Redemption.Targets.BasicLayer.Sprites.Contains(this))
 					Redemption.Targets.BasicLayer.Sprites.Remove(this);
 				return true;
@@ -62,12 +62,12 @@ namespace Redemption.Items
 			x = (int)(Main.MouseWorld.X / 16);
 			y = (int)(Main.MouseWorld.Y / 16);
 			Dust.QuickBox(new Vector2(x, y) * 16, new Vector2(x + 1, y + 1) * 16, 2, new Color(218, 70, 70), null);
-			Talk($"Drawing sprites at [{x}, {y}]. Right-click to discard.", new Color(218, 70, 70));
+            Talk($"Drawing sprites at [{x}, {y}]. Right-click to discard.", new Color(218, 70, 70));
 			if (!Redemption.Targets.BasicLayer.Sprites.Contains(this))
 				Redemption.Targets.BasicLayer.Sprites.Add(this);
 			return true;
 		}
-		public void Talk(string message, Color color) => Main.NewText(message, color.R, color.G, color.B);
+		public static void Talk(string message, Color color) => Main.NewText(message, color.R, color.G, color.B);
 
 		public void Draw(SpriteBatch spriteBatch)
 		{

@@ -1,5 +1,7 @@
+using Microsoft.Xna.Framework;
 using Redemption.Items.Critters;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,25 +15,21 @@ namespace Redemption.Items.Usable.Potions
             DisplayName.SetDefault("Roast Larva");
             Tooltip.SetDefault("Medium improvements to all stats" +
                                "\n'The forbidden croissant'");
-
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+            ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
+                new Color(230, 164, 100),
+                new Color(187, 133, 81),
+                new Color(142, 86, 30)
+            };
+            ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 30;
-            Item.height = 18;
-            Item.useStyle = ItemUseStyleID.EatFood;
-            Item.useAnimation = 17;
-            Item.useTime = 17;
-            Item.useTurn = true;
-            Item.UseSound = SoundID.Item2;
-            Item.maxStack = 30;
-            Item.consumable = true;
-            Item.rare = ItemRarityID.Blue;
+            Item.DefaultToFood(30, 18, BuffID.WellFed2, 21600);
             Item.value = Item.sellPrice(silver: 5);
-            Item.buffType = BuffID.WellFed2;
-            Item.buffTime = 21600;
+            Item.rare = ItemRarityID.Blue;
         }
 
         public override void AddRecipes()

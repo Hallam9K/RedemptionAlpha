@@ -15,6 +15,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.width = 16;
             Item.height = 20;
             Item.damage = 120;
+            Item.knockBack = 5;
             Item.maxStack = 1;
             Item.value = 150;
             Item.rare = ItemRarityID.Purple;

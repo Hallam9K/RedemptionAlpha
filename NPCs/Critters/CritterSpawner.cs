@@ -6,6 +6,7 @@ using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using static Redemption.NPCs.Critters.Chicken;
 
 namespace Redemption.NPCs.Critters
 {
@@ -40,6 +41,13 @@ namespace Redemption.NPCs.Critters
             {
                 case SpawnType.Single:
                     NPC.SetDefaults(ModContent.NPCType<Chicken>());
+                    if (Main.rand.NextBool(2000))
+                        NPC.SetDefaults(ModContent.NPCType<LongChicken>());
+                    else
+                        (Main.npc[NPC.whoAmI].ModNPC as Chicken).ChickType = (ChickenType)Main.rand.Next(4);
+
+                    NPC.ai[2] = Main.rand.Next(80, 180);
+                    NPC.alpha = 0;
                     break;
                 case SpawnType.Small:
                     for (int i = 0; i < 2; i++)
@@ -99,6 +107,7 @@ namespace Redemption.NPCs.Critters
             {
                 case SpawnType.Single:
                     NPC.SetDefaults(ModContent.NPCType<Kabucra>());
+                    NPC.ai[2] = Main.rand.Next(80, 180);
                     break;
                 case SpawnType.Small:
                     for (int i = 0; i < 2; i++)
