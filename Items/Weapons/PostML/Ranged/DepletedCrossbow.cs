@@ -47,7 +47,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.shoot = ModContent.ProjectileType<Uranium_Proj>();
             Item.useAmmo = ModContent.ItemType<Uranium>();
         }
-        public override bool CanConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
             int uranium = player.FindItem(ModContent.ItemType<Uranium>());
             if (uranium >= 0 && player.inventory[uranium].stack >= 10)
