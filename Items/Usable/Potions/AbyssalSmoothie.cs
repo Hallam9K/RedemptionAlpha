@@ -1,7 +1,9 @@
+using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,25 +17,21 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Massive improvements to all stats\n" +
                 "Causes blindness for a short duration" +
                 "\n'Tastes abyssmal'");
-
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+            ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
+                new Color(0, 0, 0),
+                new Color(0, 0, 0),
+                new Color(0, 0, 0)
+            };
+            ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 
         public override void SetDefaults()
         {
-            Item.UseSound = SoundID.Item3;
-            Item.useStyle = ItemUseStyleID.DrinkLiquid;
-            Item.useTurn = true;
-            Item.useAnimation = 14;
-            Item.useTime = 14;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.width = 20;
-            Item.height = 44;
+            Item.DefaultToFood(20, 44, ModContent.BuffType<WellFed4>(), 36000, true);
             Item.value = 8000;
             Item.rare = ModContent.RarityType<SoullessRarity>();
-            Item.buffType = ModContent.BuffType<WellFed4>();
-            Item.buffTime = 36000;
         }
         public override bool? UseItem(Player player)
         {
@@ -45,6 +43,7 @@ namespace Redemption.Items.Usable.Potions
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<AbyssBloskus>())
                 .AddIngredient(ItemID.BlackCurrant, 2)
+                .AddIngredient(ModContent.ItemType<Olives>(), 2)
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
                 .Register();

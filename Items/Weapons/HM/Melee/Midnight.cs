@@ -5,6 +5,7 @@ using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Melee;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
