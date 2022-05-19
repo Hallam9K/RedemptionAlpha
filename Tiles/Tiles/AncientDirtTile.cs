@@ -20,18 +20,10 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             ItemDrop = ModContent.ItemType<AncientDirt>();
 			AddMapEntry(new Color(115, 88, 69));
-			SetModTree(new ElderTree());
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = fail ? 1 : 3;
 		}
-
-		public override int SaplingGrowthType(ref int style)
-		{
-			style = 0;
-			return ModContent.TileType<ElderSapling>();
-        }
     }
 }
