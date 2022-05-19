@@ -14,7 +14,6 @@ namespace Redemption.Tiles.Tiles
 		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
-			SetModTree(new IrradiatedPurityTree());
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedGrassTile>()] = true;
@@ -100,11 +99,6 @@ namespace Redemption.Tiles.Tiles
             g = 0.04f;
             b = 0.0f;
         }
-        public override int SaplingGrowthType(ref int style)
-		{
-			style = 0;
-			return ModContent.TileType<IrradiatedPuritySapling>();
-		}
 	}
 }
 

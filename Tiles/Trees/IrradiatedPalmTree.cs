@@ -1,38 +1,54 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Tiles.Tiles;
+using ReLogic.Content;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Trees
 {
-    class IrradiatedPalmTree : ModPalmTree
+    public class IrradiatedPalmTree : ModPalmTree
     {
-        private static Mod Mod
+        public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
         {
-            get
-            {
-                return ModLoader.GetMod("Redemption");
-            }
-        }
-
-        public override int CreateDust()
+            UseSpecialGroups = true,
+            SpecialGroupMinimalHueValue = 11f / 72f,
+            SpecialGroupMaximumHueValue = 0.25f,
+            SpecialGroupMinimumSaturationValue = 0.88f,
+            SpecialGroupMaximumSaturationValue = 1f
+        };
+        public override void SetStaticDefaults()
         {
-            return DustID.Ash;
+            GrowsOnTileId = new int[1] { ModContent.TileType<IrradiatedSandTile>() };
         }
-
+        // This is the primary texture for the trunk. Branches and foliage use different settings.
+        public override Asset<Texture2D> GetTexture()
+        {
+            return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree");
+        }
+        public override int SaplingGrowthType(ref int style)
+        {
+            style = 1;
+            return ModContent.TileType<IrradiatedPalmSapling>();
+        }
+        public override Asset<Texture2D> GetOasisBranchTextures() => null;
+        public override Asset<Texture2D> GetBranchTextures() => null;
+        public override Asset<Texture2D> GetOasisTopTextures()
+        {
+            return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree_Top");
+        }
+        public override Asset<Texture2D> GetTopTextures()
+        {
+            return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree_Top");
+        }
         public override int DropWood()
         {
             return ModContent.ItemType<PetrifiedWood>();
         }
-
-        public override Texture2D GetTexture()
+        public override int CreateDust()
         {
-            return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedPalmTree").Value;
-        }
-
-        public override Texture2D GetTopTextures()
-        {
-            return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedPalmTree_Top").Value;
+            return DustID.Ash;
         }
     }
 }

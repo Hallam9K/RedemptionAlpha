@@ -2,45 +2,48 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Tiles.Tiles;
+using ReLogic.Content;
+using Terraria.GameContent;
+using Terraria;
 
 namespace Redemption.Tiles.Trees
 {
     public class IrradiatedBorealTree : ModTree
 	{
-		private static Mod Mod
+		public override TreePaintingSettings TreeShaderSettings => new()
 		{
-			get
-			{
-				return ModLoader.GetMod("Redemption");
-			}
+			UseSpecialGroups = true,
+			SpecialGroupMinimalHueValue = 11f / 72f,
+			SpecialGroupMaximumHueValue = 0.25f,
+			SpecialGroupMinimumSaturationValue = 0.88f,
+			SpecialGroupMaximumSaturationValue = 1f
+		};
+		public override void SetStaticDefaults()
+		{
+			GrowsOnTileId = new int[1] { ModContent.TileType<IrradiatedSnowTile>() };
 		}
-        public override int GrowthFXGore()
+		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
 		{
-			return -1;
-        }
-        public override int CreateDust()
-		{
-            return DustID.Ash;
 		}
-
-		public override int DropWood()
+		public override Asset<Texture2D> GetTexture()
 		{
-			return ModContent.ItemType<PetrifiedWood>();
+			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedBorealTree");
 		}
-
-		public override Texture2D GetTexture()
+		public override int SaplingGrowthType(ref int style)
 		{
-			return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedBorealTree").Value;
+			style = 0;
+			return ModContent.TileType<ElderSapling>();
 		}
-
-		public override Texture2D GetTopTextures(int i, int j, ref int frame, ref int frameWidth, ref int frameHeight, ref int xOffsetLeft, ref int yOffset)
+		public override Asset<Texture2D> GetBranchTextures()
 		{
-			return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedBorealTree_Top").Value;
+			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedBorealTree_Branch");
 		}
-
-		public override Texture2D GetBranchTextures(int i, int j, int trunkOffset, ref int frame)
+		public override Asset<Texture2D> GetTopTextures()
 		{
-			return Mod.Assets.Request<Texture2D>("Tiles/Trees/IrradiatedBorealTree_Branch").Value;
+			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedBorealTree_Top");
 		}
+		public override int DropWood() => ModContent.ItemType<PetrifiedWood>();
+		public override int CreateDust() => DustID.Ash;
 	}
 }

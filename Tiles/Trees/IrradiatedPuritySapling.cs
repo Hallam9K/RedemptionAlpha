@@ -44,31 +44,23 @@ namespace Redemption.Tiles.Trees
             DustType = DustID.Ash;
 			AdjTiles = new int[]{ TileID.Saplings };
 		}
-
-		public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
-
+		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void RandomUpdate(int i, int j)
 		{
-			if (WorldGen.genRand.Next(20) == 0)
-			{
-				bool isPlayerNear = WorldGen.PlayerLOS(i, j);
-				bool success = WorldGen.GrowTree(i, j);
-				if (success && isPlayerNear)
-				{
-					WorldGen.TreeGrowFXCheck(i, j);
-				}
-			}
+			if (!WorldGen.genRand.NextBool(20))
+				return;
+
+			bool growSucess;
+			growSucess = WorldGen.GrowTree(i, j);
+			bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+			if (growSucess && isPlayerNear)
+				WorldGen.TreeGrowFXCheck(i, j);
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
 		{
 			if (i % 2 == 1)
-			{
 				effects = SpriteEffects.FlipHorizontally;
-			}
 		}
 	}
 }
