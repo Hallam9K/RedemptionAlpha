@@ -19,8 +19,6 @@ namespace Redemption.Tiles.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileBrick[Type] = true;
-            SetModCactus(new IrradiatedCactus());
-            SetModPalmTree(new IrradiatedPalmTree());
             Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;

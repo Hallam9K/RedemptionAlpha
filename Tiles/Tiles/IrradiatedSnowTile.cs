@@ -47,7 +47,6 @@ namespace Redemption.Tiles.Tiles
             SoundType = SoundID.Item;
             AddMapEntry(new Color(204, 215, 191));
             ItemDrop = ModContent.ItemType<IrradiatedSnow>();
-            SetModTree(new IrradiatedBorealTree());
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
@@ -84,11 +83,6 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), 0, 0, -1, -1);
             }
-        }
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return ModContent.TileType<IrradiatedBorealSapling>();
         }
     }
 }

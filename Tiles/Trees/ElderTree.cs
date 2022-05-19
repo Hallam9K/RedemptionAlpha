@@ -2,47 +2,54 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
+using Terraria.GameContent;
+using Terraria;
+using Redemption.Tiles.Tiles;
+using ReLogic.Content;
 
 namespace Redemption.Tiles.Trees
 {
-    public class ElderTree : ModTree
+	public class ElderTree : ModTree
 	{
-		private static Mod Mod
+		public override TreePaintingSettings TreeShaderSettings => new()
+        {
+			UseSpecialGroups = true,
+			SpecialGroupMinimalHueValue = 11f / 72f,
+			SpecialGroupMaximumHueValue = 0.25f,
+			SpecialGroupMinimumSaturationValue = 0.88f,
+			SpecialGroupMaximumSaturationValue = 1f
+		};
+		public override void SetStaticDefaults()
 		{
-			get
-			{
-				return ModLoader.GetMod("Redemption");
-			}
+			GrowsOnTileId = new int[1] { ModContent.TileType<AncientDirtTile>() };
+		}
+		public override Asset<Texture2D> GetTexture()
+		{
+			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/ElderTree");
 		}
 
-		public override int CreateDust()
+		public override int SaplingGrowthType(ref int style)
 		{
-            return DustID.t_BorealWood;
+			style = 0;
+			return ModContent.TileType<ElderSapling>();
 		}
-
+		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+		{
+			// This is where fancy code could go, but let's save that for an advanced example
+		}
+		public override Asset<Texture2D> GetBranchTextures()
+		{
+			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/ElderTree_Branches");
+		}
+		public override Asset<Texture2D> GetTopTextures()
+		{
+			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/ElderTree_Top");
+		}
+		public override int DropWood() => ModContent.ItemType<ElderWood>();
+		public override int CreateDust() => DustID.t_BorealWood;
 		public override int GrowthFXGore()
 		{
 			return ModContent.Find<ModGore>("Redemption/ElderTreeFX").Type;
-		}
-
-		public override int DropWood()
-		{
-			return ModContent.ItemType<ElderWood>();
-		}
-
-		public override Texture2D GetTexture()
-		{
-			return Mod.Assets.Request<Texture2D>("Tiles/Trees/ElderTree").Value;
-		}
-
-		public override Texture2D GetTopTextures(int i, int j, ref int frame, ref int frameWidth, ref int frameHeight, ref int xOffsetLeft, ref int yOffset)
-		{
-			return Mod.Assets.Request<Texture2D>("Tiles/Trees/ElderTree_Tops").Value;
-		}
-
-		public override Texture2D GetBranchTextures(int i, int j, int trunkOffset, ref int frame)
-		{
-			return Mod.Assets.Request<Texture2D>("Tiles/Trees/ElderTree_Branches").Value;
 		}
 	}
 }
