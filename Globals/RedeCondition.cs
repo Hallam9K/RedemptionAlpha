@@ -27,13 +27,7 @@ namespace Redemption.Globals
 	}
 	public class OnFireCondition : IItemDropRuleCondition
 	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && info.npc.FindBuffIndex(BuffID.OnFire) != -1 && info.npc.FindBuffIndex(BuffID.OnFire3) != -1)
-				return true;
-
-			return false;
-		}
+		public bool CanDrop(DropAttemptInfo info) => false;
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() => "Dropped while on fire";
 	}

@@ -37,6 +37,18 @@ namespace Redemption.Items.Materials.PostML
             Item.noUseGraphic = true;
             Item.consumable = true;
         }
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (source is EntitySource_CatchEntity sourceParent)
+            {
+                if (sourceParent.CaughtEntity is NPC)
+                {
+                    float scale = (Main.npc[sourceParent.CaughtEntity.whoAmI].ModNPC as ShadesoulNPC).Scale;
+                    int dropAmount = (int)(scale / 2 * 10);
+                    Item.stack = 1 + dropAmount;
+                }
+            }
+        }
         public override bool? UseItem(Player player)
         {
             int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)player.Center.X, (int)player.Center.Y,

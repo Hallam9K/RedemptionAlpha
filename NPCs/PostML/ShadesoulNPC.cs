@@ -49,11 +49,6 @@ namespace Redemption.NPCs.PostML
             NPC.dontTakeDamage = true;
             NPC.catchItem = (short)ModContent.ItemType<Shadesoul>();
         }
-        public override void OnCatchNPC(Player player, Item item)
-        {
-            int dropAmount = (int)(Scale / 2 * 10);
-            item.stack = 1 + dropAmount;
-        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)

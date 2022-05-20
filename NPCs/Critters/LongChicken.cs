@@ -75,6 +75,26 @@ namespace Redemption.NPCs.Critters
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LongEgg>(), 1, 1, 2));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>()));
         }
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        {
+            if (NPC.life <= 0)
+            {
+                if (ItemTags.Fire.Has(item.type))
+                    Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
+                else if (NPC.FindBuffIndex(BuffID.OnFire) != -1 || NPC.FindBuffIndex(BuffID.OnFire3) != -1)
+                    Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
+            }
+        }
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            if (NPC.life <= 0)
+            {
+                if (ProjectileTags.Fire.Has(projectile.type))
+                    Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
+                else if (NPC.FindBuffIndex(BuffID.OnFire) != -1 || NPC.FindBuffIndex(BuffID.OnFire3) != -1)
+                    Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
+            }
+        }
 
         public Vector2 moveTo;
         private int runCooldown;
