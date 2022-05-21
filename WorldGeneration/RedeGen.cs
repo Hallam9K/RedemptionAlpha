@@ -37,7 +37,6 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Tiles.MusicBoxes;
 using Redemption.Tiles.Furniture.Archcloth;
 using Redemption.NPCs.Bosses.KSIII;
-using StructureHelper;
 using System;
 using System.Threading;
 
@@ -361,6 +360,7 @@ namespace Redemption.WorldGeneration
                 tasks.Insert(ShiniesIndex + 5, new PassLegacy("Generating Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Ancient Decal
+                    /*
                     progress.Message = "Generating ancient decal";
                     for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-06); k++)
                     {
@@ -435,6 +435,7 @@ namespace Redemption.WorldGeneration
                             placed = true;
                         }
                     }
+                    */
                     #endregion
                 }));
             }

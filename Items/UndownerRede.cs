@@ -47,6 +47,7 @@ namespace Redemption.Items
             RedeBossDowned.downedVlitch3 = false;
             RedeBossDowned.voltBegin = false;
             RedeBossDowned.downedPZ = false;
+            RedeBossDowned.oblitDeath = 0;
             RedeQuest.wayfarerVars[0] = 1;
 
             if (Main.netMode == NetmodeID.Server)
