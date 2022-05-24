@@ -705,9 +705,9 @@ namespace Redemption.Base
                             closestPoint = corner;
                         }
                     }
-                    if (closestPoint == topLeft || closestPoint == bottomRight) { destVec = rand.Next(2) == 0 ? topRight : bottomLeft; }
+                    if (closestPoint == topLeft || closestPoint == bottomRight) { destVec = rand.NextBool(2)? topRight : bottomLeft; }
                     else
-                    if (closestPoint == topRight || closestPoint == bottomLeft) { destVec = rand.Next(2) == 0 ? topLeft : bottomRight; }
+                    if (closestPoint == topRight || closestPoint == bottomLeft) { destVec = rand.NextBool(2)? topLeft : bottomRight; }
                 }
                 ai[0] = destVec.X; ai[1] = destVec.Y;
                 if (Main.netMode == NetmodeID.Server) { npc.netUpdate = true; }
@@ -1899,7 +1899,7 @@ namespace Redemption.Base
                             Main.dust[dustID].position.Y -= dustY;
                         }
                     }
-                    if (Main.rand.Next(8) == 0)
+                    if (Main.rand.NextBool(8))
                     {
                         int offset = 1;
                         Vector2 pos = new(p.position.X - offset, p.position.Y - offset);
@@ -2010,7 +2010,7 @@ namespace Redemption.Base
             if (playSound && p.soundDelay == 0)
             {
                 p.soundDelay = 8;
-                SoundEngine.PlaySound(SoundID.Item, (int)p.position.X, (int)p.position.Y, 7);
+                SoundEngine.PlaySound(SoundID.Item7, p.position);
             }
             if (ai[0] == 0f)
             {
@@ -2215,7 +2215,7 @@ namespace Redemption.Base
                 {
                     p.netUpdate = true;
                     Collision.HitTiles(p.position, p.velocity, p.width, p.height);
-                    if (playSound) { SoundEngine.PlaySound(SoundID.Dig, (int)p.position.X, (int)p.position.Y); }
+                    if (playSound) { SoundEngine.PlaySound(SoundID.Dig,p.position); }
                 }
             }
         }
@@ -2476,7 +2476,7 @@ namespace Redemption.Base
             Player targetPlayer = npc.target < 0 ? null : Main.player[npc.target];
             Vector2 playerCenter = targetPlayer == null ? npc.Center + new Vector2(0, 5f) : targetPlayer.Center;
 
-            if (npc.justHit && Main.netMode != NetmodeID.MultiplayerClient && noDmg && Main.rand.Next(6) == 0)
+            if (npc.justHit && Main.netMode != NetmodeID.MultiplayerClient && noDmg && Main.rand.NextBool(6))
             {
                 npc.netUpdate = true;
                 ai[0] = -1f;
@@ -2739,7 +2739,7 @@ namespace Redemption.Base
             bool collisonOnX = false;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (ai[2] == 0f && Main.rand.Next(7200) == 0) { ai[2] = 2f; npc.netUpdate = true; }
+                if (ai[2] == 0f && Main.rand.NextBool(7200)) { ai[2] = 2f; npc.netUpdate = true; }
                 if (!npc.collideX && !npc.collideY)
                 {
                     npc.localAI[3] += 1f;
@@ -3057,7 +3057,7 @@ namespace Redemption.Base
                 npc.HitEffect();
                 npc.active = false;
                 if (npc.type == NPCID.OldMan)
-                    SoundEngine.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
+                    SoundEngine.PlaySound(SoundID.Roar, npc.position);
             }
             //prevent a -1, -1 saving scenario
             if (npc.type >= Main.maxNPCTypes && npc.homeTileX == -1 && npc.homeTileY == -1 || npc.homeTileX == ushort.MaxValue && npc.homeTileY == ushort.MaxValue)
@@ -3158,7 +3158,7 @@ namespace Redemption.Base
                 }
                 else
                 {
-                    if (Main.rand.Next(80) != 0 || (double)ai[2] != 0) return;
+                    if (!Main.rand.NextBool(80)|| (double)ai[2] != 0) return;
                     ai[2] = 200f;
                     npc.direction *= -1;
                     npc.netUpdate = true;
@@ -3223,7 +3223,7 @@ namespace Redemption.Base
                 int tileX2 = (int)((npc.Center.X + 15 * npc.direction) / 16f);
                 int tileY2 = (int)((npc.position.Y + npc.height - 16f) / 16f);
                 //Main.tile[tileX2 - npc.direction, tileY2 + 1].halfBrick();
-                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].HasUnactuatedTile && Main.tile[tileX2, tileY2 - 2].TileType == 10 && (Main.rand.Next(10) == 0 || seekHouse))
+                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].HasUnactuatedTile && Main.tile[tileX2, tileY2 - 2].TileType == 10 && (Main.rand.NextBool(10)|| seekHouse))
                 {
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         return;
@@ -3890,7 +3890,7 @@ namespace Redemption.Base
                 int tx = (int)tilePos.X; int ty = (int)tilePos.Y;
                 if (!Main.tile[tx, ty].HasUnactuatedTile || !Main.tileSolid[Main.tile[tx, ty].TileType] || Main.tileSolid[Main.tile[tx, ty].TileType] && Main.tileSolidTop[Main.tile[tx, ty].TileType])
                 {
-                    if (npc.DeathSound != null) SoundEngine.PlaySound(npc.DeathSound, (int)npc.Center.X, (int)npc.Center.Y);
+                    if (npc.DeathSound != null) SoundEngine.PlaySound((SoundStyle)npc.DeathSound, npc.Center);
                     npc.life = -1;
                     npc.HitEffect();
                     npc.active = false;
@@ -4200,7 +4200,7 @@ namespace Redemption.Base
                             if (npc.position.X + npc.width > tPos.X && npc.position.X < tPos.X + 16f && npc.position.Y + npc.height > tPos.Y && npc.position.Y < tPos.Y + 16f)
                             {
                                 canMove = true;
-                                if (spawnTileDust && Main.rand.Next(100) == 0 && checkTile.HasUnactuatedTile)
+                                if (spawnTileDust && Main.rand.NextBool(100)&& checkTile.HasUnactuatedTile)
                                 {
                                     WorldGen.KillTile(tX, tY, true, true);
                                 }
@@ -4313,7 +4313,7 @@ namespace Redemption.Base
                         if (distSoundDelay < 10f) { distSoundDelay = 10f; }
                         if (distSoundDelay > 20f) { distSoundDelay = 20f; }
                         npc.soundDelay = (int)distSoundDelay;
-                        SoundEngine.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y);
+                        SoundEngine.PlaySound(SoundID.Roar, npc.position);
                     }
                     dist = (float)Math.Sqrt(playerCenterX * playerCenterX + playerCenterY * playerCenterY);
                     float absPlayerCenterX = Math.Abs(playerCenterX);

@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap2").WithPitchVariance(0.1f), Projectile.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Zap2") { PitchVariance = .1f }, Projectile.position);
             for (int i = 0; i < 15; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Frost, 0f, 0f, 100, default, 4f);

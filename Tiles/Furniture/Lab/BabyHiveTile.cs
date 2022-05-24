@@ -29,8 +29,7 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<SludgeDust>();
             MinPick = 10;
             MineResist = 5f;
-            SoundStyle = 13;
-            SoundType = SoundID.NPCHit;
+            HitSound = SoundID.NPCHit13;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Baby Infection Hive");
             AddMapEntry(new Color(54, 193, 59));

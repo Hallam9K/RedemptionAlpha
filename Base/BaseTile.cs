@@ -185,45 +185,6 @@ namespace Redemption.Base
 
         public static bool AlchemyFlower(int type) { return type is 82 or 83 or 84; }
 
-       /*
-        * Plays the tile at (tileX, tileY)'s hit sound.
-        */       
-        public static void PlayTileHitSound(int tileX, int tileY)
-        {
-            Tile tile = Main.tile[tileX, tileY];
-            if(tile != null)
-            {
-                PlayTileHitSound(tileX * 16, tileY * 16, tile.TileType);
-            }
-        }
-
-        /*
-         * Plays a specific tile type's hit sound at the given position.
-         */
-        public static void PlayTileHitSound(float x, float y, int tileType)
-        {
-            /*if (TileDef.sound.Length < tileType && TileDef.sound[tileType] > 0)
-            {
-				int hitSound = TileDef.sound[tileType];
-                int list = 0;
-				list = TileDef.soundGroup[tileType];
-                Main.PlaySound(list, (int)x, (int)y, hitSound);
-            }*/
-            if (tileType >= 0 && TileLoader.GetTile(tileType) != null)
-            {
-                ModTile tile = TileLoader.GetTile(tileType);
-                SoundEngine.PlaySound(tile.SoundStyle, (int)x, (int)y, tile.SoundType);
-            }
-            else if (tileType == 127)
-                SoundEngine.PlaySound(SoundID.Item, (int)x, (int)y, 27);
-            else if (AlchemyFlower(tileType) || tileType is 3 or 110 or 24 or 32 or 51 or 52 or 61 or 62 or 69 or 71 or 73 or 74 or 113 or 115)
-                SoundEngine.PlaySound(SoundID.Grass, (int)x, (int)y);
-            else if (tileType is 1 or 6 or 7 or 8 or 9 or 22 or 140 or 25 or 37 or 38 or 39 or 41 or 43 or 44 or 45 or 46 or 47 or 48 or 56 or 58 or 63 or 64 or 65 or 66 or 67 or 68 or 75 or 76 or 107 or 108 or 111 or 117 or 118 or 119 or 120 or 121 or 122)
-                SoundEngine.PlaySound(SoundID.Tink, (int)x, (int)y);
-            else if (tileType != 138)
-                SoundEngine.PlaySound(SoundID.Dig, (int)x, (int)y);
-        }
-
         /*
          * Goes through a square area given by the x, y and width, height params, and returns true if they are all of the type given.
          */

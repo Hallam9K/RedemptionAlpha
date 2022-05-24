@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 3f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(0, 246, 83));
 		}
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

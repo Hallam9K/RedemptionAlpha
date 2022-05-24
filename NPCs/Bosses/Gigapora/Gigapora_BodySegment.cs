@@ -286,7 +286,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (NPC.immortal)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithVolume(0.5f).WithPitchVariance(0.1f), NPC.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/BallFire") { Volume = .5f, PitchVariance = .1f }, NPC.position);
                 damage = 0;
                 return false;
             }

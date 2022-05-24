@@ -343,7 +343,7 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer == 60)
                     {
                         for (int i = 0; i < 2; i++)
-                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), true, SoundID.Item1, "Sounds/Custom/BallFire", NPC.whoAmI, i);
+                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), true, SoundID.Item1, "BallFire", NPC.whoAmI, i);
                     }
                     if (AITimer >= 160)
                     {

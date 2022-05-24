@@ -14,7 +14,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 3f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
         }
         public override bool KillSound(int i, int j) => false;
         public override bool CreateDust(int i, int j, ref int type) => false;

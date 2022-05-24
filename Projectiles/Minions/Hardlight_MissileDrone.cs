@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.Minions
             if (soundVolume > 2f) { soundVolume = 2f; }
             if (Projectile.soundDelay == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item24.WithVolume(soundVolume), Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item24 with { Volume = soundVolume }, Projectile.position);
                 Projectile.soundDelay = 10;
             }
 
@@ -141,7 +141,7 @@ namespace Redemption.Projectiles.Minions
             {
                 AdjustMagnitude(ref Projectile.velocity);
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2").WithVolume(.2f).WithPitchVariance(0.1f), Projectile.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Alarm2") { Volume = .2f, PitchVariance = .1f }, Projectile.position);
                 Projectile.localAI[0] = 1f;
             }
             if (Projectile.localAI[0]++ < 20)

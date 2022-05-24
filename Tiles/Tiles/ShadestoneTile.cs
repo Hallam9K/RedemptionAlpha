@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<Shadestone>();
             MinPick = 350;
             MineResist = 11f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Shadestone");
             AddMapEntry(new Color(30, 30, 30));

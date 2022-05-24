@@ -19,7 +19,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileShine[Type] = 1100;
             TileID.Sets.Falling[Type] = true;
             DustType = DustID.GoldCoin;
-            SoundType = SoundID.Coins;
+            HitSound = SoundID.Coins;
             AddMapEntry(new Color(208, 200, 48));
             ItemDrop = ModContent.ItemType<AncientGoldCoin>();
         }
@@ -114,7 +114,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void AI()
         {
-            if (Main.rand.Next(5) == 0)
+            if (Main.rand.NextBool(5))
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustType);
                 Main.dust[dust].velocity.X *= 0.4f;

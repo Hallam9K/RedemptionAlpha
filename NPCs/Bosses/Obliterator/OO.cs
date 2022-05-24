@@ -18,6 +18,7 @@ using Terraria.GameContent.Bestiary;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -41,7 +42,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
             set => NPC.ai[0] = (int)value;
         }
 
-        public ref float AITimer => ref NPC.ai[2];
+        public ref float AITimer => ref NPC.ai[1];
+        public ref float TimerRand => ref NPC.ai[2];
 
         public override void SetStaticDefaults()
         {
@@ -107,7 +109,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (NPC.life <= 0)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), NPC.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion"), NPC.position);
                 RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
 
                 for (int i = 0; i < 80; i++)
@@ -174,10 +176,20 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 repeat = reader.ReadInt32();
             }
         }
+        public override void OnSpawn(IEntitySource source)
+        {
+            ArmFrameY[0] = 2;
+            ArmFrameY[1] = 1;
+            ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
+            ArmRot[1] = 0f;
+            HandsFrameY[0] = 2;
+            HandsFrameY[1] = 2;
+        }
         public Vector2 MoveVector2;
 
         public int frameCounters;
         public int repeat;
+        public bool BeamAnimation;
         void AttackChoice()
         {
         }
@@ -186,30 +198,114 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
             NPC.LookAtEntity(player);
             //DespawnHandler();
+            Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 
-            ArmFrameY[0] = 2;
-            ArmFrameY[1] = 1;
-            ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
-            ArmRot[1] = 0f;
-            HandsFrameY[0] = 2;
-            HandsFrameY[1] = 2;
-            LegFrameY = 2;
+            float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
+            Vector2 DefaultPos = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 80);
 
-            if (NPC.velocity.Length() > 12)
+            switch (AIState)
             {
-                Vector2 position = NPC.Center + (Vector2.Normalize(NPC.velocity) * 30f);
-                Dust dust20 = Main.dust[Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain)];
-                dust20.position = position;
-                dust20.velocity = (NPC.velocity.RotatedBy(1.5708) * 0.33f) + (NPC.velocity / 4f);
-                dust20.position += NPC.velocity.RotatedBy(1.5708);
-                dust20.fadeIn = 0.5f;
-                dust20.noGravity = true;
-                dust20 = Main.dust[Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain)];
-                dust20.position = position;
-                dust20.velocity = (NPC.velocity.RotatedBy(-1.5708) * 0.33f) + (NPC.velocity / 4f);
-                dust20.position += NPC.velocity.RotatedBy(-1.5708);
-                dust20.fadeIn = 0.5f;
-                dust20.noGravity = true;
+                case ActionState.Intro:
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
+                            NPC.LookAtEntity(player);
+                            AITimer++;
+                            if (NPC.DistanceSQ(DefaultPos) < 100 * 100 || AITimer > 200)
+                            {
+                                AITimer = 0;
+                                if (RedeBossDowned.oblitDeath == 2)
+                                    TimerRand = 2;
+                                else
+                                    TimerRand = 1;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                                NPC.MoveToVector2(DefaultPos, 11f);
+                            break;
+                        case 1:
+                            NPC.velocity *= 0.96f;
+                            if (AITimer++ >= 30)
+                            {
+                                NPC.velocity *= 0f;
+                                player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                                player.RedemptionScreen().lockScreen = true;
+                            }
+                            if (AITimer == 120)
+                            {
+                                HandsFrameY[0] = 0;
+                                ArmFrameY[0] = 1;
+                                HeadFrameY = 1;
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Yo.", true, false);
+                            }
+                            if (AITimer >= 120 && AITimer < 188)
+                                ArmRot[0].SlowRotation(MathHelper.PiOver2 + (-1 * NPC.spriteDirection) + RotFlip, MathHelper.Pi / 50);
+                            else if (AITimer >= 188 && AITimer < 350)
+                            {
+                                HeadFrameY = 0;
+                                HandsFrameY[0] = 2;
+                                ArmRot[0].SlowRotation(0, MathHelper.Pi / 20);
+                            }
+                            else
+                                ArmRot[0] = MathHelper.PiOver2 + RotFlip;
+                            if (AITimer < 190 || AITimer > 370)
+                                NPC.LookAtEntity(player);
+                            if (AITimer == 190 && player.active && !player.dead)
+                            {
+                                BeamAnimation = true;
+                                // Beam Animation
+                            }
+                            if (AITimer == 238)
+                                player.GetModPlayer<ScreenPlayer>().Rumble(112, 20);
+                            if (AITimer == 350)
+                            {
+                                ArmFrameY[0] = 2;
+                                BeamAnimation = false;
+                                // Beam End
+                            }
+                            if (AITimer == 400)
+                            {
+                                if (RedeBossDowned.oblitDeath == 1)
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityRed, "I guess I can't fool you twice, huh.", true, false);
+                                else
+                                    CombatText.NewText(NPC.getRect(), Colors.RarityRed, "So much for a surprise attack...", true, false);
+                            }
+                            if (AITimer == 580)
+                            {
+                                HeadFrameY = 2;
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Hang on, I got a call from Girus.", true, false);
+                            }
+                            if (AITimer == 740)
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "'I wasted too much energy too quickly?'", true, false);
+                            if (AITimer == 840)
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "'I'm an idiot?'", true, false);
+                            if (AITimer == 940)
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "You're scrapping my personality drive?", true, false);
+                            if (AITimer == 1140)
+                            {
+                                HeadFrameY = 0;
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Ah well, request accepted...", true, false);
+                            }
+                            if (AITimer == 1380)
+                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "REBOOTING SYSTEMS... GENERATING BARRIER...", true, false);
+                            if (AITimer > 1500)
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/LabSafeS"), NPC.position);
+                                for (int i = 0; i < 100; i++)
+                                {
+                                    int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain, Scale: 1.5f);
+                                    Main.dust[dustIndex].velocity *= 1.9f;
+                                }
+                                RedeBossDowned.oblitDeath = 2;
+                                AIState = ActionState.Begin;
+                                AITimer = 0;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                    }
+                    break;
             }
         }
         public override void FindFrame(int frameHeight)
@@ -218,12 +314,35 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = NPC.rotation;
 
+            if (BeamAnimation)
+            {
+                if (++NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 5 * frameHeight)
+                        NPC.frame.Y = 5 * frameHeight;
+                }
+            }
+            else
+            {
+                if (++NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y -= frameHeight;
+                    if (NPC.frame.Y < 0)
+                        NPC.frame.Y = 0;
+                }
+            }
 
+            LegFrameY = 2 + (int)(-NPC.velocity.Y / 6);
+            LegFrameY = (int)MathHelper.Clamp(LegFrameY, 0, 4);
+            NPC.rotation = NPC.velocity.X * 0.01f;
         }
         public void Dash(int speed, bool directional)
         {
             Player player = Main.player[NPC.target];
-            SoundEngine.PlaySound(SoundID.Item74, (int)NPC.position.X, (int)NPC.position.Y);
+            SoundEngine.PlaySound(SoundID.Item74, NPC.position);
             if (directional)
                 NPC.velocity = NPC.DirectionTo(player.Center) * speed;
             else
@@ -235,21 +354,21 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (!player.active || player.dead)
             {
                 NPC.velocity *= 0.96f;
-                if (NPC.ai[0] == 1 && NPC.ai[2] > 190 && RedeBossDowned.oblitDeath == 0)
+                if (NPC.ai[0] == 1 && AITimer > 190 && RedeBossDowned.oblitDeath == 0)
                 {
                     RedeBossDowned.oblitDeath = 1;
-                    NPC.ai[2] = 0;
+                    AITimer = 0;
                     NPC.ai[3] = 0;
                     NPC.ai[0] = 6;
                 }
                 else if (NPC.ai[0] == 6)
                 {
-                    NPC.ai[2]++;
-                    if (NPC.ai[2] == 100)
+                    AITimer++;
+                    if (AITimer == 100)
                         CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Alright, target eliminated.", true, false);
-                    if (NPC.ai[2] == 190)
+                    if (AITimer == 190)
                         CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Returning to base...", true, false);
-                    if (NPC.ai[2] > 190)
+                    if (AITimer > 190)
                     {
                         NPC.velocity.Y -= 1;
                         if (NPC.timeLeft > 10)
@@ -264,10 +383,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             CombatText.NewText(NPC.getRect(), Colors.RarityRed, "TARGET OBLITERATED... RETURNING TO GIRUS...", true, false);
                         else
                             CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Target eliminated...", true, false);
-                        NPC.ai[2] = 0;
+                        AITimer = 0;
                         NPC.ai[0] = 7;
                     }
-                    if (NPC.ai[0] == 7 && ++NPC.ai[2] > 120)
+                    if (NPC.ai[0] == 7 && ++AITimer > 120)
                         NPC.velocity.Y -= 1;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
@@ -300,9 +419,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Texture2D headGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Head_Glow").Value;
             Texture2D legs = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Legs").Value;
             Texture2D thruster = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora_ThrusterBlue").Value;
-            float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
+            float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, -NPC.velocity.Y / 20);
             thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
-            float thrusterScaleY = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.3f, 2f);
+            float thrusterScaleY = MathHelper.Clamp(-NPC.velocity.Y / 10, 0.3f, 2f);
             Vector2 p = NPC.Center - screenPos;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (!NPC.IsABestiaryIconDummy)
@@ -319,47 +438,66 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
-            // Back Arm
             int armsHeight = armF.Height / 3;
             Rectangle rectArmF = new(0, armsHeight * ArmFrameY[1], armF.Width, armsHeight);
             Rectangle rectArmB = new(0, armsHeight * ArmFrameY[0], armB.Width, armsHeight);
             Vector2 originArms = new(armF.Width / 2f + (-6 * NPC.spriteDirection), armsHeight / 2f - 14);
-            spriteBatch.Draw(armB, p + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -11), new Rectangle?(rectArmB), NPC.GetAlpha(drawColor), ArmRot[0], originArms, NPC.scale, effects, 0);
-            // Back Hand
+
             int handsHeight = hands.Height / 3;
             Rectangle rectHandF = new(0, handsHeight * HandsFrameY[1], hands.Width / 2, handsHeight);
             Rectangle rectHandB = new(hands.Width / 2, handsHeight * HandsFrameY[0], hands.Width / 2, handsHeight);
-            spriteBatch.Draw(hands, p + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -11), new Rectangle?(rectHandB), NPC.GetAlpha(drawColor), ArmRot[0], originArms - new Vector2((NPC.spriteDirection == -1 ? 31 : 10) + (HandArmX[ArmFrameY[0]] * -NPC.spriteDirection), 64 + HandArmY[ArmFrameY[1]]), NPC.scale, effects, 0);
-            // Rockets Back
+
             int armRHeight = armR.Height / 4;
             int armRWidth = armR.Width / 3;
             Rectangle rectArmRB = new(armRWidth * ArmFrameY[0], armRHeight * ArmRFrameY, armRWidth, armRHeight);
             Rectangle rectArmRF = new(armRWidth * ArmFrameY[1], armRHeight * ArmRFrameY, armRWidth, armRHeight);
-            spriteBatch.Draw(armR, p + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -11), new Rectangle?(rectArmRB), NPC.GetAlpha(drawColor), ArmRot[0], originArms - new Vector2(NPC.spriteDirection == -1 ? 3 : 12, 0), NPC.scale, effects, 0);
+
+            if (NPC.frame.Y <= 0)
+            {
+                // Back Arm
+                spriteBatch.Draw(armB, p + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectArmB), NPC.GetAlpha(drawColor), ArmRot[0], originArms, NPC.scale, effects, 0);
+                // Back Hand
+                spriteBatch.Draw(hands, p + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectHandB), NPC.GetAlpha(drawColor), ArmRot[0], originArms - new Vector2((NPC.spriteDirection == -1 ? 29 : 12) + (HandArmX[ArmFrameY[0]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[0]]), NPC.scale, effects, 0);
+                // Rockets Back
+                spriteBatch.Draw(armR, p + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectArmRB), NPC.GetAlpha(drawColor), ArmRot[0], originArms - new Vector2(NPC.spriteDirection == -1 ? -3 : 14, 0), NPC.scale, effects, 0);
+            }
             // Body
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
             Vector2 thrusterOrigin = new(thruster.Width / 2f, thruster.Height / 2f - 20);
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
-                spriteBatch.Draw(thruster, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(NPC.spriteDirection == 1 ? -44 : 0, NPC.rotation) + RedeHelper.PolarVector(4, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                spriteBatch.Draw(thruster, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(NPC.spriteDirection == 1 ? -44 : 0, NPC.rotation) + RedeHelper.PolarVector(4, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(-NPC.velocity.Y / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
             }
-            spriteBatch.Draw(thruster, p + RedeHelper.PolarVector(30, NPC.rotation) + RedeHelper.PolarVector(NPC.spriteDirection == 1 ? -44 : 0, NPC.rotation) + RedeHelper.PolarVector(4, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation - MathHelper.PiOver2, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+            spriteBatch.Draw(thruster, p + RedeHelper.PolarVector(30, NPC.rotation) + RedeHelper.PolarVector(NPC.spriteDirection == 1 ? -44 : 0, NPC.rotation) + RedeHelper.PolarVector(4, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(-NPC.velocity.Y / 20, 0, 1), NPC.rotation - MathHelper.PiOver2, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(texture, p + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             spriteBatch.Draw(glow, p + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            // Head
-            int headHeight = head.Height / 3;
-            Rectangle rectHead = new(0, headHeight * HeadFrameY, head.Width, headHeight);
-            spriteBatch.Draw(head, p + new Vector2(NPC.spriteDirection == -1 ? 0 : 8, 0), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(4, -2), NPC.scale, effects, 0);
-            spriteBatch.Draw(headGlow, p + new Vector2(NPC.spriteDirection == -1 ? 0 : 8, 0), new Rectangle?(rectHead), RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(4, -2), NPC.scale, effects, 0);
+            if (NPC.frame.Y <= 0)
+            {
+                // Head
+                int headHeight = head.Height / 3;
+                Rectangle rectHead = new(0, headHeight * HeadFrameY, head.Width, headHeight);
+                spriteBatch.Draw(head, p + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
+                spriteBatch.Draw(headGlow, p + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
+            }
             // Legs
             int legsHeight = legs.Height / 5;
             Rectangle rectLegs = new(0, legsHeight * LegFrameY, legs.Width, legsHeight);
             spriteBatch.Draw(legs, p, new Rectangle?(rectLegs), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(22, -78), NPC.scale, effects, 0);
-            // Front Arm
-            spriteBatch.Draw(armF, p + new Vector2(NPC.spriteDirection == -1 ? 11 : -55, -22), new Rectangle?(rectArmF), NPC.GetAlpha(drawColor), ArmRot[1], originArms, NPC.scale, effects, 0);
-            spriteBatch.Draw(hands, p + new Vector2(NPC.spriteDirection == -1 ? 11 : -55, -22), new Rectangle?(rectHandF), NPC.GetAlpha(drawColor), ArmRot[1], originArms - new Vector2((NPC.spriteDirection == -1 ? 34 : 11) + (HandArmX[ArmFrameY[1]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[1]]), NPC.scale, effects, 0);
-            spriteBatch.Draw(armR, p + new Vector2(NPC.spriteDirection == -1 ? 11 : -55, -22), new Rectangle?(rectArmRF), NPC.GetAlpha(drawColor), ArmRot[1], originArms - new Vector2(NPC.spriteDirection == -1 ? 3 : 12, 0), NPC.scale, effects, 0);
+            if (NPC.frame.Y <= 0)
+            {
+                // Front Arm
+                spriteBatch.Draw(armF, p + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectArmF), NPC.GetAlpha(drawColor), ArmRot[1], originArms, NPC.scale, effects, 0);
+                spriteBatch.Draw(hands, p + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectHandF), NPC.GetAlpha(drawColor), ArmRot[1], originArms - new Vector2((NPC.spriteDirection == -1 ? 28 : 13) + (HandArmX[ArmFrameY[1]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[1]]), NPC.scale, effects, 0);
+                spriteBatch.Draw(armR, p + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectArmRF), NPC.GetAlpha(drawColor), ArmRot[1], originArms - new Vector2(NPC.spriteDirection == -1 ? -3 : 14, 0), NPC.scale, effects, 0);
+            }
             return false;
         }
     }

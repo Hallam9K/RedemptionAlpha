@@ -57,7 +57,7 @@ namespace Redemption.Projectiles.Melee
         public override void Kill(int timeLeft)
         {
             if (!Projectile.wet)
-                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(0.4f), Projectile.position);
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode with { Volume = .4f }, Projectile.position);
             for (int i = 0; i < 6; i++)
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
             for (int i = 0; i < 12; i++)

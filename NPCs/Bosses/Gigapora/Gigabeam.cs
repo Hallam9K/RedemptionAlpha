@@ -55,14 +55,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < MaxLaserLength; i += 10)
             {
-                if (Main.rand.Next(40) == 0)
+                if (Main.rand.NextBool(40))
                 {
                     Dust dust = Dust.NewDustPerfect(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * i, ModContent.DustType<GlowDust>(), Vector2.UnitX.RotatedBy(Projectile.rotation) * Main.rand.NextFloat(10, 20), 0, default, 2f);
                     dust.noGravity = true;
                     Color dustColor = new(216, 35, 10) { A = 0 };
                     dust.color = dustColor;
                 }
-                if (Main.rand.Next(40) == 0)
+                if (Main.rand.NextBool(40))
                 {
                     Dust dust = Dust.NewDustPerfect(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * i, ModContent.DustType<GlowDust>(), Vector2.UnitX.RotatedBy(Projectile.rotation) * Main.rand.NextFloat(10, 20), 0, default, 1f);
                     dust.noGravity = true;

@@ -56,7 +56,7 @@ namespace Redemption.Projectiles.Magic
 
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item21.WithVolume(0.5f), Projectile.position);
+            SoundEngine.PlaySound(SoundID.Item21 with { Volume = 0.5f }, Projectile.position);
             for (int i = 0; i < 20; i++)
             {
                 int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.GemSapphire, 0, 0, Scale: 3);

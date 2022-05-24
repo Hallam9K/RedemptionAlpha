@@ -28,7 +28,7 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.OrangeStainedGlass;
             MinPick = 0;
             MineResist = 0.1f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Radiation Pill");
             AddMapEntry(new Color(236, 144, 71), name);

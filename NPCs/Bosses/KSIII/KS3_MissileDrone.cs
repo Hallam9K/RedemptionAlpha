@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (soundVolume > 2f) { soundVolume = 2f; }
             if (NPC.soundDelay == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item24.WithVolume(soundVolume), NPC.position);
+                SoundEngine.PlaySound(SoundID.Item24 with { Volume = soundVolume }, NPC.position);
                 NPC.soundDelay = 10;
             }
             NPC host = Main.npc[(int)NPC.ai[0]];
@@ -206,7 +206,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 AdjustMagnitude(ref Projectile.velocity);
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2").WithVolume(.2f).WithPitchVariance(0.1f), Projectile.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Alarm2") { Volume = .2f, PitchVariance = .1f }, Projectile.position);
                 Projectile.localAI[0] = 1f;
             }
             if (Projectile.localAI[0]++ < 20)

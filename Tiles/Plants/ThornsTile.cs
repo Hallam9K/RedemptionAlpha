@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(159, 208, 159));
             DustType = DustID.GrassBlades;
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void NearbyEffects(int i, int j, bool closer)

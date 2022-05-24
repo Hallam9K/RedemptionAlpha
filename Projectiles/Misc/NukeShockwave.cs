@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Misc
                 target.velocity += throwVelocity;
             }
             if (!Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/NukeExplosion"), target.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NukeExplosion"), target.position);
         }
     }
 }

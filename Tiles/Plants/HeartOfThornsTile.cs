@@ -28,7 +28,7 @@ namespace Redemption.Tiles.Plants
             name.SetDefault("Heart of Thorns");
             AddMapEntry(new Color(144, 244, 144), name);
             DustType = DustID.GrassBlades;
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

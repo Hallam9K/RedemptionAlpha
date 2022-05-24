@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.channel = true;
             Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Green;
-            Item.UseSound = SoundID.Item9.WithVolume(0);
+            Item.UseSound = SoundID.Item9 with { Volume = 0 };
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<SoulScepterChargeS>();
             Item.shootSpeed = 10f;

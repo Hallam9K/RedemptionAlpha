@@ -32,8 +32,6 @@ namespace Redemption.Tiles.Trees
             style = 1;
             return ModContent.TileType<IrradiatedPalmSapling>();
         }
-        public override Asset<Texture2D> GetOasisBranchTextures() => null;
-        public override Asset<Texture2D> GetBranchTextures() => null;
         public override Asset<Texture2D> GetOasisTopTextures()
         {
             return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree_Top");

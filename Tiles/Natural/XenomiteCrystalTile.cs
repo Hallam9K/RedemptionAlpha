@@ -25,8 +25,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.DrawYOffset = 4;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            SoundStyle = 27;
-            SoundType = SoundID.Item;
+            HitSound = SoundID.Item27;
             TileObjectData.newTile.AnchorValidTiles = new int[]
             {
                 ModContent.TileType<IrradiatedGrassTile>(),

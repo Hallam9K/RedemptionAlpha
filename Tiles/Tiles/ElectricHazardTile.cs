@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Electric;
             MinPick = 310;
             MineResist = 7f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(200, 255, 255));
             AnimationFrameHeight = 90;
             ItemDrop = ModContent.ItemType<ElectricHazard>();

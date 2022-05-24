@@ -273,10 +273,10 @@ namespace Redemption.NPCs.Bosses.Thorn
                             if (AITimer >= 60 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 15 : 25) == 0 && TimerRand >= 0)
                             {
                                 NPC.Shoot(new Vector2(player.Center.X + TimerRand, player.Center.Y - 200), ModContent.ProjectileType<ThornSeed>(),
-                                    NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                                    NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
                                 if (TimerRand != 0)
                                     NPC.Shoot(new Vector2(player.Center.X + -TimerRand, player.Center.Y - 200), ModContent.ProjectileType<ThornSeed>(),
-                                    NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                                    NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
 
                                 TimerRand -= 100;
                                 NPC.netUpdate = true;
@@ -444,7 +444,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     dust2.noGravity = true;
                                     dust2.velocity = -player.DirectionTo(dust2.position) * 10;
                                 }
-                                NPC.Shoot(player.Center, ModContent.ProjectileType<SlashFlashPro>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<SlashFlashPro>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
                             }
 
                             if (NPC.life < NPC.lifeMax / 2 ? AITimer >= 230 : AITimer >= 250)
@@ -487,7 +487,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
                         if (AITimer % 30 == 0 && AITimer < 180)
                         {
-                            SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 28, 1, TimerRand);
+                            SoundEngine.PlaySound(SoundID.Item28 with { Pitch = TimerRand }, NPC.position);
                             TimerRand += 0.1f;
                             NPC.netUpdate = true;
                         }

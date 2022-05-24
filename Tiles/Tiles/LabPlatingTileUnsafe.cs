@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<LabPlatingUnsafe>();
             MinPick = 500;
             MineResist = 3f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(202, 210, 210));
         }
         public override void RandomUpdate(int i, int j)

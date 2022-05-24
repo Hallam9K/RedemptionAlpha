@@ -123,7 +123,7 @@ namespace Redemption.Base
                         Main.recBigList = false;
                         player.chestX = left;
                         player.chestY = top;
-                        SoundEngine.PlaySound(player.chest < 0 ? 10 : 12);
+                        SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
                     }
                     Recipe.FindRecipes();
                 }
@@ -575,8 +575,8 @@ namespace Redemption.Base
             int distance = maxDistance - minDistance;
             if (!circular)
             {
-                float newPosX = pos.X + (Main.rand.Next(2) == 0 ? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
-                float newPosY = pos.Y + (Main.rand.Next(2) == 0 ? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
+                float newPosX = pos.X + (Main.rand.NextBool(2)? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
+                float newPosY = pos.Y + (Main.rand.NextBool(2)? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
                 return new Vector2(newPosX, newPosY);
             }
 

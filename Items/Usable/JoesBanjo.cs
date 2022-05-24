@@ -42,16 +42,16 @@ namespace Redemption.Items.Usable
                     switch (Main.rand.Next(3))
                     {
                         case 0:
-                            LegacySoundStyle b1 = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Banjo1");
-                            SoundEngine.PlaySound(b1.SoundId, (int)player.Center.X, (int)player.Center.Y, b1.Style, 1, cursorPosFromPlayer);
+                            SoundStyle b1 = new("Redemption/Sounds/Custom/Banjo1") { Pitch = cursorPosFromPlayer };
+                            SoundEngine.PlaySound(b1, player.Center);
                             break;
                         case 1:
-                            LegacySoundStyle b2 = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Banjo2");
-                            SoundEngine.PlaySound(b2.SoundId, (int)player.Center.X, (int)player.Center.Y, b2.Style, 1, cursorPosFromPlayer);
+                            SoundStyle b2 = new("Redemption/Sounds/Custom/Banjo2") { Pitch = cursorPosFromPlayer };
+                            SoundEngine.PlaySound(b2, player.Center);
                             break;
                         case 2:
-                            LegacySoundStyle b3 = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Banjo3");
-                            SoundEngine.PlaySound(b3.SoundId, (int)player.Center.X, (int)player.Center.Y, b3.Style, 1, cursorPosFromPlayer);
+                            SoundStyle b3 = new("Redemption/Sounds/Custom/Banjo3") { Pitch = cursorPosFromPlayer };
+                            SoundEngine.PlaySound(b3, player.Center);
                             break;
 
                     }

@@ -45,7 +45,7 @@ namespace Redemption.Projectiles.Magic
             if (soundVolume > 2f) { soundVolume = 2f; }
             if (Projectile.soundDelay == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item24.WithVolume(soundVolume), Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item24 with { Volume = soundVolume }, Projectile.position);
                 Projectile.soundDelay = 10;
             }
 

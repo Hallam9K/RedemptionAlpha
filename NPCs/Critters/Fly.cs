@@ -105,8 +105,7 @@ namespace Redemption.NPCs.Critters
                     if (NPC.soundDelay == 0)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/FlyBuzz")
-                                .WithVolume(1 * NPC.scale).WithPitchVariance(0.1f), NPC.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/FlyBuzz") { Volume = 1 * NPC.scale, PitchVariance = .1f }, NPC.position);
 
                         NPC.soundDelay = 180;
                     }
@@ -248,7 +247,7 @@ namespace Redemption.NPCs.Critters
             {
                 Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Smoke, NPC.velocity.X * 0.5f,
                     NPC.velocity.Y * 0.5f);
-                NPC.DeathSound = SoundID.NPCDeath1.WithVolume(0);
+                NPC.DeathSound = SoundID.NPCDeath1 with { Volume = 0 };
                 NPC.immuneTime = 30;
                 NPC.life = 1;
                 return false;

@@ -50,7 +50,7 @@ namespace Redemption.Projectiles.Misc
                 }
 
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gas1"), Projectile.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Gas1"), Projectile.position);
 
                 if (Projectile.owner == Main.myPlayer)
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), spawn, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Projectile.owner);

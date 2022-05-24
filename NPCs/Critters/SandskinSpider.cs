@@ -165,7 +165,7 @@ namespace Redemption.NPCs.Critters
 
                     if (NPC.soundDelay == 0)
                     {
-                        SoundEngine.PlaySound(SoundID.Roar, (int)NPC.position.X, (int)NPC.position.Y, 1, volumeScale: 0.3f);
+                        SoundEngine.PlaySound(SoundID.WormDigQuiet with { Volume = .3f }, NPC.position);
                         NPC.soundDelay = 20;
                     }
                     for (int i = 0; i < 2; i++)
@@ -215,7 +215,7 @@ namespace Redemption.NPCs.Critters
 
                     if (NPC.soundDelay == 0)
                     {
-                        SoundEngine.PlaySound(SoundID.Roar, (int)NPC.position.X, (int)NPC.position.Y, 1, volumeScale: 0.3f);
+                        SoundEngine.PlaySound(SoundID.WormDigQuiet with { Volume = .3f }, NPC.position);
                         NPC.soundDelay = 20;
                     }
                     for (int i = 0; i < 2; i++)

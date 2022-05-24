@@ -213,7 +213,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     {
                         for (int i = 0; i < 2; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), false, SoundID.Item1.WithVolume(0));
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), false, SoundID.Item1 with { Volume = 0 });
                         }
                         summonTimer = 600;
                     }

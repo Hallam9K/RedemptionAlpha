@@ -5,7 +5,7 @@
     <AssemblyName>Redemption</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -22,9 +22,6 @@
     </Reference>
     <Reference Include="ParticleLibrary">
       <HintPath>..\Mod Libraries\ParticleLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureHelper">
-      <HintPath>..\Mod Libraries\StructureHelper.dll</HintPath>
     </Reference>
     <Reference Include="SubworldLibrary">
       <HintPath>..\..\ModReader\SubworldLibrary\SubworldLibrary.dll</HintPath>

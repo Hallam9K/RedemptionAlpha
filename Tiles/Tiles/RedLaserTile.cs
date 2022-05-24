@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 3f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(255, 56, 13));
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;

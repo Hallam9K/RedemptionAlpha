@@ -477,9 +477,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125);
 
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1 with { Volume = 0 });
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1 with { Volume = 0 });
                             }
                             if (AttackNumber > 5)
                             {
@@ -497,9 +497,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item125, "", 1);
 
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                        new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                        new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1 with { Volume = 0 });
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                        new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1.WithVolume(0));
+                                        new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1 with { Volume = 0 });
                                 }
                             }
                             if (AttackNumber > 5 ? AITimer == 180 : AITimer == 150)
@@ -533,7 +533,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer >= 90 && AITimer % 7 == 0 && AITimer <= 130 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), NPC.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f }, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPC.damage / 4, 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
@@ -635,7 +635,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 ArmType = 3;
                                 HeadFrameY = 2;
-                                NPC.Shoot(NPC.Center + new Vector2(80 * NPC.spriteDirection, 20), ModContent.ProjectileType<Erhan_Bible>(), NPC.damage, new Vector2(0, -1), true, SoundID.Item1, "Sounds/Custom/Choir", NPC.whoAmI);
+                                NPC.Shoot(NPC.Center + new Vector2(80 * NPC.spriteDirection, 20), ModContent.ProjectileType<Erhan_Bible>(), NPC.damage, new Vector2(0, -1), true, SoundID.Item1, "Choir", NPC.whoAmI);
                             }
                             if (AITimer == 180)
                             {
@@ -688,7 +688,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer >= 130 && AITimer % 7 == 0 && AITimer <= 170 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), NPC.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f }, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPC.damage / 4, 3, Main.myPlayer, NPC.whoAmI, TimerRand2 * 60);
                                 Main.projectile[p].localAI[0] += TimerRand2 * 7;
@@ -754,7 +754,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                             if (AITimer % 20 == 0 && AITimer < 60)
                             {
-                                SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 28, 1, TimerRand2);
+                                SoundEngine.PlaySound(SoundID.Item28 with { Pitch = TimerRand2 }, NPC.position);
                                 TimerRand2 += 0.1f;
                                 NPC.netUpdate = true;
                             }

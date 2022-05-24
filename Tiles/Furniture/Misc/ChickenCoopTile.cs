@@ -38,7 +38,7 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             if (Main.rand.NextBool(8))
             {
-                SoundEngine.PlaySound(SoundID.Item16, i * 16, j * 16);
+                SoundEngine.PlaySound(SoundID.Item16, new Vector2(i * 16, j * 16));
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>());
             }
         }

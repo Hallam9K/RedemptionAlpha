@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void ExtractinatorUse(ref int resultType, ref int resultStack)
         {
-            if (Main.rand.Next(5) == 0)
+            if (Main.rand.NextBool(5))
             {
                 resultType = ModContent.ItemType<ElderWood>();
                 resultStack = 14;

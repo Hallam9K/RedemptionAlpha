@@ -179,7 +179,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             Projectile.localAI[0]++;
             if (Projectile.localAI[0] == 30)
-                SoundEngine.PlaySound(SoundID.Item125, (int)Projectile.position.X, (int)Projectile.position.Y);
+                SoundEngine.PlaySound(SoundID.Item125, Projectile.position);
             if (Projectile.localAI[0] >= 30)
             {
                 if (proType != 0)

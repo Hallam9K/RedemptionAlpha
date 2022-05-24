@@ -101,13 +101,13 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
 
             if (Main.rand.NextBool(800) && !Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SkeletonAmbient"), NPC.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SkeletonAmbient"), NPC.position);
 
             switch (AIState)
             {
                 case ActionState.Trumpet:
                     if (Main.rand.NextBool(500) && !Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Doot").WithPitchVariance(0.3f), NPC.position);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Doot") { PitchVariance = .3f }, NPC.position);
                     break;
                 case ActionState.Dancing:
                     int gotNPC2 = GetNearestNPC();

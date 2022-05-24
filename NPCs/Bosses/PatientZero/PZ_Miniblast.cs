@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item14.WithVolume(.2f), Projectile.position);
+            SoundEngine.PlaySound(SoundID.Item14 with { Volume = .2f }, Projectile.position);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenTorch, Scale: 2);

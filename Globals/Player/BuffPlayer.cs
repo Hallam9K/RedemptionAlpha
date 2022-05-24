@@ -160,7 +160,7 @@ namespace Redemption.Globals.Player
                 if (xeniumBonus != 0 && !Player.HasBuff(ModContent.BuffType<XeniumCooldown>()))
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GrenadeLauncher"), Player.position);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/GrenadeLauncher"), Player.position);
                     Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
@@ -170,7 +170,7 @@ namespace Redemption.Globals.Player
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Alarm2"), Player.position);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Alarm2"), Player.position);
 
                     Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 60 * 60);
                     Vector2 spawn = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800);

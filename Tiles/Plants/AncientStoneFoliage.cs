@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.CoordinatePadding = 0;
             TileObjectData.addTile(Type);
             DustType = DustID.Grass;
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -61,7 +61,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.CoordinatePadding = 0;
             TileObjectData.addTile(Type);
             DustType = DustID.Grass;
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

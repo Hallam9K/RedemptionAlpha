@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer >= 130 && AITimer % 7 == 0 && AITimer <= 170 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice3").WithPitchVariance(0.1f), Projectile.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f }, Projectile.position);
                                 SoundEngine.PlaySound(SoundID.Item125, Projectile.Center);
                                 int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
