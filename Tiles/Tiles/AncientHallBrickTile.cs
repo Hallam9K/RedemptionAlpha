@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 500;
             MineResist = 10f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(81, 72, 65));
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)

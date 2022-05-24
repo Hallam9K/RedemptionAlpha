@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             if (!RedeBossDowned.downedSeed && !RedeHelper.TBotActive())
             {
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.target);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.target);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSeed, -1);
         }
@@ -226,7 +226,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenFairy, 0f, 0f, 100, default, 3.5f);
                                 Main.dust[dustIndex].velocity *= 2.9f;
                             }
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<StrangePortal>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<StrangePortal>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
 
                             TimerRand = 1;
                             NPC.netUpdate = true;
@@ -577,7 +577,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         SoundEngine.PlaySound(SoundID.NPCDeath10, NPC.position);
                         for (int i = -32; i <= 32; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectionDust>(), 0, 10 * Vector2.UnitX.RotatedBy(Math.PI / 32 * i), false, SoundID.Item1.WithVolume(0));
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectionDust>(), 0, 10 * Vector2.UnitX.RotatedBy(Math.PI / 32 * i), false, SoundID.Item1 with { Volume = 0 });
                         }
 
                         if (Main.netMode != NetmodeID.Server)

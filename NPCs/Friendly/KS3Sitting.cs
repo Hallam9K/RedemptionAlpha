@@ -114,7 +114,7 @@ namespace Redemption.NPCs.Friendly
                     AITimer = 0;
                 }
                 if (AITimer == 330)
-                    NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ModContent.ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", Main.rand.Next(4));
+                    NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ModContent.ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", Main.rand.Next(4));
             }
         }
 
@@ -169,7 +169,7 @@ namespace Redemption.NPCs.Friendly
             {
                 if (ChatNumber == 2 && RedeWorld.slayerRep == 0)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuTick);
 
                     int Urani = player.FindItem(ModContent.ItemType<Uranium>());
                     if (Urani >= 0)
@@ -192,19 +192,19 @@ namespace Redemption.NPCs.Friendly
 
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
-                        SoundEngine.PlaySound(SoundID.Chat, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.Chat);
                         return;
                     }
                     else
                     {
                         Main.npcChatCornerItem = ModContent.ItemType<Uranium>();
                         Main.npcChatText = "You don't have any uranium, idiot.";
-                        SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
                 else if (ChatNumber == 10 && RedeWorld.slayerRep == 1)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuTick);
 
                     int WiringKit = player.FindItem(ModContent.ItemType<SlayerWiringKit>());
                     if (WiringKit >= 0)
@@ -219,7 +219,7 @@ namespace Redemption.NPCs.Friendly
                         RedeWorld.slayerRep++;
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
-                        SoundEngine.PlaySound(SoundID.Chat, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.Chat);
 
                         Dictionary<Color, int> colorToTile = new()
                         {
@@ -244,12 +244,12 @@ namespace Redemption.NPCs.Friendly
                     {
                         Main.npcChatCornerItem = ModContent.ItemType<SlayerWiringKit>();
                         Main.npcChatText = QuestChat();
-                        SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
                 else if (ChatNumber == 10 && RedeWorld.slayerRep == 2)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuTick);
 
                     int HullPlating = player.FindItem(ModContent.ItemType<SlayerHullPlating>());
                     if (HullPlating >= 0)
@@ -264,7 +264,7 @@ namespace Redemption.NPCs.Friendly
                         RedeWorld.slayerRep++;
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 
-                        SoundEngine.PlaySound(SoundID.Chat, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.Chat);
 
                         Dictionary<Color, int> colorToTile = new()
                         {
@@ -291,12 +291,12 @@ namespace Redemption.NPCs.Friendly
                     {
                         Main.npcChatCornerItem = ModContent.ItemType<SlayerHullPlating>();
                         Main.npcChatText = QuestChat();
-                        SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
                 else if (ChatNumber == 10 && RedeWorld.slayerRep == 3)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuTick);
 
                     int ShipEngine = player.FindItem(ModContent.ItemType<SlayerShipEngine>());
                     if (ShipEngine >= 0)
@@ -316,7 +316,7 @@ namespace Redemption.NPCs.Friendly
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
                         CombatText.NewText(player.getRect(), Color.Gold, "+2", true, false);
 
-                        SoundEngine.PlaySound(SoundID.Chat, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.Chat);
 
                         Dictionary<Color, int> colorToTile = new()
                         {
@@ -350,13 +350,13 @@ namespace Redemption.NPCs.Friendly
                     {
                         Main.npcChatCornerItem = ModContent.ItemType<SlayerShipEngine>();
                         Main.npcChatText = QuestChat();
-                        SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                        SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
                 else if (ChatNumber == 10 && RedeWorld.slayerRep >= 4)
                 {
                     Main.npcChatText = QuestChat();
-                    SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuTick);
                 }
                 else if (ChatNumber == 9 && RedeWorld.slayerRep >= 4)
                     shop = true;

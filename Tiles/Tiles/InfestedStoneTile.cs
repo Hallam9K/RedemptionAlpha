@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][TileID.Stone] = true;
             ItemDrop = ItemID.StoneBlock;
             DustType = DustID.Stone;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             MinPick = 0;
             MineResist = 1.5f;
             AddMapEntry(new Color(128, 128, 128));

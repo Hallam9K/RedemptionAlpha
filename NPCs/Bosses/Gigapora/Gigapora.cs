@@ -129,11 +129,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         continue;
 
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), seg.position);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion"), seg.position);
                     RedeDraw.SpawnExplosion(seg.Center, Color.OrangeRed);
                 }
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), NPC.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion"), NPC.position);
                 RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
@@ -416,7 +416,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 if (NPC.velocity.Y > -4 || AITimer >= 120)
                                 {
                                     if (!Main.dedServ)
-                                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserCharge").WithVolume(1.5f), NPC.position);
+                                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/GigaLaserCharge") { Volume = 1.5f }, NPC.position);
                                     AITimer = 0;
                                     TimerRand = 3;
                                 }
@@ -456,13 +456,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             if (AITimer++ == 120)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserFire").WithVolume(1.5f), NPC.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/GigaLaserFire") { Volume = 1.5f }, NPC.position);
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(30, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
                             }
 
                             if (AITimer == 453 && !Main.dedServ)
-                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/GigaLaserCoolDown").WithVolume(1.5f), NPC.position);
+                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/GigaLaserCoolDown") { Volume = 1.5f }, NPC.position);
                             if (AITimer >= 470)
                             {
                                 DrillLaser = false;
@@ -630,8 +630,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (NPC.soundDelay == 0)
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Quake")
-                            .WithVolume(MathHelper.Clamp(NPC.velocity.Length() / 10, 0.1f, 2f)), NPC.position);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Quake") { Volume = MathHelper.Clamp(NPC.velocity.Length() / 10, 0.1f, 2f) }, NPC.position);
                     NPC.soundDelay = 80;
                 }
             }
@@ -727,7 +726,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (NPC.immortal && AIState is not ActionState.Death)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire").WithVolume(0.5f).WithPitchVariance(0.1f), NPC.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/BallFire") { Volume = .5f, PitchVariance = .1f }, NPC.position);
                 damage = 0;
                 return false;
             }

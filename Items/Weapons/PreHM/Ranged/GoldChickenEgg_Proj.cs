@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.NPCDeath11.WithVolume(0.5f), Projectile.position);
+            SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
             for (int i = 0; i < 6; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MothronEgg, Projectile.velocity.X * 0.5f,
                     Projectile.velocity.Y * 0.5f, Scale: 2);
@@ -63,7 +63,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Tink, (int)Projectile.position.X, (int)Projectile.position.Y, 1);
+            SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
             Projectile.penetrate--;
             if (Projectile.penetrate <= 0)
                 Projectile.Kill();

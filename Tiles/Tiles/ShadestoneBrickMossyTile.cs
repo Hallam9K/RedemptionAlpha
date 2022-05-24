@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 500;
             MineResist = 11f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mossy Shadestone Brick");
             AddMapEntry(new Color(22, 26, 35));

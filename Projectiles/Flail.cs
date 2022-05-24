@@ -331,7 +331,7 @@ namespace Redemption.Projectiles
 				{
 					Collision.HitTiles(Projectile.position, velocity, Projectile.width, Projectile.height);
 				}
-				SoundEngine.PlaySound(0, (int)Projectile.position.X, (int)Projectile.position.Y);
+				SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
 			}
 			if (Projectile.ai[0] != 3f && Projectile.ai[0] != 0f && Projectile.ai[0] != 5f && Projectile.ai[0] != 6f && Projectile.localAI[0] >= 10f)
 			{

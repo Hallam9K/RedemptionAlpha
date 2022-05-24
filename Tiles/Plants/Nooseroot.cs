@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<VoidFlame>();
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
             ItemDrop = ModContent.ItemType<Nooseroot>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -70,7 +70,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<VoidFlame>();
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
             ItemDrop = ModContent.ItemType<Nooseroot>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -107,7 +107,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<VoidFlame>();
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
             ItemDrop = ModContent.ItemType<Nooseroot>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

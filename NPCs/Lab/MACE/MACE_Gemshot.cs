@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            SoundEngine.PlaySound(SoundID.Item14.WithVolume(.2f), Projectile.position);
+            SoundEngine.PlaySound(SoundID.Item14 with { Volume = .2f }, Projectile.position);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenTorch, Scale: 2.0f);

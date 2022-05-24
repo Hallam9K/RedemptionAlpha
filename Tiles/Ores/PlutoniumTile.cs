@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Ores
             ItemDrop = ModContent.ItemType<Plutonium>();
             MinPick = 220;
             MineResist = 6f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Plutonium");
             AddMapEntry(new Color(133, 253, 255), name);
@@ -44,7 +44,7 @@ namespace Redemption.Tiles.Ores
             if (dist <= 30 && dist > 18 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(80000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
@@ -52,7 +52,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 18 && dist > 10 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller2").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller2") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(40000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;
@@ -60,7 +60,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 10 && dist > 4 && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller3").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller3") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(8000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;
@@ -68,7 +68,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 4)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller4").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller4") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(1000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;

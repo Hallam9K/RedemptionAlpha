@@ -32,7 +32,7 @@ namespace Redemption.Projectiles.Minions
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y, 1, 0.2f);
+            SoundEngine.PlaySound(SoundID.Dig with { Volume = .2f }, Projectile.position);
             return true;
         }
         public override void Kill(int timeLeft)

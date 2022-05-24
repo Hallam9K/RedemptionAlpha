@@ -14,7 +14,7 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
 
-        public void GuardHit(Terraria.NPC npc, ref double damage, LegacySoundStyle sound, float dmgReduction = 0.25f)
+        public void GuardHit(Terraria.NPC npc, ref double damage, SoundStyle sound, float dmgReduction = 0.25f)
         {
             if (IgnoreArmour || npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPoints < 0 || GuardBroken)
                 return;
@@ -22,19 +22,20 @@ namespace Redemption.Globals.NPC
             damage = (int)(damage * dmgReduction);
             npc.HitEffect();
             SoundEngine.PlaySound(sound, npc.position);
-            SoundEngine.PlaySound(npc.HitSound, npc.position);
+            if (npc.HitSound.HasValue)
+                SoundEngine.PlaySound(npc.HitSound.Value, npc.position);
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, (int)damage, true, true);
             GuardPoints -= (int)damage;
             damage = 0;
             IgnoreArmour = false;
         }
-        public void GuardBreakCheck(Terraria.NPC npc, int dustType, LegacySoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0, bool customSound = true, string soundString = "GuardBreak")
+        public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0, bool customSound = true, string soundString = "GuardBreak")
         {
             if (GuardPoints > 0 || GuardBroken)
                 return;
 
             if (customSound && !Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/" + soundString), npc.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + soundString), npc.position);
             else
                 SoundEngine.PlaySound(sound, npc.position);
 

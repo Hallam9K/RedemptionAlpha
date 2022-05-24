@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (Main.rand.Next(3) == 0)
+            if (Main.rand.NextBool(3))
                 Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Enchanted_Pink, 0f, 0f, 100, default, 3f);
             Projectile.localAI[0]++;
             Projectile.velocity.Y += 0.2f;

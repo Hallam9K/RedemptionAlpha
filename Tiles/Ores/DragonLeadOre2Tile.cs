@@ -20,7 +20,7 @@ namespace Redemption.Tiles.Ores
 			ItemDrop = ItemID.StoneBlock;
             MinPick = 10;
             MineResist = 1.4f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Stone?");
             AddMapEntry(new Color(138, 138, 138));

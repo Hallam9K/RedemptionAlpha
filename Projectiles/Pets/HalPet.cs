@@ -65,7 +65,7 @@ namespace Redemption.Projectiles.Pets
                     }
                 }
             }
-            if (Main.rand.Next(1000000) == 0)
+            if (Main.rand.NextBool(1000000))
             {
                 switch (Main.rand.Next(2))
                 {
@@ -79,7 +79,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HeldItem.type == ItemID.BowlofSoup)
             {
-                if (Main.rand.Next(900) == 0)
+                if (Main.rand.NextBool(900))
                 {
                     EmoteBubble.NewBubble(75, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(2))
@@ -95,7 +95,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HeldItem.type == ItemID.CookedFish)
             {
-                if (Main.rand.Next(2) == 0)
+                if (Main.rand.NextBool(2))
                 {
                     EmoteBubble.NewBubble(76, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(4))
@@ -120,7 +120,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HeldItem.type == ItemID.GingerbreadCookie || player.HeldItem.type == ItemID.SugarCookie)
             {
-                if (Main.rand.Next(500) == 0)
+                if (Main.rand.NextBool(500))
                 {
                     EmoteBubble.NewBubble(94, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(3))
@@ -139,14 +139,14 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HeldItem.type == ItemID.WhoopieCushion)
             {
-                if (Main.rand.Next(1200) == 0)
+                if (Main.rand.NextBool(1200))
                 {
                     CombatText.NewText(Projectile.getRect(), Color.DeepPink, "*toot*", false, false);
                 }
             }
             if (player.HeldItem.type == ModContent.ItemType<ChickenEgg>() || player.HeldItem.type == ModContent.ItemType<FriedChickenEgg>() || player.HeldItem.type == ModContent.ItemType<LongEgg>() || player.HeldItem.type == ModContent.ItemType<GoldChickenEgg>())
             {
-                if (Main.rand.Next(300) == 0)
+                if (Main.rand.NextBool(300))
                 {
                     switch (Main.rand.Next(2))
                     {
@@ -161,7 +161,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HeldItem.type == ModContent.ItemType<ChickenGoldItem>() || player.HeldItem.type == ModContent.ItemType<ChickenItem>() || player.HeldItem.type == ModContent.ItemType<LeghornChickenItem>() || player.HeldItem.type == ModContent.ItemType<LongChickenItem>() || player.HeldItem.type == ModContent.ItemType<RedChickenItem>() || player.HeldItem.type == ModContent.ItemType<BlackChickenItem>())
             {
-                if (Main.rand.Next(300) == 0)
+                if (Main.rand.NextBool(300))
                 {
                     switch (Main.rand.Next(3))
                     {
@@ -179,14 +179,14 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HeldItem.type == ModContent.ItemType<FriedChicken>())
             {
-                if (Main.rand.Next(2) == 0)
+                if (Main.rand.NextBool(2))
                 {
                     CombatText.NewText(Projectile.getRect(), Color.DeepPink, "gimmi chciken", false, false);
                 }
             }
             if (player.HasBuff(BuffID.Invisibility))
             {
-                if (Main.rand.Next(400) == 0)
+                if (Main.rand.NextBool(400))
                 {
                     EmoteBubble.NewBubble(87, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(6))
@@ -214,7 +214,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HasBuff(BuffID.Bleeding))
             {
-                if (Main.rand.Next(3000) == 0)
+                if (Main.rand.NextBool(3000))
                 {
                     switch (Main.rand.Next(3))
                     {
@@ -232,7 +232,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HasBuff(BuffID.Slow))
             {
-                if (Main.rand.Next(1000) == 0)
+                if (Main.rand.NextBool(1000))
                 {
                     EmoteBubble.NewBubble(91, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(3))
@@ -251,7 +251,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HasBuff(BuffID.Frozen))
             {
-                if (Main.rand.Next(1000) == 0)
+                if (Main.rand.NextBool(1000))
                 {
                     switch (Main.rand.Next(3))
                     {
@@ -269,7 +269,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HasBuff(BuffID.Rabies))
             {
-                if (Main.rand.Next(5000) == 0)
+                if (Main.rand.NextBool(5000))
                 {
                     switch (Main.rand.Next(2))
                     {
@@ -284,7 +284,7 @@ namespace Redemption.Projectiles.Pets
             }
             if (player.HasBuff(BuffID.Stinky))
             {
-                if (Main.rand.Next(900) == 0)
+                if (Main.rand.NextBool(900))
                 {
                     EmoteBubble.NewBubble(8, new WorldUIAnchor(Projectile), 120);
                     switch (Main.rand.Next(4))
@@ -304,7 +304,7 @@ namespace Redemption.Projectiles.Pets
                     }
                 }
             }
-            if (Main.rand.Next(40000) == 0)
+            if (Main.rand.NextBool(40000))
             {
                 switch (Main.rand.Next(15))
                 {

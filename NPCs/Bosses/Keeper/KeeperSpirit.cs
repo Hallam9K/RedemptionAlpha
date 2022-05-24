@@ -257,7 +257,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 }
                                 if (AITimer == 40)
                                 {
-                                    SoundEngine.PlaySound(SoundID.Zombie, (int)NPC.position.X, (int)NPC.position.Y, 83, 1, 0.3f);
+                                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_83") { Pitch = 0.3f }, NPC.position);
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -6f * NPC.spriteDirection;
                                 }
@@ -418,7 +418,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 if (AITimer == 5)
                                 {
                                     NPC.LookAtEntity(player);
-                                    SoundEngine.PlaySound(SoundID.Zombie, (int)NPC.position.X, (int)NPC.position.Y, 83, 1, 0.3f);
+                                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_83") { Pitch = 0.3f }, NPC.position);
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -6f * NPC.spriteDirection;
                                 }
@@ -468,7 +468,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                                     if (AITimer % 2 == 0)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), false, SoundID.NPCDeath52.WithVolume(0.5f));
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), false, SoundID.NPCDeath52 with { Volume = .5f });
                                     }
                                 }
                                 if (AITimer >= 320)

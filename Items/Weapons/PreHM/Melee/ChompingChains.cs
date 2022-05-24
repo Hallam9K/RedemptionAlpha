@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = Item.sellPrice(0, 1, 75, 0);
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing");
+            Item.UseSound = new("Redemption/Sounds/Custom/ChainSwing");
             Item.autoReuse = false;
             Item.useTurn = true;
             Item.noUseGraphic = true;

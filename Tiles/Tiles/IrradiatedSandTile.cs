@@ -48,7 +48,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(6) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(100) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
@@ -145,7 +145,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void AI()
         {
-            if (Main.rand.Next(5) == 0)
+            if (Main.rand.NextBool(5))
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustType);
                 Main.dust[dust].velocity.X *= 0.4f;

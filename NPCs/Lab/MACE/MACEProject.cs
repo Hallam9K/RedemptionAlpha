@@ -190,7 +190,7 @@ namespace Redemption.NPCs.Lab.MACE
                     {
                         if (!Main.dedServ)
                         {
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/SpookyNoise"), NPC.position);
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SpookyNoise"), NPC.position);
                         }
                         GuardPointMax = NPC.RedemptionGuard().GuardPoints;
                         CraneOrigin = NPC.Center;
@@ -230,7 +230,7 @@ namespace Redemption.NPCs.Lab.MACE
                             if (!Main.dedServ)
                             {
                                 if (AITimer == 1)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/DistortedRoar").WithVolume(.5f), NPC.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/DistortedRoar") { Volume = .5f }, NPC.position);
                                 if (AITimer < 60)
                                 {
                                     TimerRand += (float)Math.PI / 120;
@@ -391,7 +391,7 @@ namespace Redemption.NPCs.Lab.MACE
 
                             if (AITimer == 100)
                             {
-                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/EnergyChargeSound2", NPC.whoAmI);
+                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, SoundID.Item1, "EnergyChargeSound2", NPC.whoAmI);
                             }
                             if (AITimer >= 100 && AITimer <= 290)
                             {
@@ -497,7 +497,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 if (NPC.collideY || NPC.velocity.Y == 0)
                                 {
                                     if (!Main.dedServ)
-                                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2"), NPC.position);
+                                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2"), NPC.position);
                                     player.RedemptionScreen().ScreenShakeIntensity = 20;
 
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -520,7 +520,7 @@ namespace Redemption.NPCs.Lab.MACE
                                         }
                                     }
                                     for (int i = 0; i < 2; i++)
-                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 38), ModContent.ProjectileType<MACE_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0), "", i);
+                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 38), ModContent.ProjectileType<MACE_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", i);
 
                                     AITimer = 0;
                                     TimerRand = 0;
@@ -568,7 +568,7 @@ namespace Redemption.NPCs.Lab.MACE
                             if (NPC.collideX || NPC.velocity.X == 0)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2"), NPC.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2"), NPC.position);
                                 player.RedemptionScreen().ScreenShakeIntensity = 20;
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -589,7 +589,7 @@ namespace Redemption.NPCs.Lab.MACE
                                     }
                                 }
                                 for (int i = 0; i < 6; i++)
-                                    NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage, RedeHelper.Spread(10), false, SoundID.Item1.WithVolume(0));
+                                    NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage, RedeHelper.Spread(10), false, SoundID.Item1 with { Volume = 0 });
 
                                 AITimer = 0;
                                 TimerRand = 0;
@@ -616,7 +616,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 Main.dust[dustIndex].velocity *= 3f;
                             }
                             for (int k = 0; k < 6; k++)
-                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1 with { Volume = 0 });
 
                             AIState = ActionState.JawPhase;
                             NPC.netUpdate = true;
@@ -632,7 +632,7 @@ namespace Redemption.NPCs.Lab.MACE
 
                             SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/DistortedRoar").WithVolume(.5f), NPC.position);
+                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/DistortedRoar") { Volume = .5f }, NPC.position);
 
                             if (Main.netMode != NetmodeID.Server)
                                 Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
@@ -643,7 +643,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 Main.dust[dustIndex].velocity *= 3f;
                             }
                             for (int k = 0; k < 6; k++)
-                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(110, 164))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(110, 164))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1 with { Volume = 0 });
                             AIState = ActionState.HeadPhase;
                             NPC.netUpdate = true;
                             break;

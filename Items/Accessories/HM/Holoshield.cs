@@ -155,7 +155,7 @@ namespace Redemption.Items.Accessories.HM
                             continue;
 
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Reflect").WithVolume(.5f).WithPitchVariance(.1f));
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Reflect") { Volume = 0.5f, PitchVariance = 0.1f });
                         proj.damage *= 8;
                         proj.velocity = -proj.velocity;
                         proj.friendly = true;

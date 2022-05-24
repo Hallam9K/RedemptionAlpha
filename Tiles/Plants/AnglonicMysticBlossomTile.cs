@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Plants
             name.SetDefault("Anglonic Mystic Blossom");
             AddMapEntry(new Color(235, 175, 255), name);
             DustType = DustID.GrassBlades;
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

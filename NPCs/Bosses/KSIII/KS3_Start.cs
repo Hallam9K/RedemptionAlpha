@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         if (NPC.ai[1] >= 2)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_DroneKillCheck>(), 0, Vector2.Zero, false, SoundID.Item1.WithVolume(0f));
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_DroneKillCheck>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
                             NPC.ai[0] = 4;
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
@@ -95,7 +95,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 2:
                     if (NPC.ai[2]++ == 30)
                         NPC.Shoot(new Vector2(player.Center.X + 90, player.Center.Y - 50), ModContent.ProjectileType<KS3_HeadHologram>(), 0, Vector2.Zero, false,
-                            SoundID.Item1.WithVolume(0f));
+                            SoundID.Item1 with { Volume = 0 });
 
                     if (NPC.ai[2] > 760)
                     {

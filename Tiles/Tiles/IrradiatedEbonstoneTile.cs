@@ -41,7 +41,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Ash;
             MinPick = 100;
             MineResist = 2.5f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(59, 58, 64));
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
@@ -53,7 +53,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(6) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(100) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;

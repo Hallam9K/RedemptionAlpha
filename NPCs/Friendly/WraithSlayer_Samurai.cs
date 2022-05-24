@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Friendly
 
             if (AIState is ActionState.Idle)
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 81);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_81"), NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Friendly
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
-                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 82);
+                        SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_82"), NPC.position);
                         NPC.velocity.Y = -4;
                         Flare = true;
                     }
@@ -221,7 +221,7 @@ namespace Redemption.NPCs.Friendly
                     if (NPC.frame.Y == 5 * frameHeight)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice1").WithPitchVariance(0.1f), NPC.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice1") { PitchVariance = .1f }, NPC.position);
                     }
                     if (NPC.frame.Y == 8 * frameHeight)
                     {
@@ -274,7 +274,7 @@ namespace Redemption.NPCs.Friendly
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage)
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 81);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_81"), NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 AITimer = 0;
                 AIState = ActionState.Alert;

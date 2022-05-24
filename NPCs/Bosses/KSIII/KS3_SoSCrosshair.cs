@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (Projectile.localAI[1] >= 30 && Projectile.localAI[1] % 5 == 0 && Projectile.localAI[1] < 60 && Projectile.owner == Main.myPlayer)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileFire1").WithVolume(.8f).WithPitchVariance(0.1f), player.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileFire1") { Volume = .8f, PitchVariance = .1f }, player.position);
 
                         Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (player.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<KS3_SoSMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 1);
                     }

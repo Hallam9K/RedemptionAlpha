@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Redemption.Biomes;
 using Redemption.Items.Materials.PostML;
 using Redemption.Dusts.Tiles;
+using Redemption.Sounds.Custom;
 
 namespace Redemption.Tiles.Ores
 {
@@ -20,8 +21,7 @@ namespace Redemption.Tiles.Ores
             DustType = ModContent.DustType<MaskDust>();
             MinPick = 300;
             MineResist = 6f;
-            SoundType = SoundLoader.CustomSoundType;
-            SoundStyle = SoundLoader.GetSoundSlot(Mod, "Sounds/Custom/MaskBreak");
+            HitSound = CustomSounds.MaskBreak;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Vessel Fragments");
             AddMapEntry(new Color(210, 200, 191));

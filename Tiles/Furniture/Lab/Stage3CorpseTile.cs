@@ -27,8 +27,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.GreenTorch;
-            SoundStyle = 27;
-            SoundType = SoundID.Item;
+            HitSound = SoundID.Item27;
             MinPick = 500;
             MineResist = 7f;
             ModTranslation name = CreateMapEntryName();

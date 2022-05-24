@@ -43,7 +43,7 @@ namespace Redemption.Items.Usable.Summons
 		{
 			if (player.whoAmI == Main.myPlayer)
 			{
-				SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+				SoundEngine.PlaySound(SoundID.Roar, player.position);
 
 				int type = ModContent.NPCType<Thorn>();
 

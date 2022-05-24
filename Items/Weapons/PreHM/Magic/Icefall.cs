@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.shootSpeed = 0;
             Item.shoot = ModContent.ProjectileType<Icefall_Mist>();
             if (Main.netMode != NetmodeID.Server)
-                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/IceMist").WithPitchVariance(0.1f);
+                Item.UseSound = new("Redemption/Sounds/Custom/IceMist") { PitchVariance = .1f };
         }
         public override bool CanUseItem(Player player)
         {

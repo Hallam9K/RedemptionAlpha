@@ -100,7 +100,7 @@ namespace Redemption.Gores.Misc
                 {
                     gore.Frame.CurrentRow = 10;
                     gore.frameCounter = 0;
-                    SoundEngine.PlaySound(SoundID.Drip, (int)gore.position.X + 8, (int)gore.position.Y + 8, Main.rand.Next(2));
+                    SoundEngine.PlaySound(new("Terraria/Sounds/Drip_" + Main.rand.Next(2)) { Identifier = "Terraria/Drip" }, gore.position + new Vector2(8, 8));
                 }
             }
             else if (Collision.WetCollision(gore.position + gore.velocity, 16, 14))
@@ -109,7 +109,7 @@ namespace Redemption.Gores.Misc
                 {
                     gore.Frame.CurrentRow = 10;
                     gore.frameCounter = 0;
-                    SoundEngine.PlaySound(SoundID.Drip, (int)gore.position.X + 8, (int)gore.position.Y + 8, 2);
+                    SoundEngine.PlaySound(new("Terraria/Sounds/Drip_2") { Identifier = "Terraria/Drip" }, gore.position + new Vector2(8, 8));
                 }
                 int tileX = (int)(gore.position.X + 8f) / 16;
                 int tileY = (int)(gore.position.Y + 14f) / 16;

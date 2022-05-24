@@ -100,7 +100,7 @@ namespace Redemption.NPCs.PreHM
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_63"), NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Threatened;
             }
@@ -151,7 +151,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.Sight(player, 800, true, true))
                     {
-                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
+                        SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_63"), NPC.position);
                         globalNPC.attacker = player;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
@@ -168,7 +168,7 @@ namespace Redemption.NPCs.PreHM
                 case ActionState.Wander:
                     if (NPC.Sight(player, 800, true, true))
                     {
-                        SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 63);
+                        SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_63"), NPC.position);
                         globalNPC.attacker = player;
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
@@ -255,9 +255,9 @@ namespace Redemption.NPCs.PreHM
                             NPC.frameCounter = 0;
                             if (NPC.frame.Y == frameHeight)
                             {
-                                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 64);
+                                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_64"), NPC.position);
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
-                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
                             }
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
@@ -280,9 +280,9 @@ namespace Redemption.NPCs.PreHM
                             NPC.frameCounter = 0;
                             if (NPC.frame.Y == frameHeight)
                             {
-                                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 64);
+                                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_64"), NPC.position);
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16);
-                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1.WithVolume(0));
+                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
                             }
                             if (NPC.frame.Y == 6 * frameHeight)
                                 NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);

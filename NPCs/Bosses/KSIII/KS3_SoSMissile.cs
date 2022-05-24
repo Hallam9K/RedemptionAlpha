@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion").WithPitchVariance(0.1f), Projectile.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion") { PitchVariance = .1f }, Projectile.position);
 
             if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                 Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;

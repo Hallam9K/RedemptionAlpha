@@ -387,7 +387,7 @@ namespace Redemption.Globals.NPC
             }
             if (spiderSwarmed)
             {
-                if (Main.rand.Next(10) == 0 && npc.alpha < 200)
+                if (Main.rand.NextBool(10)&& npc.alpha < 200)
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<SpiderSwarmerDust>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
@@ -413,7 +413,7 @@ namespace Redemption.Globals.NPC
             }
             if (blackHeart)
             {
-                if (Main.rand.Next(3) == 0 && npc.alpha < 200)
+                if (Main.rand.NextBool(3)&& npc.alpha < 200)
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<VoidFlame>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;

@@ -256,7 +256,7 @@ namespace Redemption.NPCs.Friendly
                         if (Frag[k] >= 0)
                             Main.npcChatText = "You have fragments, but none of them are from the same weapon.";
                     }
-                    SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                    SoundEngine.PlaySound(SoundID.MenuTick);
                 }
 
             }
