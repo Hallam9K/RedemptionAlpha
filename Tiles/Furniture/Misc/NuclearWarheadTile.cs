@@ -39,7 +39,7 @@ namespace Redemption.Tiles.Furniture.Misc
             MinPick = 10;
             MineResist = 7f;
             
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Nuclear Warhead");
             AddMapEntry(new Color(62, 88, 90), name);

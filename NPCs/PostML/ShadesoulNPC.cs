@@ -89,7 +89,7 @@ namespace Redemption.NPCs.PostML
 
             if (++AITimer > 600)
             {
-                SoundEngine.PlaySound(SoundID.NPCDeath39.WithVolume(0.3f), NPC.position);
+                SoundEngine.PlaySound(SoundID.NPCDeath39 with { Volume = .3f }, NPC.position);
                 NPC.active = false;
             }
         }

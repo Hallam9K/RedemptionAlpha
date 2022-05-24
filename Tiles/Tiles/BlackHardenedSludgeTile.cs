@@ -22,8 +22,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<SludgeDust>();
             MinPick = 300;
             MineResist = 8f;
-            SoundStyle = 13;
-            SoundType = SoundID.NPCHit;
+            HitSound = SoundID.NPCHit13;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Black Hardened Sludge");
             AddMapEntry(new Color(31, 30, 46));

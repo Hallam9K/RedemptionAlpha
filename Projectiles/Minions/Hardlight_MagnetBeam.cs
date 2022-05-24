@@ -66,7 +66,7 @@ namespace Redemption.Projectiles.Minions
                 {
                     float loudness = Projectile.damage / (15 * 8);
                     loudness = MathHelper.Clamp(loudness, 1, 2);
-                    SoundEngine.PlaySound(SoundID.Zombie, (int)Projectile.position.X, (int)Projectile.position.Y, 104, loudness);
+                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_104") { Volume = loudness }, Projectile.position);
                 }
                 LaserScale = 0.2f;
             }

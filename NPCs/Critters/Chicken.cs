@@ -145,7 +145,7 @@ namespace Redemption.NPCs.Critters
             }
 
             if (Main.rand.NextBool(500) && !Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChickenCluck" + (Main.rand.Next(3) + 1)), NPC.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChickenCluck" + (Main.rand.Next(3) + 1)), NPC.position);
 
             switch (AIState)
             {

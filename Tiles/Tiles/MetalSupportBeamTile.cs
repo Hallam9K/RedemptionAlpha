@@ -19,7 +19,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<MetalSupportBeam>();
             MinPick = 200;
             MineResist = 6f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(105, 107, 114));
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)

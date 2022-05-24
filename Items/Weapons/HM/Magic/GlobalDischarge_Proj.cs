@@ -140,7 +140,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 if (Projectile.ai[1] > 0)
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Spark1"), Projectile.position);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Spark1"), Projectile.position);
 
                     staff.active = false;
                     Projectile.ai[1] = -2;
@@ -227,7 +227,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             else
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Spark1"), Projectile.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Spark1"), Projectile.position);
                                 Projectile.ai[1] = -1;
                             }
                             Projectile.netUpdate = true;
@@ -240,7 +240,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             if (Projectile.localAI[0] >= Projectile.localAI[1])
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Zap2").WithPitchVariance(0.1f), Projectile.position);
+                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Zap2") { Pitch = 0.1f }, Projectile.position);
 
                                 if (Projectile.localAI[1] > 5)
                                     Projectile.localAI[1]--;
@@ -262,7 +262,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MissileExplosion"), Projectile.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion"), Projectile.position);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

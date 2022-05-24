@@ -70,7 +70,7 @@ namespace Redemption.Tiles.Furniture.Shade
             {
                 if (frameCounter > Main.rand.Next(120, 300))
                 {
-                    if (Main.rand.Next(3) != 0)
+                    if (!Main.rand.NextBool(3))
                     {
                         frame = 1;
                     }
@@ -90,7 +90,7 @@ namespace Redemption.Tiles.Furniture.Shade
             {
                 if (frameCounter > Main.rand.Next(100, 200))
                 {
-                    if (Main.rand.Next(3) != 0)
+                    if (!Main.rand.NextBool(3))
                     {
                         frame = 7;
                     }

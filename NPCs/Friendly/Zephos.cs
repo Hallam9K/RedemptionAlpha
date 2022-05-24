@@ -254,30 +254,30 @@ namespace Redemption.NPCs.Friendly
                         case 2:
                             if (Main.LocalPlayer.BuyItem(500))
                             {
-                                SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 37);
+                                SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                                 Main.LocalPlayer.AddBuff(BuffID.Sharpened, 36000);
                             }
                             else
                             {
                                 Main.npcChatText = NoCoinsChat();
-                                SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                                SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
                         case 3:
                             if (Main.LocalPlayer.BuyItem(1500))
                             {
-                                SoundEngine.PlaySound(SoundID.Item, (int)NPC.position.X, (int)NPC.position.Y, 37);
+                                SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                                 Main.LocalPlayer.AddBuff(ModContent.BuffType<ShineArmourBuff>(), 36000);
                             }
                             else
                             {
                                 Main.npcChatText = NoCoinsChat();
-                                SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                                SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
                         case 4:
                             Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                            SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1);
+                            SoundEngine.PlaySound(SoundID.MenuTick);
                             break;
                     }
                 }

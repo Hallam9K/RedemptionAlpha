@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (Projectile.localAI[0]++ >= 50)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice2"), Projectile.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice2"), Projectile.position);
                         rot = host.Center.ToRotation();
                         Projectile.localAI[0] = 0;
                         Projectile.localAI[1] = 1;
@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case 2:
                     Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() + MathHelper.PiOver4, MathHelper.Pi / 10);
                     if (Projectile.localAI[0]++ == 40 && !Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice1"), host.Center);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice1"), host.Center);
                     if (Projectile.localAI[0] >= 40)
                         Projectile.velocity = Projectile.DirectionTo(host.Center) * 20;
                     if (Projectile.DistanceSQ(host.Center) <= 60 * 60)
@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (Projectile.localAI[0]++ >= 50)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice2"), Projectile.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice2"), Projectile.position);
                         rot = host.Center.ToRotation();
                         Projectile.localAI[0] = 0;
                         Projectile.localAI[1] = 1;
@@ -196,7 +196,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case 2:
                     Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() + MathHelper.PiOver4, MathHelper.Pi / 10);
                     if (Projectile.localAI[0]++ == 40 && !Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Slice1"), host.Center);
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice1"), host.Center);
                     if (Projectile.localAI[0] >= 40)
                         Projectile.velocity = Projectile.DirectionTo(host.Center) * 20;
                     if (Projectile.DistanceSQ(host.Center) <= 60 * 60)

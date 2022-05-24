@@ -184,7 +184,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (Projectile.localAI[0] == 0)
             {
                 Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
-                SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y, 1);
+                SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
                 Projectile.localAI[0] = 2;
             }
             return false;

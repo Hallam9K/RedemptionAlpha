@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Wraith;
             MinPick = 2000;
             MineResist = 50f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Bedrock");
             AddMapEntry(new Color(0, 0, 0), name);

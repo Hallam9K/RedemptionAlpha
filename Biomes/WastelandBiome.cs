@@ -44,15 +44,17 @@ namespace Redemption.Biomes
         {
             if (Main.raining)
             {
+                SoundStyle muller = new("Redemption/Sounds/Custom/Muller1") { Volume = 0.9f, PitchVariance = 0.1f };
+
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(500) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(muller, player.position);
 
                 if (player.ZoneOverworldHeight || player.ZoneSkyHeight)
                     player.AddBuff(ModContent.BuffType<HeavyRadiationDebuff>(), 30);
                 else
                     player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);
 
-                if (Main.rand.Next(80000) == 0 && player.RedemptionRad().irradiatedLevel == 0 && !player.RedemptionPlayerBuff().HEVSuit && !player.RedemptionPlayerBuff().hazmatSuit)
+                if (Main.rand.NextBool(80000) && player.RedemptionRad().irradiatedLevel == 0 && !player.RedemptionPlayerBuff().HEVSuit && !player.RedemptionPlayerBuff().hazmatSuit)
                     player.RedemptionRad().irradiatedLevel++;
             }
             else

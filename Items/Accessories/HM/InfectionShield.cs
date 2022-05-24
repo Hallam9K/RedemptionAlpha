@@ -228,7 +228,8 @@ namespace Redemption.Items.Accessories.HM
                     continue;
 
                 npc.AddBuff(ModContent.BuffType<BileDebuff>(), 300);
-                SoundEngine.PlaySound(npc.HitSound.WithVolume(0.4f), npc.position);
+                if (npc.HitSound.HasValue)
+                    SoundEngine.PlaySound(npc.HitSound.Value with { Volume = .4f }, npc.position);
                 Projectile.Kill();
             }
         }

@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Lab.MACE
                     if (Projectile.scale > 2f)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MACEProjectLaunch").WithPitchVariance(0.1f), Projectile.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MACEProjectLaunch") { PitchVariance = .1f }, Projectile.position);
                         Projectile.localAI[0] = 2;
                         Projectile.velocity = RedeHelper.PolarVector(20, (Main.player[npc.target].Center - npc.Center).ToRotation());
                         int pieCut = 32;

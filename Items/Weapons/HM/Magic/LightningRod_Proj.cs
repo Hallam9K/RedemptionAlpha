@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         if (Projectile.ai[1]++ >= 60)
                             glow += 0.01f;
                         if (Projectile.ai[1] == 30 && !Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Spark1"), Projectile.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Spark1"), Projectile.position);
 
                         if (Projectile.ai[1] >= 30 && (Projectile.ai[1] >= 60 ? Main.rand.NextBool(6) : Main.rand.NextBool(10)))
                             DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 0.2f, 5, 0.1f);
@@ -67,7 +67,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         }
 
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ElectricNoise"), Projectile.position);
+                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElectricNoise"), Projectile.position);
                         DustHelper.DrawCircle(Projectile.Center + new Vector2(36 * player.direction, -36), DustID.Electric, 3, 2, 1, 1, 1, nogravity: true);
                         int dmg = (int)Projectile.ai[1] * 2;
                         DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, new LightningParticle(), 1.3f, 30, 0.05f);

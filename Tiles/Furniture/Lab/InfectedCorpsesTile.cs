@@ -31,8 +31,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			name.SetDefault("Infected Corpse");
 			AddMapEntry(new Color(61, 75, 66), name);
             DustType = DustID.GreenBlood;
-			SoundStyle = 13;
-			SoundType = SoundID.NPCHit;
+			HitSound = SoundID.NPCHit13;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -62,8 +61,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			name.SetDefault("Infected Corpse");
 			AddMapEntry(new Color(61, 75, 66), name);
 			DustType = DustID.GreenBlood;
-			SoundStyle = 13;
-			SoundType = SoundID.NPCHit;
+			HitSound = SoundID.NPCHit13;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -93,8 +91,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			name.SetDefault("Infected Corpse");
 			AddMapEntry(new Color(61, 75, 66), name);
 			DustType = DustID.GreenBlood;
-			SoundStyle = 13;
-			SoundType = SoundID.NPCHit;
+			HitSound = SoundID.NPCHit13;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

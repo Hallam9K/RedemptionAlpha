@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Walls
@@ -10,7 +11,7 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(8, 64, 39));
-            SoundType = 6;
+            HitSound = SoundID.Grass;
         }
         public override bool CanExplode(int i, int j) => false;
         public override void KillWall(int i, int j, ref bool fail) => fail = true;

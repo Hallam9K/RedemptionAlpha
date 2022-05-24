@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.soundDelay--;
             if (Projectile.soundDelay <= 0)
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 15, 1, rotSpeed - 0.5f);
+                SoundEngine.PlaySound(SoundID.Item15 with { Pitch = rotSpeed - 0.5f }, Projectile.Center);
                 Projectile.soundDelay = (int)(360 / ((rotSpeed * (SwingSpeed + 1) + 1) * MathHelper.TwoPi));
             }
 

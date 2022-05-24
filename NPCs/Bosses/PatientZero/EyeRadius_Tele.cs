@@ -95,7 +95,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             }
             if (npc.ai[1] >= 230 && npc.ai[1] % 3 == 0 && npc.ai[1] <= 380 && Main.myPlayer == Projectile.owner)
             {
-                SoundEngine.PlaySound(SoundID.Item14.WithVolume(0.5f), npc.position);
+                SoundEngine.PlaySound(SoundID.Item14 with { Volume = .5f }, npc.position);
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), npc.Center, RedeHelper.PolarVector(13, Projectile.rotation + Main.rand.NextFloat(-0.3f, 0.3f)), ModContent.ProjectileType<PZ_Miniblast>(), (int)(npc.damage * 0.85f) / 3, 3, Main.myPlayer);
             }
         }

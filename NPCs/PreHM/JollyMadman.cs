@@ -104,7 +104,7 @@ namespace Redemption.NPCs.PreHM
 
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 2);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_2"), NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -354,7 +354,7 @@ namespace Redemption.NPCs.PreHM
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y == 6 * frameHeight)
                     {
-                        SoundEngine.PlaySound(SoundID.Item71.WithVolume(0.5f), NPC.position);
+                        SoundEngine.PlaySound(SoundID.Item71 with { Volume = .5f }, NPC.position);
                         NPC.velocity.X += 4 * NPC.spriteDirection;
                     }
                     if (NPC.frame.Y > 8 * frameHeight)
@@ -427,7 +427,7 @@ namespace Redemption.NPCs.PreHM
             int gotNPC = GetNearestNPC(NPCLists.HasLostSoul.ToArray());
             if (NPC.Sight(player, 650, true, true))
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_3"), NPC.position);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
@@ -437,7 +437,7 @@ namespace Redemption.NPCs.PreHM
             {
                 if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 650, true, true))
                 {
-                    SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_3"), NPC.position);
                     globalNPC.attacker = Main.npc[gotNPC];
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
@@ -448,7 +448,7 @@ namespace Redemption.NPCs.PreHM
             gotNPC = GetNearestNPC(new[] { ModContent.NPCType<LostSoulNPC>() });
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 650, true, true))
             {
-                SoundEngine.PlaySound(SoundID.Zombie, NPC.position, 3);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_3"), NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;

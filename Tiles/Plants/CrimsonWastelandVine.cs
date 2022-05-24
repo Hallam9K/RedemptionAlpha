@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Plants
 			Main.tileNoFail[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLighted[Type] = false;
-			SoundType = SoundID.Grass;
+			HitSound = SoundID.Grass;
             DustType = DustID.Ash;
 
             AddMapEntry(new Color(93, 69, 72));

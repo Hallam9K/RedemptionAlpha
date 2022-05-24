@@ -43,8 +43,7 @@ namespace Redemption.Tiles.Plants
             };
             TileObjectData.addTile(Type);
 
-            SoundType = SoundID.Grass;
-            SoundStyle = 0;
+            HitSound = SoundID.Grass;
             DustType = DustID.GrassBlades;
         }
         public override bool CanPlace(int i, int j)

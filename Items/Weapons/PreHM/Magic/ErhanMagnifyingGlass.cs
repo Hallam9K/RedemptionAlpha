@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.value = Item.sellPrice(0, 0, 54, 0);
             Item.channel = true;
             Item.rare = ItemRarityID.Blue;
-            Item.UseSound = SoundID.Item1.WithVolume(0);
+            Item.UseSound = SoundID.Item1 with { Volume = 0 };
             Item.autoReuse = false;
             Item.shoot = ModContent.ProjectileType<MagnifyingGlassRay>();
             Item.shootSpeed = 10f;

@@ -36,7 +36,7 @@ namespace Redemption.Tiles.Tiles
 			ItemDrop = ModContent.ItemType<PlantMatter>();
             MinPick = 0;
             MineResist = 1f;
-            SoundType = SoundID.Grass;
+            HitSound = SoundID.Grass;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Plant Matter");
             AddMapEntry(new Color(109, 155, 67), name);

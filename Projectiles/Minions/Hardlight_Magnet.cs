@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.Minions
             if (soundVolume > 2f) { soundVolume = 2f; }
             if (Projectile.soundDelay == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item24.WithVolume(soundVolume), Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item24 with { Volume = soundVolume }, Projectile.position);
                 Projectile.soundDelay = 10;
             }
 
@@ -113,7 +113,7 @@ namespace Redemption.Projectiles.Minions
             if (Projectile.localAI[0] == 240 && damageStored > 10 && getNPC != -1 && Projectile.owner == Main.myPlayer)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/BallFire"), Projectile.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/BallFire"), Projectile.position);
 
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_MagnetBeam>(), (int)MathHelper.Clamp(damageStored, 10, 800), 4, player.whoAmI, Projectile.whoAmI);
             }

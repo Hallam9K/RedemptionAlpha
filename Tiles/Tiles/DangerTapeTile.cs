@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<DangerTape>();
             MinPick = 500;
             MineResist = 3f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(49, 49, 52));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -47,7 +47,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<DangerTape2>();
             MinPick = 50;
             MineResist = 1f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(49, 49, 52));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<SlayerShipPanel>();
             MinPick = 500;
             MineResist = 7f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(72, 70, 79));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

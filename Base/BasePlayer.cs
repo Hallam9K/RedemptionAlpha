@@ -18,11 +18,11 @@ namespace Redemption.Base
 		public static bool ConsumeAmmo(Player player, Item item, Item ammo)
 		{
 			bool consume = true;
-			if (player.magicQuiver && ammo.ammo == AmmoID.Arrow && Main.rand.Next(5) == 0) consume = false;
-			if (player.ammoBox && Main.rand.Next(5) == 0) consume = false;
-			if (player.ammoPotion && Main.rand.Next(5) == 0) consume = false;	
-			if (player.ammoCost80 && Main.rand.Next(5) == 0) consume = false;
-			if (player.ammoCost75 && Main.rand.Next(4) == 0) consume = false;	
+			if (player.magicQuiver && ammo.ammo == AmmoID.Arrow && Main.rand.NextBool(5)) consume = false;
+			if (player.ammoBox && Main.rand.NextBool(5)) consume = false;
+			if (player.ammoPotion && Main.rand.NextBool(5)) consume = false;	
+			if (player.ammoCost80 && Main.rand.NextBool(5)) consume = false;
+			if (player.ammoCost75 && Main.rand.NextBool(4)) consume = false;	
 			if (!PlayerLoader.CanConsumeAmmo(player, item, ammo)) consume = false;
 			if (!ItemLoader.CanConsumeAmmo(item, ammo, player)) consume = false;
 			return consume;

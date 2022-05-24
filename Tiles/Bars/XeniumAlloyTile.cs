@@ -12,7 +12,7 @@ namespace Redemption.Tiles.Bars
     {
         public override void SetStaticDefaults()
         {
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
 
             Main.tileShine[Type] = 1100;
             Main.tileSolid[Type] = true;

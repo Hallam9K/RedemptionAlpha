@@ -24,16 +24,16 @@ namespace Redemption.Tiles.Ores
             ItemDrop = ModContent.ItemType<Uranium>();
             MinPick = 210;
             MineResist = 7f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Uranium");
             AddMapEntry(new Color(77, 240, 107), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 0.0f;
+            r = 0;
             g = 0.4f;
-            b = 0.0f;
+            b = 0;
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
@@ -45,7 +45,7 @@ namespace Redemption.Tiles.Ores
             if (dist <= 15 && dist > 8 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller1").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(80000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
@@ -53,7 +53,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 8 && dist > 2 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller2").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller2") { Volume = .9f, PitchVariance = .1f }, player.position);
 
                 if (Main.rand.NextBool(40000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
@@ -61,7 +61,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 2 && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Muller3").WithVolume(.9f).WithPitchVariance(.1f), player.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller3") { Volume = .9f, PitchVariance = .1f }, player.position);
                 if (Main.rand.NextBool(8000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
             }

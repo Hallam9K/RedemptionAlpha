@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y, 1);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             return true;
         }
         public override bool PreDraw(ref Color lightColor)

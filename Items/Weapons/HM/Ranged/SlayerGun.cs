@@ -33,7 +33,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Cyan;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun1");
+            Item.UseSound = new("Redemption/Sounds/Custom/Gun1");
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 8;
@@ -48,20 +48,20 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             if (player.altFunctionUse == 2)
             {
-                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ShootChange");
+                Item.UseSound = new("Redemption/Sounds/Custom/ShootChange");
             }
             else
             {
                 switch (AttackMode)
                 {
                     case 0:
-                        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun1");
+                        Item.UseSound = new("Redemption/Sounds/Custom/Gun1");
                         break;
                     case 1:
-                        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun3");
+                        Item.UseSound = new("Redemption/Sounds/Custom/Gun3");
                         break;
                     case 2:
-                        Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Gun2");
+                        Item.UseSound = new("Redemption/Sounds/Custom/Gun2");
                         break;
                 }
             }

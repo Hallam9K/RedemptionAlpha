@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (soundVolume > 2f) { soundVolume = 2f; }
             if (NPC.soundDelay == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item24.WithVolume(soundVolume), NPC.position);
+                SoundEngine.PlaySound(SoundID.Item24 with { Volume = soundVolume }, NPC.position);
                 NPC.soundDelay = 10;
             }
             if (NPC.ai[1]++ % 50 == 0)
@@ -119,7 +119,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1: // Stop and Scan
                     NPC.velocity *= 0.96f;
                     if (NPC.ai[2]++ == 30)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/BallFire", NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, SoundID.Item1, "BallFire", NPC.whoAmI);
 
                     if (NPC.ai[2] > 240)
                     {

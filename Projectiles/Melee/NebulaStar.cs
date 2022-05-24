@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.Melee
             {
                 if (Main.rand.NextBool(30) && Main.myPlayer == Projectile.owner)
                 {
-                    SoundEngine.PlaySound(SoundID.Item9.WithVolume(0.5f), Projectile.position);
+                    SoundEngine.PlaySound(SoundID.Item9 with { Volume = .5f }, Projectile.position);
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, RedeHelper.PolarVector(8, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<NebulaSpark>(), Projectile.damage / 2, 1, player.whoAmI);
                 }
                 Vector2 move = Vector2.Zero;

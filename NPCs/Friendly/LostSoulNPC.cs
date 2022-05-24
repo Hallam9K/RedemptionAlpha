@@ -95,7 +95,7 @@ namespace Redemption.NPCs.Friendly
 
             if (++AITimer > 600)
             {
-                SoundEngine.PlaySound(SoundID.NPCDeath39.WithVolume(0.3f), NPC.position);
+                SoundEngine.PlaySound(SoundID.NPCDeath39 with { Volume = .3f }, NPC.position);
                 NPC.active = false;
             }
         }

@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            SoundEngine.PlaySound(SoundID.NPCDeath1.WithVolume(.2f), Projectile.position);
+            SoundEngine.PlaySound(SoundID.NPCDeath1 with { Volume = .2f }, Projectile.position);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<SludgeDust>(), Scale: 2);

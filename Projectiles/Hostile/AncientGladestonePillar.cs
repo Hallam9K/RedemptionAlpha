@@ -34,7 +34,7 @@ namespace Redemption.Projectiles.Hostile
         }
         public override void AI()
         {
-            if (Main.rand.Next(2) == 0 && Projectile.localAI[0] < 30)
+            if (Main.rand.NextBool(2)&& Projectile.localAI[0] < 30)
             {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<SlateDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
             }
@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Hostile
             else if (Projectile.localAI[0] == 30)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2").WithVolume(0.5f), Projectile.position);
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2") { Volume = .5f }, Projectile.position);
                 Projectile.velocity.Y -= 10;
             }
             else if (Projectile.localAI[0] == 40)
