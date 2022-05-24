@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Misc
             MinPick = 50;
             MineResist = 4f;
 
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Cage");
             AddMapEntry(new Color(116, 121, 144), name);

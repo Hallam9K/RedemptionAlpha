@@ -39,8 +39,8 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.Lead;
             MinPick = 50;
             MineResist = 3f;
-            
-            SoundType = SoundID.Tink;
+
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Cage");
             AddMapEntry(new Color(116, 121, 144), name);
