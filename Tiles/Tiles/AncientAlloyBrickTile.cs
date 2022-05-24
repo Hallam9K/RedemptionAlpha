@@ -19,7 +19,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<AncientAlloyBrick>();
             MinPick = 350;
             MineResist = 18f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(105, 97, 102));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.noUseGraphic = true;
             Item.shoot = ModContent.ProjectileType<CageFlail_Ball>();
             Item.shootSpeed = 32f;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing");
+            Item.UseSound = new("Redemption/Sounds/Custom/ChainSwing");
             Item.DamageType = DamageClass.Melee;
             Item.autoReuse = false;
             Item.channel = true;
@@ -95,7 +95,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     if (Main.myPlayer == Projectile.owner)
                         Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(Main.rand.Next(3, 14), Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<Echo_Friendly>(), Projectile.damage, 0, Main.myPlayer);
                 }
-                SoundEngine.PlaySound(SoundID.Zombie, Projectile.position, 81);
+                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_81"), Projectile.position);
                 Projectile.localAI[0] = 2;
             }
         }
@@ -103,11 +103,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void PostAI()
         {
             if (Projectile.ai[0] == 0 && soundTimer++ % 30 == 0 && !Main.dedServ)
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing").WithVolume(0.5f), Projectile.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing") { Volume = .5f }, Projectile.position);
 
             if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/ChainSwing"), Projectile.position);
+                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing"), Projectile.position);
                 Projectile.localAI[0] = 1;
             }
             Vector2 position = Projectile.Center;

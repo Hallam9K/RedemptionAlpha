@@ -62,7 +62,7 @@ namespace Redemption.Projectiles.Magic
                 {
                     if (Projectile.ai[0] == 0)
                     {
-                        SoundEngine.PlaySound(SoundID.NPCDeath52.WithVolume(0.5f), Projectile.position);
+                        SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = .5f }, Projectile.position);
                         Projectile.timeLeft = 60;
                         Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 20;
                         Projectile.ai[0] = 1;

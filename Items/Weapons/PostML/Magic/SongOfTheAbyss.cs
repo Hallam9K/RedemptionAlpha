@@ -51,8 +51,8 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 float cursorPosFromPlayer = player.Distance(Main.MouseWorld) / (Main.screenHeight / 2 / 24);
                 if (cursorPosFromPlayer > 24) cursorPosFromPlayer = 1;
                 else cursorPosFromPlayer = (cursorPosFromPlayer / 12) - 1;
-                LegacySoundStyle b1 = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/Lyre1");
-                SoundEngine.PlaySound(b1.SoundId, (int)player.Center.X, (int)player.Center.Y, b1.Style, 1, cursorPosFromPlayer);
+                SoundStyle b1 = new("Redemption/Sounds/Custom/Lyre1");
+                SoundEngine.PlaySound(b1 with { Pitch = cursorPosFromPlayer }, player.Center);
             }
             switch (shot)
             {

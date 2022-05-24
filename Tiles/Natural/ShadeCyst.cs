@@ -29,8 +29,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.AncientLight;
-            SoundStyle = 13;
-            SoundType = SoundID.NPCHit;
+            HitSound = SoundID.NPCHit13;
             MineResist = 10;
             AddMapEntry(new Color(151, 147, 161));
             AnimationFrameHeight = 48;

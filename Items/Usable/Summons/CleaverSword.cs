@@ -38,9 +38,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool? UseItem(Player player)
         {
-            if (player.whoAmI == Main.myPlayer)
-            {
-                SoundEngine.PlaySound(SoundID.Roar, player.position);
+            SoundEngine.PlaySound(SoundID.Roar, player.position);
 
             int type = ModContent.NPCType<Wielder>();
 

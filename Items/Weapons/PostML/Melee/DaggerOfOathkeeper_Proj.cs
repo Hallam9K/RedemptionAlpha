@@ -104,7 +104,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         {
                             Projectile.Kill();
                             if (player.channel)
-                                Projectile.Shoot(player.Center, ModContent.ProjectileType<DaggerOfOathkeeper_Proj2>(), Projectile.damage * 4, Projectile.velocity, false, SoundID.Item1.WithVolume(0));
+                                Projectile.Shoot(player.Center, ModContent.ProjectileType<DaggerOfOathkeeper_Proj2>(), Projectile.damage * 4, Projectile.velocity, false, SoundID.Item1 with { Volume = 0 });
                         }
                         break;
                 }
@@ -185,7 +185,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
 
             if (Timer == 3)
-                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<ShadeStab_Proj>(), Projectile.damage * 2, RedeHelper.PolarVector(26, vector.ToRotation()), false, SoundID.Item1.WithVolume(0), "", Main.rand.Next(2));
+                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<ShadeStab_Proj>(), Projectile.damage * 2, RedeHelper.PolarVector(26, vector.ToRotation()), false, SoundID.Item1 with { Volume = 0 }, "", Main.rand.Next(2));
 
             if (Timer < 4)
                 Length *= 1.7f;

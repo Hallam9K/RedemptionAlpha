@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
             DustType = DustID.AncientLight;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Sielukaivo Shadowbinder");
             AddMapEntry(new Color(210, 200, 191), name);

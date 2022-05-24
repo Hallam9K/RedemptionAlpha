@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
-            SoundType = SoundID.Shatter;
+            HitSound = SoundID.Shatter;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Pot");
             AddMapEntry(new Color(140, 140, 170), name);
@@ -41,14 +41,14 @@ namespace Redemption.Tiles.Natural
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             EntitySource_TileBreak source = new(i, j);
-            if (Main.rand.Next(250) == 0)
+            if (Main.rand.NextBool(250))
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(source, (i + 1.5f) * 16f, j * 16f, 0f, 0f, ProjectileID.CoinPortal, 0, 0, Main.myPlayer);
             }
             else
             {
-                if (Main.expertMode ? Main.rand.Next(45) < 2 : Main.rand.Next(45) == 0)
+                if (Main.expertMode ? Main.rand.Next(45) < 2 : Main.rand.NextBool(45))
                 {
                     switch (Main.rand.Next(11))
                     {

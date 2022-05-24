@@ -21,7 +21,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<EvergoldBrick>();
             MinPick = 500;
             MineResist = 18f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(230, 230, 50));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

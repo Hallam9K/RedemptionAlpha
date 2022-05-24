@@ -314,7 +314,6 @@ namespace Redemption
 
         public static TrailManager TrailManager;
         public bool Initialized;
-        public static SoundLooper soullessAmbience;
 
         public override void Load()
         {
@@ -358,17 +357,8 @@ namespace Redemption
 
             orig(self, gameTime);
         }
-        public override void PostUpdateInput()
-        {
-            soullessAmbience?.Update();
-        }
-        public override void PostSetupContent()
-        {
-            soullessAmbience = new SoundLooper(Mod, "Sounds/Custom/SoullessAmbient");
-        }
         public override void Unload()
         {
-            soullessAmbience = null;
             TrailManager = null;
             On.Terraria.Main.Update -= LoadTrailManager;
         }

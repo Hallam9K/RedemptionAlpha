@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<ShadesteelDust>();
             MinPick = 100;
             MineResist = 7f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ItemDrop = ModContent.ItemType<ShadesteelChain>();
             AddMapEntry(new Color(83, 87, 123));
         }

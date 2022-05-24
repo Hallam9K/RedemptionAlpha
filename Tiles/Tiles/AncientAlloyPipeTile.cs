@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 350;
             MineResist = 11f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             AddMapEntry(new Color(105, 97, 102));
             ItemDrop = ModContent.ItemType<AncientAlloyPipe>();
         }

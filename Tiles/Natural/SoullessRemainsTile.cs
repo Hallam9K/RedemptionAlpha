@@ -35,8 +35,7 @@ namespace Redemption.Tiles.Natural
             DustType = ModContent.DustType<VoidFlame>();
             MinPick = 200;
             MineResist = 6f;
-            SoundStyle = 48;
-            SoundType = SoundID.NPCHit;
+            HitSound = SoundID.NPCHit48;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Soulless Remains");
             AddMapEntry(new Color(210, 200, 191), name);

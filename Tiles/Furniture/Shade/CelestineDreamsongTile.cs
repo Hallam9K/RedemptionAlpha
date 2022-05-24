@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
             DustType = DustID.AncientLight;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
 			ModTranslation name = CreateMapEntryName();
             name.SetDefault("Celestine Dreamsong");
             AddMapEntry(new Color(223, 230, 238));

@@ -73,7 +73,7 @@ namespace Redemption.Projectiles.Hostile
 		{
 			if (Projectile.localAI[1] == 0)
 			{
-				SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact.WithVolume(0.5f), Projectile.position);
+				SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Volume = .5f }, Projectile.position);
 				Projectile.position += oldVelocity * 2;
 				Projectile.localAI[1] = 1;
 			}
@@ -98,7 +98,7 @@ namespace Redemption.Projectiles.Hostile
 			}
 			if (Projectile.ai[1] == 1)
 			{
-				SoundEngine.PlaySound(SoundID.NPCDeath39.WithVolume(0.5f), Projectile.position);
+				SoundEngine.PlaySound(SoundID.NPCDeath39 with { Volume = .5f }, Projectile.position);
 				Color c = new(167, 255, 255);
 				RedeDraw.SpawnRing(Projectile.Center, c, 0.2f, 0.86f, 8);
 				for (int i = 0; i < 7; i++)

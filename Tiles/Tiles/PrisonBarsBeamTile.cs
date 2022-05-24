@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 500;
             MineResist = 18f;
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Prison Bars");
             AddMapEntry(new Color(83, 87, 123));

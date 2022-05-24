@@ -40,7 +40,7 @@ namespace Redemption.Globals
                 if (!soullessBools[1] && player.Hitbox.Intersects(b1))
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2").WithVolume(0.5f), b1.Center.ToVector2());
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2") { Volume = .5f }, b1.Center.ToVector2());
 
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b1.Center.ToVector2()) / 64);
                     for (int x = 275; x < 280; x++)
@@ -60,7 +60,7 @@ namespace Redemption.Globals
                 if (!soullessBools[3] && player.Hitbox.Intersects(b2))
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/EarthBoom2").WithVolume(0.5f), b2.Center.ToVector2());
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2") { Volume = .5f }, b2.Center.ToVector2());
 
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b2.Center.ToVector2()) / 64);
                     for (int x = 347; x < 354; x++)

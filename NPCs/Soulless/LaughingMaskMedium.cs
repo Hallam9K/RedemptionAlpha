@@ -96,9 +96,9 @@ namespace Redemption.NPCs.Soulless
             if (NPC.ai[2] >= 60 && NPC.ai[1] == 0)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Custom/MaskLaugh2").WithVolume(.5f).WithPitchVariance(0.1f));
+                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MaskLaugh2") { Volume = .5f, PitchVariance = .1f });
 
-                NPC.Shoot(NPC.Center, ProjectileID.LostSoulHostile, NPC.damage, RedeHelper.PolarVector(15, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item1.WithVolume(0));
+                NPC.Shoot(NPC.Center, ProjectileID.LostSoulHostile, NPC.damage, RedeHelper.PolarVector(15, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item1 with { Volume = 0 });
                 NPC.ai[1] = 1;
             }
             else if (NPC.ai[1] == 1)

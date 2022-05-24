@@ -16,6 +16,9 @@ using Redemption.Items.Weapons.PostML.Melee;
 using Terraria.Utilities;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
+using Terraria.Audio;
+using ReLogic.Utilities;
+using Redemption.Sounds.Custom;
 
 namespace Redemption.Globals.Player
 {
@@ -68,24 +71,31 @@ namespace Redemption.Globals.Player
                 "Keep your findings in this branch to yourself please.\n" +
                 "===============", 244, 71, 255);
         }
-        public override void PreUpdate()
+
+        public static readonly SoundStyle SoullessLoopSound = new("Redemption/Sounds/Custom/SoullessAmbient");
+        private SlotId soullessLoopSoundSlot;
+        private float soullessEffectIntensity;
+        public override void PostUpdate()
         {
-            if (!Main.dedServ)
+            if (Player.whoAmI != Main.myPlayer)
+                return;
+
+            float soullessEffectPitch = 0f;
+            if (SubworldSystem.IsActive<SoullessSub>() && Player.InModBiome(ModContent.GetInstance<SoullessBiome>()))
             {
-                if (SubworldSystem.IsActive<SoullessSub>() && Player.InModBiome(ModContent.GetInstance<SoullessBiome>()))
+                if (stalkerSilence)
                 {
-                    if (stalkerSilence)
-                    {
-                        RedeSystem.soullessAmbience.SetTo(MathHelper.Min(0.05f, Main.ambientVolume), -0.5f);
-                    }
-                    else
-                    {
-                        RedeSystem.soullessAmbience.SetTo(Main.ambientVolume);
-                    }
+                    soullessEffectIntensity = MathHelper.Min(0.05f, Main.ambientVolume);
+                    soullessEffectPitch = -0.5f;
                 }
                 else
-                    RedeSystem.soullessAmbience.Stop();
+                {
+                    soullessEffectIntensity = Main.ambientVolume;
+                }
             }
+            else
+                soullessEffectIntensity = 0;
+            CustomSounds.UpdateLoopingSound(ref soullessLoopSoundSlot, SoullessLoopSound, soullessEffectIntensity, soullessEffectPitch);
         }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
