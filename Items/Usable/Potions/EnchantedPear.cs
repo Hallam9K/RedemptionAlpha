@@ -29,7 +29,7 @@ namespace Redemption.Items.Usable.Potions
             Item.value = 120;
             Item.rare = ItemRarityID.Cyan;
             Item.buffType = ModContent.BuffType<WellFed4>();
-            Item.buffTime = 20000;
+            Item.buffTime = 10000;
         }
     }
 }

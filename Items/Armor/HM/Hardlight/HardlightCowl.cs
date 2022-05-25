@@ -16,15 +16,15 @@ namespace Redemption.Items.Armor.HM.Hardlight
             "5% increased magic critical strike chance\n" +
             "+50 max mana");
 
-            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 24;
-            Item.height = 12;
+            Item.width = 20;
+            Item.height = 18;
             Item.sellPrice(silver: 75);
             Item.rare = ItemRarityID.Cyan;
             Item.defense = 16;
@@ -59,6 +59,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                     "Summons a drone that gives a continuous feed of mana for 10 seconds";
             }
             player.RedemptionPlayerBuff().hardlightBonus = 2;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
     }
 }

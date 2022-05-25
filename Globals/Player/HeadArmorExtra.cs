@@ -85,8 +85,6 @@ namespace Redemption.Globals.Player
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightHelm", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightHood_Head_Glow", immediate).Value);
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightHood", EquipType.Head), head);
-            head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightRegalia_Head_Glow", immediate).Value);
-            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightRegalia", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightVisor_Head_Glow", immediate).Value);
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightVisor", EquipType.Head), head);
 

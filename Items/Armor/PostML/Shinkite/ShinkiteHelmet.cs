@@ -29,6 +29,10 @@ namespace Redemption.Items.Armor.PostML.Shinkite
         {
             return body.type == ModContent.ItemType<ShinkiteChestplate>() && legs.type == ModContent.ItemType<ShinkiteLeggings>();
         }
+        public override void UpdateArmorSet(Player player)
+        {
+            player.RedemptionPlayerBuff().MetalSet = true;
+        }
         public override void UpdateEquip(Player player)
         {
             player.RedemptionPlayerBuff().shinkiteHead = true;

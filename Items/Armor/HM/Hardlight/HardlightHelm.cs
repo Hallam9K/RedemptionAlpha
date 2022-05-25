@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 24;
             Item.height = 22;
             Item.sellPrice(silver: 75);
             Item.rare = ItemRarityID.Cyan;
@@ -57,6 +57,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                     "Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon";
             }
             player.RedemptionPlayerBuff().hardlightBonus = 3;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
     }
 }

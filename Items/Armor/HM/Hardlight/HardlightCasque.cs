@@ -24,8 +24,8 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void SetDefaults()
         {
-            Item.width = 20;
-            Item.height = 20;
+            Item.width = 26;
+            Item.height = 22;
             Item.sellPrice(silver: 75);
             Item.rare = ItemRarityID.Cyan;
             Item.defense = 16;
@@ -59,6 +59,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                     "Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons";
             }
             player.RedemptionPlayerBuff().hardlightBonus = 1;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
     }
 }

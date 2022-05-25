@@ -54,6 +54,7 @@ Mods: {
             MicroshieldCoreBuff: "Microshield Core"
             
             # Pets
+            BabyRockpileBuff: "Baby Rockpile"
             BouquetOfThornsBuff: "Bouquet of Thorns"
             CuddlyTeratomaBuff: "Cuddly Teratoma"
             ErhanPetBuff: "Angel & Devil"
@@ -115,6 +116,7 @@ Mods: {
             MicroshieldCoreBuff: "A tiny shield core is defending you"
             
             # Pets
+            BabyRockpileBuff: "Never seen a pile of rocks dance before"
             BouquetOfThornsBuff: "A gift for the newly divorced"
             CuddlyTeratomaBuff: "Don't stand still for too long"
             ErhanPetBuff: "They're bickering about something non-stop"
