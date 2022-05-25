@@ -15,15 +15,15 @@ namespace Redemption.Items.Armor.HM.Hardlight
             Tooltip.SetDefault("13% increased ranged damage\n" +
             "5% increased ranged critical strike chance");
 
-            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
+            ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 20;
-            Item.height = 16;
+            Item.width = 22;
+            Item.height = 20;
             Item.sellPrice(silver: 75);
             Item.rare = ItemRarityID.Cyan;
             Item.defense = 16;
@@ -57,6 +57,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                     "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position";
             }
             player.RedemptionPlayerBuff().hardlightBonus = 6;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
     }
 }

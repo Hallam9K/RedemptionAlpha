@@ -27,7 +27,7 @@ namespace Redemption.Items.Usable.Potions
 
         public override void SetDefaults()
         {
-            Item.DefaultToFood(24, 58, ModContent.BuffType<WellFed4>(), 20000, true);
+            Item.DefaultToFood(24, 58, ModContent.BuffType<WellFed4>(), 10000, true);
             Item.value = 80;
             Item.rare = ItemRarityID.Blue;
         }

@@ -143,7 +143,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             Player player = Main.player[Projectile.owner];
             if (player.velocity.Y > 0)
-                damage = (int)(damage * ((player.velocity.Y / 10) + 1));
+                damage = (int)(damage * ((player.velocity.Y / 8) + 1));
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

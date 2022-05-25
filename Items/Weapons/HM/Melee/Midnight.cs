@@ -14,9 +14,10 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Midnight, Defiler of the Prince");
-            Tooltip.SetDefault("Slams down in a blaze of twilight, releasing nebula stars" +
-                "\nNebula stars slowly chase targets while spewing nebula sparks" +
-                "\nCan't create nebula stars while some are already active");
+            Tooltip.SetDefault("Slams down in a blaze of twilight" +
+                "\nHold left-click to charge a stronger slam, releasing Nebula stars if hitting a surface or enemy" +
+                "\nNebula Stars slowly chase targets while spewing nebula sparks" +
+                "\nCan't create nebula stars while at least 4 are already active");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -37,7 +38,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.autoReuse = false;	
 
             // Weapon Properties
-            Item.damage = 120;
+            Item.damage = 105;
             Item.knockBack = 10.5f;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -63,7 +64,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'A blade crafted in the mountains of Erellon, imbued with shadow magic by an unknown source.\n" +
+                    "'A blade crafted in the mountains of Erellon, imbued with celestial magic by an unknown source.\n" +
                     "It was used by a rebel to assassinate the heir of Erellon. Afterwards the assassin was soon caught,\n" +
                     "and the weapon was held in a museum'")
                 {
