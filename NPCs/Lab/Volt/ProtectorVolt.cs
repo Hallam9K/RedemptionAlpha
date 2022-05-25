@@ -275,7 +275,7 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer++ == 60)
                     {
                         for (int i = 0; i < 5; i++)
-                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<Volt_OrbProj>(), NPC.damage, RedeHelper.PolarVector(5 + (i * 3), gunRot), false, SoundID.Item61);
+                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<Volt_OrbProj>(), NPC.damage, RedeHelper.PolarVector(5 + (i * 3), gunRot), true, SoundID.Item61);
                     }
                     if (AITimer >= 170)
                     {
@@ -302,7 +302,7 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     if (AITimer == 60)
                     {
-                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item73, "", NPC.whoAmI);
+                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), true, SoundID.Item73, NPC.whoAmI);
                     }
                     if (AITimer > 60)
                         gunRot += 0.01f;
@@ -344,7 +344,7 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer == 60)
                     {
                         for (int i = 0; i < 2; i++)
-                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), true, SoundID.Item1, "BallFire", NPC.whoAmI, i);
+                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), true, CustomSounds.BallFire, NPC.whoAmI, i);
                     }
                     if (AITimer >= 160)
                     {
@@ -387,7 +387,7 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     if (AITimer == 60)
                     {
-                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item73, "", NPC.whoAmI);
+                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), true, SoundID.Item73, NPC.whoAmI);
                         if (NPC.Center.X > (RedeGen.LabVector.X + 86) * 16)
                             TimerRand = 1;
                     }

@@ -181,7 +181,7 @@ namespace Redemption.NPCs.Wasteland
                     if (AITimer == 5)
                     {
                         int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30)) / 16, (int)(globalNPC.attacker.Center.Y / 16) - 2);
-                        NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<MutatedLivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
+                        NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<MutatedLivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
@@ -195,7 +195,7 @@ namespace Redemption.NPCs.Wasteland
                                 continue;
 
                             int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Center.Y / 16) - 2);
-                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<MutatedLivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
+                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<MutatedLivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                         }
                         for (int p = 0; p < Main.maxPlayers; p++)
                         {
@@ -210,7 +210,7 @@ namespace Redemption.NPCs.Wasteland
                                 continue;
 
                             int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Center.Y / 16) - 2);
-                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<MutatedLivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
+                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<MutatedLivingBloomRoot>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                         }
                     }
                     else if (AITimer >= 80)

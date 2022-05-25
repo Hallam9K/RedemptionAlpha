@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElectricNoise"), Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.ElectricNoise, Projectile.position);
 
             DustHelper.DrawCircle(Projectile.Center, DustID.Electric, 3, 3, 3, 1, 1, nogravity: true);
             for (int i = 0; i < 20; i++)

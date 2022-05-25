@@ -164,7 +164,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void OnKill()
         {
-            NPC.Shoot(new Vector2(NPC.Center.X - 60, NPC.Center.Y), ModContent.ProjectileType<KS3_Exit>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
+            NPC.Shoot(new Vector2(NPC.Center.X - 60, NPC.Center.Y), ModContent.ProjectileType<KS3_Exit>(), 0, Vector2.Zero, false, SoundID.Item1);
 
             if (!RedeBossDowned.downedSlayer)
             {
@@ -423,7 +423,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 RedeBossDowned.slayerDeath = 3;
 
                             NPC.dontTakeDamage = false;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
                             HeadType = 0;
                             AITimer = 0;
                             AIState = ActionState.GunAttacks;
@@ -490,7 +490,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             NPC.dontTakeDamage = false;
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
                             HeadType = 0;
                             AITimer = 0;
                             AIState = ActionState.GunAttacks;
@@ -625,7 +625,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 40 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, SoundID.Item1, "Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -634,7 +634,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     for (int i = 0; i < 3; i++)
                                     {
                                         int rot = 25 * i;
-                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 25)), true, SoundID.Item1, "Gun3");
+                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 25)), true, CustomSounds.Gun3);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                 }
@@ -650,7 +650,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 20 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, SoundID.Item1, "Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -659,7 +659,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     for (int i = 0; i < 5; i++)
                                     {
                                         int rot = 25 * i;
-                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, SoundID.Item1, "Gun3");
+                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, CustomSounds.Gun3);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                 }
@@ -675,7 +675,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 35 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, SoundID.Item1, "Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -684,7 +684,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     for (int i = 0; i < 5; i++)
                                     {
                                         int rot = 25 * i;
-                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, SoundID.Item1, "Gun3");
+                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, CustomSounds.Gun3);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                 }
@@ -706,7 +706,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             SnapGunToFiringArea();
                             if (AITimer++ == 0)
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine1>(), 0, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item1 with { Volume = 0 }, ai1: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine1>(), 0, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item1, ai1: NPC.whoAmI);
 
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -300 : 300, 10);
 
@@ -750,7 +750,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.velocity.X = player.Center.X > NPC.Center.X ? -9 : 9;
                                     for (int i = 0; i < Main.rand.Next(5, 8); i++)
                                     {
-                                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(Main.rand.Next(8, 13) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, SoundID.Item1, "ShotgunBlast1");
+                                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(Main.rand.Next(8, 13) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, CustomSounds.ShotgunBlast1);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
@@ -784,7 +784,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             if (phase >= 5 ? AITimer == 40 : AITimer == 60)
                             {
-                                NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, SoundID.Item1, "Gun2");
+                                NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2);
                                 BodyState = (int)BodyAnim.GunShoot;
                                 NPC.netUpdate = true;
                             }
@@ -828,7 +828,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 if (phase >= 5 ? AITimer == 41 || AITimer == 44 || AITimer == 47 : AITimer == 61 || AITimer == 64 || AITimer == 67)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, SoundID.Item1, "Gun2");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -874,7 +874,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 if (AITimer % 10 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, SoundID.Item1, "Gun1");
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -975,7 +975,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     BodyState = (int)BodyAnim.RocketFist;
 
                                 if (AITimer == 135)
-                                    NPC.Shoot(new Vector2(NPC.Center.X + 15 * NPC.spriteDirection, NPC.Center.Y - 11), ModContent.ProjectileType<KS3_Fist>(), 102, new Vector2(10 * NPC.spriteDirection, 0), true, SoundID.Item1, "MissileFire1");
+                                    NPC.Shoot(new Vector2(NPC.Center.X + 15 * NPC.spriteDirection, NPC.Center.Y - 11), ModContent.ProjectileType<KS3_Fist>(), 102, new Vector2(10 * NPC.spriteDirection, 0), true, CustomSounds.MissileFire1);
 
                                 if (AITimer > 170)
                                 {
@@ -1022,7 +1022,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         BodyState = (int)BodyAnim.Grenade;
 
                                     if (AITimer == 140)
-                                        NPC.Shoot(new Vector2(NPC.Center.X + 21 * NPC.spriteDirection, NPC.Center.Y - 17), ModContent.ProjectileType<KS3_FlashGrenade>(), 78, new Vector2(10 * NPC.spriteDirection, -6), false, SoundID.Item1);
+                                        NPC.Shoot(new Vector2(NPC.Center.X + 21 * NPC.spriteDirection, NPC.Center.Y - 17), ModContent.ProjectileType<KS3_FlashGrenade>(), 78, new Vector2(10 * NPC.spriteDirection, -6), true, SoundID.Item1);
 
                                     if (AITimer > 180)
                                     {
@@ -1080,9 +1080,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 {
                                     NPC.Move(ShootPos, 4f, 14f, true);
                                     if (AITimer == 121)
-                                        NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_BeamCell>(), 96,
-                                            RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(35 * NPC.spriteDirection)),
-                                            false, SoundID.Item103, ai0: NPC.whoAmI);
+                                        NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_BeamCell>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(35 * NPC.spriteDirection)),
+                                            true, SoundID.Item103, ai0: NPC.whoAmI);
 
                                     if (AITimer > 240)
                                     {
@@ -1142,10 +1141,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.velocity *= 0.9f;
                                     if (AITimer == 202)
                                     {
-                                        NPC.Shoot(new Vector2(NPC.spriteDirection == 1 ? NPC.Center.X + 2 : NPC.Center.X - 2, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge>(), 80, Vector2.Zero, true, SoundID.Item1, "ElectricNoise", ai0: NPC.whoAmI);
+                                        NPC.Shoot(new Vector2(NPC.spriteDirection == 1 ? NPC.Center.X + 2 : NPC.Center.X - 2, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge>(), 80, Vector2.Zero, true, CustomSounds.ElectricNoise, NPC.whoAmI);
 
                                         for (int i = 0; i < 18; i++)
-                                            NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge2>(), 0, RedeHelper.PolarVector(14, MathHelper.ToRadians(20) * i), false, SoundID.Item1 with { Volume = 0 });
+                                            NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge2>(), 0, RedeHelper.PolarVector(14, MathHelper.ToRadians(20) * i), false, SoundID.Item1);
                                     }
                                     if (AITimer > 232)
                                     {
@@ -1228,7 +1227,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
                                 if (AITimer == 16)
-                                    NPC.Shoot(new Vector2(NPC.Center.X + 48 * NPC.spriteDirection, NPC.Center.Y - 12), ModContent.ProjectileType<KS3_Reflect>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                    NPC.Shoot(new Vector2(NPC.Center.X + 48 * NPC.spriteDirection, NPC.Center.Y - 12), ModContent.ProjectileType<KS3_Reflect>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                                 if (AITimer > 231)
                                     BodyState = (int)BodyAnim.ShieldOff;
@@ -1266,7 +1265,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.velocity *= 0.98f;
                                 if (AITimer == 16)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                                     if (!NPC.AnyNPCs(ModContent.NPCType<KS3_MissileDrone>()))
                                     {
                                         for (int i = 0; i < Main.rand.Next(2, 5); i++)
@@ -1307,7 +1306,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.velocity *= 0.98f;
                                 if (AITimer == 16)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                                     if (!NPC.AnyNPCs(ModContent.NPCType<KS3_Magnet>()))
                                     {
                                         for (int i = 0; i < 2; i++)
@@ -1348,9 +1347,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.velocity *= 0.98f;
                                 if (AITimer == 16)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                                     if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
-                                        NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
+                                        NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                                 }
                                 if (AITimer > 91)
                                 {
@@ -1468,7 +1467,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 if (AITimer == 110)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Wave>(), 120, Vector2.Zero, false, SoundID.Item74, ai0: NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Wave>(), 120, Vector2.Zero, true, SoundID.Item74, ai0: NPC.whoAmI);
                                     NPC.velocity.Y += 40f;
                                 }
                                 if (AITimer >= 110)
@@ -1604,7 +1603,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         BodyState = (int)BodyAnim.DropkickStart;
 
                                         SoundEngine.PlaySound(SoundID.Item74, NPC.position);
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine2>(), 0, NPC.DirectionTo(player.Center + player.velocity * 20f), false, SoundID.Item1 with { Volume = 0 }, ai1: NPC.whoAmI);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine2>(), 0, NPC.DirectionTo(player.Center + player.velocity * 20f), false, SoundID.Item1, ai1: NPC.whoAmI);
                                         NPC.netUpdate = true;
                                     }
                                     else
@@ -1774,7 +1773,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.Move(ShootPos, NPC.Distance(player.Center) > 300 ? 20f : 9f, 8f, true);
                                 if (AITimer >= 15 && AITimer % 3 == 0)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_JojoFist>(), 132, Vector2.Zero, false, SoundID.Item60 with { Volume = .3f }, ai0: NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_JojoFist>(), 132, Vector2.Zero, true, SoundID.Item60 with { Volume = .3f }, ai0: NPC.whoAmI);
                                 }
                                 if (AITimer > 240)
                                 {
@@ -1794,13 +1793,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     NPC.velocity *= 0.9f;
                     if (AITimer++ == 5)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                     if (RedeBossDowned.slayerDeath >= 4)
                     {
                         if (AITimer == 30)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                             HeadType = 0;
                             if (!NPC.AnyNPCs(ModContent.NPCType<KS3_MissileDrone>()))
                             {
@@ -1817,7 +1816,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = (ActionState)Main.rand.Next(2, 5);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -1852,7 +1851,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AttackChoice == 1 ? AITimer == 700 : AITimer == 580)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                             HeadType = 0;
                             if (!NPC.AnyNPCs(ModContent.NPCType<KS3_MissileDrone>()))
                             {
@@ -1872,7 +1871,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = (ActionState)Main.rand.Next(3, 5);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -1886,13 +1885,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     NPC.velocity *= 0.9f;
                     if (AITimer++ == 5)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                     if (RedeBossDowned.slayerDeath >= 5)
                     {
                         if (AITimer == 30)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                             HeadType = 0;
                             if (!NPC.AnyNPCs(ModContent.NPCType<KS3_Magnet>()))
                             {
@@ -1909,7 +1908,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = (ActionState)Main.rand.Next(3, 5);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -1952,7 +1951,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer == 840)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                             HeadType = 0;
                             if (!NPC.AnyNPCs(ModContent.NPCType<KS3_Magnet>()))
                             {
@@ -1972,7 +1971,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = (ActionState)Main.rand.Next(3, 5);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -1986,16 +1985,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.LookAtEntity(player);
                     NPC.velocity *= 0.9f;
                     if (AITimer++ == 5)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                     if (RedeBossDowned.slayerDeath >= 6)
                     {
                         if (AITimer == 30)
                         {
                             HeadType = 0;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
-                                NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                         }
                         if (AITimer > 80)
                         {
@@ -2004,7 +2003,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = (ActionState)Main.rand.Next(3, 5);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -2031,9 +2030,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer == 820)
                         {
                             HeadType = 0;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, SoundID.Item1, "Alarm2", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
-                                NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI);
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), 98, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                         }
                         if (AITimer > 840)
                         {
@@ -2045,7 +2044,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             AITimer = 0;
                             AIState = (ActionState)Main.rand.Next(3, 5);
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -2064,7 +2063,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer++ == 5)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                     if (RedeBossDowned.slayerDeath >= 7)
                     {
@@ -2076,7 +2075,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer > 300)
                         {
                             NPC.life = 1;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
                             HeadType = 0;
                             AttackChoice = 0;
                             AITimer = 0;
@@ -2117,7 +2116,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer > 1120)
                         {
                             NPC.life = 1;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
                             HeadType = 0;
                             AttackChoice = 0;
                             AITimer = 0;
@@ -2178,7 +2177,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                     if (AITimer == 5)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, ai0: NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield2>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
 
                     if (AITimer == 30 && !Main.dedServ)
                     {

@@ -155,7 +155,7 @@ namespace Redemption.Items.Accessories.HM
                             continue;
 
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Reflect") { Volume = 0.5f, PitchVariance = 0.1f });
+                            SoundEngine.PlaySound(CustomSounds.Reflect);
                         proj.damage *= 8;
                         proj.velocity = -proj.velocity;
                         proj.friendly = true;

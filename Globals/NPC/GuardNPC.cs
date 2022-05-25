@@ -29,15 +29,12 @@ namespace Redemption.Globals.NPC
             damage = 0;
             IgnoreArmour = false;
         }
-        public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0, bool customSound = true, string soundString = "GuardBreak")
+        public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
             if (GuardPoints > 0 || GuardBroken)
                 return;
 
-            if (customSound && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + soundString), npc.position);
-            else
-                SoundEngine.PlaySound(sound, npc.position);
+            SoundEngine.PlaySound(sound, npc.position);
 
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, "Guard Broken!", false, true);
             for (int i = 0; i < dustAmount; i++)
@@ -94,7 +91,7 @@ namespace Redemption.Globals.NPC
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.Gold, SoundID.Item37);
+                GuardBreakCheck(npc, DustID.Gold, CustomSounds.GuardBreak);
             }
             if (npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle ||
                 npc.type == NPCID.ArmoredSkeleton || npc.type == NPCID.ArmoredViking || npc.type == NPCID.BlueArmoredBones ||
@@ -109,7 +106,7 @@ namespace Redemption.Globals.NPC
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.Bone, SoundID.Item37, damage: 50);
+                GuardBreakCheck(npc, DustID.Bone, CustomSounds.GuardBreak, damage: 50);
             }
             if (npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
                 npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
@@ -121,7 +118,7 @@ namespace Redemption.Globals.NPC
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.Torch, SoundID.Item37, damage: 50);
+                GuardBreakCheck(npc, DustID.Torch, CustomSounds.GuardBreak, damage: 50);
             }
             if (npc.type == NPCID.PossessedArmor)
             {
@@ -132,7 +129,7 @@ namespace Redemption.Globals.NPC
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.Demonite, SoundID.Item37, damage: 10);
+                GuardBreakCheck(npc, DustID.Demonite, CustomSounds.GuardBreak, damage: 10);
             }
             if (npc.type == NPCID.GoblinWarrior)
             {
@@ -143,7 +140,7 @@ namespace Redemption.Globals.NPC
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.Iron, SoundID.Item37, damage: 10);
+                GuardBreakCheck(npc, DustID.Iron, CustomSounds.GuardBreak, damage: 10);
             }
             if (npc.type == NPCID.Paladin)
             {
@@ -154,7 +151,7 @@ namespace Redemption.Globals.NPC
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     return false;
                 }
-                GuardBreakCheck(npc, DustID.GoldCoin, SoundID.Item37, damage: npc.lifeMax / 3);
+                GuardBreakCheck(npc, DustID.GoldCoin, CustomSounds.GuardBreak, damage: npc.lifeMax / 3);
             }
             return true;
         }

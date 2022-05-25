@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Friendly
 
             if (AIState is ActionState.Idle)
             {
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_81"), NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie81, NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }
@@ -103,7 +103,7 @@ namespace Redemption.NPCs.Friendly
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Wraith, SoundID.Item37, 10, 1, 150);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Wraith, CustomSounds.GuardBreak, 10, 1, 150);
             return true;
         }
         private Vector2 moveTo;
@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Friendly
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
-                        SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_82"), NPC.position);
+                        SoundEngine.PlaySound(SoundID.Zombie82, NPC.position);
                         NPC.velocity.Y = -4;
                         Flare = true;
                     }
@@ -221,14 +221,14 @@ namespace Redemption.NPCs.Friendly
                     if (NPC.frame.Y == 5 * frameHeight)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice1") { PitchVariance = .1f }, NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.Slice1, NPC.position);
                     }
                     if (NPC.frame.Y == 8 * frameHeight)
                     {
                         if (NPC.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                             Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 5;
 
-                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), false, SoundID.Item71);
+                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), true, SoundID.Item71);
                         Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 280 : NPC.Center.X - 18), (int)NPC.Center.Y, 280, 60);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
@@ -274,7 +274,7 @@ namespace Redemption.NPCs.Friendly
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage)
             {
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_81"), NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie81, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 AITimer = 0;
                 AIState = ActionState.Alert;

@@ -69,7 +69,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         if (Timer++ == 0)
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Swing1") { Volume = .4f, PitchVariance = .1f }, player.position);
+                                SoundEngine.PlaySound(CustomSounds.Swing1, player.position);
                             startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                             speed = MathHelper.ToRadians(3);
                         }

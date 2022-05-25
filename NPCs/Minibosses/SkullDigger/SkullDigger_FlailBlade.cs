@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             case 1:
                                 Projectile.localAI[0]++;
                                 if (Projectile.localAI[0] >= 40 && Projectile.localAI[0] % 20 == 0)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing") { PitchVariance = .1f }, Projectile.position);
+                                    SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
 
                                 rot += speed * host.spriteDirection;
                                 speed *= 1.04f;
@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 Projectile.Center = originPos + new Vector2(0, 1).RotatedBy(rot) * length;
                                 if (Projectile.localAI[0] >= 120)
                                 {
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing") { PitchVariance = .1f }, Projectile.position);
+                                    SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
 
                                     Projectile.velocity = RedeHelper.PolarVector(14 + (Projectile.Distance(player.Center) / 30), (player.Center - Projectile.Center).ToRotation());
                                     host.velocity = RedeHelper.PolarVector(14, (player.Center - host.Center).ToRotation());
@@ -126,7 +126,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             case 1:
                                 Projectile.localAI[0]++;
                                 if (Projectile.localAI[0] % 50 == 0)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing") { PitchVariance = .1f }, Projectile.position);
+                                    SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
 
                                 length++;
                                 length = MathHelper.Clamp(length, 10, 100);

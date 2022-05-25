@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 {
                     float loudness = Projectile.damage / 15;
                     loudness = MathHelper.Clamp(loudness, 1, 2);
-                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_104") { Volume = loudness }, Projectile.position);
+                    SoundEngine.PlaySound(SoundID.Zombie104 with { Volume = loudness }, Projectile.position);
                 }
                 LaserScale = 0.2f;
             }

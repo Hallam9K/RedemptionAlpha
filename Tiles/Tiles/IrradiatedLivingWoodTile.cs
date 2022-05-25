@@ -41,7 +41,7 @@ namespace Redemption.Tiles.Tiles
             if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(6) && !Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f }, player.position);
+                    SoundEngine.PlaySound(CustomSounds.Muller1, player.position);
 
                 if (Main.rand.NextBool(100) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;

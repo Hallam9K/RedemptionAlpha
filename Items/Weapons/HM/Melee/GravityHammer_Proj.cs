@@ -106,7 +106,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         if ((tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType]) || (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType]))
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/GravityHammerSlam") { Volume = .6f }, Projectile.position);
+                                SoundEngine.PlaySound(CustomSounds.GravityHammerSlam, Projectile.position);
                             player.RedemptionScreen().ScreenShakeIntensity = 20;
                             SlamOrigin = new(Projectile.Center.X + (70 * Projectile.spriteDirection), Projectile.Center.Y);
                             miss = false;

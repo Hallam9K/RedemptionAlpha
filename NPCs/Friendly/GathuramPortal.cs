@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Friendly
                 Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 1.3f)).UseColor(2, 8, 5).UseTargetPosition(NPC.Center);
 
                 if (RotTime > 0.5 && RotTime < 0.6 && !Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/PortalWub"), NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.PortalWub, NPC.position);
             }
 
             for (int i = 0; i < 30; i++)

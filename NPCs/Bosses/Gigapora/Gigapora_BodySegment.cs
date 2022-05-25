@@ -191,8 +191,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 {
                     if (ShootTimer++ == 60)
                     {
-                        NPC.Shoot(NPC.Center + RedeHelper.PolarVector(36, NPC.rotation), ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), false, SoundID.Item62);
-                        NPC.Shoot(NPC.Center + RedeHelper.PolarVector(-36, NPC.rotation), ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), false, SoundID.Item62);
+                        NPC.Shoot(NPC.Center + RedeHelper.PolarVector(36, NPC.rotation), ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), true, SoundID.Item62);
+                        NPC.Shoot(NPC.Center + RedeHelper.PolarVector(-36, NPC.rotation), ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), true, SoundID.Item62);
                     }
                     if (ShootTimer >= 80)
                     {
@@ -286,7 +286,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (NPC.immortal)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/BallFire") { Volume = .5f, PitchVariance = .1f }, NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.BallFire with { Volume = .5f }, NPC.position);
                 damage = 0;
                 return false;
             }

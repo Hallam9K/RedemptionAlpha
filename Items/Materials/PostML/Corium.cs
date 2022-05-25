@@ -28,7 +28,7 @@ namespace Redemption.Items.Materials.PostML
         }
         public override void HoldItem(Player player)
         {
-            SoundStyle muller = new("Redemption/Sounds/Custom/Muller5") { Volume = 0.9f, PitchVariance = 0.1f };
+            SoundStyle muller = CustomSounds.Muller5;
             if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
                 SoundEngine.PlaySound(muller, player.position);
 

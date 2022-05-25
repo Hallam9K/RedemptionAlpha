@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Lab.Volt
                                 Mod mod = Redemption.Instance;
 
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom"), NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
 
                                 for (int i = 0; i < 40; i++)
                                     Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, 0, 0, default, 2f);

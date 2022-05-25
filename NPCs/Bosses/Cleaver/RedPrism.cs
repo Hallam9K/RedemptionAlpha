@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (AITimer == 0)
             {
                 LaserScale = 0.1f;
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_104"), Projectile.position);
+                SoundEngine.PlaySound(SoundID.Zombie104, Projectile.position);
             }
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (AITimer == 0)
             {
                 LaserScale = 0.1f;
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_104"), Projectile.position);
+                SoundEngine.PlaySound(SoundID.Zombie104, Projectile.position);
             }
 
             Projectile host = Main.projectile[(int)Projectile.ai[0]];

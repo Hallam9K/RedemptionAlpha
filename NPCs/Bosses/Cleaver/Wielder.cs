@@ -289,7 +289,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<WielderOrb>(), 0, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", NPC.whoAmI, i * 90);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<WielderOrb>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, i * 90);
                             }
                             AIHost = 0;
                             AIState = ActionState.Idle;
@@ -355,7 +355,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     NPC.netUpdate = true;
                                 }
                                 if (AITimer == 125)
-                                    NPC.Dash(7, false, SoundID.Item1 with { Volume = 0 }, player.Center);
+                                    NPC.Dash(7, false, SoundID.Item1, player.Center);
                                 if (AITimer > 150)
                                 {
                                     AIHost = 0;
@@ -381,7 +381,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                 NPC.netUpdate = true;
                             }
                             if (AITimer == 90)
-                                NPC.Dash(12, false, SoundID.Item1 with { Volume = 0 }, player.Center);
+                                NPC.Dash(12, false, SoundID.Item1, player.Center);
                             if (AITimer > 200)
                             {
                                 AIHost = 0;
@@ -454,7 +454,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     NPC.netUpdate = true;
                                 }
                                 if (AITimer == 125)
-                                    NPC.Dash(7, false, SoundID.Item1 with { Volume = 0 }, player.Center);
+                                    NPC.Dash(7, false, SoundID.Item1, player.Center);
                                 if (AITimer > 180)
                                 {
                                     AIHost = 0;
@@ -611,13 +611,13 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (AITimer == 200)
                             {
                                 aniType = 1;
-                                NPC.Dash(7, false, SoundID.Item1 with { Volume = 0 }, player.Center);
+                                NPC.Dash(7, false, SoundID.Item1, player.Center);
                                 AITimer = 100;
                             }
                             if (AITimer == 300)
                             {
                                 aniType = 2;
-                                NPC.Dash(7, false, SoundID.Item1 with { Volume = 0 }, player.Center);
+                                NPC.Dash(7, false, SoundID.Item1, player.Center);
                                 AITimer = 100;
                             }
                             if (AITimer >= 1000)

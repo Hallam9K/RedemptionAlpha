@@ -65,7 +65,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4);
                         RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f);
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NebSound2") { Pitch = 0.1f }, player.position);
+                            SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = 0.1f }, player.position);
                         Projectile.localAI[0] = 1;
                     }
                     if (!player.channel)
@@ -77,7 +77,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         if (Projectile.localAI[0] == 1)
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NebSound1") { Pitch = 0.1f }, player.position);
+                                SoundEngine.PlaySound(CustomSounds.NebSound1 with { Pitch = 0.1f }, player.position);
                             SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
                             if (Projectile.owner == Main.myPlayer)
                                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, Vector2.Zero, ModContent.ProjectileType<BlindJustice_Aura>(), Projectile.damage, 0, Projectile.owner);

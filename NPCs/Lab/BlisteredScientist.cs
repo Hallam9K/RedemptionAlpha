@@ -224,7 +224,7 @@ namespace Redemption.NPCs.Lab
             int gotNPC = GetNearestNPC(true);
             if (NPC.Sight(player, 100, false, false, blind: true))
             {
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_2"), NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie2, NPC.position);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
@@ -232,7 +232,7 @@ namespace Redemption.NPCs.Lab
             }
             if (Main.rand.NextBool(800) && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 100, false, false, blind: true))
             {
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_3"), NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie3, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
@@ -241,7 +241,7 @@ namespace Redemption.NPCs.Lab
             gotNPC = GetNearestNPC();
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 100, false, false, blind: true))
             {
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_3"), NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie3, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
@@ -282,7 +282,7 @@ namespace Redemption.NPCs.Lab
 
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
-                SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_2"), NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie2, NPC.position);
                 AITimer = 0;
                 AIState = ActionState.Alert;
             }

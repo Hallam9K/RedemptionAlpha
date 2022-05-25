@@ -57,7 +57,7 @@ namespace Redemption.Projectiles.Ranged
 
             DustHelper.DrawCircle(Projectile.Center + vel, DustID.OrangeTorch, 1, 2, 2, nogravity: true);
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/PlasmaBlast"), Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
             if (Projectile.DistanceSQ(player.Center) < 600 * 600)
                 player.RedemptionScreen().ScreenShakeIntensity = 3;
         }

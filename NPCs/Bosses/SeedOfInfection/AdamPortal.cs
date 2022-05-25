@@ -103,7 +103,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", Projectile.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 1.3f)).UseColor(2, 8, 5).UseTargetPosition(Projectile.Center);
 
                     if (RotTime > 0.5 && RotTime < 0.6 && !Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/PortalWub"), Projectile.position);
+                        SoundEngine.PlaySound(CustomSounds.PortalWub, Projectile.position);
                 }
             }
         }

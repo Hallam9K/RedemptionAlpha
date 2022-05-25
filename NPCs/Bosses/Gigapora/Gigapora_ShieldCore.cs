@@ -149,7 +149,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (AITimer++ % (another ? 90 : 60) == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, true, SoundID.Item1, "Laser1");
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, true, CustomSounds.Laser1);
                     }
                     if (AITimer >= (another ? 220 : 180) && NPC.DistanceSQ(player.Center) <= 600 * 600)
                     {
@@ -165,7 +165,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (AITimer++ % 3 == 0 && AITimer < 30)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation() + TimerRand - MathHelper.ToRadians(another ? 50 : 25)), true, SoundID.Item1, "Laser1");
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation() + TimerRand - MathHelper.ToRadians(another ? 50 : 25)), true, CustomSounds.Laser1);
 
                         TimerRand += MathHelper.ToRadians(another ? 20 : 10);
                         NPC.netUpdate = true;
@@ -184,7 +184,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     {
                         NPC.velocity = player.Center.DirectionTo(NPC.Center) * 3;
                         for (int i = -1; i <= 1; i += 2)
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_DualcastBall>(), (int)(NPC.damage * 1.15f), RedeHelper.PolarVector(14, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(80 * i)), true, SoundID.Item1, "Zap2");
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_DualcastBall>(), (int)(NPC.damage * 1.15f), RedeHelper.PolarVector(14, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(80 * i)), true, CustomSounds.Zap2);
                     }
                     if (AITimer >= 60)
                     {
@@ -197,7 +197,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     NPC.Move(new Vector2(Main.rand.Next(-100, 100), -400), 18, 50, true);
                     if (AITimer++ >= 20 && AITimer % (another ? 8 : 5) == 0 && AITimer <= 80)
                     {
-                        NPC.Shoot(player.Center + player.velocity + RedeHelper.Spread(300), ModContent.ProjectileType<ShieldCore_Zap>(), NPC.damage, Vector2.Zero, true, SoundID.Item1, "ElectricSlash", NPC.whoAmI);
+                        NPC.Shoot(player.Center + player.velocity + RedeHelper.Spread(300), ModContent.ProjectileType<ShieldCore_Zap>(), NPC.damage, Vector2.Zero, true, CustomSounds.ElectricSlash, NPC.whoAmI);
                     }
                     if (AITimer >= 140)
                     {

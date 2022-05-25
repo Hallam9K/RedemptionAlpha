@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (player.altFunctionUse == 2 && !player.HasBuff<XeniumLanceCooldown>())
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElectricSlash2") { Pitch = .1f }, player.position);
+                    SoundEngine.PlaySound(CustomSounds.ElectricSlash2, player.position);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 3, sp ? 1 : 0);
                 player.AddBuff(ModContent.BuffType<XeniumLanceCooldown>(), 20 * 60);
                 ShotCount--;
@@ -81,13 +81,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     {
                         case 0:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElectricSlash") { Volume = .8f, Pitch = .1f }, player.position);
+                                SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = .8f }, player.position);
                             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 1, sp ? 1 : 0);
                             Level++;
                             break;
                         case 1:
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElectricSlash2") { Volume = .8f, Pitch = .1f }, player.position);
+                                SoundEngine.PlaySound(CustomSounds.ElectricSlash2 with { Volume = .8f }, player.position);
                             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 2, sp ? 1 : 0);
 
                             Cooldown = 0;
@@ -99,7 +99,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 else
                 {
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElectricSlash") { Volume = .8f, Pitch = .1f }, player.position);
+                        SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = .8f }, player.position);
                     Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<XeniumLance_Proj>(), damage, knockback, player.whoAmI, 0, sp ? 1 : 0);
                     Level = 0;
                 }

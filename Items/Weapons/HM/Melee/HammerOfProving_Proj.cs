@@ -95,7 +95,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             {
                                 float volume = MathHelper.Lerp(0.1f, 1f, player.velocity.Y / 40);
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2") { Volume = volume }, Projectile.position);
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = volume }, Projectile.position);
                                 for (int i = 0; i < 10; i++)
                                     Dust.NewDust(new Vector2(Projectile.position.X, Projectile.Bottom.Y), Projectile.width, 2, DustID.Stone,
                                         -player.velocity.X * 0.6f, -player.velocity.Y * 0.6f, Scale: 2);

@@ -132,7 +132,7 @@ namespace Redemption.NPCs.PreHM
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Web, SoundID.Item37);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Web, CustomSounds.GuardBreak);
             return true;
         }
 
@@ -297,7 +297,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkeletonNoble_HalberdProj>(), damage,
-                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), false, SoundID.Item1, "", NPC.whoAmI,
+                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), true, SoundID.Item1, NPC.whoAmI,
                             Personality == PersonalityState.Greedy ? 1 : 0);
                         AITimer = 1;
                     }
