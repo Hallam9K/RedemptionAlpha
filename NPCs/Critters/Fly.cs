@@ -12,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using ReLogic.Utilities;
 
 namespace Redemption.NPCs.Critters
 {
@@ -70,6 +71,8 @@ namespace Redemption.NPCs.Critters
 
         public NPC npcTarget;
         public Vector2 moveTo;
+        private SlotId loop;
+        private float loopVolume;
         public int hitCooldown;
         public override void OnSpawn(IEntitySource source)
         {
@@ -96,19 +99,14 @@ namespace Redemption.NPCs.Critters
             if (NPC.collideY && NPC.velocity.Y != NPC.oldVelocity.Y)
                 NPC.velocity.Y = -NPC.oldVelocity.Y;
 
+            loopVolume = 0;
             switch (AIState)
             {
                 case ActionState.Flying:
                     NPC.noGravity = true;
                     NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
 
-                    if (NPC.soundDelay == 0)
-                    {
-                        if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/FlyBuzz") { Volume = 1 * NPC.scale, PitchVariance = .1f }, NPC.position);
-
-                        NPC.soundDelay = 180;
-                    }
+                    loopVolume = 1 * NPC.scale;
 
                     if (NPC.velocity.Length() < 4)
                         NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
@@ -199,6 +197,7 @@ namespace Redemption.NPCs.Critters
 
                     break;
             }
+            CustomSounds.UpdateLoopingSound(ref loop, CustomSounds.FlyBuzz with { MaxInstances = 3 }, loopVolume, 0, NPC.position);
         }
 
         public void CheckNPCHit()
@@ -254,6 +253,8 @@ namespace Redemption.NPCs.Critters
             }
 
             NPC.DeathSound = SoundID.NPCDeath1;
+            loopVolume = 0;
+            CustomSounds.UpdateLoopingSound(ref loop, CustomSounds.FlyBuzz with { MaxInstances = 3 }, loopVolume, 0, NPC.position);
             return true;
         }
 

@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 1000);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
 
             damage *= 2;
             return true;
@@ -299,9 +299,9 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AniFrameY == 4)
                     {
                         if (!Main.rand.NextBool(3))
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item19, "");
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19);
                         else
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item19, "", 1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19, 1);
                     }
                     if (AniFrameY > 5)
                         AniFrameY = 5;
@@ -320,7 +320,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y == 8 * frameHeight)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorBucket_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item19);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorBucket_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19);
 
                     if (NPC.frame.Y > 10 * frameHeight)
                         NPC.frame.Y = 10 * frameHeight;

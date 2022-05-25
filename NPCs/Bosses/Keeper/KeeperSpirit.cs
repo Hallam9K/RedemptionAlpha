@@ -257,7 +257,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 }
                                 if (AITimer == 40)
                                 {
-                                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_83") { Pitch = 0.3f }, NPC.position);
+                                    SoundEngine.PlaySound(SoundID.Zombie83 with { Pitch = 0.3f }, NPC.position);
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -6f * NPC.spriteDirection;
                                 }
@@ -361,7 +361,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperBloodWave>(), NPC.damage,
                                         RedeHelper.PolarVector(Main.rand.NextFloat(8, 16), (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.3f, 0.3f)),
-                                        false, SoundID.NPCDeath19, "", NPC.whoAmI);
+                                        true, SoundID.NPCDeath19, NPC.whoAmI);
                                 }
                                 for (int i = 0; i < 30; i++)
                                 {
@@ -396,7 +396,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             {
                                 Vector2 pos = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(TimerRand)) * 60;
                                 NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage,
-                                       RedeHelper.PolarVector(Main.expertMode ? 4 : 3, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item20);
+                                       RedeHelper.PolarVector(Main.expertMode ? 4 : 3, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item20);
 
                                 TimerRand += 45;
                             }
@@ -418,7 +418,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 if (AITimer == 5)
                                 {
                                     NPC.LookAtEntity(player);
-                                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_83") { Pitch = 0.3f }, NPC.position);
+                                    SoundEngine.PlaySound(SoundID.Zombie83 with { Pitch = 0.3f }, NPC.position);
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -6f * NPC.spriteDirection;
                                 }
@@ -468,7 +468,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                                     if (AITimer % 2 == 0)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), false, SoundID.NPCDeath52 with { Volume = .5f });
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), true, SoundID.NPCDeath52 with { Volume = .5f });
                                     }
                                 }
                                 if (AITimer >= 320)
@@ -502,7 +502,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 {
                                     NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil>(),
                                         NPC.damage, RedeHelper.PolarVector(7, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)),
-                                        false, SoundID.Item20);
+                                        true, SoundID.Item20);
                                 }
                                 if (AITimer >= 130)
                                 {

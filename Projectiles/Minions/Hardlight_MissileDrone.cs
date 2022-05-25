@@ -141,7 +141,7 @@ namespace Redemption.Projectiles.Minions
             {
                 AdjustMagnitude(ref Projectile.velocity);
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Alarm2") { Volume = .2f, PitchVariance = .1f }, Projectile.position);
+                    SoundEngine.PlaySound(CustomSounds.Alarm2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
                 Projectile.localAI[0] = 1f;
             }
             if (Projectile.localAI[0]++ < 20)

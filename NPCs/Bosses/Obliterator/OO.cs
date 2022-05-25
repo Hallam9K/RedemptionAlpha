@@ -109,7 +109,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (NPC.life <= 0)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion"), NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.MissileExplosion, NPC.position);
                 RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed);
 
                 for (int i = 0; i < 80; i++)
@@ -292,7 +292,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (AITimer > 1500)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/LabSafeS"), NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.LabSafeS, NPC.position);
                                 for (int i = 0; i < 100; i++)
                                 {
                                     int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain, Scale: 1.5f);

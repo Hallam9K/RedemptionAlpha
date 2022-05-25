@@ -81,7 +81,7 @@ namespace Redemption.NPCs.PreHM
                     AITimer++;
                     if (AITimer % 8 == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3), false, SoundID.Item1 with { Volume = 0 });
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3), false, SoundID.Item1);
                     }
                     if (AITimer > 60)
                     {
@@ -103,7 +103,7 @@ namespace Redemption.NPCs.PreHM
                 BaseAI.DamageNPC(possibleTarget, possibleTarget.lifeMax, 0, NPC, false);
                 if (possibleTarget.life <= 0)
                 {
-                    SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_9") { Pitch = .3f }, NPC.position);
+                    SoundEngine.PlaySound(SoundID.Zombie9 with { Pitch = .3f }, NPC.position);
                     if (NPC.life < NPC.lifeMax)
                     {
                         NPC.life += 5;

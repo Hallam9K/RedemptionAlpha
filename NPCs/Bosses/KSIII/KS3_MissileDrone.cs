@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (NPC.ai[2] % 30 == 0)
                 {
-                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), false, SoundID.Item74);
+                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), true, SoundID.Item74);
                     shotCount++;
                 }
             }
@@ -206,7 +206,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 AdjustMagnitude(ref Projectile.velocity);
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Alarm2") { Volume = .2f, PitchVariance = .1f }, Projectile.position);
+                    SoundEngine.PlaySound(CustomSounds.Alarm2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
                 Projectile.localAI[0] = 1f;
             }
             if (Projectile.localAI[0]++ < 20)

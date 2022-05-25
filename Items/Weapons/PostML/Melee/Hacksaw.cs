@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
-                Item.UseSound = new("Redemption/Sounds/Custom/ShootChange");
+                Item.UseSound = CustomSounds.ShootChange;
             else
                 Item.UseSound = SoundID.Item23;
             if (AttackMode == 2)

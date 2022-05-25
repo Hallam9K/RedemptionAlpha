@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     NPC.noTileCollide = false;
                     if (Main.rand.NextBool(20))
                     {
-                        NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.position.Y + Main.rand.Next(0, NPC.height)), ModContent.ProjectileType<Blisterface_Bubble>(), 80, Vector2.Zero, false, SoundID.Item111);
+                        NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.position.Y + Main.rand.Next(0, NPC.height)), ModContent.ProjectileType<Blisterface_Bubble>(), 80, Vector2.Zero, true, SoundID.Item111);
                     }
                     if (NPC.CountNPCS(ModContent.NPCType<BlisteredFish2>()) <= 5)
                     {
@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     {
                         if (AITimer[1] % 2 == 0)
                         {
-                            NPC.Shoot(new Vector2(NPC.Center.X + 12f * NPC.spriteDirection, NPC.Center.Y), ModContent.ProjectileType<Blisterface_Bubble>(), 80, new Vector2(Main.rand.Next(6, 13) * NPC.spriteDirection, Main.rand.Next(-2, 3)), false, SoundID.NPCDeath13, "", 0, 1);
+                            NPC.Shoot(new Vector2(NPC.Center.X + 12f * NPC.spriteDirection, NPC.Center.Y), ModContent.ProjectileType<Blisterface_Bubble>(), 80, new Vector2(Main.rand.Next(6, 13) * NPC.spriteDirection, Main.rand.Next(-2, 3)), true, SoundID.NPCDeath13, 0, 1);
                         }
                     }
                     if (AITimer[1] >= 68)

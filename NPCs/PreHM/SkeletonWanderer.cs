@@ -231,7 +231,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkeletonWanderer_SpearProj>(), damage,
-                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), false, SoundID.Item1, "", NPC.whoAmI,
+                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), true, SoundID.Item1, NPC.whoAmI,
                             Personality == PersonalityState.Greedy ? 1 : 0);
                         AITimer = 1;
                     }

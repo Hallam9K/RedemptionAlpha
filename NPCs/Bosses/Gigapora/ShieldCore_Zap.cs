@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (Projectile.ai[1] == 40)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Zap2"), Projectile.position);
+                    SoundEngine.PlaySound(CustomSounds.Zap2, Projectile.position);
                 DustHelper.DrawParticleElectricity(host.Center, Projectile.Center, new LightningParticle(), 2f, 20, 0.1f, 2);
                 DustHelper.DrawParticleElectricity(host.Center, Projectile.Center, new LightningParticle(), 2f, 20, 0.1f, 2);
                 Flare = true;

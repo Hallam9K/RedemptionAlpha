@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Lab.MACE
                 Projectile.velocity.X = 0;
 
             if (Projectile.localAI[0] == 60 && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Alarm2") { Volume = .5f }, Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.Alarm2 with { Volume = .5f }, Projectile.position);
 
             if (Projectile.localAI[0] >= 60 && Projectile.localAI[0] % 4 == 0 && Projectile.localAI[0] <= 80 && Main.myPlayer == Projectile.owner)
             {
@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Lab.MACE
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Zap1") { Volume = .5f, PitchVariance = .1f }, Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.Zap1, Projectile.position);
             if (Main.myPlayer == Projectile.owner)
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 67), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser>(), 34, 3, Main.myPlayer);
         }

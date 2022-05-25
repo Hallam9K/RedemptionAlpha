@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Redemption.Biomes;
 using Redemption.Items.Materials.PostML;
 using Redemption.Dusts.Tiles;
-using Redemption.Sounds.Custom;
 
 namespace Redemption.Tiles.Ores
 {

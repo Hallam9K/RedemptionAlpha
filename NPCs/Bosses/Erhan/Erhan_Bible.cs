@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (TimerRand++ % 30 == 0)
                             {
                                 RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Seed>(), Projectile.damage * 4, RedeHelper.SpreadUp(10), false, SoundID.Item42);
+                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Seed>(), Projectile.damage * 4, RedeHelper.SpreadUp(10), true, SoundID.Item42);
                             }
                             if (TimerRand >= 460)
                                 Projectile.Kill();
@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer >= 130 && AITimer % 7 == 0 && AITimer <= 170 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f }, Projectile.position);
+                                    SoundEngine.PlaySound(CustomSounds.Slice3, Projectile.position);
                                 SoundEngine.PlaySound(SoundID.Item125, Projectile.Center);
                                 int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
@@ -196,7 +196,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Projectile.netUpdate = true;
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
                                 RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 2, new Vector2(2, 0), false, SoundID.Item162, "", Projectile.whoAmI);
+                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 2, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
                             }
                             if (AITimer >= 80)
                                 Projectile.velocity.Y = -1.5f;

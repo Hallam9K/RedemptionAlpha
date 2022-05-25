@@ -197,7 +197,7 @@ namespace Redemption.Globals
 
                 knockBack += item.knockBack;
                 bool flag2 = doNotConsume
-                             || player.magicQuiver && ammoID == AmmoID.Arrow && Main.rand.NextBool(5)                             || player.ammoBox && Main.rand.NextBool(5)                             || player.ammoPotion && Main.rand.NextBool(5)                             || player.ammoCost80 && Main.rand.NextBool(5)                             || player.ammoCost75 && Main.rand.NextBool(4);
+                             || player.magicQuiver && ammoID == AmmoID.Arrow && Main.rand.NextBool(5) || player.ammoBox && Main.rand.NextBool(5) || player.ammoPotion && Main.rand.NextBool(5) || player.ammoCost80 && Main.rand.NextBool(5) || player.ammoCost75 && Main.rand.NextBool(4);
 
                 if (flag2 || !item.consumable)
                     return true;
@@ -490,7 +490,7 @@ namespace Redemption.Globals
             }
 
             return @float + Main.rand.Next(0, (int)distortNumber + 1) / (float)Math.Pow(10, counter) *
-                (Main.rand.NextBool(2)? -1 : 1);
+                (Main.rand.NextBool(2) ? -1 : 1);
         }
 
         public static Vector2 FoundPosition(Vector2 tilePos)
@@ -599,7 +599,7 @@ namespace Redemption.Globals
         public static bool DaerelActive()
         {
             return Terraria.NPC.AnyNPCs(ModContent.NPCType<Daerel>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<DaerelUnconscious>());
-        } 
+        }
         public static bool TBotActive()
         {
             return Terraria.NPC.AnyNPCs(ModContent.NPCType<TBot>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>());
@@ -636,11 +636,9 @@ namespace Redemption.Globals
         /// Example: npc.Shoot(npc.Center, ModContent.ProjectileType<Bullet>(), 40, new Vector2(-5, 0), false, false, SoundID.Item1);
         /// </summary>
         public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity,
-            bool customSound, SoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
+            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0)
         {
-            if (customSound && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + soundString), npc.position);
-            else
+            if (playSound)
                 SoundEngine.PlaySound(sound, npc.position);
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -650,11 +648,9 @@ namespace Redemption.Globals
             }
         }
         public static void Shoot(this Projectile proj, Vector2 position, int projType, int damage, Vector2 velocity,
-            bool customSound, SoundStyle sound, string soundString = "", float ai0 = 0, float ai1 = 0)
+            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0)
         {
-            if (customSound && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + soundString), proj.position);
-            else
+            if (playSound)
                 SoundEngine.PlaySound(sound, proj.position);
 
             if (Main.netMode != NetmodeID.MultiplayerClient)

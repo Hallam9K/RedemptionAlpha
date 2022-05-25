@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.knockBack = 0.5f;
             Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ItemRarityID.Pink;
-            Item.UseSound = new("Redemption/Sounds/Custom/PlasmaShot");
+            Item.UseSound = CustomSounds.PlasmaShot;
 
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;

@@ -33,7 +33,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.knockBack = 3;
             Item.value = Item.sellPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Cyan;
-            Item.UseSound = new("Redemption/Sounds/Custom/Gun1");
+            Item.UseSound = CustomSounds.Gun1;
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 8;
@@ -48,20 +48,20 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             if (player.altFunctionUse == 2)
             {
-                Item.UseSound = new("Redemption/Sounds/Custom/ShootChange");
+                Item.UseSound = CustomSounds.ShootChange;
             }
             else
             {
                 switch (AttackMode)
                 {
                     case 0:
-                        Item.UseSound = new("Redemption/Sounds/Custom/Gun1");
+                        Item.UseSound = CustomSounds.Gun1;
                         break;
                     case 1:
-                        Item.UseSound = new("Redemption/Sounds/Custom/Gun3");
+                        Item.UseSound = CustomSounds.Gun3;
                         break;
                     case 2:
-                        Item.UseSound = new("Redemption/Sounds/Custom/Gun2");
+                        Item.UseSound = CustomSounds.Gun2;
                         break;
                 }
             }

@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Lab.Janitor
                 target.ai[0] = 4;
                 target.ai[1] = 0;
                 target.ai[2] = 0;
-                target.RedemptionGuard().GuardBreakCheck(target, DustID.Electric, SoundID.Item37, 10, 1, 1000);
+                target.RedemptionGuard().GuardBreakCheck(target, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
             }
         }
         public override void Kill(int timeleft)

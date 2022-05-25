@@ -154,7 +154,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case 3:
                     if (AITimer++ == 0)
                     {
-                        NPC.Shoot(NPC.Center + new Vector2(0, -800), ModContent.ProjectileType<ScorchingRay>(), 0, new Vector2(0, 10), false, SoundID.Item162);
+                        NPC.Shoot(NPC.Center + new Vector2(0, -800), ModContent.ProjectileType<ScorchingRay>(), 0, new Vector2(0, 10), true, SoundID.Item162);
                     }
                     if (AITimer >= 90)
                     {

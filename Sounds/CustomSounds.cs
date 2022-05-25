@@ -1,0 +1,114 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using ReLogic.Utilities;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ModLoader;
+
+namespace Redemption
+{
+    public static class CustomSounds
+    {
+		public static void UpdateLoopingSound(ref SlotId slot, SoundStyle style, float volume, float pitch = 0f, Vector2? position = null)
+		{
+			SoundEngine.TryGetActiveSound(slot, out var sound);
+
+			if (volume > 0f)
+			{
+				if (sound == null)
+				{
+					slot = SoundEngine.PlaySound(style with { Volume = volume, Pitch = pitch }, position);
+					return;
+				}
+
+				sound.Position = position;
+				sound.Volume = volume;
+			}
+			else if (sound != null)
+			{
+				sound.Stop();
+
+				slot = SlotId.Invalid;
+			}
+		}
+		public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
+        {
+            PitchVariance = 0.2f
+        };
+        public static readonly SoundStyle LiftLoop = new("Redemption/Sounds/Custom/ElevatorLoop");
+        public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
+        public static readonly SoundStyle BallFire = new("Redemption/Sounds/Custom/BallFire") { PitchVariance = .1f };
+        public static readonly SoundStyle Banjo = new("Redemption/Sounds/Custom/Banjo", 3);
+        public static readonly SoundStyle Bass1 = new("Redemption/Sounds/Custom/Bass1") { PitchVariance = .1f };
+        public static readonly SoundStyle BulletBounce = new("Redemption/Sounds/Custom/BulletBounce", 3) { Volume = .3f, PitchVariance = .1f };
+        public static readonly SoundStyle ChainSwing = new("Redemption/Sounds/Custom/ChainSwing");
+        public static readonly SoundStyle ChickenCluck = new("Redemption/Sounds/Custom/ChickenCluck", 3);
+        public static readonly SoundStyle Choir = new("Redemption/Sounds/Custom/Choir");
+        public static readonly SoundStyle DistortedRoar = new("Redemption/Sounds/Custom/DistortedRoar") { Volume = .5f };
+        public static readonly SoundStyle Doot = new("Redemption/Sounds/Custom/Doot") { PitchVariance = .3f };
+        public static readonly SoundStyle EarthBoom = new("Redemption/Sounds/Custom/EarthBoom");
+        public static readonly SoundStyle ElectricNoise = new("Redemption/Sounds/Custom/ElectricNoise");
+        public static readonly SoundStyle ElectricSlash = new("Redemption/Sounds/Custom/ElectricSlash") { PitchVariance = .1f };
+        public static readonly SoundStyle ElectricSlash2 = new("Redemption/Sounds/Custom/ElectricSlash2") { PitchVariance = .1f };
+        public static readonly SoundStyle ElevatorBreak = new("Redemption/Sounds/Custom/ElevatorBreak");
+        public static readonly SoundStyle ElevatorImpact = new("Redemption/Sounds/Custom/ElevatorImpact");
+        public static readonly SoundStyle ElevatorStart = new("Redemption/Sounds/Custom/ElevatorStart");
+        public static readonly SoundStyle EnergyCharge2 = new("Redemption/Sounds/Custom/EnergyChargeSound2");
+        public static readonly SoundStyle FlyBuzz = new("Redemption/Sounds/Custom/FlyBuzz") { PitchVariance = .1f };
+        public static readonly SoundStyle Gas1 = new("Redemption/Sounds/Custom/Gas1");
+        public static readonly SoundStyle GigaLaserCharge = new("Redemption/Sounds/Custom/GigaLaserCharge") { Volume = 1.5f };
+        public static readonly SoundStyle GigaLaserCoolDown = new("Redemption/Sounds/Custom/GigaLaserCoolDown") { Volume = 1.5f };
+        public static readonly SoundStyle GigaLaserFire = new("Redemption/Sounds/Custom/GigaLaserFire") { Volume = 1.5f };
+        public static readonly SoundStyle GravityHammerSlam = new("Redemption/Sounds/Custom/GravityHammerSlam") { Volume = 0.6f };
+        public static readonly SoundStyle GrenadeLauncher = new("Redemption/Sounds/Custom/GrenadeLauncher");
+        public static readonly SoundStyle GuardBreak = new("Redemption/Sounds/Custom/GuardBreak");
+        public static readonly SoundStyle Gun1 = new("Redemption/Sounds/Custom/Gun1");
+        public static readonly SoundStyle Gun2 = new("Redemption/Sounds/Custom/Gun2");
+        public static readonly SoundStyle Gun3 = new("Redemption/Sounds/Custom/Gun3");
+        public static readonly SoundStyle IceMist = new("Redemption/Sounds/Custom/IceMist") { PitchVariance = .1f };
+        public static readonly SoundStyle LabSafeS = new("Redemption/Sounds/Custom/LabSafeS");
+        public static readonly SoundStyle Laser1 = new("Redemption/Sounds/Custom/Laser1");
+        public static readonly SoundStyle Lyre1 = new("Redemption/Sounds/Custom/Lyre1");
+        public static readonly SoundStyle MACEProjectLaunch = new("Redemption/Sounds/Custom/MACEProjectLaunch") { PitchVariance = .1f };
+        public static readonly SoundStyle MaskLaugh1 = new("Redemption/Sounds/Custom/MaskLaugh1") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle MaskLaugh2 = new("Redemption/Sounds/Custom/MaskLaugh2") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle MaskLaugh3 = new("Redemption/Sounds/Custom/MaskLaugh3") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle MissileExplosion = new("Redemption/Sounds/Custom/MissileExplosion");
+        public static readonly SoundStyle MissileFire1 = new("Redemption/Sounds/Custom/MissileFire1") { Volume = .8f, PitchVariance = .1f };
+        public static readonly SoundStyle Muller1 = new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f };
+        public static readonly SoundStyle Muller2 = new("Redemption/Sounds/Custom/Muller2") { Volume = .9f, PitchVariance = .1f };
+        public static readonly SoundStyle Muller3 = new("Redemption/Sounds/Custom/Muller3") { Volume = .9f, PitchVariance = .1f };
+        public static readonly SoundStyle Muller4 = new("Redemption/Sounds/Custom/Muller4") { Volume = .9f, PitchVariance = .1f };
+        public static readonly SoundStyle Muller5 = new("Redemption/Sounds/Custom/Muller5") { Volume = .9f, PitchVariance = .1f };
+        public static readonly SoundStyle NebSound1 = new("Redemption/Sounds/Custom/NebSound1") { PitchVariance = .1f };
+        public static readonly SoundStyle NebSound2 = new("Redemption/Sounds/Custom/NebSound2") { PitchVariance = .1f };
+        public static readonly SoundStyle NukeExplosion = new("Redemption/Sounds/Custom/NukeExplosion");
+        public static readonly SoundStyle PatientZeroLaser = new("Redemption/Sounds/Custom/PatientZeroLaser");
+        public static readonly SoundStyle PatientZeroLaserL = new("Redemption/Sounds/Custom/PatientZeroLaserL");
+        public static readonly SoundStyle PlasmaBlast = new("Redemption/Sounds/Custom/PlasmaBlast");
+        public static readonly SoundStyle PlasmaShot = new("Redemption/Sounds/Custom/PlasmaShot");
+        public static readonly SoundStyle PortalWub = new("Redemption/Sounds/Custom/PortalWub");
+        public static readonly SoundStyle Quake = new("Redemption/Sounds/Custom/Quake");
+        public static readonly SoundStyle Reflect = new("Redemption/Sounds/Custom/Reflect") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle ShootChange = new("Redemption/Sounds/Custom/ShootChange");
+        public static readonly SoundStyle ShotgunBlast1 = new("Redemption/Sounds/Custom/ShotgunBlast1") { PitchVariance = .1f };
+        public static readonly SoundStyle Shriek = new("Redemption/Sounds/Custom/Shriek") { Volume = .4f };
+        public static readonly SoundStyle Slam2 = new("Redemption/Sounds/Custom/Slam2") { Volume = .5f };
+        public static readonly SoundStyle Slice1 = new("Redemption/Sounds/Custom/Slice1") { PitchVariance = .1f };
+        public static readonly SoundStyle Slice2 = new("Redemption/Sounds/Custom/Slice2");
+        public static readonly SoundStyle Slice3 = new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f };
+        public static readonly SoundStyle Spark1 = new("Redemption/Sounds/Custom/Spark1") { PitchVariance = .1f };
+        public static readonly SoundStyle SpookyNoise = new("Redemption/Sounds/Custom/SpookyNoise");
+        public static readonly SoundStyle Swing1 = new("Redemption/Sounds/Custom/Swing1") { Volume = .4f, PitchVariance = .1f };
+        public static readonly SoundStyle Switch1 = new("Redemption/Sounds/Custom/Switch1") { Volume = .5f };
+        public static readonly SoundStyle Swoosh1 = new("Redemption/Sounds/Custom/Swoosh1") { Volume = .4f, PitchVariance = .1f };
+        public static readonly SoundStyle Teleport1 = new("Redemption/Sounds/Custom/Teleport1") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle Teleport2 = new("Redemption/Sounds/Custom/Teleport2") { PitchVariance = .1f };
+        public static readonly SoundStyle Thunderstrike = new("Redemption/Sounds/Custom/Thunderstrike") { Volume = .7f, PitchVariance = .1f };
+        public static readonly SoundStyle Transformation = new("Redemption/Sounds/Custom/Transformation") { Volume = .7f, PitchVariance = .1f };
+        public static readonly SoundStyle VomitAttack = new("Redemption/Sounds/Custom/VomitAttack") { PitchVariance = .1f };
+        public static readonly SoundStyle WorldTree = new("Redemption/Sounds/Custom/WorldTree") { PitchVariance = .1f };
+        public static readonly SoundStyle Zap1 = new("Redemption/Sounds/Custom/Zap1") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle Zap2 = new("Redemption/Sounds/Custom/Zap2") { PitchVariance = .1f };
+    }
+}

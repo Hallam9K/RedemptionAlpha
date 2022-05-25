@@ -81,7 +81,7 @@ namespace Redemption.Projectiles.Ranged
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/MissileExplosion") { PitchVariance = .1f }, Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.MissileExplosion with { PitchVariance = .1f }, Projectile.position);
 
             for (int i = 0; i < 25; i++)
             {

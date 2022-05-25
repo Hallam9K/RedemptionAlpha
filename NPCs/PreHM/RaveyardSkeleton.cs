@@ -107,7 +107,7 @@ namespace Redemption.NPCs.PreHM
             {
                 case ActionState.Trumpet:
                     if (Main.rand.NextBool(500) && !Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Doot") { PitchVariance = .3f }, NPC.position);
+                        SoundEngine.PlaySound(CustomSounds.Doot, NPC.position);
                     break;
                 case ActionState.Dancing:
                     int gotNPC2 = GetNearestNPC();

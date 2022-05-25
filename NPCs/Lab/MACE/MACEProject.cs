@@ -149,7 +149,7 @@ namespace Redemption.NPCs.Lab.MACE
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, SoundID.Item37, 10, 1, 4000);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 4000);
             return true;
         }
 
@@ -189,7 +189,7 @@ namespace Redemption.NPCs.Lab.MACE
                     {
                         if (!Main.dedServ)
                         {
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SpookyNoise"), NPC.position);
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                         }
                         GuardPointMax = NPC.RedemptionGuard().GuardPoints;
                         CraneOrigin = NPC.Center;
@@ -208,7 +208,7 @@ namespace Redemption.NPCs.Lab.MACE
                     {
                         GlowActive = true;
                         GlowTimer = 0;
-                        NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125);
+                        NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item125);
                     }
                     switch (TimerRand2)
                     {
@@ -229,7 +229,7 @@ namespace Redemption.NPCs.Lab.MACE
                             if (!Main.dedServ)
                             {
                                 if (AITimer == 1)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/DistortedRoar") { Volume = .5f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.DistortedRoar, NPC.position);
                                 if (AITimer < 60)
                                 {
                                     TimerRand += (float)Math.PI / 120;
@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Lab.MACE
                                     Main.dust[dustIndex].velocity *= 10f;
                                 }
                                 for (int i = 0; i < 5; i++)
-                                    NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(72) * i), false, SoundID.Item73);
+                                    NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(72) * i), true, SoundID.Item73);
                             }
                             if (AITimer == 40)
                             {
@@ -262,7 +262,7 @@ namespace Redemption.NPCs.Lab.MACE
                                     Main.dust[dustIndex].velocity *= 10f;
                                 }
                                 for (int i = 0; i < 10; i++)
-                                    NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(36) * i), false, SoundID.Item73);
+                                    NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(36) * i), true, SoundID.Item73);
                             }
                             if (AITimer == 80)
                                 JawOpen = false;
@@ -279,7 +279,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 JawOpen = true;
                             if (AITimer >= 50 && AITimer % (Phase == 0 ? 20 : 12) == 0 && AITimer <= 100)
                             {
-                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<BigElectronade>(), NPC.damage, new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)), false, SoundID.Item61);
+                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<BigElectronade>(), NPC.damage, new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)), true, SoundID.Item61);
                             }
                             if (AITimer == 100)
                                 JawOpen = false;
@@ -324,7 +324,7 @@ namespace Redemption.NPCs.Lab.MACE
                                             GlowActive2 = true;
                                             GlowTimer2 = 0;
                                             for (int i = 0; i < 2; i++)
-                                                NPC.Shoot(MouthOrigin - new Vector2(0, 24), ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-7, -4)), false, SoundID.Item73);
+                                                NPC.Shoot(MouthOrigin - new Vector2(0, 24), ModContent.ProjectileType<MACE_Miniblast>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-7, -4)), true, SoundID.Item73);
                                         }
                                     }
                                     break;
@@ -353,7 +353,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 TimerRand -= 2;
                                 GlowActive = true;
                                 GlowTimer = 0;
-                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), false, SoundID.Item125);
+                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), true, SoundID.Item125);
                                 AITimer = 0;
                             }
                             TimerRand = MathHelper.Clamp(TimerRand, 2, 20);
@@ -374,7 +374,7 @@ namespace Redemption.NPCs.Lab.MACE
                             {
                                 GlowActive = true;
                                 GlowTimer = 0;
-                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), false, SoundID.Item125);
+                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), true, SoundID.Item125);
                             }
                             if (AITimer >= 30)
                             {
@@ -390,7 +390,7 @@ namespace Redemption.NPCs.Lab.MACE
 
                             if (AITimer == 100)
                             {
-                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, SoundID.Item1, "EnergyChargeSound2", NPC.whoAmI);
+                                NPC.Shoot(MouthOrigin, ModContent.ProjectileType<MACE_FireBlast>(), (int)(NPC.damage * 1.5f), Vector2.Zero, true, CustomSounds.EnergyCharge2, NPC.whoAmI);
                             }
                             if (AITimer >= 100 && AITimer <= 290)
                             {
@@ -433,13 +433,13 @@ namespace Redemption.NPCs.Lab.MACE
                             break;
                         case 1:
                             if (AITimer++ == 60)
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 16), ModContent.ProjectileType<MACE_Gemshot>(), NPC.damage, RedeHelper.PolarVector(-12, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 16), ModContent.ProjectileType<MACE_Gemshot>(), NPC.damage, RedeHelper.PolarVector(-12, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item125);
                             GlowTimer++;
                             if (AITimer >= 60 && AITimer % 15 == 0)
                             {
                                 GlowActive = true;
                                 GlowTimer = 0;
-                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), false, SoundID.Item125);
+                                NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - EyeOrigin).ToRotation()), true, SoundID.Item125);
                             }
                             if (AITimer >= 180)
                             {
@@ -455,21 +455,21 @@ namespace Redemption.NPCs.Lab.MACE
                                 GlowActive = true;
                                 GlowTimer = 0;
                                 for (int i = 0; i < 6; i++)
-                                    NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(60) * i), false, SoundID.Item125);
+                                    NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(8, MathHelper.ToRadians(60) * i), true, SoundID.Item125);
                             }
                             if (AITimer == 120)
                             {
                                 GlowActive = true;
                                 GlowTimer = 0;
                                 for (int i = 0; i < 12; i++)
-                                    NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(7, MathHelper.ToRadians(30) * i), false, SoundID.Item125);
+                                    NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(7, MathHelper.ToRadians(30) * i), true, SoundID.Item125);
                             }
                             if (AITimer == 180)
                             {
                                 GlowActive = true;
                                 GlowTimer = 0;
                                 for (int i = 0; i < 18; i++)
-                                    NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(6, MathHelper.ToRadians(20) * i), false, SoundID.Item125);
+                                    NPC.Shoot(EyeOrigin, ModContent.ProjectileType<MACE_Laser>(), NPC.damage, RedeHelper.PolarVector(6, MathHelper.ToRadians(20) * i), true, SoundID.Item125);
                             }
                             if (AITimer >= 220)
                             {
@@ -496,7 +496,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 if (NPC.collideY || NPC.velocity.Y == 0)
                                 {
                                     if (!Main.dedServ)
-                                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2"), NPC.position);
+                                        SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
                                     player.RedemptionScreen().ScreenShakeIntensity = 20;
 
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -519,7 +519,7 @@ namespace Redemption.NPCs.Lab.MACE
                                         }
                                     }
                                     for (int i = 0; i < 2; i++)
-                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 38), ModContent.ProjectileType<MACE_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 }, "", i);
+                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 38), ModContent.ProjectileType<MACE_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, i);
 
                                     AITimer = 0;
                                     TimerRand = 0;
@@ -548,7 +548,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 TimerRand += 3;
                                 for (int i = -1; i < 2; i += 2)
                                 {
-                                    NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 16), ModContent.ProjectileType<MACE_Orb>(), NPC.damage, new Vector2(TimerRand * i, 0f), false, SoundID.Item61);
+                                    NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 16), ModContent.ProjectileType<MACE_Orb>(), NPC.damage, new Vector2(TimerRand * i, 0f), true, SoundID.Item61);
                                 }
                             }
                             if (AITimer >= 120)
@@ -567,7 +567,7 @@ namespace Redemption.NPCs.Lab.MACE
                             if (NPC.collideX || NPC.velocity.X == 0)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2"), NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
                                 player.RedemptionScreen().ScreenShakeIntensity = 20;
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -588,7 +588,7 @@ namespace Redemption.NPCs.Lab.MACE
                                     }
                                 }
                                 for (int i = 0; i < 6; i++)
-                                    NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage, RedeHelper.Spread(10), false, SoundID.Item1 with { Volume = 0 });
+                                    NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage, RedeHelper.Spread(10), false, SoundID.Item1);
 
                                 AITimer = 0;
                                 TimerRand = 0;
@@ -615,7 +615,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 Main.dust[dustIndex].velocity *= 3f;
                             }
                             for (int k = 0; k < 6; k++)
-                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1 with { Volume = 0 });
+                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(0, NPC.height))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1);
 
                             AIState = ActionState.JawPhase;
                             NPC.netUpdate = true;
@@ -631,7 +631,7 @@ namespace Redemption.NPCs.Lab.MACE
 
                             SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/DistortedRoar") { Volume = .5f }, NPC.position);
+                                SoundEngine.PlaySound(CustomSounds.DistortedRoar, NPC.position);
 
                             if (Main.netMode != NetmodeID.Server)
                                 Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);
@@ -642,7 +642,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 Main.dust[dustIndex].velocity *= 3f;
                             }
                             for (int k = 0; k < 6; k++)
-                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(110, 164))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1 with { Volume = 0 });
+                                NPC.Shoot(NPC.position + new Vector2(Main.rand.Next(0, NPC.width), Main.rand.Next(Main.rand.Next(110, 164))), ModContent.ProjectileType<MACE_Scrap>(), NPC.damage / 2, RedeHelper.Spread(4), false, SoundID.Item1);
                             AIState = ActionState.HeadPhase;
                             NPC.netUpdate = true;
                             break;

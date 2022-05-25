@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
             Projectile.localAI[1]++;
             if (Projectile.localAI[1] == 10)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NebSound2"), Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.NebSound2, Projectile.position);
 
             Projectile.rotation += 0.1f;
             switch (Projectile.localAI[0])
