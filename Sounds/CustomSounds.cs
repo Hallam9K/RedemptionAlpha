@@ -31,10 +31,11 @@ namespace Redemption
 				slot = SlotId.Invalid;
 			}
 		}
-		public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
+        public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
         {
             PitchVariance = 0.2f
         };
+        public static readonly SoundStyle LiftLoop = new("Redemption/Sounds/Custom/ElevatorLoop");
         public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
         public static readonly SoundStyle BallFire = new("Redemption/Sounds/Custom/BallFire") { PitchVariance = .1f };
         public static readonly SoundStyle Banjo = new("Redemption/Sounds/Custom/Banjo", 3);
@@ -49,6 +50,9 @@ namespace Redemption
         public static readonly SoundStyle ElectricNoise = new("Redemption/Sounds/Custom/ElectricNoise");
         public static readonly SoundStyle ElectricSlash = new("Redemption/Sounds/Custom/ElectricSlash") { PitchVariance = .1f };
         public static readonly SoundStyle ElectricSlash2 = new("Redemption/Sounds/Custom/ElectricSlash2") { PitchVariance = .1f };
+        public static readonly SoundStyle ElevatorBreak = new("Redemption/Sounds/Custom/ElevatorBreak");
+        public static readonly SoundStyle ElevatorImpact = new("Redemption/Sounds/Custom/ElevatorImpact");
+        public static readonly SoundStyle ElevatorStart = new("Redemption/Sounds/Custom/ElevatorStart");
         public static readonly SoundStyle EnergyCharge2 = new("Redemption/Sounds/Custom/EnergyChargeSound2");
         public static readonly SoundStyle FlyBuzz = new("Redemption/Sounds/Custom/FlyBuzz") { PitchVariance = .1f };
         public static readonly SoundStyle Gas1 = new("Redemption/Sounds/Custom/Gas1");
@@ -64,7 +68,11 @@ namespace Redemption
         public static readonly SoundStyle IceMist = new("Redemption/Sounds/Custom/IceMist") { PitchVariance = .1f };
         public static readonly SoundStyle LabSafeS = new("Redemption/Sounds/Custom/LabSafeS");
         public static readonly SoundStyle Laser1 = new("Redemption/Sounds/Custom/Laser1");
+        public static readonly SoundStyle Lyre1 = new("Redemption/Sounds/Custom/Lyre1");
         public static readonly SoundStyle MACEProjectLaunch = new("Redemption/Sounds/Custom/MACEProjectLaunch") { PitchVariance = .1f };
+        public static readonly SoundStyle MaskLaugh1 = new("Redemption/Sounds/Custom/MaskLaugh1") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle MaskLaugh2 = new("Redemption/Sounds/Custom/MaskLaugh2") { Volume = .5f, PitchVariance = .1f };
+        public static readonly SoundStyle MaskLaugh3 = new("Redemption/Sounds/Custom/MaskLaugh3") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle MissileExplosion = new("Redemption/Sounds/Custom/MissileExplosion");
         public static readonly SoundStyle MissileFire1 = new("Redemption/Sounds/Custom/MissileFire1") { Volume = .8f, PitchVariance = .1f };
         public static readonly SoundStyle Muller1 = new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f };
@@ -92,6 +100,7 @@ namespace Redemption
         public static readonly SoundStyle Spark1 = new("Redemption/Sounds/Custom/Spark1") { PitchVariance = .1f };
         public static readonly SoundStyle SpookyNoise = new("Redemption/Sounds/Custom/SpookyNoise");
         public static readonly SoundStyle Swing1 = new("Redemption/Sounds/Custom/Swing1") { Volume = .4f, PitchVariance = .1f };
+        public static readonly SoundStyle Switch1 = new("Redemption/Sounds/Custom/Switch1") { Volume = .5f };
         public static readonly SoundStyle Swoosh1 = new("Redemption/Sounds/Custom/Swoosh1") { Volume = .4f, PitchVariance = .1f };
         public static readonly SoundStyle Teleport1 = new("Redemption/Sounds/Custom/Teleport1") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle Teleport2 = new("Redemption/Sounds/Custom/Teleport2") { PitchVariance = .1f };
