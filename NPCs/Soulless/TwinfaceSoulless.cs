@@ -351,9 +351,9 @@ namespace Redemption.NPCs.Soulless
                             {
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
                                 if (AniFrameY is 6)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TwinfaceSoulless_Slash_Proj>(), damage, new Vector2(26 * NPC.spriteDirection, 0), false, SoundID.DD2_PhantomPhoenixShot, "", NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TwinfaceSoulless_Slash_Proj>(), damage, new Vector2(26 * NPC.spriteDirection, 0), true, SoundID.DD2_PhantomPhoenixShot, NPC.whoAmI);
                                 if (AniFrameY is 10)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TwinfaceSoulless_Slash_Proj2>(), (int)(damage * 1.2f), new Vector2(36 * NPC.spriteDirection, 0), false, SoundID.DD2_PhantomPhoenixShot, "", NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<TwinfaceSoulless_Slash_Proj2>(), (int)(damage * 1.2f), new Vector2(36 * NPC.spriteDirection, 0), true, SoundID.DD2_PhantomPhoenixShot, NPC.whoAmI);
                             }
                         }
                         if (AniFrameY > 14)

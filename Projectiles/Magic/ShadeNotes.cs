@@ -96,14 +96,14 @@ namespace Redemption.Projectiles.Magic
                     if (Main.myPlayer == Projectile.owner)
                     {
                         for (int i = 0; i < 4; i++)
-                            Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<ShadeNote_Proj>(), Projectile.damage / 2, RedeHelper.PolarVector(14, MathHelper.PiOver2 * i), false, SoundID.Item1 with { Volume = 0 }, "", target.whoAmI);
+                            Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<ShadeNote_Proj>(), Projectile.damage / 2, RedeHelper.PolarVector(14, MathHelper.PiOver2 * i), false, SoundID.Item1, target.whoAmI);
                     }
                     break;
                 case 1:
                     if (Main.myPlayer == Projectile.owner)
                     {
                         for (int i = 0; i < 4; i++)
-                            Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<ShadeNote_Proj>(), Projectile.damage / 2, RedeHelper.PolarVector(14, (MathHelper.PiOver2 * i) + MathHelper.PiOver4), false, SoundID.Item1 with { Volume = 0 }, "", target.whoAmI, 1);
+                            Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<ShadeNote_Proj>(), Projectile.damage / 2, RedeHelper.PolarVector(14, (MathHelper.PiOver2 * i) + MathHelper.PiOver4), false, SoundID.Item1, target.whoAmI, 1);
                     }
                     break;
             }

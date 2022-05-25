@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Sounds.Custom;
 using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
@@ -69,7 +68,7 @@ namespace Redemption.NPCs.Soulless
                     continue;
 
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Switch1") { Volume = .5f }, NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.Switch1, NPC.position);
                 if (NPC.position.Y < (NPC.ai[2] - ((NPC.ai[2] / 2) - (NPC.ai[3] / 2))) * 16)
                     buttonPressed = 1;
                 else
@@ -88,7 +87,7 @@ namespace Redemption.NPCs.Soulless
                     if (NPC.ai[0]++ == 50)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElevatorStart"), NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.ElevatorStart, NPC.position);
                         Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                     }
                     if (NPC.ai[0] >= 50)
@@ -105,7 +104,7 @@ namespace Redemption.NPCs.Soulless
                             if (NPC.ai[1]++ == 0)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slam2") { Volume = .5f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.Slam2, NPC.position);
                                 Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 5 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                             }
                             NPC.velocity *= 0;
@@ -120,7 +119,7 @@ namespace Redemption.NPCs.Soulless
                                     continue;
 
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Switch1") { Volume = .5f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.Switch1, NPC.position);
                                 buttonPressed = 0;
                             }
                         }
@@ -131,7 +130,7 @@ namespace Redemption.NPCs.Soulless
                     if (NPC.ai[0]++ == 50)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElevatorStart"), NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.ElevatorStart, NPC.position);
                         Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                     }
                     if (NPC.ai[0] >= 50)
@@ -148,7 +147,7 @@ namespace Redemption.NPCs.Soulless
                             if (NPC.ai[1]++ == 0)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Slam2") { Volume = .5f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.Slam2, NPC.position);
                                 Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 5 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                             }
                             NPC.velocity *= 0;
@@ -163,7 +162,7 @@ namespace Redemption.NPCs.Soulless
                                     continue;
 
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Switch1") { Volume = .5f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.Switch1, NPC.position);
                                 buttonPressed = 0;
                             }
                         }
@@ -243,7 +242,7 @@ namespace Redemption.NPCs.Soulless
                     continue;
 
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Switch1") { Volume = .5f }, NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.Switch1, NPC.position);
                 buttonPressed = 1;
             }
             switch (buttonPressed)
@@ -258,7 +257,7 @@ namespace Redemption.NPCs.Soulless
                     if (NPC.ai[0]++ == 50)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElevatorStart"), NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.ElevatorStart, NPC.position);
                         Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                     }
                     if (NPC.ai[0] >= 50)
@@ -271,7 +270,7 @@ namespace Redemption.NPCs.Soulless
                                 SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElevatorLoop"), NPC.position);
                         }
                         if (NPC.ai[0] == 260 && !Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElevatorBreak"), NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.ElevatorBreak, NPC.position);
                         if (NPC.ai[0] == 480)
                         {
                             Rectangle fallRect = new((int)NPC.position.X, (int)NPC.position.Y - 40, NPC.width, NPC.height + 40);
@@ -310,7 +309,7 @@ namespace Redemption.NPCs.Soulless
                                 NetMessage.SendData(MessageID.WorldData);
 
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ElevatorImpact"), NPC.position);
+                                SoundEngine.PlaySound(CustomSounds.ElevatorImpact, NPC.position);
                             Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 14 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                             if (Main.netMode != NetmodeID.Server)
                             {

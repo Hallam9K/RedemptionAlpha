@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable
 
         public override void SetDefaults()
         {
-            Item.UseSound = new("Redemption/Sounds/Custom/WorldTree");
+            Item.UseSound = CustomSounds.WorldTree;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTurn = true;
             Item.noUseGraphic = false;

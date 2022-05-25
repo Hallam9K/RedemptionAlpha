@@ -102,7 +102,7 @@ namespace Redemption.Items.Usable
                 {
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BlindingLight>(), 0, 0, Main.myPlayer);
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NebSound2") { Volume = .9f }, Projectile.position);
+                        SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .9f }, Projectile.position);
                 }
                 if (Projectile.localAI[0] == 25)
                 {
