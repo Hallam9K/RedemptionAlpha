@@ -118,7 +118,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 DustHelper.DrawCircle(Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
 
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Thunderstrike") { Volume = .7f, Pitch = .1f }, Projectile.position);
+                    SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
                 if (Projectile.owner == Main.myPlayer)
                     Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
             }

@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                 if (!Main.dedServ)
                 {
                     RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Blisterface", 60, 90, 0.8f, 0, Color.Green, "An Unfortunate Goldfish");
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/SpookyNoise"), NPC.position);
+                    SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                 }
                 NPC.SetDefaults(ModContent.NPCType<Blisterface>());
                 NPC.netUpdate = true;

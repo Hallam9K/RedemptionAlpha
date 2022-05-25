@@ -44,7 +44,7 @@ namespace Redemption.Biomes
         {
             if (Main.raining)
             {
-                SoundStyle muller = new("Redemption/Sounds/Custom/Muller1") { Volume = 0.9f, PitchVariance = 0.1f };
+                SoundStyle muller = CustomSounds.Muller1;
 
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(500) && !Main.dedServ)
                     SoundEngine.PlaySound(muller, player.position);

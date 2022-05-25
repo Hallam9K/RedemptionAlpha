@@ -101,7 +101,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 							if (player.ownedProjectileCounts[ModContent.ProjectileType<NebulaStar>()] < 3)
 							{
 								if (!Main.dedServ)
-									SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Teleport1") { Volume = .5f }, Projectile.position);
+									SoundEngine.PlaySound(CustomSounds.Teleport1, Projectile.position);
 								for (int i = 0; i < Main.rand.Next(3, 5); i++)
 								{
 									if (Projectile.owner == Main.myPlayer)

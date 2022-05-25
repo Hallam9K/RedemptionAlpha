@@ -98,11 +98,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Player player = Main.player[Projectile.owner];
             Projectile.rotation = (player.Center - Projectile.Center).ToRotation() + (float)Math.PI / 2;
             if (Projectile.ai[0] == 0 && soundTimer++ % 30 == 0 && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing") { Volume = .5f }, Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.ChainSwing with { Volume = .5f }, Projectile.position);
 
             if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 0)
             {
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ChainSwing"), Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.ChainSwing, Projectile.position);
                 Projectile.localAI[0] = 1;
             }
 

@@ -273,10 +273,10 @@ namespace Redemption.NPCs.Bosses.Thorn
                             if (AITimer >= 60 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 15 : 25) == 0 && TimerRand >= 0)
                             {
                                 NPC.Shoot(new Vector2(player.Center.X + TimerRand, player.Center.Y - 200), ModContent.ProjectileType<ThornSeed>(),
-                                    NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
+                                    NPC.damage, Vector2.Zero, false, SoundID.Item1);
                                 if (TimerRand != 0)
                                     NPC.Shoot(new Vector2(player.Center.X + -TimerRand, player.Center.Y - 200), ModContent.ProjectileType<ThornSeed>(),
-                                    NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
+                                    NPC.damage, Vector2.Zero, false, SoundID.Item1);
 
                                 TimerRand -= 100;
                                 NPC.netUpdate = true;
@@ -304,7 +304,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<CursedThornVile>(), NPC.damage,
                                         RedeHelper.PolarVector(NPC.life < NPC.lifeMax / 2 ? 18 : 12, (origin - NPC.Center).ToRotation()
-                                        + TimerRand - MathHelper.ToRadians(45)), false, SoundID.Item17);
+                                        + TimerRand - MathHelper.ToRadians(45)), true, SoundID.Item17);
 
                                     TimerRand += MathHelper.ToRadians(15);
                                     NPC.netUpdate = true;
@@ -347,17 +347,17 @@ namespace Redemption.NPCs.Bosses.Thorn
                             if (NPC.life < NPC.lifeMax / 2 ? (AITimer == 80 || AITimer == 140) : (AITimer == 80 || AITimer == 160))
                             {
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ProjectileID.Stinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), false, SoundID.Item17);
+                                    NPC.Shoot(NPC.Center, ProjectileID.Stinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), true, SoundID.Item17);
                             }
                             if (NPC.life < NPC.lifeMax / 2 ? AITimer == 110 : AITimer == 120)
                             {
                                 for (int i = 0; i < 8; i++)
-                                    NPC.Shoot(NPC.Center, ProjectileID.Stinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(45) * i), false, SoundID.Item17);
+                                    NPC.Shoot(NPC.Center, ProjectileID.Stinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(45) * i), true, SoundID.Item17);
                             }
                             if (NPC.life < NPC.lifeMax / 2 && AITimer == 170)
                             {
                                 for (int i = 0; i < 18; i++)
-                                    NPC.Shoot(NPC.Center, ProjectileID.Stinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(20) * i), false, SoundID.Item17);
+                                    NPC.Shoot(NPC.Center, ProjectileID.Stinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(20) * i), true, SoundID.Item17);
                             }
 
                             if (AITimer >= 180)
@@ -392,7 +392,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 {
                                     if (Main.rand.NextBool(2))
                                         NPC.Shoot(HeartOrigin, ModContent.ProjectileType<LeechingThornSeed>(), NPC.damage,
-                                            RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item17, "", NPC.whoAmI);
+                                            RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), true, SoundID.Item17, NPC.whoAmI);
                                 }
 
                                 if (NPC.life < NPC.lifeMax / 2 ? AITimer >= 240 : AITimer >= 180)
@@ -444,7 +444,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     dust2.noGravity = true;
                                     dust2.velocity = -player.DirectionTo(dust2.position) * 10;
                                 }
-                                NPC.Shoot(player.Center, ModContent.ProjectileType<SlashFlashPro>(), NPC.damage, Vector2.Zero, false, SoundID.Item1 with { Volume = 0 });
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<SlashFlashPro>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
                             }
 
                             if (NPC.life < NPC.lifeMax / 2 ? AITimer >= 230 : AITimer >= 250)
@@ -495,7 +495,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         if (AITimer == 180)
                         {
                             DustHelper.DrawCircle(HeartOrigin, DustID.MagicMirror, 5, 5, 5, 1, 2, nogravity: true);
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ManaBarrier>(), 0, Vector2.Zero, false, SoundID.Item29, "", NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ManaBarrier>(), 0, Vector2.Zero, true, SoundID.Item29, NPC.whoAmI);
                         }
                     }
 

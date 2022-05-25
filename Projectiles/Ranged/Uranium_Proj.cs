@@ -62,7 +62,7 @@ namespace Redemption.Projectiles.Ranged
 
             RedeDraw.SpawnRing(Projectile.Center, Color.LimeGreen, glowScale: 3);
             if (!Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/PlasmaBlast"), Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
             if (Projectile.DistanceSQ(player.Center) < 600 * 600)
                 player.RedemptionScreen().ScreenShakeIntensity = 3;

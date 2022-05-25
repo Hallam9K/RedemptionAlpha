@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Hostile
             else if (Projectile.localAI[0] == 30)
             {
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/EarthBoom2") { Volume = .5f }, Projectile.position);
+                    SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .5f }, Projectile.position);
                 Projectile.velocity.Y -= 10;
             }
             else if (Projectile.localAI[0] == 40)

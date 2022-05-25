@@ -54,7 +54,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
-                Item.UseSound = new("Redemption/Sounds/Custom/ShootChange");
+                Item.UseSound = CustomSounds.ShootChange;
             else
                 Item.UseSound = SoundID.Item44;
             return !player.HasBuff(ModContent.BuffType<SwordRemoteCooldown>());
@@ -337,7 +337,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (Projectile.alpha <= 0)
                             {
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NebSound2") { Volume = .9f }, Projectile.position);
+                                    SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .9f }, Projectile.position);
                                 Projectile.alpha = 0;
                                 Projectile.localAI[0] = 1;
                                 Projectile.localAI[1] = 0;

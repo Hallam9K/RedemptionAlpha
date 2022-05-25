@@ -44,7 +44,7 @@ namespace Redemption.Tiles.Ores
             if (dist <= 30 && dist > 18 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller1") { Volume = .9f, PitchVariance = .1f }, player.position);
+                    SoundEngine.PlaySound(CustomSounds.Muller1, player.position);
 
                 if (Main.rand.NextBool(80000) && modPlayer.irradiatedLevel < 2)
                     modPlayer.irradiatedLevel++;
@@ -52,7 +52,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 18 && dist > 10 && !suit.hazmatSuit && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller2") { Volume = .9f, PitchVariance = .1f }, player.position);
+                    SoundEngine.PlaySound(CustomSounds.Muller2, player.position);
 
                 if (Main.rand.NextBool(40000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;
@@ -60,7 +60,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 10 && dist > 4 && !suit.HEVSuit)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller3") { Volume = .9f, PitchVariance = .1f }, player.position);
+                    SoundEngine.PlaySound(CustomSounds.Muller3, player.position);
 
                 if (Main.rand.NextBool(8000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;
@@ -68,7 +68,7 @@ namespace Redemption.Tiles.Ores
             else if (dist <= 4)
             {
                 if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Muller4") { Volume = .9f, PitchVariance = .1f }, player.position);
+                    SoundEngine.PlaySound(CustomSounds.Muller4, player.position);
 
                 if (Main.rand.NextBool(1000) && modPlayer.irradiatedLevel < 3)
                     modPlayer.irradiatedLevel++;

@@ -206,7 +206,7 @@ namespace Redemption.Globals
                     else if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-                    SoundStyle s = new("Redemption/Sounds/Custom/LabSafeS") { Volume = 0.6f };
+                    SoundStyle s = CustomSounds.LabSafeS with { Volume = 0.6f };
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(s);
 
@@ -334,7 +334,7 @@ namespace Redemption.Globals
 
                     nukeDeathReason = nukeDeaths;
                     if (!Main.dedServ)
-                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/NukeExplosion"), player.position);
+                        SoundEngine.PlaySound(CustomSounds.NukeExplosion, player.position);
 
                     player.KillMe(PlayerDeathReason.ByCustomReason(nukeDeathReason), 999999, 1);
                 }

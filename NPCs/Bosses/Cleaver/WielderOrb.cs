@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     continue;
 
                 if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/BallFire") { PitchVariance = .1f }, Projectile.position);
+                    SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);
 
                 for (int j = 0; j < 2; j++)
                 {

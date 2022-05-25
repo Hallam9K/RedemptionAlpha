@@ -39,22 +39,8 @@ namespace Redemption.Items.Usable
                 else cursorPosFromPlayer = (cursorPosFromPlayer / 12) - 1;
                 if (!Main.dedServ)
                 {
-                    switch (Main.rand.Next(3))
-                    {
-                        case 0:
-                            SoundStyle b1 = new("Redemption/Sounds/Custom/Banjo1") { Pitch = cursorPosFromPlayer };
-                            SoundEngine.PlaySound(b1, player.Center);
-                            break;
-                        case 1:
-                            SoundStyle b2 = new("Redemption/Sounds/Custom/Banjo2") { Pitch = cursorPosFromPlayer };
-                            SoundEngine.PlaySound(b2, player.Center);
-                            break;
-                        case 2:
-                            SoundStyle b3 = new("Redemption/Sounds/Custom/Banjo3") { Pitch = cursorPosFromPlayer };
-                            SoundEngine.PlaySound(b3, player.Center);
-                            break;
-
-                    }
+                    SoundStyle b1 = CustomSounds.Banjo with { Pitch = cursorPosFromPlayer };
+                    SoundEngine.PlaySound(b1, player.Center);
                 }
             }
             return false;

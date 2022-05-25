@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
             if (AITimer == 80 && !Main.dedServ)
-                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Bass1") { PitchVariance = .1f }, Projectile.position);
+                SoundEngine.PlaySound(CustomSounds.Bass1, Projectile.position);
 
             if (AITimer >= 80)
             {

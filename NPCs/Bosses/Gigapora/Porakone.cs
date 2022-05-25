@@ -133,7 +133,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     if (AITimer++ == 60)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(new("Redemption/Sounds/Custom/ShootChange"), NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.ShootChange, NPC.position);
                         aniType = 2;
                         NPC.netUpdate = true;
                     }
@@ -147,7 +147,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         if (NPC.soundDelay == 0)
                         {
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(new("Redemption/Sounds/Custom/Quake") { Volume = MathHelper.Clamp(AITimer2, 0.1f, 2f) }, NPC.position);
+                                SoundEngine.PlaySound(CustomSounds.Quake with { Volume = MathHelper.Clamp(AITimer2, 0.1f, 2f) }, NPC.position);
 
                             NPC.soundDelay = 50;
                         }

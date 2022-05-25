@@ -119,7 +119,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1: // Stop and Scan
                     NPC.velocity *= 0.96f;
                     if (NPC.ai[2]++ == 30)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, SoundID.Item1, "BallFire", NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, CustomSounds.BallFire, NPC.whoAmI);
 
                     if (NPC.ai[2] > 240)
                     {
