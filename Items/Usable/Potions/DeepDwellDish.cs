@@ -12,14 +12,14 @@ namespace Redemption.Items.Usable.Potions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Deep Dwell Dish");
-            Tooltip.SetDefault("'Tastes like [REDACTED]'"
-                + "\nMinor improvements to all stats");
+            Tooltip.SetDefault("Major improvements to all stats" +
+                "\n'Tastes like [REDACTED]'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
         public override void SetDefaults()
         {
             Item.UseSound = SoundID.Item2;
-            Item.useStyle = ItemUseStyleID.DrinkLiquid;
+            Item.useStyle = ItemUseStyleID.EatFood;
             Item.useTurn = true;
             Item.useAnimation = 30;
             Item.useTime = 30;
@@ -29,8 +29,8 @@ namespace Redemption.Items.Usable.Potions
             Item.height = 20;
             Item.value = Item.sellPrice(0, 0, 25, 0);
             Item.rare = ModContent.RarityType<SoullessRarity>();
-            Item.buffType = BuffID.WellFed;
-            Item.buffTime = 14400;
+            Item.buffType = BuffID.WellFed3;
+            Item.buffTime = 24400;
         }
         public override void AddRecipes()
         {
