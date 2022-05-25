@@ -146,6 +146,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
+        private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -156,12 +157,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            for (int k = 0; k < Projectile.oldPos.Length; k++)
-            {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY) - new Vector2(13, 11);
-                Color color = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
-            }
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, Color.LightBlue * Projectile.Opacity * glow, Projectile.rotation, origin, Projectile.scale, spriteEffects);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

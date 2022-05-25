@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void SetDefaults()
         {
-            Item.width = 20;
+            Item.width = 22;
             Item.height = 20;
             Item.sellPrice(silver: 75);
             Item.rare = ItemRarityID.Cyan;
@@ -57,6 +57,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                     "Summons 2 missile drones and a magnet drone";
             }
             player.RedemptionPlayerBuff().hardlightBonus = 4;
+            player.RedemptionPlayerBuff().MetalSet = true;
         }
     }
 }

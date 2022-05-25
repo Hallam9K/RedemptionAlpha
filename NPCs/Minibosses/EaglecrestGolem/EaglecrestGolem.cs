@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable;
@@ -138,6 +139,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<StonePuppet>()));
+
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestJavelin>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestSling>()));
