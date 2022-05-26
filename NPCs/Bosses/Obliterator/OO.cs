@@ -20,6 +20,8 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.BaseExtension;
 using Redemption.UI;
+using System;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -197,12 +199,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            NPC.LookAtEntity(player);
             //DespawnHandler();
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 
             float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
             Vector2 DefaultPos = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 80);
+            Vector2 LaserPos = new(NPC.position.X + (NPC.spriteDirection == -1 ? 46 : 16), NPC.position.Y + 70);
 
             switch (AIState)
             {
@@ -254,12 +256,28 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             else
                                 ArmRot[0] = MathHelper.PiOver2 + RotFlip;
+                            if (AITimer == 170)
+                                BeamAnimation = true;
                             if (AITimer < 190 || AITimer > 370)
                                 NPC.LookAtEntity(player);
+                            if (AITimer >= 190 && AITimer < 238)
+                            {
+                                for (int k = 0; k < 3; k++)
+                                {
+                                    Vector2 vector;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector.X = (float)(Math.Sin(angle) * 100);
+                                    vector.Y = (float)(Math.Cos(angle) * 100);
+                                    Dust dust = Main.dust[Dust.NewDust(LaserPos + vector, 2, 2, ModContent.DustType<GlowDust>())];
+                                    dust.noGravity = true;
+                                    Color dustColor = new(Color.Red.R, Color.Red.G, Color.Red.B) { A = 0 };
+                                    dust.color = dustColor;
+                                    dust.velocity = dust.position.DirectionTo(LaserPos) * 10f;
+                                }
+                            }
                             if (AITimer == 190 && player.active && !player.dead)
                             {
-                                BeamAnimation = true;
-                                // Beam Animation
+                                NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaMegaBeam>(), 1000, new Vector2(10 * NPC.spriteDirection, 0), true, CustomSounds.MegaLaser, NPC.whoAmI);
                             }
                             if (AITimer == 238)
                                 player.GetModPlayer<ScreenPlayer>().Rumble(112, 20);
@@ -267,12 +285,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 ArmFrameY[0] = 2;
                                 BeamAnimation = false;
-                                // Beam End
                             }
                             if (AITimer == 400)
                             {
-                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "I guess I can't fool you twice, huh.", 3, 60, 0, false); // 69
-                                Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "So much for a surprise attack...", 3, 60, 0, false); // 69
+                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "I guess I can't fool you twice, huh.", 2, 60, 0, false); // 69
+                                Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "So much for a surprise attack...", 2, 60, 0, false); // 69
 
                                 TextBubbleUI.Visible = true;
                                 if (RedeBossDowned.oblitDeath == 1)
@@ -433,20 +450,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             float thrusterScaleY = MathHelper.Clamp(-NPC.velocity.Y / 10, 0.3f, 2f);
             Vector2 p = NPC.Center - screenPos;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            if (!NPC.IsABestiaryIconDummy)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
-                {
-                    Vector2 value4 = NPC.oldPos[i];
-                    spriteBatch.Draw(texture, value4 + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, NPC.gfxOffY), NPC.frame, RedeColor.VlitchGlowColour * 0.5f, oldrot[i], NPC.frame.Size() / 2f, NPC.scale, effects, 0);
-                }
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            }
             int armsHeight = armF.Height / 3;
             Rectangle rectArmF = new(0, armsHeight * ArmFrameY[1], armF.Width, armsHeight);
             Rectangle rectArmB = new(0, armsHeight * ArmFrameY[0], armB.Width, armsHeight);
@@ -460,6 +464,38 @@ namespace Redemption.NPCs.Bosses.Obliterator
             int armRWidth = armR.Width / 3;
             Rectangle rectArmRB = new(armRWidth * ArmFrameY[0], armRHeight * ArmRFrameY, armRWidth, armRHeight);
             Rectangle rectArmRF = new(armRWidth * ArmFrameY[1], armRHeight * ArmRFrameY, armRWidth, armRHeight);
+
+            int headHeight = head.Height / 3;
+            Rectangle rectHead = new(0, headHeight * HeadFrameY, head.Width, headHeight);
+
+            int legsHeight = legs.Height / 5;
+            Rectangle rectLegs = new(0, legsHeight * LegFrameY, legs.Width, legsHeight);
+
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    if (NPC.frame.Y <= 0)
+                    {
+                        spriteBatch.Draw(armB, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectArmB), RedeColor.VlitchGlowColour, ArmRot[0], originArms, NPC.scale, effects, 0);
+                        spriteBatch.Draw(hands, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectHandB), RedeColor.VlitchGlowColour, ArmRot[0], originArms - new Vector2((NPC.spriteDirection == -1 ? 29 : 12) + (HandArmX[ArmFrameY[0]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[0]]), NPC.scale, effects, 0);
+                    }
+                    spriteBatch.Draw(texture, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), NPC.frame, RedeColor.VlitchGlowColour, oldrot[i], NPC.frame.Size() / 2f, NPC.scale, effects, 0);
+                    if (NPC.frame.Y <= 0)
+                        spriteBatch.Draw(head, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), RedeColor.VlitchGlowColour, oldrot[i], NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
+                    spriteBatch.Draw(legs, NPC.oldPos[i] + NPC.Size / 2f - screenPos, new Rectangle?(rectLegs), RedeColor.VlitchGlowColour, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(22, -78), NPC.scale, effects, 0);
+                    if (NPC.frame.Y <= 0)
+                    {
+                        spriteBatch.Draw(armF, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectArmF), RedeColor.VlitchGlowColour, ArmRot[1], originArms, NPC.scale, effects, 0);
+                        spriteBatch.Draw(hands, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectHandF), RedeColor.VlitchGlowColour, ArmRot[1], originArms - new Vector2((NPC.spriteDirection == -1 ? 28 : 13) + (HandArmX[ArmFrameY[1]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[1]]), NPC.scale, effects, 0);
+                    }
+                }
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
 
             if (NPC.frame.Y <= 0)
             {
@@ -491,14 +527,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (NPC.frame.Y <= 0)
             {
                 // Head
-                int headHeight = head.Height / 3;
-                Rectangle rectHead = new(0, headHeight * HeadFrameY, head.Width, headHeight);
                 spriteBatch.Draw(head, p + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
                 spriteBatch.Draw(headGlow, p + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
             }
             // Legs
-            int legsHeight = legs.Height / 5;
-            Rectangle rectLegs = new(0, legsHeight * LegFrameY, legs.Width, legsHeight);
             spriteBatch.Draw(legs, p, new Rectangle?(rectLegs), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(22, -78), NPC.scale, effects, 0);
             if (NPC.frame.Y <= 0)
             {
