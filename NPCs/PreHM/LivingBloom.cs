@@ -225,7 +225,7 @@ namespace Redemption.NPCs.PreHM
         }
         public static bool GrassCheck(int X, int Y) // Directly from Flower Boots code, cleaned a bit
         {
-            Tile tile = Main.tile[X, Y];
+            Tile tile = Framing.GetTileSafely(X, Y);
             if (tile == null)
             {
                 return false;

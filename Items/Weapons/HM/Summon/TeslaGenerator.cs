@@ -44,7 +44,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 		}
 		public override bool CanUseItem(Player player)
 		{
-			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			if (tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileCut[tile.TileType])
 				return false;
 

@@ -110,5 +110,9 @@ namespace Redemption
         public static readonly SoundStyle WorldTree = new("Redemption/Sounds/Custom/WorldTree") { PitchVariance = .1f };
         public static readonly SoundStyle Zap1 = new("Redemption/Sounds/Custom/Zap1") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle Zap2 = new("Redemption/Sounds/Custom/Zap2") { PitchVariance = .1f };
+        public static readonly SoundStyle Voice1 = new("Redemption/Sounds/Custom/Voice1") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        public static readonly SoundStyle Voice2 = new("Redemption/Sounds/Custom/Voice2") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        public static readonly SoundStyle Voice3 = new("Redemption/Sounds/Custom/Voice3") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        public static readonly SoundStyle Voice4 = new("Redemption/Sounds/Custom/Voice4") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
     }
 }

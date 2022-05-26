@@ -19,6 +19,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.BaseExtension;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -237,7 +238,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 HandsFrameY[0] = 0;
                                 ArmFrameY[0] = 1;
                                 HeadFrameY = 1;
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Yo.", true, false);
+
+                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1, null, "Yo.", 3, 60, 0, false); // 69
+
+                                TextBubbleUI.Visible = true;
+                                TextBubbleUI.AddDialogue(d1);
                             }
                             if (AITimer >= 120 && AITimer < 188)
                                 ArmRot[0].SlowRotation(MathHelper.PiOver2 + (-1 * NPC.spriteDirection) + RotFlip, MathHelper.Pi / 50);
@@ -266,10 +271,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             if (AITimer == 400)
                             {
+                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "I guess I can't fool you twice, huh.", 3, 60, 0, false); // 69
+                                Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "So much for a surprise attack...", 3, 60, 0, false); // 69
+
+                                TextBubbleUI.Visible = true;
                                 if (RedeBossDowned.oblitDeath == 1)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityRed, "I guess I can't fool you twice, huh.", true, false);
+                                    TextBubbleUI.AddDialogue(d1);
                                 else
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityRed, "So much for a surprise attack...", true, false);
+                                    TextBubbleUI.AddDialogue(d2);
                             }
                             if (AITimer == 580)
                             {

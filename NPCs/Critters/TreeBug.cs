@@ -106,7 +106,7 @@ namespace Redemption.NPCs.Critters
                     }
 
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
-                    Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+                    Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
                     if (Main.rand.NextBool(500) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileTags.WoodLeaf.Has(tile.TileType))
                     {

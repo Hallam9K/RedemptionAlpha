@@ -48,6 +48,7 @@ namespace Redemption.NPCs.Friendly
             Player player = Main.player[NPC.target];
             NPC portal = Main.npc[(int)NPC.ai[3]];
             Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            SoundStyle voice = CustomSounds.Voice4 with { Pitch = 0.6f };
 
             if (NPC.alpha > 0 && TimerRand < 3)
                 NPC.alpha -= 10;
@@ -67,7 +68,7 @@ namespace Redemption.NPCs.Friendly
                             Main.dust[dust].color = dustColor;
                             Main.dust[dust].velocity *= 3f;
                         }
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Woah!", 1, 30, 30, true); // 65
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, null, "Woah!", 1, 30, 30, true); // 65
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
@@ -100,7 +101,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 40)
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 187);
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Ow, my head hurts..", 3, 100, 30, true); // 187
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, null, "Ow, my head hurts..", 3, 100, 30, true); // 187
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
@@ -117,12 +118,12 @@ namespace Redemption.NPCs.Friendly
                 case 3:
                     if (AITimer++ == 5)
                     {
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Hey Zephos,[10] do you know where we are?", 3, 100, 0, false); // 221
-                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, d1, "Uh..[30] Zephos?", 3, 100, 0, false); // 166
-                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Oh, hi there![10] Didn't notice you.", 3, 100, 0, false); // 206
-                        Dialogue d4 = new(NPC, null, bubble, null, Color.White, Color.Gray, d3, "You haven't seen my friend around here,[10] have you?", 3, 100, 0, false); // 257
-                        Dialogue d5 = new(NPC, null, bubble, null, Color.White, Color.Gray, d4, "Guess he didn't jump in.[30] Oh well,[10] I'll head back to get him.", 3, 100, 0, false); // 320
-                        Dialogue d6 = new(NPC, null, bubble, null, Color.White, Color.Gray, d5, "I'll come back once I find him,[10] so, see you soon I suppose.", 3, 100, 30, true); // 317
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, null, "Hey Zephos,[10] do you know where we are?", 3, 100, 0, false); // 221
+                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, d1, "Uh..[30] Zephos?", 3, 100, 0, false); // 166
+                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, d2, "Oh, hi there![10] Didn't notice you.", 3, 100, 0, false); // 206
+                        Dialogue d4 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, d3, "You haven't seen my friend around here,[10] have you?", 3, 100, 0, false); // 257
+                        Dialogue d5 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, d4, "Guess he didn't jump in.[30] Oh well,[10] I'll head back to get him.", 3, 100, 0, false); // 320
+                        Dialogue d6 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice, d5, "I'll come back once I find him,[10] so, see you soon I suppose.", 3, 100, 30, true); // 317
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);

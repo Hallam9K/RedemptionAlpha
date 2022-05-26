@@ -41,8 +41,8 @@ namespace Redemption.Items
 		{
 			NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
 			npc.position = player.Center;
-			Dialogue dialogue1 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", 6, 120, 30, true);
-			Dialogue dialogue2 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
+			Dialogue dialogue1 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, null, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", 6, 120, 30, true);
+			Dialogue dialogue2 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
 			TextBubbleUI.Visible = true;
 			TextBubbleUI.AddDialogue(dialogue1);
 			TextBubbleUI.AddDialogue(dialogue2);

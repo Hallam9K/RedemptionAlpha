@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Critters
                     HopCheck();
 
                     Point tileBelow = new Vector2(NPC.Center.X, NPC.Bottom.Y).ToTileCoordinates();
-                    Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+                    Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
                     if (BuryCheck() && Main.rand.NextBool(60) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileID.Sets.Conversion.Sand[tile.TileType])
                     {
                         NPC.velocity.Y = 0;

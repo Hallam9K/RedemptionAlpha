@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Critters
                         AIState = ActionState.Peck;
 
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
-                    Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+                    Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
                     if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.TileType == TileID.HayBlock && 
                         tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])

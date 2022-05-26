@@ -118,7 +118,7 @@ namespace Redemption.Tiles.Furniture.Lab
 
 		public override void HitWire(int i, int j)
 		{
-			Tile tile = Main.tile[i, j];
+			Tile tile = Framing.GetTileSafely(i, j);
 
 			int spawnX = i;
 			int spawnY = j - (tile.TileFrameY % NextStyleHeight) / 18;

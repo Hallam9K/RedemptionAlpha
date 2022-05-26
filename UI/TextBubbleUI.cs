@@ -8,6 +8,7 @@ using System.Linq;
 using Terraria.UI.Chat;
 using ReLogic.Graphics;
 using System;
+using Terraria.Audio;
 
 namespace Redemption.UI
 {
@@ -59,7 +60,10 @@ namespace Redemption.UI
 				// Measure our progress via a modulo between our char time and
 				// our timer, allowing us to decide how many chars to display
 				if (dialogue.pauseTime <= 0 && dialogue.displayingText.Length != dialogue.text.Length && dialogue.timer % dialogue.charTime == 0)
+				{
+					SoundEngine.PlaySound((SoundStyle)dialogue.sound);
 					dialogue.displayingText += dialogue.text[dialogue.displayingText.Length];
+				}
 
 				InterpretSymbols(ref dialogue);
 
@@ -256,6 +260,7 @@ namespace Redemption.UI
 		public DynamicSpriteFont font;
 		public Color textColor;
 		public Color shadowColor;
+		public SoundStyle? sound;
 
 		public Dialogue leader;
 
@@ -279,6 +284,7 @@ namespace Redemption.UI
 			font = Terraria.GameContent.FontAssets.MouseText.Value;
 			textColor = Color.White;
 			shadowColor = Color.Black;
+			sound = CustomSounds.Voice1;
 			leader = null;
 			this.text = text ?? "";
 			displayingText ??= "";
@@ -296,6 +302,7 @@ namespace Redemption.UI
 			font = dialogue.font ?? Terraria.GameContent.FontAssets.MouseText.Value;
 			textColor = dialogue.textColor;
 			shadowColor = dialogue.shadowColor;
+			sound = dialogue.sound;
 			leader = dialogue.leader;
 			displayingText ??= "";
 			charTime = dialogue.charTime;
@@ -304,7 +311,7 @@ namespace Redemption.UI
 			fadeTimeMax = dialogue.fadeTime;
 			boxFade = dialogue.boxFade;
 		}
-		public Dialogue(NPC npc, Texture2D icon, Texture2D bubble, DynamicSpriteFont font, Color textColor, Color shadowColor, Dialogue leader, string text, int charTime, int pauseTime, int fadeTime, bool boxFade)
+		public Dialogue(NPC npc, Texture2D icon, Texture2D bubble, DynamicSpriteFont font, Color textColor, Color shadowColor, SoundStyle? sound, Dialogue leader, string text, int charTime, int pauseTime, int fadeTime, bool boxFade)
 		{
 			this.npc = npc;
 			this.icon = icon;
@@ -312,6 +319,7 @@ namespace Redemption.UI
 			this.font = font ?? Terraria.GameContent.FontAssets.MouseText.Value;
 			this.textColor = textColor;
 			this.shadowColor = shadowColor;
+			this.sound = sound ?? CustomSounds.Voice1;
 			this.leader = leader;
 			this.text = text ?? "";
 			displayingText ??= "";
