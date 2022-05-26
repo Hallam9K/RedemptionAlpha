@@ -117,7 +117,6 @@ namespace Redemption.Globals.Player
                     choice.Add(ModContent.ItemType<AbyssStinger>(), 3);
                     choice.Add(ModContent.ItemType<DarkStar>(), 1);
                     choice.Add(ModContent.ItemType<LurkingKetred>(), 10);
-                    choice.Add(ModContent.ItemType<JagboneFish>(), 8);
                     choice.Add(ModContent.ItemType<ShadeFish>(), 9);
                     itemDrop = choice;
                 }

@@ -48,6 +48,8 @@ namespace Redemption.NPCs.Friendly
 
             Player player = Main.player[NPC.target];
             Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Kingdom").Value;
+            SoundStyle voice1 = CustomSounds.Voice3 with { Pitch = -0.8f };
+            SoundStyle voice2 = CustomSounds.Voice3 with { Pitch = -0.1f };
 
             switch (TimerRand)
             {
@@ -55,7 +57,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 0)
                     {
                         NPC.spriteDirection = 1;
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "...", 1, 120, 60, true);
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice1, null, "...", 1, 120, 60, true);
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
@@ -69,7 +71,7 @@ namespace Redemption.NPCs.Friendly
                 case 1:
                     if (AITimer++ == 30)
                     {
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "What do you think, Jo-", 3, 30, 100, true); // 196
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice1, null, "What do you think, Jo-", 3, 30, 100, true); // 196
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);
                     }
@@ -84,9 +86,9 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 60)
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, null, "Who you?!", 3, 100, 0, false); // 166
-                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, d1, "Where am I?", 3, 100, 0, false); // 166
-                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, d2, "Heyo, I'm Newb![60] Want to be friends?", 3, 100, 30, true); // 196
+                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice2, null, "Who you?!", 3, 100, 0, false); // 166
+                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice2, d1, "Where am I?", 3, 100, 0, false); // 166
+                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice2, d2, "Heyo, I'm Newb![60] Want to be friends?", 3, 100, 30, true); // 196
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.AddDialogue(d1);

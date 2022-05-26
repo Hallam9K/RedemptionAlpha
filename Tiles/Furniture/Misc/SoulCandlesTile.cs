@@ -53,7 +53,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             if (!Main.projectile.Any(projectile => projectile.type == ModContent.ProjectileType<SoulCandles_Proj>() && (projectile.ModProjectile as SoulCandles_Proj).Parent == Main.tile[i, j] && projectile.active))
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -76,7 +76,7 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
