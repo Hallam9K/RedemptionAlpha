@@ -63,7 +63,7 @@ namespace Redemption.Tiles.Containers
         {
             int left = i;
             int top = j;
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             if (tile.TileFrameX % 36 != 0)
             {
                 left--;
@@ -99,7 +99,7 @@ namespace Redemption.Tiles.Containers
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             Main.mouseRightRelease = false;
             int left = i;
             int top = j;
@@ -179,7 +179,7 @@ namespace Redemption.Tiles.Containers
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             int left = i;
             int top = j;
             if (tile.TileFrameX % 36 != 0)

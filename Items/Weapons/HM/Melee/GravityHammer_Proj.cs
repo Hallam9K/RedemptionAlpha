@@ -101,8 +101,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                             player.position.Y = tilePosY * 16 - 32;
                         Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
                         Point tileBelow2 = new Vector2(projHitbox.Center.X + (16 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
-                        Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
-                        Tile tile2 = Main.tile[tileBelow2.X, tileBelow2.Y];
+                        Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
+                        Tile tile2 = Framing.GetTileSafely(tileBelow2.X, tileBelow2.Y);
                         if ((tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType]) || (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType]))
                         {
                             if (!Main.dedServ)

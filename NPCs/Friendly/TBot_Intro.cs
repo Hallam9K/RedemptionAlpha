@@ -99,8 +99,8 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (AITimer++ == 18)
                         {
-                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "HUH?", 3, 100, 0, false); // 112
-                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "How-[10] Wh-[10] I-", 3, 100, 30, true); // 183
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, null, "HUH?", 3, 100, 0, false); // 112
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, d1, "How-[10] Wh-[10] I-", 3, 100, 30, true); // 183
 
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.AddDialogue(d1);
@@ -117,8 +117,8 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (AITimer++ == 18)
                         {
-                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "AH!", 3, 100, 0, false); // 109
-                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "...I-[10]I thought you were someone else.[30] Sorry about that.", 3, 100, 30, true); // 335
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, null, "AH!", 3, 100, 0, false); // 109
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, d1, "...I-[10]I thought you were someone else.[30] Sorry about that.", 3, 100, 30, true); // 335
 
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.AddDialogue(d1);
@@ -139,9 +139,9 @@ namespace Redemption.NPCs.Friendly
                             NPC.LookAtEntity(player);
                         if (AITimer++ == 5)
                         {
-                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "*Sigh*[10] I wasn't expecting to see the likes of us here.", 3, 100, 0, false); // 272
-                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "Not going back there now.[30] Since you're here and not there,[10] I can safely assume you're not with Her..?", 3, 100, 30, true); // 473
-                            Dialogue d3 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d2, "...Alright.[30] We can safely ignore each other then.", 3, 100, 30, true); // 307
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, null, "*Sigh*[10] I wasn't expecting to see the likes of us here.", 3, 100, 0, false); // 272
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, d1, "Not going back there now.[30] Since you're here and not there,[10] I can safely assume you're not with Her..?", 3, 100, 30, true); // 473
+                            Dialogue d3 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, d2, "...Alright.[30] We can safely ignore each other then.", 3, 100, 30, true); // 307
 
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.AddDialogue(d1);
@@ -168,8 +168,8 @@ namespace Redemption.NPCs.Friendly
                             NPC.LookAtEntity(player);
                         if (AITimer++ == 5)
                         {
-                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "Anyways,[10] hello.[30] I'm Adam,[10] and I'm an Android originating from a faraway snowy wasteland.", 3, 100, 0, false); // 414
-                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, d1, "Seeing as I won't be returning to that frozen hell for a good while,[10] mind if I stay here?[30] I assume you've some shelter to stay at.", 3, 100, 30, true); // 560
+                            Dialogue d1 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, null, "Anyways,[10] hello.[30] I'm Adam,[10] and I'm an Android originating from a faraway snowy wasteland.", 3, 100, 0, false); // 414
+                            Dialogue d2 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, d1, "Seeing as I won't be returning to that frozen hell for a good while,[10] mind if I stay here?[30] I assume you've some shelter to stay at.", 3, 100, 30, true); // 560
 
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.AddDialogue(d1);
@@ -179,7 +179,7 @@ namespace Redemption.NPCs.Friendly
                             EmoteBubble.NewBubble(98, new WorldUIAnchor(NPC), 204);
                         if (AITimer == 979)
                         {
-                            Dialogue d4 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, "...The resemblance between them is uncanny...", 3, 100, 30, true); // 265
+                            Dialogue d4 = new(NPC, null, null, null, Color.LightGreen, Color.DarkGreen, null, null, "...The resemblance between them is uncanny...", 3, 100, 30, true); // 265
 
                             EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
                             NPC.spriteDirection = -NPC.spriteDirection;

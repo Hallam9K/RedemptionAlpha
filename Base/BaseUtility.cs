@@ -67,7 +67,7 @@ namespace Redemption.Base
         public static void OpenChestUI(int i, int j)
         {
             Player player = Main.player[Main.myPlayer];
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             Main.mouseRightRelease = false;
             int left = i;
             int top = j;

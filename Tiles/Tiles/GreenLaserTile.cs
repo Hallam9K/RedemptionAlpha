@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Tiles
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;

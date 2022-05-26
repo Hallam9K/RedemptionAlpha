@@ -49,7 +49,9 @@ namespace Redemption.Items.Weapons.HM.Magic
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'An ancient relic owned by King Tenebris. The texts contained within this tome were said\n" +
-                    "to contain the knowledge necessary to master psychic magic.'")
+                    "to hold the knowledge necessary to master psychic magic.\n\n" +
+                    "King Tenebris reigns over Erellon within the capital of Arrgath, a province protected by\n" +
+                    "lands of plentiful life and barren death. It is said his knowledge of the ancient times is truly boundless.'")
                 {
                     OverrideColor = Color.LightGray
                 };
