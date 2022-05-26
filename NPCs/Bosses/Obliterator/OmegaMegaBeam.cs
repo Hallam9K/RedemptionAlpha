@@ -64,6 +64,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.Center = LaserPos;
             if (AITimer == 48)
                 SoundEngine.PlaySound(SoundID.Zombie104, Projectile.position);
+            if (AITimer >= 48 && AITimer < 160)
+                Main.player[npc.target].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 40;
             if (AITimer > 48 && AITimer <= 60)
             {
                 offset -= 4;

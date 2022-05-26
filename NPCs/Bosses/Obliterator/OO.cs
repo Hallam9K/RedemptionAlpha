@@ -198,10 +198,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
         }
         public override void AI()
         {
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            //DespawnHandler();
+            Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
+            DespawnHandler();
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 
+            SoundStyle voice = CustomSounds.Voice1 with { Pitch = -0.8f };
             float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
             Vector2 DefaultPos = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 80);
             Vector2 LaserPos = new(NPC.position.X + (NPC.spriteDirection == -1 ? 46 : 16), NPC.position.Y + 70);
@@ -212,6 +215,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     switch (TimerRand)
                     {
                         case 0:
+                            if (!Main.dedServ)
+                                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
+
                             ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
                             NPC.LookAtEntity(player);
                             AITimer++;
@@ -241,7 +247,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 ArmFrameY[0] = 1;
                                 HeadFrameY = 1;
 
-                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1, null, "Yo.", 3, 60, 0, false); // 69
+                                SoundEngine.PlaySound(CustomSounds.ObliteratorYo, NPC.position);
+                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1 with { Volume = 0 }, null, "Yo.", 3, 60, 0, false); // 69
 
                                 TextBubbleUI.Visible = true;
                                 TextBubbleUI.AddDialogue(d1);
@@ -279,8 +286,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaMegaBeam>(), 1000, new Vector2(10 * NPC.spriteDirection, 0), true, CustomSounds.MegaLaser, NPC.whoAmI);
                             }
-                            if (AITimer == 238)
-                                player.GetModPlayer<ScreenPlayer>().Rumble(112, 20);
                             if (AITimer == 350)
                             {
                                 ArmFrameY[0] = 2;
@@ -288,8 +293,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             if (AITimer == 400)
                             {
-                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "I guess I can't fool you twice, huh.", 2, 60, 0, false); // 69
-                                Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, null, null, "So much for a surprise attack...", 2, 60, 0, false); // 69
+                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "I guess I can't fool you twice,[10] huh.", 2, 100, 0, false); // 182
+                                Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "So much for a surprise attack...", 2, 118, 0, false); // 182
 
                                 TextBubbleUI.Visible = true;
                                 if (RedeBossDowned.oblitDeath == 1)
@@ -297,26 +302,35 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 else
                                     TextBubbleUI.AddDialogue(d2);
                             }
-                            if (AITimer == 580)
+                            if (AITimer == 582)
                             {
+                                Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "Hang on,[10] I got a call from Girus.", 2, 100, 0, false); // 166
+                                Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d1, "'I wasted too much energy too quickly?'", 2, 100, 0, false); // 178
+                                Dialogue d3 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d2, "'I'm an idiot?'", 2, 100, 0, false); // 130
+                                Dialogue d4 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d3, "You're scrapping my personality drive after this fight?", 2, 100, 0, false); // 210
+                                Dialogue d5 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d4, "Ah well,[10] request accepted...", 2, 100, 0, false); // 156
+                                Dialogue d6 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d5, "So,[10] are we ready to duke it out?", 2, 100, 30, true); // 202
                                 HeadFrameY = 2;
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Hang on, I got a call from Girus.", true, false);
+                                TextBubbleUI.Visible = true;
+                                TextBubbleUI.AddDialogue(d1);
+                                TextBubbleUI.AddDialogue(d2);
+                                TextBubbleUI.AddDialogue(d3);
+                                TextBubbleUI.AddDialogue(d4);
+                                TextBubbleUI.AddDialogue(d5);
+                                TextBubbleUI.AddDialogue(d6);
                             }
-                            if (AITimer == 740)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "'I wasted too much energy too quickly?'", true, false);
-                            if (AITimer == 840)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "'I'm an idiot?'", true, false);
-                            if (AITimer == 940)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "You're scrapping my personality drive?", true, false);
-                            if (AITimer == 1140)
-                            {
+                            if (AITimer == 1266)
                                 HeadFrameY = 0;
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Ah well, request accepted...", true, false);
-                            }
-                            if (AITimer == 1380)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityRed, "REBOOTING SYSTEMS... GENERATING BARRIER...", true, false);
-                            if (AITimer > 1500)
+                            if (AITimer == 1422)
                             {
+                                ArmFrameY[0] = 1;
+                                HandsFrameY[0] = 1;
+                            }
+                            if (AITimer > 1624)
+                            {
+                                if (!Main.dedServ)
+                                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2");
+
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.LabSafeS, NPC.position);
                                 for (int i = 0; i < 100; i++)
@@ -377,24 +391,31 @@ namespace Redemption.NPCs.Bosses.Obliterator
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
+            SoundStyle voice = CustomSounds.Voice1 with { Pitch = -0.8f };
             if (!player.active || player.dead)
             {
                 NPC.velocity *= 0.96f;
-                if (NPC.ai[0] == 1 && AITimer > 190 && RedeBossDowned.oblitDeath == 0)
+                if (AIState is ActionState.Intro && AITimer > 190 && RedeBossDowned.oblitDeath == 0)
                 {
                     RedeBossDowned.oblitDeath = 1;
                     AITimer = 0;
-                    NPC.ai[3] = 0;
-                    NPC.ai[0] = 6;
+                    TimerRand = 0;
+                    NPC.ai[0] = -1;
                 }
-                else if (NPC.ai[0] == 6)
+                else if (NPC.ai[0] == -1)
                 {
-                    AITimer++;
-                    if (AITimer == 100)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Alright, target eliminated.", true, false);
-                    if (AITimer == 190)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Returning to base...", true, false);
-                    if (AITimer > 190)
+                    if (AITimer++ == 100)
+                    {
+                        Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "Alright,[10] target eliminated.", 2, 100, 0, false); // 154
+                        Dialogue d2 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d1, "Returning to base...", 2, 100, 30, true); // 170
+
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.AddDialogue(d1);
+                        TextBubbleUI.AddDialogue(d2);
+                    }
+                    if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<OmegaMegaBeam>()))
+                        BeamAnimation = false;
+                    if (AITimer > 284)
                     {
                         NPC.velocity.Y -= 1;
                         if (NPC.timeLeft > 10)
@@ -403,16 +424,16 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 }
                 else
                 {
-                    if (NPC.ai[0] != 7)
+                    if (NPC.ai[0] != -2)
                     {
-                        if (RedeBossDowned.oblitDeath == 2)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityRed, "TARGET OBLITERATED... RETURNING TO GIRUS...", true, false);
-                        else
-                            CombatText.NewText(NPC.getRect(), Colors.RarityRed, "Target eliminated...", true, false);
+                        Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "Target eliminated...", 2, 100, 30, true); // 150
+
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.AddDialogue(d1);
                         AITimer = 0;
-                        NPC.ai[0] = 7;
+                        NPC.ai[0] = -2;
                     }
-                    if (NPC.ai[0] == 7 && ++AITimer > 120)
+                    if (NPC.ai[0] == -2 && ++AITimer > 120)
                         NPC.velocity.Y -= 1;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
