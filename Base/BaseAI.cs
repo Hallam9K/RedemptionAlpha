@@ -185,7 +185,7 @@ namespace Redemption.Base
             float dist = Vector2.Distance(codable.Center, owner.Center);
             if (dist > teleportDist) { codable.Center = owner.Center; }
             int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
-            Tile tile = Main.tile[tileX, tileY];
+            Tile tile = Framing.GetTileSafely(tileX, tileY);
             bool inTile = tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType];
             float prevAI = ai[0];
             ai[0] = ai[0] == 1 && (dist > Math.Max(lineDist, returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox)) || dist > returnDist || inTile ? 1 : 0;
@@ -267,7 +267,7 @@ namespace Redemption.Base
             float dist = Vector2.Distance(codable.Center, owner.Center);
             if (dist > teleportDist) { codable.Center = owner.Center; }
             int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
-            Tile tile = Main.tile[tileX, tileY];
+            Tile tile = Framing.GetTileSafely(tileX, tileY);
             bool inTile = tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType];
             float prevAI = ai[0];
             ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
@@ -379,7 +379,7 @@ namespace Redemption.Base
             float dist = Vector2.Distance(codable.Center, owner.Center);
             if (dist > teleportDist) { codable.Center = owner.Center; }
             int tileX = (int)(codable.Center.X / 16f), tileY = (int)(codable.Center.Y / 16f);
-            Tile tile = Main.tile[tileX, tileY];
+            Tile tile = Framing.GetTileSafely(tileX, tileY);
             bool inTile = tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType];
             float prevAI = ai[0];
             ai[0] = ai[0] == 1 && (owner.velocity.Y != 0 || dist > Math.Max(lineDist, returnDist / 10f)) || dist > returnDist || inTile ? 1 : 0;
@@ -4985,7 +4985,7 @@ namespace Redemption.Base
                 {
                     for (int y = tileY; y >= tileItY; y--)
                     {
-                        Tile tile = Main.tile[tileX, y];
+                        Tile tile = Framing.GetTileSafely(tileX, y);
                         Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
                         if (tile.HasUnactuatedTile && (y != tileY || tile.Slope == 0) && Main.tileSolid[tile.TileType] && (jumpUpPlatforms || !Main.tileSolidTop[tile.TileType]))
                         {
@@ -5018,7 +5018,7 @@ namespace Redemption.Base
                             {
                                 for (int x = tileX; x < tileItX; x++)
                                 {
-                                    Tile tile = Main.tile[x, tileY + 1];
+                                    Tile tile = Framing.GetTileSafely(x, tileY + 1);
                                     if (x != tileX && !tile.HasUnactuatedTile)
                                     {
                                         newVelocity.Y -= 0.0325f;
@@ -5031,7 +5031,7 @@ namespace Redemption.Base
                             {
                                 for (int x = tileItX; x < tileX; x++)
                                 {
-                                    Tile tile = Main.tile[x, tileY + 1];
+                                    Tile tile = Framing.GetTileSafely(x, tileY + 1);
                                     if (x != tileItX && !tile.HasUnactuatedTile)
                                     {
                                         newVelocity.Y -= 0.0325f;
@@ -5127,7 +5127,7 @@ namespace Redemption.Base
             {
                 for (int y = topY; x < topY + rect.Height; y++)
                 {
-                    Tile tile = Main.tile[x, y];
+                    Tile tile = Framing.GetTileSafely(x, y);
                     if (tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                     {
                         return false;
@@ -5970,7 +5970,7 @@ namespace Redemption.Base
                             Vector2 vec = ignoreType == 1 ? (Vector2)ignore : new Vector2(-1, -1);
                             if ((int)vec.X != vecX && (int)vec.Y != vecY)
                             {
-                                Tile tile = Main.tile[vecX, vecY];
+                                Tile tile = Framing.GetTileSafely(vecX, vecY);
                                 if (tile is { HasUnactuatedTile: true })
                                 {
                                     bool ignoreTile = tileTypesToIgnore is { Length: > 0 } && BaseUtility.InArray(tileTypesToIgnore, tile.TileType);

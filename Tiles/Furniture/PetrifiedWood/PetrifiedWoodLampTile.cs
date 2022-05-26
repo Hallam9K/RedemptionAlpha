@@ -63,7 +63,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             if (tile.TileFrameX < 18)
             {
                 r = 0.7f;

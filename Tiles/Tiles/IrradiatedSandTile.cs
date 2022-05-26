@@ -204,7 +204,7 @@ namespace Redemption.Tiles.Tiles
                 int tileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
                 int tileY = (int)(Projectile.position.Y + Projectile.width / 2) / 16;
 
-                Tile tile = Main.tile[tileX, tileY];
+                Tile tile = Framing.GetTileSafely(tileX, tileY);
                 Tile tileBelow = Main.tile[tileX, tileY + 1];
 
                 if (tile.IsHalfBlock && Projectile.velocity.Y > 0f && Math.Abs(Projectile.velocity.Y) > Math.Abs(Projectile.velocity.X))

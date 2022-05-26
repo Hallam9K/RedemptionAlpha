@@ -65,7 +65,7 @@ namespace Redemption.Base
 			{
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
-					Tile tile = Main.tile[x1, y1];
+					Tile tile = Framing.GetTileSafely(x1, y1);
 					if (tile is {HasTile: true} && tile.TileType == type && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
 					{
 						dist = Vector2.Distance(originalPos, new Vector2(x1, y1));
@@ -100,7 +100,7 @@ namespace Redemption.Base
 
         public static Vector2 FindTopLeft(int x, int y)
         {
-            Tile tile = Main.tile[x, y]; if (tile == null) return new Vector2(x, y);
+            Tile tile = Framing.GetTileSafely(x, y); if (tile == null) return new Vector2(x, y);
             TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
             x -= tile.TileFrameX / 18 % data.Width;
             y -= tile.TileFrameY / 18 % data.Height;
@@ -124,7 +124,7 @@ namespace Redemption.Base
 			{
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
-					Tile tile = Main.tile[x1, y1];
+					Tile tile = Framing.GetTileSafely(x1, y1);
 					if (tile is {HasTile: true} && tile.TileType == type && (addTile == null || addTile(tile)))
 					{
 						if (type == 21 || TileObjectData.GetTileData(tile).Width > 1 || TileObjectData.GetTileData(tile).Height > 1)
@@ -165,7 +165,7 @@ namespace Redemption.Base
 			{
 				for (int y1 = leftY; y1 < rightY; y1++)
 				{
-					Tile tile = Main.tile[x1, y1];
+					Tile tile = Framing.GetTileSafely(x1, y1);
 					if (tile is {LiquidAmount: > 0} && (liquidType == 0 ? tile.LiquidType == 1 : liquidType == 1 ? tile.LiquidType == 2 : tile.LiquidType == 3))
 					{
 						liquidAmt += tile.LiquidAmount;
@@ -193,7 +193,7 @@ namespace Redemption.Base
             for(int x1 = x; x1 < x + width; x1++)
                 for (int y1 = y; y1 < y + height; y1++)
                 {
-                    Tile tile = Main.tile[x1, y1];
+                    Tile tile = Framing.GetTileSafely(x1, y1);
                     if(tile is not {HasTile: true} || tile.TileType != type)
                     {
                         return false;
@@ -217,7 +217,7 @@ namespace Redemption.Base
                     int x2 = (int)tileCenter.X + x;
                     int y2 = (int)tileCenter.Y + y;
                     if (x2 < 0 || y2 < 0 || x2 > Main.maxTilesX || y2 > Main.maxTilesY) { continue; }
-                    Tile tile = Main.tile[x2, y2];
+                    Tile tile = Framing.GetTileSafely(x2, y2);
                     if (tile == null) { continue; }
                     addedTile = false;
                     if (tile.HasTile)
@@ -253,7 +253,7 @@ namespace Redemption.Base
                     int x2 = (int)tileCenter.X + x;
                     int y2 = (int)tileCenter.Y + y;
                     if (x2 < 0 || y2 < 0 || x2 > Main.maxTilesX || y2 > Main.maxTilesY) { continue; }
-                    Tile tile = Main.tile[x2, y2];
+                    Tile tile = Framing.GetTileSafely(x2, y2);
                     if (tile == null) { continue; }
                     foreach (int i in wallTypes)
                     {
@@ -277,7 +277,7 @@ namespace Redemption.Base
                     int x2 = (int)tileCenter.X + x;
                     int y2 = (int)tileCenter.Y + y;
                     if (x2 < 0 || y2 < 0 || x2 > Main.maxTilesX || y2 > Main.maxTilesY) { continue; }
-                    Tile tile = Main.tile[x2, y2];
+                    Tile tile = Framing.GetTileSafely(x2, y2);
                     if (tile is not {HasTile: true}) { continue; }
                     foreach (int i in tileTypes)
                     {

@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             player.heldProj = Projectile.whoAmI;
             Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
             Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
-            Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
+            Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
             SwingSpeed = SetSwingSpeed(42);
 

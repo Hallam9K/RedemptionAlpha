@@ -108,7 +108,7 @@ namespace Redemption
                     if (!WorldGen.InWorld(x1, y1, 0))
                         continue;
 
-                    Tile tile = Main.tile[x1, y1];
+                    Tile tile = Framing.GetTileSafely(x1, y1);
                     if (dist < distRad && tile != null)
                     {
                         if (tile.HasTile && tile.TileType == TileID.LeafBlock)

@@ -142,7 +142,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		public override void MouseOverFar(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			int left = Player.tileTargetX;
 			int top = Player.tileTargetY;
 			left -= tile.TileFrameX % 54 / 18;
@@ -184,7 +184,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			int left = Player.tileTargetX;
 			int top = Player.tileTargetY;
 			left -= tile.TileFrameX % 54 / 18;

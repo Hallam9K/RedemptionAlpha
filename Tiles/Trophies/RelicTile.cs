@@ -117,7 +117,7 @@ namespace Redemption.Tiles.Trophies
 				offScreen = Vector2.Zero;
 
 			Point p = new(i, j);
-			Tile tile = Main.tile[p.X, p.Y];
+			Tile tile = Framing.GetTileSafely(p.X, p.Y);
 			if (tile == null || !tile.HasTile)
 				return;
 

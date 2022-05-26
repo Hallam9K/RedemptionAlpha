@@ -54,7 +54,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             if (tile.TileFrameX < 36)
             {
                 r = 0.7f;

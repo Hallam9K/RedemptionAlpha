@@ -89,8 +89,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                             player.velocity.Y += 1;
                             Point tileBelow = new Vector2(Projectile.Center.X, Projectile.Bottom.Y).ToTileCoordinates();
                             Point tileBelow2 = new Vector2(player.Center.X, player.Bottom.Y).ToTileCoordinates();
-                            Tile tile = Main.tile[tileBelow.X, tileBelow.Y];
-                            Tile tile2 = Main.tile[tileBelow2.X, tileBelow2.Y];
+                            Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
+                            Tile tile2 = Framing.GetTileSafely(tileBelow2.X, tileBelow2.Y);
                             if (((tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType]) || (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])) && player.velocity.Y >= 0)
                             {
                                 float volume = MathHelper.Lerp(0.1f, 1f, player.velocity.Y / 40);
