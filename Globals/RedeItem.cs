@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using System.Linq;
 
 namespace Redemption.Globals
 {
@@ -46,6 +47,28 @@ namespace Redemption.Globals
                 Main.dust[sparkle].velocity.Y = -2;
                 Main.dust[sparkle].noGravity = true;
             }
+        }
+
+        readonly int[] bannedArenaItems = new int[]
+        {
+            ItemID.RodofDiscord,
+            ItemID.IceRod,
+            ItemID.PortalGun,
+            ItemID.MagicMirror,
+            ItemID.IceMirror,
+            ItemID.CellPhone,
+            ItemID.StaticHook,
+            ItemID.AntiGravityHook,
+            ItemID.Sandgun,
+            ItemID.ActuationRod,
+            ItemID.GravitationPotion
+        };
+        public override bool CanUseItem(Item item, Terraria.Player player)
+        {
+            if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
+                return false;
+
+            return base.CanUseItem(item, player);
         }
         public override void OnCreate(Item item, ItemCreationContext context)
         {

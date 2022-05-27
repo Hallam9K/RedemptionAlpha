@@ -193,8 +193,27 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int frameCounters;
         public int repeat;
         public bool BeamAnimation;
+
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7 };
+        public List<int> CopyList = null;
+        public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
         {
+            int attempts = 0;
+            while (attempts == 0)
+            {
+                if (CopyList == null || CopyList.Count == 0)
+                    CopyList = new List<int>(AttackList);
+                ID = CopyList[Main.rand.Next(0, CopyList.Count)];
+                CopyList.Remove(ID);
+                NPC.netUpdate = true;
+
+                if ((ID == 6 && NPC.life >= (int)(NPC.lifeMax * 0.6f)) ||
+                (ID == 7 && NPC.life >= (int)(NPC.lifeMax * 0.7f)))
+                    continue;
+
+                attempts++;
+            }
         }
         public override void AI()
         {
@@ -204,10 +223,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
             DespawnHandler();
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 
-            SoundStyle voice = CustomSounds.Voice1 with { Pitch = -0.8f };
+            SoundStyle voice = CustomSounds.Voice5;
             float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
             Vector2 DefaultPos = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 80);
+            Vector2 DefaultPos2 = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 40);
             Vector2 LaserPos = new(NPC.position.X + (NPC.spriteDirection == -1 ? 46 : 16), NPC.position.Y + 70);
+            Vector2 RandPos = new(Main.rand.Next(-500, -300) * NPC.spriteDirection, Main.rand.Next(-400, 200));
 
             switch (AIState)
             {
@@ -225,7 +246,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 AITimer = 0;
                                 if (RedeBossDowned.oblitDeath == 2)
-                                    TimerRand = 2;
+                                {
+                                    AIState = ActionState.Begin;
+                                    TimerRand = 0;
+                                }
                                 else
                                     TimerRand = 1;
                                 NPC.netUpdate = true;
@@ -309,7 +333,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 Dialogue d3 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d2, "'I'm an idiot?'", 2, 100, 0, false); // 130
                                 Dialogue d4 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d3, "You're scrapping my personality drive after this fight?", 2, 100, 0, false); // 210
                                 Dialogue d5 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d4, "Ah well,[10] request accepted...", 2, 100, 0, false); // 156
-                                Dialogue d6 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d5, "So,[10] are we ready to duke it out?", 2, 100, 30, true); // 202
+                                Dialogue d6 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, d5, "Anyway...", 2, 100, 30, true); // 148
                                 HeadFrameY = 2;
                                 TextBubbleUI.Visible = true;
                                 TextBubbleUI.AddDialogue(d1);
@@ -321,16 +345,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             if (AITimer == 1266)
                                 HeadFrameY = 0;
-                            if (AITimer == 1422)
+                            if (AITimer > 1560)
                             {
-                                ArmFrameY[0] = 1;
-                                HandsFrameY[0] = 1;
-                            }
-                            if (AITimer > 1624)
-                            {
-                                if (!Main.dedServ)
-                                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2");
-
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.LabSafeS, NPC.position);
                                 for (int i = 0; i < 100; i++)
@@ -345,6 +361,58 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             break;
                     }
+                    break;
+                case ActionState.Begin:
+                    #region Fight Startup
+                    NPC.LookAtEntity(player);
+                    if (!Main.dedServ)
+                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2");
+                    ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
+                    if (AITimer++ == 0 && Main.dedServ)
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Omega Obliterator", 60, 90, 0.8f, 0, Color.Red, "3rd Omega Prototype");
+                    if (AITimer < 60)
+                        NPC.Move(DefaultPos2, 9, 10);
+                    else
+                        NPC.velocity *= 0.96f;
+                    if (AITimer == 60)
+                    {
+                        NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
+
+                        NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
+
+                        ArenaWorld.arenaBoss = "OO";
+                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (200 * 16) + 8);
+                        ArenaWorld.arenaSize = new Vector2(240 * 16, 400 * 16);
+                        ArenaWorld.arenaMiddle = NPC.Center;
+                        ArenaWorld.arenaActive = true;
+
+                        ArmFrameY[0] = 1;
+                        HandsFrameY[0] = 1;
+
+                        Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "Ready for obliteration?", 2, 100, 30, true); // 176
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.AddDialogue(d1);
+                    }
+                    if (AITimer >= 236)
+                    {
+                        NPC.dontTakeDamage = false;
+                        ArmFrameY[0] = 2;
+                        AITimer = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
+                    #endregion
+                    break;
+                case ActionState.Idle:
+                    NPC.LookAtEntity(player);
+                    AIState = ActionState.Attacks;
+                    AITimer = 0;
+                    TimerRand = 0;
+                    AttackChoice();
+                    MoveVector2 = RandPos;
+                    NPC.netUpdate = true;
                     break;
             }
         }
@@ -374,7 +442,15 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         NPC.frame.Y = 0;
                 }
             }
-
+            if (AIState is ActionState.Attacks)
+            {
+                if ((NPC.spriteDirection == -1 && NPC.velocity.X >= 8) || (NPC.spriteDirection == 1 && NPC.velocity.X <= -8))
+                    HeadFrameY = 1;
+                else if ((NPC.spriteDirection == 1 && NPC.velocity.X >= 8) || (NPC.spriteDirection == -1 && NPC.velocity.X <= -8))
+                    HeadFrameY = 2;
+                else
+                    HeadFrameY = 0;
+            }
             LegFrameY = 2 + (int)(-NPC.velocity.Y / 6);
             LegFrameY = (int)MathHelper.Clamp(LegFrameY, 0, 4);
             NPC.rotation = NPC.velocity.X * 0.01f;
