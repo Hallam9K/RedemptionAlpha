@@ -36,6 +36,7 @@ namespace Redemption
             PitchVariance = 0.2f
         };
         public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
+        public static readonly SoundStyle BallCreate = new("Redemption/Sounds/Custom/BallCreate") { PitchVariance = .1f };
         public static readonly SoundStyle BallFire = new("Redemption/Sounds/Custom/BallFire") { PitchVariance = .1f };
         public static readonly SoundStyle Banjo = new("Redemption/Sounds/Custom/Banjo", 3);
         public static readonly SoundStyle Bass1 = new("Redemption/Sounds/Custom/Bass1") { PitchVariance = .1f };

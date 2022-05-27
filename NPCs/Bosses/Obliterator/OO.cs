@@ -195,7 +195,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int repeat;
         public bool BeamAnimation;
 
-        public List<int> AttackList = new() { 0, 1 };
+        public List<int> AttackList = new() { 0, 1, 2, 3 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
@@ -231,6 +231,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Vector2 LaserPos = new(NPC.position.X + (NPC.spriteDirection == -1 ? 46 : 16), NPC.position.Y + 70);
             Vector2 RandPos = new(Main.rand.Next(-500, -300) * NPC.spriteDirection, Main.rand.Next(-400, 200));
             Vector2 ChargePos = new(player.Center.X - (400 * NPC.spriteDirection), player.Center.Y);
+            Vector2 ShootPos = new(player.Center.X - (300 * NPC.spriteDirection), player.Center.Y - 10);
 
             switch (AIState)
             {
@@ -430,10 +431,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         case 0:
                             if (AITimer < 180)
                             {
-                                ArmRot[0].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
-                                ArmRot[1].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
-                                ArmFrameY[0] = 0;
-                                ArmFrameY[1] = 0;
+                                ArmRot[0].SlowRotation(NPC.velocity.X / 40 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                ArmRot[1].SlowRotation(NPC.velocity.X / 40 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                int frame = 0;
+                                if (NPC.velocity.Y >= 1)
+                                    frame = 1;
+                                ArmFrameY[0] = frame;
+                                ArmFrameY[1] = frame;
                             }
                             else
                             {
@@ -474,10 +478,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         case 1:
                             if (AITimer >= 200 && AITimer < 260)
                             {
-                                ArmRot[0].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
-                                ArmRot[1].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
-                                ArmFrameY[0] = 0;
-                                ArmFrameY[1] = 0;
+                                ArmRot[0].SlowRotation(NPC.velocity.X / 40 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                ArmRot[1].SlowRotation(NPC.velocity.X / 40 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                int frame = 0;
+                                if (NPC.velocity.Y >= 1)
+                                    frame = 1;
+                                ArmFrameY[0] = frame;
+                                ArmFrameY[1] = frame;
                             }
                             else
                             {
@@ -525,6 +532,95 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             break;
                         #endregion
+
+                        #region Plasma Orb 1
+                        case 2:
+                            NPC.LookAtEntity(player);
+                            AITimer++;
+                            if (AITimer < 200)
+                            {
+                                if (NPC.DistanceSQ(ShootPos) < 200 * 200 || AITimer >= 40)
+                                {
+                                    BeamAnimation = true;
+                                    if (NPC.frame.Y >= 404)
+                                    {
+                                        AITimer = 200;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                                else
+                                    NPC.Move(ShootPos, 16, 10);
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0.86f;
+                                if (AITimer == 210)
+                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2(15 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+
+                                if (AITimer > 230)
+                                {
+                                    BeamAnimation = false;
+                                    if (TimerRand >= 2)
+                                    {
+                                        TimerRand = 0;
+                                        NPC.velocity *= 0f;
+                                        AIState = ActionState.Idle;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                    else
+                                    {
+                                        TimerRand++;
+                                        NPC.velocity *= 0f;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Plasma Orb 2
+                        case 3:
+                            NPC.LookAtEntity(player);
+                            AITimer++;
+                            if (AITimer < 200)
+                            {
+                                if (NPC.DistanceSQ(ShootPos) < 500 * 500 || AITimer >= 40)
+                                {
+                                    BeamAnimation = true;
+                                    if (NPC.frame.Y >= 404)
+                                    {
+                                        if (player.Center.Y > NPC.Center.Y)
+                                            NPC.velocity.Y = 20f;
+                                        else
+                                            NPC.velocity.Y = -20f;
+
+                                        AITimer = 200;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                                else
+                                    NPC.Move(ShootPos, 19, 10);
+                            }
+                            else
+                            {
+                                NPC.velocity.Y *= 0.98f;
+                                NPC.velocity.X *= 0.5f;
+                                if (AITimer > 200 && AITimer % 7 == 0)
+                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2(15 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+
+                                if (AITimer > 270)
+                                {
+                                    BeamAnimation = false;
+                                    NPC.velocity *= 0f;
+                                    AIState = ActionState.Idle;
+                                    AITimer = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                            #endregion
                     }
                     break;
             }
