@@ -22,6 +22,7 @@ using Redemption.BaseExtension;
 using Redemption.UI;
 using System;
 using Redemption.Dusts;
+using Redemption.NPCs.Bosses.Cleaver;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -149,7 +150,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         {
             potionType = ItemID.GreaterHealingPotion;
         }
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.Length() > 12;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
@@ -194,7 +195,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int repeat;
         public bool BeamAnimation;
 
-        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7 };
+        public List<int> AttackList = new() { 0, 1 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
@@ -229,6 +230,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Vector2 DefaultPos2 = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 40);
             Vector2 LaserPos = new(NPC.position.X + (NPC.spriteDirection == -1 ? 46 : 16), NPC.position.Y + 70);
             Vector2 RandPos = new(Main.rand.Next(-500, -300) * NPC.spriteDirection, Main.rand.Next(-400, 200));
+            Vector2 ChargePos = new(player.Center.X - (400 * NPC.spriteDirection), player.Center.Y);
 
             switch (AIState)
             {
@@ -397,6 +399,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     {
                         NPC.dontTakeDamage = false;
                         ArmFrameY[0] = 2;
+                        HandsFrameY[0] = 2;
                         AITimer = 0;
                         AIState = ActionState.Idle;
                         NPC.netUpdate = true;
@@ -407,12 +410,122 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     break;
                 case ActionState.Idle:
                     NPC.LookAtEntity(player);
+
+                    ArmFrameY[0] = 2;
+                    ArmFrameY[1] = 1;
+                    ArmRot[0] = MathHelper.PiOver2 + RotFlip;
+                    ArmRot[1] = 0;
+
                     AIState = ActionState.Attacks;
                     AITimer = 0;
                     TimerRand = 0;
                     AttackChoice();
                     MoveVector2 = RandPos;
                     NPC.netUpdate = true;
+                    break;
+                case ActionState.Attacks:
+                    switch (ID)
+                    {
+                        #region Directional Charge
+                        case 0:
+                            if (AITimer < 180)
+                            {
+                                ArmRot[0].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                ArmRot[1].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                ArmFrameY[0] = 0;
+                                ArmFrameY[1] = 0;
+                            }
+                            else
+                            {
+                                ArmFrameY[0] = 2;
+                                ArmFrameY[1] = 1;
+                                ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 40);
+                                ArmRot[1].SlowRotation(0, MathHelper.Pi / 40);
+                            }
+                            if (NPC.velocity.Length() <= 12)
+                                NPC.LookAtEntity(player);
+
+                            if (AITimer == 0)
+                            {
+                                NPC.velocity *= 0f;
+                                AITimer = 1;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0.96f;
+                                if (AITimer++ == 2 || AITimer == 100)
+                                    NPC.velocity = -NPC.DirectionTo(player.Center) * 7f;
+                                if (AITimer == 40 || AITimer == 140)
+                                    Dash(60, true);
+                                if (AITimer > 220)
+                                {
+                                    NPC.velocity *= 0f;
+                                    AIState = ActionState.Idle;
+                                    AITimer = 0;
+                                    TimerRand = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Side Charge
+                        case 1:
+                            if (AITimer >= 200 && AITimer < 260)
+                            {
+                                ArmRot[0].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                ArmRot[1].SlowRotation(NPC.velocity.X / 30 - (0.4f * -NPC.spriteDirection), MathHelper.Pi / 40);
+                                ArmFrameY[0] = 0;
+                                ArmFrameY[1] = 0;
+                            }
+                            else
+                            {
+                                ArmFrameY[0] = 2;
+                                ArmFrameY[1] = 1;
+                                ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 40);
+                                ArmRot[1].SlowRotation(0, MathHelper.Pi / 40);
+                            }
+                            if (NPC.velocity.Length() <= 12)
+                                NPC.LookAtEntity(player);
+
+                            AITimer++;
+                            if (AITimer < 200)
+                            {
+                                if (NPC.DistanceSQ(ChargePos) < 200 * 200 || AITimer >= 60)
+                                {
+                                    AITimer = 200;
+                                    NPC.netUpdate = true;
+                                }
+                                else
+                                    NPC.Move(ChargePos, 15f, 10);
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0.96f;
+                                if (AITimer == 205)
+                                    NPC.velocity.X = player.Center.X > NPC.Center.X ? -8 : 8;
+
+                                if (AITimer == 235)
+                                    Dash(60, false);
+
+                                if (AITimer > 235 && AITimer % 3 == 0 && NPC.velocity.Length() > 12)
+                                {
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2(-4f * NPC.spriteDirection, 12f), true, SoundID.Item91);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2(-4f * NPC.spriteDirection, -12f), true, SoundID.Item91);
+                                }
+                                if (AITimer > 310)
+                                {
+                                    NPC.velocity *= 0f;
+                                    AIState = ActionState.Idle;
+                                    AITimer = 0;
+                                    TimerRand = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+                    }
                     break;
             }
         }
@@ -471,6 +584,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (!player.active || player.dead)
             {
                 NPC.velocity *= 0.96f;
+                float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
+                ArmFrameY[0] = 2;
+                ArmFrameY[1] = 1;
+                ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 40);
+                ArmRot[1].SlowRotation(0, MathHelper.Pi / 40);
                 if (AIState is ActionState.Intro && AITimer > 190 && RedeBossDowned.oblitDeath == 0)
                 {
                     RedeBossDowned.oblitDeath = 1;
@@ -575,19 +693,20 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
+                    Color glowColor = RedeColor.VlitchGlowColour * 0.7f;
                     if (NPC.frame.Y <= 0)
                     {
-                        spriteBatch.Draw(armB, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectArmB), RedeColor.VlitchGlowColour, ArmRot[0], originArms, NPC.scale, effects, 0);
-                        spriteBatch.Draw(hands, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectHandB), RedeColor.VlitchGlowColour, ArmRot[0], originArms - new Vector2((NPC.spriteDirection == -1 ? 29 : 12) + (HandArmX[ArmFrameY[0]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[0]]), NPC.scale, effects, 0);
+                        spriteBatch.Draw(armB, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectArmB), glowColor, ArmRot[0], originArms, NPC.scale, effects, 0);
+                        spriteBatch.Draw(hands, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? -34 : -10, -13), new Rectangle?(rectHandB), glowColor, ArmRot[0], originArms - new Vector2((NPC.spriteDirection == -1 ? 29 : 12) + (HandArmX[ArmFrameY[0]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[0]]), NPC.scale, effects, 0);
                     }
-                    spriteBatch.Draw(texture, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), NPC.frame, RedeColor.VlitchGlowColour, oldrot[i], NPC.frame.Size() / 2f, NPC.scale, effects, 0);
+                    spriteBatch.Draw(texture, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), NPC.frame, glowColor, oldrot[i], NPC.frame.Size() / 2f, NPC.scale, effects, 0);
                     if (NPC.frame.Y <= 0)
-                        spriteBatch.Draw(head, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), RedeColor.VlitchGlowColour, oldrot[i], NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
-                    spriteBatch.Draw(legs, NPC.oldPos[i] + NPC.Size / 2f - screenPos, new Rectangle?(rectLegs), RedeColor.VlitchGlowColour, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(22, -78), NPC.scale, effects, 0);
+                        spriteBatch.Draw(head, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == 1 ? -44 : 0, 0), new Rectangle?(rectHead), glowColor, oldrot[i], NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -48 : 4, -2), NPC.scale, effects, 0);
+                    spriteBatch.Draw(legs, NPC.oldPos[i] + NPC.Size / 2f - screenPos, new Rectangle?(rectLegs), glowColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(22, -78), NPC.scale, effects, 0);
                     if (NPC.frame.Y <= 0)
                     {
-                        spriteBatch.Draw(armF, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectArmF), RedeColor.VlitchGlowColour, ArmRot[1], originArms, NPC.scale, effects, 0);
-                        spriteBatch.Draw(hands, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectHandF), RedeColor.VlitchGlowColour, ArmRot[1], originArms - new Vector2((NPC.spriteDirection == -1 ? 28 : 13) + (HandArmX[ArmFrameY[1]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[1]]), NPC.scale, effects, 0);
+                        spriteBatch.Draw(armF, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectArmF), glowColor, ArmRot[1], originArms, NPC.scale, effects, 0);
+                        spriteBatch.Draw(hands, NPC.oldPos[i] + NPC.Size / 2f - screenPos + new Vector2(NPC.spriteDirection == -1 ? 15 : -59, -22), new Rectangle?(rectHandF), glowColor, ArmRot[1], originArms - new Vector2((NPC.spriteDirection == -1 ? 28 : 13) + (HandArmX[ArmFrameY[1]] * -NPC.spriteDirection), 78 + HandArmY[ArmFrameY[1]]), NPC.scale, effects, 0);
                     }
                 }
                 spriteBatch.End();

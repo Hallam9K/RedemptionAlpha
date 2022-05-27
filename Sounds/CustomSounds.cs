@@ -105,8 +105,8 @@ namespace Redemption
         public static readonly SoundStyle Voice2 = new("Redemption/Sounds/Custom/Voice2") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
         public static readonly SoundStyle Voice3 = new("Redemption/Sounds/Custom/Voice3") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
         public static readonly SoundStyle Voice4 = new("Redemption/Sounds/Custom/Voice4") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
-        public static readonly SoundStyle Voice5 = new("Redemption/Sounds/Custom/Voice5") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        public static readonly SoundStyle Voice5 = new("Redemption/Sounds/Custom/Voice5") { Volume = 0.7f, MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
         public static readonly SoundStyle MegaLaser = new("Redemption/Sounds/Custom/MegaLaser");
-        public static readonly SoundStyle ObliteratorYo = new("Redemption/Sounds/Custom/ObliteratorYo");
+        public static readonly SoundStyle ObliteratorYo = new("Redemption/Sounds/Custom/ObliteratorYo") { Volume = 0.7f };
     }
 }
