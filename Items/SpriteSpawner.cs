@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Particles;
 using Redemption.UI;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +8,7 @@ using static Redemption.Effects.RenderTargets.BasicLayer;
 
 namespace Redemption.Items
 {
-	public class SpriteSpawner : ModItem, IBasicSprite
+    public class SpriteSpawner : ModItem, IBasicSprite
 	{
 		public static int x;
 		public static int y;

@@ -11,7 +11,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.DamageClasses;
 using Redemption.Buffs;
 using Redemption.Biomes;
 using Terraria.GameInput;
@@ -21,8 +20,6 @@ using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
-using Redemption.Items.Armor.PostML.Xenium;
-using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Globals.Player

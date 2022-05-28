@@ -1,12 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Obliterator;
-using System.Collections.Generic;
-using System.IO;
-using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace Redemption.Globals
 {

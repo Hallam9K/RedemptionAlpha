@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Dusts;
 using Redemption.Dusts.Tiles;
-using Redemption.Globals;
 using Redemption.Items.Placeable.Furniture.Misc;
 using System;
 using System.Linq;

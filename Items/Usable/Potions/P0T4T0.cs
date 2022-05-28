@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Critters;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;

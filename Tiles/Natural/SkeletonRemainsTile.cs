@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
-using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

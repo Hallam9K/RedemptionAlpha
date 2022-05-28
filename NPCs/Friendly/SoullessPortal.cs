@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
-using Redemption.Dusts;
 using Terraria.Utilities;
 using Terraria.Audio;
 using Terraria.GameContent;

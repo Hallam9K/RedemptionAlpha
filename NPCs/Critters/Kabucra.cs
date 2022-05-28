@@ -5,13 +5,11 @@ using Redemption.Items.Armor.Single;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.Critters
 {

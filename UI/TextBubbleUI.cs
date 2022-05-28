@@ -4,15 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria.UI;
 using Terraria.ModLoader;
-using System.Linq;
-using Terraria.UI.Chat;
 using ReLogic.Graphics;
 using System;
 using Terraria.Audio;
 
 namespace Redemption.UI
 {
-	public class TextBubbleUI : UIState
+    public class TextBubbleUI : UIState
 	{
 		public static List<Dialogue> Dialogue;
 

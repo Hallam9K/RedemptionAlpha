@@ -9,7 +9,6 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Buffs.Debuffs;
 using Terraria.GameContent;
 using Redemption.Globals;
-using Redemption.Base;
 using Redemption.BaseExtension;
 using Terraria.Audio;
 

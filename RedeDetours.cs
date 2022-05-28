@@ -1,11 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Effects.PrimitiveTrails;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using static Redemption.Globals.RedeNet;
+﻿using Terraria;
 
 namespace Redemption
 {

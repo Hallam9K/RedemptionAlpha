@@ -1,9 +1,6 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using ReLogic.Utilities;
-using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
 
 namespace Redemption
 {

@@ -1,6 +1,3 @@
-using Redemption.Globals;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Furniture.Shade;
 using Terraria;
 using Terraria.GameContent.Creative;

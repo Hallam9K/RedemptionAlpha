@@ -2,9 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using System;
-using System.Linq;
 using Terraria.ID;
-using Terraria.DataStructures;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.Audio;

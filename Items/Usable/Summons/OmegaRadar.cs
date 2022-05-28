@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Obliterator;
 using Terraria;
 using Terraria.Audio;

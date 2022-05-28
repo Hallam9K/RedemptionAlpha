@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
-using Redemption.Tiles.Trees;
 using Redemption.Items.Placeable.Tiles;
 using Terraria.DataStructures;
 using Redemption.Globals.Player;

@@ -1,12 +1,9 @@
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Items.Donator.Lizzy;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Redemption.BaseExtension;
