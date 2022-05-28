@@ -13,6 +13,7 @@ using Redemption.Base;
 using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -120,11 +121,11 @@ namespace Redemption.NPCs.Friendly
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
             {
                 chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?");
-            }/*
-            if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+            }
+            if (player.RedemptionPlayerBuff().ChickenForm)
             {
                 chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");
-            }
+            }/*
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
             {
                 chat.Add("Do I know you?");
@@ -164,6 +165,8 @@ namespace Redemption.NPCs.Friendly
             {
                 shop.item[nextSlot++].SetDefaults(ItemID.Sapphire);
                 shop.item[nextSlot++].SetDefaults(ItemID.Emerald);
+                shop.item[nextSlot].SetDefaults(ItemID.Geode);
+                shop.item[nextSlot++].shopCustomPrice = Item.buyPrice(0, NPC.downedBoss3 ? 1 : 2, 0, 0);
             }
             if (NPC.downedBoss3)
             {

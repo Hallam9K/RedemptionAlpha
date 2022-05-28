@@ -73,6 +73,7 @@ namespace Redemption.Globals.Player
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
+        public bool ChickenForm;
 
         public float TrueMeleeDamage = 1f;
 
@@ -117,6 +118,7 @@ namespace Redemption.Globals.Player
             brokenBlade = false;
             TrueMeleeDamage = 1f;
             shellCap = false;
+            ChickenForm = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
