@@ -195,7 +195,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int repeat;
         public bool BeamAnimation;
 
-        public List<int> AttackList = new() { 0, 1, 2, 3 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
@@ -539,7 +539,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             AITimer++;
                             if (AITimer < 200)
                             {
-                                if (NPC.DistanceSQ(ShootPos) < 200 * 200 || AITimer >= 40)
+                                if (NPC.DistanceSQ(ShootPos) < 100 * 100 || AITimer >= (NPC.life < (int)(NPC.lifeMax * 0.4f) ? 20 : 40))
                                 {
                                     BeamAnimation = true;
                                     if (NPC.frame.Y >= 404)
@@ -553,9 +553,20 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             else
                             {
-                                NPC.velocity *= 0.86f;
+                                NPC.velocity *= 0.94f;
                                 if (AITimer == 210)
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2(15 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+                                {
+                                    if (NPC.life < (int)(NPC.lifeMax * 0.6f))
+                                    {
+                                        for (int i = 0; i < 3; i++)
+                                        {
+                                            int rot = 25 * i;
+                                            NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, RedeHelper.PolarVector(i == 1 ? 25 : 20, (NPC.spriteDirection == -1 ? MathHelper.Pi : 0) + MathHelper.ToRadians(rot - 25)), true, CustomSounds.BallCreate);
+                                        }
+                                    }
+                                    else
+                                        NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2(16 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+                                }
 
                                 if (AITimer > 230)
                                 {
@@ -571,7 +582,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     else
                                     {
                                         TimerRand++;
-                                        NPC.velocity *= 0f;
                                         AITimer = 0;
                                         NPC.netUpdate = true;
                                     }
@@ -608,12 +618,65 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.velocity.Y *= 0.98f;
                                 NPC.velocity.X *= 0.5f;
                                 if (AITimer > 200 && AITimer % 7 == 0)
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2(15 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2(12 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
 
                                 if (AITimer > 270)
                                 {
                                     BeamAnimation = false;
                                     NPC.velocity *= 0f;
+                                    AIState = ActionState.Idle;
+                                    AITimer = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Annihilation Cannon
+                        case 4:
+                            NPC.LookAtEntity(player);
+                            if (AITimer >= 200 && AITimer <= 350)
+                            {
+                                ArmRot[0].SlowRotation(0.4f * -NPC.spriteDirection, MathHelper.Pi / 30);
+                                ArmRot[1].SlowRotation(0.4f * -NPC.spriteDirection, MathHelper.Pi / 30);
+                                ArmFrameY[0] = 2;
+                                ArmFrameY[1] = 2;
+                            }
+                            else
+                            {
+                                ArmFrameY[0] = 2;
+                                ArmFrameY[1] = 1;
+                                ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 20);
+                                ArmRot[1].SlowRotation(0, MathHelper.Pi / 20);
+                            }
+                            AITimer++;
+                            if (AITimer < 200)
+                            {
+                                if (NPC.DistanceSQ(ShootPos) < 500 * 500 || AITimer >= 60)
+                                {
+                                    AITimer = 200;
+                                    NPC.netUpdate = true;
+                                }
+                                else
+                                    NPC.Move(ShootPos, 11, 10);
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0.96f;
+                                if (NPC.life < (int)(NPC.lifeMax * 0.4f))
+                                {
+                                    if (AITimer > 200 && AITimer % 4 == 0 && AITimer < 320)
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
+                                }
+                                else
+                                {
+                                    if (AITimer > 200 && AITimer % 8 == 0 && AITimer < 320)
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
+                                }
+                                if (AITimer > 380)
+                                {
+                                    ArmRFrameY[0] = 0;
+                                    ArmRFrameY[1] = 0;
                                     AIState = ActionState.Idle;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
@@ -737,9 +800,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             return null;
         }
         private int LegFrameY;
-        private int[] ArmFrameY = new int[2];
-        private float[] ArmRot = new float[2];
-        private int ArmRFrameY;
+        public int[] ArmFrameY = new int[2];
+        public float[] ArmRot = new float[2];
+        public int[] ArmRFrameY = new int[2];
         private int[] HandsFrameY = new int[2];
         private int HeadFrameY;
         private readonly int[] HandArmX = new int[] { -18, 0, 6 };
@@ -771,10 +834,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Rectangle rectHandF = new(0, handsHeight * HandsFrameY[1], hands.Width / 2, handsHeight);
             Rectangle rectHandB = new(hands.Width / 2, handsHeight * HandsFrameY[0], hands.Width / 2, handsHeight);
 
-            int armRHeight = armR.Height / 4;
+            int armRHeight = armR.Height / 5;
             int armRWidth = armR.Width / 3;
-            Rectangle rectArmRB = new(armRWidth * ArmFrameY[0], armRHeight * ArmRFrameY, armRWidth, armRHeight);
-            Rectangle rectArmRF = new(armRWidth * ArmFrameY[1], armRHeight * ArmRFrameY, armRWidth, armRHeight);
+            Rectangle rectArmRB = new(armRWidth * ArmFrameY[0], armRHeight * ArmRFrameY[0], armRWidth, armRHeight);
+            Rectangle rectArmRF = new(armRWidth * ArmFrameY[1], armRHeight * ArmRFrameY[1], armRWidth, armRHeight);
 
             int headHeight = head.Height / 3;
             Rectangle rectHead = new(0, headHeight * HeadFrameY, head.Width, headHeight);

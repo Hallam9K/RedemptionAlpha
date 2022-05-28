@@ -9,6 +9,9 @@ using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.Audio;
 using Redemption.NPCs.Bosses.Cleaver;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -29,7 +32,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = 900;
         }
         public override void AI()
         {
@@ -42,8 +45,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             }
             if (Projectile.localAI[0] == 0)
             {
-                RedeDraw.SpawnRing(Projectile.Center, Color.Red);
-                AdjustMagnitude(ref Projectile.velocity);
+                RedeDraw.SpawnRing(Projectile.Center, Color.IndianRed);
                 Projectile.localAI[0] = 1;
                 Projectile.scale = 0.1f;
             }
@@ -95,6 +97,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
         }
         public override void Kill(int timeLeft)
         {
+            Dust dust2 = Dust.NewDustPerfect(Projectile.Center + new Vector2(4, 4), ModContent.DustType<GlowDust>(), Vector2.Zero, Scale: 3);
+            dust2.noGravity = true;
+            Color dustColor = new(Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B) { A = 0 };
+            dust2.color = dustColor;
+
             for (int i = 0; i < 8; i++)
             {
                 Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain);
@@ -104,6 +111,21 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override Color? GetAlpha(Color lightColor)
         {
             return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;
+        }
+        private float drawTimer;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int height = texture.Height / 4;
+            int y = height * Projectile.frame;
+            Vector2 position = Projectile.Center - Main.screenPosition;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 origin = new(texture.Width / 2f, height / 2f);
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, position, new Rectangle?(rect), RedeColor.RedPulse * 0.3f, Projectile.rotation, origin, Projectile.scale);
+            Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+
+            return false;
         }
         private static void AdjustMagnitude(ref Vector2 vector)
         {
