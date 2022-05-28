@@ -21,6 +21,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -536,6 +537,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WornDagger>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 3, 1, 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 3, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
