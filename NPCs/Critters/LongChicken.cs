@@ -303,7 +303,7 @@ namespace Redemption.NPCs.Critters
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
             RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
-            if (NPC.Sight(player, 140, true, true) && !player.RedemptionPlayerBuff().ChickenForm)
+            if (NPC.Sight(player, 140, true, true) && !player.RedemptionPlayerBuff().ChickenForm && !player.RedemptionPlayerBuff().devilScented)
             {
                 globalNPC.attacker = player;
                 AITimer = 0;
