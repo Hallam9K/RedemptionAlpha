@@ -125,7 +125,9 @@ namespace Redemption.NPCs.Friendly
             if (player.RedemptionPlayerBuff().ChickenForm)
             {
                 chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");
-            }/*
+            }
+            else
+                chat.Add("Chickens very funny! I once dropped a crown on floor and chicken pecked it so hard it exploded!!");/*
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
             {
                 chat.Add("Do I know you?");

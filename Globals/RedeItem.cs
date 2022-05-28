@@ -8,6 +8,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using System.Linq;
+using Redemption.NPCs.Critters;
+using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Accessories.PreHM;
+using ReLogic.Content;
 
 namespace Redemption.Globals
 {
@@ -47,6 +52,32 @@ namespace Redemption.Globals
                 Main.dust[sparkle].velocity.Y = -2;
                 Main.dust[sparkle].noGravity = true;
             }
+            if (item.type == ItemID.GoldCrown || item.type == ItemID.PlatinumCrown)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    Terraria.NPC chicken = Main.npc[i];
+                    if (!chicken.active || chicken.type != ModContent.NPCType<Chicken>())
+                        continue;
+
+                    if (chicken.frame.Y != 488 && chicken.frame.Y != 532)
+                        continue;
+
+                    if (!item.Hitbox.Intersects(chicken.Hitbox))
+                        continue;
+
+                    SoundEngine.PlaySound(SoundID.Item68, item.position);
+                    SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = 0.1f }, item.position);
+                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3", AssetRequestMode.ImmediateLoad).Value);
+                    chicken.active = false;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Item.NewItem(item.GetSource_Loot(), item.getRect(), ModContent.ItemType<CrownOfTheKing>(), item.stack);
+                        item.active = false;
+                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item.whoAmI);
+                    }
+                }
+            }    
         }
 
         readonly int[] bannedArenaItems = new int[]
