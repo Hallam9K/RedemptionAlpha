@@ -8,21 +8,20 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist
 {
-    public class WornDagger : ModItem
+    public class BuddingBoline : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Worn Dagger");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 22;
-            Item.height = 24;
-            Item.rare = ItemRarityID.White;
-            Item.value = Item.sellPrice(silver: 15);
+            Item.width = 28;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(silver: 95);
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -32,20 +31,18 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 7;
-            Item.crit = 12;
-            Item.knockBack = 3;
+            Item.damage = 30;
+            Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.DamageType = ModContent.GetInstance<RitualistClass>();
             Item.noMelee = true;
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<WornDagger_Slash>();
+            Item.shoot = ModContent.ProjectileType<BuddingBoline_Slash>();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            velocity += velocity.RotatedByRandom(0.2f);
             Vector2 Offset = Vector2.Normalize(velocity) * 50f;
             position += Offset;
         }

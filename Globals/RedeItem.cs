@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Accessories.PreHM;
 using ReLogic.Content;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.Globals
 {
@@ -38,6 +39,13 @@ namespace Redemption.Globals
                 player.AddBuff(ModContent.BuffType<HeartInsigniaBuff>(), 180);
 
             return true;
+        }
+        public override void RightClick(Item item, Terraria.Player player)
+        {
+            if (item.type == ItemID.JungleFishingCrate && Main.rand.NextBool(6))
+                player.QuickSpawnItem(player.GetSource_OpenItem(item.type), ModContent.ItemType<BuddingBoline>());
+            if (item.type == ItemID.JungleFishingCrateHard && Main.rand.NextBool(12))
+                player.QuickSpawnItem(player.GetSource_OpenItem(item.type), ModContent.ItemType<BuddingBoline>());
         }
         public override void PostUpdate(Item item)
         {

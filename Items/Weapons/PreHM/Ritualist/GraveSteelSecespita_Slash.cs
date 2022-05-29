@@ -10,11 +10,12 @@ using Redemption.DamageClasses;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist
 {
-    public class WornDagger_Slash : TrueMeleeProjectile
+    public class GraveSteelSecespita_Slash : TrueMeleeProjectile
     {
+        public override string Texture => "Redemption/Items/Weapons/PreHM/Ritualist/WornDagger_Slash";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Worn Dagger");
+            DisplayName.SetDefault("Grave Steel Secespita");
             Main.projFrames[Projectile.type] = 5;
         }
         public override bool ShouldUpdatePosition() => false;

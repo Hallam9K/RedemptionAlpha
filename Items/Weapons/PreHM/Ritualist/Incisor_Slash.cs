@@ -7,21 +7,22 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Terraria.DataStructures;
 using Redemption.DamageClasses;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist
 {
-    public class WornDagger_Slash : TrueMeleeProjectile
+    public class Incisor_Slash : TrueMeleeProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Worn Dagger");
+            DisplayName.SetDefault("Incisor");
             Main.projFrames[Projectile.type] = 5;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
-            Projectile.width = 76;
-            Projectile.height = 16;
+            Projectile.width = 82;
+            Projectile.height = 22;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
@@ -35,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Player player = Main.player[Projectile.owner];
             directionLock = player.direction;
             player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
-            SoundEngine.PlaySound(CustomSounds.Slice3 with { Volume = 0.2f, Pitch = 0.1f }, Projectile.position);
+            SoundEngine.PlaySound(CustomSounds.Slice3 with { Volume = 0.2f }, Projectile.position);
         }
         private float squish;
         public override void AI()
@@ -69,7 +70,6 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -91,7 +91,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 20,
-                Projectile.Center + unit * 30, 16, ref point))
+                Projectile.Center + unit * 34, 22, ref point))
                 return true;
             else
                 return false;
