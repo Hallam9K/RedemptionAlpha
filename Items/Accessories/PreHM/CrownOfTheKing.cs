@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -75,6 +76,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void ResetEffects()
         {
             VanityOn = HideVanity = ForceVanity = false;
+            Player.Hitbox = new Rectangle((int)Player.position.X, (int)Player.position.Y + 10, Player.width, Player.height - 10);
         }
         public override void UpdateVisibleVanityAccessories()
         {
