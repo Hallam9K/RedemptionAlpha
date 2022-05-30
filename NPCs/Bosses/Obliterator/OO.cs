@@ -385,8 +385,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
 
                         ArenaWorld.arenaBoss = "OO";
-                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (200 * 16) + 8);
-                        ArenaWorld.arenaSize = new Vector2(240 * 16, 400 * 16);
+                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (800 * 16) + 8);
+                        ArenaWorld.arenaSize = new Vector2(240 * 16, 1600 * 16);
                         ArenaWorld.arenaMiddle = NPC.Center;
                         ArenaWorld.arenaActive = true;
 
