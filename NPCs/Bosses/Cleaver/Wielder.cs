@@ -131,7 +131,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 writer.Write(ID);
                 writer.Write(AttackNumber);
                 writer.Write(cooldown);
-                writer.Write(barrierSpawn);
             }
         }
 
@@ -143,7 +142,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 ID = reader.ReadInt32();
                 AttackNumber = reader.ReadInt32();
                 cooldown = reader.ReadInt32();
-                barrierSpawn = reader.ReadBoolean();
             }
         }
 
@@ -152,7 +150,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public int cooldown;
         private int AttackNumber;
         private bool Funny;
-        private bool barrierSpawn;
 
         void AttackChoice()
         {
@@ -189,18 +186,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (AIState > ActionState.Intro2)
-            {
-                if (!barrierSpawn)
-                {
-                    for (int i = 0; i < 36; i++)
-                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<WielderShield>(), NPC.whoAmI, i * 10);
-                    barrierSpawn = true;
-                    NPC.netUpdate = true;
-                }
-                if (NPC.Distance(Main.LocalPlayer.Center) > 1500 && AIState != ActionState.Death2)
-                    player.AddBuff(BuffID.Electrified, 10);
-            }
             if (cooldown < 0)
                 cooldown = 0;
             Vector2 SwingPos = new(NPC.Center.X > player.Center.X ? 150 : -150, -20);

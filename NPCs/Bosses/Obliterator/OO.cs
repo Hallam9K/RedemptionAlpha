@@ -191,7 +191,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int repeat;
         public bool BeamAnimation;
 
-        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
@@ -230,6 +230,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Vector2 ShootPos = new(player.Center.X - (300 * NPC.spriteDirection), player.Center.Y - 10);
             Vector2 HandPos = NPC.Center + new Vector2(NPC.spriteDirection == -1 ? -110 : 64, -6);
             Vector2 EyePos = NPC.Center + RedeHelper.PolarVector(60, NPC.rotation - (float)Math.PI / 2) + RedeHelper.PolarVector(50 * NPC.spriteDirection, NPC.rotation);
+            Vector2 BottomPos = new(player.Center.X - (500 * NPC.spriteDirection), player.Center.Y + 400);
 
             switch (AIState)
             {
@@ -748,6 +749,96 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     NPC.velocity *= 0f;
                                     AIState = ActionState.Idle;
                                     AITimer = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Stun Beam
+                        case 6:
+                            AITimer++;
+                            if (AITimer >= 200 && AITimer <= 380)
+                            {
+                                ArmRot[0].SlowRotation(0.4f * -NPC.spriteDirection, MathHelper.Pi / 30);
+                                ArmRot[1].SlowRotation(0.4f * -NPC.spriteDirection, MathHelper.Pi / 30);
+                                ArmFrameY[0] = 2;
+                                ArmFrameY[1] = 2;
+                            }
+                            else
+                            {
+                                ArmFrameY[0] = 2;
+                                ArmFrameY[1] = 1;
+                                ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 20);
+                                ArmRot[1].SlowRotation(0, MathHelper.Pi / 20);
+                            }
+                            if (AITimer < 200)
+                            {
+                                if (AITimer >= 80)
+                                {
+                                    NPC.Shoot(EyePos, ModContent.ProjectileType<OO_StunBeam>(), 100, new Vector2(10 * NPC.spriteDirection, 0), true, CustomSounds.BallFire, NPC.whoAmI);
+                                    NPC.velocity *= 0f;
+                                    AITimer = 200;
+                                    NPC.netUpdate = true;
+                                }
+                                else
+                                {
+                                    NPC.LookAtEntity(player);
+                                    NPC.Move(BottomPos, 30, 10);
+                                }
+                            }
+                            else
+                            {
+                                if (AITimer < 205)
+                                    NPC.velocity.Y -= 2f;
+
+                                if (AITimer > 200 && AITimer % 6 == 0 && AITimer < 360 && player.active && !player.dead && player.HasBuff(ModContent.BuffType<StaticStunDebuff>()))
+                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-80, 80), player.Center.Y + Main.rand.Next(-80, 80)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
+
+                                if (AITimer > 300)
+                                    NPC.velocity *= 0.98f;
+
+                                if (AITimer > 400)
+                                {
+                                    NPC.velocity *= 0f;
+                                    AITimer = 0;
+                                    AIState = ActionState.Idle;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Waving Deathrays
+                        case 7:
+                            AITimer++;
+                            if (AITimer < 200)
+                            {
+                                if (NPC.DistanceSQ(ChargePos) < 200 * 200 || AITimer >= 80)
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(10 * NPC.spriteDirection, 0), true, CustomSounds.Laser1, NPC.whoAmI, i + 3);
+
+                                    NPC.velocity *= 0f;
+                                    AITimer = 200;
+                                }
+                                else
+                                {
+                                    NPC.LookAtEntity(player);
+                                    NPC.MoveToVector2(ChargePos, 30);
+                                }
+                            }
+                            else
+                            {
+                                NPC.MoveToVector2(ChargePos, 6);
+                                if (AITimer > 320)
+                                    NPC.velocity *= 0.98f;
+
+                                if (AITimer > 380)
+                                {
+                                    NPC.velocity *= 0f;
+                                    AITimer = 0;
+                                    AIState = ActionState.Idle;
                                     NPC.netUpdate = true;
                                 }
                             }

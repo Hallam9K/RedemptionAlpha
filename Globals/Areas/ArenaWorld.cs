@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Obliterator;
 using Terraria.ModLoader;
 
@@ -20,10 +21,14 @@ namespace Redemption.Globals
             switch (arenaBoss)
             {
                 case "OO":
-                    if (Terraria.NPC.AnyNPCs(ModContent.NPCType<OO>()))
+                    if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<OO>()))
                     {
+                        DeactivateArena();
+                        return;
                     }
-                    else
+                    break;
+                case "OC":
+                    if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
                     {
                         DeactivateArena();
                         return;
