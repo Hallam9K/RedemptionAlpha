@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         {
             NPC.aiStyle = -1;
             NPC.lifeMax = 181000;
-            NPC.damage = 280;
+            NPC.damage = 200;
             NPC.defense = 80;
             NPC.knockBackResist = 0f;
             NPC.width = 100;
@@ -190,7 +190,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int repeat;
         public bool BeamAnimation;
 
-        public List<int> AttackList = new() { 0, 1, 2, 3, 4 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5 };
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
@@ -227,6 +227,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Vector2 RandPos = new(Main.rand.Next(-500, -300) * NPC.spriteDirection, Main.rand.Next(-400, 200));
             Vector2 ChargePos = new(player.Center.X - (400 * NPC.spriteDirection), player.Center.Y);
             Vector2 ShootPos = new(player.Center.X - (300 * NPC.spriteDirection), player.Center.Y - 10);
+            Vector2 HandPos = NPC.Center + new Vector2(NPC.spriteDirection == -1 ? -110 : 64, -6);
+            Vector2 EyePos = NPC.Center + RedeHelper.PolarVector(60, NPC.rotation - (float)Math.PI / 2) + RedeHelper.PolarVector(50 * NPC.spriteDirection, NPC.rotation);
 
             switch (AIState)
             {
@@ -672,6 +674,81 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 {
                                     ArmRFrameY[0] = 0;
                                     ArmRFrameY[1] = 0;
+                                    AIState = ActionState.Idle;
+                                    AITimer = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            break;
+                        #endregion
+
+                        #region Plasma Shots
+                        case 5:
+                            if (AITimer++ < 300)
+                                NPC.LookAtEntity(player);
+
+                            ArmRot[0].SlowRotation(MathHelper.PiOver2 + RotFlip, MathHelper.Pi / 20);
+                            if (AITimer <= 305)
+                                HandsFrameY[0] = 1;
+                            else
+                                HandsFrameY[0] = 2;
+
+                            if (NPC.life < (int)(NPC.lifeMax * 0.4f))
+                            {
+                                if ((NPC.life < (int)(NPC.lifeMax * 0.2f) ? AITimer % 8 == 0 : AITimer % 10 == 0) && AITimer < 300)
+                                    NPC.Shoot(HandPos, ModContent.ProjectileType<OO_Fingerflash>(), 90, Vector2.Zero, false, CustomSounds.Laser1, NPC.whoAmI);
+                            }
+                            else
+                            {
+                                if (AITimer % 15 == 0 && AITimer < 300)
+                                    NPC.Shoot(HandPos, ModContent.ProjectileType<OO_Fingerflash>(), 90, Vector2.Zero, false, CustomSounds.Laser1, NPC.whoAmI);
+                            }
+                            if (AITimer < 200)
+                            {
+                                if (NPC.DistanceSQ(MoveVector2) < 100 * 100 || AITimer >= 30)
+                                {
+                                    NPC.netUpdate = true;
+                                    AITimer = 200;
+                                }
+                                else
+                                    NPC.Move(MoveVector2, 20f, 10, true);
+                            }
+                            else if (AITimer >= 200 && AITimer < 300)
+                            {
+                                NPC.velocity *= 0.9f;
+                                if (AITimer > 210)
+                                {
+                                    if (repeat >= 4)
+                                    {
+                                        repeat = 0;
+                                        NPC.velocity *= 0f;
+                                        AITimer = 300;
+                                        NPC.netUpdate = true;
+                                    }
+                                    else
+                                    {
+                                        repeat++;
+                                        MoveVector2 = RandPos;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8);
+                                if (AITimer == 305)
+                                {
+                                    Dialogue d1 = new(NPC, null, null, null, Colors.RarityRed, Color.DarkRed, voice, null, "Eye beam!", 2, 70, 30, true);
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.AddDialogue(d1);
+
+                                    for (int i = 0; i < 3; i++)
+                                        NPC.Shoot(EyePos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(1 * NPC.spriteDirection, 0), true, CustomSounds.Laser1, NPC.whoAmI, i);
+                                }
+                                if (AITimer > 420)
+                                {
+                                    NPC.velocity *= 0f;
                                     AIState = ActionState.Idle;
                                     AITimer = 0;
                                     NPC.netUpdate = true;

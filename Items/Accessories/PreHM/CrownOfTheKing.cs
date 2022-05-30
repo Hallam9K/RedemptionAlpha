@@ -75,8 +75,11 @@ namespace Redemption.Items.Accessories.PreHM
 
         public override void ResetEffects()
         {
+            //if ((VanityOn || ForceVanity) && !HideVanity)
+            //{
+                //Player.Hitbox = new Rectangle((int)Player.position.X, (int)Player.position.Y + 10, Player.width, Player.height - 10);
+            //}
             VanityOn = HideVanity = ForceVanity = false;
-            Player.Hitbox = new Rectangle((int)Player.position.X, (int)Player.position.Y + 10, Player.width, Player.height - 10);
         }
         public override void UpdateVisibleVanityAccessories()
         {
