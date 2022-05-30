@@ -61,7 +61,7 @@ namespace Redemption.UI
 				Dialogue dialogue = Dialogue[i].Get();
 
 				string[] drawnText = FormatText(dialogue.displayingText, dialogue.font, out int width, out int height);
-				Vector2 pos = dialogue.chain.modifier + dialogue.modifier + (dialogue.npc != null ? dialogue.npc.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.npc.height) : dialogue.chain.anchor != null ? dialogue.chain.anchor.VisualPosition : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f));
+				Vector2 pos = (dialogue.chain == null ? Vector2.Zero : dialogue.chain.modifier) + dialogue.modifier + (dialogue.npc != null ? dialogue.npc.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.npc.height) : dialogue.chain.anchor != null ? dialogue.chain.anchor.VisualPosition : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f));
 
 				spriteBatch.End();
 				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);

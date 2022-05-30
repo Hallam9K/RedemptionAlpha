@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 {
                     (Main.npc[npc.whoAmI].ModNPC as OO).ArmRot[0] = MathHelper.PiOver2 + (0.7f * -npc.spriteDirection) + (npc.spriteDirection == -1 ? 0 : MathHelper.Pi);
 
-                    Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<OO_Laser>(), 90 * 3, RedeHelper.PolarVector(12, (Main.player[npc.target].Center - npc.Center).ToRotation()), true, CustomSounds.Laser1);
+                    Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<OO_Laser>(), 150, RedeHelper.PolarVector(12, (Main.player[npc.target].Center - npc.Center).ToRotation()), true, CustomSounds.Laser1);
                 }
                 if (++Projectile.frame >= 9)
                     Projectile.Kill();
