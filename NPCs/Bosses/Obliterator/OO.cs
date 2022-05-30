@@ -221,6 +221,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 
             SoundStyle voice = CustomSounds.Voice5;
+            if (RedeBossDowned.downedVlitch3)
+                voice = CustomSounds.Voice5 with { Pitch = -0.5f };
+
             float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
             Vector2 DefaultPos = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 80);
             Vector2 DefaultPos2 = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 40);
@@ -247,7 +250,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (NPC.DistanceSQ(DefaultPos) < 100 * 100 || AITimer > 200)
                             {
                                 AITimer = 0;
-                                if (RedeBossDowned.oblitDeath == 2)
+                                if (RedeBossDowned.oblitDeath == 2 || RedeBossDowned.downedVlitch3)
                                 {
                                     AIState = ActionState.Begin;
                                     TimerRand = 0;
@@ -387,7 +390,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         ArmFrameY[0] = 1;
                         HandsFrameY[0] = 1;
 
-                        Dialogue d1 = new(NPC, "Ready for obliteration?", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 176
+                        string s = "Ready for obliteration?";
+                        if (RedeBossDowned.downedVlitch3)
+                            s = "PREPARE FOR OBLITERATION.";
+
+                        Dialogue d1 = new(NPC, s, Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 176
+
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(d1);
                     }
@@ -737,9 +745,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8);
                                 if (AITimer == 305)
                                 {
-                                    Dialogue d1 = new(NPC, "Eye beam!", Colors.RarityRed, Color.DarkRed, voice, 2, 70, 30, true, modifier: modifier);
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    if (!RedeBossDowned.downedVlitch3)
+                                    {
+                                        Dialogue d1 = new(NPC, "Eye beam!", Colors.RarityRed, Color.DarkRed, voice, 2, 70, 30, true, modifier: modifier);
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d1);
+                                    }
 
                                     for (int i = 0; i < 3; i++)
                                         NPC.Shoot(EyePos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(1 * NPC.spriteDirection, 0), true, CustomSounds.Laser1, NPC.whoAmI, i);
@@ -849,7 +860,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 case ActionState.Overheat:
                     if (TimerRand == 1)
                     {
-                        if (AITimer >= 878 && AITimer <= 1206)
+                        if (AITimer >= 878 && AITimer <= 1206 && !RedeBossDowned.downedVlitch3)
                         {
                             ArmRot[0].SlowRotation(MathHelper.PiOver2 + ((1f + Main.rand.NextFloat(-0.05f, 0.05f)) * -NPC.spriteDirection) + RotFlip, MathHelper.Pi / 30);
                             ArmRot[1].SlowRotation(MathHelper.PiOver2 + ((1f + Main.rand.NextFloat(-0.05f, 0.05f)) * -NPC.spriteDirection) + RotFlip, MathHelper.Pi / 30);
@@ -872,7 +883,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity.X = 0;
                     Main.dust[dust].velocity.Y = -5;
-                    if ((TimerRand == 1 && AITimer >= 878) || TimerRand > 1)
+                    if ((TimerRand == 1 && AITimer >= (RedeBossDowned.downedVlitch3 ? 196 : 878)) || TimerRand > 1)
                     {
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
                         Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
@@ -918,25 +929,36 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
                                 if (AITimer == 60)
                                 {
-                                    DialogueChain chain = new();
-                                    chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 136
-                                         .Add(new(NPC, "Overload?[30] Damn right I'm overloading!", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 204
-                                         .Add(new(NPC, "My circuits are burning with energy![10] This is truly exhilarating!", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 238
-                                         .Add(new(NPC, "OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 218
-                                         .Add(new(NPC, "Hahaha.[30] HAHAHAHAHAHAHA!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.1f, PitchVariance = 0.1f }, 2, 100, 0, false, modifier: modifier)) // 156
-                                         .Add(new(NPC, "THE POWER OF THE SUN IN MY VERY CORE!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 2, 100, 30, true, modifier: modifier)); // 204
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(chain);
+                                    if (!RedeBossDowned.downedVlitch3)
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 136
+                                             .Add(new(NPC, "Overload?[30] Damn right I'm overloading!", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 204
+                                             .Add(new(NPC, "My circuits are burning with energy![10] This is truly exhilarating!", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 238
+                                             .Add(new(NPC, "OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 218
+                                             .Add(new(NPC, "Hahaha.[30] HAHAHAHAHAHAHA!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.1f, PitchVariance = 0.1f }, 2, 100, 0, false, modifier: modifier)) // 156
+                                             .Add(new(NPC, "THE POWER OF THE SUN IN MY VERY CORE!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 2, 100, 30, true, modifier: modifier)); // 204
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
+                                    else
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 136
+                                             .Add(new(NPC, "OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)); // 218
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
                                 }
-                                if (AITimer == 638)
+                                if (AITimer == (RedeBossDowned.downedVlitch3 ? 196 : 638))
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
                                 }
-                                if (AITimer == 878)
+                                if (AITimer == 878 && !RedeBossDowned.downedVlitch3)
                                     HeadFrameY = 2;
 
-                                if (AITimer > 1238)
+                                if (AITimer > (RedeBossDowned.downedVlitch3 ? 414 : 1238))
                                 {
                                     HeadFrameY = 0;
                                     AITimer = 0;
@@ -1066,7 +1088,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             else
                             {
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8);
-                                if (AITimer == 305)
+                                if (AITimer == 305 && !RedeBossDowned.downedVlitch3)
                                 {
                                     Dialogue d1 = new(NPC, "EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 1, 70, 30, true, modifier: modifier);
                                     TextBubbleUI.Visible = true;
@@ -1296,13 +1318,23 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
 
-                                    DialogueChain chain = new();
-                                    chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 228
-                                         .Add(new(NPC, "Is it getting hot in here[10] or is it just m-", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, modifier: modifier)); // 124
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(chain);
+                                    if (!RedeBossDowned.downedVlitch3)
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 228
+                                             .Add(new(NPC, "Is it getting hot in here[10] or is it just m-", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, modifier: modifier)); // 124
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
+                                    else
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)); // 228
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
                                 }
-                                if (AITimer > 804)
+                                if (AITimer > (RedeBossDowned.downedVlitch3 ? 678 : 804))
                                 {
                                     NPC.velocity *= 0f;
                                     AITimer = 0;
