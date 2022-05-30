@@ -49,7 +49,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 180;
+            Projectile.timeLeft = 140;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

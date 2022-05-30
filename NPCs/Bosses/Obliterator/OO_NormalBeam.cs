@@ -102,7 +102,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 float velRot = BaseUtility.RotationTo(Projectile.Center, Projectile.Center + originalVelocity);
                 Projectile.velocity = BaseUtility.RotateVector(default, new Vector2(Projectile.velocity.Length(), 0f), velRot + (vectorOffset * 0.5f));
             }
-            int start = Projectile.ai[1] > 2 ? 50 : 30;
+            int start = Projectile.ai[1] > 2 || Projectile.ai[1] == -1 ? 50 : 30;
             if (AITimer == start)
             {
                 SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);

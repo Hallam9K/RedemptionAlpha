@@ -1041,6 +1041,11 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (AIState is ActionState.Death)
             {
+                if (TimerRand < 3 && AITimer < 1)
+                {
+                    NPC.life = 1;
+                    return false;
+                }
                 if (!Spared)
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("", 1, 1, 0, "", 0, null, null, null, null);
                 return true;
