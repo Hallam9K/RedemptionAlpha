@@ -47,6 +47,157 @@ namespace Redemption.Globals
             if (item.type == ItemID.JungleFishingCrateHard && Main.rand.NextBool(12))
                 player.QuickSpawnItem(player.GetSource_OpenItem(item.type), ModContent.ItemType<BuddingBoline>());
         }
+
+        #region Vanilla Set Bonuses
+        public static readonly string copperSet = "MoR:CopperSet";
+        public static readonly string tinSet = "MoR:TinSet";
+        public static readonly string cactusSet = "MoR:CactusSet";
+        public static readonly string ironSet = "MoR:IronSet";
+        public static readonly string leadSet = "MoR:LeadSet";
+        public static readonly string silverSet = "MoR:SilverSet";
+        public static readonly string tungstenSet = "MoR:TungstenSet";
+        public static readonly string goldSet = "MoR:GoldSet";
+        public static readonly string platinumSet = "MoR:PlatinumSet";
+        public static readonly string fossilSet = "MoR:FossilSet";
+        public static readonly string jungleSet = "MoR:JungleSet";
+        public static readonly string shadowSet = "MoR:ShadowSet";
+        public static readonly string crimsonSet = "MoR:CrimsonSet";
+        public static readonly string moltenSet = "MoR:MoltenSet";
+        public static readonly string cobaltSet = "MoR:CobaltSet";
+        public static readonly string palladiumSet = "MoR:PalladiumSet";
+        public static readonly string mythrilSet = "MoR:MythrilSet";
+        public static readonly string orichalcumSet = "MoR:OrichalcumSet";
+        public static readonly string adamantiteSet = "MoR:AdamantiteSet";
+        public static readonly string titaniumSet = "MoR:TitaniumSet";
+        public static readonly string frostSet = "MoR:FrostSet";
+        public static readonly string forbiddenSet = "MoR:ForbiddenSet";
+        public static readonly string hallowedSet = "MoR:HallowedSet";
+        public static readonly string turtleSet = "MoR:TurtleSet";
+        public static readonly string beetleSet = "MoR:BeetleSet";
+        public static readonly string spectreSet = "MoR:SpectreSet";
+        public override string IsArmorSet(Item head, Item body, Item legs)
+        {
+            if (head.type == ItemID.CopperHelmet && body.type == ItemID.CopperChainmail && legs.type == ItemID.CopperGreaves)
+                return copperSet;
+            if (head.type == ItemID.TinHelmet && body.type == ItemID.TinChainmail && legs.type == ItemID.TinGreaves)
+                return tinSet;
+            if (head.type == ItemID.CactusHelmet && body.type == ItemID.CactusBreastplate && legs.type == ItemID.CactusLeggings)
+                return cactusSet;
+            if ((head.type == ItemID.IronHelmet || head.type == ItemID.AncientIronHelmet) && body.type == ItemID.IronChainmail && legs.type == ItemID.IronGreaves)
+                return ironSet;
+            if (head.type == ItemID.LeadHelmet && body.type == ItemID.LeadChainmail && legs.type == ItemID.LeadGreaves)
+                return leadSet;
+            if (head.type == ItemID.SilverHelmet && body.type == ItemID.SilverChainmail && legs.type == ItemID.SilverGreaves)
+                return silverSet;
+            if (head.type == ItemID.TungstenHelmet && body.type == ItemID.TungstenChainmail && legs.type == ItemID.TungstenGreaves)
+                return tungstenSet;
+            if ((head.type == ItemID.GoldHelmet || head.type == ItemID.AncientGoldHelmet) && body.type == ItemID.GoldChainmail && legs.type == ItemID.GoldGreaves)
+                return goldSet;
+            if (head.type == ItemID.PlatinumHelmet && body.type == ItemID.PlatinumChainmail && legs.type == ItemID.PlatinumGreaves)
+                return platinumSet;
+            if (head.type == ItemID.FossilHelm && body.type == ItemID.FossilShirt && legs.type == ItemID.FossilPants)
+                return fossilSet;
+            if (head.type == ItemID.JungleHat && body.type == ItemID.JungleShirt && legs.type == ItemID.JunglePants)
+                return jungleSet;
+            if ((head.type == ItemID.ShadowHelmet && body.type == ItemID.ShadowScalemail && legs.type == ItemID.ShadowGreaves) &&
+                (head.type == ItemID.AncientShadowHelmet && body.type == ItemID.AncientShadowScalemail && legs.type == ItemID.AncientShadowGreaves))
+                return shadowSet;
+            if (head.type == ItemID.CrimsonHelmet && body.type == ItemID.CrimsonScalemail && legs.type == ItemID.CrimsonGreaves)
+                return crimsonSet;
+            if (head.type == ItemID.MoltenHelmet && body.type == ItemID.MoltenBreastplate && legs.type == ItemID.MoltenGreaves)
+                return moltenSet;
+            if ((head.type == ItemID.CobaltHelmet || head.type == ItemID.CobaltMask || head.type == ItemID.CobaltHat) && body.type == ItemID.CobaltBreastplate && legs.type == ItemID.CobaltLeggings)
+                return cobaltSet;
+            if ((head.type == ItemID.PalladiumHelmet || head.type == ItemID.PalladiumHeadgear || head.type == ItemID.PalladiumMask) && body.type == ItemID.PalladiumBreastplate && legs.type == ItemID.PalladiumLeggings)
+                return palladiumSet;
+            if ((head.type == ItemID.MythrilHelmet || head.type == ItemID.MythrilHat || head.type == ItemID.MythrilHood) && body.type == ItemID.MythrilChainmail && legs.type == ItemID.MythrilGreaves)
+                return mythrilSet;
+            if ((head.type == ItemID.OrichalcumHelmet || head.type == ItemID.OrichalcumHeadgear || head.type == ItemID.OrichalcumMask) && body.type == ItemID.OrichalcumBreastplate && legs.type == ItemID.OrichalcumLeggings)
+                return orichalcumSet;
+            if ((head.type == ItemID.AdamantiteHelmet || head.type == ItemID.AdamantiteHeadgear || head.type == ItemID.AdamantiteMask) && body.type == ItemID.AdamantiteBreastplate && legs.type == ItemID.AdamantiteLeggings)
+                return adamantiteSet;
+            if ((head.type == ItemID.TitaniumHelmet || head.type == ItemID.TitaniumHeadgear || head.type == ItemID.TitaniumMask) && body.type == ItemID.TitaniumBreastplate && legs.type == ItemID.TitaniumLeggings)
+                return titaniumSet;
+            if (head.type == ItemID.FrostHelmet && body.type == ItemID.FrostBreastplate && legs.type == ItemID.FrostLeggings)
+                return frostSet;
+            if (head.type == ItemID.AncientBattleArmorHat && body.type == ItemID.AncientBattleArmorShirt && legs.type == ItemID.AncientBattleArmorPants)
+                return forbiddenSet;
+            if (((head.type == ItemID.HallowedHeadgear || head.type == ItemID.HallowedHelmet || head.type == ItemID.HallowedHood || head.type == ItemID.HallowedMask) && body.type == ItemID.HallowedPlateMail && legs.type == ItemID.HallowedGreaves) || ((head.type == ItemID.AncientHallowedHeadgear || head.type == ItemID.AncientHallowedHelmet || head.type == ItemID.AncientHallowedHood || head.type == ItemID.AncientHallowedMask) && body.type == ItemID.AncientHallowedPlateMail && legs.type == ItemID.AncientHallowedGreaves))
+                return hallowedSet;
+            if (head.type == ItemID.TurtleHelmet && body.type == ItemID.TurtleScaleMail && legs.type == ItemID.TurtleLeggings)
+                return turtleSet;
+            if (head.type == ItemID.BeetleHelmet && body.type == ItemID.BeetleScaleMail && legs.type == ItemID.BeetleLeggings)
+                return beetleSet;
+            if ((head.type == ItemID.SpectreHood || head.type == ItemID.SpectreMask) && body.type == ItemID.SpectreRobe && legs.type == ItemID.SpectrePants)
+                return spectreSet;
+
+            return base.IsArmorSet(head, body, legs);
+        }
+        public override void UpdateArmorSet(Terraria.Player player, string set)
+        {
+            if (set == copperSet || set == tinSet || set == ironSet || set == leadSet)
+            {
+                player.setBonus += "\n20% increased Thunder elemental resistance";
+                player.RedemptionPlayerBuff().ElementalResistance[6] += 0.2f;
+            }
+            if (set == silverSet || set == tungstenSet || set == titaniumSet)
+            {
+                player.setBonus += "\n20% increased Thunder elemental damage";
+                player.RedemptionPlayerBuff().ElementalDamage[6] += 0.2f;
+            }
+            if (set == cactusSet || set == jungleSet || set == orichalcumSet || set == beetleSet || set == turtleSet)
+            {
+                player.setBonus += "\n20% increased Nature elemental resistance";
+                player.RedemptionPlayerBuff().ElementalResistance[9] += 0.2f;
+            }
+            if (set == goldSet || set == mythrilSet || set == spectreSet)
+            {
+                player.setBonus += "\n20% increased Arcane elemental resistance";
+                player.RedemptionPlayerBuff().ElementalResistance[0] += 0.2f;
+            }
+            if (set == platinumSet)
+            {
+                player.setBonus += "\n20% increased Arcane elemental damage";
+                player.RedemptionPlayerBuff().ElementalDamage[0] += 0.2f;
+            }
+            if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet)
+            {
+                player.setBonus += "\n20% increased Earth elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[4] += 0.2f;
+            }
+            if (set == shadowSet)
+            {
+                player.setBonus += "\n20% increased Shadow elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[8] += 0.2f;
+            }
+            if (set == crimsonSet)
+            {
+                player.setBonus += "\n20% increased Blood elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[11] += 0.2f;
+            }
+            if (set == moltenSet)
+            {
+                player.setBonus += "\n20% increased Fire elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[1] += 0.2f;
+            }
+            if (set == cobaltSet)
+            {
+                player.setBonus += "\n20% increased Water elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[2] += 0.2f;
+            }
+            if (set == palladiumSet || set == hallowedSet)
+            {
+                player.setBonus += "\n20% increased Holy elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[7] += 0.2f;
+            }
+            if (set == frostSet)
+            {
+                player.setBonus += "\n20% increased Ice elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[3] += 0.2f;
+            }
+        }
+        #endregion
+
         public override void PostUpdate(Item item)
         {
             if (item.type == ItemID.Heart && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)

@@ -70,7 +70,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                CustomTexturePath = "Redemption/Textures/Bestiary/OmegaObliterator_Bestiary"
+            };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
