@@ -462,7 +462,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 NPC.velocity *= 0.96f;
                                 if (AITimer++ == 2 || AITimer == 100)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                     NPC.velocity = -NPC.DirectionTo(player.Center) * 7f;
+                                }
                                 if (AITimer == 40 || AITimer == 140)
                                     Dash(60, true);
                                 if (AITimer > 220)
@@ -514,7 +517,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 NPC.velocity *= 0.96f;
                                 if (AITimer == 205)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                     NPC.velocity.X = player.Center.X > NPC.Center.X ? -8 : 8;
+                                }
 
                                 if (AITimer == 235)
                                     Dash(60, false);
@@ -1003,7 +1009,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 NPC.velocity *= 0.96f;
                                 if (AITimer == 205)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                     NPC.velocity.X = player.Center.X > NPC.Center.X ? -8 : 8;
+                                }
 
                                 if (AITimer == 225)
                                     Dash(60, false);
@@ -1226,16 +1235,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 NPC.velocity *= 0.96f;
                                 AITimer++;
-                                if (AITimer == 2)
+                                if (AITimer == 2 || AITimer == 80)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                     NPC.velocity = -NPC.DirectionTo(player.Center) * 7f;
+                                }
 
-                                if (AITimer == 30)
-                                    Dash(70, true);
-
-                                if (AITimer == 80)
-                                    NPC.velocity = -NPC.DirectionTo(player.Center) * 7f;
-
-                                if (AITimer == 110)
+                                if (AITimer == 30 || AITimer == 110)
                                     Dash(70, true);
 
                                 if (AITimer > 170)
