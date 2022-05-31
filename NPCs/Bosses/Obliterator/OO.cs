@@ -228,6 +228,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 voice = CustomSounds.Voice5 with { Pitch = -0.5f };
 
             float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
+            int SpeedBoost = NPC.DistanceSQ(player.Center) >= 900 * 900 ? 10 : 0;
             Vector2 DefaultPos = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 80);
             Vector2 DefaultPos2 = new(player.Center.X - (240 * NPC.spriteDirection), player.Center.Y - 40);
             Vector2 LaserPos = new(NPC.position.X + (NPC.spriteDirection == -1 ? 46 : 16), NPC.position.Y + 70);
@@ -381,12 +382,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     if (AITimer == 60)
                     {
                         NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
-
                         NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (120 * 16) - 10), ModContent.ProjectileType<OOBarrierH>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (120 * 16) + 26), ModContent.ProjectileType<OOBarrierH>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
 
                         ArenaWorld.arenaBoss = "OO";
-                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (800 * 16) + 8);
-                        ArenaWorld.arenaSize = new Vector2(240 * 16, 1600 * 16);
+                        ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
+                        ArenaWorld.arenaSize = new Vector2(240 * 16, 240 * 16);
                         ArenaWorld.arenaMiddle = NPC.Center;
                         ArenaWorld.arenaActive = true;
 
@@ -470,7 +472,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     NPC.velocity = -NPC.DirectionTo(player.Center) * 7f;
                                 }
                                 if (AITimer == 40 || AITimer == 140)
-                                    Dash(60, true);
+                                    Dash(60 + SpeedBoost, true);
                                 if (AITimer > 220)
                                 {
                                     NPC.velocity *= 0f;
@@ -526,7 +528,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
 
                                 if (AITimer == 235)
-                                    Dash(60, false);
+                                    Dash(60 + SpeedBoost, false);
 
                                 if (AITimer > 235 && AITimer % 3 == 0 && NPC.velocity.Length() > 12)
                                 {
@@ -561,7 +563,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     }
                                 }
                                 else
-                                    NPC.Move(ShootPos, 16, 10);
+                                    NPC.Move(ShootPos, 16 + SpeedBoost, 10);
                             }
                             else
                             {
@@ -573,11 +575,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         for (int i = 0; i < 3; i++)
                                         {
                                             int rot = 25 * i;
-                                            NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, RedeHelper.PolarVector(i == 1 ? 25 : 20, (NPC.spriteDirection == -1 ? MathHelper.Pi : 0) + MathHelper.ToRadians(rot - 25)), true, CustomSounds.BallCreate);
+                                            NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, RedeHelper.PolarVector((i == 1 ? 25 : 20) + SpeedBoost, (NPC.spriteDirection == -1 ? MathHelper.Pi : 0) + MathHelper.ToRadians(rot - 25)), true, CustomSounds.BallCreate);
                                         }
                                     }
                                     else
-                                        NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2(16 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+                                        NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2((16 + SpeedBoost) * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
                                 }
 
                                 if (AITimer > 230)
@@ -623,14 +625,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     }
                                 }
                                 else
-                                    NPC.Move(ShootPos, 19, 10);
+                                    NPC.Move(ShootPos, 19 + SpeedBoost, 10);
                             }
                             else
                             {
                                 NPC.velocity.Y *= 0.98f;
-                                NPC.velocity.X *= 0.5f;
+                                NPC.velocity.X *= 0.8f;
                                 if (AITimer > 200 && AITimer % 7 == 0)
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2(12 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2((12 + SpeedBoost) * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
 
                                 if (AITimer > 270)
                                 {
@@ -670,20 +672,20 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     NPC.netUpdate = true;
                                 }
                                 else
-                                    NPC.Move(ShootPos, 11, 10);
+                                    NPC.Move(ShootPos, 18 + SpeedBoost, 10);
                             }
                             else
                             {
                                 NPC.velocity *= 0.96f;
                                 if (NPC.life < (int)(NPC.lifeMax * 0.4f))
                                 {
-                                    if (AITimer > 200 && AITimer % 4 == 0 && AITimer < 320)
-                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
+                                    if (AITimer > 200 && AITimer % (NPC.DistanceSQ(player.Center) >= 900 * 900 ? 2 : 4) == 0 && AITimer < 320)
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)) + (player.velocity * 20), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                                 }
                                 else
                                 {
-                                    if (AITimer > 200 && AITimer % 8 == 0 && AITimer < 320)
-                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
+                                    if (AITimer > 200 && AITimer % (NPC.DistanceSQ(player.Center) >= 900 * 900 ? 4 : 6) == 0 && AITimer < 320)
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)) + (player.velocity * 20), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                                 }
                                 if (AITimer > 380)
                                 {
@@ -726,7 +728,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     AITimer = 200;
                                 }
                                 else
-                                    NPC.Move(MoveVector2, 20f, 10, true);
+                                    NPC.Move(MoveVector2, 20 + SpeedBoost, 10, true);
                             }
                             else if (AITimer >= 200 && AITimer < 300)
                             {
@@ -751,7 +753,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             else
                             {
-                                NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8);
+                                NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
                                 if (AITimer == 305)
                                 {
                                     if (!RedeBossDowned.downedVlitch3)
@@ -804,7 +806,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 else
                                 {
                                     NPC.LookAtEntity(player);
-                                    NPC.Move(BottomPos, 30, 10);
+                                    NPC.Move(BottomPos, 30 + SpeedBoost, 10);
                                 }
                             }
                             else
@@ -845,12 +847,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 else
                                 {
                                     NPC.LookAtEntity(player);
-                                    NPC.MoveToVector2(ChargePos, 30);
+                                    NPC.MoveToVector2(ChargePos, 30 + SpeedBoost);
                                 }
                             }
                             else
                             {
-                                NPC.MoveToVector2(ChargePos, 6);
+                                NPC.MoveToVector2(ChargePos, 6 + SpeedBoost);
                                 if (AITimer > 320)
                                     NPC.velocity *= 0.98f;
 
@@ -1006,7 +1008,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     NPC.netUpdate = true;
                                 }
                                 else
-                                    NPC.Move(ChargePos, 40, 10);
+                                    NPC.Move(ChargePos, 40 + SpeedBoost, 10);
                             }
                             else
                             {
@@ -1018,7 +1020,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
 
                                 if (AITimer == 225)
-                                    Dash(60, false);
+                                    Dash(60 + SpeedBoost, false);
 
                                 if (AITimer > 225 && AITimer % 3 == 0 && NPC.velocity.Length() > 12)
                                 {
@@ -1074,7 +1076,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     NPC.netUpdate = true;
                                 }
                                 else
-                                    NPC.Move(MoveVector2, 50, 10, true);
+                                    NPC.Move(MoveVector2, 50 + SpeedBoost, 10, true);
                             }
                             else if (AITimer >= 200 && AITimer < 300)
                             {
@@ -1099,7 +1101,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             else
                             {
-                                NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8);
+                                NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
                                 if (AITimer == 305 && !RedeBossDowned.downedVlitch3)
                                 {
                                     Dialogue d1 = new(NPC, "EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 1, 70, 30, true, modifier: modifier);
@@ -1144,13 +1146,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     NPC.netUpdate = true;
                                 }
                                 else
-                                    NPC.Move(ShootPos, 25, 10);
+                                    NPC.Move(ShootPos, 25 + SpeedBoost, 10);
                             }
                             else
                             {
                                 NPC.velocity *= 0.96f;
-                                if (AITimer > 200 && AITimer % 4 == 0 && AITimer < 320)
-                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
+                                if (AITimer > 200 && AITimer % 2 == 0 && AITimer < 320)
+                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-900, 900), player.Center.Y + Main.rand.Next(-900, 900)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
 
                                 if (AITimer > 380)
                                 {
@@ -1186,14 +1188,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     }
                                 }
                                 else
-                                    NPC.Move(ShootPos, 24, 10);
+                                    NPC.Move(ShootPos, 24 + SpeedBoost, 10);
                             }
                             else
                             {
                                 NPC.velocity.Y *= 0.98f;
                                 NPC.velocity.X *= 0.5f;
                                 if (AITimer > 200 && AITimer % 5 == 0)
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2(12 * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
+                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2((12 + SpeedBoost) * NPC.spriteDirection, 0), true, CustomSounds.BallCreate);
 
                                 if (AITimer > 240)
                                 {
@@ -1245,7 +1247,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
 
                                 if (AITimer == 30 || AITimer == 110)
-                                    Dash(70, true);
+                                    Dash(70 + SpeedBoost, true);
 
                                 if (AITimer > 170)
                                 {
@@ -1287,7 +1289,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
                                 else
                                 {
-                                    NPC.MoveToVector2(ShootPos, 34f);
+                                    NPC.MoveToVector2(ShootPos, 34 + SpeedBoost);
                                 }
                             }
                             else

@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (!npc.active || npc.type != ModContent.NPCType<OO>())
                 Projectile.Kill();
             Projectile.localAI[1]++;
-            if (Projectile.localAI[1] == 30 && Main.myPlayer == Projectile.owner)
+            if (Projectile.localAI[1] == 20 && Main.myPlayer == Projectile.owner)
             {
                 float[] armRot = (Main.npc[npc.whoAmI].ModNPC as OO).ArmRot;
                 int[] rocketFrame = (Main.npc[npc.whoAmI].ModNPC as OO).ArmRFrameY;

@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 900;
+            Projectile.timeLeft = 1600;
         }
         public override void AI()
         {

@@ -84,7 +84,7 @@ namespace Redemption.Globals
                         Vector2 newPos = Player.Center;
                         newPos.Y = ArenaWorld.arenaTopLeft.Y;
                         Player.Center = newPos;
-                        Player.velocity.Y = 0f;
+                        Player.velocity.Y = 0.1f;
                     }
                 }
                 else if (ArenaWorld.soloPlayer != -1 && ArenaWorld.soloPlayer != Player.whoAmI)

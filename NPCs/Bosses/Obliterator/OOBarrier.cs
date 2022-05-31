@@ -87,4 +87,80 @@ namespace Redemption.NPCs.Bosses.Obliterator
             return false;
         }
     }
+    public class OOBarrierH : ModProjectile
+    {
+        public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OOBarrier";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Barrier");
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = -1;
+            Projectile.friendly = false;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            Projectile.hide = true;
+        }
+        public override bool ShouldUpdatePosition() => false;
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCs.Add(index);
+        }
+        private Vector2 originPos;
+        public override void OnSpawn(IEntitySource source)
+        {
+            originPos = Projectile.Center;
+        }
+        public override void AI()
+        {
+            if (ArenaWorld.arenaActive)
+                Projectile.timeLeft = 2;
+            else
+                Projectile.Kill();
+
+            Player player = Main.LocalPlayer;
+            float distY = player.Center.Y - Projectile.Center.Y;
+            distY = Math.Abs(distY);
+            if (distY > 500) distY = 500;
+            visibility = 0.5f * (500 - distY) / 500;
+
+            if (Projectile.ai[1] > 0)
+            {
+                float newY = ArenaWorld.arenaTopLeft.Y - 16;
+
+                Projectile.Center = new Vector2(player.Center.X, newY);
+            }
+            else
+            {
+                float newY = ArenaWorld.arenaTopLeft.Y + ArenaWorld.arenaSize.Y + 16;
+
+                Projectile.Center = new Vector2(player.Center.X, newY);
+            }
+        }
+        float visibility = 0f;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int projHeight = texture.Height;
+            var effects = Projectile.ai[1] >= 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+
+            Vector2 drawPos = originPos;
+            drawPos.X += projHeight * 200;
+            Vector2 origin = new(texture.Width - 8, texture.Height - 8);
+            if (Projectile.ai[1] >= 0)
+                origin.Y = 8;
+
+            for (int i = 0; i < 400; i++)
+            {
+                Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(RedeColor.RedPulse) * visibility, MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
+                drawPos.X -= projHeight;
+            }
+            return false;
+        }
+    }
 }
