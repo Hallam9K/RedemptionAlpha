@@ -436,7 +436,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             if (RedeBossDowned.downedSlayer)
                             {
-                                switch (Main.rand.Next(4))
+                                switch (Main.rand.Next(5))
                                 {
                                     case 0:
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("What? Do you want to fight me again?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
@@ -449,6 +449,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         break;
                                     case 3:
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Really, a rematch? Fine.", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 4:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Why don't you go preemptively die and save me the effort.", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                                         break;
                                 }
                             }
