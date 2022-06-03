@@ -20,7 +20,6 @@ namespace Redemption.NPCs.Friendly
             {
                 Hide = true
             };
-
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()

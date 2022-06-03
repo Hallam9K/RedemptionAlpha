@@ -13,6 +13,7 @@ using Redemption.Base;
 using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -120,15 +121,27 @@ namespace Redemption.NPCs.Friendly
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
             {
                 chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?");
-            }/*
-            if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+            }
+            if (player.RedemptionPlayerBuff().ChickenForm)
             {
                 chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");
             }
+            else
+                chat.Add("Chickens very funny! I fed chicken grain but I threw a crown on floor instead, but chicken pecked it anyway! ... And then it exploded!!");/*
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
             {
                 chat.Add("Do I know you?");
             }*/
+            chat.Add("My shoes aren't muddy! Where is all the mud!?");
+            chat.Add("Trees here are funny colours! Where are yellow leaves! They all green! ... Green is good colour too.", 0.6);
+            chat.Add("What's your name? Is it Garry? I bet it's Garry! Garry the Gentle is your name now!", 0.4);
+            chat.Add("This island is not MY island! Where are my people!?", 0.4);
+            chat.Add("They're coming, the red is coming! Don't stay! ... Oh hewwo!", 0.2);
+            chat.Add("Me like emeralds, they green! Rubies me hate! Too red!", 0.2);
+            chat.Add("What is beyond portal? Let's find out Johnny! ... Wait that isn't right name...", 0.2);
+            chat.Add("Me sowwy! Me go with yellow man!", 0.2);
+            if (RedeWorld.alignment < 0)
+                chat.Add("Your ambitions are futile and will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.", 0.05);
             chat.Add("Who you? You human?");
             chat.Add("Me find shiny stones!");
             chat.Add("You look stupid! Haha!");
@@ -164,6 +177,8 @@ namespace Redemption.NPCs.Friendly
             {
                 shop.item[nextSlot++].SetDefaults(ItemID.Sapphire);
                 shop.item[nextSlot++].SetDefaults(ItemID.Emerald);
+                shop.item[nextSlot].SetDefaults(ItemID.Geode);
+                shop.item[nextSlot++].shopCustomPrice = Item.buyPrice(0, NPC.downedBoss3 ? 1 : 2, 0, 0);
             }
             if (NPC.downedBoss3)
             {

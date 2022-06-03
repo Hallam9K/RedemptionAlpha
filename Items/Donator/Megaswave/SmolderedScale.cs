@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Megaswave

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Particles;
 using Redemption.UI;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,20 +37,27 @@ namespace Redemption.Items
 		{
 			NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
 			npc.position = player.Center;
-			Dialogue dialogue1 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, null, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", 6, 120, 30, true);
-			Dialogue dialogue2 = new(npc, null, null, null, Color.LightGreen, Color.DarkCyan, null, dialogue1, "It's such a lovely day out! I hope nothing bad happens to me...", 6, 120, 30, true);
+			
+			DialogueChain chain = new();
+			chain.modifier = new(0f, 128f);
+			chain.Add(new(npc, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", Color.LightGreen, Color.DarkCyan, boxFade: true))
+				 .Add(new(npc, "It's such a lovely day out! I hope nothing bad happens to me...", Color.LightGreen, Color.DarkCyan, boxFade: true))
+				 .Add(new(npc, "What could go wrong anyway? Seems pretty safe out here.", Color.LightGreen, Color.DarkCyan, boxFade: true))
+			     .Add(new(npc, "Plus! I could just run away at any time! I'm SUPER[@BOO!] good at jumping.", Color.LightGreen, Color.DarkCyan, boxFade: true))
+				 .Add(new(npc, "[@Gotcha!]Apparently there's a slime out there that can jump a bajillion feet into the air! Something like the King of all slimes...", Color.LightGreen, Color.DarkCyan, boxFade: true));
+			chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+			
 			TextBubbleUI.Visible = true;
-			TextBubbleUI.AddDialogue(dialogue1);
-			TextBubbleUI.AddDialogue(dialogue2);
+			TextBubbleUI.Add(chain);
 
 			//Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<AdamPortal>(), 0, 0f);
-			
+
 			if (player.altFunctionUse == 2)
 			{
 				x = 0;
 				y = 0;
 				progress = 0f;
-                Talk("Coordinates cleared.", new Color(218, 70, 70));
+				Talk("Coordinates cleared.", new Color(218, 70, 70));
 				if (Redemption.Targets.BasicLayer.Sprites.Contains(this))
 					Redemption.Targets.BasicLayer.Sprites.Remove(this);
 				return true;
@@ -62,13 +65,16 @@ namespace Redemption.Items
 			x = (int)(Main.MouseWorld.X / 16);
 			y = (int)(Main.MouseWorld.Y / 16);
 			Dust.QuickBox(new Vector2(x, y) * 16, new Vector2(x + 1, y + 1) * 16, 2, new Color(218, 70, 70), null);
-            Talk($"Drawing sprites at [{x}, {y}]. Right-click to discard.", new Color(218, 70, 70));
+			Talk($"Drawing sprites at [{x}, {y}]. Right-click to discard.", new Color(218, 70, 70));
 			if (!Redemption.Targets.BasicLayer.Sprites.Contains(this))
 				Redemption.Targets.BasicLayer.Sprites.Add(this);
 			return true;
 		}
+		private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+		{
+			Talk(signature, Color.LightGreen);
+		}
 		public static void Talk(string message, Color color) => Main.NewText(message, color.R, color.G, color.B);
-
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			//float sin = (float)Math.Sin(Main.GlobalTimeWrappedHourly * 6f) + 1f / 4f + 1f;

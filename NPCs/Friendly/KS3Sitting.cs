@@ -536,10 +536,10 @@ namespace Redemption.NPCs.Friendly
                 {
                     chat.Add("Look at you all well fed... Good for you.");
                 }
-                /*if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                if (player.RedemptionPlayerBuff().ChickenForm)
                 {
                     chat.Add("How did a chicken break into my ship?");
-                }*/
+                }
             }
             return chat;
         }

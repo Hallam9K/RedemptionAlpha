@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Redemption.Buffs.Minions;
+﻿using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;

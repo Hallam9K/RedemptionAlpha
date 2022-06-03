@@ -9,6 +9,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -108,6 +109,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit>(), 2));
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 20, 40));
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 1000));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
         }
 
         public int Xvel;

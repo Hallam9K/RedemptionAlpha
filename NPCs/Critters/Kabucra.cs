@@ -1,17 +1,16 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Armor.Single;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.Critters
 {
@@ -174,7 +173,7 @@ namespace Redemption.NPCs.Critters
                 if (!target.active || target.dead)
                     continue;
 
-                if (NPC.Sight(target, 200, false, true) && BaseAI.HitTileOnSide(NPC, 3))
+                if (NPC.Sight(target, 200, false, true) && BaseAI.HitTileOnSide(NPC, 3) && !target.RedemptionPlayerBuff().devilScented)
                     spooked = true;
             }
             return spooked;

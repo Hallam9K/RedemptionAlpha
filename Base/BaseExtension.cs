@@ -17,6 +17,8 @@ namespace Redemption.BaseExtension
         public static Radiation RedemptionRad(this Player player) => player.GetModPlayer<Radiation>();
         /// <summary>References the BuffPlayer instance.</summary>
         public static BuffPlayer RedemptionPlayerBuff(this Player player) => player.GetModPlayer<BuffPlayer>();
+        /// <summary>References the AbilityPlayer instance.</summary>
+        public static AbilityPlayer RedemptionAbility(this Player player) => player.GetModPlayer<AbilityPlayer>();
         /// <summary>References the RedeNPC instance.</summary>
         public static RedeNPC Redemption(this NPC npc) => npc.GetGlobalNPC<RedeNPC>(true);
         /// <summary>References the BuffNPC instance.</summary>

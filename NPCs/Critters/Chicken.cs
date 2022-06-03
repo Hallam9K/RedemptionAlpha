@@ -14,7 +14,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 
@@ -369,7 +368,7 @@ namespace Redemption.NPCs.Critters
             Player player = Main.player[NPC.GetNearestAlivePlayer()];
             RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
-            if (NPC.Sight(player, 140, true, true))
+            if (NPC.Sight(player, 140, true, true) && !player.RedemptionPlayerBuff().ChickenForm && !player.RedemptionPlayerBuff().devilScented)
             {
                 globalNPC.attacker = player;
                 AITimer = 0;

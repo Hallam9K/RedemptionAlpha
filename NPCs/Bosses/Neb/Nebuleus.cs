@@ -4,19 +4,10 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Terraria.Graphics.Shaders;
-using Redemption.Items.Weapons.PostML.Magic;
-using Redemption.Items.Weapons.PostML.Melee;
-using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Usable;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Placeable.Trophies;
 using Redemption.Projectiles.Misc;
-using Redemption.Dusts;
 using System.IO;
 using System.Collections.Generic;
 using Redemption.Globals;
@@ -1646,10 +1637,13 @@ namespace Redemption.NPCs.Bosses.Neb
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
             Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y);
-            for (int k = oldPos.Length - 1; k >= 0; k -= 1)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                float alpha = 1f - (k + 1) / (float)(oldPos.Length + 2);
-                spriteBatch.Draw(texture, oldPos[k] - screenPos, NPC.frame, Main.DiscoColor * (0.5f * alpha), oldrot[k], NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                for (int k = oldPos.Length - 1; k >= 0; k -= 1)
+                {
+                    float alpha = 1f - (k + 1) / (float)(oldPos.Length + 2);
+                    spriteBatch.Draw(texture, oldPos[k] - screenPos, NPC.frame, Main.DiscoColor * (0.5f * alpha), oldrot[k], NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                }
             }
             if (NPC.ai[1] == 5 && NPC.ai[2] > 50 && NPC.ai[0] < 6)
             {
@@ -1660,14 +1654,17 @@ namespace Redemption.NPCs.Bosses.Neb
             }
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
-            spriteBatch.Draw(wings, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                spriteBatch.Draw(wings, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
             if (NPC.ai[3] != 6)
             {
                 if (NPC.ai[3] == 0)

@@ -1,7 +1,3 @@
-using Redemption.Items.Materials.PostML;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.PostML.Melee;
-using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Tiles.Furniture.Shade;
 using Terraria;
 using Terraria.GameContent.Creative;

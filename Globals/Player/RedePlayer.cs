@@ -1,12 +1,9 @@
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Items.Donator.Lizzy;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Redemption.BaseExtension;
@@ -21,6 +18,8 @@ namespace Redemption.Globals.Player
         public int spiritLevel = 0;
         public int maxSpiritLevel = 3;
         public bool foundHall;
+        public bool foundLab;
+        public bool omegaGiftGiven;
         public int hitTarget = -1;
         public int hitTarget2 = -1;
         public bool medKit;
@@ -33,6 +32,8 @@ namespace Redemption.Globals.Player
         public override void Initialize()
         {
             foundHall = false;
+            foundLab = false;
+            omegaGiftGiven = false;
             medKit = false;
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
@@ -89,6 +90,8 @@ namespace Redemption.Globals.Player
         {
             var saveS = new List<string>();
             if (foundHall) saveS.Add("foundHall");
+            if (foundLab) saveS.Add("foundLab");
+            if (omegaGiftGiven) saveS.Add("omegaGiftGiven");
             if (medKit) saveS.Add("medKit");
 
             tag["saveS"] = saveS;
@@ -98,6 +101,8 @@ namespace Redemption.Globals.Player
         {
             var saveS = tag.GetList<string>("saveS");
             foundHall = saveS.Contains("foundHall");
+            foundLab = saveS.Contains("foundLab");
+            omegaGiftGiven = saveS.Contains("omegaGiftGiven");
             medKit = saveS.Contains("medKit");
         }
     }

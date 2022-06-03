@@ -9,7 +9,6 @@ namespace Redemption.Items.Usable.Potions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Starlite Fries");
-
             Tooltip.SetDefault("Medium improvements to all stats" +
                 "\n'Delicious'");
 

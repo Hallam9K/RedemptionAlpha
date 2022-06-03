@@ -1,14 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.Items.Accessories.HM;
 using ReLogic.Content;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Biomes
 {

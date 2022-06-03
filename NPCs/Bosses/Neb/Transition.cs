@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using System.Linq;
 
 namespace Redemption.NPCs.Bosses.Neb
 {

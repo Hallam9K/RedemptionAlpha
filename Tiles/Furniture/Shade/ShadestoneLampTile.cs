@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Dusts;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Redemption.Dusts.Tiles;
 

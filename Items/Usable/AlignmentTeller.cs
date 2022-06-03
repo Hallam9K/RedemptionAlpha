@@ -52,7 +52,7 @@ namespace Redemption.Items.Usable
             if (!Main.dedServ)
             {
                 if (RedeWorld.alignment == 0)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truely neutral...", 120, 30, 0, Color.DarkGoldenrod);
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truly neutral...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= -1 && RedeWorld.alignment <= 1)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are safe for now...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)

@@ -1,10 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.WorldGeneration;
-using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;

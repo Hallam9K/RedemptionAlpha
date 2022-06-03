@@ -14,6 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -275,6 +276,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 2, 4));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCorruption(), ModContent.ItemType<Bioweapon>(), 4, 1, 2));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 2));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Bunny, false);
             foreach (var dropRule in dropRules)
             {

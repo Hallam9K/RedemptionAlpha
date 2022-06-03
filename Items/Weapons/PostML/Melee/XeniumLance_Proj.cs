@@ -150,7 +150,22 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     {
                         player.velocity = RedeHelper.PolarVector(35, Projectile.velocity.ToRotation());
                     }
-
+                    if (Timer >= 5)
+                    {
+                        Vector2 position = player.Center + (Vector2.Normalize(player.velocity) * 30f);
+                        Dust dust = Main.dust[Dust.NewDust(player.position, player.width, player.height, DustID.GreenFairy)];
+                        dust.position = position;
+                        dust.velocity = (player.velocity.RotatedBy(1.57) * 0.33f) + (player.velocity / 4f);
+                        dust.position += player.velocity.RotatedBy(1.57);
+                        dust.fadeIn = 0.5f;
+                        dust.noGravity = true;
+                        dust = Main.dust[Dust.NewDust(player.position, player.width, player.height, DustID.GreenFairy)];
+                        dust.position = position;
+                        dust.velocity = (player.velocity.RotatedBy(-1.57) * 0.33f) + (player.velocity / 4f);
+                        dust.position += player.velocity.RotatedBy(-1.57);
+                        dust.fadeIn = 0.5f;
+                        dust.noGravity = true;
+                    }
                     if (Timer >= 10)
                     {
                         player.immune = true;

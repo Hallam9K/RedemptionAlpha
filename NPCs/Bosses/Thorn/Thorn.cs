@@ -24,6 +24,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -129,7 +130,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
 
             npcLoot.Add(notExpertRule);
         }

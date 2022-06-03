@@ -9,7 +9,6 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
-using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
