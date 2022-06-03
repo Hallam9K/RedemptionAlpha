@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Items.Usable;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;

@@ -57,10 +57,10 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 0)
                     {
                         NPC.spriteDirection = 1;
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice1, null, "...", 1, 120, 60, true);
+                        Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 120, 60, true, bubble: bubble);
 
                         TextBubbleUI.Visible = true;
-                        TextBubbleUI.AddDialogue(d1);
+                        TextBubbleUI.Add(d1);
                     }
                     if (AITimer >= 60)
                     {
@@ -71,9 +71,9 @@ namespace Redemption.NPCs.Friendly
                 case 1:
                     if (AITimer++ == 30)
                     {
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice1, null, "What do you think, Jo-", 3, 30, 100, true); // 196
+                        Dialogue d1 = new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, 3, 30, 100, true, bubble: bubble);
                         TextBubbleUI.Visible = true;
-                        TextBubbleUI.AddDialogue(d1);
+                        TextBubbleUI.Add(d1);
                     }
                     if (AITimer >= 209)
                     {
@@ -86,14 +86,13 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 60)
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
-                        Dialogue d1 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice2, null, "Who you?!", 3, 100, 0, false); // 166
-                        Dialogue d2 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice2, d1, "Where am I?", 3, 100, 0, false); // 166
-                        Dialogue d3 = new(NPC, null, bubble, null, Color.White, Color.Gray, voice2, d2, "Heyo, I'm Newb![60] Want to be friends?", 3, 100, 30, true); // 196
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "Who you?!", Color.White, Color.Gray, voice2, 3, 100, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "Where am I?", Color.White, Color.Gray, voice2, 3, 100, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "Heyo, I'm Newb![60] Want to be friends?", Color.White, Color.Gray, voice2, 3, 100, 30, true, bubble: bubble)); // 196
 
                         TextBubbleUI.Visible = true;
-                        TextBubbleUI.AddDialogue(d1);
-                        TextBubbleUI.AddDialogue(d2);
-                        TextBubbleUI.AddDialogue(d3);
+                        TextBubbleUI.Add(chain);
                     }
                     if (AITimer >= 30)
                         NPC.LookAtEntity(player);

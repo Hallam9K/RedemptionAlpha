@@ -18,7 +18,6 @@ using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
 using Terraria.Audio;
 using ReLogic.Utilities;
-using Redemption.Sounds.Custom;
 
 namespace Redemption.Globals.Player
 {
