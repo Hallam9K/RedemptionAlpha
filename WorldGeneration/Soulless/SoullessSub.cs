@@ -37,7 +37,7 @@ namespace Redemption.WorldGeneration.Soulless
         public override int Width => 2200;
         public override int Height => 1800;
         public override bool NormalUpdates => false;
-        public override bool ShouldSave => false;
+        public override bool ShouldSave => true;
         public override bool NoPlayerSaving => false;
         public override List<GenPass> Tasks => new()
         {
@@ -69,8 +69,8 @@ namespace Redemption.WorldGeneration.Soulless
             Main.dayTime = true;
             Main.time = 40000;
         }
-        //private double animationTimer = 0;
-        /*public override void DrawMenu(GameTime gameTime)
+        /*private double animationTimer = 0;
+        public override void DrawMenu(GameTime gameTime)
         {
             Texture2D soullessBackground = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessSubworldTex").Value;
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Main.UIScaleMatrix);
