@@ -76,10 +76,8 @@ namespace Redemption.Globals.Player
         public static void RegisterHeads()
         {
             var immediate = AssetRequestMode.ImmediateLoad;
-            Mod mod = Redemption.Instance;
-            OnHeadDraw head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightCasque_Head_Glow", immediate).Value);
-            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightCasque", EquipType.Head), head);
-            head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightCowl_Head_Glow", immediate).Value);
+            Mod mod = Redemption.Instance;     
+            OnHeadDraw head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightCowl_Head_Glow", immediate).Value);
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightCowl", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/HM/Hardlight/HardlightHelm_Head_Glow", immediate).Value);
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightHelm", EquipType.Head), head);

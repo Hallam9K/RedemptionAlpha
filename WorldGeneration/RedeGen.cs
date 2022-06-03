@@ -39,7 +39,6 @@ using Redemption.Tiles.Furniture.Archcloth;
 using Redemption.NPCs.Bosses.KSIII;
 using System;
 using System.Threading;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.WorldGeneration
 {
@@ -78,27 +77,7 @@ namespace Redemption.WorldGeneration
             HallOfHeroesVector = new Vector2(-1, -1);
             LabVector = new Vector2(-1, -1);
         }
-        public override void PostWorldGen()
-        {
-            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
-            {
-                Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 10 * 36)
-                {
-                    if (Main.rand.NextBool(3))
-                    {
-                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
-                        {
-                            if (chest.item[inventoryIndex].type == ItemID.None)
-                            {
-                                chest.item[inventoryIndex].SetDefaults(ModContent.ItemType<BuddingBoline>());
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+     
         public override void PostUpdateWorld()
         {
             if (NPC.downedBoss3 && !dragonLeadSpawn)
