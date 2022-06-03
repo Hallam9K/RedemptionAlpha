@@ -2,16 +2,9 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
-using Terraria.DataStructures;
-using System.Collections.Generic;
-using Redemption.Projectiles.Magic;
 using Terraria.GameContent.Creative;
-using Redemption.Globals;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Items.Materials.HM;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {

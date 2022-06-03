@@ -25,9 +25,10 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, 2, 4);
             TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
+            TileObjectData.newAlternate.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, 2, 5);
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.WoodFurniture;

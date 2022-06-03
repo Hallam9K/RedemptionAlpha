@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
@@ -22,6 +23,11 @@ namespace Redemption.Biomes
         public override void OnInBiome(Player player)
         {
             LabArea.Active = true;
+        }
+        public override void OnEnter(Player player)
+        {
+            if (!player.Redemption().foundLab)
+                player.Redemption().foundLab = true;
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;

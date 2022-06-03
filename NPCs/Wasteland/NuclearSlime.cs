@@ -7,6 +7,7 @@ using Redemption.Dusts;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -74,6 +75,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 3, 8));
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 10000));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
         }
         public override void PostAI()
         {

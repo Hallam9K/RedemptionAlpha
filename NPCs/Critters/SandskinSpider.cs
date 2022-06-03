@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
@@ -259,7 +260,7 @@ namespace Redemption.NPCs.Critters
                 if (!target.active || target.dead)
                     continue;
 
-                if (NPC.Sight(target, 300, false, true) && BaseAI.HitTileOnSide(NPC, 3))
+                if (NPC.Sight(target, 300, false, true) && BaseAI.HitTileOnSide(NPC, 3) && !target.RedemptionPlayerBuff().devilScented)
                     spooked = true;
             }
             return spooked;

@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary;
-using Terraria.ModLoader;
+﻿using ParticleLibrary;
 
 namespace Redemption.Particles
 {

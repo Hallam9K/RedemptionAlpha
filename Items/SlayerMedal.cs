@@ -1,3 +1,4 @@
+using Redemption.Tiles.Furniture.Misc;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,9 +19,10 @@ namespace Redemption.Items
 
         public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<SlayerMedalTile>());
             Item.width = 16;
             Item.height = 26;
-            Item.maxStack = 1;
+            Item.maxStack = 30;
             Item.value = 1;
             Item.rare = ItemRarityID.Blue;
         }

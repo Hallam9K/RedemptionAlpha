@@ -3,8 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using System;
 using Terraria.GameContent;
 using Redemption.Effects.PrimitiveTrails;
 using ReLogic.Content;

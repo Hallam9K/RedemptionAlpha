@@ -13,7 +13,7 @@ using Terraria.GameContent;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
-	public class ShadestoneToiletTile : ModTile
+    public class ShadestoneToiletTile : ModTile
 	{
 		public const int NextStyleHeight = 40;
 		public override void SetStaticDefaults()

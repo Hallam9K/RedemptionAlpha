@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.BaseExtension;
-using Terraria.ModLoader.Config;
 using Terraria.ModLoader;
 using Redemption.Projectiles.Melee;
 using ParticleLibrary;
@@ -14,7 +13,7 @@ using Redemption.Particles;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
-	public class Midnight_SlashProj : TrueMeleeProjectile
+    public class Midnight_SlashProj : TrueMeleeProjectile
 	{
 		public override void SetStaticDefaults()
 		{

@@ -341,10 +341,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         {
                                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little scrap of metal.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                                         }
-                                        /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                                        else if (player.RedemptionPlayerBuff().ChickenForm)
                                         {
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little chicken nugget.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0);
-                                        }*/
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little chicken nugget.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        }
                                         else
                                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Alright listen here you little fleshbag.", 280, 1, 0.6f, "King Slayer III:", 1, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                                     }
@@ -354,10 +354,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         {
                                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little scrap of metal decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                                         }
-                                        /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                                        else if (player.RedemptionPlayerBuff().ChickenForm)
                                         {
-                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little chicken nugget decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center, 0, NPC.whoAmI);
-                                        }*/
+                                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little chicken nugget decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        }
                                         else
                                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, this little fleshbag decided to save me the trouble of finding it.", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                                     }
@@ -438,7 +438,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             if (RedeBossDowned.downedSlayer)
                             {
-                                switch (Main.rand.Next(4))
+                                switch (Main.rand.Next(5))
                                 {
                                     case 0:
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("What? Do you want to fight me again?", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
@@ -451,6 +451,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         break;
                                     case 3:
                                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Really, a rematch? Fine.", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                                        break;
+                                    case 4:
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Why don't you go preemptively die and save me the effort.", 200, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                                         break;
                                 }
                             }
@@ -1924,10 +1927,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("This rusty little tincan is more persistent than I thought...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                             }
-                            /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                            else if (player.RedemptionPlayerBuff().ChickenForm)
                             {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The concept of losing to a chicken does not bode well with me...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0);
-                            }*/
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The concept of losing to a chicken does not bode well with me...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                            }
                             else
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You pack more of a punch than I thought for such a small fleshbag...", 280, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                         }
@@ -2292,10 +2295,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for a heap of scrap no less.", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                             }
-                            /*else if (BasePlayer.HasAccessory(player, ModContent.ItemType<CrownOfTheKing>(), true, true))
+                            else if (player.RedemptionPlayerBuff().ChickenForm)
                             {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for what? A bloody chicken!?", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, null, NPC.Center,  id: NPC.whoAmI);
-                            }*/
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for what? A bloody chicken!?", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                            }
                             else
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And for an annoying brat no less.", 180, 1, 0.6f, "King Slayer III:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
                         }

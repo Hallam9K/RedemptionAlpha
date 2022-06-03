@@ -1,6 +1,5 @@
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 

@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.ID;
 using System;
 using Terraria.ModLoader;
-using System.IO;
 using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.Base;

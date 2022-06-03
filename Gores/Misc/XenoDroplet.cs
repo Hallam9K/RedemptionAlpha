@@ -2,12 +2,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Gores.Misc
 {
-	public class XenoDroplet : ModGore
+    public class XenoDroplet : ModGore
 	{
 		public override void OnSpawn(Gore gore, IEntitySource source)
 		{

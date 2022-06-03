@@ -11,6 +11,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.Items.Usable
 {
@@ -47,7 +48,7 @@ namespace Redemption.Items.Usable
             {
                 player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ThornMask>());
             }
-            switch (Main.rand.Next(3))
+            switch (Main.rand.Next(4))
             {
                 case 0:
                     player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CursedGrassBlade>());
@@ -57,6 +58,9 @@ namespace Redemption.Items.Usable
                     break;
                 case 2:
                     player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<RootTendril>());
+                    break;
+                case 3:
+                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<BlightedBoline>());
                     break;
             }
             player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CircletOfBrambles>());

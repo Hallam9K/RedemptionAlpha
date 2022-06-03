@@ -318,6 +318,8 @@ namespace Redemption.NPCs.Friendly
             chat.Add("Cool Bug Fact: Sandskin Spiders live in deserts, roaming around at night when other tiny insects come out to eat. When the hot day arrives, the spider will borrow a feet under the sand to sleep. Yes, I like bugs.");
             chat.Add("When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
             chat.Add("Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!");
+            chat.Add("If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.");
+            chat.Add("The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.");
             chat.Add("Living Blooms roam this island? They are native to Anglon's lush forests. Living Blooms are more plant than animal. Seems like many creatures got to this island from the portal.");
             if (!Main.dayTime)
                 chat.Add("There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.");

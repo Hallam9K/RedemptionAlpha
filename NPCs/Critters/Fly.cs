@@ -6,7 +6,6 @@ using Redemption.Globals;
 using Redemption.Items.Critters;
 using Redemption.NPCs.PreHM;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;

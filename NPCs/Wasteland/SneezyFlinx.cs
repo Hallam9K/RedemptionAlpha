@@ -7,6 +7,7 @@ using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -205,6 +206,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCorruption(), ModContent.ItemType<Bioweapon>(), 2, 2, 5));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 2, 2, 5));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.SnowFlinx, false);
             foreach (var dropRule in dropRules)
             {

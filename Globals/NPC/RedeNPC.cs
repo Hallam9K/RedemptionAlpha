@@ -29,6 +29,7 @@ using Redemption.NPCs.Soulless;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Donator.Megaswave;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.Globals.NPC
 {
@@ -454,6 +455,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
             if (npc.type == NPCID.Ghost || npc.type == NPCID.Wraith)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
+            if (npc.type == NPCID.AngryBones || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.CursedSkull || npc.type == NPCID.DarkCaster)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {

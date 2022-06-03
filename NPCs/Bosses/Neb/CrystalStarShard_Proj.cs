@@ -3,12 +3,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
-	public class CrystalStarShard_Proj : ModProjectile
+    public class CrystalStarShard_Proj : ModProjectile
 	{
         public override void SetStaticDefaults()
         {

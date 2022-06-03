@@ -11,7 +11,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.DamageClasses;
 using Redemption.Buffs;
 using Redemption.Biomes;
 using Terraria.GameInput;
@@ -79,6 +78,7 @@ namespace Redemption.Globals.Player
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
+        public bool ChickenForm;
 
         public float TrueMeleeDamage = 1f;
 
@@ -129,6 +129,7 @@ namespace Redemption.Globals.Player
             shadowBinder = false;
             lacerated = false;
             shadevision = false;
+            ChickenForm = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {

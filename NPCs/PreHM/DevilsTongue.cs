@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
 using Terraria;
@@ -114,6 +115,12 @@ namespace Redemption.NPCs.PreHM
                         NPC.life = NPC.lifeMax;
                     CrittersConsumed++;
                 }
+            }
+            if (NPC.ai[3] == 0 && CrittersConsumed >= 5)
+            {
+                SoundEngine.PlaySound(SoundID.Zombie9 with { Pitch = -.3f }, NPC.position);
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<DevilishResin>());
+                NPC.ai[3] = 1;
             }
         }
         public override void FindFrame(int frameHeight)

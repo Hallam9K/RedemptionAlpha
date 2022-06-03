@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Trees
         }
         public override Asset<Texture2D> GetOasisTopTextures()
         {
-            return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree_Top");
+            return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree_OasisTop");
         }
         public override Asset<Texture2D> GetTopTextures()
         {

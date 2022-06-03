@@ -1,9 +1,6 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using ReLogic.Utilities;
-using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
 
 namespace Redemption
 {
@@ -37,6 +34,7 @@ namespace Redemption
         };
         public static readonly SoundStyle LiftLoop = new("Redemption/Sounds/Custom/ElevatorLoop");
         public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
+        public static readonly SoundStyle BallCreate = new("Redemption/Sounds/Custom/BallCreate") { PitchVariance = .1f };
         public static readonly SoundStyle BallFire = new("Redemption/Sounds/Custom/BallFire") { PitchVariance = .1f };
         public static readonly SoundStyle Banjo = new("Redemption/Sounds/Custom/Banjo", 3);
         public static readonly SoundStyle Bass1 = new("Redemption/Sounds/Custom/Bass1") { PitchVariance = .1f };
@@ -114,5 +112,9 @@ namespace Redemption
         public static readonly SoundStyle Voice2 = new("Redemption/Sounds/Custom/Voice2") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
         public static readonly SoundStyle Voice3 = new("Redemption/Sounds/Custom/Voice3") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
         public static readonly SoundStyle Voice4 = new("Redemption/Sounds/Custom/Voice4") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        public static readonly SoundStyle Voice5 = new("Redemption/Sounds/Custom/Voice5") { Volume = 0.7f, MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
+        public static readonly SoundStyle MegaLaser = new("Redemption/Sounds/Custom/MegaLaser");
+        public static readonly SoundStyle ObliteratorYo = new("Redemption/Sounds/Custom/ObliteratorYo") { Volume = 0.7f };
+        public static readonly SoundStyle OODashReady = new("Redemption/Sounds/Custom/OODashReady") { Volume = 0.8f };
     }
 }

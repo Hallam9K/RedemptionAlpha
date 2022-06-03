@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ParticleLibrary;
-using Redemption.Particles;
 
 namespace Redemption.Globals
 {

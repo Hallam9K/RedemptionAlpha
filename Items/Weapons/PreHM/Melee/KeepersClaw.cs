@@ -1,3 +1,4 @@
+using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -44,6 +45,19 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<KeepersClaw_Slash>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<GrimShard>())
+                .AddIngredient(ItemID.DemoniteBar, 12)
+                .AddTile(TileID.Anvils)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<GrimShard>())
+                .AddIngredient(ItemID.CrimtaneBar, 12)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
