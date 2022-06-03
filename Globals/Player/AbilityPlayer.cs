@@ -16,6 +16,7 @@ using Terraria.ID;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameInput;
+using Terraria.Audio;
 
 namespace Redemption.Globals.Player
 {
@@ -47,6 +48,7 @@ namespace Redemption.Globals.Player
             {
                 if (SpiritwalkerTimer++ >= 60)
                 {
+                    SoundEngine.PlaySound(CustomSounds.PortalWub with { Volume = 2f, Pitch = -0.5f }, Player.position);
                     SpiritwalkerActive = !SpiritwalkerActive;
                     SpiritwalkerCooldown = 60;
                     SpiritwalkerTimer = 0;

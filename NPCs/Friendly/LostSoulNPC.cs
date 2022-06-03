@@ -7,6 +7,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.DataStructures;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -65,13 +66,12 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool? CanBeHitByItem(Player player, Item item)
         {
-            return ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) ||
-                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) || ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
-            return ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) ||
-                ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
+            Player player = Main.player[projectile.owner];
+            return player.RedemptionAbility().SpiritwalkerActive || ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
         }
         public override void AI()
         {

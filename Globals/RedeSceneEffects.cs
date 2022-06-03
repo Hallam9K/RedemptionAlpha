@@ -68,4 +68,13 @@ namespace Redemption.Globals
             return player.GetModPlayer<BuffPlayer>().island;
         }
     }
+    public class SpiritRealmMusic : ModSceneEffect
+    {
+        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/SpiritRealm");
+        public override SceneEffectPriority Priority => SceneEffectPriority.Event;
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return player.RedemptionAbility().SpiritwalkerActive;
+        }
+    }
 }

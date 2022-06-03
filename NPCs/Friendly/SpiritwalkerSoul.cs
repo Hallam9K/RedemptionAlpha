@@ -111,12 +111,12 @@ namespace Redemption.NPCs.Friendly
                     }
                     if (AITimer >= 260)
                     {
-                        string s = "Select a keybind for [Spirit Walker Key] in Controls";
+                        string s = "Hold [Spirit Walker Ability Key] to enter the Spirit Realm";
                         foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
                         {
                             s = "Hold " + key + " to enter the Spirit Realm";
                         }
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("-Spirit Walker-", 120, 90, 1f, 0, Color.White, s);
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("-Spirit Walker-", 180, 90, 1f, 0, Color.White, s);
 
                         SoundEngine.PlaySound(CustomSounds.NewLocation, player.position);
                         player.RedemptionAbility().Spiritwalker = true;
