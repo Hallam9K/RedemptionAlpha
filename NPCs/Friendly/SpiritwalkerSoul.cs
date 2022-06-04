@@ -12,6 +12,8 @@ using ParticleLibrary;
 using Redemption.BaseExtension;
 using System;
 using Redemption.Dusts;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -122,6 +124,7 @@ namespace Redemption.NPCs.Friendly
                         player.RedemptionAbility().Spiritwalker = true;
                         player.RedemptionAbility().SpiritwalkerActive = false;
 
+                        NPC.Shoot(player.Center, ModContent.ProjectileType<SpiritwalkerIconFade>(), 0, Vector2.Zero, false, SoundID.Item1, player.whoAmI);
                         for (int i = 0; i < 20; i++)
                         {
                             ParticleManager.NewParticle(player.Center, RedeHelper.Spread(10), new SpiritParticle(), Color.White, 2);
@@ -137,5 +140,59 @@ namespace Redemption.NPCs.Friendly
             }
         }
         public override bool? CanHitNPC(NPC target) => false;
+    }
+    public class SpiritwalkerIconFade : ModProjectile
+    {
+        public override string Texture => "Redemption/Textures/Abilities/Spiritwalker";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Spirit Walker");
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 40;
+            Projectile.height = 40;
+            Projectile.penetrate = -1;
+            Projectile.hostile = false;
+            Projectile.friendly = false;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+        }
+        public override void AI()
+        {
+            Player player = Main.player[(int)Projectile.ai[0]];
+            Projectile.Center = new Vector2(player.Center.X, player.Center.Y - 180);
+            Projectile.timeLeft = 10;
+            Projectile.scale += 0.01f;
+            switch (Projectile.localAI[0])
+            {
+                case 0:
+                    Projectile.alpha -= 10;
+                    if (Projectile.alpha <= 0)
+                        Projectile.localAI[0] = 1;
+                    break;
+                case 1:
+                    Projectile.alpha++;
+                    if (Projectile.alpha >= 255)
+                        Projectile.Kill();
+                    break;
+            }
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+
+            float fluctuate = (float)Math.Abs(Math.Sin(Main.GlobalTimeWrappedHourly * 4.5f)) * 0.1f;
+            float modifiedScale = Projectile.scale * (1 + fluctuate);
+
+            Color godrayColor = Color.Lerp(new Color(180, 255, 255), Color.White * Projectile.Opacity, 0.5f);
+            godrayColor.A = 0;
+            RedeDraw.DrawGodrays(Main.spriteBatch, Projectile.Center - Main.screenPosition, godrayColor, 100 * modifiedScale * Projectile.Opacity, 30 * modifiedScale * Projectile.Opacity, 16);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
+        }
     }
 }
