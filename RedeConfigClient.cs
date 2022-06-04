@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 namespace Redemption
@@ -17,7 +18,8 @@ namespace Redemption
         public bool CameraLockDisable;
 
         [Label("Disable Elements")]
-        [Tooltip("Disables elemental resistances and damage")]
+        [Tooltip("Disables elemental resistances and damage (DO NOT ENABLE ELEMENTS IF YOU HAVE ANOTHER CONTENT MOD ON)")]
+        [DefaultValue(true)]
         public bool ElementDisable;
     }
 }
