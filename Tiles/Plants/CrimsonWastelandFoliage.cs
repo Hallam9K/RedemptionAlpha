@@ -5,6 +5,7 @@ using Terraria.ID;
 using Redemption.Tiles.Tiles;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Metadata;
 
 namespace Redemption.Tiles.Plants
 {
@@ -33,6 +34,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             DustType = DustID.Ash;
             HitSound = SoundID.Grass;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
