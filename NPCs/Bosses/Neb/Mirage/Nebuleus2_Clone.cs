@@ -29,11 +29,17 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             DisplayName.SetDefault("Nebuleus Mirage");
             Main.npcFrameCount[NPC.type] = 9;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 950000;
+            NPC.lifeMax = 427500;
             NPC.defense = 170;
             NPC.damage = 250;
             NPC.width = 90;

@@ -14,6 +14,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
 using Redemption.Items.Usable.Potions;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -189,13 +190,12 @@ namespace Redemption.NPCs.PreHM
 
         public override bool? CanBeHitByItem(Player player, Item item)
         {
-            return ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) ||
-                ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) || ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
-            return ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) ||
-                ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
+            Player player = Main.player[projectile.owner];
+            return player.RedemptionAbility().SpiritwalkerActive || ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
         }
 
         public override void OnKill()

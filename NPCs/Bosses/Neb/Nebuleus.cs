@@ -17,6 +17,7 @@ using Terraria.Audio;
 using Redemption.Base;
 using Redemption.UI;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -30,12 +31,28 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 5;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                CustomTexturePath = "Redemption/Textures/Bestiary/Nebuleus_Bestiary"
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+
+                new FlavorTextBestiaryInfoElement("...")
+            });
         }
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 750000;
-            NPC.defense = 170;
+            NPC.lifeMax = 337500;
+            NPC.defense = 120;
             NPC.damage = 250;
             NPC.width = 62;
             NPC.height = 84;
@@ -93,7 +110,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.75;
+            damage *= 0.8;
             return true;
         }
         public override void SendExtraAI(BinaryWriter writer)

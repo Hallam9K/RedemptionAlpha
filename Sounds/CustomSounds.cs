@@ -47,6 +47,7 @@ namespace Redemption
         public static readonly SoundStyle ElectricNoise = new("Redemption/Sounds/Custom/ElectricNoise");
         public static readonly SoundStyle ElectricSlash = new("Redemption/Sounds/Custom/ElectricSlash") { PitchVariance = .1f };
         public static readonly SoundStyle ElectricSlash2 = new("Redemption/Sounds/Custom/ElectricSlash2") { PitchVariance = .1f };
+        public static readonly SoundStyle EnergyCharge = new("Redemption/Sounds/Custom/EnergyChargeSound");
         public static readonly SoundStyle EnergyCharge2 = new("Redemption/Sounds/Custom/EnergyChargeSound2");
         public static readonly SoundStyle FlyBuzz = new("Redemption/Sounds/Custom/FlyBuzz") { PitchVariance = .1f };
         public static readonly SoundStyle Gas1 = new("Redemption/Sounds/Custom/Gas1");
@@ -107,5 +108,6 @@ namespace Redemption
         public static readonly SoundStyle MegaLaser = new("Redemption/Sounds/Custom/MegaLaser");
         public static readonly SoundStyle ObliteratorYo = new("Redemption/Sounds/Custom/ObliteratorYo") { Volume = 0.7f };
         public static readonly SoundStyle OODashReady = new("Redemption/Sounds/Custom/OODashReady") { Volume = 0.8f };
+        public static readonly SoundStyle NewLocation = new("Redemption/Sounds/Custom/NewLocationSound");
     }
 }

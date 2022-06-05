@@ -19,6 +19,8 @@ using System;
 using Redemption.Dusts;
 using Redemption.NPCs.Bosses.Cleaver;
 using ReLogic.Content;
+using Redemption.Items.Placeable.Trophies;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -131,6 +133,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 100, default, 2f);
                     Main.dust[dustIndex].velocity *= 1.8f;
                 }
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                for (int i = 0; i < 15; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/OOGore" + (i + 1)).Type);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
@@ -140,6 +147,15 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OO_GirusTalk>(), 0, 0, Main.myPlayer);
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch3, -1);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OOBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -1509,6 +1525,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Texture2D headGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Head_Glow").Value;
             Texture2D legs = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Legs").Value;
             Texture2D thruster = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora_ThrusterBlue").Value;
+            if (NPC.ai[0] >= 4)
+            {
+                texture = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Overheat").Value;
+                armB = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arm_Back_Overheat").Value;
+                armF = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arm_Front_Overheat").Value;
+                head = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Head_Overheat").Value;
+                legs = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Legs_Overheat").Value;
+            }
             float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, -NPC.velocity.Y / 20);
             thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
             float thrusterScaleY = MathHelper.Clamp(-NPC.velocity.Y / 10, 0.3f, 2f);

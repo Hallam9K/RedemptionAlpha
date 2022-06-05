@@ -6,6 +6,7 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Redemption.Buffs.Debuffs;
+using Terraria.GameContent.Metadata;
 
 namespace Redemption.Tiles.Plants
 {
@@ -32,6 +33,7 @@ namespace Redemption.Tiles.Plants
             AddMapEntry(new Color(159, 208, 159));
             DustType = DustID.GrassBlades;
             HitSound = SoundID.Grass;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void NearbyEffects(int i, int j, bool closer)
