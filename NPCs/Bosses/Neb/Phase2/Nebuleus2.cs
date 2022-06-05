@@ -29,12 +29,18 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         {
             DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 9;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 950000;
-            NPC.defense = 170;
+            NPC.lifeMax = 427500;
+            NPC.defense = 120;
             NPC.damage = 250;
             NPC.width = 90;
             NPC.height = 108;
@@ -98,7 +104,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.75;
+            damage *= 0.8;
             return true;
         }
         public override void SendExtraAI(BinaryWriter writer)
