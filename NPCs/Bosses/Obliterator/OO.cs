@@ -19,6 +19,8 @@ using System;
 using Redemption.Dusts;
 using Redemption.NPCs.Bosses.Cleaver;
 using ReLogic.Content;
+using Redemption.Items.Placeable.Trophies;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -145,6 +147,15 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OO_GirusTalk>(), 0, 0, Main.myPlayer);
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch3, -1);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OOBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
