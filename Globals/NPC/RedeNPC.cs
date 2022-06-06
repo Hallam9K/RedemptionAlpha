@@ -438,7 +438,7 @@ namespace Redemption.Globals.NPC
                 spawnRate = 18;
                 maxSpawns = 12;
             }
-            if (player.InModBiome(ModContent.GetInstance<LabBiome>()))
+            if (player.InModBiome<LabBiome>())
             {
                 spawnRate = 20;
                 maxSpawns = 12;
@@ -462,7 +462,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
             }
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<LabBiome>()))
+            if (spawnInfo.Player.InModBiome<LabBiome>())
             {
                 if (!RedeWorld.labSafe)
                 {
@@ -482,7 +482,7 @@ namespace Redemption.Globals.NPC
                         pool.Add(ModContent.NPCType<BlisteredFish>(), 0.4f);
                 }
             }
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
+            if (spawnInfo.Player.InModBiome<WastelandPurityBiome>())
             {
                 int[] GrassTileArray = { ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>(), ModContent.TileType<IrradiatedGrassTile>() };
                 bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
@@ -497,7 +497,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
                 pool.Add(ModContent.NPCType<NuclearShadow>(), 0.2f);
                 pool.Add(ModContent.NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
-                if (spawnInfo.Player.InModBiome(ModContent.GetInstance<WastelandSnowBiome>()))
+                if (spawnInfo.Player.InModBiome<WastelandSnowBiome>())
                 {
                     pool.Add(ModContent.NPCType<SneezyFlinx>(), 0.8f);
                     pool.Add(ModContent.NPCType<SicklyWolf>(), 0.7f);

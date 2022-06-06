@@ -61,7 +61,7 @@ namespace Redemption.Globals.Player
         {
             if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
             {
-                if (Player.InModBiome(ModContent.GetInstance<LabBiome>()) && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
+                if (Player.InModBiome<LabBiome>() && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
                     itemDrop = ModContent.ItemType<LabCrate>();
             }
         }

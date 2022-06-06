@@ -112,10 +112,10 @@ namespace Redemption.Items.Donator.Gonk
             if (Main.tile[water.X, water.Y].LiquidType == LiquidID.Water && Main.tile[water.X, water.Y].LiquidAmount > 0)
                 Main.EntitySpriteDraw(gravityOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
-            //if (Main.player[Projectile.owner].InModBiome(ModContent.GetInstance<WastelandPurityBiome>())) // TODO: Samus overlay for Soulless Dimension
+            //if (Main.player[Projectile.owner].InModBiome<WastelandPurityBiome>())) // TODO: Samus overlay for Soulless Dimension
             //    Main.EntitySpriteDraw(lightOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
-            if (Main.player[Projectile.owner].InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
+            if (Main.player[Projectile.owner].InModBiome<WastelandPurityBiome>())
                 Main.EntitySpriteDraw(phazonOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
