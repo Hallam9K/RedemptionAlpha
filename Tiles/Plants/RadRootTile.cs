@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -39,6 +40,7 @@ namespace Redemption.Tiles.Plants
 
             HitSound = SoundID.Grass;
             DustType = DustID.GreenBlood;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
         public override bool CanPlace(int i, int j)
         {

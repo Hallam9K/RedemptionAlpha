@@ -34,6 +34,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.velocity *= 1.02f;
         }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;
+        }
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 5; i++)

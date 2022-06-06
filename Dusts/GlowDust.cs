@@ -9,7 +9,6 @@ namespace Redemption.Dusts
 		public override void OnSpawn(Dust dust)
 		{
 			dust.noGravity = true;
-			dust.noLight = false;
 			dust.frame = new Rectangle(0, 0, 64, 64);
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor)
@@ -39,7 +38,8 @@ namespace Redemption.Dusts
 			dust.velocity *= 0.99f;
 			dust.color *= 0.95f;
 
-			Lighting.AddLight(dust.position, dust.color.ToVector3());
+			if (!dust.noLight)
+				Lighting.AddLight(dust.position, dust.color.ToVector3());
 
 			if (dust.scale < 0.05f)
 				dust.active = false;

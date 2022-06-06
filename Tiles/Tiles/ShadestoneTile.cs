@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Tiles
         }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (Main.rand.NextBool(40000) && Main.LocalPlayer.InModBiome(ModContent.GetInstance<SoullessBiome>()))
+            if (Main.rand.NextBool(40000) && Main.LocalPlayer.InModBiome<SoullessBiome>())
                 Dust.NewDust(new Vector2(i * 16, j * 16), 0, 0, ModContent.DustType<SoullessScreenDust>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

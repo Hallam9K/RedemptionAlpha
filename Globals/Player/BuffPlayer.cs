@@ -508,7 +508,7 @@ namespace Redemption.Globals.Player
                 Player.lifeRegen -= 5;
                 Player.statDefense -= 30;
             }
-            if ((Player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Player.InModBiome(ModContent.GetInstance<LabBiome>())) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.RedemptionPlayerBuff().WastelandWaterImmune)
+            if ((Player.InModBiome<WastelandPurityBiome>() || Player.InModBiome<LabBiome>()) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.RedemptionPlayerBuff().WastelandWaterImmune)
             {
                 if (Player.lifeRegen > 10)
                     Player.lifeRegen = 10;

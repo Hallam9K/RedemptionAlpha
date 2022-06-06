@@ -148,8 +148,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaCleaverBag>()));
-
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<CleaverRelic>()));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

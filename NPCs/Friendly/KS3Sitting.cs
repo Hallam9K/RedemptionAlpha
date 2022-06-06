@@ -494,7 +494,7 @@ namespace Redemption.NPCs.Friendly
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
 
-            if (RedeBossDowned.downedSlayer && !Main.LocalPlayer.InModBiome(ModContent.GetInstance<SlayerShipBiome>()))
+            if (RedeBossDowned.downedSlayer && !Main.LocalPlayer.InModBiome<SlayerShipBiome>())
                 chat.Add("Wait a second... This isn't my ship. Did you move my chair?");
             else
             {

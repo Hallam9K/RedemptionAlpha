@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
 
-            SwingSpeed = SetSwingSpeed(50);
+            SwingSpeed = SetSwingSpeed(30);
 
             Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
 

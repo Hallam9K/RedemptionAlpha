@@ -20,7 +20,7 @@ namespace Redemption.Globals
         {
             Tile topperTile = Framing.GetTileSafely(i, --j);
 
-            if (closer && (Main.LocalPlayer.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()) || Main.LocalPlayer.InModBiome(ModContent.GetInstance<LabBiome>())) &&
+            if (closer && (Main.LocalPlayer.InModBiome<WastelandPurityBiome>() || Main.LocalPlayer.InModBiome<LabBiome>()) &&
                 topperTile.LiquidAmount > 0 && topperTile.LiquidType == LiquidID.Water)
             {
                 for (; j > 0 && Main.tile[i, j - 1] != null && Main.tile[i, j - 1].LiquidAmount > 0 && Main.tile[i, j - 1].LiquidType == LiquidID.Water; --j);

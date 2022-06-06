@@ -134,7 +134,7 @@ namespace Redemption.Items.Donator.Lizzy
             if (Main.xMas)
                 Main.EntitySpriteDraw(xmasOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
-            if (Main.player[Projectile.owner].InModBiome(ModContent.GetInstance<WastelandPurityBiome>()))
+            if (Main.player[Projectile.owner].InModBiome<WastelandPurityBiome>())
                 Main.EntitySpriteDraw(maskOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
