@@ -503,7 +503,7 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<SicklyPenguin>(), 0.6f);
                 }
             }
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<BlazingBastionBiome>()))
+            if (spawnInfo.Player.InModBiome<BlazingBastionBiome>())
             {
                 pool.Clear();
                 pool.Add(NPCID.Demon, 1f);
