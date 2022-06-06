@@ -68,7 +68,7 @@ namespace Redemption.Tiles.Furniture.Misc
 
 		public override float GetTorchLuck(Player player)
 		{
-			bool inWastelandBiome = Main.LocalPlayer.InModBiome(ModContent.GetInstance<WastelandPurityBiome>());
+			bool inWastelandBiome = Main.LocalPlayer.InModBiome<WastelandPurityBiome>();
 			return inWastelandBiome ? 1f : 0;
 		}
 

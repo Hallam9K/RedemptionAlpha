@@ -29,11 +29,11 @@ namespace Redemption.Biomes
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
                 player.RedemptionPlayerBuff().HEVSuit;
 
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()), player.Center);
+            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome<WastelandPurityBiome>(), player.Center);
 
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(fogSafe ? 0.25f : 0.3f).UseIntensity(fogSafe ? 0.6f : 1f)
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome(ModContent.GetInstance<WastelandPurityBiome>()));
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome<WastelandPurityBiome>());
         }
         public override void OnLeave(Player player)
         {

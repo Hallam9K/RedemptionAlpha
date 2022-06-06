@@ -232,7 +232,7 @@ namespace Redemption.Globals
                 }
                 Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.5f);
             }
-            if (Main.player[Main.myPlayer].InModBiome(ModContent.GetInstance<SoullessBiome>()))
+            if (Main.player[Main.myPlayer].InModBiome<SoullessBiome>())
             {
                 if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
                 {
