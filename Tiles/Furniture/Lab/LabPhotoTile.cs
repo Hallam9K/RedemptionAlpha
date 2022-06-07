@@ -53,7 +53,7 @@ namespace Redemption.Tiles.Furniture.Lab
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
         }
         public override bool CreateDust(int i, int j, ref int type) => false;
-        public override bool KillSound(int i, int j) => false;
+        public override bool KillSound(int i, int j, bool fail) => false;
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) => fail = true;
         public override bool CanExplode(int i, int j) => false;
 

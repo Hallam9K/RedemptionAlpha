@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Tiles
             MineResist = 3f;
             HitSound = SoundID.Tink;
 		}
-        public override bool KillSound(int i, int j) => false;
+        public override bool KillSound(int i, int j, bool fail) => false;
         public override bool CreateDust(int i, int j, ref int type) => false;
         public override bool CanExplode(int i, int j) => false;
     }
