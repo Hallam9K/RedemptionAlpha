@@ -21,6 +21,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             DisplayName.SetDefault("Skull Digger's Skull Digger");
             Tooltip.SetDefault("'Yes, he did name his weapon after himself...'");
 
+            ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -44,23 +45,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.channel = true;
             Item.shoot = ModContent.ProjectileType<SkullDiggerFlail_Proj>();
             Item.shootSpeed = 32f;
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            foreach (TooltipLine line in tooltips)
-            {
-                if (line.Mod == "Terraria" && line.Name == "Damage")
-                {
-                    string[] strings = line.Text.Split(' ');
-                    int dmg = int.Parse(strings[0]);
-                    dmg *= 2;
-                    line.Text = dmg + "";
-                    for (int i = 1; i < strings.Length; i++)
-                    {
-                        line.Text += " " + strings[i];
-                    }
-                }
-            }
         }
     }
 
