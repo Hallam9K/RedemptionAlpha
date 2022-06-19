@@ -983,7 +983,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
                                 }
                                 if (AITimer == 878 && !RedeBossDowned.downedVlitch3)
+                                {
+                                    player.RedemptionScreen().TimedZoom(new Vector2(1.2f, 1.2f), 80, 280);
                                     HeadFrameY = 2;
+                                }
 
                                 if (AITimer > (RedeBossDowned.downedVlitch3 ? 414 : 1238))
                                 {

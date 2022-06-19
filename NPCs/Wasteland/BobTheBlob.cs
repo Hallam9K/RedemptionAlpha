@@ -109,7 +109,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit>(), 2));
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 20, 40));
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 1000));
-            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
         }
 
         public int Xvel;

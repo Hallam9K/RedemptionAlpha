@@ -125,7 +125,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                         if (Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
                             Terraria.Graphics.Effects.Filters.Scene.Deactivate("MoonLordShake");
                     }
-
                     if (AITimer++ == 80)
                     {
                         if (!Main.dedServ)
