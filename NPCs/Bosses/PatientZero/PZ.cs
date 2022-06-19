@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 200 years, conscious and aware of the situation around him... God, that must be tormentous.")
+                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
