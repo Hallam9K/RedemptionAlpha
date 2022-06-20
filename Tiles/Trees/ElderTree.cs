@@ -27,17 +27,16 @@ namespace Redemption.Tiles.Trees
 		{
 			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/ElderTree");
 		}
-
-		public override int SaplingGrowthType(ref int style)
+        public override int SaplingGrowthType(ref int style)
 		{
 			style = 0;
 			return ModContent.TileType<ElderSapling>();
 		}
-		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-		{
-			// This is where fancy code could go, but let's save that for an advanced example
-		}
-		public override Asset<Texture2D> GetBranchTextures()
+        public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+        {
+            throw new System.NotImplementedException();
+        }
+        public override Asset<Texture2D> GetBranchTextures()
 		{
 			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/ElderTree_Branches");
 		}
@@ -47,7 +46,7 @@ namespace Redemption.Tiles.Trees
 		}
 		public override int DropWood() => ModContent.ItemType<ElderWood>();
 		public override int CreateDust() => DustID.t_BorealWood;
-		public override int GrowthFXGore()
+        public override int TreeLeaf()
 		{
 			return ModContent.Find<ModGore>("Redemption/ElderTreeFX").Type;
 		}

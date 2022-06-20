@@ -23,13 +23,15 @@ namespace Redemption.Tiles.Trees
 		{
 			GrowsOnTileId = new int[1] { ModContent.TileType<IrradiatedSnowTile>() };
 		}
-		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-		{
-		}
-		public override Asset<Texture2D> GetTexture()
+        public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+        {
+            throw new System.NotImplementedException();
+        }
+        public override Asset<Texture2D> GetTexture()
 		{
 			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedBorealTree");
 		}
+		public override bool Shake(int x, int y, ref bool createLeaves) => false;
 		public override int SaplingGrowthType(ref int style)
 		{
 			style = 0;
