@@ -6,6 +6,7 @@ using Redemption.Tiles.Tiles;
 using Terraria.GameContent;
 using Terraria;
 using ReLogic.Content;
+using Terraria.Enums;
 
 namespace Redemption.Tiles.Trees
 {
@@ -19,14 +20,16 @@ namespace Redemption.Tiles.Trees
 			SpecialGroupMinimumSaturationValue = 0.88f,
 			SpecialGroupMaximumSaturationValue = 1f
 		};
-		public override void SetStaticDefaults()
+        public override void SetStaticDefaults()
 		{
 			GrowsOnTileId = new int[3] { ModContent.TileType<IrradiatedGrassTile>(), ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>() };
 		}
-		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-		{
-		}
-		public override Asset<Texture2D> GetTexture()
+        public override bool Shake(int x, int y, ref bool createLeaves) => false;
+        public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+        {
+            throw new System.NotImplementedException();
+        }
+        public override Asset<Texture2D> GetTexture()
 		{
 			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPurityTree");
 		}

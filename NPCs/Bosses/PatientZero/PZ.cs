@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 200 years, conscious and aware of the situation around him... God, that must be tormentous.")
+                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.")
             });
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -715,6 +715,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                             player.RedemptionScreen().lockScreen = true;
                             player.RedemptionScreen().ScreenShakeIntensity = 5;
+                            player.RedemptionScreen().TimedZoom(new Vector2(1.4f, 1.4f), 100, 100);
                             NPC.LockMoveRadius(player);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
                             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);

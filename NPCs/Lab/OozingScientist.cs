@@ -240,7 +240,7 @@ namespace Redemption.NPCs.Lab
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 6, 12));
-            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
             npcLoot.Add(ItemDropRule.OneFromOptions(50, ModContent.ItemType<SneakloneHelmet1>(), ModContent.ItemType<SneakloneHelmet2>(), ModContent.ItemType<SneakloneSuit>(), ModContent.ItemType<SneakloneLegs>()));
         }
 

@@ -18,7 +18,6 @@ namespace Redemption.NPCs.Friendly
             DisplayName.SetDefault("Zephos");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
-            NPCID.Sets.SavesAndLoads[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Hide = true
@@ -37,6 +36,7 @@ namespace Redemption.NPCs.Friendly
             NPC.dontTakeDamage = true;
             NPC.npcSlots = 0;
         }
+        public override bool NeedSaving() => true;
         public override bool UsesPartyHat() => false;
         public override bool CheckActive() => false;
         public override bool CanChat() => true;

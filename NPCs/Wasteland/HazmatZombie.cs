@@ -249,7 +249,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GasMask>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit3>(), 20));
-            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Zombie, false);
             foreach (var dropRule in dropRules)
             {

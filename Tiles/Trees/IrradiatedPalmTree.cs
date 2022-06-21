@@ -27,6 +27,7 @@ namespace Redemption.Tiles.Trees
         {
             return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPalmTree");
         }
+        public override bool Shake(int x, int y, ref bool createLeaves) => false;
         public override int SaplingGrowthType(ref int style)
         {
             style = 1;

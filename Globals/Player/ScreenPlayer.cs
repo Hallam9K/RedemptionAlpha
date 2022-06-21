@@ -79,6 +79,46 @@ namespace Redemption
         public Vector2 ScreenFocusPosition;
         public float ScreenFocusInterpolant;
 
+        public Vector2 timedZoom = Vector2.Zero;
+        public float timedZoomTime = 0;
+        public float timedZoomTimeMax = 0;
+        public float timedZoomDuration = 0;
+        public float timedZoomDurationMax = 0;
+        public void TimedZoom(Vector2 zoom, int zoomTime, int zoomDuration)
+        {
+            timedZoom = zoom;
+            timedZoomTimeMax = zoomTime;
+            timedZoomDurationMax = zoomDuration;
+        }
+        public override void PostUpdateMiscEffects()
+        {
+            if (timedZoomDurationMax > 0 && timedZoom != Vector2.Zero)
+            {
+                if (timedZoomDuration == 0)
+                {
+                    if (timedZoomTime < timedZoomTimeMax)
+                        timedZoomTime++;
+                    else if (timedZoomTime == timedZoomTimeMax)
+                        timedZoomDuration = 1;
+                }
+                else if (timedZoomDuration >= 1 && timedZoomDuration < timedZoomDurationMax)
+                    timedZoomDuration++;
+                else if (timedZoomDuration == timedZoomDurationMax)
+                {
+                    if (timedZoomTime > 0)
+                        timedZoomTime--;
+                    else if (timedZoomTime == 0)
+                    {
+                        timedZoomTime = 0;
+                        timedZoomTimeMax = 0;
+                        timedZoomDuration = 0;
+                        timedZoomDurationMax = 0;
+
+                        timedZoom = Vector2.Zero;
+                    }
+                }
+            }
+        }
         public override void ModifyScreenPosition()
         {
             if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)

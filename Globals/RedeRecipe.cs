@@ -63,115 +63,115 @@ namespace Redemption.Globals
 
         public override void AddRecipes()
         {
-            Mod.CreateRecipe(ItemID.GreenDye)
+            Recipe.Create(ItemID.GreenDye)
                 .AddIngredient<TreeBugShell>()
                 .AddTile(TileID.DyeVat)
                 .Register();
 
-            Mod.CreateRecipe(ItemID.CyanDye)
+            Recipe.Create(ItemID.CyanDye)
                 .AddIngredient<CoastScarabShell>()
                 .AddTile(TileID.DyeVat)
                 .Register();
 
             // Living Furniture
-            Mod.CreateRecipe(ItemID.LivingLoom)
+            Recipe.Create(ItemID.LivingLoom)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodWand)
+            Recipe.Create(ItemID.LivingWoodWand)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LeafWand)
+            Recipe.Create(ItemID.LeafWand)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingLeafWall, 4)
+            Recipe.Create(ItemID.LivingLeafWall, 4)
                 .AddIngredient(ModContent.ItemType<LivingTwig>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodWall, 4)
+            Recipe.Create(ItemID.LivingWoodWall, 4)
                 .AddIngredient(ModContent.ItemType<LivingTwig>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodDoor)
+            Recipe.Create(ItemID.LivingWoodDoor)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodChair)
+            Recipe.Create(ItemID.LivingWoodChair)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodTable)
+            Recipe.Create(ItemID.LivingWoodTable)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodPiano)
+            Recipe.Create(ItemID.LivingWoodPiano)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 15)
                 .AddIngredient(ItemID.Bone, 4)
                 .AddIngredient(ItemID.Book)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodBookcase)
+            Recipe.Create(ItemID.LivingWoodBookcase)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 20)
                 .AddIngredient(ItemID.Book, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodBed)
+            Recipe.Create(ItemID.LivingWoodBed)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 15)
                 .AddIngredient(ItemID.Silk, 5)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodSofa)
+            Recipe.Create(ItemID.LivingWoodSofa)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 5)
                 .AddIngredient(ItemID.Silk, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodBathtub)
+            Recipe.Create(ItemID.LivingWoodBathtub)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 14)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodLantern)
+            Recipe.Create(ItemID.LivingWoodLantern)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 6)
                 .AddIngredient(ItemID.Torch)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodLamp)
+            Recipe.Create(ItemID.LivingWoodLamp)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 3)
                 .AddIngredient(ItemID.Torch)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodCandle)
+            Recipe.Create(ItemID.LivingWoodCandle)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 4)
                 .AddIngredient(ItemID.Torch)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodChandelier)
+            Recipe.Create(ItemID.LivingWoodChandelier)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 4)
                 .AddIngredient(ItemID.Torch, 4)
                 .AddIngredient(ItemID.Chain)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodCandelabra)
+            Recipe.Create(ItemID.LivingWoodCandelabra)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 5)
                 .AddIngredient(ItemID.Torch, 3)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodWorkBench)
+            Recipe.Create(ItemID.LivingWoodWorkBench)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodPlatform, 2)
+            Recipe.Create(ItemID.LivingWoodPlatform, 2)
                 .AddIngredient(ModContent.ItemType<LivingTwig>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodClock)
+            Recipe.Create(ItemID.LivingWoodClock)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
                 .AddRecipeGroup("IronBar", 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            Mod.CreateRecipe(ItemID.LivingWoodSink)
+            Recipe.Create(ItemID.LivingWoodSink)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 6)
                 .AddIngredient(ItemID.WaterBucket)
                 .AddTile(TileID.WorkBenches)

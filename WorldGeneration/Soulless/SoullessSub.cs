@@ -38,7 +38,7 @@ namespace Redemption.WorldGeneration.Soulless
             Main.dayTime = true;
             Main.time = 40000;
         }
-        private double animationTimer = 0;
+        //private double animationTimer = 0;
         /*public override void DrawMenu(GameTime gameTime)
         {
             Texture2D soullessBackground = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessSubworldTex").Value;

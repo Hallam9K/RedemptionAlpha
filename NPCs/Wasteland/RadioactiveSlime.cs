@@ -100,7 +100,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsCrimson(), ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 3, 8));
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 10000));
-            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForbiddenFries>(), 150));
+            npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
         }
         public override void HitEffect(int hitDirection, double damage)
         {

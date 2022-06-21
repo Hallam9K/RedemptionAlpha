@@ -435,7 +435,7 @@ namespace Redemption.Globals.NPC
             }
             if (RedeWorld.SkeletonInvasion)
             {
-                spawnRate = 18;
+                spawnRate = 19;
                 maxSpawns = 12;
             }
             if (player.InModBiome<LabBiome>())
@@ -454,7 +454,7 @@ namespace Redemption.Globals.NPC
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight)
             {
                 pool.Clear();
-                pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 3);
+                pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 2);
                 pool.Add(ModContent.NPCType<EpidotrianSkeleton>(), 5);
                 pool.Add(ModContent.NPCType<CavernSkeletonSpawner>(), 5);
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);

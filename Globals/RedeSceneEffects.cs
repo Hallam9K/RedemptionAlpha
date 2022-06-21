@@ -56,12 +56,12 @@ namespace Redemption.Globals
     {
         public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Island");
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
-        public override void SpecialVisuals(Terraria.Player player)
+        public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1.2f).UseIntensity(1f)
-                .UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.GetModPlayer<BuffPlayer>().island);
-            player.ManageSpecialBiomeVisuals("MoR:IslandEffect", player.GetModPlayer<BuffPlayer>().island);
+                    .UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
+            player.ManageSpecialBiomeVisuals("MoR:IslandEffect", isActive);
         }
         public override bool IsSceneEffectActive(Terraria.Player player)
         {

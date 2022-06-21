@@ -34,7 +34,6 @@ namespace Redemption.Effects.RenderTargets
             graphicsDevice.Clear(Color.Transparent);
 
             // Draw our sprites.
-            float c = 1f / 255f;
 
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);

@@ -63,8 +63,6 @@ namespace Redemption.NPCs.Friendly
             NPC.dontTakeDamage = true;
         }
 
-        Vector2 DefaultPos;
-        private float giftRot;
         public override void AI()
         {
             Player player = Main.player[NPC.target];

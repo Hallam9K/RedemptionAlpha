@@ -21,6 +21,7 @@ using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -150,7 +151,6 @@ namespace Redemption
             }
             texture.SetData(buffer);
         }
-
         private void LoadCache()
         {
             _loadCache = new List<ILoadable>();
@@ -387,6 +387,23 @@ namespace Redemption
                 backgroundColor.B = (byte)sunB;
             }
         }
+        public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
+        {
+            if (Main.gameMenu)
+                return;
+
+            Player player = Main.LocalPlayer;
+            ScreenPlayer screenPlayer = player.GetModPlayer<ScreenPlayer>();
+
+            if (screenPlayer.timedZoomDurationMax > 0 && screenPlayer.timedZoom != Vector2.Zero)
+            {
+                float lerpAmount = MathHelper.Lerp(0, MathHelper.PiOver2, screenPlayer.timedZoomTime / screenPlayer.timedZoomTimeMax);
+
+                Vector2 idealScreenZoom = screenPlayer.timedZoom;
+                Transform.Zoom = Vector2.Lerp(new Vector2(1), idealScreenZoom, (float)Math.Sin(lerpAmount));
+            }
+        }
+
         public override void PreUpdateProjectiles()
         {
             if (Main.netMode != NetmodeID.Server)
