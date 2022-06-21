@@ -73,7 +73,7 @@ namespace Redemption.Globals
                         //_ = (1f + num4 * 10f) / 11f;
                         drawInfo.itemColor = drawInfo.itemColor.MultiplyRGBA(new Color(Vector4.Lerp(Vector4.One, new Vector4(0f, 0.12f, 0.16f, 0f), 1f - num4)));
                     }
-                    bool flag = drawInfo.drawPlayer.itemAnimation > 0 && heldItem.useStyle != 0;
+                    bool flag = drawInfo.drawPlayer.itemAnimation > 0 && heldItem.useStyle != ItemUseStyleID.None;
                     bool flag2 = heldItem.holdStyle != 0 && !drawInfo.drawPlayer.pulley;
                     if (!drawInfo.drawPlayer.CanVisuallyHoldItem(heldItem))
                     {
@@ -88,7 +88,7 @@ namespace Redemption.Globals
                     //Vector2 vector = Vector2.Zero;
 
                     Vector2 origin = new(sourceRect.Value.Width * 0.5f - sourceRect.Value.Width * 0.5f * drawInfo.drawPlayer.direction, sourceRect.Value.Height);
-                    if (heldItem.useStyle == 9 && drawInfo.drawPlayer.itemAnimation > 0)
+                    if (heldItem.useStyle == ItemUseStyleID.DrinkLiquid && drawInfo.drawPlayer.itemAnimation > 0)
                     {
                         Vector2 value2 = new(0.5f, 0.4f);
                         origin = sourceRect.Value.Size() * value2;
@@ -99,7 +99,7 @@ namespace Redemption.Globals
                     }
                     //origin += vector;
                     float itemRotation = drawInfo.drawPlayer.itemRotation;
-                    if (heldItem.useStyle == 8)
+                    if (heldItem.useStyle == ItemUseStyleID.GolfPlay)
                     {
                         ref float x = ref position.X;
                         float num6 = x;

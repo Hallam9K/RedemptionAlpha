@@ -24,16 +24,16 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/Wasteland";
         public override string BackgroundPath => "Textures/MapBackgrounds/PurityWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
-        public override void SpecialVisuals(Player player)
+        public override void SpecialVisuals(Player player, bool isActive)
         {
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
                 player.RedemptionPlayerBuff().HEVSuit;
 
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", player.InModBiome<WastelandPurityBiome>(), player.Center);
+            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", isActive, player.Center);
 
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(fogSafe ? 0.25f : 0.3f).UseIntensity(fogSafe ? 0.6f : 1f)
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome<WastelandPurityBiome>());
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
         }
         public override void OnLeave(Player player)
         {

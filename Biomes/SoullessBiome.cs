@@ -18,11 +18,11 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Textures/Bestiary/SoullessCaverns";
         public override string BackgroundPath => "Textures/MapBackgrounds/SoullessCavernsMap";
         public override Color? BackgroundColor => base.BackgroundColor;
-        public override void SpecialVisuals(Player player)
+        public override void SpecialVisuals(Player player, bool isActive)
         {
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", player.InModBiome<SoullessBiome>());
-            player.ManageSpecialBiomeVisuals("MoR:SoullessSky", player.InModBiome<SoullessBiome>(), player.Center);
+            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
+            player.ManageSpecialBiomeVisuals("MoR:SoullessSky", isActive, player.Center);
         }
         public override void OnLeave(Player player)
         {
