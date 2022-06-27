@@ -11,9 +11,10 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabMusic");
 
-        public override string BestiaryIcon => "Textures/Bestiary/TeochromeIcon";
-		public override string BackgroundPath => "Textures/MapBackgrounds/LabMapBackground";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/TeochromeIcon";
+		public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/LabMapBackground";
 		public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
 
         public override void SetStaticDefaults()
         {

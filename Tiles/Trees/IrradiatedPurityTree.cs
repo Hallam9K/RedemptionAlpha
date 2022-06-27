@@ -25,11 +25,10 @@ namespace Redemption.Tiles.Trees
 			GrowsOnTileId = new int[3] { ModContent.TileType<IrradiatedGrassTile>(), ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>() };
 		}
         public override bool Shake(int x, int y, ref bool createLeaves) => false;
-        public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-        {
-            throw new System.NotImplementedException();
-        }
-        public override Asset<Texture2D> GetTexture()
+		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+		{
+		}
+		public override Asset<Texture2D> GetTexture()
 		{
 			return ModContent.Request<Texture2D>("Redemption/Tiles/Trees/IrradiatedPurityTree");
 		}

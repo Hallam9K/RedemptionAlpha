@@ -20,13 +20,5 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Cyan;
             Item.maxStack = 1;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ItemID.LunarBar, 5)
-                .AddTile(TileID.LunarCraftingStation)
-                .Register();
-        }
     }
 }

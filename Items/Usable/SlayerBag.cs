@@ -51,6 +51,7 @@ namespace Redemption.Items.Usable
             player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SlayerGun>());
             player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SlayerMedal>());
             player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12));
+            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Holokey>());
         }
 
         public override Color? GetAlpha(Color lightColor)

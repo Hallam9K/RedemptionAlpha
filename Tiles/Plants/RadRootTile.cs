@@ -91,26 +91,16 @@ namespace Redemption.Tiles.Plants
             Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
             Player nearestPlayer = Main.player[Player.FindClosest(worldPosition, 16, 16)];
 
-            int herbItemType = ModContent.ItemType<Nightshade>();
+            int herbItemType = ModContent.ItemType<RadRoot>();
             int herbItemStack = 1;
 
-            int seedItemType = ModContent.ItemType<NightshadeSeeds>();
-            int seedItemStack = 1;
-
             if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth)
-            {
                 herbItemStack = Main.rand.Next(1, 3);
-                seedItemStack = Main.rand.Next(1, 6);
-            }
             else if (stage == PlantStage.Grown)
-            {
                 herbItemStack = 1;
-                seedItemStack = Main.rand.Next(1, 4);
-            }
+
             if (herbItemType > 0 && herbItemStack > 0)
                 Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, herbItemType, herbItemStack);
-            if (seedItemType > 0 && seedItemStack > 0)
-                Item.NewItem(new EntitySource_TileBreak(i, j), worldPosition, seedItemType, seedItemStack);
             return false;
         }
         public override bool IsTileSpelunkable(int i, int j)

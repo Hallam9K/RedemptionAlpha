@@ -66,13 +66,5 @@ namespace Redemption.Items.Weapons.HM.Magic
                 tooltips.Add(line);
             }
         }
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-            .AddIngredient(ItemID.WaterBolt)
-            .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 7)
-            .AddTile(TileID.Bookcases)
-            .Register();
-        }
     }
 }

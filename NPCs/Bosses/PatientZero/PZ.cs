@@ -803,25 +803,28 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 if (KariFrame > 3)
                     KariFrame = 0;
             }
-            if (OpenEye && NPC.frame.Y != 0)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                if (NPC.frameCounter++ >= 20)
+                if (OpenEye && NPC.frame.Y != 0)
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 3 * frameHeight)
-                        NPC.frame.Y = 0;
+                    if (NPC.frameCounter++ >= 20)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
                 }
-            }
-            else if (!OpenEye && NPC.frame.Y != 2 * frameHeight)
-            {
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 20)
+                else if (!OpenEye && NPC.frame.Y != 2 * frameHeight)
                 {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 3 * frameHeight)
-                        NPC.frame.Y = 0;
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter >= 20)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
                 }
             }
         }

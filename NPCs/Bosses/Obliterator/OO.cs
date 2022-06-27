@@ -21,6 +21,8 @@ using Redemption.NPCs.Bosses.Cleaver;
 using ReLogic.Content;
 using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -156,6 +158,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {

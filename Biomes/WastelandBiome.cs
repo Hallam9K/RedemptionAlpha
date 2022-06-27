@@ -21,9 +21,10 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Textures/Bestiary/Wasteland";
-        public override string BackgroundPath => "Textures/MapBackgrounds/PurityWastelandMap1";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/Wasteland";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/PurityWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
         public override void SpecialVisuals(Player player, bool isActive)
         {
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
@@ -82,16 +83,17 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Textures/Bestiary/WastelandSnow";
-        public override string BackgroundPath => "Textures/MapBackgrounds/SnowWastelandMap1";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandSnow";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/SnowWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Snow Wasteland");
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override bool IsBiomeActive(Player player)
         {
@@ -106,16 +108,17 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Textures/Bestiary/WastelandDesert";
-        public override string BackgroundPath => "Textures/MapBackgrounds/DesertWastelandMap1";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandDesert";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/DesertWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Desert Wasteland");
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override bool IsBiomeActive(Player player)
         {
@@ -131,9 +134,10 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Textures/Bestiary/WastelandCorrupt";
-        public override string BackgroundPath => "Textures/MapBackgrounds/CorruptionWastelandMap1";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandCorrupt";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/CorruptionWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
 
         public override void SetStaticDefaults()
         {
@@ -156,9 +160,10 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland");
 
-        public override string BestiaryIcon => "Textures/Bestiary/WastelandCrimson";
-        public override string BackgroundPath => "Textures/MapBackgrounds/CrimsonWastelandMap1";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/WastelandCrimson";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/CrimsonWastelandMap1";
         public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
 
         public override void SetStaticDefaults()
         {

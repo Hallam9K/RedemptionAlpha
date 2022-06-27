@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Friendly
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("Fallen are a catergory of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons."),
+                new FlavorTextBestiaryInfoElement("Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons."),
             });
         }
 
@@ -112,15 +112,12 @@ namespace Redemption.NPCs.Friendly
 
                 if (NPC.IsABestiaryIconDummy)
                 {
-                    if (FallenType < 0)
-                        FallenType = 0;
-
                     bestiaryTimer++;
                     if (bestiaryTimer % 60 == 0)
                     {
                         FallenType++;
-                        if (FallenType > 2)
-                            FallenType = 0;
+                        if (FallenType > 1)
+                            FallenType = -1;
                     }
                 }
             }
@@ -151,7 +148,7 @@ namespace Redemption.NPCs.Friendly
 
         public override List<string> SetNPCNameList()
         {
-            return new List<string> { "Happins, Tenvon, Okvot" };
+            return new List<string> { "Happins", "Tenvon", "Okvot" };
         }
 
         public override string GetChat()

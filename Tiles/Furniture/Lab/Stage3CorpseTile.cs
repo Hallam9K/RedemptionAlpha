@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -28,11 +29,15 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addTile(Type);
             DustType = DustID.GreenTorch;
             HitSound = SoundID.Item27;
-            MinPick = 500;
+            MinPick = 200;
             MineResist = 7f;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Crystallized Corpse");
             AddMapEntry(new Color(54, 193, 59));
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<Stage3Corpse>());
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -41,20 +46,5 @@ namespace Redemption.Tiles.Furniture.Lab
             b = 0.3f;
         }
         public override bool CanExplode(int i, int j) => false;
-    }
-    public class Stage3Corpse : PlaceholderTile
-    {
-        public override string Texture => "Redemption/Placeholder";
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Crystallized Corpse");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createTile = ModContent.TileType<Stage3CorpseTile>();
-        }
     }
 }

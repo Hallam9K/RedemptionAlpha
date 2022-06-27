@@ -47,6 +47,12 @@ namespace Redemption.Items.Accessories.HM
                 .AddIngredient(ItemID.TitaniumBar, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.EoCShield)
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ItemID.AdamantiteBar, 5)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -143,6 +149,9 @@ namespace Redemption.Items.Accessories.HM
                             continue;
 
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
+                            continue;
+
+                        if (npc.CountsAsACritter && Player.dontHurtCritters)
                             continue;
 
                         float damage = 40 * Player.GetDamage(DamageClass.Melee).Multiplicative;
