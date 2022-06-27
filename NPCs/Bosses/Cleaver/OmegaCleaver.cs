@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.width = 98;
             NPC.height = 280;
             NPC.friendly = false;
-            NPC.damage = 160;
+            NPC.damage = 110;
             NPC.defense = 60;
             NPC.lifeMax = 55000;
             NPC.HitSound = SoundID.NPCHit4;

@@ -451,7 +451,7 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
             }
-            if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight)
+            if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
                 pool.Add(ModContent.NPCType<RaveyardSkeletonSpawner>(), 2);
@@ -481,7 +481,7 @@ namespace Redemption.Globals.NPC
                         pool.Add(ModContent.NPCType<BlisteredFish>(), 0.4f);
                 }
             }
-            if (spawnInfo.Player.InModBiome<WastelandPurityBiome>())
+            if (spawnInfo.Player.InModBiome<WastelandPurityBiome>() && !spawnInfo.Player.ZoneDungeon && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 int[] GrassTileArray = { ModContent.TileType<IrradiatedCorruptGrassTile>(), ModContent.TileType<IrradiatedCrimsonGrassTile>(), ModContent.TileType<IrradiatedGrassTile>() };
                 bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);

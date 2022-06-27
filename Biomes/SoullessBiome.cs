@@ -15,9 +15,10 @@ namespace Redemption.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SoullessCaverns2");
 
-        public override string BestiaryIcon => "Textures/Bestiary/SoullessCaverns";
-        public override string BackgroundPath => "Textures/MapBackgrounds/SoullessCavernsMap";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/SoullessCaverns";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/SoullessCavernsMap";
         public override Color? BackgroundColor => base.BackgroundColor;
+        public override string MapBackground => BackgroundPath;
         public override void SpecialVisuals(Player player, bool isActive)
         {
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);

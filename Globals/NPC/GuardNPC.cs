@@ -62,6 +62,8 @@ namespace Redemption.Globals.NPC
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
                 damage *= 4;
+            if (ProjectileTags.Explosive.Has(projectile.type))
+                damage *= 4;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

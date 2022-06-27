@@ -49,7 +49,7 @@ namespace Redemption.Items.Accessories.HM
         public const int DashCooldown = 50;
         public const int DashDuration = 35;
 
-        public const float DashVelocity = 9f;
+        public const float DashVelocity = 10f;
 
         public int DashDir = -1;
 
@@ -114,6 +114,9 @@ namespace Redemption.Items.Accessories.HM
                             continue;
 
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
+                            continue;
+
+                        if (npc.CountsAsACritter && Player.dontHurtCritters)
                             continue;
 
                         float damage = 20 * Player.GetDamage(DamageClass.Melee).Multiplicative;

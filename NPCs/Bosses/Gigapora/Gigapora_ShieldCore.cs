@@ -85,7 +85,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void OnKill()
         {
             Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
-            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (seg.active && seg.type == ModContent.NPCType<Gigapora_BodySegment>())
             {

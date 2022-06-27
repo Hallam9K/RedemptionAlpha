@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.HM
 		{
             DisplayName.SetDefault("Broken Blade");
             Tooltip.SetDefault("Hitting enemies with physical melee has a chance to summon a Phantom Cleaver above their heads" +
-                "\n15% increased physical melee damage");
+                "\n10% increased physical melee damage");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -30,7 +30,7 @@ namespace Redemption.Items.Accessories.HM
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
             player.RedemptionPlayerBuff().brokenBlade = true;
-            player.RedemptionPlayerBuff().TrueMeleeDamage += 0.15f;
+            player.RedemptionPlayerBuff().TrueMeleeDamage += 0.1f;
         }
 	}
     public class PhantomCleaver_F2 : ModProjectile

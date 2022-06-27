@@ -289,6 +289,11 @@ namespace Redemption.Globals
                 TooltipLine hammerLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(hammerLine);
             }
+            if (!RedeConfigClient.Instance.ElementDisable && ProjectileTags.Explosive.Has(item.shoot))
+            {
+                TooltipLine explodeLine = new(Mod, "ExplodeBonus", "Explosive Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
+                tooltips.Add(explodeLine);
+            }
 
             if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type) && !ProjectileTags.NoElement.Has(item.shoot))
             {

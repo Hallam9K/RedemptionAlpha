@@ -39,6 +39,11 @@ namespace Redemption.Items.Armor.HM.Xenomite
                 .AddIngredient(ModContent.ItemType<XenomiteItem>(), 20)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.AdamantiteBar, 8)
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 20)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

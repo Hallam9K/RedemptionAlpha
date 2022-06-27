@@ -274,7 +274,7 @@ namespace Redemption.NPCs.Critters
                     NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
         public override bool? CanHitNPC(NPC target) => false;
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => Aggressive == 1;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => Aggressive == 1 && !target.dontHurtCritters;
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

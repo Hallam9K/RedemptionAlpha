@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -11,7 +12,7 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Minor improvements to all stats" +
+            Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'Sluuuuuurp'");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
@@ -25,9 +26,9 @@ namespace Redemption.Items.Usable.Potions
 
         public override void SetDefaults()
         {
-            Item.DefaultToFood(24, 40, BuffID.WellFed, 16000, true);
-            Item.value = 80;
-            Item.rare = ItemRarityID.Blue;
+            Item.DefaultToFood(24, 40, ModContent.BuffType<WellFed4>(), 10000);
+            Item.value = 120;
+            Item.rare = ItemRarityID.Cyan;
         }
     }
 }

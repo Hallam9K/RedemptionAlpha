@@ -14,7 +14,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crosshair");
-            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults()

@@ -68,6 +68,7 @@ namespace Redemption.Globals.Player
         public bool shinkiteHead;
         public bool vortiHead;
         public bool hikariteHead;
+        public bool blastBattery;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -118,6 +119,7 @@ namespace Redemption.Globals.Player
             TrueMeleeDamage = 1f;
             shellCap = false;
             ChickenForm = false;
+            blastBattery = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {

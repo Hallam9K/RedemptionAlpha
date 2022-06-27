@@ -19,7 +19,9 @@ namespace Redemption.Tiles.Tiles
             MinPick = 200;
             MineResist = 4f;
             HitSound = SoundID.Tink;
-            AddMapEntry(new Color(189, 191, 200));
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Cyberscrap");
+            AddMapEntry(new Color(189, 191, 200), name);
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{

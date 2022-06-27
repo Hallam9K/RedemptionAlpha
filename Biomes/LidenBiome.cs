@@ -4,8 +4,9 @@ namespace Redemption.Biomes
 {
     public class LidenBiome : ModBiome
     {
-        public override string BestiaryIcon => "Textures/Bestiary/Wasteland";
-        public override string BackgroundPath => "Textures/MapBackgrounds/LidenMapBG";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/Wasteland";
+        public override string BackgroundPath => "Redemption/Textures/MapBackgrounds/LidenMapBG";
+        public override string MapBackground => BackgroundPath;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Liden");
@@ -14,7 +15,7 @@ namespace Redemption.Biomes
     }
     public class LidenBiomeAlpha : ModBiome
     {
-        public override string BestiaryIcon => "Textures/Bestiary/AlphaIcon";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/AlphaIcon";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Alpha");
@@ -23,7 +24,7 @@ namespace Redemption.Biomes
     }
     public class LidenBiomeOmega : ModBiome
     {
-        public override string BestiaryIcon => "Textures/Bestiary/OmegaIcon";
+        public override string BestiaryIcon => "Redemption/Textures/Bestiary/OmegaIcon";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Omega");

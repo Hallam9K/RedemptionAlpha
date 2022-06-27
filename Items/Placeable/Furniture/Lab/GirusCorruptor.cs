@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Used to corrupt Xenomite, Starlite, AI Chips, etc."
+            Tooltip.SetDefault("Used to corrupt Xenomite, AI Chips, etc."
                 + "\nFound in the Abandoned Laboratory");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

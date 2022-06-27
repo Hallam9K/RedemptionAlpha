@@ -217,7 +217,7 @@ namespace Redemption.NPCs.Critters
             int gotNPC = GetNearestNPC();
             if (CountCheck() > 5)
             {
-                if (NPC.Sight(player, 100, false, true))
+                if (NPC.Sight(player, 100, false, true) && !player.dontHurtCritters)
                 {
                     globalNPC.attacker = player;
                     AITimer = 0;

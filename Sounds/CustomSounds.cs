@@ -6,32 +6,33 @@ namespace Redemption
 {
     public static class CustomSounds
     {
-		public static void UpdateLoopingSound(ref SlotId slot, SoundStyle style, float volume, float pitch = 0f, Vector2? position = null)
-		{
-			SoundEngine.TryGetActiveSound(slot, out var sound);
+        public static void UpdateLoopingSound(ref SlotId slot, SoundStyle style, float volume, float pitch = 0f, Vector2? position = null)
+        {
+            SoundEngine.TryGetActiveSound(slot, out var sound);
 
-			if (volume > 0f)
-			{
-				if (sound == null)
-				{
-					slot = SoundEngine.PlaySound(style with { Volume = volume, Pitch = pitch }, position);
-					return;
-				}
+            if (volume > 0f)
+            {
+                if (sound == null)
+                {
+                    slot = SoundEngine.PlaySound(style with { Volume = volume, Pitch = pitch }, position);
+                    return;
+                }
 
-				sound.Position = position;
-				sound.Volume = volume;
-			}
-			else if (sound != null)
-			{
-				sound.Stop();
+                sound.Position = position;
+                sound.Volume = volume;
+            }
+            else if (sound != null)
+            {
+                sound.Stop();
 
-				slot = SlotId.Invalid;
-			}
-		}
-		public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
+                slot = SlotId.Invalid;
+            }
+        }
+        public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
         {
             PitchVariance = 0.2f
         };
+        public static readonly SoundStyle AlarmItem = new("Redemption/Sounds/Custom/AlarmItem") { PitchVariance = .1f };
         public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
         public static readonly SoundStyle BallCreate = new("Redemption/Sounds/Custom/BallCreate") { PitchVariance = .1f };
         public static readonly SoundStyle BallFire = new("Redemption/Sounds/Custom/BallFire") { PitchVariance = .1f };

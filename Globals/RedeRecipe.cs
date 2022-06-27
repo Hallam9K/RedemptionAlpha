@@ -4,6 +4,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -71,6 +72,31 @@ namespace Redemption.Globals
             Recipe.Create(ItemID.CyanDye)
                 .AddIngredient<CoastScarabShell>()
                 .AddTile(TileID.DyeVat)
+                .Register();
+
+            Recipe.Create(ItemID.RottenEgg, 15)
+                .AddIngredient<ChickenEgg>(15)
+                .AddIngredient(ItemID.VilePowder)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+            Recipe.Create(ItemID.RottenEgg, 15)
+                .AddIngredient<ChickenEgg>(15)
+                .AddIngredient(ItemID.ViciousPowder)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            Recipe.Create(ItemID.BunnyStew)
+                .AddIngredient<HazmatBunnyItem>()
+                .AddTile(TileID.CookingPots)
+                .Register();
+
+            Recipe.Create(ItemID.DryadCoverings)
+                .AddIngredient(ItemID.Vine, 6)
+                .AddTile(TileID.Loom)
+                .Register();
+            Recipe.Create(ItemID.DryadLoincloth)
+                .AddIngredient(ItemID.Vine, 4)
+                .AddTile(TileID.Loom)
                 .Register();
 
             // Living Furniture
