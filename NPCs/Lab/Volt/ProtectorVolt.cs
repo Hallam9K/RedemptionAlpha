@@ -15,6 +15,8 @@ using Terraria.Utilities;
 using Redemption.WorldGeneration;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Terraria.Audio;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -121,6 +123,7 @@ namespace Redemption.NPCs.Lab.Volt
         private bool FloatPos;
         public float gunRot;
         private bool faceLeft;
+        public readonly Vector2 modifier = new(0, -200);
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -128,6 +131,7 @@ namespace Redemption.NPCs.Lab.Volt
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
+            SoundStyle voice = CustomSounds.Voice6 with { Pitch = -0.1f };
             if (NPC.spriteDirection == 1)
             {
                 if (faceLeft)
@@ -433,7 +437,12 @@ namespace Redemption.NPCs.Lab.Volt
                             if (RedeBossDowned.downedVolt)
                             {
                                 if (AITimer == 10)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Enough.", true, false);
+                                {
+                                    Dialogue d1 = new(NPC, "Enough.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier); // 144
+
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
+                                }
                                 if (AITimer >= 30)
                                 {
                                     AITimer = 0;
@@ -444,14 +453,16 @@ namespace Redemption.NPCs.Lab.Volt
                             else
                             {
                                 if (AITimer == 10)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "... Are you allowed through? Let me check.", true, false);
-                                if (AITimer == 120)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "... Oh?", true, false);
-                                if (AITimer == 260)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "... You're allowed through?", true, false);
-                                if (AITimer == 420)
-                                    CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "This was mildly embarrassing. Apologies.", true, false);
-                                if (AITimer >= 620)
+                                {
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, "... Are you allowed through?[30] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 214
+                                         .Add(new(NPC, "... Oh?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 114
+                                         .Add(new(NPC, "... You're allowed through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 154
+                                         .Add(new(NPC, "This was mildly embarrassing.[30] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 240
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(chain);
+                                }
+                                if (AITimer >= 732)
                                 {
                                     AITimer = 0;
                                     TimerRand = 2;

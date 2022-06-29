@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
@@ -30,6 +31,11 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 300;
+            Projectile.hide = true;
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
         }
         public int hitCounter;
         public override void AI()
