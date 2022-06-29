@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.UI;
 using Redemption.WorldGeneration;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,20 +52,23 @@ namespace Redemption.NPCs.Lab.Janitor
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
             NPC.LookByVelocity();
+            SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
 
             moveTo = new((RedeGen.LabVector.X + 190) * 16, (RedeGen.LabVector.Y + 21) * 16);
             switch (State)
             {
                 case 0:
                     if (AITimer++ == 10)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Okay, okay!", true, false);
-                    if (AITimer == 100)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Alright fine, you probably can handle yourself here.", true, false);
-                    if (AITimer == 260)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Here, have this Lab Access thing and get lost!", true, false);
-                    if (AITimer == 390)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "I got moppin' to do.", true, false);
-                    if (AITimer >= 390)
+                    {
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "Okay,[10] okay!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 132
+                             .Add(new(NPC, "Alright fine,[10] you probably can handle yourself here.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 214
+                             .Add(new(NPC, "Here,[10] have this Lab Access thing and get lost!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 202
+                             .Add(new(NPC, "I got moppin' to do.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 170
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.Add(chain);
+                    }
+                    if (AITimer >= 558)
                     {
                         if (NPC.DistanceSQ(moveTo) < 16 * 16)
                         {
@@ -138,12 +143,15 @@ namespace Redemption.NPCs.Lab.Janitor
                     break;
                 case 3:
                     if (AITimer++ == 40)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Ey...", true, false);
-                    if (AITimer == 180)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Did you just... block my way?", true, false);
-                    if (AITimer == 340)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Well screw you too!", true, false);
-                    if (AITimer > 420)
+                    {
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "Ey...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 110
+                             .Add(new(NPC, "Did you just...[30] block my way?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 188
+                             .Add(new(NPC, "Well screw you too!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 168
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.Add(chain);
+                    }
+                    if (AITimer > 486)
                     {
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;

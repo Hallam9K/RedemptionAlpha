@@ -11,6 +11,7 @@ using Terraria.Audio;
 using Redemption.Base;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -48,6 +49,7 @@ namespace Redemption.NPCs.Lab.Volt
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
+        public readonly Vector2 modifier = new(0, -200);
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -55,6 +57,8 @@ namespace Redemption.NPCs.Lab.Volt
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
+
+            SoundStyle voice = CustomSounds.Voice6 with { Pitch = -0.1f };
 
             if (RedeBossDowned.downedVolt)
                 NPC.Transform(ModContent.NPCType<ProtectorVolt_NPC>());
@@ -86,14 +90,18 @@ namespace Redemption.NPCs.Lab.Volt
                         {
                             AITimer++;
                             if (AITimer == 40)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Halt!", true, false);
-                            if (AITimer == 120)
-                                CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "You aren't supposed to be here!", true, false);
-                            if (AITimer == 260)
+                            {
+                                DialogueChain chain = new();
+                                chain.Add(new(NPC, "Halt!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 110
+                                     .Add(new(NPC, "You aren't supposed to be here!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 192
+                                TextBubbleUI.Visible = true;
+                                TextBubbleUI.Add(chain);
+                            }
+                            if (AITimer == 342)
                             {
                                 NPC.velocity.Y = -8;
                             }
-                            if ((NPC.collideY || NPC.velocity.Y == 0) && AITimer >= 270)
+                            if ((NPC.collideY || NPC.velocity.Y == 0) && AITimer >= 352)
                             {
                                 Mod mod = Redemption.Instance;
 
@@ -126,14 +134,16 @@ namespace Redemption.NPCs.Lab.Volt
                     case 2:
                         AITimer++;
                         if (AITimer == 40)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Hm? Are you supposed to be let through?", true, false);
-                        if (AITimer == 220)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "One second...", true, false);
-                        if (AITimer == 340)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "...", true, false);
-                        if (AITimer == 500)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityYellow, "Everything seems to be in order. Move along.", true, false);
-                        if (AITimer > 560)
+                        {
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, "Hm? Are you supposed to be let through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 178
+                                 .Add(new(NPC, "One second...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 126
+                                 .Add(new(NPC, ".[20].[20].[20]", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 166
+                                 .Add(new(NPC, "Everything seems to be in order.[30] Move along.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 248
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(chain);
+                        }
+                        if (AITimer > 758)
                         {
                             if (!LabArea.labAccess[3])
                                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
