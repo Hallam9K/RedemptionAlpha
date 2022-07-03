@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4);
                 RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.2f);
             }
-            if (Projectile.localAI[0] == 200)
+            if (Projectile.localAI[0] == 136)
             {
                 SoundEngine.PlaySound(SoundID.Tink);
                 Projectile.frame = 1;
@@ -39,13 +39,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                     Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(13, 2), RedeHelper.SpreadUp(5),
                         ModContent.Find<ModGore>("Redemption/HolyGrenadePin").Type);
             }
-            if (Projectile.localAI[0] == 320)
+            if (Projectile.localAI[0] == 338)
             {
                 Projectile.alpha = 255;
                 SoundEngine.PlaySound(SoundID.Item14);
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(255, 216, 0), DustID.GoldFlame, 20, 30, 3);
             }
-            if (Projectile.localAI[0] >= 380)
+            if (Projectile.localAI[0] >= 398)
                 Projectile.Kill();
         }
     }

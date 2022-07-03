@@ -41,14 +41,14 @@ namespace Redemption.NPCs.Lab.Janitor
 
         public override void AI()
         {
-            Player player = Main.player[NPC.target];
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
             SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
             switch (State)
             {
                 case 0:
-                    if (NPC.DistanceSQ(player.Center) <= 200 * 200 && player.Center.X < NPC.Center.X)
+                    if (player.active && !player.dead && NPC.DistanceSQ(player.Center) <= 200 * 200 && player.Center.X < NPC.Center.X)
                     {
                         if (player.IsFullTBot())
                             State = 1;

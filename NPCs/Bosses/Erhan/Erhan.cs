@@ -237,16 +237,17 @@ namespace Redemption.NPCs.Bosses.Erhan
         private float TimerRand2;
         private bool Spared;
         private Vector2 playerOrigin;
+        public readonly Vector2 modifier = new(0, -200);
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
         public override void AI()
         {
-            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
-            if (MoRDialogueUI.Visible)
-                RedeSystem.Instance.DialogueUIElement.TextPos = text;
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            SoundStyle voice = CustomSounds.Voice4 with { Pitch = -0.2f };
+            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
 
             Player player = Main.player[NPC.target];
 
@@ -299,36 +300,40 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer++ == 0)
                                     {
                                         ArmType = 2;
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Great heavens!!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                        Dialogue d1 = new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 130
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d1);
                                     }
-                                    if (AITimer >= 120)
+                                    if (AITimer >= 130)
                                     {
                                         player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                                         player.RedemptionScreen().lockScreen = true;
                                         NPC.LockMoveRadius(player);
                                     }
-                                    if (AITimer == 120)
+                                    if (AITimer == 130)
                                     {
                                         ArmType = 0;
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Doth thine brain be stuck in a well!?", 240, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "Doth thine brain be stuck in a well!?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 174
+                                             .Add(new(NPC, "To summon a demon,[10] so close to my land...[30] 'Tis heresy!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 248
+                                             .Add(new(NPC, "Repent![30] Repent for thy sins!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 186
+                                             .Add(new(NPC, "Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 248
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
                                     }
-                                    if (AITimer == 360)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("To summon a demon, so close to my land... 'Tis heresy!", 240, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, null, NPC.Center, sound: true);
-                                    if (AITimer == 600)
+                                    if (AITimer == 552)
                                     {
                                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 200);
                                         ArmType = 2;
                                         HeadFrameY = 1;
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Repent! Repent for thy sins!", 200, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
                                     }
-                                    if (AITimer == 800)
+                                    if (AITimer == 738)
                                     {
                                         ArmType = 0;
                                         HeadFrameY = 0;
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Lest I smack'eth thine buttocks with the Hand of Judgement!", 240, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
                                     }
                                 }
-                                if (AITimer >= 1040)
+                                if (AITimer >= 986)
                                 {
                                     if (!Main.dedServ)
                                     {
@@ -351,7 +356,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                             else
                             {
                                 if (AITimer++ == 0 && !Main.dedServ)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("CEASE!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                {
+                                    Dialogue d1 = new(NPC, "CEASE!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 154
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
+                                }
 
                                 if (AITimer >= 120)
                                 {
@@ -824,11 +833,19 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
                             {
                                 if (AITimer == 60)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Huzzah! *pant* A shield!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                if (AITimer == 240)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But alas, this shield is useless against a blade!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                {
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, "Huzzah! [30]*pant*[30] A shield!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 184
+                                         .Add(new(NPC, "But alas,[10] this shield is useless against a blade!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 238
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(chain);
+                                }
                                 if (AITimer == 500)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("*pant* *pant* Alright'eth! I hath regained my breath. Have at thee!", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                {
+                                    Dialogue d1 = new(NPC, "*pant* *pant*[30] Alright'eth![30] I hath regained my breath.[30] Have at thee!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 354
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
+                                }
                             }
                             if (AITimer >= (RedeBossDowned.erhanDeath < 2 ? 500 : 360))
                             {
@@ -911,30 +928,36 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer++ == 10)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I foresee my defeat creeping up on me.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    if (AITimer == 190)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Well...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    if (AITimer == 370)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If all else fail'eth...", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    if (AITimer == 600)
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "I foresee my defeat creeping up on me.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 176
+                                             .Add(new(NPC, "Well...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 114
+                                             .Add(new(NPC, "If all else fail'eth...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 20, true, null, bubble, null, modifier)); // 166
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
+                                    if (AITimer == 516)
                                     {
                                         ArmType = 1;
                                         NPC.Shoot(NPC.Center + new Vector2(40 * NPC.spriteDirection, -80),
                                             ModContent.ProjectileType<HolyHandGrenadeOfAnglon>(), 0, Vector2.Zero, true, SoundID.Item30);
                                     }
-                                    if (AITimer == 620)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Grenade.", 120, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    if (AITimer == 800)
+                                    if (AITimer == 536)
                                     {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "Grenade.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 116
+                                             .Add(new(NPC, "...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 130, 0, false, null, bubble, null, modifier)) // 136
+                                             .Add(new(NPC, "How doth one use this thing?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 10, 0, false, null, bubble, null, modifier)); // 66
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
+                                    if (AITimer == 652)
                                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 60);
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, text, NPC.Center);
-                                    }
-                                    if (AITimer == 860)
-                                    {
+
+                                    if (AITimer == 788)
                                         HeadFrameY = 1;
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("How doth one use this thing?", 60, 1, 0.6f, "Erhan:", 0, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    }
-                                    if (AITimer >= 920)
+
+                                    if (AITimer >= 854)
                                     {
                                         HeadFrameY = 0;
                                         ArmType = 0;
@@ -993,28 +1016,33 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 }
                                 if (AITimer == 60)
                                 {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It would appear'eth, I hath lost.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                    Dialogue d1 = new(NPC, "It would[10] appear'eth,[20] I hath lost.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 216
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
                                 }
                                 if (AITimer == 300)
                                 {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If, mayhaps you shan't spare my life...", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                    Dialogue d2 = new(NPC, "If,[20] mayhaps you shan't[10] spare my life...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 238
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d2);
                                 }
                                 if (AITimer == 600)
                                 {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Send master Hallowed Knight my regards.", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                    Dialogue d3 = new(NPC, "Send master Hallowed Knight[20] my regards.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 228
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d3);
                                 }
                                 if (AITimer == 1200)
                                 {
+                                    Dialogue d4 = new(NPC, "Well...[30] 'Til we meet again!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 184
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d4);
+
                                     NPC.dontTakeDamage = true;
                                     if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
-
-                                if (AITimer == 1200)
-                                {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Well... 'Til we meet again!", 180, 1, 0.6f, "Erhan:", 0.5f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                }
-                                if (AITimer == 1380)
+                                if (AITimer == 1384)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                                     player.RedemptionScreen().ScreenShakeIntensity = 14;
@@ -1022,7 +1050,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     HolyFlare = true;
                                     NPC.alpha = 255;
                                 }
-                                if (AITimer >= 1385)
+                                if (AITimer >= 1389)
                                 {
                                     Spared = true;
                                     NPC.dontTakeDamage = false;
@@ -1047,7 +1075,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                     return false;
                 }
                 if (!Spared)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("", 1, 1, 0, "", 0, null, null, null, null);
+                {
+                    TextBubbleUI.Visible = false;
+                    TextBubbleUI.Clear();
+                }
                 return true;
             }
             else
