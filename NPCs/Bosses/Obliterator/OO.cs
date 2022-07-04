@@ -1452,7 +1452,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
-            SoundStyle voice = CustomSounds.Voice1 with { Pitch = -0.8f };
+            SoundStyle voice = CustomSounds.Voice5;
+            if (RedeBossDowned.downedVlitch3)
+                voice = CustomSounds.Voice5 with { Pitch = -0.5f };
             if (!player.active || player.dead)
             {
                 NPC.velocity *= 0.96f;

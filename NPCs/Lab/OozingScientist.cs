@@ -90,7 +90,7 @@ namespace Redemption.NPCs.Lab
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(600))
+            if (Main.rand.NextBool(1800))
                 SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_" + (Main.rand.NextBool() ? 21 : 23)), NPC.position);
 
             switch (AIState)

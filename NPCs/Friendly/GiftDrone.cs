@@ -16,6 +16,7 @@ using Redemption.Items.Usable;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
 using System;
+using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -146,6 +147,129 @@ namespace Redemption.NPCs.Friendly
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (NPC.ai[0] < 2)
                 spriteBatch.Draw(gift, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation * 2, NPC.frame.Size() / 2 + new Vector2(-6, -10), NPC.scale, effects, 0);
+
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
+        }
+    }
+    public class GiftDrone2 : ModNPC
+    {
+        public override string Texture => "Redemption/NPCs/Friendly/GiftDrone";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Gift Drone");
+            Main.npcFrameCount[NPC.type] = 3;
+            NPCDebuffImmunityData debuffData = new()
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Confused,
+                    BuffID.Poisoned,
+                    BuffID.Venom,
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<ViralityDebuff>(),
+                    ModContent.BuffType<DirtyWoundDebuff>()
+                }
+            };
+            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+        }
+        public override void SetDefaults()
+        {
+            NPC.width = 44;
+            NPC.height = 16;
+            NPC.friendly = true;
+            NPC.damage = 0;
+            NPC.defense = 20;
+            NPC.lifeMax = 100;
+            NPC.HitSound = SoundID.NPCHit4;
+            NPC.DeathSound = SoundID.NPCDeath56;
+            NPC.noTileCollide = true;
+            NPC.noGravity = true;
+            NPC.value = 0f;
+            NPC.knockBackResist = 0f;
+            NPC.aiStyle = -1;
+            NPC.dontTakeDamage = true;
+        }
+        public override bool NeedSaving() => true;
+        public override bool CheckActive() => false;
+        public override void AI()
+        {
+            Player player = Main.player[(int)NPC.ai[1]];
+            if (!player.active)
+                NPC.active = false;
+
+            NPC.LookAtEntity(player);
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
+
+            float soundVolume = NPC.velocity.Length() / 50;
+            if (soundVolume > 2f) { soundVolume = 2f; }
+            if (NPC.soundDelay == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item24 with { Volume = soundVolume }, NPC.position);
+                NPC.soundDelay = 10;
+            }
+
+            switch (NPC.ai[0])
+            {
+                case 0: // Fly Down
+                    if (NPC.Sight(player, 200, false, true, true))
+                    {
+                        NPC.ai[0] = 1;
+                    }
+                    else
+                        NPC.Move(player.Center + new Vector2(100 * player.direction, -100), NPC.DistanceSQ(player.Center) > 1800 * 1800 ? 50 : 7, 15);
+                    break;
+                case 1: // Stop
+                    NPC.velocity *= 0.96f;
+                    if (NPC.ai[2]++ > 120 && NPC.DistanceSQ(player.Center) < 400 * 400)
+                    {
+                        Item.NewItem(NPC.GetSource_Loot(), (int)NPC.Center.X, (int)NPC.Center.Y + 26, 1, 1, ModContent.ItemType<OmegaTransmitter>(), 1, false, 0, true, false);
+                        NPC.ai[2] = 0;
+                        NPC.ai[0] = 2;
+                    }
+                    break;
+                case 2: // Yeet out
+                    if (NPC.ai[2]++ > 10)
+                    {
+                        NPC.velocity.Y -= 0.3f;
+                        if (NPC.DistanceSQ(player.Center) > 1500 * 1500)
+                            NPC.active = false;
+                    }
+                    break;
+            }
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (++NPC.frameCounter >= 5)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 2 * frameHeight)
+                    NPC.frame.Y = 0;
+            }
+            NPC.rotation = NPC.velocity.X * 0.05f;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D gift = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "2_Gift").Value;
+            Texture2D giftGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "2_Gift_Glow").Value;
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            if (NPC.ai[0] < 2)
+            {
+                spriteBatch.Draw(gift, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation * 2, NPC.frame.Size() / 2 + new Vector2(-6, -10), NPC.scale, effects, 0);
+                spriteBatch.Draw(giftGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation * 2, NPC.frame.Size() / 2 + new Vector2(-6, -10), NPC.scale, effects, 0);
+            }
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
