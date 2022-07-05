@@ -203,10 +203,7 @@ namespace Redemption.Globals.Player
                                 Projectile.NewProjectile(Player.GetSource_FromThis(), spawn2, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileDrone>(), 0, 0, Main.myPlayer);
                             }
                             break;
-                        case 5: // Druid
-
-                            break;
-                        case 6: // Ranger
+                        case 5: // Ranger
                             if (Player.whoAmI == Main.myPlayer)
                                 Projectile.NewProjectile(Player.GetSource_FromThis(), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Hardlight_SoSCrosshair>(), 400, 8, Main.myPlayer);
                             break;
@@ -447,8 +444,6 @@ namespace Redemption.Globals.Player
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
             if (dragonLeadBonus && Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
-            if (eldritchRoot && target.life <= 0)
-                Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
             if (brokenBlade && proj.Redemption().TechnicallyMelee && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
                 Projectile.NewProjectile(Projectile.InheritSource(proj), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
@@ -462,8 +457,6 @@ namespace Redemption.Globals.Player
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
             if (dragonLeadBonus && Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
-            if (eldritchRoot && target.life <= 0)
-                Player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180);
             if (brokenBlade && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);

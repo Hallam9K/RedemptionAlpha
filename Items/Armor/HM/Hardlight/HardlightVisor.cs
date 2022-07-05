@@ -56,7 +56,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
                 player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
                     "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position";
             }
-            player.RedemptionPlayerBuff().hardlightBonus = 6;
+            player.RedemptionPlayerBuff().hardlightBonus = 5;
             player.RedemptionPlayerBuff().MetalSet = true;
         }
     }

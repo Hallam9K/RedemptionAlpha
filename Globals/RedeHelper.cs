@@ -905,7 +905,7 @@ namespace Redemption.Globals
         /// <param name="blind">Sets if the enemy can't see the target if they don't move much.</param>
         /// <param name="moveThreshold">Sets how much velocity is needed before being detectable, use if 'blind' is true.</param>
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
-            bool lineOfSight = false, bool canSeeHiding = false, bool blind = false, float moveThreshold = 2)
+            bool lineOfSight = false, bool canSeeHiding = false, bool blind = false, float moveThreshold = 2, int headOffset = 0)
         {
             if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
                 return false;
@@ -921,7 +921,7 @@ namespace Redemption.Globals
 
             if (lineOfSight)
             {
-                if (!Collision.CanHit(npc.position, npc.width, npc.height, codable.position, codable.width, codable.height))
+                if (!Collision.CanHit(npc.position - new Vector2(0, headOffset), npc.width, npc.height, codable.position, codable.width, codable.height))
                     return false;
             }
 

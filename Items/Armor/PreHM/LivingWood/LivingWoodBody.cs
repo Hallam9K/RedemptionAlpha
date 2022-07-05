@@ -11,7 +11,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("+1 increased druidic damage");
+            Tooltip.SetDefault("+1 increased summon damage");
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<DruidClass>().Flat += 1;
+            player.GetDamage(DamageClass.Summon).Flat += 1;
         }
     }
 }

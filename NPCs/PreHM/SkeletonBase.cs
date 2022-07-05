@@ -195,7 +195,7 @@ namespace Redemption.NPCs.PreHM
                     NPC.life = (int)(NPC.life * 1.2f);
                     NPC.defense = (int)(NPC.defense * 1.25f);
                     NPC.damage = (int)(NPC.damage * 0.6f);
-                    NPC.value = 4;
+                    NPC.value *= 4;
                     SpeedMultiplier = 1.8f;
                     break;
             }
