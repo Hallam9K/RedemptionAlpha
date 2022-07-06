@@ -139,7 +139,7 @@ namespace Redemption.NPCs.Friendly
             chat.Add("They're coming, the red is coming! Don't stay! ... Oh hewwo!", 0.2);
             chat.Add("Me like emeralds, they green! Rubies me hate! Too red!", 0.2);
             chat.Add("What is beyond portal? Let's find out Johnny! ... Wait that isn't right name...", 0.2);
-            chat.Add("Me sowwy! Me go with yellow man!", 0.2);
+            chat.Add("Me sowwy! Me go with yellow knight!", 0.2);
             if (RedeWorld.alignment < 0)
                 chat.Add("Your ambitions are futile and will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.", 0.05);
             chat.Add("Who you? You human?");

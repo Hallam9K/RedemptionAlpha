@@ -65,6 +65,8 @@ namespace Redemption.Globals
         public static int slayerRep;
         public static bool labSafe;
         public static int labSafeMessageTimer;
+        public static bool[] omegaTransmitReady = new bool[3];
+        public static bool apidroidKilled;
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -214,6 +216,21 @@ namespace Redemption.Globals
                         NetMessage.SendData(MessageID.WorldData);
                 }
             }
+            if (Terraria.NPC.downedPlantBoss && !omegaTransmitReady[0])
+            {
+                omegaTransmitReady[0] = true;
+                OmegaTransmitterMessage();
+            }
+            if (Terraria.NPC.downedGolemBoss && !omegaTransmitReady[1])
+            {
+                omegaTransmitReady[1] = true;
+                OmegaTransmitterMessage();
+            }
+            if (Terraria.NPC.downedMoonlord && !omegaTransmitReady[2])
+            {
+                omegaTransmitReady[2] = true;
+                OmegaTransmitterMessage();
+            }
 
             int PalebatImpID = Terraria.NPC.FindFirstNPC(ModContent.NPCType<PalebatImp>());
             if (PalebatImpID >= 0 && (Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer > 0)
@@ -254,6 +271,18 @@ namespace Redemption.Globals
                 blobbleSwarmCooldown--;
 
             UpdateNukeCountdown();
+        }
+
+        public static void OmegaTransmitterMessage()
+        {
+            string status = "A new Omega Prototype can be called using the Omega Transmitter";
+            if (Main.netMode == NetmodeID.Server)
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.IndianRed);
+            else if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(Language.GetTextValue(status), Color.IndianRed);
+
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
         }
 
         #region Warhead Countdown
@@ -367,6 +396,19 @@ namespace Redemption.Globals
             zephosDownedTimer = 0;
             slayerRep = 0;
             labSafe = false;
+            apidroidKilled = false;
+            if (Terraria.NPC.downedPlantBoss)
+                omegaTransmitReady[0] = true;
+            else
+                omegaTransmitReady[0] = false;
+            if (Terraria.NPC.downedGolemBoss)
+                omegaTransmitReady[1] = true;
+            else
+                omegaTransmitReady[1] = false;
+            if (Terraria.NPC.downedMoonlord)
+                omegaTransmitReady[2] = true;
+            else
+                omegaTransmitReady[2] = false;
         }
 
         public override void OnWorldUnload()
@@ -381,6 +423,10 @@ namespace Redemption.Globals
             zephosDownedTimer = 0;
             slayerRep = 0;
             labSafe = false;
+            apidroidKilled = false;
+            omegaTransmitReady[0] = false;
+            omegaTransmitReady[1] = false;
+            omegaTransmitReady[2] = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -391,6 +437,8 @@ namespace Redemption.Globals
                 lists.Add("SkeletonInvasion");
             if (labSafe)
                 lists.Add("labSafe");
+            if (apidroidKilled)
+                lists.Add("apidroidKilled");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -413,6 +461,7 @@ namespace Redemption.Globals
             zephosDownedTimer = tag.GetInt("zephosDownedTimer");
             slayerRep = tag.GetInt("slayerRep");
             labSafe = lists.Contains("labSafe");
+            apidroidKilled = lists.Contains("apidroidKilled");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -420,6 +469,7 @@ namespace Redemption.Globals
             var flags = new BitsByte();
             flags[0] = SkeletonInvasion;
             flags[1] = labSafe;
+            flags[2] = apidroidKilled;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -435,6 +485,7 @@ namespace Redemption.Globals
             BitsByte flags = reader.ReadByte();
             SkeletonInvasion = flags[0];
             labSafe = flags[1];
+            apidroidKilled = flags[2];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

@@ -213,6 +213,8 @@ namespace Redemption.Globals.Player
             BodyDictionary.Add(EquipLoader.GetEquipSlot(mod, "HardlightPlate", EquipType.Body), body);
             body = new(Request<Texture2D>("Redemption/Items/Armor/HM/Xenomite/XenomitePlate_Body_Glow", immediate).Value);
             BodyDictionary.Add(EquipLoader.GetEquipSlot(mod, "XenomitePlate", EquipType.Body), body);
+            body = new(Request<Texture2D>("Redemption/Items/Armor/PostML/Xenium/XeniumBreastplate_Body_Glow", immediate).Value);
+            BodyDictionary.Add(EquipLoader.GetEquipSlot(mod, "XeniumBreastplate", EquipType.Body), body);
         }
     }
 }

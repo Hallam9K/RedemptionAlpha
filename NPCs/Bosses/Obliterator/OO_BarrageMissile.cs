@@ -143,8 +143,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
         public override void SetDefaults()
         {
-            Projectile.width = 224;
-            Projectile.height = 224;
+            Projectile.width = 144;
+            Projectile.height = 144;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;

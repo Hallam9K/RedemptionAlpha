@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Magic
             MoveVector2.Y = (float)(Math.Cos(angle) * Rand);
         }
         public override bool? CanCutTiles() => Projectile.ai[0] != 0;
-        public override bool? CanHitNPC(NPC target) => Projectile.ai[0] != 0;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] != 0 ? null : false;
         public Vector2 MoveVector2;
         public Vector2 pos = new(0, -5);
         public ref float Rand => ref Projectile.localAI[0];

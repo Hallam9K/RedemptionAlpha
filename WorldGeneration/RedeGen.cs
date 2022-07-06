@@ -1131,7 +1131,7 @@ namespace Redemption.WorldGeneration
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ElderWoodChestTile>(), false);
 
             int[] ChestLoot = new int[] {
-                ModContent.ItemType<PouchBelt>(), ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>() };
+                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>() };
             int[] ChestLoot2 = new int[] {
                 ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
             int[] ChestLoot3 = new int[] {

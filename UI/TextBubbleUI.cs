@@ -316,7 +316,7 @@ namespace Redemption.UI
 			// our timer, allowing us to decide how many chars to display
 			if (pauseTime <= 0 && displayingText.Length != text.Length && timer % charTime == 0)
 			{
-				SoundEngine.PlaySound((SoundStyle)sound);
+				SoundEngine.PlaySound((SoundStyle)sound, npc.position);
 				displayingText += text[displayingText.Length];
 			}
 

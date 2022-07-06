@@ -169,8 +169,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
         public override void SetDefaults()
         {
-            Projectile.width = 224;
-            Projectile.height = 224;
+            Projectile.width = 144;
+            Projectile.height = 144;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.ignoreWater = true;

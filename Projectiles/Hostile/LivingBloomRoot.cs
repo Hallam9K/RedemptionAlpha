@@ -34,7 +34,7 @@ namespace Redemption.Projectiles.Hostile
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return target.type != ModContent.NPCType<LivingBloom>() ? null : false;
+            return target.type != ModContent.NPCType<LivingBloom>() && target.type != ModContent.NPCType<ForestNymph>() ? null : false;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
         public override void AI()

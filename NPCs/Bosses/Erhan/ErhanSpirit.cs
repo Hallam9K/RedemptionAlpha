@@ -189,16 +189,17 @@ namespace Redemption.NPCs.Bosses.Erhan
         private float TimerRand2;
         private bool Funny;
         private Vector2 playerOrigin;
+        public readonly Vector2 modifier = new(0, -200);
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
         public override void AI()
         {
-            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
-            if (MoRDialogueUI.Visible)
-                RedeSystem.Instance.DialogueUIElement.TextPos = text;
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            SoundStyle voice = CustomSounds.Voice4 with { Pitch = -0.2f };
+            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
 
             Player player = Main.player[NPC.target];
 
@@ -253,9 +254,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     if (AITimer == 1 && !Main.dedServ)
                                     {
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
+                                        Dialogue d1 = new(NPC, "GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 228
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d1);
                                     }
-                                    if (AITimer >= 181)
+                                    if (AITimer >= 218)
                                     {
                                         if (!Main.dedServ)
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
@@ -275,10 +278,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 else
                                 {
                                     if (AITimer == 1 && !Main.dedServ)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thou may inquire, how hath I returned...", 180, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    if (AITimer == 181 && !Main.dedServ)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I am but the holiest of men,\nthus the Lord has returned me to beat thine buttocks once more!", 300, 1, 0.6f, "Erhan:", 1f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-                                    if (AITimer >= 481)
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "Thou may inquire,[10] how hath I returned...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 190
+                                             .Add(new(NPC, "I am but the holiest of men,[10] thus the Lord has returned me to beat thine buttocks once more!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 324
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
+                                    if (AITimer >= 500)
                                     {
                                         if (!Main.dedServ)
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
@@ -299,9 +306,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                             else
                             {
                                 if (AITimer++ == 0 && !Main.dedServ)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Guess whom'st've's back!", 120, 1, 0.6f, "Erhan:", 2f, Color.LightGoldenrodYellow, null, text, NPC.Center, sound: true);
-
-                                if (AITimer >= 120)
+                                {
+                                    Dialogue d1 = new(NPC, "Guess whom'st've's back!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 178
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
+                                }
+                                if (AITimer >= 150)
                                 {
                                     if (!Main.dedServ)
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");

@@ -155,7 +155,7 @@ namespace Redemption.NPCs.PreHM
                     NPC.alpha++;
                     if (NPC.alpha >= 255)
                     {
-                        if (player.ZoneOverworldHeight || player.ZoneSkyHeight || vanishCounter > 4)
+                        if (((player.ZoneOverworldHeight || player.ZoneSkyHeight) && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive) || vanishCounter > 4)
                         {
                             NPC.active = false;
                         }
@@ -267,6 +267,9 @@ namespace Redemption.NPCs.PreHM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
+                return 1f;
+
             return SpawnCondition.Cavern.Chance * 0.01f;
         }
     }

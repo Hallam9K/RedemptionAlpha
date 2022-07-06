@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.NPCs.HM;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -28,10 +29,16 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<KS3_ScannerDrone>())
+            if (!npc.active || (npc.type != ModContent.NPCType<KS3_ScannerDrone>() && npc.type != ModContent.NPCType<Android>()))
+                Projectile.Kill();
+
+            if (npc.type == ModContent.NPCType<Android>() && npc.ai[0] != 2)
                 Projectile.Kill();
 
             Vector2 Pos = new(npc.Center.X + 5 * npc.spriteDirection, npc.Center.Y - 3);
+            if (npc.type == ModContent.NPCType<Android>())
+                Pos = new(npc.Center.X + 19 * npc.spriteDirection, npc.Center.Y - 1);
+
             Projectile.Center = Pos;
             switch (Projectile.localAI[1])
             {
@@ -57,14 +64,16 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            //Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Ray").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.LightBlue), Projectile.rotation, drawOrigin, new Vector2(Projectile.scale - (npc.type == ModContent.NPCType<Android>() ? 0.4f : 0), Projectile.scale + 1), effects, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

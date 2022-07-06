@@ -225,7 +225,7 @@ namespace Redemption.NPCs.Wasteland
         public void RegenCheck()
         {
             int regenCooldown = NPC.wet && !NPC.lavaWet ? 30 : 40;
-            if ((NPC.wet && !NPC.lavaWet) || (Main.raining && NPC.position.Y < Main.worldSurface && Framing.GetTileSafely(NPC.Center).WallType == WallID.None))
+            if ((NPC.wet && !NPC.lavaWet) || NPC.HasBuff(BuffID.Wet) || (Main.raining && NPC.position.Y < Main.worldSurface && Framing.GetTileSafely(NPC.Center).WallType == WallID.None))
             {
                 regenTimer++;
                 if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)

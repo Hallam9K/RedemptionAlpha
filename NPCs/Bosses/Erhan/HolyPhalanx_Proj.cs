@@ -69,9 +69,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                         rot += speed;
                         dist += dist2;
                         if (Projectile.localAI[0] >= 160)
-                            speed *= 0.98f;
+                            speed *= 0.99f;
                         else
-                            speed *= 1.02f;
+                            speed *= 1.01f;
                         speed = MathHelper.Min(speed, 3);
                         if (Projectile.localAI[0] >= 160)
                             dist2 *= 0.98f;
@@ -173,9 +173,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                         rot += speed;
                         dist += dist2;
                         if (Projectile.localAI[0] >= 160)
-                            speed *= 0.98f;
+                            speed *= 0.99f;
                         else
-                            speed *= 1.02f;
+                            speed *= 1.01f;
                         speed = MathHelper.Min(speed, 3);
                         if (Projectile.localAI[0] >= 160)
                             dist2 *= 0.98f;

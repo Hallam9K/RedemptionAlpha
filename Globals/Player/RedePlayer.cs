@@ -23,7 +23,7 @@ namespace Redemption.Globals.Player
         public int hitTarget = -1;
         public int hitTarget2 = -1;
         public bool medKit;
-
+        public int slayerStarRating;
         public override void ResetEffects()
         {
             hitTarget = -1;

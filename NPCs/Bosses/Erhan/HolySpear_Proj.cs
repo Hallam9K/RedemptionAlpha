@@ -66,10 +66,12 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f,
+                    Projectile.velocity.Y * 0.5f, Scale: 3);
                 Main.dust[dust].noGravity = true;
+                Main.dust[dust].velocity.Y = -7;
             }
         }
     }

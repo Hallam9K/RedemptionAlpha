@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Friendly
                 NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f));
             }
 
-            if (++AITimer > 600)
+            if (++AITimer > 600 && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath39 with { Volume = .3f }, NPC.position);
                 NPC.active = false;
@@ -106,7 +106,12 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
-
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
+                return 2f;
+            return 0;
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]

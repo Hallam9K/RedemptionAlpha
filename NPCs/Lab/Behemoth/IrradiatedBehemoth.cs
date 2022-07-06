@@ -17,6 +17,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Lore;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -123,6 +124,8 @@ namespace Redemption.NPCs.Lab.Behemoth
         {
             if (!LabArea.labAccess[1])
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
+            if (!RedeBossDowned.downedBehemoth)
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IB_GirusTalk>(), 0, 0, Main.myPlayer);
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBehemoth, -1);
         }
@@ -154,11 +157,12 @@ namespace Redemption.NPCs.Lab.Behemoth
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                         }
                     }
-                    if (AITimer < 180 && NPC.DistanceSQ(Main.LocalPlayer.Center) < 1300 * 1300)
+                    if (AITimer < 180 && NPC.DistanceSQ(Main.LocalPlayer.Center) < 1800 * 1800)
                     {
                         NPC.velocity.Y = 0.1f;
                         player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                         player.RedemptionScreen().lockScreen = true;
+                        player.RedemptionScreen().cutscene = true;
                     }
                     else
                     {

@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Living Wood Helmet");
-            Tooltip.SetDefault("+1 increased druidic damage");
+            Tooltip.SetDefault("+1 increased summon damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -36,13 +36,14 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage<DruidClass>().Flat += 1;
+            player.GetDamage(DamageClass.Summon).Flat += 1;
         }
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Nature Guardians additionally drop small seeds that grow into living wood saplings";
-
+            player.setBonus = "Immune to poison, increases your max number of minions";
+            player.buffImmune[BuffID.Poisoned] = true;
+            player.maxMinions += 1;
             if (Main.rand.NextBool(25) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {
                 if (Main.netMode == NetmodeID.Server)

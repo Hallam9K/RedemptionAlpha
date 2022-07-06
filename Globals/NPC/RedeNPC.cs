@@ -391,7 +391,14 @@ namespace Redemption.Globals.NPC
             }
 
             if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
-                attacker = value.entity;
+            {
+                bool g = false;
+                if (value.entity is Terraria.NPC && (value.entity as Terraria.NPC).whoAmI == npc.whoAmI)
+                    g = true;
+
+                if (!g)
+                    attacker = value.entity;
+            }
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
         }
@@ -417,8 +424,6 @@ namespace Redemption.Globals.NPC
             conditionalRule.OnSuccess(rule);
             npcLoot.Add(conditionalRule);
 
-            if (npc.type == NPCID.EaterofSouls || npc.type == NPCID.LittleEater || npc.type == NPCID.BigEater || npc.type == NPCID.CorruptGoldfish || npc.type == NPCID.DevourerHead || npc.type == NPCID.Corruptor || npc.type == NPCID.CorruptSlime || npc.type == NPCID.Slimeling || npc.type == NPCID.Slimer2 || npc.type == NPCID.BloodCrawler || npc.type == NPCID.CrimsonGoldfish || npc.type == NPCID.FaceMonster || npc.type == NPCID.Crimera || npc.type == NPCID.BigCrimera || npc.type == NPCID.LittleCrimera || npc.type == NPCID.Herpling || npc.type == NPCID.Crimslime || npc.type == NPCID.BigCrimslime || npc.type == NPCID.LittleCrimslime || npc.type == NPCID.BloodFeeder || npc.type == NPCID.BloodJelly)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EldritchRoot>(), 500));
             if (npc.type == NPCID.BoneSerpentHead)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
             if (npc.type == NPCID.Ghost || npc.type == NPCID.Wraith)
@@ -451,6 +456,7 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
             }
+
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
