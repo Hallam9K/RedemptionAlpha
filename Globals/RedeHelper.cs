@@ -100,7 +100,7 @@ namespace Redemption.Globals
             {
                 Terraria.NPC candidate = Main.npc[i];
                 float distance = (candidate.Center - position).Length();
-                if (!(distance < maxDistance) || !npc.active || candidate.type == npc.type ||
+                if (!(distance < maxDistance) || !npc.active || !candidate.active || candidate.type == npc.type ||
                     !Collision.CanHit(position, 0, 0, candidate.Center, 0, 0) && !ignoreTiles)
                     continue;
 
@@ -111,7 +111,6 @@ namespace Redemption.Globals
 
             return foundTarget;
         }
-
         //used by minions to give each minion of the same type a unique identifier so they don't stack
         public static int MinionHordeIdentity(Projectile projectile)
         {

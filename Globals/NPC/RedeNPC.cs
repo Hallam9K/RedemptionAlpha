@@ -391,7 +391,14 @@ namespace Redemption.Globals.NPC
             }
 
             if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
-                attacker = value.entity;
+            {
+                bool g = false;
+                if (value.entity is Terraria.NPC && (value.entity as Terraria.NPC).whoAmI == npc.whoAmI)
+                    g = true;
+
+                if (!g)
+                    attacker = value.entity;
+            }
             else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
                 attacker = npc;
         }

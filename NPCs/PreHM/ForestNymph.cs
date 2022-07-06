@@ -397,14 +397,18 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
                     }
-
-                    Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 50 : NPC.Center.X), (int)(NPC.Center.Y - 33), 50, 80);
                     NPC.LookAtEntity(globalNPC.attacker);
+                    Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 50 : NPC.Center.X), (int)(NPC.Center.Y - 33), 50, 80);
 
                     if (NPC.velocity.Y < 0)
                         NPC.velocity.Y = 0;
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.9f;
+
+                    if (NPC.frame.Y == 6 * 94 && AITimer++ < 10)
+                        NPC.frameCounter = 0;
+                    if (NPC.frame.Y == 6 * 94 && AITimer == 9 && NPC.Hitbox.Intersects(globalNPC.attacker.Hitbox))
+                        NPC.velocity.X -= 6 * NPC.spriteDirection;
 
                     if (NPC.frame.Y == 7 * 94 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
                     {
@@ -421,7 +425,7 @@ namespace Redemption.NPCs.PreHM
                         {
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
                             BaseAI.DamagePlayer(globalNPC.attacker as Player, damage, 5, hitDirection, NPC);
-                            if (Main.rand.NextBool(3))
+                            if (Main.rand.NextBool(3) && globalNPC.attacker is Player)
                                 (globalNPC.attacker as Player).AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
                         }
                     }
@@ -553,6 +557,8 @@ namespace Redemption.NPCs.PreHM
                 }
                 if (AIState is ActionState.Slash)
                 {
+                    NPC.rotation = 0;
+
                     if (NPC.frame.Y < 4 * frameHeight)
                         NPC.frame.Y = 4 * frameHeight;
 
@@ -561,9 +567,6 @@ namespace Redemption.NPCs.PreHM
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y == 6 * frameHeight && NPC.Hitbox.Intersects(globalNPC.attacker.Hitbox))
-                            NPC.velocity.X -= 6 * NPC.spriteDirection;
-
                         if (NPC.frame.Y == 7 * frameHeight)
                         {
                             SoundEngine.PlaySound(SoundID.Item71 with { Volume = .7f }, NPC.position);

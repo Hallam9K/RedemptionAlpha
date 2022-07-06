@@ -66,6 +66,7 @@ namespace Redemption.Globals
         public static bool labSafe;
         public static int labSafeMessageTimer;
         public static bool[] omegaTransmitReady = new bool[3];
+        public static bool apidroidKilled;
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -395,6 +396,7 @@ namespace Redemption.Globals
             zephosDownedTimer = 0;
             slayerRep = 0;
             labSafe = false;
+            apidroidKilled = false;
             if (Terraria.NPC.downedPlantBoss)
                 omegaTransmitReady[0] = true;
             else
@@ -421,6 +423,7 @@ namespace Redemption.Globals
             zephosDownedTimer = 0;
             slayerRep = 0;
             labSafe = false;
+            apidroidKilled = false;
             omegaTransmitReady[0] = false;
             omegaTransmitReady[1] = false;
             omegaTransmitReady[2] = false;
@@ -434,6 +437,8 @@ namespace Redemption.Globals
                 lists.Add("SkeletonInvasion");
             if (labSafe)
                 lists.Add("labSafe");
+            if (apidroidKilled)
+                lists.Add("apidroidKilled");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -456,6 +461,7 @@ namespace Redemption.Globals
             zephosDownedTimer = tag.GetInt("zephosDownedTimer");
             slayerRep = tag.GetInt("slayerRep");
             labSafe = lists.Contains("labSafe");
+            apidroidKilled = lists.Contains("apidroidKilled");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -463,6 +469,7 @@ namespace Redemption.Globals
             var flags = new BitsByte();
             flags[0] = SkeletonInvasion;
             flags[1] = labSafe;
+            flags[2] = apidroidKilled;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -478,6 +485,7 @@ namespace Redemption.Globals
             BitsByte flags = reader.ReadByte();
             SkeletonInvasion = flags[0];
             labSafe = flags[1];
+            apidroidKilled = flags[2];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

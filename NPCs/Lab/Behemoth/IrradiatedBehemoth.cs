@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                         }
                     }
-                    if (AITimer < 180 && NPC.DistanceSQ(Main.LocalPlayer.Center) < 1300 * 1300)
+                    if (AITimer < 180 && NPC.DistanceSQ(Main.LocalPlayer.Center) < 1800 * 1800)
                     {
                         NPC.velocity.Y = 0.1f;
                         player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
