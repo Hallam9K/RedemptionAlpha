@@ -111,5 +111,7 @@ namespace Redemption
         public static readonly SoundStyle ObliteratorYo = new("Redemption/Sounds/Custom/ObliteratorYo") { Volume = 0.7f };
         public static readonly SoundStyle OODashReady = new("Redemption/Sounds/Custom/OODashReady") { Volume = 0.8f };
         public static readonly SoundStyle NewLocation = new("Redemption/Sounds/Custom/NewLocationSound");
-    }
+        public static readonly SoundStyle ShieldActivate = new("Redemption/Sounds/Custom/GigaShieldActivate");
+        public static readonly SoundStyle Launch2 = new("Redemption/Sounds/Custom/Launch2") { PitchVariance = .1f };
+}
 }

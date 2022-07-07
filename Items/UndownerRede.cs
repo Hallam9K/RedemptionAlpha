@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items
 {
@@ -49,6 +50,7 @@ namespace Redemption.Items
             RedeBossDowned.downedPZ = false;
             RedeBossDowned.downedNebuleus = false;
             RedeBossDowned.oblitDeath = 0;
+            player.Redemption().slayerStarRating = 0;
             RedeQuest.wayfarerVars[0] = 1;
 
             if (Main.netMode == NetmodeID.Server)
