@@ -25,8 +25,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
-            Projectile.width = 48;
-            Projectile.height = 48;
+            Projectile.width = 76;
+            Projectile.height = 76;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
         }

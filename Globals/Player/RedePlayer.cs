@@ -36,6 +36,10 @@ namespace Redemption.Globals.Player
             omegaGiftGiven = false;
             medKit = false;
         }
+        public override void UpdateDead()
+        {
+            slayerStarRating = 0;
+        }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
             if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && item.DamageType == DamageClass.Melee)
