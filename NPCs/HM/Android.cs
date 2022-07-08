@@ -221,7 +221,7 @@ namespace Redemption.NPCs.HM
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -245,7 +245,7 @@ namespace Redemption.NPCs.HM
                             others.ai[0] = 3;
                         }
                     }
-                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 2)
+                    if (NPC.life <= NPC.lifeMax / 3 && player.Redemption().slayerStarRating <= 1)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
                         runCooldown = 0;
@@ -276,7 +276,7 @@ namespace Redemption.NPCs.HM
                     break;
 
                 case ActionState.RocketFist:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -301,7 +301,7 @@ namespace Redemption.NPCs.HM
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
 
-                    if (NPC.life > NPC.lifeMax / 5)
+                    if (NPC.life > NPC.lifeMax / 3)
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -331,7 +331,7 @@ namespace Redemption.NPCs.HM
                             Main.dust[dust].noGravity = true;
                         }
                         NPC.netUpdate = true;
-                        if (player.Redemption().slayerStarRating <= 2 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
+                        if (player.Redemption().slayerStarRating <= 1 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
                         {
                             player.Redemption().slayerStarRating++;
                             NPC.SetDefaults(ModContent.NPCType<SlayerSpawner>());
@@ -417,7 +417,7 @@ namespace Redemption.NPCs.HM
             WeightedRandom<int> choice = new(Main.rand);
             choice.Add(0, 10);
             choice.Add(1, 4);
-            choice.Add(2, 0.1f);
+            choice.Add(2, 0.05f);
 
             Variant = choice;
         }

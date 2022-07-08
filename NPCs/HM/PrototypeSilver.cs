@@ -29,6 +29,8 @@ using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
+using Redemption.Projectiles.Ranged;
+using System;
 
 namespace Redemption.NPCs.HM
 {
@@ -38,8 +40,8 @@ namespace Redemption.NPCs.HM
         {
             Idle,
             Wander,
-            NA,
-            Alert,
+            Alert = 3,
+            Laser,
             Grapple,
             Teleport
         }
@@ -96,6 +98,7 @@ namespace Redemption.NPCs.HM
         private int runCooldown;
         private float shieldAlpha;
         private bool shieldUp;
+        private Vector2 p;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 120);
@@ -150,7 +153,7 @@ namespace Redemption.NPCs.HM
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -179,7 +182,7 @@ namespace Redemption.NPCs.HM
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
                         shieldUp = true;
                     }
-                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 3)
+                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 2)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
                         runCooldown = 0;
@@ -204,6 +207,13 @@ namespace Redemption.NPCs.HM
                             AIState = ActionState.Grapple;
                         }
                     }
+                    if (Main.rand.NextBool(100) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 60 * 60)
+                    {
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        AITimer = 0;
+                        NPC.velocity.X = 0;
+                        AIState = ActionState.Laser;
+                    }
 
                     jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
@@ -212,14 +222,60 @@ namespace Redemption.NPCs.HM
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
-                case ActionState.Grapple:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                case ActionState.Laser:
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
                     {
                         runCooldown = 0;
                         AITimer = 0;
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                    }
+                    NPC.LookAtEntity(globalNPC.attacker);
+
+                    if (NPC.velocity.Y < 0)
+                        NPC.velocity.Y = 0;
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.9f;
+
+                    Vector2 originPos = NPC.Center + new Vector2(8 * NPC.spriteDirection, -21);
+                    if (++AITimer < 60)
+                    {
+                        for (int k = 0; k < 3; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 20);
+                            vector.Y = (float)(Math.Cos(angle) * 20);
+                            Dust dust2 = Main.dust[Dust.NewDust(originPos + vector, 2, 2, DustID.Frost)];
+                            dust2.noGravity = true;
+                            dust2.velocity = dust2.position.DirectionTo(originPos) * 2f;
+                        }
+                    }
+                    if (AITimer == 51 || AITimer == 61 || AITimer == 71)
+                        p = globalNPC.attacker.Center;
+                    if (AITimer == 60 || AITimer == 70 || AITimer == 80)
+                    {
+                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
+                        NPC.velocity.X -= 2 * NPC.spriteDirection;
+                    }
+                    if (AITimer >= 100)
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.Alert;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+
+                case ActionState.Grapple:
+                    if (AITimer >= 100 && NPC.ThreatenedCheck(ref runCooldown, 300, 3))
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        moveTo = NPC.FindGround(20);
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = ActionState.Wander;
+                        break;
                     }
 
                     if (NPC.velocity.Y < 0)
@@ -229,8 +285,8 @@ namespace Redemption.NPCs.HM
 
                     if (AITimer == 0)
                     {
-                        Vector2 originPos = NPC.Center + new Vector2(-11 * NPC.spriteDirection, -9);
-                        NPC.Shoot(originPos, ModContent.ProjectileType<PrototypeSilver_Hook>(), NPC.damage, Vector2.Zero, true, CustomSounds.Launch2 with { Volume = 0.6f }, NPC.whoAmI);
+                        Vector2 originPos2 = NPC.Center + new Vector2(-11 * NPC.spriteDirection, -9);
+                        NPC.Shoot(originPos2, ModContent.ProjectileType<PrototypeSilver_Hook>(), NPC.damage, Vector2.Zero, true, CustomSounds.Launch2 with { Volume = 0.6f }, NPC.whoAmI);
                         AITimer = 1;
                     }
                     if (AITimer >= 100)
@@ -276,7 +332,7 @@ namespace Redemption.NPCs.HM
                             Main.dust[dust].noGravity = true;
                         }
                         NPC.netUpdate = true;
-                        if (player.Redemption().slayerStarRating <= 3 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
+                        if (player.Redemption().slayerStarRating <= 2 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
                         {
                             player.Redemption().slayerStarRating++;
                             NPC.SetDefaults(ModContent.NPCType<SlayerSpawner>());
@@ -449,7 +505,7 @@ namespace Redemption.NPCs.HM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
                 new FlavorTextBestiaryInfoElement(
-                    ""),
+                    "Prototype Silvers were the 2nd Slayer Unit constructed, with a built-in shield generator and durable plating. Made for military purposes during an alien war in Asherah. The war was a swift one. Despite its name, it's mainly composed of the spare titanium from Alkonost."),
             });
         }
     }

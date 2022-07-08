@@ -188,12 +188,12 @@ namespace Redemption.Items.Usable.Summons
                 Vector2 origin2 = new(glow.Width / 2, glow.Height / 2);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
                 spriteBatch.Draw(glow, position + new Vector2(6, 14), new Rectangle(0, 0, glow.Width, glow.Height), color * 0.7f, 0, origin2, scale * 0.8f, SpriteEffects.None, 0f);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
             }
             return true;
         }

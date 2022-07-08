@@ -152,7 +152,7 @@ namespace Redemption.NPCs.PreHM
 
                 case ActionState.Alert:
                     NPC.LookByVelocity();
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -191,7 +191,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Cast:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;

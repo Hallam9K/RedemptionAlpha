@@ -230,7 +230,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 320)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 320))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -283,7 +283,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Slash:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 320)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 320))
                     {
                         runCooldown = 0;
                         AITimer = 0;

@@ -49,21 +49,13 @@ namespace Redemption.NPCs.HM
                 case 2:
                     if (NPC.ai[1]++ == 300)
                     {
-                        for (int i = 0; i < Main.rand.Next(4, 6); i++)
-                            SpawnAndroid(pos);
-                        NPC.active = false;
-                    }
-                    break;
-                case 3:
-                    if (NPC.ai[1]++ == 300)
-                    {
                         for (int i = 0; i < Main.rand.Next(2, 4); i++)
                             SpawnAndroid(pos);
                         SpawnPrototypeSilver(pos);
                         NPC.active = false;
                     }
                     break;
-                case 4:
+                case 3:
                     if (NPC.ai[1]++ == 300)
                     {
                         for (int i = 0; i < 2; i++)

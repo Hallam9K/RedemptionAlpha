@@ -38,12 +38,11 @@ namespace Redemption.NPCs.HM
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.ai[0] != 4 || host.type != ModContent.NPCType<PrototypeSilver>())
+            if (!host.active || host.ai[0] != 5 || host.type != ModContent.NPCType<PrototypeSilver>())
                 Projectile.Kill();
 
             Vector2 originPos = host.Center + new Vector2(-11 * host.spriteDirection, -9);
 
-            Player player = Main.player[host.target];
             Projectile.timeLeft = 10;
 
             switch (Projectile.ai[1])
@@ -55,7 +54,7 @@ namespace Redemption.NPCs.HM
                 case 1:
                     if (host.Redemption().attacker is Player && Projectile.Hitbox.Intersects(host.Redemption().attacker.Hitbox))
                         host.Redemption().attacker.position = Projectile.position;
-                    Projectile.velocity *= 0.97f;
+                    Projectile.velocity *= 0.96f;
                     if (Projectile.velocity.Length() < 5)
                     {
                         Projectile.ai[1] = 2;
