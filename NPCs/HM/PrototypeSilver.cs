@@ -257,7 +257,7 @@ namespace Redemption.NPCs.HM
                     if (AITimer == 60 || AITimer == 70 || AITimer == 80)
                     {
                         NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
-                        NPC.velocity.X -= 2 * NPC.spriteDirection;
+                        NPC.velocity.X -= 1 * NPC.spriteDirection;
                     }
                     if (AITimer >= 100)
                     {
@@ -277,6 +277,7 @@ namespace Redemption.NPCs.HM
                         AIState = ActionState.Wander;
                         break;
                     }
+                    NPC.LookAtEntity(globalNPC.attacker);
 
                     if (NPC.velocity.Y < 0)
                         NPC.velocity.Y = 0;
@@ -351,6 +352,12 @@ namespace Redemption.NPCs.HM
                 {
                     NPC.rotation = 0;
                     NPC.frame.Y = 12 * frameHeight;
+                    return;
+                }
+                else if (AIState is ActionState.Laser)
+                {
+                    NPC.rotation = 0;
+                    NPC.frame.Y = 0;
                     return;
                 }
 

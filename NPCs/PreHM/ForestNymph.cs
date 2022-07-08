@@ -57,6 +57,7 @@ namespace Redemption.NPCs.PreHM
         }
 
         public int HairExtType;
+        public bool HasHat;
         public int EyeType;
         public int HairType;
         public int FlowerType;
@@ -667,6 +668,8 @@ namespace Redemption.NPCs.PreHM
             HairType = hair;
             FlowerType = Main.rand.Next(6);
             HairExtType = Main.rand.Next(3);
+            if (Main.rand.NextBool(10))
+                HasHat = true;
             WeightedRandom<int> eyes = new(Main.rand);
             eyes.Add(0);
             eyes.Add(1);
@@ -742,6 +745,7 @@ namespace Redemption.NPCs.PreHM
             Texture2D hair1c = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1c").Value;
             Texture2D hair2 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra2").Value;
             Texture2D hair3 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra3").Value;
+            Texture2D tophat = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra4").Value;
             Texture2D eye = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Eye").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 pos = NPC.Center + new Vector2(NPC.spriteDirection == -1 ? -19 : 17, -17);
@@ -786,6 +790,9 @@ namespace Redemption.NPCs.PreHM
             spriteBatch.Draw(hair2, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
             if (FlowerType <= 4)
                 spriteBatch.Draw(hair3, pos - screenPos, new Rectangle?(rect3), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+            
+            if (HasHat)
+                spriteBatch.Draw(tophat, pos - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;

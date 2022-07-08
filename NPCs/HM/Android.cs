@@ -417,7 +417,7 @@ namespace Redemption.NPCs.HM
             WeightedRandom<int> choice = new(Main.rand);
             choice.Add(0, 10);
             choice.Add(1, 4);
-            choice.Add(2, 0.05f);
+            choice.Add(2, 0.02f);
 
             Variant = choice;
         }
