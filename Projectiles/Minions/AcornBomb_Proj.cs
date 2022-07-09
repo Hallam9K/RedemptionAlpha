@@ -60,7 +60,7 @@ namespace Redemption.Projectiles.Minions
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<AcornBomb_Shard>(), Projectile.damage / 3, 1, Main.myPlayer);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(8), ModContent.ProjectileType<AcornBomb_Shard>(), Projectile.damage / 3, 1, Main.myPlayer);
                     }
                 }
                 Rectangle boom = new((int)Projectile.Center.X - 40, (int)Projectile.Center.Y - 40, 80, 80);

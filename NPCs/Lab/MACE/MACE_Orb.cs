@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Lab.MACE
 
             if (Projectile.localAI[0] >= 60 && Projectile.localAI[0] % 4 == 0 && Projectile.localAI[0] <= 80 && Main.myPlayer == Projectile.owner)
             {
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 97), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser_Tele>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y + 97), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser_Tele>(), 0, 0, Main.myPlayer);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Lab.MACE
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Zap1, Projectile.position);
             if (Main.myPlayer == Projectile.owner)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y + 67), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser>(), 34, 3, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y + 67), Vector2.Zero, ModContent.ProjectileType<MACE_OrbLaser>(), 34, 3, Main.myPlayer);
         }
     }
 }

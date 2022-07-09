@@ -186,8 +186,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (Projectile.localAI[0] % 3 == 0 && Main.myPlayer == Projectile.owner)
             {
                 Projectile.localAI[1] += 5;
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, new Vector2(Projectile.localAI[1], 0), ModContent.ProjectileType<PhantomCleaver2>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, new Vector2(-Projectile.localAI[1], 0), ModContent.ProjectileType<PhantomCleaver2>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Projectile.localAI[1], 0), ModContent.ProjectileType<PhantomCleaver2>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(-Projectile.localAI[1], 0), ModContent.ProjectileType<PhantomCleaver2>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
         }
     }

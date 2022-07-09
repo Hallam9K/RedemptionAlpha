@@ -55,11 +55,11 @@ namespace Redemption.NPCs.Lab.MACE
             {
                 case 0:
                     if (Projectile.localAI[0]++ == 1 && Projectile.Center.X < (RedeGen.LabVector.X + 103) * 16 && Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center + new Vector2(Projectile.width, 0), Vector2.Zero, Type, Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(Projectile.width, 0), Vector2.Zero, Type, Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
                     break;
                 case 1:
                     if (Projectile.localAI[0]++ == 1 && Projectile.Center.X > (RedeGen.LabVector.X + 43) * 16 && Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center - new Vector2(Projectile.width, 0), Vector2.Zero, Type, Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(Projectile.width, 0), Vector2.Zero, Type, Projectile.damage, 0, Main.myPlayer, Projectile.ai[0]);
                     break;
             }
         }

@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 Projectile.Center = originPos + new Vector2(0, 1).RotatedBy(rot) * length;
                                 if (Projectile.localAI[0] >= 60 && Projectile.localAI[0] % 15 == 0 && Main.myPlayer == player.whoAmI)
                                 {
-                                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SkullDigger_FlailBlade_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, host.whoAmI);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SkullDigger_FlailBlade_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, host.whoAmI);
                                 }
                                 if (Projectile.localAI[0] >= 260)
                                 {

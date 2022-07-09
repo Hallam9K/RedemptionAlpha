@@ -49,7 +49,7 @@ namespace Redemption.Projectiles.Minions
             if (Projectile.localAI[0]++ % 80 == 0 && Projectile.localAI[0] >= 80 && Projectile.owner == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Item61 with { Volume = .5f }, Projectile.position);
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center - new Vector2(0, 8), new Vector2(Main.rand.Next(10, 13) * Projectile.spriteDirection, -Main.rand.Next(4, 7)), ModContent.ProjectileType<AcornBomb_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 8), new Vector2(Main.rand.Next(10, 13) * Projectile.spriteDirection, -Main.rand.Next(4, 7)), ModContent.ProjectileType<AcornBomb_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
             Projectile.velocity.Y += 1;
         }

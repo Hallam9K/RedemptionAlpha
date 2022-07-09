@@ -72,7 +72,7 @@ namespace Redemption.Projectiles.Ranged
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.MissileFire1, player.position);
 
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (locked.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_SoSMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 1);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(player.Center.X + Main.rand.Next(-200, 201), player.Center.Y - 800), RedeHelper.PolarVector(14, (locked.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_SoSMissile>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 1);
                     }
                     if (Projectile.localAI[1] >= 60 && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<Hardlight_SoSMissile>()))
                         Projectile.Kill();

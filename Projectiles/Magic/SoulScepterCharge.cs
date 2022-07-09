@@ -100,17 +100,17 @@ namespace Redemption.Projectiles.Magic
                     if (Projectile.localAI[1] == 120)
                     {
                         SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 90, Projectile.ai[1]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 90, Projectile.ai[1]);
                     }
                     if (Projectile.localAI[1] == 240)
                     {
                         SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 180, Projectile.ai[1]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 180, Projectile.ai[1]);
                     }
                     if (Projectile.localAI[1] == 360)
                     {
                         SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 270, Projectile.ai[1]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 270, Projectile.ai[1]);
                     }
                 }
             }

@@ -56,7 +56,7 @@ namespace Redemption.Projectiles.Magic
                 Projectile.alpha -= 5;
 
                 if (Main.rand.NextBool(30) && Projectile.alpha <= 100 && Main.myPlayer == Projectile.owner)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<Icefall_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<Icefall_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
                 if (Main.rand.NextBool(20) && Projectile.alpha <= 150)
                 {

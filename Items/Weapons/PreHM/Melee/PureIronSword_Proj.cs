@@ -82,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         if (Projectile.localAI[0] == 1)
                         {
                             SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, Vector2.Zero, ModContent.ProjectileType<ArcticWind_Proj>(), 0, 0, Projectile.owner);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<ArcticWind_Proj>(), 0, 0, Projectile.owner);
                         }
                     }
                 }

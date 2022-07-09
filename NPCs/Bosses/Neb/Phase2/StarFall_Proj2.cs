@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 LaserScale = 1;
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<StarFall_Proj2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<StarFall_Proj2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
             if (Projectile.timeLeft >= 50)

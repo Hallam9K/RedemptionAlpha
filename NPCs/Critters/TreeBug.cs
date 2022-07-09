@@ -243,7 +243,7 @@ namespace Redemption.NPCs.Critters
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "A beetle commonly found inhabiting trees. It feeds on leaves and uses its leaf-like shell for camouflage from predators. Its shell makes a good source of green dye.")
+                    "A beetle commonly found inhabiting trees. It feeds on leaves and uses its leaf-like shell for camouflage against predators. Its shell makes a good source of green dye.")
             });
         }
 

@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.Minions
                 if (getNPC != -1 && Projectile.localAI[0] % 30 == 0 && Projectile.owner == Main.myPlayer)
                 {
                     SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), ModContent.ProjectileType<Hardlight_SlayerMissile>(), 242, 4, player.whoAmI, Projectile.whoAmI);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), ModContent.ProjectileType<Hardlight_SlayerMissile>(), 242, 4, player.whoAmI, Projectile.whoAmI);
                     shotCount++;
                 }
             }

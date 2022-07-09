@@ -130,7 +130,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                                 Main.dust[d2].velocity = Projectile.velocity * 12;
                                 Main.dust[d2].noGravity = true;
                             }
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity * 25, ModContent.ProjectileType<Hacksaw_Heat_Proj>(), Projectile.damage * 4, Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * 25, ModContent.ProjectileType<Hacksaw_Heat_Proj>(), Projectile.damage * 4, Projectile.knockBack, Projectile.owner);
                             Projectile.Kill();
                         }
                         break;

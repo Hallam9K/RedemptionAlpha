@@ -55,7 +55,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 Projectile.ai[1] = 10;
                 SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
                 for (int i = 0; i < 4; i++)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(2, MathHelper.PiOver2 * i),
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(2, MathHelper.PiOver2 * i),
                         ModContent.ProjectileType<HolyBible_Ray>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
             }
             if (Projectile.ai[0] >= 240)

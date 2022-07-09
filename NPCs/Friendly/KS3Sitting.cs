@@ -532,7 +532,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     chat.Add("I'm not an idiot ya know, I know one of my own minions when I see one.");
                 }*/
-                if (player.HasBuff(BuffID.WellFed) && RedeWorld.slayerRep < 2)
+                if (player.wellFed && RedeWorld.slayerRep < 2)
                 {
                     chat.Add("Look at you all well fed... Good for you.");
                 }

@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Ranged
         {
             Player player = Main.player[Projectile.owner];
             if (Main.myPlayer == player.whoAmI)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ThornArrowSeed>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ThornArrowSeed>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
         public override void AI()
         {
@@ -93,7 +93,7 @@ namespace Redemption.Projectiles.Ranged
         {
             Player player = Main.player[Projectile.owner];
             if (Main.myPlayer == player.whoAmI)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y - 36), Vector2.Zero, ModContent.ProjectileType<ThornTrapSmall_Proj>(), Projectile.damage, 3, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y - 36), Vector2.Zero, ModContent.ProjectileType<ThornTrapSmall_Proj>(), Projectile.damage, 3, Main.myPlayer);
 
             return true;
         }

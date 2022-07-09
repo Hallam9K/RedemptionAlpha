@@ -135,14 +135,14 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             for (int i = 0; i < Main.rand.Next(5, 8); i++)
                             {
-                                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(Main.rand.Next(7, 11), Projectile.velocity.ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), ProjectileID.CrystalStorm, Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(Main.rand.Next(7, 11), Projectile.velocity.ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), ProjectileID.CrystalStorm, Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
                             }
                         }
                         else
                         {
                             for (int i = 0; i < Main.rand.Next(1, 3); i++)
                             {
-                                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(Main.rand.Next(7, 11), Projectile.velocity.ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), ProjectileID.CrystalStorm, Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(Main.rand.Next(7, 11), Projectile.velocity.ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), ProjectileID.CrystalStorm, Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
                             }
                         }
                     }

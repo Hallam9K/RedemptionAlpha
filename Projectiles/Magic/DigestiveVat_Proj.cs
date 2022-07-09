@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.Magic
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, RedeHelper.Spread(1), ModContent.ProjectileType<DigestiveAcid_Mist>(), 0, 0, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.position, RedeHelper.Spread(1), ModContent.ProjectileType<DigestiveAcid_Mist>(), 0, 0, Projectile.owner);
                 }
             }
             for (int i = 0; i < 10; i++)

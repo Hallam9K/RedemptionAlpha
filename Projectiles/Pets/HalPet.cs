@@ -70,10 +70,10 @@ namespace Redemption.Projectiles.Pets
                 switch (Main.rand.Next(2))
                 {
                     case 0:
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Main.screenPosition.X, player.Center.Y + Main.rand.Next(-500, 500)), new Vector2(6, 0), ModContent.ProjectileType<HalPetSPEEN>(), 9999, 20, Projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Main.screenPosition.X, player.Center.Y + Main.rand.Next(-500, 500)), new Vector2(6, 0), ModContent.ProjectileType<HalPetSPEEN>(), 9999, 20, Projectile.owner);
                         break;
                     case 1:
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Main.screenPosition.X + Main.screenWidth, player.Center.Y + Main.rand.Next(-500, 500)), new Vector2(-6, 0), ModContent.ProjectileType<HalPetSPEEN>(), 9999, 20, Projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Main.screenPosition.X + Main.screenWidth, player.Center.Y + Main.rand.Next(-500, 500)), new Vector2(-6, 0), ModContent.ProjectileType<HalPetSPEEN>(), 9999, 20, Projectile.owner);
                         break;
                 }
             }

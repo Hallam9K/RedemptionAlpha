@@ -1159,7 +1159,7 @@ namespace Redemption.Base
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient && Collision.CanHitLine(projectile.Center, 0, 0, Main.player[parentTarget].Center, 0, 0))
                     {
-                        Projectile.NewProjectile(Projectile.InheritSource(projectile), projectile.Center.X, projectile.Center.Y, distVecNormal.X * shootVelocity, distVecNormal.Y * shootVelocity, fireProjType, fireDmg, 1f, Main.myPlayer);
+                        Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center.X, projectile.Center.Y, distVecNormal.X * shootVelocity, distVecNormal.Y * shootVelocity, fireProjType, fireDmg, 1f, Main.myPlayer);
                     }
                     ai[0] = 0f;
                 }
@@ -1846,7 +1846,7 @@ namespace Redemption.Base
                     if (p.ai[1] < length && Main.myPlayer == p.owner)
                     {
                         Vector2 rotVec = p.velocity;
-                        int id = Projectile.NewProjectile(Projectile.InheritSource(p), p.Center.X + p.velocity.X, p.Center.Y + p.velocity.Y, rotVec.X, rotVec.Y, p.type, p.damage, p.knockBack, p.owner);
+                        int id = Projectile.NewProjectile(p.GetSource_FromAI(), p.Center.X + p.velocity.X, p.Center.Y + p.velocity.Y, rotVec.X, rotVec.Y, p.type, p.damage, p.knockBack, p.owner);
                         Main.projectile[id].damage = p.damage;
                         Main.projectile[id].ai[1] = p.ai[1] + 1f;
                         NetMessage.SendData(MessageID.SyncProjectile, -1, -1, NetworkText.FromLiteral(""), id);

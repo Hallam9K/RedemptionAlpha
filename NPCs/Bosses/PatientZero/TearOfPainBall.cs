@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (Projectile.penetrate <= 0)
             {
                 for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, new Vector2(-Projectile.velocity.X + Main.rand.Next(-2, 2), -Projectile.velocity.Y + Main.rand.Next(-2, 2)), ModContent.ProjectileType<TearOfPain>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner, 0, 1);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(-Projectile.velocity.X + Main.rand.Next(-2, 2), -Projectile.velocity.Y + Main.rand.Next(-2, 2)), ModContent.ProjectileType<TearOfPain>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner, 0, 1);
 
                 Projectile.Kill();
             }

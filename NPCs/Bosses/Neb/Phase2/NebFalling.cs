@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public override void Kill(int timeLeft)
         {
             if (Projectile.owner == Main.myPlayer)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<NebDefeat>(), 0, 3, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<NebDefeat>(), 0, 3, Main.myPlayer);
             for (int i = 0; i < 25; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Enchanted_Pink, 0f, 0f, 100, default, 4f);

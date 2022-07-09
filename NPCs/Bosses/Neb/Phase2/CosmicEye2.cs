@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 {
                     Projectile.alpha = 0;
                     if (Main.myPlayer == Projectile.owner)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CosmicEye_Beam2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CosmicEye_Beam2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
                     Projectile.localAI[0] = 1;
                 }
             }

@@ -120,7 +120,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
                 if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

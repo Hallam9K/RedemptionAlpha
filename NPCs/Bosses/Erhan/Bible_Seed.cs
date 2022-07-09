@@ -77,7 +77,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             if (Main.myPlayer == player.whoAmI)
             {
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Bible_SpearSpawner>(), Projectile.damage, 3, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Bible_SpearSpawner>(), Projectile.damage, 3, Projectile.owner);
             }
             return true;
         }
@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     SoundEngine.PlaySound(SoundID.Item101, Projectile.Center);
                     if (Main.netMode != NetmodeID.Server && Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), origin, Vector2.Zero, ModContent.ProjectileType<Bible_SeedSpear>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(0.5f, 1.5f));
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin, Vector2.Zero, ModContent.ProjectileType<Bible_SeedSpear>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(0.5f, 1.5f));
                 }
             }
         }

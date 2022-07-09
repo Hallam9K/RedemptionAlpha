@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             if (Projectile.localAI[0] == 0 && Main.myPlayer == Projectile.owner)
             {
                 if (Main.myPlayer == Projectile.owner)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<NebTeleLine2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<NebTeleLine2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 Projectile.localAI[0] = 1;
             }
         }

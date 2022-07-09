@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.Misc
                     SoundEngine.PlaySound(CustomSounds.Gas1, Projectile.position);
 
                 if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), spawn, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), spawn, Vector2.Zero, ModContent.ProjectileType<GasCanister_Gas>(), 0, 0, Projectile.owner);
             }
 
             if (Projectile.localAI[0] >= 300)

@@ -91,7 +91,7 @@ namespace Redemption.Projectiles.Minions
                         continue;
 
                     if (Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), target.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MagnetPulse>(), 0, 0, player.whoAmI, Projectile.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MagnetPulse>(), 0, 0, player.whoAmI, Projectile.whoAmI);
                     damageStored += target.damage * 2;
                     target.Kill();
                 }
@@ -115,7 +115,7 @@ namespace Redemption.Projectiles.Minions
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);
 
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_MagnetBeam>(), (int)MathHelper.Clamp(damageStored, 10, 800), 4, player.whoAmI, Projectile.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (Main.npc[getNPC].Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<Hardlight_MagnetBeam>(), (int)MathHelper.Clamp(damageStored, 10, 800), 4, player.whoAmI, Projectile.whoAmI);
             }
             if (Projectile.localAI[0] >= 400)
             {

@@ -82,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = Projectile.velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, perturbedSpeed * 1.2f, ModContent.ProjectileType<ChompingChains_Proj_Skull>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, i);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, perturbedSpeed * 1.2f, ModContent.ProjectileType<ChompingChains_Proj_Skull>(), Projectile.damage, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, i);
                 }
             }
             else if (Projectile.localAI[0] >= 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ChompingChains_Proj_Skull>()] <= 0)

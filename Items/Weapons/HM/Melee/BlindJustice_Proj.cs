@@ -80,7 +80,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                 SoundEngine.PlaySound(CustomSounds.NebSound1 with { Pitch = 0.1f }, player.position);
                             SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, Projectile.position);
                             if (Projectile.owner == Main.myPlayer)
-                                Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, Vector2.Zero, ModContent.ProjectileType<BlindJustice_Aura>(), Projectile.damage, 0, Projectile.owner);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<BlindJustice_Aura>(), Projectile.damage, 0, Projectile.owner);
                         }
                     }
                 }
