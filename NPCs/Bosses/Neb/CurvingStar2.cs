@@ -145,7 +145,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Projectile.localAI[0] == 0)
             {
                 if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CurvingStar_Tele3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CurvingStar_Tele3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
                 Projectile.localAI[0]++;
             }
             else
@@ -161,7 +161,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     }
                     SoundEngine.PlaySound(SoundID.Item117, Projectile.position);
                     if (Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CurvingStar2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CurvingStar2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0], Projectile.ai[1]);
                     Projectile.Kill();
                 }
             }

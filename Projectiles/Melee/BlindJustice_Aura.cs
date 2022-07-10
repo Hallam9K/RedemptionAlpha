@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Melee
             }
             if (Projectile.timeLeft % 3 == 0 && Projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center, RedeHelper.PolarVector(10, Projectile.rotation * 8), ModContent.ProjectileType<Lightmass>(), Projectile.damage / 5, 0, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, RedeHelper.PolarVector(10, Projectile.rotation * 8), ModContent.ProjectileType<Lightmass>(), Projectile.damage / 5, 0, Projectile.owner);
             }
 
             if (Projectile.timeLeft >= 40)

@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Lab.Janitor
             Projectile.velocity.Y += 0.1f;
 
             if (Main.rand.NextBool(4) && Projectile.timeLeft < 170)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(7, Projectile.rotation - MathHelper.PiOver2), ModContent.ProjectileType<BucketSplash>(), Projectile.damage / 2, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(7, Projectile.rotation - MathHelper.PiOver2), ModContent.ProjectileType<BucketSplash>(), Projectile.damage / 2, 0, Main.myPlayer);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

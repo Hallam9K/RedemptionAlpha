@@ -163,7 +163,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(2, MathHelper.PiOver2 * i), ModContent.ProjectileType<HolyBible_Ray>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(2, MathHelper.PiOver2 * i), ModContent.ProjectileType<HolyBible_Ray>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
                                     Main.projectile[p].timeLeft = 390;
                                 }
                             }

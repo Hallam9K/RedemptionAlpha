@@ -106,7 +106,7 @@ namespace Redemption.Projectiles.Minions
                     }
                     Flare = true;
                     FlareTimer = 0;
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), projPos, RedeHelper.PolarVector(10, (target.Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), ModContent.ProjectileType<CorpseWalkerSkull_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), projPos, RedeHelper.PolarVector(10, (target.Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), ModContent.ProjectileType<CorpseWalkerSkull_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
             else

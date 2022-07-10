@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void PostAI()
         {
             if (Projectile.localAI[0] == 1 && Main.myPlayer == Projectile.owner)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PoisonBeat_Tele>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PoisonBeat_Tele>(), 0, 0, Main.myPlayer);
 
             Projectile.velocity.Y += 0.1f;
         }

@@ -399,8 +399,6 @@ namespace Redemption.Globals.NPC
                 if (!g)
                     attacker = value.entity;
             }
-            else if (npc.ClosestNPCToNPC(ref npc, 1000, npc.Center))
-                attacker = npc;
         }
         public override void OnKill(Terraria.NPC npc)
         {

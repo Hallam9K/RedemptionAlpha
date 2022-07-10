@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Main.myPlayer == Projectile.owner)
             {
                 for (int i = 0; i < 5; i++)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (MathHelper.ToRadians(72) * i) + Projectile.rotation), ModContent.ProjectileType<CrystalStarShard_Proj>(), Projectile.damage / 3, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (MathHelper.ToRadians(72) * i) + Projectile.rotation), ModContent.ProjectileType<CrystalStarShard_Proj>(), Projectile.damage / 3, 0, Main.myPlayer);
             }
         }
         public override void AI()
@@ -124,7 +124,7 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 LaserScale = 1;
                 if (Main.myPlayer == Projectile.owner)
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CrystalStar_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<CrystalStar_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
             }
 
             if (Projectile.timeLeft >= 50)

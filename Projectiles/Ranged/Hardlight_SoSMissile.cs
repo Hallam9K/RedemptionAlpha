@@ -47,7 +47,7 @@ namespace Redemption.Projectiles.Ranged
                 if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                 Projectile.Kill();
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
@@ -65,7 +65,7 @@ namespace Redemption.Projectiles.Ranged
                     if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                         Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                     Projectile.Kill();
                 }
             }
@@ -75,7 +75,7 @@ namespace Redemption.Projectiles.Ranged
             if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                 Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
 
-            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
             Projectile.Kill();
         }
         public override void Kill(int timeLeft)

@@ -82,7 +82,7 @@ namespace Redemption.Items.Usable
                 Projectile.position.Y = Projectile.position.Y - Projectile.height / 2;
                 Projectile.damage = 550;
                 Projectile.knockBack = 15f;
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center.X, Projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<PlutoniumBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<PlutoniumBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             }
             else
             {

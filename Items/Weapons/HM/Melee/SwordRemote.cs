@@ -314,7 +314,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (Projectile.localAI[1] >= 60 && Projectile.localAI[1] % 5 == 0 && Projectile.localAI[1] < 130)
                             {
                                 if (Main.myPlayer == Projectile.owner)
-                                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), ModContent.ProjectileType<PhantomCleaver_F>(), 1000, Projectile.knockBack, Main.myPlayer);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), ModContent.ProjectileType<PhantomCleaver_F>(), 1000, Projectile.knockBack, Main.myPlayer);
                             }
                             if (Projectile.localAI[1] > 140)
                             {
@@ -361,7 +361,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                         repeat = 1;
                                 }
                                 if (Main.myPlayer == Projectile.owner)
-                                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), new Vector2(Projectile.Center.X, Projectile.Center.Y) + RedeHelper.PolarVector(134, Projectile.rotation + (float)-Math.PI / 2), RedeHelper.PolarVector(9, Projectile.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism_F>(), 1000, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y) + RedeHelper.PolarVector(134, Projectile.rotation + (float)-Math.PI / 2), RedeHelper.PolarVector(9, Projectile.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism_F>(), 1000, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
                             }
                             if (Projectile.localAI[1] > 40)
                             {

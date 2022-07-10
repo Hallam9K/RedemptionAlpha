@@ -15,6 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Redemption.NPCs.HM;
 
 namespace Redemption.Globals
 {
@@ -625,7 +626,41 @@ namespace Redemption.Globals
 
             return false;
         }
+        public static bool TargetCheck(this Terraria.NPC npc, int ID = 0, bool bool1 = false, bool bool2 = false)
+        {
+            Terraria.Player player = Main.player[npc.target];
+            RedeNPC globalNPC = npc.Redemption();
+            if (globalNPC.attacker is Terraria.Player)
+                return false;
 
+            Terraria.NPC target = Main.npc[globalNPC.attacker.whoAmI];
+            if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+                return true;
+
+            switch (ID)
+            {
+                case 1:
+                    if (NPCLists.Plantlike.Contains(target.type))
+                        return true;
+                    break;
+                case 2:
+                    if (player.RedemptionPlayerBuff().skeletonFriendly && NPCLists.SkeletonHumanoid.Contains(target.type))
+                        return true;
+                    break;
+                case 3:
+                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>())
+                        return true;
+                    break;
+            }
+            return false;
+        }
+        public static bool ThreatenedCheck(this Terraria.NPC npc, ref int runCD, int runCDNum = 180, int ID = 0)
+        {
+            RedeNPC globalNPC = npc.Redemption();
+            if (globalNPC.attacker == null || !globalNPC.attacker.active || npc.TargetCheck(ID) || npc.PlayerDead() || npc.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCD > runCDNum)
+                return true;
+            return false;
+        }
         #region NPC Methods
 
         /// <summary>

@@ -145,7 +145,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Threatened:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 180, 1))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -166,7 +166,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     break;
                 case ActionState.RootAttack:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 180, 1))
                         AIState = ActionState.Wander;
 
                     for (int i = 0; i < 2; i++)

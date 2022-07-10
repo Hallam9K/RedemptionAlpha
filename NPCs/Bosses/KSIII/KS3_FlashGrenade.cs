@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 int dustIndex = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Frost, 0f, 0f, 100, default, 4f);
                 Main.dust[dustIndex].velocity *= 12f;
             }
-            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FlashGrenadeBlast>(), Projectile.damage, 0, Main.myPlayer);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FlashGrenadeBlast>(), Projectile.damage, 0, Main.myPlayer);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

@@ -173,7 +173,7 @@ namespace Redemption.NPCs.PreHM
 
                 case ActionState.Retreat:
                     SightCheck();
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 360, 2))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
@@ -199,7 +199,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Follow:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 360, 2))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
@@ -235,7 +235,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Dance:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || !AttackerIsUndead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 360, 2))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);

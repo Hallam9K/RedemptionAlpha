@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Minions
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Laser1 with { Volume = .6f }, Projectile.position);
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.DirectionTo(target.Center) * 8, ModContent.ProjectileType<MicroshieldCore_Bolt>(), 100, 3, owner.whoAmI);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.DirectionTo(target.Center) * 8, ModContent.ProjectileType<MicroshieldCore_Bolt>(), 100, 3, owner.whoAmI);
                 }
             }
             else

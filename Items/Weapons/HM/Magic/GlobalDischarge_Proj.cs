@@ -83,7 +83,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (Projectile.localAI[0]++ == 0 && Projectile.owner == Main.myPlayer)
             {
                 Projectile.alpha = 0;
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center + Vector2.Normalize(Projectile.velocity) * 58f, RedeHelper.PolarVector(18, (Main.MouseWorld - player.Center).ToRotation()), ModContent.ProjectileType<GlobalDischarge_Sphere>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center + Vector2.Normalize(Projectile.velocity) * 58f, RedeHelper.PolarVector(18, (Main.MouseWorld - player.Center).ToRotation()), ModContent.ProjectileType<GlobalDischarge_Sphere>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
             }
         }
         public override bool PreDraw(ref Color lightColor)

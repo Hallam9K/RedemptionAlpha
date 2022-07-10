@@ -190,7 +190,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Threatened:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
@@ -224,14 +224,14 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.PillarAttack:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown))
                         AIState = ActionState.Wander;
 
                     NPC.velocity.X = 0;
                     break;
 
                 case ActionState.PillarJump:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 800 * 800 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown))
                         AIState = ActionState.Wander;
                     break;
             }

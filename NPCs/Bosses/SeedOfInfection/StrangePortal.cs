@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             if (Projectile.localAI[0] % 10 == 0 && Main.myPlayer == player.whoAmI)
             {
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StrangePortal2>(), 0, 0, Projectile.owner, rotSwitch ? 0 : 1);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StrangePortal2>(), 0, 0, Projectile.owner, rotSwitch ? 0 : 1);
                 rotSwitch = !rotSwitch;
             }
         }

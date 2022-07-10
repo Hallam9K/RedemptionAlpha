@@ -51,7 +51,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 if (HitCount >= 3 && Projectile.owner == Main.myPlayer)
                 {
-                    int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Projectile.velocity * 4, ModContent.ProjectileType<ChickenEgg_Proj>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * 4, ModContent.ProjectileType<ChickenEgg_Proj>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
                     Main.projectile[p].DamageType = DamageClass.Melee;
                     Main.projectile[p].netUpdate2 = true;
                     HitCount = 0;

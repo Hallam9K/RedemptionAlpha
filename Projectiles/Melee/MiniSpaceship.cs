@@ -85,7 +85,7 @@ namespace Redemption.Projectiles.Melee
                         if (modPlayer.hitTarget != -1)
                         {
                             SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ModContent.ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ModContent.ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
                             modPlayer.hitTarget = -1;
                         }
                     }
@@ -94,7 +94,7 @@ namespace Redemption.Projectiles.Melee
                         if (modPlayer.hitTarget2 != -1)
                         {
                             SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ModContent.ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Projectile.rotation), ModContent.ProjectileType<MiniSpaceship_Laser>(), 1 + (player.HeldItem.damage / 4), Projectile.knockBack, Projectile.owner);
                             modPlayer.hitTarget2 = -1;
                         }
                     }

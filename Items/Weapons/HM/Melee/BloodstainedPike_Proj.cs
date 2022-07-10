@@ -93,7 +93,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                     SoundEngine.PlaySound(SoundID.NPCDeath6, Projectile.position);
                                     if (Main.myPlayer == Projectile.owner)
                                     {
-                                        int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloodstainedPike_Proj2>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloodstainedPike_Proj2>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
                                         Main.projectile[p].rotation = Projectile.rotation;
                                         Main.projectile[p].spriteDirection = Projectile.spriteDirection;
                                         Main.projectile[p].netUpdate2 = true;

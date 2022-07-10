@@ -84,7 +84,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         {
                             SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
 
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), player.Center,
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
                                 RedeHelper.PolarVector(15, (Main.MouseWorld - player.Center).ToRotation()),
                                 ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }

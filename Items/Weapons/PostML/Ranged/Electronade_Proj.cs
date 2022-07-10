@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 Main.dust[dust].noGravity = true;
             }
             if (Projectile.owner == Main.myPlayer)
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Electronade_TeslaField>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Electronade_TeslaField>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

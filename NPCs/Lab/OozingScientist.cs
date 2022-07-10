@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Lab
                     break;
 
                 case ActionState.Alert:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 180)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 380))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;

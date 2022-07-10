@@ -145,7 +145,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             break;
 
                         if (Main.netMode != NetmodeID.Server && Projectile.owner == Main.myPlayer)
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), origin + new Vector2(0, -20), Vector2.Zero, ModContent.ProjectileType<GravityHammer_GroundShock>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, SlamOrigin.X);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin + new Vector2(0, -20), Vector2.Zero, ModContent.ProjectileType<GravityHammer_GroundShock>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, SlamOrigin.X);
                     }
                 }
             }

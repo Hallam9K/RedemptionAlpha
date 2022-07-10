@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
@@ -56,7 +57,8 @@ namespace Redemption.NPCs.PreHM
             set => NPC.ai[3] = (int)value;
         }
 
-        public bool HasHairExt;
+        public int HairExtType;
+        public bool HasHat;
         public int EyeType;
         public int HairType;
         public int FlowerType;
@@ -98,9 +100,9 @@ namespace Redemption.NPCs.PreHM
             NPC.value = 500;
             NPC.knockBackResist = 0.3f;
             NPC.rarity = 2;
-            NPC.aiStyle = -1; // TODO: Forest Nympth banner
-            //Banner = NPC.type;
-            //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
+            NPC.aiStyle = -1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<ForestNymphBanner>();
         }
         public Vector2 SetEyeOffset(ref int frameHeight)
         {
@@ -128,6 +130,8 @@ namespace Redemption.NPCs.PreHM
                 for (int i = 0; i < 10; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GrassBlades,
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                for (int i = 0; i < 7; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ForestNymphGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GrassBlades,
                 NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
@@ -270,7 +274,7 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X = 0;
 
                     EyeState = 2;
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 1))
                     {
                         runCooldown = 0;
                         moveTo = NPC.FindGround(20);
@@ -346,7 +350,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Attacking:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 1))
                     {
                         runCooldown = 0;
                         moveTo = NPC.FindGround(20);
@@ -389,7 +393,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Slash:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 1))
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -432,7 +436,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.RootAtk:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.PlayerDead() || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 300)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 1))
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -524,7 +528,6 @@ namespace Redemption.NPCs.PreHM
         private int EyeState;
         public override void FindFrame(int frameHeight)
         {
-            RedeNPC globalNPC = NPC.Redemption();
             if (Main.netMode != NetmodeID.Server)
             {
                 switch (EyeState)
@@ -667,8 +670,9 @@ namespace Redemption.NPCs.PreHM
             hair.Add(3, 0.1);
             HairType = hair;
             FlowerType = Main.rand.Next(6);
-            if (Main.rand.NextBool(2))
-                HasHairExt = true;
+            HairExtType = Main.rand.Next(3);
+            if (Main.rand.NextBool(10))
+                HasHat = true;
             WeightedRandom<int> eyes = new(Main.rand);
             eyes.Add(0);
             eyes.Add(1);
@@ -740,8 +744,11 @@ namespace Redemption.NPCs.PreHM
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D hair1 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1").Value;
+            Texture2D hair1b = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1b").Value;
+            Texture2D hair1c = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1c").Value;
             Texture2D hair2 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra2").Value;
             Texture2D hair3 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra3").Value;
+            Texture2D tophat = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra4").Value;
             Texture2D eye = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Eye").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 pos = NPC.Center + new Vector2(NPC.spriteDirection == -1 ? -19 : 17, -17);
@@ -767,12 +774,28 @@ namespace Redemption.NPCs.PreHM
             Rectangle rect = new(x, y, Width, Height);
             Rectangle rect2 = new(x2, y2, Width2, Height2);
             Rectangle rect3 = new(x3, 0, Width3, hair3.Height);
-            if (HasHairExt)
-                spriteBatch.Draw(hair1, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12), NPC.scale, effects, 0);
+            switch (HairExtType)
+            {
+                case 1:
+                    hair1 = hair1b;
+                    break;
+                case 2:
+                    hair1 = hair1c;
+                    Height = hair1c.Height / 10;
+                    Width = hair1c.Width / 4;
+                    y = Height * (NPC.frame.Y / 94);
+                    x = Width * HairType;
+                    rect = new(x, y, Width, Height);
+                    break;
+            }
+            spriteBatch.Draw(hair1, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
 
             spriteBatch.Draw(hair2, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
             if (FlowerType <= 4)
                 spriteBatch.Draw(hair3, pos - screenPos, new Rectangle?(rect3), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+            
+            if (HasHat)
+                spriteBatch.Draw(tophat, pos - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;

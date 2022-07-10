@@ -198,7 +198,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Defend:
-                    if (defending == null || !defending.active || globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    if (defending == null || !defending.active || globalNPC.attacker == null || !globalNPC.attacker.active || NPC.TargetCheck(2) || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
@@ -265,7 +265,7 @@ namespace Redemption.NPCs.PreHM
                     break;
 
                 case ActionState.Block:
-                    if (globalNPC.attacker == null || !globalNPC.attacker.active || NPC.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCooldown > 360)
+                    if (NPC.ThreatenedCheck(ref runCooldown, 360, 2))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);

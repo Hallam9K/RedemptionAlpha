@@ -72,7 +72,7 @@ namespace Redemption.Tiles.Furniture.Lab
                         {
                             Projectile.frame = 1;
                             SoundEngine.PlaySound(SoundID.Item40, Projectile.position);
-                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), ShootPos, RedeHelper.PolarVector(18, Projectile.rotation + -MathHelper.Pi), ModContent.ProjectileType<MACE_FlakBullet>(), npc.damage / 4, 0, Main.myPlayer);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), ShootPos, RedeHelper.PolarVector(18, Projectile.rotation + -MathHelper.Pi), ModContent.ProjectileType<MACE_FlakBullet>(), npc.damage / 4, 0, Main.myPlayer);
                         }
                         if (npc.ai[3] != 5)
                         {

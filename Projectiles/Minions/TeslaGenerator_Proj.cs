@@ -66,7 +66,7 @@ namespace Redemption.Projectiles.Minions
                 {
                     Vector2 ai = RedeHelper.PolarVector(10, (target.Center - Projectile.Center).ToRotation());
                     float ai2 = Main.rand.Next(100);
-                    Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(10, (target.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<TeslaGenerator_Lightning>(), Projectile.damage, 0, Main.myPlayer, ai.ToRotation(), ai2);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (target.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<TeslaGenerator_Lightning>(), Projectile.damage, 0, Main.myPlayer, ai.ToRotation(), ai2);
                 }
             }
             for (int k = 0; k < 2; k++)
