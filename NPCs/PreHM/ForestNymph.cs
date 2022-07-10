@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
@@ -99,9 +100,9 @@ namespace Redemption.NPCs.PreHM
             NPC.value = 500;
             NPC.knockBackResist = 0.3f;
             NPC.rarity = 2;
-            NPC.aiStyle = -1; // TODO: Forest Nympth banner
-            //Banner = NPC.type;
-            //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
+            NPC.aiStyle = -1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<ForestNymphBanner>();
         }
         public Vector2 SetEyeOffset(ref int frameHeight)
         {
@@ -129,6 +130,8 @@ namespace Redemption.NPCs.PreHM
                 for (int i = 0; i < 10; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GrassBlades,
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                for (int i = 0; i < 7; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/ForestNymphGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GrassBlades,
                 NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
