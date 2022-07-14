@@ -11,6 +11,7 @@ using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Terraria.DataStructures;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -27,22 +28,30 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
 
         public override bool ShouldUpdatePosition() => false;
-
         public override void SetSafeDefaults()
         {
             Projectile.width = 58;
             Projectile.height = 64;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
+            Length = 40;
+            Rot = MathHelper.ToRadians(2);
+            Projectile.alpha = 255;
         }
 
-        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Timer < 15 && Projectile.ai[0] != 0 ? null : false;
 
-        float oldRotation = 0f;
-        int directionLock = 0;
+        private Vector2 startVector;
+        private Vector2 vector;
+        public ref float Length => ref Projectile.localAI[0];
+        public ref float Rot => ref Projectile.localAI[1];
+        public float Timer;
+        private float speed;
         private float SwingSpeed;
         private float glow;
-
+        public override void OnSpawn(IEntitySource source)
+        {
+        }
         public override void AI()
         {
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
@@ -51,96 +60,166 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
-            {
                 Projectile.Kill();
-            }
 
             SwingSpeed = SetSwingSpeed(1);
-
-            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
-            float swordRotation = 0f;
-            if (Main.myPlayer == Projectile.owner)
-            {
-                if (Projectile.ai[0] == 0)
-                {
-                    swordRotation = MathHelper.ToRadians(-45f * player.direction - 90f);
-
-                    glow += 0.01f;
-                    glow = MathHelper.Clamp(glow, 0, 0.4f);
-                    if (glow >= 0.4 && Projectile.localAI[0] == 0)
-                    {
-                        RedeDraw.SpawnRing(Projectile.Center, Color.OrangeRed, 0.2f, 0.85f, 4);
-                        RedeDraw.SpawnRing(Projectile.Center, Color.OrangeRed, 0.2f);
-                        SoundEngine.PlaySound(SoundID.Item88, Projectile.position);
-                        Projectile.localAI[0] = 1;
-                    }
-                    if (!player.channel)
-                    {
-                        Projectile.ai[0] = 1;
-                        oldRotation = swordRotation;
-                        directionLock = player.direction;
-                        SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
-                        if (Projectile.localAI[0] == 1)
-                        {
-                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
-
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(15, (Main.MouseWorld - player.Center).ToRotation()),
-                                ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-                        }
-                    }
-                }
-                if (Projectile.ai[0] >= 1)
-                {
-                    player.direction = directionLock;
-
-                    Projectile.ai[0]++;
-
-                    float timer = Projectile.ai[0] - 1;
-
-                    swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 90f), timer / (Projectile.localAI[0] == 1 ? 10f : 20f) / SwingSpeed);
-
-                    if (Projectile.ai[0] >= (Projectile.localAI[0] == 1 ? 11 : 21) * SwingSpeed)
-                        Projectile.Kill();
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile target = Main.projectile[i];
-                        if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
-                            continue;
-
-                        if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileTags.Fire.Has(target.type) || ProjectileLists.IsTechnicallyMelee.Contains(target.type))
-                            continue;
-
-                        DustHelper.DrawCircle(target.Center, DustID.Torch, 1, 4, 4, nogravity: true);
-                        target.Kill();
-                    }
-                }
-            }
-
-            Projectile.velocity = swordRotation.ToRotationVector2();
-
-            Projectile.spriteDirection = player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-
-            Projectile.Center = playerCenter + Projectile.velocity * 40f;
-
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
 
-            if (Projectile.ai[0] == 0)
-            {
-                player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
-                player.bodyFrame.Y = 5 * player.bodyFrame.Height;
-            }
+            Projectile.spriteDirection = player.direction;
+            if (Projectile.spriteDirection == 1)
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
             else
-                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-        }
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
+            if (Main.myPlayer == Projectile.owner)
+            {
+                switch (Projectile.ai[0])
+                {
+                    case -1:
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer++ == 0)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item71, player.position);
+                        }
+                        if (Timer < 15)
+                            BlockProj();
+                        if (Timer < 5 * SwingSpeed)
+                        {
+                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
+                            speed += 0.15f;
+                            vector = startVector.RotatedBy(Rot) * Length;
+                        }
+                        else
+                        {
+                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
+                            speed *= 0.7f;
+                            vector = startVector.RotatedBy(Rot) * Length;
+                        }
+                        if (Timer >= 25 * SwingSpeed)
+                            Projectile.Kill();
+                        break;
+
+                    case 0:
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer++ == 0)
+                        {
+                            speed = MathHelper.ToRadians(1);
+                            startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection));
+                            vector = startVector * Length;
+                        }
+                        if (!player.channel)
+                        {
+                            Timer = 0;
+                            Projectile.ai[0] = -1;
+                            Projectile.netUpdate = true;
+                        }
+                        glow += 0.01f;
+                        if (glow >= 0.4)
+                        {
+                            Timer = 0;
+                            RedeDraw.SpawnRing(Projectile.Center, Color.OrangeRed, 0.2f, 0.85f, 4);
+                            RedeDraw.SpawnRing(Projectile.Center, Color.OrangeRed, 0.2f);
+                            SoundEngine.PlaySound(SoundID.Item88, Projectile.position);
+                            SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                            Projectile.ai[0] = 1;
+                        }
+                        break;
+                    case 1:
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer++ == 7)
+                        {
+                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
+                                ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                        }
+                        if (Timer < 15)
+                            BlockProj();
+                        if (Timer < 5 * SwingSpeed)
+                        {
+                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
+                            speed += 0.15f;
+                            vector = startVector.RotatedBy(Rot) * Length;
+                        }
+                        else
+                        {
+                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
+                            speed *= 0.8f;
+                            vector = startVector.RotatedBy(Rot) * Length;
+                        }
+                        if (Timer >= 20 * SwingSpeed)
+                        {
+                            if (!player.channel)
+                            {
+                                Projectile.Kill();
+                                return;
+                            }
+                            SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                            Projectile.ai[0]++;
+                            Timer = 0;
+                            Projectile.netUpdate = true;
+                        }
+                        break;
+                    case 2:
+                        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer++ == 5)
+                        {
+                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
+                                ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                        }
+                        if (Timer < 15)
+                            BlockProj();
+                        if (Timer < 5 * SwingSpeed)
+                        {
+                            Rot -= speed / SwingSpeed * Projectile.spriteDirection;
+                            speed += 0.15f;
+                            vector = startVector.RotatedBy(Rot) * Length;
+                        }
+                        else
+                        {
+                            Rot -= speed / SwingSpeed * Projectile.spriteDirection;
+                            speed *= 0.5f;
+                            vector = startVector.RotatedBy(Rot) * Length;
+                        }
+                        if (Timer >= 20 * SwingSpeed)
+                        {
+                            if (!player.channel)
+                            {
+                                Projectile.Kill();
+                                return;
+                            }
+                            SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                            Projectile.ai[0] = 1;
+                            Timer = 0;
+                            Projectile.netUpdate = true;
+                        }
+                        break;
+                }
+            }
+            if (Timer > 1)
+                Projectile.alpha = 0;
+
+            Projectile.Center = player.MountedCenter + vector;
+        }
+        private void BlockProj()
+        {
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile target = Main.projectile[i];
+                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200)
+                    continue;
+
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileTags.Fire.Has(target.type) || ProjectileLists.IsTechnicallyMelee.Contains(target.type))
+                    continue;
+
+                DustHelper.DrawCircle(target.Center, DustID.Torch, 1, 4, 4, nogravity: true);
+                target.Kill();
+            }
+        }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (NPCLists.Dragonlike.Contains(target.type))
@@ -158,11 +237,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Player player = Main.player[Projectile.owner];
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 1.1f, 1.2f);
+            Vector2 v = RedeHelper.PolarVector(0, (Projectile.Center - player.Center).ToRotation());
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -172,13 +253,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Color.OrangeRed * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
+                Main.EntitySpriteDraw(texture, drawPos - v, null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
             }
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }

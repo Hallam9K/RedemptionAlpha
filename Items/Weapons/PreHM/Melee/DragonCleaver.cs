@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Swings can block fire projectiles\n" +
-                "Hold left-click to charge a Heat Wave\n" +
+                "Hold left-click to charge a Heat Wave, continue holding to go into a fiery flurry\n" +
                 "Deals more damage to dragon-like enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
