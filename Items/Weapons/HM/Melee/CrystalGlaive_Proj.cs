@@ -47,6 +47,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
+            Projectile.Center = player.MountedCenter + vector;
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
@@ -158,7 +159,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Timer > 1)
                 Projectile.alpha = 0;
 
-            Projectile.Center = player.MountedCenter + vector;
             Dust dust = Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight)];
             dust.velocity *= 0;
             dust.noGravity = true;

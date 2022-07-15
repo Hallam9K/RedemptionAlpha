@@ -49,9 +49,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float speed;
         private float SwingSpeed;
         private float glow;
-        public override void OnSpawn(IEntitySource source)
-        {
-        }
         public override void AI()
         {
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
@@ -128,14 +125,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         break;
                     case 1:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ == 7)
+                        if (Timer++ == (int)(7 * SwingSpeed))
                         {
                             SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
                                 RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
                                 ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }
-                        if (Timer < 15)
+                        if (Timer < 15 * SwingSpeed)
                             BlockProj();
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -164,14 +161,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         break;
                     case 2:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ == 5)
+                        if (Timer++ == (int)(5 * SwingSpeed))
                         {
                             SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
                                 RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
                                 ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }
-                        if (Timer < 15)
+                        if (Timer < 15 * SwingSpeed)
                             BlockProj();
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -237,13 +234,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Player player = Main.player[Projectile.owner];
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 1.1f, 1.2f);
-            Vector2 v = RedeHelper.PolarVector(0, (Projectile.Center - player.Center).ToRotation());
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -253,13 +248,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Color.OrangeRed * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos - v, null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
+                Main.EntitySpriteDraw(texture, drawPos, null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
             }
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }
