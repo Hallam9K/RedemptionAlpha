@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Pure-Iron Sword");
             Tooltip.SetDefault("Swings can block ice projectiles\n" +
-                "Hold left-click to charge a Arctic Spin Slash");
+                "Holding left-click and hitting enemies will charge an Arctic Spin Slash");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

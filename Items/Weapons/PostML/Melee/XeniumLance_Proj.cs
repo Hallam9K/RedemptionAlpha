@@ -29,6 +29,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.height = 48;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
+            Projectile.alpha = 255;
             Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
@@ -51,6 +52,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
+            Projectile.Center = player.MountedCenter + vector;
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
@@ -181,8 +183,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     Length = MathHelper.Clamp(Length, 60, 120);
                     break;
             }
-            Projectile.Center = player.MountedCenter + vector;
-
+            if (Timer > 1)
+                Projectile.alpha = 0;
             return false;
         }
 

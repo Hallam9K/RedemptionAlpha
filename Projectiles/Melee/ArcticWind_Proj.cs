@@ -55,7 +55,7 @@ namespace Redemption.Projectiles.Melee
             }
 
             if (Projectile.timeLeft >= 30)
-                Projectile.alpha -= 6;
+                Projectile.alpha -= 10;
 
             if (Projectile.timeLeft <= 20)
             {
@@ -86,7 +86,7 @@ namespace Redemption.Projectiles.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, (Projectile.scale * 2) * 0.8f, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 2, effects, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Length = 66;
+            Length = 78;
             Rot = MathHelper.ToRadians(3);
         }
         private Vector2 startVector;
@@ -53,6 +53,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
+            Projectile.Center = player.MountedCenter + vector;
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
@@ -71,7 +72,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Swing1, player.position);
                             startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
-                            speed = MathHelper.ToRadians(3);
+                            speed = MathHelper.ToRadians(10);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -85,8 +86,9 @@ namespace Redemption.Items.Weapons.HM.Melee
                             speed *= 0.8f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
-                        if (Timer >= 16 * SwingSpeed)
+                        if (Timer >= 10 * SwingSpeed)
                         {
+                            Projectile.alpha = 255;
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
                             Projectile.ai[0]++;
                             Timer = 0;
@@ -95,10 +97,10 @@ namespace Redemption.Items.Weapons.HM.Melee
                         break;
                     case 1:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ < 5 * SwingSpeed)
+                        if (Timer++ < 4 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed += 0.14f;
+                            speed += 0.23f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
                         else
@@ -107,15 +109,13 @@ namespace Redemption.Items.Weapons.HM.Melee
                             speed *= 0.6f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
-                        if (Timer >= 10 * SwingSpeed)
+                        if (Timer >= 18 * SwingSpeed)
                             Projectile.Kill();
                         break;
                 }
             }
             if (Timer > 1)
                 Projectile.alpha = 0;
-
-            Projectile.Center = player.MountedCenter + vector;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

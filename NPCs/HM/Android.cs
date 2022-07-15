@@ -141,7 +141,7 @@ namespace Redemption.NPCs.HM
                             AITimer = 0;
                             AIState = ActionState.Scan;
                         }
-                        else if (RedeHelper.ClosestNPCToNPC(NPC, ref closeNPC, 100, NPC.Center))
+                        else if (RedeHelper.ClosestNPCToNPC(NPC, ref closeNPC, 100, NPC.Center) && !closeNPC.dontTakeDamage)
                         {
                             AITimer = 0;
                             AIState = ActionState.Scan;
