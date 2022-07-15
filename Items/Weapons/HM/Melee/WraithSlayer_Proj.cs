@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Swing1, player.position);
                             startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
-                            speed = MathHelper.ToRadians(3);
+                            speed = MathHelper.ToRadians(10);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -86,7 +86,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             speed *= 0.8f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
-                        if (Timer >= 12 * SwingSpeed)
+                        if (Timer >= 10 * SwingSpeed)
                         {
                             Projectile.alpha = 255;
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
@@ -100,16 +100,16 @@ namespace Redemption.Items.Weapons.HM.Melee
                         if (Timer++ < 4 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed += 0.2f;
+                            speed += 0.23f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
                         else
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed *= 0.66f;
+                            speed *= 0.6f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
-                        if (Timer >= 16 * SwingSpeed)
+                        if (Timer >= 18 * SwingSpeed)
                             Projectile.Kill();
                         break;
                 }

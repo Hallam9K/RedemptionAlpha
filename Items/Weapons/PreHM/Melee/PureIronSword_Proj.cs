@@ -86,7 +86,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 {
                     case 0:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        speed = MathHelper.ToRadians(1);
+                        speed = MathHelper.ToRadians(6);
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() + ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection));
                         SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
                         vector = startVector * Length;
@@ -128,7 +128,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             {
                                 Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - player.Center).ToRotation());
                                 Projectile.alpha = 255;
-                                speed = MathHelper.ToRadians(1);
+                                speed = MathHelper.ToRadians(6);
                                 Rot = MathHelper.ToRadians(2);
                                 startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection)); ;
                                 vector = startVector * Length;
@@ -178,7 +178,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             else
                             {
                                 Projectile.alpha = 255;
-                                speed = MathHelper.ToRadians(1);
+                                speed = MathHelper.ToRadians(6);
 
                                 Projectile.ai[0] = 1;
                             }
@@ -215,7 +215,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             glow = 0;
                             Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - player.Center).ToRotation());
                             Projectile.alpha = 255;
-                            speed = MathHelper.ToRadians(1);
+                            speed = MathHelper.ToRadians(6);
                             Rot = MathHelper.ToRadians(2);
                             startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection));
                             vector = startVector * Length;
@@ -264,7 +264,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             target.immune[Projectile.owner] = 0;
 
             if (glow < 0.8f)
-                glow += 0.1f;
+                glow += 0.2f;
             Player player = Main.player[Projectile.owner];
             if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
