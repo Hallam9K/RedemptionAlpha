@@ -9,13 +9,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Donator.Gonk;
 
 namespace Redemption.Items.Usable
 {
     public class OmegaCleaverBag : ModItem
 	{
-		public override int BossBagNPC => ModContent.NPCType<OmegaCleaver>();
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Box (Omega Cleaver)");
@@ -37,26 +38,13 @@ namespace Redemption.Items.Usable
 		{
 			return true;
 		}
-		public override void OpenBossBag(Player player)
-		{
-			/*if (Main.rand.Next(20) == 0)
-			{
-				player.QuickSpawnItem(ModContent.ItemType<IntruderMask>(), 1);
-				player.QuickSpawnItem(ModContent.ItemType<IntruderArmour>(), 1);
-				player.QuickSpawnItem(ModContent.ItemType<IntruderPants>(), 1);
-			}*/		
-			/*if (Main.rand.Next(3) == 0)
-			{
-				player.QuickSpawnItem(ModContent.ItemType<GirusDagger>(), 1);
-			}
-			if (Main.rand.Next(3) == 0)
-			{
-				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
-			}*/
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<OmegaBattery>(), Main.rand.Next(1, 4));
-			player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<BrokenBlade>());
-		}
-
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>(), 1));
+        }
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);

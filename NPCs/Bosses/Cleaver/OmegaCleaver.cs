@@ -21,6 +21,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -154,7 +156,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
 
             npcLoot.Add(notExpertRule);
         }

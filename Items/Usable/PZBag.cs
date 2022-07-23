@@ -6,6 +6,7 @@ using Redemption.NPCs.Bosses.PatientZero;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,8 +14,6 @@ namespace Redemption.Items.Usable
 {
     public class PZBag : ModItem
 	{
-		public override int BossBagNPC => ModContent.NPCType<PZ>();
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Treasure Bag (Patient Zero)");
@@ -33,15 +32,12 @@ namespace Redemption.Items.Usable
 		public override bool CanRightClick()
 		{
 			return true;
-		}
-		public override void OpenBossBag(Player player)
-        {
-            if (Main.rand.NextBool(7))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<PZMask>());
-
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<MedicKit>());
         }
-
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
+        }
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);

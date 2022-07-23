@@ -4,6 +4,7 @@ using Terraria.ID;
 using Redemption.Items.Armor.Vanity.TBot;
 using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable
 {
@@ -32,19 +33,11 @@ namespace Redemption.Items.Usable
             return true;
         }
         public override bool CanRightClick() => true;
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            switch (Main.rand.Next(2))
-            {
-                case 0:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TBotVanityEyes>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TBotVanityGoggles>());
-                    break;
-            }
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TBotVanityChestplate>());
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TBotVanityLegs>());
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<TBotVanityEyes>(), ModContent.ItemType<TBotVanityGoggles>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TBotVanityChestplate>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TBotVanityLegs>()));
         }
     }
 }

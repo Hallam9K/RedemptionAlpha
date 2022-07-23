@@ -10,13 +10,12 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable
 {
     public class SoIBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<SoI>();
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Treasure Bag (Seed of Infection)");
@@ -39,26 +38,12 @@ namespace Redemption.Items.Usable
         }
 
         public override bool CanRightClick() => true;
-
-        public override void OpenBossBag(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.NextBool(7))
-            {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<InfectedMask>());
-            }
-            switch (Main.rand.Next(2))
-            {
-                case 0:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<XenomiteGlaive>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CystlingSummon>());
-                    break;
-                    // TODO: Xenomite Canister
-            }
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 23));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenomiteGlaive>(), ModContent.ItemType<CystlingSummon>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
         }
-
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.Lerp(lightColor, Color.White, 0.4f);

@@ -11,13 +11,12 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable
 {
     public class ErhanBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<Erhan>();
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Treasure Bag (Erhan)");
@@ -40,29 +39,13 @@ namespace Redemption.Items.Usable
         }
 
         public override bool CanRightClick() => true;
-
-        public override void OpenBossBag(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.NextBool(7))
-            {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ErhanHelmet>());
-            }
-            switch (Main.rand.Next(3))
-            {
-                case 0:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Bindeklinge>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HolyBible>());
-                    break;
-                case 2:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HallowedHandGrenade>());
-                    break;
-            }
-            if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ErhanMagnifyingGlass>());
-
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ErhanCross>());
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanHelmet>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1,
+                ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanMagnifyingGlass>(), 2));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanCross>()));
         }
 
         public override Color? GetAlpha(Color lightColor)
