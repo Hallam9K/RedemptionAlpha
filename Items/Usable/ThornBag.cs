@@ -12,13 +12,12 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Weapons.PreHM.Ritualist;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable
 {
     public class ThornBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<Thorn>();
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Treasure Bag (Thorn)");
@@ -41,31 +40,12 @@ namespace Redemption.Items.Usable
         }
 
         public override bool CanRightClick() => true;
-
-        public override void OpenBossBag(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.NextBool(7))
-            {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<ThornMask>());
-            }
-            switch (Main.rand.Next(4))
-            {
-                case 0:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CursedGrassBlade>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CursedThornBow>());
-                    break;
-                case 2:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<RootTendril>());
-                    break;
-                case 3:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<BlightedBoline>());
-                    break;
-            }
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CircletOfBrambles>());
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CircletOfBrambles>()));
         }
-
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.Lerp(lightColor, Color.White, 0.4f);

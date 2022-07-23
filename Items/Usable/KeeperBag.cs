@@ -13,13 +13,12 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Ritualist;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable
 {
     public class KeeperBag : ModItem
 	{
-        public override int BossBagNPC => ModContent.NPCType<Keeper>();
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Treasure Bag (The Keeper)");
@@ -42,33 +41,14 @@ namespace Redemption.Items.Usable
         }
 
         public override bool CanRightClick() => true;
-
-        public override void OpenBossBag(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.NextBool(7))
-            {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<KeepersVeil>());
-            }
-
-            switch (Main.rand.Next(4))
-            {
-                case 0:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SoulScepter>());
-                    break;
-                case 1:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<KeepersClaw>());
-                    break;
-                case 2:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<FanOShivs>());
-                    break;
-                case 3:
-                    player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<KeepersKnife>());
-                    break;
-            }
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<GrimShard>(), Main.rand.Next(3, 5));
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<HeartInsignia>());
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<KeepersVeil>(), 7));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1,
+                ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>(), ModContent.ItemType<KeepersKnife>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GrimShard>(), 1, 3, 5));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartInsignia>()));
         }
-
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.Lerp(lightColor, Color.White, 0.4f);

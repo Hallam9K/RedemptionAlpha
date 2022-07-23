@@ -11,13 +11,12 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Globals;
 using Redemption.BaseExtension;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable
 {
     public class SlayerBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<KS3>();
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cyber Loot Box (King Slayer III)");
@@ -41,19 +40,14 @@ namespace Redemption.Items.Usable
         }
 
         public override bool CanRightClick() => true;
-
-        public override void OpenBossBag(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.NextBool(7))
-            {
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<KingSlayerMask>());
-            }
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SlayerGun>());
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<SlayerMedal>());
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12));
-            player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Holokey>());
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<KingSlayerMask>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerGun>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
         }
-
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.Lerp(lightColor, Color.White, 0.4f);

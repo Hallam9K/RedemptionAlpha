@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Accessories.PreHM;
 using ReLogic.Content;
 using Redemption.Items.Weapons.PreHM.Ritualist;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Globals
 {
@@ -40,12 +41,12 @@ namespace Redemption.Globals
 
             return true;
         }
-        public override void RightClick(Item item, Terraria.Player player)
+        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            if (item.type == ItemID.JungleFishingCrate && Main.rand.NextBool(6))
-                player.QuickSpawnItem(player.GetSource_OpenItem(item.type), ModContent.ItemType<BuddingBoline>());
-            if (item.type == ItemID.JungleFishingCrateHard && Main.rand.NextBool(12))
-                player.QuickSpawnItem(player.GetSource_OpenItem(item.type), ModContent.ItemType<BuddingBoline>());
+            if (item.type == ItemID.JungleFishingCrate)
+                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 6));
+            if (item.type == ItemID.JungleFishingCrateHard)
+                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));
         }
 
         #region Vanilla Set Bonuses
