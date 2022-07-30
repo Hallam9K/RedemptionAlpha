@@ -39,6 +39,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Beam");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()

@@ -4,6 +4,7 @@ using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -36,6 +37,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Beam Cell");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()

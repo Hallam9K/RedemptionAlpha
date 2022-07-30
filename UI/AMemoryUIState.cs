@@ -39,6 +39,11 @@ namespace Redemption.UI
         {
             Visible = false;
         }
+        public override void Update(GameTime gameTime)
+        {
+            if (!Main.LocalPlayer.releaseInventory)
+                Visible = false;
+        }
         public override void MouseOver(UIMouseEvent evt)
         {
             Main.isMouseLeftConsumedByUI = true;

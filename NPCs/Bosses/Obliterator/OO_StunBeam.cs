@@ -9,6 +9,7 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -40,6 +41,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Stun Beam");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
         {

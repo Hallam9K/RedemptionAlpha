@@ -151,6 +151,9 @@ namespace Redemption.UI
         }
         public override void Update(GameTime gameTime)
         {
+            if (ButtonState != 2 && !Main.LocalPlayer.releaseInventory)
+                Visible = false;
+
             if (!Visible)
                 ButtonState = 0;
 

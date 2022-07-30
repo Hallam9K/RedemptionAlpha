@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 {
@@ -37,6 +38,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eye Ray");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()
