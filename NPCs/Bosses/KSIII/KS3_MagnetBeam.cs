@@ -40,6 +40,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Magnet Beam");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()

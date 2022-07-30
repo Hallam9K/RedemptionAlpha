@@ -35,7 +35,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = false;
         // >
-
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Obliterator Beam");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 156;

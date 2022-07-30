@@ -39,7 +39,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = false;
         // >
-
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Phantom Cleaver");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 30;
