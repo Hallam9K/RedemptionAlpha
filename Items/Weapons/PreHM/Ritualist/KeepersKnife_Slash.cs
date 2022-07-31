@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Terraria.DataStructures;
 using Redemption.DamageClasses;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist
 {
@@ -29,6 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 8;
             Projectile.DamageType = ModContent.GetInstance<RitualistClass>();
+            Projectile.Redemption().RitDagger = true;
         }
         private int directionLock;
         public override void OnSpawn(IEntitySource source)

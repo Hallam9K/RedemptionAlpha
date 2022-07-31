@@ -28,6 +28,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 
 namespace Redemption
@@ -413,6 +414,18 @@ namespace Redemption
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
+            if (Main.LocalPlayer.HeldItem.CountsAsClass<DamageClasses.RitualistClass>())
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer SpiritGaugeUI = new("Redemption: Spirit Gauge UI",
+                    delegate
+                    {
+                        DrawSpiritGauge(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, SpiritGaugeUI);
+            }
             if (RedeWorld.SkeletonInvasion)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -468,6 +481,29 @@ namespace Redemption
                 }, InterfaceScaleType.UI));
         }
 
+        public static void DrawSpiritGauge(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            RitualistPlayer rP = player.GetModPlayer<RitualistPlayer>();
+
+            Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/SpiritGauge").Value;
+            Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/SpiritGauge_Fill").Value;
+            float timerMax = rP.SpiritGaugeMax;
+            int timerProgress = (int)(timerBarInner.Width * (rP.SpiritGauge / timerMax));
+            Vector2 drawPos = player.Center + new Vector2(0, 32) - Main.screenPosition;
+            spriteBatch.Draw(timerBar, drawPos, null, Color.White, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+
+            Texture2D timerBar2 = ModContent.Request<Texture2D>("Redemption/UI/SpiritGaugeSmall").Value;
+            Texture2D timerBarInner2 = ModContent.Request<Texture2D>("Redemption/UI/SpiritGaugeSmall_Fill").Value;
+            float timerMax2 = rP.SpiritGaugeCDMax;
+            int timerProgress2 = (int)(timerBarInner2.Width * (rP.SpiritGaugeCD / timerMax2));
+            Vector2 drawPos2 = player.Center + new Vector2(0, 41) - Main.screenPosition;
+            spriteBatch.Draw(timerBar2, drawPos2, null, Color.White, 0f, timerBar2.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBarInner2, drawPos2, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner2.Height)), Color.White, 0f, timerBarInner2.Size() / 2f, 1f, SpriteEffects.None, 0f);
+
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, (rP.SpiritLevel + 1).ToString(), player.Center + new Vector2(-46, 36) - Main.screenPosition, Color.White, 0, Vector2.Zero, Vector2.One);
+        }
         #region Skele Invasion UI
         public static void DrawSkeletonInvasionUI(SpriteBatch spriteBatch)
         {
