@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
 using Redemption.Buffs;
+using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -30,10 +33,9 @@ namespace Redemption.Items.Usable
             SoundEngine.PlaySound(SoundID.Grab, player.position);
             for (int i = 0; i < 14; i++)
             {
-                int dust = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height, DustID.DungeonSpirit, 0, 0, 20, Scale: 2);
-                Main.dust[dust].noGravity = true;
+                ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 0.5f * Item.scale, 0, 1);
             }
-            player.GetModPlayer<RitualistPlayer>().SpiritGauge += 5;
+            player.GetModPlayer<RitualistPlayer>().SpiritGauge += 5 * Item.scale;
             return false;
         }
         public override void PostUpdate()
@@ -43,28 +45,15 @@ namespace Redemption.Items.Usable
             {
                 for (int i = 0; i < 14; i++)
                 {
-                    int dust = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height, DustID.DungeonSpirit, 0, 0, 20, Scale: 2);
-                    Main.dust[dust].noGravity = true;
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Item), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 0.5f * Item.scale, 0, 1);
                 }
                 Item.active = false;
                 NetMessage.SendData(MessageID.SyncItem, -1, -1, null, Item.whoAmI);
             }
-            if (!Main.rand.NextBool(2))
-                return;
-
-            int sparkle = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height,
-                DustID.DungeonSpirit, 0, 0, 20, Scale: 2);
-            Main.dust[sparkle].velocity *= 0;
-            Main.dust[sparkle].noGravity = true;
+            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Item), Vector2.Zero, new SpiritParticle(), Color.White, 0.5f * Item.scale, 0, 1);
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Rectangle frame;
-            frame = texture.Frame();
-            Vector2 origin = frame.Size() / 2f;
-
-            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
     }

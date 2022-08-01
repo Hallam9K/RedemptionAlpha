@@ -12,6 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("On hit, temporarily reduces the enemy's defense by 5 times the player's Spirit Level");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
+using Redemption.Globals.Player;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +14,8 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("After the player's Spirit Level increases, the following successful hit spawns a flower\n" +
+                "The flower gives slightly increased life regeneration and knockback immunity while in its radius");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
