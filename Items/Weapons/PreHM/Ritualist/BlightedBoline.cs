@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
+using Redemption.Globals.Player;
+using Redemption.Projectiles.Ritualist;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blighted Boline");
+            Tooltip.SetDefault("After the player's Spirit Level increases, the following swing fires a cursed thorn tenril");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -41,6 +45,15 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<BlightedBoline_Slash>();
+        }
+        private int oldSpiritLevel;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (oldSpiritLevel < player.GetModPlayer<RitualistPlayer>().SpiritLevel)
+                Projectile.NewProjectile(source, position, velocity * 2f, ModContent.ProjectileType<CursedThornVileF>(), damage, knockback, player.whoAmI);
+
+            oldSpiritLevel = player.GetModPlayer<RitualistPlayer>().SpiritLevel;
+            return true;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

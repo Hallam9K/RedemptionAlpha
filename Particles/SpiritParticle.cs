@@ -40,7 +40,8 @@ namespace Redemption.Particles
 
                 // Add the sine component to the velocity.
                 // This is scaled by the mult, which changes every cycle.
-                velocity += new Vector2(sineX * mult, -Main.rand.NextFloat(1f, 2f) / 100f);
+                if (ai[1] == 0)
+                    velocity += new Vector2(sineX * mult, -Main.rand.NextFloat(1f, 2f) / 100f);
 
                 // Clamp the velocity so the particle doesnt go too fast.
                 Utils.Clamp(velocity.X, -6f, 6f);
@@ -79,6 +80,8 @@ namespace Redemption.Particles
         }
         private void Spawn()
         {
+            if (ai[1] == 1)
+                timeLeft = Main.rand.Next(20, 30);
             timeLeftMax = timeLeft;
             size = Main.rand.NextFloat(5f, 11f) / 10f;
         }

@@ -18,6 +18,8 @@ using Redemption.Particles;
 using Terraria.GameInput;
 using Terraria.Audio;
 using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Ritualist;
+using Redemption.Projectiles.Ritualist;
 
 namespace Redemption.Globals.Player
 {
@@ -30,6 +32,9 @@ namespace Redemption.Globals.Player
         public float SpiritGaugeCD;
         public float SpiritGaugeCDMax = 600;
         public float SpiritGaugeCDCD;
+
+        public bool bolineFlower;
+
         public override void ResetEffects()
         {
             SpiritLevelCap = 2;
@@ -45,6 +50,7 @@ namespace Redemption.Globals.Player
 
             if (SpiritGauge >= SpiritGaugeMax && SpiritLevel < SpiritLevelCap)
             {
+                IncreaseLevelEffects();
                 SpiritGaugeCD = SpiritGaugeCDMax;
                 SpiritGauge = 5;
                 SpiritLevel++;
@@ -59,6 +65,20 @@ namespace Redemption.Globals.Player
             SpiritGauge = MathHelper.Clamp(SpiritGauge, 0, SpiritGaugeMax);
             SpiritGaugeCD = MathHelper.Clamp(SpiritGaugeCD, 0, SpiritGaugeCDMax);
         }
+        private void IncreaseLevelEffects()
+        {
+            if (Player.HasItem(ModContent.ItemType<BuddingBoline>()))
+                Player.GetModPlayer<RitualistPlayer>().bolineFlower = true;
+
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (!proj.active || proj.type != ModContent.ProjectileType<HellfireCharge_Proj>())
+                    continue;
+
+                proj.ai[1] = 1;
+            }
+        }
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             SpiritGauge -= 15;
@@ -68,7 +88,7 @@ namespace Redemption.Globals.Player
             if (proj.Redemption().RitDagger)
             {
                 SpiritGaugeCD = SpiritGaugeCDMax;
-                if (Main.rand.NextBool(2))
+                if (Main.rand.NextBool(3))
                 {
                     for (int i = 0; i < Main.rand.Next(1, 3); i++)
                         Item.NewItem(proj.GetSource_FromAI(), target.getRect(), ModContent.ItemType<RitSpirit>(), 1, false, 0, true);
