@@ -4,6 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -22,7 +24,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.hostile = false;
             Projectile.penetrate = 4;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 80;
             Projectile.alpha = 50;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
@@ -37,7 +39,7 @@ namespace Redemption.Projectiles.Ranged
                 originalVelocity = Projectile.velocity;
             if (offsetLeft)
             {
-                Projectile.scale -= 0.03f;
+                Projectile.scale -= 0.04f;
                 if (Projectile.scale <= 0.7f)
                 {
                     Projectile.scale = 0.7f;
@@ -46,19 +48,26 @@ namespace Redemption.Projectiles.Ranged
             }
             else
             {
-                Projectile.scale += 0.03f;
+                Projectile.scale += 0.04f;
                 if (Projectile.scale >= 1.3f)
                 {
                     Projectile.scale = 1.3f;
                     offsetLeft = true;
                 }
             }
+            if (Projectile.timeLeft <= 30)
+                Projectile.alpha = (int)MathHelper.Lerp(255f, 0f, Projectile.timeLeft / 30f);
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.immune[Projectile.owner] = 5;
-        }
-        public override void Kill(int timeLeft)
         {
             for (int m = 0; m < 16; m++)
             {
@@ -67,6 +76,10 @@ namespace Redemption.Projectiles.Ranged
                 Main.dust[dustID].noLight = false;
                 Main.dust[dustID].noGravity = true;
             }
+            target.immune[Projectile.owner] = 5;
+        }
+        public override void Kill(int timeLeft)
+        {
         }
     }
 }
