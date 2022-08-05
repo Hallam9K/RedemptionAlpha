@@ -37,6 +37,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Ray");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
         {
