@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.BaseExtension;
+using Terraria.Graphics.Effects;
 
 namespace Redemption.Globals.Player
 {
@@ -332,8 +333,6 @@ namespace Redemption.Globals.Player
         }
         public override void PreUpdate()
         {
-            Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-            Player.ManageSpecialBiomeVisuals("MoR:IslandEffect", false);
         }
         public override void UpdateDead()
         {
@@ -345,7 +344,7 @@ namespace Redemption.Globals.Player
         {
             if (Player.HasBuff(ModContent.BuffType<RadiationDebuff>()))
             {
-                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
+                Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(1f)
                     .UseColor(Color.GreenYellow).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
                 Player.ManageSpecialBiomeVisuals("MoR:FogOverlay", Player.HasBuff(ModContent.BuffType<RadiationDebuff>()));
             }

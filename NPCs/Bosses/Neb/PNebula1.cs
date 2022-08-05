@@ -7,6 +7,9 @@ using Terraria.ModLoader;
 using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.Base;
+using ParticleLibrary;
+using Redemption.Globals;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -183,10 +186,7 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 if (proType != 0)
                 {
-                    int dustID = Dust.NewDust(new Vector2(Projectile.Center.X - 1, Projectile.Center.Y - 1) - Projectile.velocity, 2, 2, DustID.Enchanted_Pink, 0f, 0f, 100, Color.White, 2f);
-                    Main.dust[dustID].velocity *= 0f;
-                    Main.dust[dustID].noLight = false;
-                    Main.dust[dustID].noGravity = true;
+                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Pink, 0.6f, 0, 1);
                 }
 
                 if (originalVelocity == Vector2.Zero)
@@ -222,6 +222,10 @@ namespace Redemption.NPCs.Bosses.Neb
             }
             else
                 Projectile.hostile = false;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
         }
         public override bool ShouldUpdatePosition()
         {

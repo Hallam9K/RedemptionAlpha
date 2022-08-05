@@ -74,6 +74,7 @@ namespace Redemption
         public static readonly SoundStyle Muller5 = new("Redemption/Sounds/Custom/Muller5") { Volume = .9f, PitchVariance = .1f };
         public static readonly SoundStyle NebSound1 = new("Redemption/Sounds/Custom/NebSound1") { PitchVariance = .1f };
         public static readonly SoundStyle NebSound2 = new("Redemption/Sounds/Custom/NebSound2") { PitchVariance = .1f };
+        public static readonly SoundStyle NebSound3 = new("Redemption/Sounds/Custom/NebSound3") { PitchVariance = .1f };
         public static readonly SoundStyle NukeExplosion = new("Redemption/Sounds/Custom/NukeExplosion");
         public static readonly SoundStyle PatientZeroLaser = new("Redemption/Sounds/Custom/PatientZeroLaser");
         public static readonly SoundStyle PatientZeroLaserL = new("Redemption/Sounds/Custom/PatientZeroLaserL");

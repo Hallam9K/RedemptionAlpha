@@ -85,7 +85,6 @@ namespace Redemption.Projectiles.Ritualist
                 }
             }
         }
-        private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;

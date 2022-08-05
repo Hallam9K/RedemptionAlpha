@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("ExtraTextures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new RainbowTrail(5f, 0.002f, 1f, .75f), new RoundCap(), new DefaultTrailPosition(), 50f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
         public float rot;
         public override void AI()
@@ -68,7 +68,8 @@ namespace Redemption.NPCs.Bosses.Neb
                 Color color = Projectile.GetAlpha(Main.DiscoColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
-            return true;
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
         }
     }
     public class Starfall_Tele : ModProjectile

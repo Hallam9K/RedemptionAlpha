@@ -49,6 +49,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 }
             }
         }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
+        }
         public override bool ShouldUpdatePosition() => false;
     }
 }

@@ -48,7 +48,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             return !target.friendly && Projectile.ai[0] != 0 ? null : false;
         }
 
-        private bool resetImmunity;
         private Vector2 startVector;
         private Vector2 vector;
         public ref float Length => ref Projectile.localAI[0];

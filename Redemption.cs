@@ -115,8 +115,12 @@ namespace Redemption
                     Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
                 });
-            }
 
+                Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:NebP1"] = new NebSky();
+                Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:NebP2"] = new NebSky2();
+            }
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);

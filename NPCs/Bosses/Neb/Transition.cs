@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -39,6 +40,10 @@ namespace Redemption.NPCs.Bosses.Neb
                 if (Projectile.alpha <= 0)
                     Projectile.localAI[0] = 1f;
             }
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public int MaxLaserLength = 2000;
         // >
+        public override bool ShouldUpdatePosition() => false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Ray");
@@ -45,7 +46,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 120;
         }
         public override void AI()
         {
@@ -107,7 +108,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(RedeColor.NebColour), (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
