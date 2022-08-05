@@ -34,6 +34,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
         public int MaxLaserLength = 2000;
         // >
+        public override bool ShouldUpdatePosition() => false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Ray");
