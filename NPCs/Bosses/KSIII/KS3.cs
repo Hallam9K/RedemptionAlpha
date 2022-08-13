@@ -546,7 +546,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     break;
                 case ActionState.GunAttacks:
-                    NPC.LookAtEntity(player);
+                    if (AttackChoice != 2 || AITimer <= 245)
+                        NPC.LookAtEntity(player);
+
                     if (AttackChoice == 0)
                     {
                         AttackChoice = Main.rand.Next(1, 6);
@@ -893,7 +895,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     break;
                 case ActionState.SpecialAttacks:
-                    NPC.LookAtEntity(player);
+                    if (AttackChoice != 3 || AITimer <= 120)
+                        NPC.LookAtEntity(player);
+
                     if (AttackChoice == 0)
                     {
                         AttackChoice = Main.rand.Next(1, 10);
@@ -1686,7 +1690,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 100;
 
                                     NPC.frame.X = 0;
-                                    BodyState = Main.rand.NextBool(2)? (int)BodyAnim.Pummel1 : (int)BodyAnim.Pummel2;
+                                    BodyState = Main.rand.NextBool(2) ? (int)BodyAnim.Pummel1 : (int)BodyAnim.Pummel2;
                                     NPC.netUpdate = true;
                                 }
                                 else
