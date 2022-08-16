@@ -1392,14 +1392,14 @@ namespace Redemption.NPCs.Bosses.Neb
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Do you just want to spar perhaps... ?" : "You've had your chance at redemption, so don't blame me...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 530)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... When you die a thousand times!", 180, 1, 0.6f, "Nebuleus:", 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0);
-                        if (NPC.ai[2] == 480)
+                        if (NPC.ai[2] == 420)
                             SoundEngine.PlaySound(CustomSounds.Transformation, NPC.position);
                     }
-                    if (NPC.ai[2] == 573)
+                    if (NPC.ai[2] == 533)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Transition>(), 0, Vector2.Zero, false, SoundID.Item1);
-                    if (NPC.ai[2] == 670)
+                    if (NPC.ai[2] == 620)
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShockwaveBoom2>(), 0, Vector2.Zero, false, SoundID.Item1);
-                    if (NPC.ai[2] > 700)
+                    if (NPC.ai[2] > 660)
                     {
                         if (RedeBossDowned.nebDeath < 5)
                             RedeBossDowned.nebDeath = 5;

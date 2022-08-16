@@ -14,8 +14,8 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override void SetDefaults()
         {
-            Projectile.width = 1000;
-            Projectile.height = 1000;
+            Projectile.width = 500;
+            Projectile.height = 500;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;
@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.scale += 0.1f;
             if (Projectile.localAI[0] == 1f)
             {
-                Projectile.alpha += 20;
+                Projectile.alpha += 10;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
             }
@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * Projectile.Opacity;
+            return Color.White * (Projectile.Opacity * 1.2f);
         }
     }
 }

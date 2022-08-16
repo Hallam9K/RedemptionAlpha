@@ -546,7 +546,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     break;
                 case ActionState.GunAttacks:
-                    if (AttackChoice != 2 || AITimer <= 245)
+                    if (AttackChoice != 2 || AITimer <= 200)
                         NPC.LookAtEntity(player);
 
                     if (AttackChoice == 0)

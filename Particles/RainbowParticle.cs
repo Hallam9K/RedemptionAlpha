@@ -16,7 +16,7 @@ namespace Redemption.Particles
 		{
 			width = 34;
 			height = 34;
-			scale = 1f;
+			scale = Vector2.One;
 			timeLeft = 50;
 			oldPos = new Vector2[10];
 			oldRot = new float[10];
@@ -45,7 +45,7 @@ namespace Redemption.Particles
 			velocity *= 0.98f;
 			color = Color.Lerp(new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0f), Color.Multiply(new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0f), 0.5f), (360f - timeLeft) / 360f);
 
-			if (scale <= 0f)
+			if (scale.Length() <= 0)
 				active = false;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor)
@@ -58,7 +58,7 @@ namespace Redemption.Particles
 			Color color = Color.Multiply(new(hsl.R, hsl.G, hsl.B, 0), alpha);
 			spriteBatch.Draw(Request<Texture2D>("Redemption/Particles/RainbowParticle2").Value, position - Main.screenPosition, new Rectangle(0, 0, 142, 42), color, ai[3].InRadians().AngleLerp((ai[3] + 90f).InRadians(), (120f - timeLeft) / 120f), new Vector2(71, 21), 0.75f * scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(Request<Texture2D>("Redemption/Particles/RainbowParticle3").Value, position - Main.screenPosition, new Rectangle(0, 0, 512, 512), color, ai[3].InRadians().AngleLerp((ai[3] + 90f).InRadians(), (120f - timeLeft) / 120f), new Vector2(256, 256), 0.25f * scale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(tex, position - screenPos, tex.AnimationFrame(ref frameCount, ref frameTick, 4, 7, true), color, 0f, new Vector2(width / 2, height / 2), scale + 0.5f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(tex, position - screenPos, tex.AnimationFrame(ref frameCount, ref frameTick, 4, 7, true), color, 0f, new Vector2(width / 2, height / 2), scale + new Vector2(0.5f, 0.5f), SpriteEffects.None, 0f);
 			return false;
 		}
 	}
