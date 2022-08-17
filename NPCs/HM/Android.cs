@@ -234,7 +234,7 @@ namespace Redemption.NPCs.HM
                             if (!others.active || others.whoAmI == NPC.whoAmI || others.ai[0] >= 3)
                                 continue;
 
-                            if (others.type != Type && others.type != ModContent.NPCType<PrototypeSilver>())
+                            if (others.type != Type && others.type != ModContent.NPCType<PrototypeSilver>() && others.type != ModContent.NPCType<SpacePaladin>())
                                 continue;
 
                             if (NPC.DistanceSQ(others.Center) >= 600 * 600)
@@ -435,7 +435,7 @@ namespace Redemption.NPCs.HM
                         if (!others.active || others.whoAmI == NPC.whoAmI || others.ai[0] >= 3)
                             continue;
 
-                        if (others.type != Type && others.type != ModContent.NPCType<PrototypeSilver>())
+                        if (others.type != Type && others.type != ModContent.NPCType<PrototypeSilver>() && others.type != ModContent.NPCType<SpacePaladin>())
                             continue;
 
                         if (NPC.DistanceSQ(others.Center) >= 600 * 600)

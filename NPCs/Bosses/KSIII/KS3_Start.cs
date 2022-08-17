@@ -137,6 +137,19 @@ namespace Redemption.NPCs.Bosses.KSIII
                         NPC.SetDefaults(ModContent.NPCType<KS3>());
                     }
                     break;
+                case 5:
+                    if (NPC.ai[2]++ == 10 || NPC.ai[2] == 30)
+                    {
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)player.Center.X + Main.rand.Next(70, 180), (int)player.Center.Y - Main.rand.Next(800, 850), ModContent.NPCType<KS3_ScannerDrone>(), ai3: NPC.whoAmI);
+                    }
+                    if (NPC.ai[2] > 30 && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()))
+                    {
+                        NPC.ai[0] = 4;
+                        NPC.ai[1] = 0;
+                        NPC.ai[2] = 0;
+                        NPC.netUpdate = true;
+                    }
+                    break;
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

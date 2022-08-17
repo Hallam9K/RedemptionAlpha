@@ -34,7 +34,7 @@ using System;
 
 namespace Redemption.NPCs.HM
 {
-    public class PrototypeSilver : ModNPC
+    public class SpacePaladin : ModNPC
     {
         public enum ActionState
         {
@@ -42,7 +42,7 @@ namespace Redemption.NPCs.HM
             Wander,
             Alert = 3,
             Laser,
-            Grapple,
+            Slash,
             Teleport
         }
 
@@ -57,8 +57,8 @@ namespace Redemption.NPCs.HM
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Prototype Silver Mk.I");
-            Main.npcFrameCount[NPC.type] = 13;
+            DisplayName.SetDefault("Space Paladin Mk.I");
+            Main.npcFrameCount[NPC.type] = 12;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -74,22 +74,22 @@ namespace Redemption.NPCs.HM
                 }
             });
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
-            NPC.width = 36;
-            NPC.height = 64;
+            NPC.width = 56;
+            NPC.height = 92;
             NPC.friendly = false;
-            NPC.damage = 60;
-            NPC.defense = 45;
-            NPC.lifeMax = 550;
+            NPC.damage = 80;
+            NPC.defense = 50;
+            NPC.lifeMax = 3450;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.aiStyle = -1;
-            NPC.value = 600;
-            NPC.knockBackResist = 0.1f; // TODO: Prototype Silver Banner
+            NPC.value = 9000;
+            NPC.knockBackResist = 0.001f; // TODO: Space Paladin Banner
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<HazmatZombieBanner>();
         }
@@ -98,24 +98,18 @@ namespace Redemption.NPCs.HM
         private int runCooldown;
         private float shieldAlpha;
         private bool shieldUp;
-        private Vector2 p;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 120);
-            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
         }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
-            if (NPC.ai[3] == 1)
-                shieldAlpha += 0.01f;
-            else
-                shieldAlpha -= 0.01f;
-            shieldAlpha = MathHelper.Clamp(shieldAlpha, 0, 0.2f);
 
             NPC.TargetClosest();
-            NPC.LookByVelocity();
+            if (AIState is not ActionState.Alert)
+                NPC.LookByVelocity();
 
             switch (AIState)
             {
@@ -149,7 +143,7 @@ namespace Redemption.NPCs.HM
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.8f, 8, 16, NPC.Center.Y > player.Center.Y);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.6f, 28, 36, NPC.Center.Y > player.Center.Y);
                     break;
 
                 case ActionState.Alert:
@@ -160,13 +154,14 @@ namespace Redemption.NPCs.HM
                     }
                     else
                     {
+                        NPC.LookAtEntity(globalNPC.attacker);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC others = Main.npc[i];
                             if (!others.active || others.whoAmI == NPC.whoAmI || others.ai[0] >= 3)
                                 continue;
 
-                            if (others.type != Type && others.type != ModContent.NPCType<Android>() && others.type != ModContent.NPCType<SpacePaladin>())
+                            if (others.type != Type && others.type != ModContent.NPCType<Android>() && others.type != ModContent.NPCType<PrototypeSilver>())
                                 continue;
 
                             if (NPC.DistanceSQ(others.Center) >= 900 * 900)
@@ -176,11 +171,6 @@ namespace Redemption.NPCs.HM
                             others.ai[1] = 0;
                             others.ai[0] = 3;
                         }
-                    }
-                    if (!shieldUp && NPC.ai[3] == 0 && NPC.life <= NPC.lifeMax / 2)
-                    {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
-                        shieldUp = true;
                     }
                     if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 3)
                     {
@@ -195,108 +185,11 @@ namespace Redemption.NPCs.HM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    NPC.DamageHostileAttackers(0, 8);
-                    if (Main.rand.NextBool(100) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 80 * 80)
-                    {
-                        if (globalNPC.attacker is not Player || (globalNPC.attacker is Player && globalNPC.attacker.Center.Y < NPC.Center.Y - 60))
-                        {
-                            NPC.LookAtEntity(globalNPC.attacker);
-                            AITimer = 0;
-                            NPC.frameCounter = 0;
-                            NPC.velocity.X = 0;
-                            AIState = ActionState.Grapple;
-                        }
-                    }
-                    if (Main.rand.NextBool(100) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 60 * 60)
-                    {
-                        NPC.LookAtEntity(globalNPC.attacker);
-                        AITimer = 0;
-                        NPC.velocity.X = 0;
-                        AIState = ActionState.Laser;
-                    }
-
                     jumpDownPlatforms = false;
                     NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
                     if (jumpDownPlatforms) { NPC.noTileCollide = true; }
                     else { NPC.noTileCollide = false; }
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
-                    break;
-
-                case ActionState.Laser:
-                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
-                    {
-                        runCooldown = 0;
-                        AITimer = 0;
-                        moveTo = NPC.FindGround(20);
-                        TimerRand = Main.rand.Next(120, 260);
-                        AIState = ActionState.Wander;
-                    }
-                    NPC.LookAtEntity(globalNPC.attacker);
-
-                    if (NPC.velocity.Y < 0)
-                        NPC.velocity.Y = 0;
-                    if (NPC.velocity.Y == 0)
-                        NPC.velocity.X *= 0.9f;
-
-                    Vector2 originPos = NPC.Center + new Vector2(8 * NPC.spriteDirection, -21);
-                    if (++AITimer < 60)
-                    {
-                        for (int k = 0; k < 3; k++)
-                        {
-                            Vector2 vector;
-                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                            vector.X = (float)(Math.Sin(angle) * 20);
-                            vector.Y = (float)(Math.Cos(angle) * 20);
-                            Dust dust2 = Main.dust[Dust.NewDust(originPos + vector, 2, 2, DustID.Frost)];
-                            dust2.noGravity = true;
-                            dust2.velocity = dust2.position.DirectionTo(originPos) * 2f;
-                        }
-                    }
-                    if (AITimer == 51 || AITimer == 61 || AITimer == 71)
-                        p = globalNPC.attacker.Center;
-                    if (AITimer == 60 || AITimer == 70 || AITimer == 80)
-                    {
-                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
-                        NPC.velocity.X -= 1 * NPC.spriteDirection;
-                    }
-                    if (AITimer >= 100)
-                    {
-                        AITimer = 0;
-                        AIState = ActionState.Alert;
-                        NPC.netUpdate = true;
-                    }
-                    break;
-
-                case ActionState.Grapple:
-                    if (AITimer >= 100 && NPC.ThreatenedCheck(ref runCooldown, 300, 3))
-                    {
-                        runCooldown = 0;
-                        AITimer = 0;
-                        moveTo = NPC.FindGround(20);
-                        TimerRand = Main.rand.Next(120, 260);
-                        AIState = ActionState.Wander;
-                        break;
-                    }
-                    NPC.LookAtEntity(globalNPC.attacker);
-
-                    if (NPC.velocity.Y < 0)
-                        NPC.velocity.Y = 0;
-                    if (NPC.velocity.Y == 0)
-                        NPC.velocity.X *= 0.9f;
-
-                    if (AITimer == 0)
-                    {
-                        Vector2 originPos2 = NPC.Center + new Vector2(-11 * NPC.spriteDirection, -9);
-                        NPC.Shoot(originPos2, ModContent.ProjectileType<PrototypeSilver_Hook>(), NPC.damage, Vector2.Zero, true, CustomSounds.Launch2 with { Volume = 0.6f }, NPC.whoAmI);
-                        AITimer = 1;
-                    }
-                    if (AITimer >= 100)
-                    {
-                        NPC.frame.Y = 0;
-                        AITimer = 0;
-                        AIState = ActionState.Alert;
-                        NPC.netUpdate = true;
-                    }
+                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.6f, 28, 36, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.Teleport:
@@ -324,16 +217,16 @@ namespace Redemption.NPCs.HM
                     if (AITimer++ >= 180)
                     {
                         SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, NPC.position);
-                        DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.12f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
-                        for (int i = 0; i < 15; i++)
+                        DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.2f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
+                        for (int i = 0; i < 25; i++)
                         {
-                            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 4);
                             int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
                             Main.dust[dust].velocity *= 6f;
                             Main.dust[dust].noGravity = true;
                         }
                         NPC.netUpdate = true;
-                        if (player.Redemption().slayerStarRating <= 3 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
+                        if (player.Redemption().slayerStarRating <= 4 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
                         {
                             player.Redemption().slayerStarRating++;
                             NPC.SetDefaults(ModContent.NPCType<SlayerSpawner>());
@@ -348,52 +241,30 @@ namespace Redemption.NPCs.HM
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                if (AIState is ActionState.Grapple)
-                {
-                    NPC.rotation = 0;
-                    NPC.frame.Y = 12 * frameHeight;
-                    return;
-                }
-                else if (AIState is ActionState.Laser)
-                {
-                    NPC.rotation = 0;
-                    NPC.frame.Y = 0;
-                    return;
-                }
-
                 if (NPC.collideY || NPC.velocity.Y == 0)
                 {
                     NPC.rotation = 0;
                     if (NPC.velocity.X == 0)
-                    {
-                        NPC.frameCounter++;
-                        if (NPC.frameCounter >= 7)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 3 * frameHeight)
-                                NPC.frame.Y = 0;
-                        }
-                    }
+                        NPC.frame.Y = 0;
                     else
                     {
-                        if (NPC.frame.Y < 4 * frameHeight)
-                            NPC.frame.Y = 4 * frameHeight;
+                        if (NPC.frame.Y < 1 * frameHeight)
+                            NPC.frame.Y = 1 * frameHeight;
 
                         NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 2 or <= -2)
+                        if (NPC.frameCounter is >= 3 or <= -3)
                         {
                             NPC.frameCounter = 0;
                             NPC.frame.Y += frameHeight;
                             if (NPC.frame.Y > 11 * frameHeight)
-                                NPC.frame.Y = 4 * frameHeight;
+                                NPC.frame.Y = 2 * frameHeight;
                         }
                     }
                 }
                 else
                 {
                     NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 4 * frameHeight;
+                    NPC.frame.Y = 10 * frameHeight;
                 }
             }
         }
@@ -411,7 +282,7 @@ namespace Redemption.NPCs.HM
                         if (!others.active || others.whoAmI == NPC.whoAmI || others.ai[0] >= 3)
                             continue;
 
-                        if (others.type != Type && others.type != ModContent.NPCType<Android>() && others.type != ModContent.NPCType<SpacePaladin>())
+                        if (others.type != Type && others.type != ModContent.NPCType<Android>() && others.type != ModContent.NPCType<PrototypeSilver>())
                             continue;
 
                         if (NPC.DistanceSQ(others.Center) >= 900 * 900)
@@ -434,32 +305,44 @@ namespace Redemption.NPCs.HM
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D upper = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Calm").Value;
+            Texture2D upperGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Calm_Glow").Value;
+            Texture2D shieldBack = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield_B").Value;
+            Texture2D shieldFront = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield_F").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            if (shieldAlpha <= 0)
+            Vector2 pos = NPC.Center + new Vector2(0, 3);
+
+            if (AIState is not ActionState.Alert)
+                spriteBatch.Draw(shieldBack, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 26 : -18, 6), NPC.scale, effects, 0);
+
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glow, pos - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            int UpperHeight = upper.Height / 12;
+            int UpperY = UpperHeight * NPC.frame.Y / 94;
+            Rectangle UpperRect = new(0, UpperY, upper.Width, UpperHeight);
+            spriteBatch.Draw(upper, pos - screenPos, UpperRect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
+            spriteBatch.Draw(upperGlow, pos - screenPos, UpperRect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
+
+            if (AIState is ActionState.Alert)
             {
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                spriteBatch.Draw(glow, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            }
-            else
-            {
-                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Empty", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);
                 ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
                 ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
-                ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * shieldAlpha).ToVector4());
-                ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
+                ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, Main.rand.NextFloat(50f, 101f) / 100f * 0.6f).ToVector4());
+                ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, 0.6f).ToVector4());
 
                 spriteBatch.End();
                 ShieldEffect.Parameters["sinMult"].SetValue(10f);
-                ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(TextureAssets.Npc[NPC.type].Value.Width / 2f / HexagonTexture.Width, TextureAssets.Npc[NPC.type].Value.Height / 13 / HexagonTexture.Height));
-                ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (TextureAssets.Npc[NPC.type].Value.Width / 2), 1f / (TextureAssets.Npc[NPC.type].Value.Height / 2)));
-                ShieldEffect.Parameters["frameAmount"].SetValue(13f);
+                ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(shieldFront.Width / 2f / HexagonTexture.Width, shieldFront.Height / 2f / HexagonTexture.Height));
+                ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (shieldFront.Width / 2), 1f / (shieldFront.Height / 2)));
+                ShieldEffect.Parameters["frameAmount"].SetValue(1f);
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 ShieldEffect.CurrentTechnique.Passes[0].Apply();
 
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                spriteBatch.Draw(glow, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(shieldFront, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 30 : -24, 10), NPC.scale, effects, 0);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -467,15 +350,15 @@ namespace Redemption.NPCs.HM
             return false;
         }
 
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
+        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CarbonMyofibre>(), 2, 4, 6));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 3, 2, 4));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 3, 1, 2));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 6, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CarbonMyofibre>(), 1, 8, 12));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 1, 4, 8));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 2, 2, 4));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 2, 1, 1));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -485,13 +368,13 @@ namespace Redemption.NPCs.HM
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                for (int i = 0; i < 16; i++)
+                for (int i = 0; i < 26; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric);
                     Main.dust[dustIndex].velocity *= 5;
                 }
-                for (int i = 0; i < 4; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PrototypeSilverGore" + (i + 1)).Type, 1);
+                for (int i = 0; i < 7; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SpacePaladinGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -503,7 +386,7 @@ namespace Redemption.NPCs.HM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            return SpawnCondition.OverworldDay.Chance * (Main.hardMode && spawnInfo.Player.Redemption().slayerStarRating > 1 ? 0.04f : 0f);
+            return SpawnCondition.OverworldDay.Chance * (Main.hardMode && spawnInfo.Player.Redemption().slayerStarRating > 2 ? 0.01f : 0f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -512,7 +395,7 @@ namespace Redemption.NPCs.HM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
                 new FlavorTextBestiaryInfoElement(
-                    "Prototype Silvers were the 2nd Slayer Unit constructed, with a built-in shield generator and durable plating. Made for military purposes during an alien war in Asherah. The war was a swift one. Despite its name, it's mainly composed of the spare titanium from Alkonost."),
+                    "The 4th Slayer Unit constructed, after Space Keeper. This unit uses newer shield technology compared to King Slayer's Prototype Multium vessel, and is capable of absorbing far greater impacts; in addition to the thick durable plating and cyber blade, this robot was built for war."),
             });
         }
     }
