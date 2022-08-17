@@ -12,6 +12,7 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria.GameContent.Creative;
 using Redemption.Globals;
+using Terraria.Audio;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -56,6 +57,9 @@ namespace Redemption.Items.Usable.Summons
                 int type = ModContent.NPCType<Neb_Start>();
                 if ((RedeBossDowned.nebDeath > 5 || RedeBossDowned.downedNebuleus) && player.altFunctionUse == 2)
                 {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Teleport2, player.position);
+
                     if (RedeBossDowned.nebDeath < 7)
                     {
                         type = ModContent.NPCType<Nebuleus2>();
@@ -87,6 +91,9 @@ namespace Redemption.Items.Usable.Summons
                     }
                     else
                     {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.Teleport1, player.position);
+
                         Main.NewText("Nebuleus is nowhere to be found...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B);
                         type = ModContent.NPCType<Nebuleus_Clone>();
 

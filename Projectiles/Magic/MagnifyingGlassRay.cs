@@ -45,8 +45,8 @@ namespace Redemption.Projectiles.Magic
 
         public override void SetDefaults()
         {
-            Projectile.width = LaserWidth;
-            Projectile.height = LaserWidth;
+            Projectile.width = 14;
+            Projectile.height = 14;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
@@ -179,14 +179,14 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(64 * Frame), 0, 64, LaserEndSegmentLength), color, r, new Vector2(64 / 2, LaserSegmentLength / 2), scale, 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + (maxDist + 5) * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(64 * Frame), LaserSegmentLength + LaserEndSegmentLength, 64, LaserEndSegmentLength), color, r, new Vector2(64 / 2, LaserSegmentLength / 2), scale, 0, 0);
 
             // Draws the Laser 'base'
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(64 * Frame), 0, 64, LaserEndSegmentLength), color * 0.5f, r, new Vector2(64 / 2, LaserSegmentLength / 2), scale * new Vector2(pulse, 1), 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + (maxDist + 5) * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(64 * Frame), LaserSegmentLength + LaserEndSegmentLength, 64, LaserEndSegmentLength), color * 0.5f, r, new Vector2(64 / 2, LaserSegmentLength / 2), scale * new Vector2(pulse, 1), 0, 0);
         }
         public override bool PreDraw(ref Color lightColor)
@@ -212,7 +212,7 @@ namespace Redemption.Projectiles.Magic
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
+                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
             {
                 return true;
             }

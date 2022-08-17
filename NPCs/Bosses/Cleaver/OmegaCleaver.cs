@@ -534,7 +534,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         if (AITimer < 50)
                                             NPC.velocity *= 0.9f;
                                         if (AITimer == 20)
+                                        {
+                                            SoundEngine.PlaySound(CustomSounds.OODashReady with { Pitch = 0.9f }, NPC.position);
                                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver2_Spawner>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                        }
 
                                         if (AITimer == 50)
                                             NPC.velocity.Y = 20;
@@ -564,6 +567,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         NPC.rotation = rot;
                                         if (NPC.Distance(PosPlayer3Check) < 30 || AITimer > 60)
                                         {
+                                            SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                             NPC.rotation = player.Center.X > NPC.Center.X ? 0.78f : 5.49f;
                                             repeat = player.Center.X > NPC.Center.X ? 0 : 1;
                                             NPC.ai[1] = 2;
@@ -642,6 +646,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         }
                                         if (NPC.Distance(PosPlayer3Check) < 30 || AITimer > 60)
                                         {
+                                            SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                             NPC.rotation = repeat == 0 ? 5.49f : 0.78f;
                                             repeat = player.Center.X > NPC.Center.X ? 0 : 1;
                                             NPC.ai[1] = 6;

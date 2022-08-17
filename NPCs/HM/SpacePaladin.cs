@@ -172,7 +172,7 @@ namespace Redemption.NPCs.HM
                             others.ai[0] = 3;
                         }
                     }
-                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 3)
+                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 4)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
                         runCooldown = 0;

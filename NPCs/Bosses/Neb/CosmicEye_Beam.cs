@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -47,26 +48,30 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 120;
+            Projectile.timeLeft = 140;
         }
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
+            Projectile eye = Main.projectile[(int)Projectile.ai[0]];
             if (AITimer == 0)
             {
+                if (eye.type == ModContent.ProjectileType<CosmicEye3>())
+                    Projectile.timeLeft = 80;
                 LaserScale = 0.1f;
-                SoundEngine.PlaySound(SoundID.Item125, Projectile.position);
             }
 
-            Projectile eye = Main.projectile[(int)Projectile.ai[0]];
+            if (AITimer == 20)
+                SoundEngine.PlaySound(SoundID.Item125, Projectile.position);
+
             if (eye.active && eye.type == ModContent.ProjectileType<CosmicEye>())
             {
                 Projectile.Center = eye.Center;
                 Projectile.velocity = RedeHelper.PolarVector(10, eye.rotation + (float)-Math.PI / 2);
             }
 
-            if (AITimer <= 10)
+            if (AITimer > 20 && AITimer <= 30)
                 LaserScale += 0.09f;
             else if (Projectile.timeLeft < 10 || !eye.active)
             {
@@ -83,6 +88,10 @@ namespace Redemption.NPCs.Bosses.Neb
 
                 LaserLength = MaxLaserLength;
             ++AITimer;
+        }
+        public override bool CanHitPlayer(Player target)
+        {
+            return AITimer > 20;
         }
 
         #region Drawcode
@@ -124,7 +133,7 @@ namespace Redemption.NPCs.Bosses.Neb
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
+                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
             {
                 return true;
             }

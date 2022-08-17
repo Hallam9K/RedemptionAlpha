@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             NPC.defense = 170;
             NPC.damage = 250;
             NPC.width = 90;
-            NPC.height = 108;
+            NPC.height = 90;
             NPC.aiStyle = -1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.knockBackResist = 0f;
@@ -781,7 +781,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
                             if (NPC.ai[2] % 3 == 0 && NPC.ai[2] >= 30 && NPC.ai[2] <= 60)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele4>(), 120, new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), true, SoundID.Item9, 1.01f);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele4>(), 120, new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), false, SoundID.Item9, 1.01f);
                             }
                             if (NPC.ai[2] == 60) { NPC.ai[3] = 2; }
                             if (NPC.ai[2] >= 100)
@@ -993,7 +993,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 NPC.rotation = 0;
                                 NPC.velocity = Vector2.Zero;
                                 NPC.netUpdate = true;
-                                if (repeat < 3) NPC.Shoot(NPC.Center, ModContent.ProjectileType<GiantStar_Proj>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                                if (repeat < 3) NPC.Shoot(NPC.Center, ModContent.ProjectileType<GiantStar_Proj>(), (int)(NPC.damage * 0.85f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                             }
                             if (NPC.ai[2] > 65 && NPC.ai[2] < 86 && NPC.ai[2] % 2 == 0)
                             {
@@ -1073,13 +1073,13 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             {
                                 SoundEngine.PlaySound(SoundID.Item74, NPC.position);
                                 NPC.velocity.Y = -35;
-                                Teleport(true, player.Center + new Vector2(0, 350));
+                                Teleport(true, player.Center + new Vector2(0, 400));
                             }
                             if (NPC.ai[2] == 95)
                             {
                                 SoundEngine.PlaySound(SoundID.Item74, NPC.position);
                                 NPC.velocity.Y = 35;
-                                Teleport(true, player.Center + new Vector2(0, -350));
+                                Teleport(true, player.Center + new Vector2(0, -400));
                             }
                             if (NPC.ai[2] == 95)
                             {
