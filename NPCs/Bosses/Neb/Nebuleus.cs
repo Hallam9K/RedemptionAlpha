@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             NPC.lifeMax = 337500;
             NPC.defense = 120;
-            NPC.damage = 250;
+            NPC.damage = 200;
             NPC.width = 62;
             NPC.height = 84;
             NPC.aiStyle = -1;

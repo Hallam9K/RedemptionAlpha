@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
             Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
-            SwingSpeed = SetSwingSpeed(42);
+            SwingSpeed = SetSwingSpeed(30);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();

@@ -199,7 +199,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
                     if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) <= 400 * 400 && Main.rand.NextBool(150))
                     {
-                        NPC.velocity = 0;
+                        NPC.velocity.X = 0;
                         AniFrameY = 0;
                         NPC.frame.Y = 0;
                         NPC.frameCounter = 0;

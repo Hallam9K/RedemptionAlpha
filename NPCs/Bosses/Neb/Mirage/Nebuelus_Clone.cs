@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             NPC.lifeMax = 337500;
             NPC.defense = 170;
-            NPC.damage = 250;
+            NPC.damage = 200;
             NPC.width = 62;
             NPC.height = 84;
             NPC.aiStyle = -1;

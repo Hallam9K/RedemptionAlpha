@@ -711,18 +711,12 @@ namespace Redemption.NPCs.Bosses.Keeper
                         Main.NewText("The Keeper noticed the abandoned teddy you're holding...", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                     if (AITimer == 120)
                         TimerRand = 1;
-                    if (AITimer == 320)
-                        Main.NewText("She starts to remember something...", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                     if (AITimer == 400)
                     {
                         NPC.frame.Y = 0;
                         NPC.frameCounter = 0;
                         TimerRand = 2;
                     }
-                    if (AITimer == 540)
-                        Main.NewText("Pain, Anger, Sadness. All those feelings were washed away...", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
-                    if (AITimer == 750)
-                        Main.NewText("She only feels... at peace...", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                     if (AITimer == 840)
                     {
                         NPC.frame.Y = 0;
