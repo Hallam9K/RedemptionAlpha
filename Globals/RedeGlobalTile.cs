@@ -4,6 +4,7 @@ using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Critters;
 using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using Redemption.Tiles.Tiles;
@@ -134,7 +135,12 @@ namespace Redemption.Globals
         public override bool Slope(int i, int j, int type)
         {
             if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>()))
+                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<HKStatueTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<JStatueTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<KSStatueTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<NStatueTile>() ||
+                Main.tile[i, j - 1].TileType == ModContent.TileType<SlayerChairTile>()))
                 return false;
             return base.Slope(i, j, type);
         }
