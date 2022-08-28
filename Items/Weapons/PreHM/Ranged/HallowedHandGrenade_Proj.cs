@@ -67,6 +67,11 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             if (Projectile.localAI[0] < 180)
                 Projectile.localAI[0] = 180;
         }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (target.type == NPCID.EaterofWorldsBody || target.type == NPCID.EaterofWorldsHead || target.type == NPCID.EaterofWorldsTail)
+                damage /= 2;
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
