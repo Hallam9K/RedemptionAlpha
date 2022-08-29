@@ -28,7 +28,7 @@ namespace Redemption.Globals
         }
         public override void PreUpdateWorld()
         {
-            if (!Active || RedeGen.LabVector.X == -1 || RedeGen.LabVector.Y == -1 || Main.netMode == NetmodeID.MultiplayerClient)
+            if (!Active || RedeGen.LabVector.X == -1 || RedeGen.LabVector.Y == -1)
                 return;
 
             Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 14, (RedeGen.LabVector.Y + 42) * 16);

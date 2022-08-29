@@ -89,6 +89,8 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return false;
                 }
@@ -103,7 +105,7 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return false;
@@ -116,7 +118,7 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4);
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return false;
@@ -128,7 +130,7 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return false;
@@ -140,7 +142,7 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return false;
@@ -152,7 +154,7 @@ namespace Redemption.Globals.NPC
                 if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
                 {
                     GuardHit(npc, ref damage, SoundID.NPCHit4, 0.2f);
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return false;

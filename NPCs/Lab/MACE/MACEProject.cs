@@ -145,7 +145,7 @@ namespace Redemption.NPCs.Lab.MACE
             if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
-                if (Main.netMode != NetmodeID.SinglePlayer)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                     return false;
@@ -230,13 +230,15 @@ namespace Redemption.NPCs.Lab.MACE
                             if (!Main.dedServ)
                             {
                                 if (AITimer == 1)
-                                    SoundEngine.PlaySound(CustomSounds.DistortedRoar, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.MACERoar, NPC.position);
                                 if (AITimer < 60)
                                 {
                                     TimerRand += (float)Math.PI / 120;
                                     if (TimerRand >= Math.PI) TimerRand = 0;
                                     float timer = TimerRand;
                                     Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(1, 1, 6).UseTargetPosition(MouthOrigin);
+
+                                    player.RedemptionScreen().ScreenShakeIntensity = 20;
                                 }
                                 else
                                     Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
@@ -632,7 +634,8 @@ namespace Redemption.NPCs.Lab.MACE
 
                             SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
                             if (!Main.dedServ)
-                                SoundEngine.PlaySound(CustomSounds.DistortedRoar, NPC.position);
+                                SoundEngine.PlaySound(CustomSounds.MACERoar, NPC.position);
+                            player.RedemptionScreen().ScreenShakeIntensity = 60;
 
                             if (Main.netMode != NetmodeID.Server)
                                 Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);

@@ -5340,7 +5340,7 @@ namespace Redemption.Base
                     npc.Redemption().attacker = damager;
                 }
 
-                if (Main.netMode != NetmodeID.SinglePlayer)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
                 }
@@ -5358,7 +5358,7 @@ namespace Redemption.Base
                     ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
 
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
 
                     if (p.penetrate != 1) { npc.immune[p.owner] = 10; }
@@ -5375,7 +5375,7 @@ namespace Redemption.Base
                     PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
                     PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
 
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
                     }

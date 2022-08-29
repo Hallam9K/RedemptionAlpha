@@ -1145,21 +1145,17 @@ namespace Redemption.WorldGeneration
                 Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
                 if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 && Main.LocalPlayer.DistanceSQ(anglonPortalPos) < 2000 * 2000 &&
                     !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
-                {
-                    NPC.NewNPC(new EntitySource_SpawnNPC(), (int)anglonPortalPos.X, (int)anglonPortalPos.Y, ModContent.NPCType<AnglonPortal>());
-                }
+                    LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
+
                 Vector2 gathicPortalPos = new(((gathicPortalVector.X + 46) * 16) - 8, ((gathicPortalVector.Y + 23) * 16) - 4);
                 if (gathicPortalVector.X != -1 && gathicPortalVector.Y != -1 && Main.LocalPlayer.DistanceSQ(gathicPortalPos) < 2000 * 2000 &&
                     !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
-                {
-                    NPC.NewNPC(new EntitySource_SpawnNPC(), (int)gathicPortalPos.X, (int)gathicPortalPos.Y, ModContent.NPCType<GathuramPortal>());
-                }
+                    LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
+
                 Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
                 if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedVlitch3 &&
                     Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
-                {
-                    NPC.NewNPC(new EntitySource_SpawnNPC(), (int)slayerSittingPos.X, (int)slayerSittingPos.Y, ModContent.NPCType<KS3Sitting>());
-                }
+                    LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
             }
         }
 

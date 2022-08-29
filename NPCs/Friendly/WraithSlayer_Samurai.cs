@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Friendly
             if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
-                if (Main.netMode != NetmodeID.SinglePlayer)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                     return false;

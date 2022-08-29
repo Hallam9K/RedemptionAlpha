@@ -114,5 +114,6 @@ namespace Redemption
         public static readonly SoundStyle NewLocation = new("Redemption/Sounds/Custom/NewLocationSound");
         public static readonly SoundStyle ShieldActivate = new("Redemption/Sounds/Custom/GigaShieldActivate");
         public static readonly SoundStyle Launch2 = new("Redemption/Sounds/Custom/Launch2") { PitchVariance = .1f };
+        public static readonly SoundStyle MACERoar = new("Redemption/Sounds/Custom/MaceRoar") { PitchVariance = .1f };
 }
 }

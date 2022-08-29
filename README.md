@@ -12,7 +12,6 @@ TODO
 MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - (Potentially fixed) Erhan text repeats and the fight doesnt begin
 - Revival potion does not work
-- Guard points are REALLY finnicky, no sound for dealing damage, 
 - Ancient gladestone golem very desynced, rubberbands, teleports when attacked, drops and gore are desynced from the location of death, pillar attack doesnt work
 - KS3 freezes when changing attack types
 - KS3 arms fade in and out of existence
