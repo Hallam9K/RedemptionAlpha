@@ -4,6 +4,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.Critters;
 using Redemption.Projectiles.Hostile;
 using Terraria;
@@ -56,6 +57,8 @@ namespace Redemption.NPCs.PreHM
             NPC.value = 0;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<DevilsTongueBanner>();
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

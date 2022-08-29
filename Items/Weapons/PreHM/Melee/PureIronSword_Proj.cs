@@ -125,16 +125,16 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             }
                             else
                             {
-                                Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - player.Center).ToRotation());
-                                Projectile.alpha = 255;
-                                speed = MathHelper.ToRadians(6);
-                                Rot = MathHelper.ToRadians(2);
-                                startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection)); ;
-                                vector = startVector * Length;
                                 if (Main.MouseWorld.X < player.Center.X)
                                     player.direction = -1;
                                 else
                                     player.direction = 1;
+                                Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - player.Center).ToRotation());
+                                Projectile.alpha = 255;
+                                speed = MathHelper.ToRadians(6);
+                                Rot = MathHelper.ToRadians(2);
+                                startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + ((MathHelper.PiOver2 + 0.6f) * player.direction));
+                                vector = startVector * Length;
                                 Projectile.ai[0]++;
                             }
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
@@ -209,17 +209,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 Projectile.Kill();
                                 return;
                             }
+                            if (Main.MouseWorld.X < player.Center.X)
+                                player.direction = -1;
+                            else
+                                player.direction = 1;
                             glow = 0;
                             Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - player.Center).ToRotation());
                             Projectile.alpha = 255;
                             speed = MathHelper.ToRadians(6);
                             Rot = MathHelper.ToRadians(2);
-                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection));
+                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + ((MathHelper.PiOver2 + 0.6f) * player.direction));
                             vector = startVector * Length;
-                            if (Main.MouseWorld.X < player.Center.X)
-                                player.direction = -1;
-                            else
-                                player.direction = 1;
 
                             Projectile.ai[0] = 2;
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);

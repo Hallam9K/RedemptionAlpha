@@ -23,6 +23,7 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -158,6 +159,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<TinyCleaver>(), 1));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
 
             npcLoot.Add(notExpertRule);
