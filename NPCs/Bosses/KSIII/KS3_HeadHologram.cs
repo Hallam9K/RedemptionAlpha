@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.UI;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.KSIII
@@ -78,7 +79,11 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (Projectile.localAI[0] > 730)
             {
                 if (RedeBossDowned.slayerDeath < 1)
+                {
                     RedeBossDowned.slayerDeath = 1;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
 
                 Projectile.alpha += 2;
                 if (Projectile.alpha >= 255)

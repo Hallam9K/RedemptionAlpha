@@ -159,7 +159,11 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void OnKill()
         {
             if (!Spared && RedeBossDowned.erhanDeath < 3)
+            {
                 RedeBossDowned.erhanDeath = 3;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
 
             if (!RedeBossDowned.downedErhan)
             {
@@ -295,43 +299,40 @@ namespace Redemption.NPCs.Bosses.Erhan
                         case 1:
                             if (RedeBossDowned.erhanDeath <= 0)
                             {
-                                if (!Main.dedServ)
+                                if (AITimer++ == 0)
                                 {
-                                    if (AITimer++ == 0)
-                                    {
-                                        ArmType = 2;
-                                        Dialogue d1 = new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 130
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(d1);
-                                    }
-                                    if (AITimer >= 130)
-                                    {
-                                        player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                                        player.RedemptionScreen().lockScreen = true;
-                                        NPC.LockMoveRadius(player);
-                                    }
-                                    if (AITimer == 130)
-                                    {
-                                        ArmType = 0;
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Doth thine brain be stuck in a well!?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 174
-                                             .Add(new(NPC, "To summon a demon,[10] so close to my land...[30] 'Tis heresy!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 248
-                                             .Add(new(NPC, "Repent![30] Repent for thy sins!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 186
-                                             .Add(new(NPC, "Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 248
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
-                                    }
-                                    if (AITimer == 552)
-                                    {
-                                        EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 200);
-                                        ArmType = 2;
-                                        HeadFrameY = 1;
-                                    }
-                                    if (AITimer == 738)
-                                    {
-                                        ArmType = 0;
-                                        HeadFrameY = 0;
-                                    }
+                                    ArmType = 2;
+                                    Dialogue d1 = new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 130
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
+                                }
+                                if (AITimer >= 130)
+                                {
+                                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                                    player.RedemptionScreen().lockScreen = true;
+                                    NPC.LockMoveRadius(player);
+                                }
+                                if (AITimer == 130)
+                                {
+                                    ArmType = 0;
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, "Doth thine brain be stuck in a well!?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 174
+                                         .Add(new(NPC, "To summon a demon,[10] so close to my land...[30] 'Tis heresy!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 248
+                                         .Add(new(NPC, "Repent![30] Repent for thy sins!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 186
+                                         .Add(new(NPC, "Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 248
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(chain);
+                                }
+                                if (AITimer == 552)
+                                {
+                                    EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 200);
+                                    ArmType = 2;
+                                    HeadFrameY = 1;
+                                }
+                                if (AITimer == 738)
+                                {
+                                    ArmType = 0;
+                                    HeadFrameY = 0;
                                 }
                                 if (AITimer >= 986)
                                 {
@@ -342,7 +343,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
                                     }
                                     if (RedeBossDowned.erhanDeath == 0)
+                                    {
                                         RedeBossDowned.erhanDeath = 1;
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.WorldData);
+                                    }
 
                                     TimerRand = 0;
                                     AITimer = 0;
@@ -850,7 +855,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer >= (RedeBossDowned.erhanDeath < 2 ? 500 : 360))
                             {
                                 if (RedeBossDowned.erhanDeath < 2)
+                                {
                                     RedeBossDowned.erhanDeath = 2;
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.WorldData);
+                                }
 
                                 AttackNumber++;
                                 NPC.noGravity = true;

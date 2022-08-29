@@ -77,7 +77,11 @@ namespace Redemption.NPCs.HM
                     if (NPC.ai[1]++ == 300)
                     {
                         if (RedeBossDowned.slayerDeath < 2)
+                        {
                             RedeBossDowned.slayerDeath = 2;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         player.Redemption().slayerStarRating = 0;
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)player.Center.X, (int)player.Center.Y, ModContent.NPCType<KS3_Start>(), 5);

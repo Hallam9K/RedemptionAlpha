@@ -469,6 +469,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             if (!Main.dedServ)
                                 RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Angel of the Cosmos");
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                     }
                     else
@@ -1281,6 +1283,8 @@ namespace Redemption.NPCs.Bosses.Neb
                         NPC.ai[2] = 0;
                         NPC.ai[0] = 4;
                         NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
                     }
                     break;
                 case 8:
@@ -1402,7 +1406,11 @@ namespace Redemption.NPCs.Bosses.Neb
                     if (NPC.ai[2] > 660)
                     {
                         if (RedeBossDowned.nebDeath < 5)
+                        {
                             RedeBossDowned.nebDeath = 5;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
                         for (int p = 0; p < Main.maxPlayers; p++)
                         {
                             if (!Main.player[p].active && Main.player[p].statLife >= Main.player[p].statLifeMax2)
@@ -1426,7 +1434,11 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Teleport1 with { Volume = 1 }, NPC.position);
                         if (RedeBossDowned.nebDeath < 5)
+                        {
                             RedeBossDowned.nebDeath = 5;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
                         NPC.netUpdate = true;
                     }
@@ -1445,7 +1457,11 @@ namespace Redemption.NPCs.Bosses.Neb
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Teleport1 with { Volume = 1 }, NPC.position);
                             if (RedeBossDowned.nebDeath < 5)
+                            {
                                 RedeBossDowned.nebDeath = 5;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
                             player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
                             NPC.netUpdate = true;
                         }

@@ -383,6 +383,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 AIState = ActionState.Begin;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
                             }
                             break;
                     }
@@ -1469,6 +1471,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     AITimer = 0;
                     TimerRand = 0;
                     NPC.ai[0] = -1;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
                 }
                 else if (NPC.ai[0] == -1)
                 {

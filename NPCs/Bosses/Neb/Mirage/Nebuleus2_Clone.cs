@@ -73,7 +73,11 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             potionType = ItemID.SuperHealingPotion;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
             if (RedeBossDowned.nebDeath < 7)
+            {
                 RedeBossDowned.nebDeath = 7;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
 
             if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendData(MessageID.WorldData);

@@ -112,7 +112,8 @@ namespace Redemption.NPCs.PreHM
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.DD2_WitherBeastCrystalImpact);
                 if (Main.netMode != NetmodeID.SinglePlayer)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
-                return false;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                    return false;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, CustomSounds.GuardBreak, 20, 2, 10);
 

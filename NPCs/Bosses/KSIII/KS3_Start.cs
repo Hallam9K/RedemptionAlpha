@@ -82,6 +82,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 RedeBossDowned.slayerDeath = 1;
                                 NPC.ai[0] = 3;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
                             }
                             else
                                 NPC.ai[0] = 2;
@@ -100,7 +102,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (NPC.ai[2] > 760)
                     {
                         if (RedeBossDowned.slayerDeath < 2)
+                        {
                             RedeBossDowned.slayerDeath = 2;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         NPC.ai[0] = 3;
                         NPC.ai[1] = 0;
@@ -114,7 +120,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     break;
                 case 4:
                     if (RedeBossDowned.slayerDeath < 2)
+                    {
                         RedeBossDowned.slayerDeath = 2;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     NPC.Center = new Vector2(player.position.X + 200, player.position.Y - 80f);
                     if (NPC.ai[2] % 3 == 0)

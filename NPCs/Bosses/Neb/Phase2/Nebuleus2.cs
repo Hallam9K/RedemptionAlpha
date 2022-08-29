@@ -455,6 +455,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (!Main.dedServ)
                                 RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Ultimate Form");
                             NPC.netUpdate = true;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                     }
                     else

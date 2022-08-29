@@ -147,7 +147,8 @@ namespace Redemption.NPCs.Lab.MACE
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
                 if (Main.netMode != NetmodeID.SinglePlayer)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
-                return false;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                    return false;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 4000);
             return true;

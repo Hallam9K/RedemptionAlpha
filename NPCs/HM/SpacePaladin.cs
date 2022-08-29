@@ -31,6 +31,7 @@ using Redemption.Particles;
 using Terraria.GameContent.UI;
 using Redemption.Projectiles.Ranged;
 using System;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.HM
 {
@@ -102,6 +103,7 @@ namespace Redemption.NPCs.HM
         {
             TimerRand = Main.rand.Next(80, 120);
         }
+        private readonly List<int> projBlocked = new();
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -110,6 +112,23 @@ namespace Redemption.NPCs.HM
             NPC.TargetClosest();
             if (AIState is not ActionState.Alert)
                 NPC.LookByVelocity();
+
+            if (AIState is ActionState.Alert)
+            {
+                Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
+                for (int p = 0; p < Main.maxProjectiles; p++)
+                {
+                    Projectile proj = Main.projectile[p];
+                    if (!proj.active || proj.friendly || (NPC.Center.X > proj.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < proj.Center.X && NPC.spriteDirection == -1))
+                        continue;
+
+                    if (proj.Hitbox.Intersects(ShieldHitbox))
+                    {
+                        if (!projBlocked.Contains(proj.whoAmI))
+                            projBlocked.Add(proj.whoAmI);
+                    }
+                }
+            }
 
             switch (AIState)
             {
@@ -299,6 +318,36 @@ namespace Redemption.NPCs.HM
                 }
             }
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (AIState is not ActionState.Alert)
+                return;
+            Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
+            if (item.Hitbox.Intersects(ShieldHitbox) && (NPC.Center.X > player.Center.X && NPC.spriteDirection == -1 || NPC.Center.X < player.Center.X && NPC.spriteDirection == 1))
+            {
+                SoundEngine.PlaySound(SoundID.NPCHit34, NPC.position);
+                damage = 0;
+                knockback = 0;
+            }
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (AIState is not ActionState.Alert)
+                return;
+            Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
+            if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1)))
+                return;
+
+            if (projectile.Hitbox.Intersects(ShieldHitbox))
+            {
+                projBlocked.Remove(projectile.whoAmI);
+                if (projectile.penetrate != -1)
+                    projectile.Kill();
+                SoundEngine.PlaySound(SoundID.NPCHit34, NPC.position);
+                damage = 0;
+                knockback = 0;
+            }
+        }
         public static float c = 1f / 255f;
         public Color innerColor = new(100 * c * 0.5f, 242 * c * 0.5f, 170 * c * 0.5f, 0.5f);
         public Color borderColor = new(0 * c, 242 * c, 170 * c, 1f);
@@ -307,6 +356,8 @@ namespace Redemption.NPCs.HM
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D upper = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Calm").Value;
             Texture2D upperGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Calm_Glow").Value;
+            Texture2D upperA = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Angry").Value;
+            Texture2D upperAGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Angry_Glow").Value;
             Texture2D shieldBack = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield_B").Value;
             Texture2D shieldFront = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield_F").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -318,14 +369,22 @@ namespace Redemption.NPCs.HM
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glow, pos - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int UpperHeight = upper.Height / 12;
-            int UpperY = UpperHeight * NPC.frame.Y / 94;
-            Rectangle UpperRect = new(0, UpperY, upper.Width, UpperHeight);
-            spriteBatch.Draw(upper, pos - screenPos, UpperRect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
-            spriteBatch.Draw(upperGlow, pos - screenPos, UpperRect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
-
+            if (AIState is not ActionState.Alert)
+            {
+                int UpperHeight = upper.Height / 12;
+                int UpperY = UpperHeight * NPC.frame.Y / 94;
+                Rectangle UpperRect = new(0, UpperY, upper.Width, UpperHeight);
+                spriteBatch.Draw(upper, pos - screenPos, UpperRect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
+                spriteBatch.Draw(upperGlow, pos - screenPos, UpperRect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
+            }
             if (AIState is ActionState.Alert)
             {
+                int UpperAHeight = upperA.Height / 12;
+                int UpperAY = UpperAHeight * NPC.frame.Y / 94;
+                Rectangle UpperARect = new(0, UpperAY, upperA.Width, UpperAHeight);
+                spriteBatch.Draw(upperA, pos - screenPos, UpperARect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 8 : 16, 22), NPC.scale, effects, 0);
+                spriteBatch.Draw(upperAGlow, pos - screenPos, UpperARect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 8 : 16, 22), NPC.scale, effects, 0);
+
                 Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Empty", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 ShieldEffect.Parameters["offset"].SetValue(Vector2.Zero);

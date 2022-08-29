@@ -48,7 +48,7 @@ namespace Redemption
             Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Menu/EpidotraMap").Value;
             Vector2 origin = new((texture.Width / 2), (texture.Height / 2));
 
-            spriteBatch.Draw(texture, logoDrawCenter - new Vector2(-100, -380) + new Vector2(((float)Math.Sin(sineAcc) * 1000f) - ((float)Math.Sin(sineTotal) * 800f), ((float)Math.Sin(sineAcc) * -500f) + ((float)Math.Sin(sineTotal) * 300f)), new Rectangle(0, 0, texture.Width, texture.Height), Color.White, 0f, origin, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, logoDrawCenter - new Vector2(-180, -300) + new Vector2(((float)Math.Sin(sineAcc) * 1000f) - ((float)Math.Sin(sineTotal) * 800f), ((float)Math.Sin(sineAcc) * -500f) + ((float)Math.Sin(sineTotal) * 300f)), new Rectangle(0, 0, texture.Width, texture.Height), Color.White, 0f, origin, 1f, SpriteEffects.None, 0f);
 
             return true;
         }
