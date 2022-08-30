@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
-            Projectile.timeLeft = 500;
+            Projectile.timeLeft = 350;
         }
         public override void AI()
         {
@@ -42,13 +42,17 @@ namespace Redemption.NPCs.Bosses.Neb
             else
             {
                 Projectile.localAI[0]++;
-                if (Projectile.localAI[0] >= 120)
+                if (Projectile.localAI[0] >= 60)
                 {
-                    Projectile.alpha += 6;
+                    Projectile.alpha += 12;
                     if (Projectile.alpha >= 255)
                         Projectile.Kill();
                 }
             }
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
         }
         public override bool ShouldUpdatePosition() => false;
     }

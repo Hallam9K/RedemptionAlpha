@@ -21,6 +21,8 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -137,13 +139,15 @@ namespace Redemption.NPCs.Bosses.KSIII
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SlayerBag>()));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<KS3Relic>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<KS3Trophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SlayerProjector>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>()));
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerMedal>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
 
             npcLoot.Add(notExpertRule);

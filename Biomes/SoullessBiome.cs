@@ -25,10 +25,6 @@ namespace Redemption.Biomes
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             player.ManageSpecialBiomeVisuals("MoR:SoullessSky", isActive, player.Center);
         }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soulless Caverns");

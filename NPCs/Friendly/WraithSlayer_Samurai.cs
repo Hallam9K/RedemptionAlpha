@@ -99,9 +99,10 @@ namespace Redemption.NPCs.Friendly
             if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
-                if (Main.netMode != NetmodeID.SinglePlayer)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
-                return false;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                    return false;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Wraith, CustomSounds.GuardBreak, 10, 1, 150);
             return true;
@@ -272,7 +273,7 @@ namespace Redemption.NPCs.Friendly
         {
             RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage)
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage && !Main.npc[gotNPC].immortal)
             {
                 SoundEngine.PlaySound(SoundID.Zombie81, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];

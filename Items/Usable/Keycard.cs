@@ -15,8 +15,8 @@ namespace Redemption.Items.Usable
 
         public override void SetDefaults()
         {
-            Item.width = 36;
-            Item.height = 22;
+            Item.width = 40;
+            Item.height = 28;
             Item.rare = ItemRarityID.Cyan;
             Item.maxStack = 1;
         }

@@ -12,6 +12,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Donator.Gonk;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.Items.Usable
 {
@@ -42,6 +43,7 @@ namespace Redemption.Items.Usable
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TinyCleaver>(), 1));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>(), 1));
         }

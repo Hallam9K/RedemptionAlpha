@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Melee;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -332,6 +333,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             else
                             {
                                 NPC.velocity *= .94f;
+                                if (AITimer == 80)
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady, Main.npc[(int)AIHost].position);
                                 if (AITimer == 120)
                                 {
                                     aniType = 1;
@@ -358,6 +361,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
                             AITimer++;
                             NPC.velocity *= .94f;
+                            if (AITimer == 81)
+                                SoundEngine.PlaySound(CustomSounds.OODashReady, Main.npc[(int)AIHost].position);
                             if (AITimer == 80)
                             {
                                 aniType = 2;
@@ -431,6 +436,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             else
                             {
                                 NPC.velocity *= .94f;
+                                if (AITimer == 81)
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady, Main.npc[(int)AIHost].position);
+
                                 if (AITimer == 120)
                                 {
                                     aniType = 1;
@@ -467,8 +475,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
                                 AITimer++;
                                 NPC.Move(AwayPos, 9, 10, true);
+
                                 if (AITimer == 81)
                                 {
+                                    SoundEngine.PlaySound(CustomSounds.OODashReady with { Pitch = -0.9f }, Main.npc[(int)AIHost].position);
                                     aniType = 2;
                                     AIHost = 8;
                                     NPC.netUpdate = true;

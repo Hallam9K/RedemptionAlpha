@@ -25,6 +25,8 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Accessories.HM;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -148,7 +150,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerGun>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
@@ -419,7 +421,11 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
                             if (RedeBossDowned.slayerDeath < 3)
+                            {
                                 RedeBossDowned.slayerDeath = 3;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
 
                             NPC.dontTakeDamage = false;
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
@@ -546,7 +552,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     break;
                 case ActionState.GunAttacks:
-                    NPC.LookAtEntity(player);
+                    if (AttackChoice != 2 || AITimer <= 200)
+                        NPC.LookAtEntity(player);
+
                     if (AttackChoice == 0)
                     {
                         AttackChoice = Main.rand.Next(1, 6);
@@ -893,7 +901,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     break;
                 case ActionState.SpecialAttacks:
-                    NPC.LookAtEntity(player);
+                    if (AttackChoice != 3 || AITimer <= 120)
+                        NPC.LookAtEntity(player);
+
                     if (AttackChoice == 0)
                     {
                         AttackChoice = Main.rand.Next(1, 10);
@@ -1686,7 +1696,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     AITimer = 100;
 
                                     NPC.frame.X = 0;
-                                    BodyState = Main.rand.NextBool(2)? (int)BodyAnim.Pummel1 : (int)BodyAnim.Pummel2;
+                                    BodyState = Main.rand.NextBool(2) ? (int)BodyAnim.Pummel1 : (int)BodyAnim.Pummel2;
                                     NPC.netUpdate = true;
                                 }
                                 else
@@ -1866,7 +1876,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AttackChoice == 1 ? AITimer > 740 : AITimer > 620)
                         {
                             if (RedeBossDowned.slayerDeath < 4)
+                            {
                                 RedeBossDowned.slayerDeath = 4;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
 
                             NPC.dontTakeDamage = false;
                             AttackChoice = 0;
@@ -1966,7 +1980,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer > 880)
                         {
                             if (RedeBossDowned.slayerDeath < 5)
+                            {
                                 RedeBossDowned.slayerDeath = 5;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
 
                             NPC.dontTakeDamage = false;
                             AttackChoice = 0;
@@ -2039,7 +2057,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer > 840)
                         {
                             if (RedeBossDowned.slayerDeath < 6)
+                            {
                                 RedeBossDowned.slayerDeath = 6;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
 
                             NPC.dontTakeDamage = false;
                             AttackChoice = 0;
@@ -2153,7 +2175,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer >= 310)
                     {
                         if (RedeBossDowned.slayerDeath < 7)
+                        {
                             RedeBossDowned.slayerDeath = 7;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         NPC.dontTakeDamage = true;
                         AITimer = 0;
@@ -2251,7 +2277,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         NPC.dontTakeDamage = false;
                         if (RedeBossDowned.slayerDeath < 7)
+                        {
                             RedeBossDowned.slayerDeath = 7;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
                         NPC.netUpdate = true;
@@ -2310,7 +2340,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer >= 500)
                     {
                         if (RedeBossDowned.slayerDeath < 8)
+                        {
                             RedeBossDowned.slayerDeath = 8;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         NPC.dontTakeDamage = false;
                         NPC.chaseable = true;

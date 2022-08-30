@@ -198,6 +198,7 @@ namespace Redemption.NPCs.Lab
                     {
                         NPC.frame.Y = 0;
                         AIState = ActionState.Alert;
+                        NPC.netUpdate = true;
                     }
                 }
                 if (NPC.frame.Y >= 16 * frameHeight && NPC.frame.Y <= 19 * frameHeight && NPC.frameCounter % 3 == 0)
@@ -285,6 +286,7 @@ namespace Redemption.NPCs.Lab
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
             if (Main.rand.NextBool(600) && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 300, false, true, blind: true))
             {
@@ -293,6 +295,7 @@ namespace Redemption.NPCs.Lab
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
             gotNPC = GetNearestNPC();
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 300, false, true, blind: true))
@@ -302,6 +305,7 @@ namespace Redemption.NPCs.Lab
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
         }
 

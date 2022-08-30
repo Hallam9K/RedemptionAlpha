@@ -41,9 +41,9 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             NPC.lifeMax = 427500;
             NPC.defense = 170;
-            NPC.damage = 250;
+            NPC.damage = 200;
             NPC.width = 90;
-            NPC.height = 108;
+            NPC.height = 90;
             NPC.aiStyle = -1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.knockBackResist = 0f;
@@ -73,7 +73,11 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             potionType = ItemID.SuperHealingPotion;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
             if (RedeBossDowned.nebDeath < 7)
+            {
                 RedeBossDowned.nebDeath = 7;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
 
             if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendData(MessageID.WorldData);
@@ -781,7 +785,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
                             if (NPC.ai[2] % 3 == 0 && NPC.ai[2] >= 30 && NPC.ai[2] <= 60)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele4>(), 120, new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), true, SoundID.Item9, 1.01f);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele4>(), 120, new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), false, SoundID.Item9, 1.01f);
                             }
                             if (NPC.ai[2] == 60) { NPC.ai[3] = 2; }
                             if (NPC.ai[2] >= 100)
@@ -993,7 +997,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 NPC.rotation = 0;
                                 NPC.velocity = Vector2.Zero;
                                 NPC.netUpdate = true;
-                                if (repeat < 3) NPC.Shoot(NPC.Center, ModContent.ProjectileType<GiantStar_Proj>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                                if (repeat < 3) NPC.Shoot(NPC.Center, ModContent.ProjectileType<GiantStar_Proj>(), (int)(NPC.damage * 0.85f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                             }
                             if (NPC.ai[2] > 65 && NPC.ai[2] < 86 && NPC.ai[2] % 2 == 0)
                             {
@@ -1073,13 +1077,13 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             {
                                 SoundEngine.PlaySound(SoundID.Item74, NPC.position);
                                 NPC.velocity.Y = -35;
-                                Teleport(true, player.Center + new Vector2(0, 350));
+                                Teleport(true, player.Center + new Vector2(0, 400));
                             }
                             if (NPC.ai[2] == 95)
                             {
                                 SoundEngine.PlaySound(SoundID.Item74, NPC.position);
                                 NPC.velocity.Y = 35;
-                                Teleport(true, player.Center + new Vector2(0, -350));
+                                Teleport(true, player.Center + new Vector2(0, -400));
                             }
                             if (NPC.ai[2] == 95)
                             {
@@ -1090,7 +1094,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             if (NPC.ai[2] == 95 || NPC.ai[2] == 115 || NPC.ai[2] == 135) { NPC.ai[3] = 5; armFrames[3] = 0; }
                             if (NPC.ai[2] == 105 || NPC.ai[2] == 125 || NPC.ai[2] == 145)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] > 95)
                             {
@@ -1116,7 +1120,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 50 || NPC.ai[2] == 70)
                             {
                                 Teleport(false, Vector2.Zero);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] >= 120)
                             {
@@ -1136,17 +1140,17 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60) { NPC.ai[3] = 5; armFrames[3] = 0; }
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 70)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.78f), true, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.78f), true, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.78f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.78f), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] == 50)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 1.2f), true, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 1.2f), true, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.6f), true, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.6f), true, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 1.2f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 1.2f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.6f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.6f), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] >= 120)
                             {
@@ -1259,6 +1263,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                             NPC.ai[2]++;
                             if (NPC.ai[2] == 1)
                             {
+                                eyeFlare = true;
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.NebSound2, NPC.position);
                             }
@@ -1369,7 +1374,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public void Teleport(bool specialPos, Vector2 teleportPos)
         {
             Player player = Main.player[NPC.target];
-            RazzleDazzle();
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.8f, 2, 0.7f, 2, 0, ai1: 1);
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.6f, 2, 0.7f, 2, 0, ai1: 1);
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.4f, 2, 0.7f, 2, 0, ai1: 1);
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3.2f, 2, 0.7f, 2, 0, ai1: 1);
             teleGlow = true;
             teleGlowTimer = 0;
             teleVector = NPC.Center;
@@ -1421,42 +1429,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int dustType = 58;
-                int pieCut = 8;
-                for (int m = 0; m < pieCut; m++)
-                {
-                    int dustID = Dust.NewDust(new Vector2(NPC.Center.X - 1, NPC.Center.Y - 1), 2, 2, dustType, 0f, 0f, 100, Color.White, 4f);
-                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(10f, 0f), m / (float)pieCut * 6.28f);
-                    Main.dust[dustID].noLight = false;
-                    Main.dust[dustID].noGravity = true;
-                }
-                int dustType2 = 59;
-                int pieCut2 = 10;
-                for (int m = 0; m < pieCut2; m++)
-                {
-                    int dustID = Dust.NewDust(new Vector2(NPC.Center.X - 1, NPC.Center.Y - 1), 2, 2, dustType2, 0f, 0f, 100, Color.White, 4f);
-                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(12f, 0f), m / (float)pieCut2 * 6.28f);
-                    Main.dust[dustID].noLight = false;
-                    Main.dust[dustID].noGravity = true;
-                }
-                int dustType3 = 60;
-                int pieCut3 = 12;
-                for (int m = 0; m < pieCut3; m++)
-                {
-                    int dustID = Dust.NewDust(new Vector2(NPC.Center.X - 1, NPC.Center.Y - 1), 2, 2, dustType3, 0f, 0f, 100, Color.White, 4f);
-                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(14f, 0f), m / (float)pieCut3 * 6.28f);
-                    Main.dust[dustID].noLight = false;
-                    Main.dust[dustID].noGravity = true;
-                }
-                int dustType4 = 62;
-                int pieCut4 = 14;
-                for (int m = 0; m < pieCut4; m++)
-                {
-                    int dustID = Dust.NewDust(new Vector2(NPC.Center.X - 1, NPC.Center.Y - 1), 2, 2, dustType4, 0f, 0f, 100, Color.White, 4f);
-                    Main.dust[dustID].velocity = BaseUtility.RotateVector(default, new Vector2(16f, 0f), m / (float)pieCut4 * 6.28f);
-                    Main.dust[dustID].noLight = false;
-                    Main.dust[dustID].noGravity = true;
-                }
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed, 5, 0.8f, 2, 0.7f, 2, 0, ai1: 1);
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink, 5, 1.6f, 2, 0.7f, 2, 0, ai1: 1);
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple, 5, 2.4f, 2, 0.7f, 2, 0, ai1: 1);
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue, 5, 3.2f, 2, 0.7f, 2, 0, ai1: 1);
             }
         }
         #endregion

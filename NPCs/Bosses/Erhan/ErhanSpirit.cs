@@ -264,7 +264,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
 
                                         if (RedeBossDowned.erhanDeath < 4)
+                                        {
                                             RedeBossDowned.erhanDeath = 4;
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.WorldData);
+                                        }
 
                                         TimerRand = 0;
                                         AITimer = 0;
@@ -291,7 +295,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
 
                                         if (RedeBossDowned.erhanDeath < 4)
+                                        {
                                             RedeBossDowned.erhanDeath = 4;
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.WorldData);
+                                        }
 
                                         TimerRand = 0;
                                         AITimer = 0;
@@ -780,7 +788,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer >= 360)
                             {
                                 if (RedeBossDowned.erhanDeath < 2)
+                                {
                                     RedeBossDowned.erhanDeath = 2;
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.WorldData);
+                                }
 
                                 AttackNumber++;
                                 NPC.noGravity = true;

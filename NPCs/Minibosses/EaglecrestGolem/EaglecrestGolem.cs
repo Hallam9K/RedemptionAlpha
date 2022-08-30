@@ -26,6 +26,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
     {
         public enum ActionState
         {
+            Start,
             Idle,
             Slash,
             Roll,
@@ -157,14 +158,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         private int summonTimer;
         private float FlareTimer;
         private bool Flare;
-        public override void OnSpawn(IEntitySource source)
-        {
-            if (!Main.dedServ)
-                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, Color.Gray, "Guardian of Eaglecrest Meadows");
-
-            TimerRand = Main.rand.Next(300, 700);
-            NPC.netUpdate = true;
-        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -186,6 +179,15 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             switch (AIState)
             {
+                case ActionState.Start:
+                    NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
+                    if (!Main.dedServ)
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, Color.Gray, "Guardian of Eaglecrest Meadows");
+
+                    TimerRand = Main.rand.Next(300, 700);
+                    AIState = ActionState.Idle;
+                    NPC.netUpdate = true;
+                    break;
                 case ActionState.Idle:
                     if (++AITimer >= TimerRand)
                     {
@@ -197,6 +199,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
                     if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) <= 400 * 400 && Main.rand.NextBool(150))
                     {
+                        NPC.velocity.X = 0;
                         AniFrameY = 0;
                         NPC.frame.Y = 0;
                         NPC.frameCounter = 0;

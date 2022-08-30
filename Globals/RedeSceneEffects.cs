@@ -4,6 +4,10 @@ using Redemption.Globals.Player;
 using ReLogic.Content;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.NPCs.Bosses.Neb;
+using Terraria.Graphics.Effects;
+using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.NPCs.Bosses.Neb.Clone;
 
 namespace Redemption.Globals
 {
@@ -58,7 +62,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1.2f).UseIntensity(1f)
+            Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1.2f).UseIntensity(1f)
                     .UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             player.ManageSpecialBiomeVisuals("MoR:IslandEffect", isActive);
@@ -75,6 +79,38 @@ namespace Redemption.Globals
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
             return player.RedemptionAbility().SpiritwalkerActive;
+        }
+    }
+    public class NebSkyScene : ModSceneEffect
+    {
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override void SpecialVisuals(Terraria.Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("MoR:NebP1", isActive);
+            if (isActive)
+                SkyManager.Instance.Activate("MoR:NebP1");
+            else
+                SkyManager.Instance.Deactivate("MoR:NebP1");
+        }
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus_Clone>());
+        }
+    }
+    public class NebSky2Scene : ModSceneEffect
+    {
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override void SpecialVisuals(Terraria.Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("MoR:NebP2", isActive);
+            if (isActive)
+                SkyManager.Instance.Activate("MoR:NebP2");
+            else
+                SkyManager.Instance.Deactivate("MoR:NebP2");
+        }
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>());
         }
     }
 }

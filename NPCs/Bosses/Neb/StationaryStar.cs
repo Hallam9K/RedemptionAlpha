@@ -33,6 +33,10 @@ namespace Redemption.NPCs.Bosses.Neb
                     Projectile.frame = 0;
             }
         }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
+        }
         public override void Kill(int timeLeft)
 		{
             for (int m = 0; m < 8; m++)

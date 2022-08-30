@@ -4,6 +4,7 @@ using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
@@ -31,6 +32,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Telegraph");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()
@@ -41,8 +43,9 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.hostile = false;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 80;
+            Projectile.timeLeft = 200;
             Projectile.alpha = 255;
+            Projectile.extraUpdates = 2;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -58,6 +61,12 @@ namespace Redemption.NPCs.Bosses.Neb
             if (AITimer < Projectile.ai[0] - 40)
                 Projectile.velocity = npc.DirectionTo(Main.player[npc.target].Center + Main.player[npc.target].velocity * 20f);
 
+            if (AITimer >= Projectile.ai[0])
+            {
+                float timer = AITimer - 60f;
+                Projectile.alpha = (int)MathHelper.Lerp(100f, 255f, timer / 30f);
+            }
+
             #region Beginning And End Effects
             if (AITimer == 0)
                 LaserScale = 1;
@@ -67,12 +76,12 @@ namespace Redemption.NPCs.Bosses.Neb
                 Projectile.alpha -= 5;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 100, 255);
             }
-            if (Projectile.timeLeft <= 30)
+            if (Projectile.timeLeft <= 20)
             {
-                if (Projectile.timeLeft > 30)
-                    Projectile.timeLeft = 30;
+                if (Projectile.timeLeft > 20)
+                    Projectile.timeLeft = 20;
 
-                Projectile.alpha += 10;
+                Projectile.alpha += 20;
             }
             #endregion
 
@@ -172,6 +181,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Telegraph");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()

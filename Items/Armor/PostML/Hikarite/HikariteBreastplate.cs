@@ -11,6 +11,9 @@ namespace Redemption.Items.Armor.PostML.Hikarite
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("14% increased damage"
+                + "\n12% increased critical strike chance");
+
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
@@ -19,7 +22,12 @@ namespace Redemption.Items.Armor.PostML.Hikarite
             Item.height = 32;
             Item.sellPrice(7, 95, 0);
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
-            Item.defense = 38;
+            Item.defense = 34;
+        }
+        public override void UpdateEquip(Player player)
+        {
+            player.GetDamage<GenericDamageClass>() += .14f;
+            player.GetCritChance<GenericDamageClass>() += 12;
         }
     }
 }

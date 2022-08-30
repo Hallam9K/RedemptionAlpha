@@ -32,11 +32,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         //should be set to about half of the end length
         private const float FirstSegmentDrawDist = 14;
 
-        public int MaxLaserLength = 2000;
+        public int MaxLaserLength = 1770;
         // >
+        public override bool ShouldUpdatePosition() => false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Ray");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
         {
@@ -46,7 +48,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 80;
+            Projectile.timeLeft = 820;
         }
         public override void AI()
         {
@@ -100,7 +102,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(LaserWidth * Frame), 0, LaserWidth, LaserEndSegmentLength), color, r, new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + (maxDist) * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(LaserWidth * Frame), LaserSegmentLength + LaserEndSegmentLength, LaserWidth, LaserEndSegmentLength), color, r, new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
         }
         public override bool PreDraw(ref Color lightColor)
@@ -108,7 +110,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(RedeColor.NebColour), (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -123,7 +125,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
+                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
             {
                 return true;
             }

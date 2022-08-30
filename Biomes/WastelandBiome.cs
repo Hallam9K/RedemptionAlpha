@@ -36,11 +36,6 @@ namespace Redemption.Biomes
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
         }
-        public override void OnLeave(Player player)
-        {
-            player.ManageSpecialBiomeVisuals("MoR:WastelandSky", false, player.Center);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", false);
-        }
         public override void OnInBiome(Player player)
         {
             if (Main.raining)

@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.width = 98;
             NPC.height = 80;
             NPC.friendly = false;
-            NPC.damage = 140;
+            NPC.damage = 120;
             NPC.defense = 80;
             NPC.lifeMax = 198000;
             NPC.SpawnWithHigherTime(30);

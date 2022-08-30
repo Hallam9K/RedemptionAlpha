@@ -8,6 +8,8 @@ using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.DataStructures;
 using Redemption.BaseExtension;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -75,9 +77,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
-                NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2 + Scale);
-            Main.dust[dust].noGravity = true;
+            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC) + (NPC.velocity * 10), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
 
             NPC.scale = 1 + Scale;
             NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;

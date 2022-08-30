@@ -56,9 +56,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
-                NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
-            Main.dust[dust].noGravity = true;
+            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC) + (NPC.velocity * 2), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
             if (Main.rand.NextBool(3))
                 ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
 

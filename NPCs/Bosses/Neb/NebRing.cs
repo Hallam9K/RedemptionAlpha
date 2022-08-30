@@ -37,5 +37,9 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
+        }
     }
 }

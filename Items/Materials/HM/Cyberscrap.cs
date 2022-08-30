@@ -25,5 +25,12 @@ namespace Redemption.Items.Materials.HM
             Item.rare = ItemRarityID.Cyan;
             Item.ammo = Item.type;
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe(2)
+                .AddIngredient(ModContent.ItemType<CyberPlating>())
+                .AddCondition(Recipe.Condition.NearLava)
+                .Register();
+        }
     }
 }

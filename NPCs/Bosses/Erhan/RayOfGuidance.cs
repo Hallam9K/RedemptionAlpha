@@ -167,14 +167,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), 0, 256, LaserEndSegmentLength), color, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale, 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + (maxDist + 30) * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), LaserSegmentLength + LaserEndSegmentLength, 256, LaserEndSegmentLength), color, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale, 0, 0);
 
             // Draws the Laser 'base'
             Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), 0, 256, LaserEndSegmentLength), color * 0.5f, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale * new Vector2(pulse, 1), 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + (maxDist + 30) * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                 new Rectangle((int)(256 * Frame), LaserSegmentLength + LaserEndSegmentLength, 256, LaserEndSegmentLength), color * 0.5f, r, new Vector2(256 / 2, LaserSegmentLength / 2), scale * new Vector2(pulse, 1), 0, 0);
         }
         public override bool PreDraw(ref Color lightColor)

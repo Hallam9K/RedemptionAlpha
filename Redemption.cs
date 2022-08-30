@@ -115,8 +115,12 @@ namespace Redemption
                     Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
                 });
-            }
 
+                Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:NebP1"] = new NebSky();
+                Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:NebP2"] = new NebSky2();
+            }
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
@@ -197,6 +201,8 @@ namespace Redemption
                 if (obj is int @int) packet.Write(@int);
                 else
                 if (obj is float single) packet.Write(single);
+                else
+                if (obj is Vector2 vector) { packet.Write(vector.X); packet.Write(vector.Y); }
             }
             return packet;
         }
@@ -228,16 +234,13 @@ namespace Redemption
                     if (Main.netMode == NetmodeID.Server)
                     {
                         int NPCType = bb.ReadInt32();
-                        int npcCenterX = bb.ReadInt32();
-                        int npcCenterY = bb.ReadInt32();
+                        Vector2 npcCenter = bb.ReadVector2();
 
                         if (NPC.AnyNPCs(NPCType))
-                        {
                             return;
-                        }
 
-                        int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, NPCType);
-                        Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
+                        int npcID = NPC.NewNPC(null, (int)npcCenter.X, (int)npcCenter.Y, NPCType);
+                        Main.npc[npcID].Center = npcCenter;
                         Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
@@ -245,11 +248,10 @@ namespace Redemption
                     if (Main.netMode == NetmodeID.Server)
                     {
                         int NPCType = bb.ReadInt32();
-                        int npcCenterX = bb.ReadInt32();
-                        int npcCenterY = bb.ReadInt32();
+                        Vector2 npcCenter = bb.ReadVector2();
 
-                        int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, NPCType);
-                        Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
+                        int npcID = NPC.NewNPC(null, (int)npcCenter.X, (int)npcCenter.Y, NPCType);
+                        Main.npc[npcID].Center = npcCenter;
                         Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
@@ -293,7 +295,7 @@ namespace Redemption
 
         public UserInterface DialogueUILayer;
         public MoRDialogueUI DialogueUIElement;
-		
+
         public UserInterface ChaliceUILayer;
         public ChaliceAlignmentUI ChaliceUIElement;
 
@@ -338,11 +340,11 @@ namespace Redemption
                 AMemoryUILayer = new UserInterface();
                 AMemoryUIElement = new AMemoryUIState();
                 AMemoryUILayer.SetState(AMemoryUIElement);
-				
-				TextBubbleUILayer = new UserInterface();
-				TextBubbleUIElement = new TextBubbleUI();
+
+                TextBubbleUILayer = new UserInterface();
+                TextBubbleUIElement = new TextBubbleUI();
                 TextBubbleUILayer.SetState(TextBubbleUIElement);
-			}
+            }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
         {
@@ -431,7 +433,7 @@ namespace Redemption
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
                 if (index >= 0)
                 {
-                    LegacyGameInterfaceLayer SkeleUI = new ("Redemption: SkeleInvasion",
+                    LegacyGameInterfaceLayer SkeleUI = new("Redemption: SkeleInvasion",
                         delegate
                         {
                             DrawSkeletonInvasionUI(Main.spriteBatch);
@@ -454,8 +456,8 @@ namespace Redemption
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
-				AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
-			}
+                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
+            }
         }
 
         public static void AddInterfaceLayer(List<GameInterfaceLayer> layers, UserInterface userInterface, UIState state, int index, bool visible, string customName = null) //Code created by Scalie
@@ -486,6 +488,9 @@ namespace Redemption
             Player player = Main.LocalPlayer;
             RitualistPlayer rP = player.GetModPlayer<RitualistPlayer>();
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
             Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/SpiritGauge").Value;
             Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/SpiritGauge_Fill").Value;
             float timerMax = rP.SpiritGaugeMax;
@@ -503,6 +508,9 @@ namespace Redemption
             spriteBatch.Draw(timerBarInner2, drawPos2, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner2.Height)), Color.White, 0f, timerBarInner2.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, (rP.SpiritLevel + 1).ToString(), player.Center + new Vector2(-46, 36) - Main.screenPosition, Color.White, 0, Vector2.Zero, Vector2.One);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
         }
         #region Skele Invasion UI
         public static void DrawSkeletonInvasionUI(SpriteBatch spriteBatch)
@@ -514,8 +522,8 @@ namespace Redemption
                 Texture2D progressColor = TextureAssets.ColorBar.Value;
                 Texture2D InvIcon = ModContent.Request<Texture2D>("Redemption/Items/Armor/Vanity/EpidotrianSkull").Value;
                 float scmp = 0.5f + 0.75f * 0.5f;
-                Color descColor = new (77, 39, 135);
-                Color waveColor = new (255, 241, 51);
+                Color descColor = new(77, 39, 135);
+                Color waveColor = new(255, 241, 51);
                 const int offsetX = 20;
                 const int offsetY = 20;
                 int width = (int)(200f * scmp);
@@ -526,8 +534,8 @@ namespace Redemption
                 string waveText = "Cleared " + Math.Round(100 * cleared) + "%";
                 Utils.DrawBorderString(spriteBatch, waveText, new Vector2(waveBackground.X + waveBackground.Width / 2, waveBackground.Y + 5), Color.White, scmp * 0.8f, 0.5f, -0.1f);
                 Rectangle waveProgressBar = Utils.CenteredRectangle(new Vector2(waveBackground.X + waveBackground.Width * 0.5f, waveBackground.Y + waveBackground.Height * 0.75f), new Vector2(progressColor.Width, progressColor.Height));
-                Rectangle waveProgressAmount = new (0, 0, (int)(progressColor.Width * MathHelper.Clamp(cleared, 0f, 1f)), progressColor.Height);
-                Vector2 offset = new ((waveProgressBar.Width - (int)(waveProgressBar.Width * scmp)) *0.5f, (waveProgressBar.Height - (int)(waveProgressBar.Height * scmp)) * 0.5f);
+                Rectangle waveProgressAmount = new(0, 0, (int)(progressColor.Width * MathHelper.Clamp(cleared, 0f, 1f)), progressColor.Height);
+                Vector2 offset = new((waveProgressBar.Width - (int)(waveProgressBar.Width * scmp)) * 0.5f, (waveProgressBar.Height - (int)(waveProgressBar.Height * scmp)) * 0.5f);
                 spriteBatch.Draw(backGround1, waveProgressBar.Location.ToVector2() + offset, null, Color.White * alpha, 0f, new Vector2(0f), scmp, SpriteEffects.None, 0f);
                 spriteBatch.Draw(backGround1, waveProgressBar.Location.ToVector2() + offset, waveProgressAmount, waveColor, 0f, new Vector2(0f), scmp, SpriteEffects.None, 0f);
                 const int internalOffset = 6;
@@ -536,7 +544,7 @@ namespace Redemption
                 Rectangle descBackground = Utils.CenteredRectangle(new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), descSize * .8f);
                 Utils.DrawInvBG(spriteBatch, descBackground, descColor * alpha);
                 int descOffset = (descBackground.Height - (int)(32f * scmp)) / 2;
-                Rectangle icon = new (descBackground.X + descOffset + 7, descBackground.Y + descOffset, (int)(32 * scmp), (int)(32 * scmp));
+                Rectangle icon = new(descBackground.X + descOffset + 7, descBackground.Y + descOffset, (int)(32 * scmp), (int)(32 * scmp));
                 spriteBatch.Draw(InvIcon, icon, Color.White);
                 Utils.DrawBorderString(spriteBatch, "Raveyard", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, 0.8f, 0.3f, 0.4f);
             }

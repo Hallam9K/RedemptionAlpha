@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent;
 using Redemption.Globals;
 using System;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -32,6 +33,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Telegraph");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()
@@ -202,6 +204,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Telegraph");
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
         public override void SetDefaults()

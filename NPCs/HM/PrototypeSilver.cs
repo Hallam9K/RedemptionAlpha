@@ -166,7 +166,7 @@ namespace Redemption.NPCs.HM
                             if (!others.active || others.whoAmI == NPC.whoAmI || others.ai[0] >= 3)
                                 continue;
 
-                            if (others.type != Type && others.type != ModContent.NPCType<Android>())
+                            if (others.type != Type && others.type != ModContent.NPCType<Android>() && others.type != ModContent.NPCType<SpacePaladin>())
                                 continue;
 
                             if (NPC.DistanceSQ(others.Center) >= 900 * 900)
@@ -182,7 +182,7 @@ namespace Redemption.NPCs.HM
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
                         shieldUp = true;
                     }
-                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 2)
+                    if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 3)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
                         runCooldown = 0;
@@ -333,7 +333,7 @@ namespace Redemption.NPCs.HM
                             Main.dust[dust].noGravity = true;
                         }
                         NPC.netUpdate = true;
-                        if (player.Redemption().slayerStarRating <= 2 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
+                        if (player.Redemption().slayerStarRating <= 3 && !NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()))
                         {
                             player.Redemption().slayerStarRating++;
                             NPC.SetDefaults(ModContent.NPCType<SlayerSpawner>());
@@ -411,7 +411,7 @@ namespace Redemption.NPCs.HM
                         if (!others.active || others.whoAmI == NPC.whoAmI || others.ai[0] >= 3)
                             continue;
 
-                        if (others.type != Type && others.type != ModContent.NPCType<Android>())
+                        if (others.type != Type && others.type != ModContent.NPCType<Android>() && others.type != ModContent.NPCType<SpacePaladin>())
                             continue;
 
                         if (NPC.DistanceSQ(others.Center) >= 900 * 900)

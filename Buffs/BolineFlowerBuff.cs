@@ -10,7 +10,7 @@ namespace Redemption.Buffs
         {
             DisplayName.SetDefault("Flower Power");
             Description.SetDefault("Increased life regen and knockback immunity");
-            Main.buffNoTimeDisplay[Type] = false;
+            Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {

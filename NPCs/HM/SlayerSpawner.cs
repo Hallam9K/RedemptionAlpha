@@ -10,6 +10,7 @@ using Redemption.BaseExtension;
 using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.NPCs.Bosses.KSIII;
 
 namespace Redemption.NPCs.HM
 {
@@ -65,6 +66,28 @@ namespace Redemption.NPCs.HM
                         NPC.active = false;
                     }
                     break;
+                case 4:
+                    if (NPC.ai[1]++ == 300)
+                    {
+                        SpawnSpacePaladin(pos);
+                        NPC.active = false;
+                    }
+                    break;
+                default:
+                    if (NPC.ai[1]++ == 300)
+                    {
+                        if (RedeBossDowned.slayerDeath < 2)
+                        {
+                            RedeBossDowned.slayerDeath = 2;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
+
+                        player.Redemption().slayerStarRating = 0;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)player.Center.X, (int)player.Center.Y, ModContent.NPCType<KS3_Start>(), 5);
+                        NPC.active = false;
+                    }
+                    break;
             }
             return true;
         }
@@ -107,6 +130,26 @@ namespace Redemption.NPCs.HM
                 Main.dust[dust].noGravity = true;
             }
             RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, ModContent.NPCType<PrototypeSilver>());
+        }
+        private void SpawnSpacePaladin(Vector2 pos)
+        {
+            pos = RedeHelper.FindGround(NPC, 18);
+            pos *= 16;
+            SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, pos);
+            DustHelper.DrawDustImage(pos - new Vector2(0, 64), DustID.Frost, 0.2f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
+            for (int k = 0; k < 30; k++)
+            {
+                int dust = Dust.NewDust(new Vector2(pos.X, pos.Y - 800), 2, 2 + 750, DustID.Frost);
+                Main.dust[dust].noGravity = true;
+            }
+            for (int j = 0; j < 25; j++)
+            {
+                ParticleManager.NewParticle(pos - new Vector2(0, 64), RedeHelper.Spread(4), new LightningParticle(), Color.White, 3);
+                int dust = Dust.NewDust(pos - new Vector2(0, 64), 2, 2, DustID.Frost, Scale: 3f);
+                Main.dust[dust].velocity *= 6f;
+                Main.dust[dust].noGravity = true;
+            }
+            RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, ModContent.NPCType<SpacePaladin>());
         }
     }
 }
