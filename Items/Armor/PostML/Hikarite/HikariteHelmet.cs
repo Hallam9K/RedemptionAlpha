@@ -12,6 +12,10 @@ namespace Redemption.Items.Armor.PostML.Hikarite
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Hikarite Greathelm");
+            Tooltip.SetDefault("16% increased damage"
+                + "\n9% increased critical strike chance");
+
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
@@ -22,7 +26,7 @@ namespace Redemption.Items.Armor.PostML.Hikarite
             Item.height = 36;
             Item.sellPrice(gold: 5);
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
-            Item.defense = 26;
+            Item.defense = 24;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -35,6 +39,8 @@ namespace Redemption.Items.Armor.PostML.Hikarite
         }
         public override void UpdateEquip(Player player)
         {
+            player.GetDamage<GenericDamageClass>() += .16f;
+            player.GetCritChance<GenericDamageClass>() += 9;
             player.RedemptionPlayerBuff().hikariteHead = true;
         }
     }

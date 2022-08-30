@@ -27,10 +27,12 @@ namespace Redemption.Globals.NPC
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, (int)damage, true, true);
             GuardPoints -= (int)damage;
             damage = 0;
-            IgnoreArmour = false;
         }
         public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
+            if (IgnoreArmour)
+                IgnoreArmour = false;
+
             if (GuardPoints > 0 || GuardBroken)
                 return;
 

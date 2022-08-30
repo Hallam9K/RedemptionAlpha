@@ -24,10 +24,12 @@ namespace Redemption.Globals.Player
         public int hitTarget2 = -1;
         public bool medKit;
         public int slayerStarRating;
+        public bool contactImmune;
         public override void ResetEffects()
         {
             hitTarget = -1;
             hitTarget2 = -1;
+            contactImmune = false;
         }
         public override void Initialize()
         {
@@ -38,7 +40,14 @@ namespace Redemption.Globals.Player
         }
         public override void UpdateDead()
         {
+            Player.fullRotation = 0f;
             slayerStarRating = 0;
+        }
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        {
+            if (damageSource.SourceNPCIndex >= 0 && contactImmune)
+                return false;
+            return true;
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {

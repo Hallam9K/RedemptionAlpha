@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -151,6 +152,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 }
             }
             return false;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<CyberPlating>(), 6)
+                .AddIngredient(ModContent.ItemType<Capacitator>(), 2)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

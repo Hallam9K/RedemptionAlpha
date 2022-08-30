@@ -27,7 +27,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             chainTexture = null;
         }
 
-        public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tiny Cleaver");
