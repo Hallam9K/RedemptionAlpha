@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Projectiles.Melee
+namespace Redemption.Items.Weapons.HM.Melee
 {
     public class Chernobyl_Proj : ModProjectile
     {
@@ -21,6 +22,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Melee;
+            Projectile.Redemption().TechnicallyMelee = true;
             ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 16f;
             ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 310f;
             ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 17f;

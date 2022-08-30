@@ -37,7 +37,7 @@ namespace Redemption.Particles
                     opacity = MathHelper.Lerp(1f, 0f, (float)(timeLeftMax / 2f - timeLeft) / (timeLeftMax / 2f));
                 else
                 {
-                    if (ai[1] == 1)
+                    if (ai[1] >= 1)
                         opacity += 0.5f;
                     else
                         opacity += 0.05f;
@@ -65,6 +65,8 @@ namespace Redemption.Particles
         }
         private void Spawn()
         {
+            if (ai[1] == 2)
+                timeLeft = Main.rand.Next(10, 20);
             timeLeftMax = timeLeft;
             size = Main.rand.NextFloat(5f, 11f) / 10f;
         }

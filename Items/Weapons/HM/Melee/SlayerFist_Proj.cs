@@ -89,9 +89,6 @@ namespace Redemption.Items.Weapons.HM.Melee
                             Projectile.Kill();
                         break;
                     case 1:
-                        if (Timer <= 5 && !player.channel)
-                            Projectile.Kill();
-
                         if (Timer++ < 40 && player.velocity.Y != 0)
                         {
                             player.Redemption().contactImmune = true;
@@ -113,6 +110,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                             SoundEngine.PlaySound(CustomSounds.MissileFire1, Projectile.Center);
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(15, (Main.MouseWorld - player.Center).ToRotation()), ModContent.ProjectileType<KS3_FistF>(), (int)(Projectile.damage * 1.1f), Projectile.knockBack, player.whoAmI);
                         }
+                        if (Timer <= 5 && !player.channel)
+                            Projectile.Kill();
                         break;
                 }
             }
