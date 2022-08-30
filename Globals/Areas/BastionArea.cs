@@ -32,7 +32,7 @@ namespace Redemption.Globals
 
             Vector2 NozaPos = new((RedeGen.BastionVector.X + 210) * 16, (RedeGen.BastionVector.Y + 64) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Noza_NPC>()) && RedeBossDowned.downedPZ)
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)NozaPos.X, (int)NozaPos.Y, ModContent.NPCType<Noza_NPC>());
+                LabArea.SpawnNPCInWorld(NozaPos, ModContent.NPCType<Noza_NPC>());
         }
     }
 }
