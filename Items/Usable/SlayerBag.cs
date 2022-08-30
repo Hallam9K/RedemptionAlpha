@@ -12,6 +12,8 @@ using Redemption.Items.Materials.HM;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.Items.Usable
 {
@@ -43,7 +45,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<KingSlayerMask>(), 7));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerGun>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
