@@ -11,6 +11,7 @@ Mods: {
 			SwordRemoteCooldown: "Sword Remote Cooldown"
 			XeniumCooldown: "Xenium Cooldown"
 			XeniumLanceCooldown: "Xenium Lance Cooldown"
+			XenomiteCooldown: "Xenomite Gas Cooldown"
             
             # Debuffs
             AntibodiesDebuff: "Xenomite Antibodies"
@@ -73,6 +74,7 @@ Mods: {
 			SwordRemoteCooldown: "You cannot use the Sword Remote"
 			XeniumCooldown: "Your shoulder launcher is reloading"
 			XeniumLanceCooldown: "The lance's battery is recharging"
+			XenomiteCooldown: "Your gas container is refilling"
             
             # Debuffs
             AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."

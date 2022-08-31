@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
             base.SetStaticDefaults();
         }
 
-        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.RedemptionPlayerBuff().xeniumBonus == 1;
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.RedemptionPlayerBuff().xeniumBonus;
 
         public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.BackAcc);
         protected override void Draw(ref PlayerDrawSet drawInfo)

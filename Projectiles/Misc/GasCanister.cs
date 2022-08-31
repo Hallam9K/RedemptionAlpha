@@ -91,7 +91,6 @@ namespace Redemption.Projectiles.Misc
         {
             DisplayName.SetDefault("Virulent Gas");
         }
-
         public override void SetDefaults()
         {
             Projectile.width = 150;
@@ -105,16 +104,8 @@ namespace Redemption.Projectiles.Misc
             Projectile.timeLeft = 240;
             Projectile.scale = Main.rand.NextFloat(2, 2.5f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
-            Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().Unparryable = true;
         }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            Projectile.localNPCImmunity[target.whoAmI] = 60;
-            target.immune[Projectile.owner] = 0;
-        }
-
         public override void AI()
         {
             if (Projectile.localAI[0] == 0)
@@ -148,7 +139,6 @@ namespace Redemption.Projectiles.Misc
                 }
             }
         }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

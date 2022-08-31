@@ -13,6 +13,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "If a target is skewered for 10 seconds or once 5 are skewered at a time:\n" +
                 "The pike takes their life and becomes enchanted for 10 seconds");
 
+            ItemID.Sets.Spears[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

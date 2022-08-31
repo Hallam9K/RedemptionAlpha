@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor.PostML.Hikarite
         public override void UpdateEquip(Player player)
         {
             player.moveSpeed += .2f;
-            player.GetDamage<GenericDamageClass>() += 13;
+            player.GetDamage<GenericDamageClass>() += .13f;
             player.GetCritChance<GenericDamageClass>() += 8;
         }
     }
