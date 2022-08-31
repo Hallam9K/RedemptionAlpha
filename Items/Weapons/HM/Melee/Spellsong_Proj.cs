@@ -192,7 +192,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Timer > 8 && Projectile.ai[0] < 2)
                 return false;
-            return Timer > 20 && Projectile.ai[0] == 2 ? null : false;
+            return Timer < 20 && Projectile.ai[0] == 2 ? null : false;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
