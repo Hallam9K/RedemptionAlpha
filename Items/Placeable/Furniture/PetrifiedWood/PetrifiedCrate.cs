@@ -16,7 +16,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Placeable.Furniture.Lab
+namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 {
     public class PetrifiedCrate : ModItem
     {
