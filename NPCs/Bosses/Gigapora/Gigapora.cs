@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.height = 140;
             NPC.damage = 140;
             NPC.defense = 20;
-            NPC.lifeMax = 50000;
+            NPC.lifeMax = 35000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;

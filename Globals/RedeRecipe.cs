@@ -19,7 +19,6 @@ namespace Redemption.Globals
         public static RecipeGroup SilverRecipeGroup;
         public static RecipeGroup CopperRecipeGroup;
         public static RecipeGroup GathicStoneRecipeGroup;
-        public static RecipeGroup BioweaponBileRecipeGroup;
         public static RecipeGroup HazmatSuitRecipeGroup;
         public static RecipeGroup PlantRecipeGroup;
 
@@ -30,7 +29,6 @@ namespace Redemption.Globals
             SilverRecipeGroup = null;
             CopperRecipeGroup = null;
             GathicStoneRecipeGroup = null;
-            BioweaponBileRecipeGroup = null;
             HazmatSuitRecipeGroup = null;
             PlantRecipeGroup = null;
         }
@@ -51,9 +49,6 @@ namespace Redemption.Globals
 
             GathicStoneRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<GathicStone>())}", ModContent.ItemType<GathicStone>(), ModContent.ItemType<GathicGladestone>(), ModContent.ItemType<GathicStoneBrick>(), ModContent.ItemType<GathicGladestoneBrick>());
             RecipeGroup.RegisterGroup("Redemption:GathicStone", GathicStoneRecipeGroup);
-
-            BioweaponBileRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<Bioweapon>())}", ModContent.ItemType<Bioweapon>(), ModContent.ItemType<ToxicBile>());
-            RecipeGroup.RegisterGroup("Redemption:BioweaponBile", BioweaponBileRecipeGroup);
 
             HazmatSuitRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ModContent.ItemType<HazmatSuit>())}", ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<HazmatSuit2>(), ModContent.ItemType<HazmatSuit3>());
             RecipeGroup.RegisterGroup("Redemption:HazmatSuits", HazmatSuitRecipeGroup);

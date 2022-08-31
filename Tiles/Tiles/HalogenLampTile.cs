@@ -48,9 +48,9 @@ namespace Redemption.Tiles.Tiles
             Tile tile = Framing.GetTileSafely(i, j);
             if (tile.TileFrameY < 90)
             {
-                r = 0.0f;
-                g = 0.3f;
-                b = 0.3f;
+                r = 0.4f;
+                g = 0.4f;
+                b = 0.6f;
             }
         }
         public override bool CanExplode(int i, int j)

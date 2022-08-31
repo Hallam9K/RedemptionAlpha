@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 5000;
+            NPC.lifeMax = 6500;
             NPC.damage = 60;
             NPC.defense = 25;
             NPC.knockBackResist = 0;

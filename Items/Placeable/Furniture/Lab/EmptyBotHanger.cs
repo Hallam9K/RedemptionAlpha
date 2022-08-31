@@ -18,8 +18,8 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<EmptyBotHangerTile>(), 0);
-            Item.width = 30;
-            Item.height = 44;
+            Item.width = 28;
+            Item.height = 42;
             Item.maxStack = 99;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.LightPurple;

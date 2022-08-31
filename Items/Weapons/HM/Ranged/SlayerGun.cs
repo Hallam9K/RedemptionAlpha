@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -19,6 +20,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Tooltip.SetDefault("'Pewpewpewpewpewpewpew'"
                 + "\nReplaces normal bullets with Phantasmal Bolts"
                 + "\nRight-clicking changes type of fire");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

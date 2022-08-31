@@ -1,0 +1,84 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Items.Materials.HM;
+using Redemption.Projectiles.Ranged;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Redemption.Items.Weapons.HM.Ranged
+{
+    public class CorruptedDoubleRifle : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
+                "Every 3rd shot fires a small laser beam\n" +
+                "33% chance not to consume ammo");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.damage = 52;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 66;
+            Item.height = 34;
+            Item.useTime = 17;
+            Item.useAnimation = 17;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = SoundID.Item36;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shootSpeed = 90;
+            Item.useAmmo = AmmoID.Bullet;
+            if (!Main.dedServ)
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+        }
+        public override bool CanConsumeAmmo(Item ammo, Player player)
+        {
+            return Main.rand.NextFloat() >= .33f;
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (type == ProjectileID.Bullet)
+                type = ProjectileID.BulletHighVelocity;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<DoubleRifle>())
+                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 3)
+                .AddIngredient(ModContent.ItemType<Plating>(), 2)
+                .AddIngredient(ModContent.ItemType<OmegaBattery>())
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
+        private int shotCount;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (shotCount++ >= 2)
+            {
+                SoundEngine.PlaySound(CustomSounds.PlasmaShot, player.position);
+                Projectile.NewProjectile(source, position + RedeHelper.PolarVector(2, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2), velocity / 60, ModContent.ProjectileType<CorruptedDoubleRifle_Beam>(), damage, knockback, player.whoAmI);
+                shotCount = 0;
+            }
+            Projectile.NewProjectile(source, position + RedeHelper.PolarVector(8, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2), velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, position + RedeHelper.PolarVector(2, (player.Center - Main.MouseWorld).ToRotation() - MathHelper.PiOver2), velocity, type, damage, knockback, player.whoAmI);
+            return false;
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-4, 0);
+        }
+    }
+}

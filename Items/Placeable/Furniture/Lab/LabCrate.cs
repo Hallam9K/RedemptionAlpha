@@ -23,6 +23,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             DisplayName.SetDefault("Laboratory Crate");
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.IsFishingCrate[Type] = true;
+            ItemID.Sets.IsFishingCrateHardmode[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
         }
 
@@ -65,6 +66,11 @@ namespace Redemption.Items.Placeable.Furniture.Lab
                 ModContent.ItemType<CarbonMyofibre>(),
                 ModContent.ItemType<XenomiteShard>()
             };
+            int[] OreLoot = new int[] { ItemID.CobaltOre, ItemID.PalladiumOre, ItemID.MythrilOre, ItemID.OrichalcumOre, ItemID.AdamantiteOre, ItemID.TitaniumOre };
+            int[] BarLoot = new int[] { ItemID.CobaltBar, ItemID.PalladiumBar, ItemID.MythrilBar, ItemID.OrichalcumBar, ItemID.AdamantiteBar, ItemID.TitaniumBar };
+            int[] PotionLoot = new int[] { ItemID.ObsidianSkinPotion, ItemID.SpelunkerPotion, ItemID.HunterPotion, ItemID.GravitationPotion, ItemID.MiningPotion, ItemID.HeartreachPotion };
+            int[] PotionLoot2 = new int[] { ItemID.HealingPotion, ItemID.ManaPotion };
+            int[] BaitLoot = new int[] { ItemID.JourneymanBait, ItemID.MasterBait };
             player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, LabChestLoot));
             player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, LabChestLoot2), Main.rand.Next(1, 3));
             player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, LabChestLoot3), Main.rand.Next(8, 12));
@@ -72,8 +78,18 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             if (Main.rand.NextBool(4))
                 player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, FloppyDiskLoot));
 
+            if (Main.rand.NextBool(14))
+                player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, OreLoot), Main.rand.Next(30, 50));
+            if (Main.rand.NextBool(6))
+                player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, BarLoot), Main.rand.Next(8, 21));
             if (Main.rand.NextBool(4))
-                player.QuickSpawnItem(entitySource, ItemID.GoldCoin, Main.rand.Next(2, 5));
+                player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, PotionLoot), Main.rand.Next(2, 5));
+            if (Main.rand.NextBool(2))
+                player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, PotionLoot2), Main.rand.Next(5, 18));
+            if (Main.rand.NextBool(2))
+                player.QuickSpawnItem(entitySource, Utils.Next(Main.rand, BaitLoot), Main.rand.Next(2, 7));
+            if (Main.rand.NextBool(4))
+                player.QuickSpawnItem(entitySource, ItemID.GoldCoin, Main.rand.Next(5, 13));
         }
     }
 }
