@@ -76,6 +76,8 @@ namespace Redemption.Globals.Player
             {
                 if (Player.InModBiome<LabBiome>() && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
                     itemDrop = ModContent.ItemType<LabCrate>();
+                if (Player.InModBiome<WastelandPurityBiome>())
+                    itemDrop = ModContent.ItemType<PetrifiedCrate>();
             }
         }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)

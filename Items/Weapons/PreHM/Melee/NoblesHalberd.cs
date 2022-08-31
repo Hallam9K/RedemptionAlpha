@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 40;
             Item.useTime = 40;
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = false;	
+            Item.autoReuse = true;
 
             // Weapon Properties
             Item.damage = 34;
