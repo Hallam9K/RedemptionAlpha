@@ -10,6 +10,7 @@ using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Globals.Player
 {
