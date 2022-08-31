@@ -1,4 +1,6 @@
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.HM.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -44,6 +46,15 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<TinyCleaver_Proj>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 8)
+                .AddIngredient(ModContent.ItemType<Plating>(), 2)
+                .AddIngredient(ModContent.ItemType<OmegaBattery>())
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

@@ -31,7 +31,7 @@ namespace Redemption.Items.Donator.Rain
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 12)
-                .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 6)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
                 .AddTile(TileID.Loom)
                 .Register();
         }

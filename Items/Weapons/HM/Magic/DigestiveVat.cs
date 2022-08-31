@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.DataStructures;
@@ -60,7 +61,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             CreateRecipe()
             .AddIngredient(ItemID.BottledWater)
-            .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 6)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
             .AddTile(TileID.Bottles)
             .Register();
         }

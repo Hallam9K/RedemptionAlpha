@@ -29,7 +29,7 @@ namespace Redemption.Items.Donator.Rain
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 12)
-                .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 6)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
                 .AddTile(TileID.Loom)
                 .Register();
         }
@@ -57,7 +57,7 @@ namespace Redemption.Items.Donator.Rain
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
-                .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 4)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 4)
                 .AddTile(TileID.Loom)
                 .Register();
         }
@@ -84,7 +84,7 @@ namespace Redemption.Items.Donator.Rain
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
-                .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 4)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 4)
                 .AddTile(TileID.Loom)
                 .Register();
         }
@@ -113,7 +113,7 @@ namespace Redemption.Items.Donator.Rain
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 3)
-                .AddRecipeGroup(RedeRecipe.BioweaponBileRecipeGroup, 2)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 2)
                 .AddTile(TileID.Loom)
                 .Register();
         }
