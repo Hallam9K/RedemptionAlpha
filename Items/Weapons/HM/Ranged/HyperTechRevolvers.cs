@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hyper-Tech Revolvers");
-            Tooltip.SetDefault("Right-click to toss one in the air, catching it gives a short damage boost\n" +
+            Tooltip.SetDefault("Right-click to toss one in the air, catching it gives a short fire rate boost\n" +
                 "Missing the catch will cause you to only shoot one gun for 10 seconds\n" +
                 "Replaces normal bullets with nano bullets");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
