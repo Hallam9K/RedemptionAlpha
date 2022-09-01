@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
+            Projectile.alpha = 255;
         }
         public override void Kill(int timeLeft)
         {
@@ -45,6 +46,7 @@ namespace Redemption.Projectiles.Ranged
             Main.dust[d].noGravity = true;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Projectile.velocity.Y += 0.1f;
+            Projectile.alpha = 0;
         }
         public override bool PreDraw(ref Color lightColor)
         {
