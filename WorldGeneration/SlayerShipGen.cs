@@ -13,6 +13,8 @@ using Terraria.WorldBuilding;
 using Redemption.Base;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Utilities;
+using Redemption.Items.Weapons.HM.Ranged;
 
 namespace Redemption.WorldGeneration
 {
@@ -133,11 +135,11 @@ namespace Redemption.WorldGeneration
             {
                 Chest chest = Main.chest[PlacementSuccess];
 
-                /*Item item0 = chest.item[0];
+                Item item0 = chest.item[0];
                 UnifiedRandom genRand0 = WorldGen.genRand;
                 int[] array0 = new int[]
-                { ModContent.ItemType<SlayerBigRevolver>(), ModContent.ItemType<SlayerGravGun>(), ModContent.ItemType<AndroidMinion>(), ModContent.ItemType<SlayersChakram>(), ModContent.ItemType<MissileDroneCaller>() };
-                item0.SetDefaults(Utils.Next(genRand0, array0), false);*/
+                { ModContent.ItemType<HyperTechRevolvers>() };
+                item0.SetDefaults(Utils.Next(genRand0, array0), false);
 
                 chest.item[1].SetDefaults(Utils.Next(WorldGen.genRand, HoloChestLoot2));
                 chest.item[1].stack = WorldGen.genRand.Next(1, 3);

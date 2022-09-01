@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             {
                 SoundEngine.PlaySound(SoundID.Item7, player.Center);
                 player.AddBuff(ModContent.BuffType<RevolverTossCooldown>(), 600);
-                Projectile.NewProjectile(source, position, new Vector2(0, -10), ModContent.ProjectileType<HyperTechRevolvers_Proj2>(), 0, 0, player.whoAmI, -player.direction);
+                Projectile.NewProjectile(source, position, new Vector2(Main.rand.NextFloat(-3, 4), -10), ModContent.ProjectileType<HyperTechRevolvers_Proj2>(), 0, 0, player.whoAmI, -player.direction);
                 return false;
             }
             if (player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] == 0)
