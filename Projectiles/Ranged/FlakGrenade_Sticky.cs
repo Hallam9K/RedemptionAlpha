@@ -90,6 +90,11 @@ namespace Redemption.Projectiles.Ranged
             if (Projectile.localAI[0] == 182)
                 Projectile.friendly = false;
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            fallThrough = false;
+            return true;
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 1;

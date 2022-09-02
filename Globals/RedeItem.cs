@@ -41,6 +41,10 @@ namespace Redemption.Globals
 
             return true;
         }
+        public override void MeleeEffects(Item item, Terraria.Player player, Rectangle hitbox)
+        {
+            player.Redemption().meleeHitbox = hitbox;
+        }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
             if (item.type == ItemID.JungleFishingCrate)

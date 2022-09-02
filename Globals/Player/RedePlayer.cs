@@ -26,11 +26,14 @@ namespace Redemption.Globals.Player
         public bool medKit;
         public int slayerStarRating;
         public bool contactImmune;
+        public Rectangle meleeHitbox;
+
         public override void ResetEffects()
         {
             hitTarget = -1;
             hitTarget2 = -1;
             contactImmune = false;
+            meleeHitbox = Rectangle.Empty;
         }
         public override void Initialize()
         {

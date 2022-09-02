@@ -57,6 +57,16 @@ namespace Redemption.Particles
                     mid = Color.Multiply(new(223, 62, 55, 0), opacity);
                     dark = Color.Multiply(new(150, 20, 54, 0), opacity);
                     break;
+                case 3:
+                    bright = Color.Multiply(new(158, 57, 248, 0), opacity);
+                    mid = Color.Multiply(new(158, 57, 248, 0), opacity);
+                    dark = Color.Multiply(new(104, 45, 237, 0), opacity);
+                    break;
+                case 4:
+                    bright = Color.Multiply(new(255, 182, 49, 0), opacity);
+                    mid = Color.Multiply(new(255, 182, 49, 0), opacity);
+                    dark = Color.Multiply(new(255, 105, 43, 0), opacity);
+                    break;
             }
             Color emberColor = Color.Multiply(Color.Lerp(bright, dark, (float)(timeLeftMax - timeLeft) / timeLeftMax), opacity);
             Color glowColor = Color.Multiply(Color.Lerp(mid, dark, (float)(timeLeftMax - timeLeft) / timeLeftMax), 1f);

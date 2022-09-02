@@ -122,6 +122,7 @@ namespace Redemption.Projectiles.Ranged
                     SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
                 Projectile.velocity.Y = -oldVelocity.Y;
             }
+            Projectile.velocity *= 0.8f;
             return false;
         }
     }

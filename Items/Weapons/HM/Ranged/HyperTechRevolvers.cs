@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -33,8 +34,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             Item.damage = 50;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 64;
-            Item.height = 34;
+            Item.width = 58;
+            Item.height = 50;
             Item.useTime = 7;
             Item.useAnimation = 7;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -49,6 +50,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 90;
             Item.useAmmo = AmmoID.Bullet;
+            if (!Main.dedServ)
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanConsumeAmmo(Item ammo, Player player) => false;
@@ -68,7 +71,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             {
                 SoundEngine.PlaySound(SoundID.Item7, player.Center);
                 player.AddBuff(ModContent.BuffType<RevolverTossCooldown>(), 600);
-                Projectile.NewProjectile(source, position, new Vector2(Main.rand.NextFloat(-3, 4), -10), ModContent.ProjectileType<HyperTechRevolvers_Proj2>(), 0, 0, player.whoAmI, -player.direction);
+                Projectile.NewProjectile(source, position, new Vector2(Main.rand.NextFloat(-3, 3), -10), ModContent.ProjectileType<HyperTechRevolvers_Proj2>(), 0, 0, player.whoAmI, -player.direction);
                 return false;
             }
             if (player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] == 0)

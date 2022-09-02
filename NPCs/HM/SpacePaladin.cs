@@ -323,7 +323,10 @@ namespace Redemption.NPCs.HM
             if (AIState is not ActionState.Alert)
                 return;
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
-            if (item.Hitbox.Intersects(ShieldHitbox) && (NPC.Center.X > player.Center.X && NPC.spriteDirection == -1 || NPC.Center.X < player.Center.X && NPC.spriteDirection == 1))
+            if (item.noMelee || item.damage <= 0 || (NPC.Center.X > player.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < player.Center.X && NPC.spriteDirection == -1))
+                return;
+
+            if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
             {
                 SoundEngine.PlaySound(SoundID.NPCHit34, NPC.position);
                 damage = 0;

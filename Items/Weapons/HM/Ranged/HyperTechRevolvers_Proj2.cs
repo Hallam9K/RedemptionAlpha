@@ -25,7 +25,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         }
         public override void SetDefaults()
         {
-            Projectile.width = 30;
+            Projectile.width = 56;
             Projectile.height = 30;
             Projectile.friendly = false;
             Projectile.hostile = false;

@@ -24,8 +24,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         }
         public override void SetDefaults()
         {
-            Projectile.width = 58;
-            Projectile.height = 28;
+            Projectile.width = 56;
+            Projectile.height = 30;
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
@@ -160,6 +160,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             Vector2 v = RedeHelper.PolarVector(-26 + offset, Projectile.velocity.ToRotation());
             Vector2 pos = Projectile.Center;
@@ -167,6 +168,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 pos = Projectile.Center - new Vector2(6 * Projectile.spriteDirection, 6);
 
             Main.EntitySpriteDraw(texture, pos - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation + (rotOffset * Projectile.spriteDirection), drawOrigin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(glow, pos - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(Color.White), Projectile.rotation + (rotOffset * Projectile.spriteDirection), drawOrigin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }
