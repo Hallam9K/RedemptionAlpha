@@ -201,7 +201,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
                             player.velocity -= RedeHelper.PolarVector(6, (Main.MouseWorld - player.Center).ToRotation());
 
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Laser>(), Projectile.damage * 3, Projectile.knockBack, player.whoAmI, Projectile.whoAmI);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Laser>(), Projectile.damage * 5, Projectile.knockBack, player.whoAmI, Projectile.whoAmI);
                             for (int i = 0; i < 15; i++)
                             {
                                 int num5 = Dust.NewDust(gunSmokePos, 8, 20, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
