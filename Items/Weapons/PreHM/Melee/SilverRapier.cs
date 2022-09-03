@@ -10,6 +10,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            ItemID.Sets.Spears[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

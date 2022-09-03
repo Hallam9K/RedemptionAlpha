@@ -161,7 +161,7 @@ namespace Redemption.Items.Usable.Summons
                 case 2:
                     omegaType = "3rd Omega Prototype\n" +
                         "'Feel the sense of frustration, prepare for obliteration'\n" +
-                        "Only usable after the first 2 Vlitch Overlords are defeated";
+                        "Only usable after the first 2 Omega Prototypes have been defeated";
                     break;
                 case 3:
                     omegaType = "4th Omega Prototype\n" +

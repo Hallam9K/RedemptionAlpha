@@ -26,11 +26,14 @@ namespace Redemption.Globals.Player
         public bool medKit;
         public int slayerStarRating;
         public bool contactImmune;
+        public Rectangle meleeHitbox;
+
         public override void ResetEffects()
         {
             hitTarget = -1;
             hitTarget2 = -1;
             contactImmune = false;
+            meleeHitbox = Rectangle.Empty;
         }
         public override void Initialize()
         {
@@ -76,7 +79,12 @@ namespace Redemption.Globals.Player
             if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
             {
                 if (Player.InModBiome<LabBiome>() && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
-                    itemDrop = ModContent.ItemType<LabCrate>();
+                {
+                    if (Terraria.NPC.downedMoonlord)
+                        itemDrop = ModContent.ItemType<LabCrate2>();
+                    else
+                        itemDrop = ModContent.ItemType<LabCrate>();
+                }
                 if (Player.InModBiome<WastelandPurityBiome>())
                     itemDrop = ModContent.ItemType<PetrifiedCrate>();
             }

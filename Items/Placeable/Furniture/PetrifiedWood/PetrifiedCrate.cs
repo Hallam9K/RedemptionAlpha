@@ -45,7 +45,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
         public override void RightClick(Player player)
         {
             var entitySource = player.GetSource_OpenItem(Type);
-            int[] PrimaryLoot = new int[] { ModContent.ItemType<GasMask>(), ModContent.ItemType<DoubleRifle>(), ModContent.ItemType<GeigerMuller>() };
+            int[] PrimaryLoot = new int[] { ModContent.ItemType<GasMask>(), ModContent.ItemType<DoubleRifle>(), ModContent.ItemType<DAN>(), ModContent.ItemType<GeigerMuller>() };
             int[] HazmatSuits = new int[] { ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<HazmatSuit3>() };
             int[] OreLoot = new int[] { ItemID.CobaltOre, ItemID.PalladiumOre, ItemID.MythrilOre, ItemID.OrichalcumOre, ItemID.AdamantiteOre, ItemID.TitaniumOre };
             int[] BarLoot = new int[] { ItemID.CobaltBar, ItemID.PalladiumBar, ItemID.MythrilBar, ItemID.OrichalcumBar, ItemID.AdamantiteBar, ItemID.TitaniumBar };

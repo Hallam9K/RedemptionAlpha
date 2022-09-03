@@ -63,12 +63,13 @@ namespace Redemption.Globals.Player
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
-        public int xeniumBonus;
+        public bool xeniumBonus;
         public int hardlightBonus;
         public bool shinkiteHead;
         public bool vortiHead;
         public bool hikariteHead;
         public bool blastBattery;
+        public bool xenomiteBonus;
 
         public bool MetalSet;
         public bool WastelandWaterImmune;
@@ -108,7 +109,7 @@ namespace Redemption.Globals.Player
             HEVSuit = false;
             WastelandWaterImmune = false;
             hardlightBonus = 0;
-            xeniumBonus = 0;
+            xeniumBonus = false;
             snipped = false;
             island = false;
             trappedSoul = false;
@@ -120,6 +121,7 @@ namespace Redemption.Globals.Player
             shellCap = false;
             ChickenForm = false;
             blastBattery = false;
+            xenomiteBonus = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -160,14 +162,21 @@ namespace Redemption.Globals.Player
         {
             if (Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)
             {
-                if (xeniumBonus != 0 && !Player.HasBuff(ModContent.BuffType<XeniumCooldown>()))
+                if (xeniumBonus && !Player.HasBuff(ModContent.BuffType<XeniumCooldown>()))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.GrenadeLauncher, Player.position);
-                    Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 35 * 35);
+                    Player.AddBuff(ModContent.BuffType<XeniumCooldown>(), 20 * 60);
                     Vector2 spawn = new(Player.Center.X, Player.Center.Y - 10);
 
                     Projectile.NewProjectile(Player.GetSource_FromThis(), spawn, RedeHelper.PolarVector(15, (Main.MouseWorld - Player.Center).ToRotation()), ModContent.ProjectileType<GasCanister>(), 0, 0, Main.myPlayer);
+                }
+                if (xenomiteBonus && !Player.HasBuff(ModContent.BuffType<XenomiteCooldown>()))
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Gas1, Player.position);
+                    Player.AddBuff(ModContent.BuffType<XenomiteCooldown>(), 20 * 60);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<XenomiteGas_Proj>(), 0, 0, Main.myPlayer);
                 }
 
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))

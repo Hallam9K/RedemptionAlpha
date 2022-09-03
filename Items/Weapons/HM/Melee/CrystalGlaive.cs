@@ -17,6 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "Right-click to fire a mid range blast of crystal shards\n" +
                 "Completing the Left-click combo empowers the right-click ability for 5 shots");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            ItemID.Sets.Spears[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

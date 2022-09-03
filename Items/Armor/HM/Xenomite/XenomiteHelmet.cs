@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.HM;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Armor.HM.Xenomite
 {
@@ -60,7 +61,12 @@ namespace Redemption.Items.Armor.HM.Xenomite
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "TBD"; // TODO: Xenomite set bonus
+            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
+            {
+                player.setBonus = "Press " + key + " to unleash toxic gas in a radius around the player, inflicting Burning Acid";
+            }
+            player.RedemptionPlayerBuff().xenomiteBonus = true;
         }
     }
 }
