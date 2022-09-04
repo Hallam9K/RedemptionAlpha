@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
+using Redemption.CrossMod;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
@@ -134,6 +135,7 @@ namespace Redemption
 
         public override void PostSetupContent()
         {
+            WeakReferences.PerformModSupport();
             if (!Main.dedServ)
             {
                 Main.QueueMainThreadAction(() =>

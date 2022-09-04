@@ -402,6 +402,8 @@ namespace Redemption.Globals.Player
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }
+            if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
+                target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
             damage = (int)(damage * TrueMeleeDamage);
         }
         public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -440,7 +442,12 @@ namespace Redemption.Globals.Player
                 #endregion
             }
             if (proj.Redemption().TechnicallyMelee)
+            {
+                if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
+                    target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
+
                 damage = (int)(damage * TrueMeleeDamage);
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {

@@ -46,6 +46,7 @@ Mods: {
             StunnedDebuff: "Stunned!"
             
             # Minions
+            AndroidMinionBuff: "Android Minion"
             CorpseSkullBuff: "Corpse-Walker Skull"
             CystlingBuff: "Cystling"
             ForretBuff: "Forret"
@@ -110,6 +111,7 @@ Mods: {
             StunnedDebuff: "You are stunned!"
             
             # Minions
+            AndroidMinionBuff: "A small android will fight for you"
             CorpseSkullBuff: "The dried up skull will fight for you"
             CystlingBuff: "A cystling will infect others for you"
             ForretBuff: "The horned ferret will fight for you"

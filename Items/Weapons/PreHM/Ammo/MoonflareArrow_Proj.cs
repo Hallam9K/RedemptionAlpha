@@ -32,7 +32,8 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 			Projectile.ignoreWater = false;
 			Projectile.tileCollide = true;
 			AIType = ProjectileID.WoodenArrowFriendly;
-		}
+            Projectile.arrow = true;
+        }
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
