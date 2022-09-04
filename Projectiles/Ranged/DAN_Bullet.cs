@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Lab.MACE
 {
     public class DAN_Bullet : ModProjectile
     {
-        public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_FlakBullet";
+        public override string Texture => "Redemption/Projectiles/Ranged/DAN_Bullet";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("D.A.N Bull-et");

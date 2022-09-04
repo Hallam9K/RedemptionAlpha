@@ -15,6 +15,7 @@ using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Utilities;
 using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items.Weapons.HM.Summon;
 
 namespace Redemption.WorldGeneration
 {
@@ -138,7 +139,7 @@ namespace Redemption.WorldGeneration
                 Item item0 = chest.item[0];
                 UnifiedRandom genRand0 = WorldGen.genRand;
                 int[] array0 = new int[]
-                { ModContent.ItemType<HyperTechRevolvers>() };
+                { ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<AndroidHologram>() };
                 item0.SetDefaults(Utils.Next(genRand0, array0), false);
 
                 chest.item[1].SetDefaults(Utils.Next(WorldGen.genRand, HoloChestLoot2));
