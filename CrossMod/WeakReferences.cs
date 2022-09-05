@@ -82,7 +82,15 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Erhan
-                bossChecklist.Call("AddBoss", mod, "Erhan", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => true,
+                bossChecklist.Call("AddBoss", mod, "Palebat Imp", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => RedeBossDowned.erhanDeath == 0, null, ModContent.ItemType<DemonScroll>(), "Use a [i:" + ModContent.ItemType<DemonScroll>() + "] at day. Can be found at the surface portal.", null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PalebatImp").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, "Redemption/Items/HintIcon");
+
+                bossChecklist.Call("AddBoss", mod, "Erhan", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => RedeBossDowned.erhanDeath > 0,
                     new List<int>
                     {
                         ModContent.ItemType<ErhanRelic>(),

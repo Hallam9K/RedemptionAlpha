@@ -4,6 +4,7 @@ using Redemption.Globals;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.Audio;
@@ -234,6 +235,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Trumpet>(), 15));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 50));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldTophat>(), 500));

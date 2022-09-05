@@ -176,7 +176,7 @@ namespace Redemption.Globals.Player
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Gas1, Player.position);
                     Player.AddBuff(ModContent.BuffType<XenomiteCooldown>(), 20 * 60);
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<XenomiteGas_Proj>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<XenomiteGas_Proj>(), 100, 0, Main.myPlayer);
                 }
 
                 if (hardlightBonus != 0 && !Player.HasBuff(ModContent.BuffType<HardlightCooldown>()))

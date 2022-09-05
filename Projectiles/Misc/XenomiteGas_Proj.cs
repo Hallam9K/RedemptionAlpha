@@ -22,12 +22,13 @@ namespace Redemption.Projectiles.Misc
             Projectile.DamageType = DamageClass.Generic;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
-            Projectile.friendly = false;
+            Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 600;
             Projectile.scale = Main.rand.NextFloat(1, 1.5f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
@@ -63,6 +64,11 @@ namespace Redemption.Projectiles.Misc
                     target.AddBuff(ModContent.BuffType<BileDebuff>(), 420);
                 }
             }
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 30;
+            target.immune[Projectile.owner] = 0;
         }
         public override bool PreDraw(ref Color lightColor)
         {

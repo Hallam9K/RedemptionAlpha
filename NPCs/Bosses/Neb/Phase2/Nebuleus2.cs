@@ -16,6 +16,10 @@ using Terraria.Audio;
 using Redemption.Base;
 using Redemption.UI;
 using Terraria.GameContent;
+using Redemption.Items.Placeable.Trophies;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -101,6 +105,23 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             }
             if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendData(MessageID.WorldData);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<NebBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebuleusTrophy>(), 10));
+            // TODO: Neb relic
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<GildedBonnet>(), 4));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<NebuleusMask>(), 7));
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
+
+            npcLoot.Add(notExpertRule);
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {

@@ -1,48 +1,51 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Materials.HM;
-using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Items.Accessories.HM;
+using Terraria.ID;
+using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
+using Terraria.GameContent.Creative;
+using Microsoft.Xna.Framework;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Donator.Gonk;
-using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.Items.Usable
 {
-    public class OmegaCleaverBag : ModItem
+    public class NebBag : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Treasure Box (Omega Cleaver)");
+			DisplayName.SetDefault("Treasure Bag (Nebuleus)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+
+            ItemID.Sets.BossBag[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
-		public override void SetDefaults()
+
+        public override void SetDefaults()
 		{
-			Item.maxStack = 999;
-			Item.consumable = true;
-			Item.width = 24;
-			Item.height = 24;
-			Item.rare = ItemRarityID.Expert;
-			Item.expert = true;
-            if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 44;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Expert;
+            Item.expert = true;
         }
-		public override bool CanRightClick() => true;
+        public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>(), 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebuleusMask>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<StrangeSkull>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HamSandwich>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebWings>()));
         }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Lerp(lightColor, Color.White, 0.4f);
+        }
+
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);
@@ -96,14 +99,14 @@ namespace Redemption.Items.Usable
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
 
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(223, 62, 55, 50), rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(90, 70, 255, 50), rotation, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             for (float i = 0f; i < 1f; i += 0.34f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
 
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians) * time, frame, new Color(150, 20, 54, 77), rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 4f).RotatedBy(radians) * time, frame, new Color(140, 120, 255, 77), rotation, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             return true;
