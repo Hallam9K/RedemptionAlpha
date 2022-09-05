@@ -434,7 +434,7 @@ namespace Redemption
             }
             if (Main.LocalPlayer.Redemption().slayerCursor)
             {
-                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Cursor"));
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Interface Logic 4"));
                 LegacyGameInterfaceLayer SlayerCursorUI = new("Redemption: Slayer Cursor UI",
                     delegate
                     {

@@ -87,6 +87,17 @@ namespace Redemption.Globals.Player
             if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
             {
                 Asset<Texture2D> emptyTex = ModContent.Request<Texture2D>("Redemption/Empty");
+                Asset<Texture2D> heartMed = ModContent.Request<Texture2D>("Redemption/Textures/HeartMed");
+                Asset<Texture2D> heartGalaxy = ModContent.Request<Texture2D>("Redemption/Textures/HeartGal");
+                Asset<Texture2D> heart2 = ModContent.Request<Texture2D>("Redemption/Textures/Heart2");
+                int totalHealthBoost = (medKit ? 1 : 0) + (galaxyHeart ? 1 : 0);
+                TextureAssets.Heart2 = totalHealthBoost switch
+                {
+                    1 => heartMed,
+                    2 => heartGalaxy,
+                    _ => heart2,
+                };
+
                 Asset<Texture2D> cursor0 = ModContent.Request<Texture2D>("Redemption/Textures/Cursor_0");
                 Asset<Texture2D> cursor1 = ModContent.Request<Texture2D>("Redemption/Textures/Cursor_1");
                 Asset<Texture2D> cursor11 = ModContent.Request<Texture2D>("Redemption/Textures/Cursor_11");
