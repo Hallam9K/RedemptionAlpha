@@ -67,6 +67,7 @@ Mods: {
             PetChickenBuff: "Chicken Pet"
             XenomiteElementalPetBuff: "Xenomite Elemental"
             TiedPetBuff: "Tied"
+            NebPetBuff: "Chibi Nebby"
 		}
 		
 		BuffDescription: {
@@ -132,6 +133,7 @@ Mods: {
             PetChickenBuff: "Cluck cluck"
             XenomiteElementalPetBuff: "Cute."
             TiedPetBuff: '''"Spooked"'''
+            NebPetBuff: "Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

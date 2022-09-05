@@ -1,48 +1,35 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Materials.HM;
-using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Armor.Vanity;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Donator.Gonk;
-using Redemption.Items.Weapons.HM.Melee;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent;
 
 namespace Redemption.Items.Usable
 {
-    public class OmegaCleaverBag : ModItem
+    public class OmegaOblitBag : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Treasure Box (Omega Cleaver)");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Treasure Box (Omega Obliterator)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
-		public override void SetDefaults()
+
+        public override void SetDefaults()
 		{
-			Item.maxStack = 999;
-			Item.consumable = true;
-			Item.width = 24;
-			Item.height = 24;
-			Item.rare = ItemRarityID.Expert;
-			Item.expert = true;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 24;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Expert;
+            Item.expert = true;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
-		public override bool CanRightClick() => true;
-        public override void ModifyItemLoot(ItemLoot itemLoot)
-        {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>(), 1));
-        }
+        public override bool CanRightClick() => true;
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);

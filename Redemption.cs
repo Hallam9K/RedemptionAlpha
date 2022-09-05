@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.CrossMod;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
@@ -430,6 +432,18 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, SpiritGaugeUI);
             }
+            if (Main.LocalPlayer.Redemption().slayerCursor)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Cursor"));
+                LegacyGameInterfaceLayer SlayerCursorUI = new("Redemption: Slayer Cursor UI",
+                    delegate
+                    {
+                        DrawSlayerCursor(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, SlayerCursorUI);
+            }
             if (RedeWorld.SkeletonInvasion)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -513,6 +527,14 @@ namespace Redemption
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawSlayerCursor(SpriteBatch spriteBatch)
+        {
+            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/SlayerCursor").Value;
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
+            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1f, 0.9f, 1f);
+
+            spriteBatch.Draw(texture, Main.MouseWorld - Main.screenPosition, null, Color.White, 0, drawOrigin, scale, SpriteEffects.None, 0);
         }
         #region Skele Invasion UI
         public static void DrawSkeletonInvasionUI(SpriteBatch spriteBatch)

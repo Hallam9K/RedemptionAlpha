@@ -290,7 +290,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity.Y += 0.2f;
                     }
                     else if (TimerRand == 0)
-                        WormMovement(player, 18, 0.05f);
+                    {
+                        int speed = 18;
+                        if (Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                            speed = 12;
+
+                        WormMovement(player, speed, 0.05f);
+                    }
                     if (++AITimer > 600)
                     {
                         TimerRand = 0;

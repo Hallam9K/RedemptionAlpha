@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Galaxy Stone");
-            Tooltip.SetDefault("Summons Nebuleus, Angel of the Cosmos"
+            Tooltip.SetDefault("Summons the Angel of the Cosmos"
                 + "\nOnly usable at night"
                 + "\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
