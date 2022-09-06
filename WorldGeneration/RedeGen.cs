@@ -381,7 +381,6 @@ namespace Redemption.WorldGeneration
                 tasks.Insert(ShiniesIndex + 5, new PassLegacy("Generating Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Ancient Decal
-                    /*
                     progress.Message = "Generating ancient decal";
                     for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-06); k++)
                     {
@@ -389,7 +388,7 @@ namespace Redemption.WorldGeneration
                         int attempts = 0;
                         while (!placed && attempts++ < 10000)
                         {
-                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
+                            int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 140);
                             int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
                             if (!WorldGen.InWorld(tilesX, tilesY))
                                 continue;
@@ -420,33 +419,30 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Vector2 origin = new(tilesX, tilesY);
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomR", origin.ToPoint16(), Mod);
+                            AncientDecalGen.PlaceR(origin.ToPoint(), WorldGen.genRand.Next(4));
                             for (int i = 0; i < roomNum - 2; i++)
                             {
                                 origin.X += 25;
-                                Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomLR", origin.ToPoint16(), Mod);
+                                AncientDecalGen.PlaceM(origin.ToPoint(), WorldGen.genRand.Next(5));
                             }
                             origin.X += 25;
-                            Generator.GenerateMultistructureRandom("WorldGeneration/AncientRoomL", origin.ToPoint16(), Mod);
+                            AncientDecalGen.PlaceL(origin.ToPoint(), WorldGen.genRand.Next(4));
 
                             for (int x = 0; x < 25 * roomNum; x++)
                             {
                                 for (int y = 0; y < 25; y++)
                                 {
-                                    if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile &&
-                                    Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
+                                    if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile && Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
                                     {
                                         if (WorldGen.genRand.NextBool(8))
                                         {
                                             switch (WorldGen.genRand.Next(2))
                                             {
                                                 case 0:
-                                                    WorldGen.PlaceObject(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>(), true);
-                                                    NetMessage.SendObjectPlacment(-1, tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>(), 0, 0, -1, -1);
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>());
                                                     break;
                                                 case 1:
-                                                    WorldGen.PlaceObject(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>(), true);
-                                                    NetMessage.SendObjectPlacment(-1, tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>(), 0, 0, -1, -1);
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>());
                                                     break;
                                             }
                                         }
@@ -456,7 +452,6 @@ namespace Redemption.WorldGeneration
                             placed = true;
                         }
                     }
-                    */
                     #endregion
                 }));
             }
@@ -698,6 +693,7 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(originPoint.X + 69, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
                     GenUtils.ObjectPlace(originPoint.X + 78, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
                     GenUtils.ObjectPlace(originPoint.X + 71, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodClockTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 56, originPoint.Y + 21, (ushort)ModContent.TileType<SkeletonRemainsTile3>());
 
                     ElderWoodChest(originPoint.X + 73, originPoint.Y + 22, 2);
                     ElderWoodChest(originPoint.X + 62, originPoint.Y + 36);
@@ -1072,7 +1068,7 @@ namespace Redemption.WorldGeneration
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ElderWoodChestTile>(), false);
 
             int[] ChestLoot = new int[] {
-                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>() };
+                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>() };
             int[] ChestLoot2 = new int[] {
                 ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
             int[] ChestLoot3 = new int[] {

@@ -5,6 +5,7 @@ using Redemption.Items;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -71,7 +72,8 @@ namespace Redemption.Tiles.Furniture.Lab
                         if (Main.netMode == NetmodeID.SinglePlayer)
                             return false;
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, (byte)player.whoAmI, ModContent.NPCType<HazmatCorpse_Ghost>(), i * 16, (j + 1) * 16).Send(-1);
+                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<HazmatCorpse_Ghost>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
+                        SoundEngine.PlaySound(SoundID.Item74, player.position);
                     }
                 }
             }
@@ -105,8 +107,6 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
-            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 

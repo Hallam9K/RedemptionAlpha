@@ -15,7 +15,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
         public override void SetStaticDefaults()
         {
             // Properties
-            Main.tileFrameImportant[Type] = true;
+			Main.tileFrameImportant[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -55,7 +55,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
         }
-
+        public override bool Slope(int i, int j) => false;
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;

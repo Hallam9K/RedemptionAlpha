@@ -1154,7 +1154,8 @@ namespace Redemption.Globals
                             Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
-                            return new Vector2(tpTileX, tpY);
+                            if (WorldGen.InWorld(tpTileX, tpY))
+                                return new Vector2(tpTileX, tpY);
                         }
                     }
                 }

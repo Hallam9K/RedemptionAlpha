@@ -4,6 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Usable;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -34,6 +36,16 @@ namespace Redemption.Items.Accessories.PreHM
             player.RedemptionPlayerBuff().ElementalResistance[1] += 0.10f;
 
             player.statManaMax2 += 20;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LostSoul>(10)
+                .AddIngredient(ItemID.Glass, 10)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 4)
+                .AddIngredient(ItemID.Chain, 2)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

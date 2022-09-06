@@ -70,8 +70,11 @@ namespace Redemption.NPCs.Friendly
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
 
+                    if (AITimer++ == 0)
+                            NPC.velocity.Y = -6;
+
                     NPC.velocity *= 0.98f;
-                    if (AITimer++ >= 120)
+                    if (AITimer >= 120)
                     {
                         NPC.MoveToVector2(player.Center, 10);
                         if (NPC.Hitbox.Intersects(player.Hitbox))

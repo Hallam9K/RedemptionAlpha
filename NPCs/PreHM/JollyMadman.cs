@@ -312,7 +312,7 @@ namespace Redemption.NPCs.PreHM
                         {
                             int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
                             BaseAI.DamagePlayer(globalNPC.attacker as Player, damage, 5, hitDirection, NPC);
-                            if (Main.rand.NextBool(2) || Main.expertMode)
+                            if (globalNPC.attacker is Player && (Main.rand.NextBool(2) || Main.expertMode))
                             {
                                 (globalNPC.attacker as Player).AddBuff(BuffID.Bleeding, 1000);
                                 (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);

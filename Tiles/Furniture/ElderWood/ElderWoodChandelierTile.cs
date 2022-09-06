@@ -22,9 +22,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 1);
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
             TileObjectData.newTile.LavaDeath = true;
-            TileObjectData.newTile.StyleWrapLimit = 37;
-            TileObjectData.newTile.StyleHorizontal = false;
-            TileObjectData.newTile.StyleLineSkip = 2;
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Elder Wood Chandelier");
