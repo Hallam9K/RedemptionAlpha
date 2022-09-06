@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Misc
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || !target.CanBeChasedBy())
+                    if (!target.active || !target.CanBeChasedBy() || target.dontCountMe)
                         continue;
 
                     if (Projectile.DistanceSQ(target.Center) > 200 * Projectile.scale * (200 * Projectile.scale))

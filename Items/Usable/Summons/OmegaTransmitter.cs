@@ -137,6 +137,8 @@ namespace Redemption.Items.Usable.Summons
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 350, (int)player.position.Y - 800, type);
+                        else
+                            NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
                         break;
                 }
             }

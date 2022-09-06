@@ -10,7 +10,7 @@ namespace Redemption.Walls
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.wallHouse[Type] = true;
+			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<SlateDust>();
 			ItemDrop = ModContent.ItemType<GathicGladestoneBrickWall>();
 			AddMapEntry(new Color(49, 43, 39));

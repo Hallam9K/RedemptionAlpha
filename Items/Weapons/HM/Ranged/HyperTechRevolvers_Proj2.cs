@@ -49,14 +49,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         player.AddBuff(ModContent.BuffType<RevolverTossBuff>(), 300);
                         Projectile.localAI[0] = 1;
                         Projectile.Kill();
-                        for (int g = 0; g < Main.maxProjectiles; ++g)
-                        {
-                            if (Main.projectile[g].active && Main.projectile[g].owner == player.whoAmI && Main.projectile[g].type == ModContent.ProjectileType<HyperTechRevolvers_Proj>())
-                            {
-                                Main.projectile[g].Kill();
-                                break;
-                            }
-                        }
                     }
                 }
             }
@@ -68,6 +60,17 @@ namespace Redemption.Items.Weapons.HM.Ranged
             {
                 player.AddBuff(ModContent.BuffType<RevolverTossDebuff>(), 600);
                 player.ClearBuff(ModContent.BuffType<RevolverTossCooldown>());
+            }
+            else
+            {
+                for (int g = 0; g < Main.maxProjectiles; ++g)
+                {
+                    if (Main.projectile[g].active && Main.projectile[g].owner == player.whoAmI && Main.projectile[g].type == ModContent.ProjectileType<HyperTechRevolvers_Proj>())
+                    {
+                        Main.projectile[g].Kill();
+                        break;
+                    }
+                }
             }
         }
     }

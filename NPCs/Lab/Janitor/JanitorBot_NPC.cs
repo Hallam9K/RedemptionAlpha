@@ -6,6 +6,7 @@ using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -109,6 +110,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
             Player player = Main.player[Main.myPlayer];
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabHologramDevice>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlating>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatingWall>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatform>());
