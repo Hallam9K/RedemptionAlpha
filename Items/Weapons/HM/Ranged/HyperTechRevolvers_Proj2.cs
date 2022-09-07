@@ -42,24 +42,32 @@ namespace Redemption.Items.Weapons.HM.Ranged
             {
                 if (Projectile.localAI[0]++ >= 30)
                 {
-                    Projectile.tileCollide = true;
                     if (player.Hitbox.Intersects(Projectile.Hitbox))
                     {
                         SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.Center);
-                        player.AddBuff(ModContent.BuffType<RevolverTossBuff>(), 300);
+                        if (player.HasBuff<RevolverTossBuff2>())
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff2>(), 360);
+                        else if (player.HasBuff<RevolverTossBuff3>())
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff3>(), 300);
+                        else
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff>(), 420);
                         Projectile.localAI[0] = 1;
                         Projectile.Kill();
                     }
                 }
             }
+            if (Projectile.timeLeft <= 200)
+                Projectile.tileCollide = true;
         }
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             if (Projectile.localAI[0] != 1)
             {
-                player.AddBuff(ModContent.BuffType<RevolverTossDebuff>(), 600);
-                player.ClearBuff(ModContent.BuffType<RevolverTossCooldown>());
+                player.AddBuff(ModContent.BuffType<RevolverTossDebuff>(), 300);
+                player.ClearBuff(ModContent.BuffType<RevolverTossBuff3>());
+                player.ClearBuff(ModContent.BuffType<RevolverTossBuff2>());
+                player.ClearBuff(ModContent.BuffType<RevolverTossBuff>());
             }
             else
             {

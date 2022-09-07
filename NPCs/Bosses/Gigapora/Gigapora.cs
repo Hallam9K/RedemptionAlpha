@@ -6,6 +6,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
 using System;
 using System.Collections.Generic;
@@ -154,6 +155,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 2, 4));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             // TODO: loot
         }
         public override void BossLoot(ref string name, ref int potionType)

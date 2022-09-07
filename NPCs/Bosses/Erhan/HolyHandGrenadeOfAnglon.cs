@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (Projectile.localAI[0] == 338)
             {
                 Projectile.alpha = 255;
-                SoundEngine.PlaySound(SoundID.Item14);
+                SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(255, 216, 0), DustID.GoldFlame, 20, 30, 3);
             }
             if (Projectile.localAI[0] >= 398)

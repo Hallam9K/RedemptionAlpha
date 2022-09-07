@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Ranged
             {
                 Projectile.velocity *= 0;
                 Projectile.alpha = 255;
-                SoundEngine.PlaySound(SoundID.Item14);
+                SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                 if (Projectile.DistanceSQ(player.Center) < 800 * 800)
                     player.RedemptionScreen().ScreenShakeIntensity += 3;
 

@@ -25,7 +25,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 52;
+            Item.damage = 62;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 66;
             Item.height = 34;
@@ -57,9 +57,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<DoubleRifle>())
+                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 4)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 3)
                 .AddIngredient(ModContent.ItemType<Plating>(), 2)
-                .AddIngredient(ModContent.ItemType<OmegaBattery>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             {
                 Projectile.velocity *= 0;
                 Projectile.alpha = 255;
-                SoundEngine.PlaySound(SoundID.Item14);
+                SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                 SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
                 for (int i = 0; i < 8; i++)
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MothronEgg, Projectile.velocity.X * 0.5f,

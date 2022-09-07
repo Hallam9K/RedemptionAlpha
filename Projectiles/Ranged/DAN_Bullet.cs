@@ -5,11 +5,10 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Lab.MACE
+namespace Redemption.Projectiles.Ranged
 {
     public class DAN_Bullet : ModProjectile
     {
-        public override string Texture => "Redemption/Projectiles/Ranged/DAN_Bullet";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("D.A.N Bull-et");
@@ -23,6 +22,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.height = 20;
             Projectile.friendly = true;
             Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 2;

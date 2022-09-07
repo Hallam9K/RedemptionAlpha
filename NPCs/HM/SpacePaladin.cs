@@ -90,15 +90,13 @@ namespace Redemption.NPCs.HM
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.aiStyle = -1;
             NPC.value = 9000;
-            NPC.knockBackResist = 0.001f; // TODO: Space Paladin Banner
-            //Banner = NPC.type;
-            //BannerItem = ModContent.ItemType<HazmatZombieBanner>();
+            NPC.knockBackResist = 0.001f;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<SpacePaladinBanner>();
         }
 
         private Vector2 moveTo;
         private int runCooldown;
-        private float shieldAlpha;
-        private bool shieldUp;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 120);

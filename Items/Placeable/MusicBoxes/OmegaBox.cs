@@ -32,7 +32,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
-				.AddIngredient(ModContent.ItemType<OmegaBattery>(), 2)
+				.AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 4)
                 .AddTile(TileID.MythrilAnvil)
 				.Register();
 		}

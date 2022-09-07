@@ -89,9 +89,9 @@ namespace Redemption.NPCs.HM
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.aiStyle = -1;
             NPC.value = 600;
-            NPC.knockBackResist = 0.1f; // TODO: Prototype Silver Banner
-            //Banner = NPC.type;
-            //BannerItem = ModContent.ItemType<HazmatZombieBanner>();
+            NPC.knockBackResist = 0.1f;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<PrototypeSilverBanner>();
         }
 
         private Vector2 moveTo;

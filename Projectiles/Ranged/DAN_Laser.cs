@@ -24,6 +24,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.height = 20;
             Projectile.friendly = true;
             Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.extraUpdates = 100;
             Projectile.timeLeft = 700;
             Projectile.penetrate = -1;
@@ -34,6 +35,12 @@ namespace Redemption.Projectiles.Ranged
         {
             if (Projectile.localAI[0]++ > 10)
             {
+                if (Projectile.ai[1] == 1)
+                {
+                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 3, 2);
+                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 2, 2);
+                    return;
+                }
                 ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 3, 3);
                 ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new LightningParticle(), Color.White, 2, 4);
             }
@@ -76,8 +83,16 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void Kill(int timeLeft)
         {
-            RedeDraw.SpawnRing(Projectile.Center, new Color(158, 57, 248), glowScale: 6);
-            RedeDraw.SpawnRing(Projectile.Center, new Color(255, 182, 49), glowScale: 5);
+            if (Projectile.ai[1] == 1)
+            {
+                RedeDraw.SpawnRing(Projectile.Center, Color.IndianRed, glowScale: 6);
+                RedeDraw.SpawnRing(Projectile.Center, Color.Red, glowScale: 5);
+            }
+            else
+            {
+                RedeDraw.SpawnRing(Projectile.Center, new Color(158, 57, 248), glowScale: 6);
+                RedeDraw.SpawnRing(Projectile.Center, new Color(255, 182, 49), glowScale: 5);
+            }
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
         }
