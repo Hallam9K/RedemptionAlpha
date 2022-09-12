@@ -21,6 +21,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.Items.Weapons.HM.Ranged;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -133,6 +134,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenomiteGlaive>(), ModContent.ItemType<CystlingSummon>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 20, 30));
 
             npcLoot.Add(notExpertRule);
         }

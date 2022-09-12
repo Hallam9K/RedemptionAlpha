@@ -1,4 +1,5 @@
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -18,7 +19,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 		{
             Item.width = 18;
             Item.height = 18;
-            Item.damage = 70;
+            Item.damage = 60;
             Item.knockBack = 8;
             Item.maxStack = 99;
             Item.value = Item.sellPrice(0, 0, 0, 85);
@@ -33,7 +34,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.autoReuse = true;
             Item.consumable = true;
             Item.shoot = ModContent.ProjectileType<ToxicGrenade_Proj>();
-            Item.shootSpeed = 14f;
+            Item.shootSpeed = 11f;
         }
         public override void AddRecipes()
         {
@@ -41,6 +42,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 .AddIngredient(ItemID.Grenade, 10)
                 .AddIngredient(ModContent.ItemType<ToxicBile>())
                 .AddTile(TileID.MythrilAnvil)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.Grenade)
+                .AddIngredient(ModContent.ItemType<XenomiteShard>(), 2)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

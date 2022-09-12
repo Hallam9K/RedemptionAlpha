@@ -20,6 +20,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -116,7 +117,54 @@ namespace Redemption.NPCs.PreHM
                 AIState = ActionState.Block;
             }
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            NPC.HitSound = SoundID.DD2_SkeletonHurt;
+            Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
+            if (NPC.frame.Y >= 13 * 64)
+                ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
+            else
+            {
+                if (NPC.Center.X > player.Center.X && NPC.spriteDirection == 1 || (NPC.Center.X < player.Center.X && NPC.spriteDirection == -1))
+                    return;
+            }
 
+            if (item.noMelee || item.damage <= 0 || item.damage > 60)
+                return;
+
+            if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
+            {
+                NPC.HitSound = SoundID.Dig;
+                damage = 0;
+                knockback = 0;
+            }
+        }
+        private readonly List<int> projBlocked = new();
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            NPC.HitSound = SoundID.DD2_SkeletonHurt;
+            Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
+            if (NPC.frame.Y >= 13 * 64)
+                ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
+            else
+            {
+                if (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1))
+                    return;
+            }
+
+            if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || !projectile.friendly || (projectile.penetrate == -1 && !projectile.Redemption().TechnicallyMelee) || projectile.damage > 60))
+                return;
+
+            if (projectile.Hitbox.Intersects(ShieldHitbox))
+            {
+                projBlocked.Remove(projectile.whoAmI);
+                if (!projectile.Redemption().TechnicallyMelee)
+                    projectile.Kill();
+                NPC.HitSound = SoundID.Dig;
+                damage = 0;
+                knockback = 0;
+            }
+        }
         private Vector2 moveTo;
         private int runCooldown;
         private NPC defending;
@@ -138,23 +186,33 @@ namespace Redemption.NPCs.PreHM
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];
-                if (!projectile.active || !projectile.friendly || projectile.penetrate == -1 || projectile.damage > 60 || ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
+                if (!projectile.active || !projectile.friendly || (!projectile.Redemption().TechnicallyMelee && projectile.penetrate == -1) || projectile.damage > 60 || projectile.Redemption().TechnicallyMelee)
                     continue;
 
                 if (NPC.frame.Y >= 13 * 64)
                 {
                     if (projectile.Hitbox.Intersects(ShieldRaisedHitbox))
                     {
-                        projectile.friendly = false;
-                        projectile.Kill();
+                        if (!projectile.Redemption().TechnicallyMelee)
+                        {
+                            SoundEngine.PlaySound(SoundID.Dig, NPC.position);
+                            projectile.Kill();
+                        }
+                        if (!projBlocked.Contains(projectile.whoAmI))
+                            projBlocked.Add(projectile.whoAmI);
                     }
                 }
                 else
                 {
-                    if (projectile.Hitbox.Intersects(ShieldHitbox))
+                    if ((NPC.Center.X > projectile.Center.X && NPC.spriteDirection == -1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == 1)) && projectile.Hitbox.Intersects(ShieldHitbox))
                     {
-                        projectile.friendly = false;
-                        projectile.Kill();
+                        if (!projectile.Redemption().TechnicallyMelee)
+                        {
+                            SoundEngine.PlaySound(SoundID.Dig, NPC.position);
+                            projectile.Kill();
+                        }
+                        if (!projBlocked.Contains(projectile.whoAmI))
+                            projBlocked.Add(projectile.whoAmI);
                     }
                 }
             }

@@ -11,6 +11,7 @@ using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.HM.Ranged;
 
 namespace Redemption.Items.Usable
 {
@@ -42,6 +43,7 @@ namespace Redemption.Items.Usable
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenomiteGlaive>(), ModContent.ItemType<CystlingSummon>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 30, 40));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
         }
         public override Color? GetAlpha(Color lightColor)
