@@ -23,6 +23,8 @@ using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Usable;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.PostML.Magic;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -145,21 +147,23 @@ namespace Redemption.NPCs.Bosses.Obliterator
         }
         public override void OnKill()
         {
-            if (!RedeBossDowned.downedVlitch3)
+            if (!RedeBossDowned.downedOmega3)
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OO_GirusTalk>(), 0, 0, Main.myPlayer);
 
-            NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch3, -1);
+            NPC.SetEventFlagCleared(ref RedeBossDowned.downedOmega3, -1);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OOBag>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaOblitBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 4, 8));
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -244,7 +248,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 
             SoundStyle voice = CustomSounds.Voice5;
-            if (RedeBossDowned.downedVlitch3)
+            if (RedeBossDowned.downedOmega3)
                 voice = CustomSounds.Voice5 with { Pitch = -0.5f };
 
             float RotFlip = NPC.spriteDirection == -1 ? 0 : MathHelper.Pi;
@@ -274,7 +278,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (NPC.DistanceSQ(DefaultPos) < 100 * 100 || AITimer > 200)
                             {
                                 AITimer = 0;
-                                if (RedeBossDowned.oblitDeath == 2 || RedeBossDowned.downedVlitch3)
+                                if (RedeBossDowned.oblitDeath == 2 || RedeBossDowned.downedOmega3)
                                 {
                                     AIState = ActionState.Begin;
                                     TimerRand = 0;
@@ -418,7 +422,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         HandsFrameY[0] = 1;
 
                         string s = "Ready for obliteration?";
-                        if (RedeBossDowned.downedVlitch3)
+                        if (RedeBossDowned.downedOmega3)
                             s = "PREPARE FOR OBLITERATION.";
 
                         Dialogue d1 = new(NPC, s, Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 176
@@ -778,7 +782,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
                                 if (AITimer == 305)
                                 {
-                                    if (!RedeBossDowned.downedVlitch3)
+                                    if (!RedeBossDowned.downedOmega3)
                                     {
                                         Dialogue d1 = new(NPC, "Eye beam!", Colors.RarityRed, Color.DarkRed, voice, 2, 70, 30, true, modifier: modifier);
                                         TextBubbleUI.Visible = true;
@@ -893,7 +897,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 case ActionState.Overheat:
                     if (TimerRand == 1)
                     {
-                        if (AITimer >= 878 && AITimer <= 1206 && !RedeBossDowned.downedVlitch3)
+                        if (AITimer >= 878 && AITimer <= 1206 && !RedeBossDowned.downedOmega3)
                         {
                             ArmRot[0].SlowRotation(MathHelper.PiOver2 + ((1f + Main.rand.NextFloat(-0.05f, 0.05f)) * -NPC.spriteDirection) + RotFlip, MathHelper.Pi / 30);
                             ArmRot[1].SlowRotation(MathHelper.PiOver2 + ((1f + Main.rand.NextFloat(-0.05f, 0.05f)) * -NPC.spriteDirection) + RotFlip, MathHelper.Pi / 30);
@@ -916,7 +920,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity.X = 0;
                     Main.dust[dust].velocity.Y = -5;
-                    if ((TimerRand == 1 && AITimer >= (RedeBossDowned.downedVlitch3 ? 196 : 878)) || TimerRand > 1)
+                    if ((TimerRand == 1 && AITimer >= (RedeBossDowned.downedOmega3 ? 196 : 878)) || TimerRand > 1)
                     {
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
                         Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
@@ -962,7 +966,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
                                 if (AITimer == 60)
                                 {
-                                    if (!RedeBossDowned.downedVlitch3)
+                                    if (!RedeBossDowned.downedOmega3)
                                     {
                                         DialogueChain chain = new();
                                         chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 136
@@ -983,18 +987,18 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         TextBubbleUI.Add(chain);
                                     }
                                 }
-                                if (AITimer == (RedeBossDowned.downedVlitch3 ? 196 : 638))
+                                if (AITimer == (RedeBossDowned.downedOmega3 ? 196 : 638))
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
                                 }
-                                if (AITimer == 878 && !RedeBossDowned.downedVlitch3)
+                                if (AITimer == 878 && !RedeBossDowned.downedOmega3)
                                 {
                                     player.RedemptionScreen().TimedZoom(new Vector2(1.2f, 1.2f), 80, 280);
                                     HeadFrameY = 2;
                                 }
 
-                                if (AITimer > (RedeBossDowned.downedVlitch3 ? 414 : 1238))
+                                if (AITimer > (RedeBossDowned.downedOmega3 ? 414 : 1238))
                                 {
                                     HeadFrameY = 0;
                                     AITimer = 0;
@@ -1127,7 +1131,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             else
                             {
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
-                                if (AITimer == 305 && !RedeBossDowned.downedVlitch3)
+                                if (AITimer == 305 && !RedeBossDowned.downedOmega3)
                                 {
                                     Dialogue d1 = new(NPC, "EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 1, 70, 30, true, modifier: modifier);
                                     TextBubbleUI.Visible = true;
@@ -1354,7 +1358,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
 
-                                    if (!RedeBossDowned.downedVlitch3)
+                                    if (!RedeBossDowned.downedOmega3)
                                     {
                                         DialogueChain chain = new();
                                         chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 228
@@ -1370,7 +1374,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         TextBubbleUI.Add(chain);
                                     }
                                 }
-                                if (AITimer > (RedeBossDowned.downedVlitch3 ? 678 : 804))
+                                if (AITimer > (RedeBossDowned.downedOmega3 ? 678 : 804))
                                 {
                                     NPC.velocity *= 0f;
                                     AITimer = 0;
@@ -1455,7 +1459,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         {
             Player player = Main.player[NPC.target];
             SoundStyle voice = CustomSounds.Voice5;
-            if (RedeBossDowned.downedVlitch3)
+            if (RedeBossDowned.downedOmega3)
                 voice = CustomSounds.Voice5 with { Pitch = -0.5f };
             if (!player.active || player.dead)
             {

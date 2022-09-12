@@ -140,11 +140,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void OnKill()
         {
-            if (!RedeBossDowned.downedVlitch2)
+            if (!RedeBossDowned.downedOmega2)
             {
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_GirusTalk>(), 0, 0, Main.myPlayer);
             }
-            NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch2, -1);
+            NPC.SetEventFlagCleared(ref RedeBossDowned.downedOmega2, -1);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

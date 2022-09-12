@@ -236,7 +236,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         Projectile.localAI[0]++;
                         if (RedeHelper.ClosestNPC(ref target, 80, Main.MouseWorld, true))
                         {
-                            if (Projectile.localAI[0] >= Projectile.localAI[1])
+                            if (Projectile.localAI[0] >= Projectile.localAI[1] && BasePlayer.ReduceMana(player, 3))
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.Zap2, Projectile.position);

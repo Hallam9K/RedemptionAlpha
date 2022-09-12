@@ -64,6 +64,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[Projectile.whoAmI] = 20;
+
             if (Projectile.localAI[0] < 180)
                 Projectile.localAI[0] = 180;
         }

@@ -82,7 +82,7 @@ namespace Redemption.Projectiles.Magic
             if (AITimer == 0)
                 LaserScale = 0.1f;
             else
-                Projectile.Center = host.Center;
+                Projectile.Center = host.Center + RedeHelper.PolarVector(6, host.rotation + MathHelper.PiOver2);
 
             if (AITimer <= 10)
             {
@@ -193,7 +193,7 @@ namespace Redemption.Projectiles.Magic
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
+                Projectile.Center + unit * LaserLength, LaserWidth * LaserScale, ref point))
             {
                 return true;
             }

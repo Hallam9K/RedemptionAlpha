@@ -1,74 +1,80 @@
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
+using Redemption.Items.Materials.HM;
 using Redemption.Projectiles;
+using Redemption.Projectiles.Minions;
+using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Summon
+namespace Redemption.Items.Weapons.HM.Summon
 {
-    public class RootTendril : ModItem
+    public class InfectedTentacle : ModItem
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("4 summon tag damage\n" +
-                "Your summons will focus struck enemies\n" +
-                "Striking enemies with the tip of the whip will heal the user");
+            Tooltip.SetDefault("Your summons will focus struck enemies\n" +
+                "Strike enemies to summon a friendly hive cyst\n" +
+                "Inflicts Infection");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
-
         public override void SetDefaults()
         {
-            Item.width = 28;
-            Item.height = 24;
-            Item.DefaultToWhip(ModContent.ProjectileType<RootTendril_Proj>(), 16, 1, 6);
-            Item.shootSpeed = 6;
-            Item.rare = ItemRarityID.Green;
+            Item.width = 16;
+            Item.height = 40;
+            Item.DefaultToWhip(ModContent.ProjectileType<InfectedTentacle_Proj>(), 46, 2, 8, 26);
+            Item.shootSpeed = 8;
+            Item.rare = ItemRarityID.LightRed;
             Item.channel = true;
-            Item.value = Item.buyPrice(0, 3, 45, 0);
+            Item.value = Item.buyPrice(0, 0, 95, 0);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 2)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
         public override bool MeleePrefix() => true;
     }
-    public class RootTendril_Proj : ModProjectile
+    public class InfectedTentacle_Proj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Root Tendril");
+            DisplayName.SetDefault("Infected Tentacle");
             ProjectileID.Sets.IsAWhip[Type] = true;
         }
         public override void SetDefaults()
         {
             Projectile.DefaultToWhip();
 
-            Projectile.WhipSettings.Segments = 10;
-            Projectile.WhipSettings.RangeMultiplier = 0.5f;
+            Projectile.WhipSettings.Segments = 20;
+            Projectile.WhipSettings.RangeMultiplier = 0.8f;
             Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
-            if (target.DistanceSQ(player.Center) > 130 * 130)
+            target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
+            if (Main.rand.NextBool(5))
+                target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 150);
+
+            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<HiveCyst_Proj>()] < 2)
             {
-                int steps = (int)player.Distance(target.Center) / 8;
-                for (int i = 0; i < steps; i++)
-                {
-                    if (Main.rand.NextBool(3))
-                    {
-                        Dust dust = Dust.NewDustDirect(Vector2.Lerp(player.Center, target.Center, (float)i / steps), 2, 2, DustID.LifeDrain);
-                        dust.velocity = target.DirectionTo(dust.position) * 2;
-                        dust.noGravity = true;
-                    }
-                }
-                player.statLife += 3;
-                player.HealEffect(3);
+                SoundEngine.PlaySound(SoundID.NPCHit13, Projectile.position);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<HiveCyst_Proj>(), Projectile.damage / 3, Projectile.knockBack, player.whoAmI);
             }
-            target.AddBuff(BuffID.BlandWhipEnemyDebuff, 180);
-            player.MinionAttackTargetNPC = target.whoAmI;
+            Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
         }
         private static void DrawLine(List<Vector2> list)
         {

@@ -180,7 +180,7 @@ namespace Redemption.Items.Usable.Summons
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             bool glowing = false;
-            if ((NPC.downedPlantBoss && !RedeBossDowned.downedVlitch1) || (NPC.downedGolemBoss && !RedeBossDowned.downedVlitch2) || (NPC.downedMoonlord && !RedeBossDowned.downedVlitch3))
+            if ((NPC.downedPlantBoss && !RedeBossDowned.downedOmega1) || (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2) || (NPC.downedMoonlord && !RedeBossDowned.downedOmega3))
                 glowing = true;
             if (glowing)
             {
@@ -202,7 +202,7 @@ namespace Redemption.Items.Usable.Summons
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             bool glowing = false;
-            if ((NPC.downedPlantBoss && !RedeBossDowned.downedVlitch1) || (NPC.downedGolemBoss && !RedeBossDowned.downedVlitch2) || (NPC.downedMoonlord && !RedeBossDowned.downedVlitch3))
+            if ((NPC.downedPlantBoss && !RedeBossDowned.downedOmega1) || (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2) || (NPC.downedMoonlord && !RedeBossDowned.downedOmega3))
                 glowing = true;
             if (glowing)
             {

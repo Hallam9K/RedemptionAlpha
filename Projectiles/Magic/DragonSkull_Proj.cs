@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -19,8 +20,8 @@ namespace Redemption.Projectiles.Magic
         }
         public override void SetDefaults()
         {
-            Projectile.width = 36;
-            Projectile.height = 36;
+            Projectile.width = 54;
+            Projectile.height = 40;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
@@ -30,6 +31,7 @@ namespace Redemption.Projectiles.Magic
         }
 
         private bool faceLeft;
+        private float jawRot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -60,30 +62,44 @@ namespace Redemption.Projectiles.Magic
                     }
                     Projectile.spriteDirection = -1;
                 }
-
+                int mana = player.inventory[player.selectedItem].mana;
                 if (Main.myPlayer == Projectile.owner)
-                    Projectile.rotation.SlowRotation((Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), (float)Math.PI / (Projectile.ai[0] >= 180 ? 300 : 80));
+                {
+                    if (Projectile.ai[0] < 40)
+                        Projectile.rotation = (Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0);
+                    else
+                        Projectile.rotation.SlowRotation((Main.MouseWorld - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0), (float)Math.PI / (Projectile.ai[0] >= 180 ? 300 : 80));
+                }
                 if (Projectile.ai[0]++ == 0)
                 {
                     for (int i = 0; i < 20; i++)
                         Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Scale: 2);
                 }
+                if (Projectile.ai[0] >= 20 && Projectile.ai[0] < 30)
+                {
+                    jawRot += 0.03f;
+                }
                 if (Projectile.ai[0] == 40)
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2),
                         RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
 
                 if (Projectile.ai[0] == 180)
                 {
-                    player.RedemptionScreen().ScreenShakeIntensity = 6;
-                    DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 4, 4, 1, 2, nogravity: true);
-                    SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
-                        RedeHelper.PolarVector(0, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<HeatRay>(),
-                        Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                    if (BasePlayer.ReduceMana(player, mana * 2))
+                    {
+                        player.RedemptionScreen().ScreenShakeIntensity = 6;
+                        DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 4, 4, 1, 2, nogravity: true);
+                        SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2),
+                            RedeHelper.PolarVector(0, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<HeatRay>(),
+                            Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                    }
+                    else
+                        Projectile.ai[1] = 1;
                 }
                 if (Projectile.ai[0] >= 380)
                     Projectile.ai[1] = 1;
@@ -91,7 +107,7 @@ namespace Redemption.Projectiles.Magic
             else
             {
                 Projectile.ai[1] = 1;
-                Projectile.alpha += 5;
+                Projectile.alpha += 10;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
             }
@@ -99,10 +115,12 @@ namespace Redemption.Projectiles.Magic
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D jawTex = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Jaw").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(jawTex, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation + (jawRot * Projectile.spriteDirection), drawOrigin - new Vector2(Projectile.spriteDirection == -1 ? -12 : 18, 12), Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation - (jawRot * Projectile.spriteDirection), drawOrigin + new Vector2(-13 * Projectile.spriteDirection, 6), Projectile.scale, effects, 0);
             return false;
         }
     }

@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             DisplayName.SetDefault("Dragon Slayer's Staff");
             Tooltip.SetDefault("Casts a molten dragon skull to spews out flames at cursor point" +
-                "\nHold down left click long enough to change the flames into a heat ray");
+                "\nHold down left click long enough to change the flames into a heat ray at double the mana cost");
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 

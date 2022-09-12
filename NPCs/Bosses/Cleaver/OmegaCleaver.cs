@@ -139,13 +139,13 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void OnKill()
         {
-            if (!RedeBossDowned.downedVlitch1)
+            if (!RedeBossDowned.downedOmega1)
             {
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OmegaCleaver_GirusTalk>(), 0, 0, Main.myPlayer);
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<UnconPetItem>());
             }
 
-            NPC.SetEventFlagCleared(ref RedeBossDowned.downedVlitch1, -1);
+            NPC.SetEventFlagCleared(ref RedeBossDowned.downedOmega1, -1);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

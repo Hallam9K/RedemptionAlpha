@@ -70,7 +70,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || !target.CanBeChasedBy() || target.whoAmI == (int)Projectile.localAI[1])
+                    if (!target.active || !target.CanBeChasedBy())
                         continue;
 
                     if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
@@ -86,10 +86,11 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            target.whoAmI = (int)Projectile.localAI[1];
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[Projectile.whoAmI] = 20;
+
             if (Projectile.localAI[0] < 180)
                 Projectile.localAI[0] = 180;
         }

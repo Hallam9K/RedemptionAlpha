@@ -31,10 +31,10 @@ namespace Redemption.WorldGeneration
         };
         private static readonly Dictionary<Color, int> colorToWall = new()
         {
-            [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
-            [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
-            [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
-            [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
+            [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
+            [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
+            [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
+            [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
             [new Color(150, 150, 150)] = -2,
             [Color.Black] = -1
         };

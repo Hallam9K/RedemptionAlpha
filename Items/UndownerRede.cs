@@ -43,9 +43,9 @@ namespace Redemption.Items
             RedeBossDowned.downedBlisterface = false;
             RedeBossDowned.downedVolt = false;
             RedeBossDowned.downedMACE = false;
-            RedeBossDowned.downedVlitch1 = false;
-            RedeBossDowned.downedVlitch2 = false;
-            RedeBossDowned.downedVlitch3 = false;
+            RedeBossDowned.downedOmega1 = false;
+            RedeBossDowned.downedOmega2 = false;
+            RedeBossDowned.downedOmega3 = false;
             RedeBossDowned.voltBegin = false;
             RedeBossDowned.downedPZ = false;
             RedeBossDowned.downedNebuleus = false;

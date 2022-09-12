@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             Item.width = 26;
             Item.height = 36;
-            Item.damage = 36;
+            Item.damage = 60;
             Item.knockBack = 8;
             Item.value = Item.sellPrice(0, 0, 54, 0);
             Item.rare = ItemRarityID.Blue;

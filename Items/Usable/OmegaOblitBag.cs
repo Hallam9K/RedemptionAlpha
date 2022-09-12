@@ -6,6 +6,10 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent;
+using Redemption.Items.Materials.HM;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.Items.Usable
 {
@@ -30,6 +34,13 @@ namespace Redemption.Items.Usable
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
         public override bool CanRightClick() => true;
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 4, 8));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
+        }
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, Color.White.ToVector3() * 0.4f);

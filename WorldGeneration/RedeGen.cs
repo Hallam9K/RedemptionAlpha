@@ -619,10 +619,10 @@ namespace Redemption.WorldGeneration
 
                     Dictionary<Color, int> colorToWall = new()
                     {
-                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
-                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
-                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
-                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
                         [new Color(0, 255, 0)] = ModContent.WallType<AncientHallPillarWallTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
@@ -737,10 +737,10 @@ namespace Redemption.WorldGeneration
 
                     Dictionary<Color, int> colorToWall = new()
                     {
-                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
-                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
-                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
-                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
                         [new Color(0, 255, 0)] = ModContent.WallType<ElderWoodWallTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
@@ -973,10 +973,10 @@ namespace Redemption.WorldGeneration
 
                     Dictionary<Color, int> colorToWall = new()
                     {
-                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
-                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
-                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
-                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
@@ -1149,7 +1149,7 @@ namespace Redemption.WorldGeneration
                     LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
 
                 Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
-                if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedVlitch3 &&
+                if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 &&
                     Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
                     LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
             }
