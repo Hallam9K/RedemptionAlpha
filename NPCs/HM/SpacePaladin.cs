@@ -339,7 +339,7 @@ namespace Redemption.NPCs.HM
             if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1)))
                 return;
 
-            if (projectile.Hitbox.Intersects(ShieldHitbox))
+            if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
                 if (projectile.penetrate != -1)

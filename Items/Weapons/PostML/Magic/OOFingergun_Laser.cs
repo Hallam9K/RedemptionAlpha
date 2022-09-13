@@ -53,8 +53,11 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 Projectile.frameCounter = 0;
                 if (Projectile.frame == 6 && Projectile.owner == Main.myPlayer)
                 {
-                    (Main.projectile[gun.whoAmI].ModProjectile as OOFingergun_Proj).offset = 10;
-                    (Main.projectile[gun.whoAmI].ModProjectile as OOFingergun_Proj).rotOffset = -0.4f;
+                    if (Main.projectile[gun.whoAmI].ModProjectile is OOFingergun_Proj)
+                    {
+                        (Main.projectile[gun.whoAmI].ModProjectile as OOFingergun_Proj).offset = 10;
+                        (Main.projectile[gun.whoAmI].ModProjectile as OOFingergun_Proj).rotOffset = -0.4f;
+                    }
 
                     SoundEngine.PlaySound(CustomSounds.Laser1 with { Pitch = 0.1f, Volume = 0.7f }, Projectile.position);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, gun.velocity * shootSpeed, ModContent.ProjectileType<OOFingergun_Laser>(), Projectile.damage, Projectile.knockBack, player.whoAmI);

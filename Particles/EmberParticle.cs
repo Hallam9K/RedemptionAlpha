@@ -29,6 +29,12 @@ namespace Redemption.Particles
         {
             if (ai[0] <= 0)
             {
+                if (timeLeft <= timeLeftMax / 2f)
+                    opacity = MathHelper.Lerp(1f, 0f, (float)(timeLeftMax / 2f - timeLeft) / (timeLeftMax / 2f));
+
+                if (ai[1] == 1)
+                    return;
+
                 float sineX = (float)Math.Sin(Main.GlobalTimeWrappedHourly * speedX);
 
                 // Makes the particle change directions or speeds.
@@ -49,10 +55,6 @@ namespace Redemption.Particles
 
                 // Decrement the timer
                 timer--;
-
-                // Halfway through, start fading.
-                if (timeLeft <= timeLeftMax / 2f)
-                    opacity = MathHelper.Lerp(1f, 0f, (float)(timeLeftMax / 2f - timeLeft) / (timeLeftMax / 2f));
             }
             ai[0]--;
         }
@@ -72,11 +74,14 @@ namespace Redemption.Particles
             float pixelRatio = 1f / 64f;
             spriteBatch.Draw(glow, VisualPosition, new Rectangle(0, 0, 64, 64), glowColor, rotation, new Vector2(32f, 32f), 1f * size * scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(circle, VisualPosition - new Vector2(1.5f, 1.5f), new Rectangle(0, 0, 64, 64), emberColor, rotation, Vector2.Zero, 1f * pixelRatio * 3f * size * scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(ember, VisualPosition, new Rectangle(0, 0, 3, 3), color, rotation, new Vector2(1.5f, 1.5f), 1f * scale, SpriteEffects.None, 0f);
+            if (ai[1] != 1)
+                spriteBatch.Draw(ember, VisualPosition, new Rectangle(0, 0, 3, 3), color, rotation, new Vector2(1.5f, 1.5f), 1f * scale, SpriteEffects.None, 0f);
             return false;
         }
         private void Spawn()
         {
+            if (ai[1] == 1)
+                timeLeft /= 7;
             timeLeftMax = timeLeft;
             size = Main.rand.NextFloat(5f, 11f) / 10f;
         }

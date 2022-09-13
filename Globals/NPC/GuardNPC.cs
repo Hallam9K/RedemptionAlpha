@@ -14,7 +14,7 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
 
-        public void GuardHit(Terraria.NPC npc, ref double damage, SoundStyle sound, float dmgReduction = 0.25f)
+        public void GuardHit(Terraria.NPC npc, ref double damage, SoundStyle sound, float dmgReduction = 0.25f, bool noNPCHitSound = false)
         {
             if (IgnoreArmour || npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPoints < 0 || GuardBroken)
                 return;
@@ -22,7 +22,7 @@ namespace Redemption.Globals.NPC
             damage = (int)(damage * dmgReduction);
             npc.HitEffect();
             SoundEngine.PlaySound(sound, npc.position);
-            if (npc.HitSound.HasValue)
+            if (!noNPCHitSound && npc.HitSound.HasValue)
                 SoundEngine.PlaySound(npc.HitSound.Value, npc.position);
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, (int)damage, true, true);
             GuardPoints -= (int)damage;

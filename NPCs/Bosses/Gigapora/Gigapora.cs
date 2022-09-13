@@ -8,6 +8,7 @@ using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -18,6 +19,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -31,7 +33,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             WormAILol,
             ProtectCore,
             Gigabeam,
-            Death
+            Death,
+            Flamethrowers
         }
 
         public ActionState AIState
@@ -247,6 +250,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!player.active || player.dead)
                 return;
 
+            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.2f).UseColor(Color.OrangeRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             switch (AIState)
             {
                 case ActionState.Intro:
@@ -304,10 +308,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     {
                         TimerRand = 0;
                         AITimer = 0;
+
+                        WeightedRandom<ActionState> choice = new(Main.rand);
                         if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()) && Main.rand.NextBool(2))
-                            AIState = ActionState.ProtectCore;
+                            choice.Add(ActionState.ProtectCore);
                         else if (BodyState >= 4)
-                            AIState = ActionState.Gigabeam;
+                            choice.Add(ActionState.Gigabeam);
+                        choice.Add(ActionState.Flamethrowers);
+
+                        AIState = choice;
+                        NPC.netUpdate = true;
                     }
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                     break;
@@ -475,6 +485,77 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             if (AITimer >= 470)
                             {
                                 DrillLaser = false;
+                                AITimer = 100;
+                                TimerRand = 0;
+                            }
+                            break;
+                    }
+                    break;
+                case ActionState.Flamethrowers:
+                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                            {
+                                if (AITimer > 0)
+                                {
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    AIState = ActionState.WormAILol;
+                                }
+                                else
+                                    TimerRand = 1;
+                            }
+                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                                NPC.velocity.X += 0.1f;
+                            else if (NPC.velocity.X > -6)
+                                NPC.velocity.X -= 0.1f;
+                            if (NPC.velocity.Y <= 20)
+                                NPC.velocity.Y += 0.2f;
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 1:
+                            if (NPC.DistanceSQ(targetPos) < 100 * 100 || AITimer++ >= 600)
+                            {
+                                NPC.velocity.X *= 0.1f;
+                                NPC.velocity.Y = -20;
+                                AITimer = 0;
+                                TimerRand = 2;
+                            }
+                            else
+                                Movement(targetPos, 0.4f, 20);
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 2:
+                            if (AITimer > 0)
+                            {
+                                AITimer++;
+                                NPC.velocity.Y *= 0.94f;
+                                NPC.velocity.X += player.Center.X > NPC.Center.X ? 0.1f : -0.1f;
+                                if (AITimer >= 60)
+                                {
+                                    AITimer = 0;
+                                    TimerRand = 3;
+                                }
+                            }
+                            else
+                            {
+                                if (player.Center.Y + 100 > NPC.Center.Y)
+                                    AITimer = 1;
+                            }
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 3:
+                            player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(4, player.RedemptionScreen().ScreenShakeIntensity);
+                            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.2f).UseColor(Color.OrangeRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+
+                            NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center - new Vector2(0, 200)).ToRotation() + 1.57f, (float)Math.PI / 80f);
+                            NPC.velocity = RedeHelper.PolarVector(-6 * ((AITimer / 260) + 1), NPC.rotation + 1.57f);
+
+                            if (AITimer++ >= 260)
+                            {
                                 AITimer = 100;
                                 TimerRand = 0;
                             }

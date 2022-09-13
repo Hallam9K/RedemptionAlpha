@@ -40,7 +40,7 @@ namespace Redemption.NPCs.PreHM
             get => (ActionState)NPC.ai[0];
             set => NPC.ai[0] = (int)value;
         }
-
+        public Vector2 ShieldOffset;
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 17;
@@ -64,6 +64,7 @@ namespace Redemption.NPCs.PreHM
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SkeletonWardenBanner>();
+            NPC.RedemptionGuard().GuardPoints = 20;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -117,9 +118,32 @@ namespace Redemption.NPCs.PreHM
                 AIState = ActionState.Block;
             }
         }
+        private bool blocked;
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (blocked && !NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
+            {
+                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.Dig, 0.1f, true);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
+                blocked = false;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                    return false;
+            }
+            if (NPC.RedemptionGuard().GuardPoints <= 0 && !NPC.RedemptionGuard().GuardBroken)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
+            }
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.WoodFurniture, CustomSounds.GuardBreak, 10, 1, 40);
+            blocked = false;
+            return true;
+        }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            NPC.HitSound = SoundID.DD2_SkeletonHurt;
+            if (NPC.RedemptionGuard().GuardBroken)
+                return;
+
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
             if (NPC.frame.Y >= 13 * 64)
                 ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
@@ -129,20 +153,20 @@ namespace Redemption.NPCs.PreHM
                     return;
             }
 
-            if (item.noMelee || item.damage <= 0 || item.damage > 60)
+            if (item.noMelee || item.damage <= 0)
                 return;
 
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
             {
-                NPC.HitSound = SoundID.Dig;
-                damage = 0;
-                knockback = 0;
+                blocked = true;
             }
         }
         private readonly List<int> projBlocked = new();
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            NPC.HitSound = SoundID.DD2_SkeletonHurt;
+            if (NPC.RedemptionGuard().GuardBroken)
+                return;
+
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
             if (NPC.frame.Y >= 13 * 64)
                 ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
@@ -152,18 +176,26 @@ namespace Redemption.NPCs.PreHM
                     return;
             }
 
-            if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || !projectile.friendly || (projectile.penetrate == -1 && !projectile.Redemption().TechnicallyMelee) || projectile.damage > 60))
+            if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || !projectile.friendly))
                 return;
 
-            if (projectile.Hitbox.Intersects(ShieldHitbox))
+            if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
-                if (!projectile.Redemption().TechnicallyMelee)
+                if (!projectile.Redemption().TechnicallyMelee && projectile.penetrate != -1)
                     projectile.Kill();
-                NPC.HitSound = SoundID.Dig;
-                damage = 0;
-                knockback = 0;
+                blocked = true;
             }
+        }
+        public Vector2 SetEyeOffset(ref int frameHeight)
+        {
+            return (NPC.frame.Y / frameHeight) switch
+            {
+                4 => new Vector2(0, -4),
+                7 => new Vector2(0, -2),
+                11 => new Vector2(0, -2),
+                _ => new Vector2(0, 0),
+            };
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -183,40 +215,44 @@ namespace Redemption.NPCs.PreHM
             NPC.LookByVelocity();
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
             Rectangle ShieldRaisedHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            if (!NPC.RedemptionGuard().GuardBroken)
             {
-                Projectile projectile = Main.projectile[i];
-                if (!projectile.active || !projectile.friendly || (!projectile.Redemption().TechnicallyMelee && projectile.penetrate == -1) || projectile.damage > 60 || projectile.Redemption().TechnicallyMelee)
-                    continue;
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile projectile = Main.projectile[i];
+                    if (!projectile.active || !projectile.friendly || (!projectile.Redemption().TechnicallyMelee && projectile.penetrate == -1) || projectile.damage > 60 || projectile.Redemption().TechnicallyMelee)
+                        continue;
 
-                if (NPC.frame.Y >= 13 * 64)
-                {
-                    if (projectile.Hitbox.Intersects(ShieldRaisedHitbox))
+                    if (NPC.frame.Y >= 13 * 64)
                     {
-                        if (!projectile.Redemption().TechnicallyMelee)
+                        if (projectile.Colliding(projectile.Hitbox, ShieldRaisedHitbox))
                         {
-                            SoundEngine.PlaySound(SoundID.Dig, NPC.position);
-                            projectile.Kill();
+                            if (!projectile.Redemption().TechnicallyMelee)
+                            {
+                                blocked = true;
+                                NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                                projectile.Kill();
+                            }
+                            if (!projBlocked.Contains(projectile.whoAmI))
+                                projBlocked.Add(projectile.whoAmI);
                         }
-                        if (!projBlocked.Contains(projectile.whoAmI))
-                            projBlocked.Add(projectile.whoAmI);
                     }
-                }
-                else
-                {
-                    if ((NPC.Center.X > projectile.Center.X && NPC.spriteDirection == -1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == 1)) && projectile.Hitbox.Intersects(ShieldHitbox))
+                    else
                     {
-                        if (!projectile.Redemption().TechnicallyMelee)
+                        if ((NPC.Center.X > projectile.Center.X && NPC.spriteDirection == -1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == 1)) && projectile.Colliding(projectile.Hitbox, ShieldHitbox))
                         {
-                            SoundEngine.PlaySound(SoundID.Dig, NPC.position);
-                            projectile.Kill();
+                            if (!projectile.Redemption().TechnicallyMelee)
+                            {
+                                blocked = true;
+                                NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                                projectile.Kill();
+                            }
+                            if (!projBlocked.Contains(projectile.whoAmI))
+                                projBlocked.Add(projectile.whoAmI);
                         }
-                        if (!projBlocked.Contains(projectile.whoAmI))
-                            projBlocked.Add(projectile.whoAmI);
                     }
                 }
             }
-
             if (Main.rand.NextBool(1500) && !Main.dedServ)
                 SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Ambient"), NPC.position);
 
@@ -412,8 +448,7 @@ namespace Redemption.NPCs.PreHM
                     PersonalityState.Greedy => NPC.frame.Width * 2,
                     _ => 0,
                 };
-                if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 &&
-                    globalNPC.attacker.Center.X < NPC.Center.X + 100)
+                if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && !NPC.RedemptionGuard().GuardBroken && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 && globalNPC.attacker.Center.X < NPC.Center.X + 100)
                 {
                     NPC.rotation = 0;
 
@@ -463,6 +498,7 @@ namespace Redemption.NPCs.PreHM
                     NPC.frame.Y = 4 * frameHeight;
                 }
             }
+            ShieldOffset = SetEyeOffset(ref frameHeight);
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool nearestUndead = false)
         {
@@ -530,6 +566,7 @@ namespace Redemption.NPCs.PreHM
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D ShieldTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
@@ -537,6 +574,8 @@ namespace Redemption.NPCs.PreHM
             if (HasEyes)
                 spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
+            if (!NPC.RedemptionGuard().GuardBroken && NPC.frame.Y < 13 * 64)
+                spriteBatch.Draw(ShieldTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 - new Vector2(0, ShieldOffset.Y), NPC.scale, effects, 0);
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;

@@ -266,7 +266,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (AITimer++ >= 518)
+                    if (AITimer++ >= 978)
                     {
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Kari Johansson", 60, 90, 0.8f, 0, Color.Green, "Patient Zero");
                         AITimer = 0;
@@ -787,7 +787,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     if (NPC.scale <= 1f)
                         GrooveTimer = 2;
                 }
-                else if (GrooveTimer++ >= 28)
+                else if (GrooveTimer++ >= 27)
                     GrooveTimer = 0;
             }
             NPC.frameCounter++;
