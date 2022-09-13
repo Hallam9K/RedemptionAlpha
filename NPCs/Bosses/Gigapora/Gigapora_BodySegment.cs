@@ -162,7 +162,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         FrameState = 1;
                         NPC.netUpdate = true;
                     }
-                    if (host.ai[0] == 5 && host.ai[2] == 2)
+                    if (host.ai[0] == 5 && host.ai[2] == 2 && SegmentType != -1 && SegmentType != -3 && SegmentType != -5 && SegmentType != -7 && SegmentType != -9 && SegmentType != -11)
                     {
                         FrameState = 1;
                         NPC.netUpdate = true;

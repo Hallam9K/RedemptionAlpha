@@ -176,6 +176,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         private bool spawned;
         private float shieldAlpha;
+        private float facing;
 
         private float BodyTimer;
         private int BodyState;
@@ -495,7 +496,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.Flamethrowers:
-                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -600 : 600), player.Center.Y + 800);
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
@@ -544,10 +545,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             if (AITimer > 0)
                             {
                                 AITimer++;
-                                NPC.velocity.Y *= 0.94f;
-                                NPC.velocity.X += player.Center.X > NPC.Center.X ? 0.1f : -0.1f;
-                                if (AITimer >= 60)
+                                NPC.Move(player.Center - new Vector2(0, 200), 30, 10);
+                                if (NPC.DistanceSQ(player.Center - new Vector2(0, 200)) < 200 * 200 || AITimer >= 120)
                                 {
+                                    facing = NPC.velocity.X < 0 ? MathHelper.Pi : 0;
+                                    NPC.velocity *= 0.9f;
                                     AITimer = 0;
                                     TimerRand = 3;
                                 }
@@ -560,14 +562,20 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                             break;
                         case 3:
-                            player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(4, player.RedemptionScreen().ScreenShakeIntensity);
-                            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.2f).UseColor(Color.OrangeRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            AITimer++;
+                            NPC.rotation.SlowRotation(1.57f + facing, (float)Math.PI / 200f);
+                            NPC.velocity = RedeHelper.PolarVector(-30 / ((AITimer / 20) + 1), NPC.rotation + 1.57f);
+                            if ((NPC.velocity.X > -6 && NPC.velocity.X < 6) || AITimer >= 80)
+                            {
+                                AITimer = 0;
+                                TimerRand = 4;
+                            }
+                            break;
+                        case 4:
+                            NPC.rotation.SlowRotation(1.57f + facing, (float)Math.PI / 200f);
+                            NPC.velocity = RedeHelper.PolarVector(-4 * ((AITimer / 200) + 1), NPC.rotation + 1.57f);
 
-                            NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center - new Vector2(0, 200)).ToRotation() + 1.57f, (float)Math.PI / 80f);
-                            NPC.velocity = RedeHelper.PolarVector(-6 * ((AITimer / 260) + 1), NPC.rotation + 1.57f);
-
-                            if (AITimer++ >= 260)
+                            if (AITimer++ >= 200)
                             {
                                 AITimer = 100;
                                 TimerRand = 0;
