@@ -35,6 +35,7 @@ namespace Redemption.Globals.NPC
         public override bool InstancePerEntity => true;
         public bool decapitated;
         public bool invisible;
+        public bool fallDownPlatform;
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
 

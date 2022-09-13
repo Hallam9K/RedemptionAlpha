@@ -120,7 +120,7 @@ namespace Redemption.NPCs.PreHM
             damage *= 2;
             return true;
         }
-
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public NPC npcTarget;
         public Vector2 moveTo;
         public int runCooldown;
@@ -183,10 +183,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Idle;
                     }
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -202,10 +199,7 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 3, 10, 1, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     NPC.DamageHostileAttackers(0, 7);

@@ -178,15 +178,12 @@ namespace Redemption.NPCs.Critters
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.5f, 3f, 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
             }
         }
-
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public int GetNearestNPC()
         {
             float nearestNPCDist = -1;

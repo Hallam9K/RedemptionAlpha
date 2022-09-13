@@ -223,10 +223,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.8f, 6, 6, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -275,10 +272,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Slash;
                     }
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.4f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
@@ -322,6 +316,7 @@ namespace Redemption.NPCs.PreHM
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private bool Flare;
         private float FlareTimer;
         public override void FindFrame(int frameHeight)

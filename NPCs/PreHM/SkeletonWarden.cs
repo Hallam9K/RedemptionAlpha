@@ -32,7 +32,8 @@ namespace Redemption.NPCs.PreHM
             Wander,
             Block,
             Slam,
-            Defend
+            Defend,
+            Retreat
         }
 
         public ActionState AIState
@@ -115,7 +116,10 @@ namespace Redemption.NPCs.PreHM
             if (AIState is ActionState.Idle or ActionState.Wander)
             {
                 AITimer = 0;
-                AIState = ActionState.Block;
+                if (NPC.RedemptionGuard().GuardBroken)
+                    AIState = ActionState.Retreat;
+                else
+                    AIState = ActionState.Block;
             }
         }
         private bool blocked;
@@ -207,6 +211,7 @@ namespace Redemption.NPCs.PreHM
 
             TimerRand = Main.rand.Next(80, 280);
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -220,14 +225,14 @@ namespace Redemption.NPCs.PreHM
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile projectile = Main.projectile[i];
-                    if (!projectile.active || !projectile.friendly || (!projectile.Redemption().TechnicallyMelee && projectile.penetrate == -1) || projectile.damage > 60 || projectile.Redemption().TechnicallyMelee)
+                    if (!projectile.active || !projectile.friendly || projectile.Redemption().TechnicallyMelee)
                         continue;
 
                     if (NPC.frame.Y >= 13 * 64)
                     {
                         if (projectile.Colliding(projectile.Hitbox, ShieldRaisedHitbox))
                         {
-                            if (!projectile.Redemption().TechnicallyMelee)
+                            if (!projectile.Redemption().TechnicallyMelee && projectile.penetrate != -1)
                             {
                                 blocked = true;
                                 NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
@@ -241,7 +246,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         if ((NPC.Center.X > projectile.Center.X && NPC.spriteDirection == -1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == 1)) && projectile.Colliding(projectile.Hitbox, ShieldHitbox))
                         {
-                            if (!projectile.Redemption().TechnicallyMelee)
+                            if (!projectile.Redemption().TechnicallyMelee && projectile.penetrate != -1)
                             {
                                 blocked = true;
                                 NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
@@ -284,10 +289,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Idle;
                     }
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.9f * SpeedMultiplier, 6, 6, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -307,12 +309,8 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
+                        if (globalNPC.attacker is not Player || !NPC.PlayerDead() && !(globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly)
                         {
-                        }
-                        else
-                        {
-
                             NPC.LookAtEntity(globalNPC.attacker);
                             NPC.velocity.Y = -2;
                             NPC.velocity.X = 5 * NPC.spriteDirection;
@@ -329,11 +327,14 @@ namespace Redemption.NPCs.PreHM
                             {
                                 (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 25;
                                 int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                globalNPC.attacker.velocity.X += NPC.velocity.X * (globalNPC.attacker as NPC).knockBackResist;
                                 BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 11, hitDirection, NPC);
                             }
                             else if (globalNPC.attacker is Player)
                             {
                                 int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                if (!(globalNPC.attacker as Player).noKnockback)
+                                    globalNPC.attacker.velocity.X += NPC.velocity.X / 2;
                                 BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
@@ -349,13 +350,9 @@ namespace Redemption.NPCs.PreHM
                         if (Main.netMode != NetmodeID.Server)
                             Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                     }
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, moveTo, 0.2f,
                         2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
-
                     break;
 
                 case ActionState.Block:
@@ -381,10 +378,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.velocity.Y == 0 && Main.rand.NextBool(80) && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
                     {
-                        if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
-                        {
-                        }
-                        else
+                        if (globalNPC.attacker is not Player || !NPC.PlayerDead() && !(globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly)
                         {
                             NPC.LookAtEntity(globalNPC.attacker);
                             NPC.velocity.Y = -2;
@@ -402,11 +396,14 @@ namespace Redemption.NPCs.PreHM
                             {
                                 (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 25;
                                 int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                globalNPC.attacker.velocity.X += NPC.velocity.X * (globalNPC.attacker as NPC).knockBackResist;
                                 BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 11, hitDirection, NPC);
                             }
                             else if (globalNPC.attacker is Player)
                             {
                                 int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
+                                if (!(globalNPC.attacker as Player).noKnockback)
+                                    globalNPC.attacker.velocity.X += NPC.velocity.X / 2;
                                 BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
@@ -425,6 +422,29 @@ namespace Redemption.NPCs.PreHM
                     {
                         AIState = ActionState.Defend;
                     }
+                    break;
+                case ActionState.Retreat:
+                    SightCheck();
+                    if (NPC.ThreatenedCheck(ref runCooldown, 360, 2))
+                    {
+                        runCooldown = 0;
+                        TimerRand = Main.rand.Next(120, 240);
+                        AIState = ActionState.Wander;
+                    }
+                    if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
+                    {
+                        runCooldown = 0;
+                        TimerRand = Main.rand.Next(120, 240);
+                        AIState = ActionState.Wander;
+                    }
+
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
+                        runCooldown++;
+                    else if (runCooldown > 0)
+                        runCooldown--;
+
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                    RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.4f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
                     break;
             }
             if (Personality != PersonalityState.Greedy)
@@ -534,14 +554,26 @@ namespace Redemption.NPCs.PreHM
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             int gotNPC = GetNearestNPC(nearestUndead: true);
-            if (AIState != ActionState.Block && !player.RedemptionPlayerBuff().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
+            if (!player.RedemptionPlayerBuff().skeletonFriendly && NPC.Sight(player, VisionRange, HasEyes, HasEyes, false))
             {
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
-                globalNPC.attacker = player;
-                moveTo = NPC.FindGround(20);
-                AITimer = 0;
-                AIState = ActionState.Block;
+                if (AIState != ActionState.Block && !NPC.RedemptionGuard().GuardBroken)
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                    globalNPC.attacker = player;
+                    moveTo = NPC.FindGround(20);
+                    AITimer = 0;
+                    AIState = ActionState.Block;
+                }
+                if (AIState != ActionState.Retreat && NPC.RedemptionGuard().GuardBroken)
+                {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(new("Redemption/Sounds/Custom/" + SoundString + "Notice"), NPC.position);
+                    globalNPC.attacker = player;
+                    moveTo = NPC.FindGround(20);
+                    AITimer = 0;
+                    AIState = ActionState.Retreat;
+                }
             }
             if (defending == null && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false))
             {

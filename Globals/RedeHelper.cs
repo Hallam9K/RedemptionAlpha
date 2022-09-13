@@ -1012,7 +1012,16 @@ namespace Redemption.Globals
                 }
             }
         }
-
+        public static void PlatformFallCheck(this Terraria.NPC npc, ref bool canJump, int yOffset = 12)
+        {
+            Terraria.Player player = Main.player[npc.target];
+            if (npc.Center.Y + yOffset < player.Center.Y)
+            {
+                canJump = true;
+                return;
+            }
+            canJump = false;
+        }
         public static void JumpDownPlatform(this Terraria.NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
         {
             Point tile = npc.Bottom.ToTileCoordinates();

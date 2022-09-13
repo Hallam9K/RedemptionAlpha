@@ -493,6 +493,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     break;
                 case ActionState.Flamethrowers:
                     targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC core = Main.npc[i];
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                            continue;
+
+                        core.ai[1] = 1;
+                        core.ai[2] = 1;
+
+                    }
                     switch (TimerRand)
                     {
                         case 0:

@@ -52,9 +52,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (Timer++ == 0 && Projectile.owner == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
+                startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation());
                 Rot = MathHelper.ToRadians(Main.rand.NextFloat(-10, 10));
                 Length = 10;
+                player.direction = Main.MouseWorld.X > player.Center.X ? 1 : -1;
             }
 
             if (Timer < 4)

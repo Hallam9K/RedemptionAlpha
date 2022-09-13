@@ -123,10 +123,7 @@ namespace Redemption.NPCs.Lab
                         AIState = ActionState.Idle;
                     }
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.7f, 6, 6, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -154,10 +151,7 @@ namespace Redemption.NPCs.Lab
                     angle = 0;
                     NPC.DamageHostileAttackers(0, 5);
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.4f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
@@ -178,6 +172,7 @@ namespace Redemption.NPCs.Lab
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         float angle;
         public override void FindFrame(int frameHeight)
         {

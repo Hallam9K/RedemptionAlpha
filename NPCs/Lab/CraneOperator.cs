@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
 using Redemption.Biomes;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab
 {
@@ -154,15 +155,13 @@ namespace Redemption.NPCs.Lab
                     {
                         moveTo = new((RedeGen.LabVector.X + 114) * 16, (RedeGen.LabVector.Y + 156) * 16);
 
-                        bool jumpDownPlatforms = false;
-                        NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                        if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                        else { NPC.noTileCollide = false; }
+                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                         RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1f, 8, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private int AniFrameY;
         private int AniFrameX;
         public override void FindFrame(int frameHeight)

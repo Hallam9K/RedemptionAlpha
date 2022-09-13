@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.UI;
 using Redemption.WorldGeneration;
@@ -89,10 +90,7 @@ namespace Redemption.NPCs.Lab.Janitor
                                 State = 3;
                                 NPC.netUpdate = true;
                             }
-                            bool jumpDownPlatforms = false;
-                            NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                            if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                            else { NPC.noTileCollide = false; }
+                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                             RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                         }
                     }
@@ -118,10 +116,7 @@ namespace Redemption.NPCs.Lab.Janitor
                             State = 3;
                             NPC.netUpdate = true;
                         }
-                        bool jumpDownPlatforms = false;
-                        NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                        if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                        else { NPC.noTileCollide = false; }
+                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                         RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
@@ -168,6 +163,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private int WalkFrame;
         public override void FindFrame(int frameHeight)
         {

@@ -176,10 +176,7 @@ namespace Redemption.NPCs.HM
                         }
                     }
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 12, 16, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -268,10 +265,7 @@ namespace Redemption.NPCs.HM
                         AIState = ActionState.RocketFist;
                     }
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2.6f, 12, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
@@ -342,6 +336,7 @@ namespace Redemption.NPCs.HM
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
             Player player = Main.player[NPC.target];
