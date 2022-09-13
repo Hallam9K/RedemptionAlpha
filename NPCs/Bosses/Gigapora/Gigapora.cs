@@ -6,6 +6,8 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
 using ReLogic.Content;
@@ -155,6 +157,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<GigaporaRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<PowerDrill>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

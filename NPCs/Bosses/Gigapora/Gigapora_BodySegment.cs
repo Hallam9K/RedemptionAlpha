@@ -14,33 +14,8 @@ using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    //[AutoloadBossHead]
     public class Gigapora_BodySegment : Gigapora
     {
-        /*public static int coreHeadSlot = -1;
-        public static int tailHeadSlot = -1;
-        public override void Load()
-        {
-            string texture = BossHeadTexture + "2";
-            coreHeadSlot = Mod.AddBossHeadTexture(texture, -1);
-            string texture2 = BossHeadTexture + "3";
-            tailHeadSlot = Mod.AddBossHeadTexture(texture2, -1);
-        }
-
-        public override void BossHeadSlot(ref int index)
-        {
-            int slot = coreHeadSlot;
-            int slot2 = tailHeadSlot;
-            if (SegmentType >= 1 && SegmentType <= 6 && slot != -1)
-            {
-                index = slot;
-            }
-            if (SegmentType == 7 && slot != -1)
-            {
-                index = slot2;
-            }
-        }*/
-
         public new float[] oldrot = new float[6];
         public ref float SegmentType => ref NPC.ai[2];
         public override void SetStaticDefaults()

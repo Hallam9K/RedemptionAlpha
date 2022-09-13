@@ -55,6 +55,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             if (Projectile.timeLeft < 60)
             {
+                Projectile.hostile = false;
                 Projectile.alpha += 10;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
