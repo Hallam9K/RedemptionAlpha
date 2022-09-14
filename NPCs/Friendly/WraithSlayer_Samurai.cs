@@ -56,10 +56,10 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.width = 42;
             NPC.height = 70;
-            NPC.damage = 1550;
+            NPC.damage = 300;
             NPC.friendly = true;
             NPC.defense = 24;
-            NPC.lifeMax = 350;
+            NPC.lifeMax = 250;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath52;
             NPC.knockBackResist = 0f;

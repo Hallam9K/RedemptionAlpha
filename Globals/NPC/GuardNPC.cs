@@ -72,15 +72,15 @@ namespace Redemption.Globals.NPC
             base.SetDefaults(npc);
             if (npc.type == NPCID.GreekSkeleton || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet ||
                 npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.GoblinWarrior)
-                GuardPoints = 15;
+                GuardPoints = 25;
             if (npc.type == NPCID.ArmoredSkeleton || npc.type == NPCID.ArmoredViking || npc.type == NPCID.PossessedArmor)
-                GuardPoints = 30;
+                GuardPoints = 60;
             if (npc.type == NPCID.BlueArmoredBones || npc.type == NPCID.BlueArmoredBonesMace || npc.type == NPCID.BlueArmoredBonesNoPants ||
                 npc.type == NPCID.BlueArmoredBonesSword || npc.type == NPCID.RustyArmoredBonesAxe ||
                 npc.type == NPCID.RustyArmoredBonesFlail || npc.type == NPCID.RustyArmoredBonesSword ||
                 npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
                 npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
-                GuardPoints = 60;
+                GuardPoints = 80;
             if (npc.type == NPCID.Paladin)
                 GuardPoints = 500;
         }
