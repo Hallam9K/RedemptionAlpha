@@ -17,7 +17,7 @@ namespace Redemption.Items.Usable.Summons
         {
             DisplayName.SetDefault("Forbidden Ritual");
             Tooltip.SetDefault("May draw unwanted attention\n" +
-                "Requires the user to have at least 200 max life"
+                "Requires the user to have at least 140 max life"
                 + "\nNot consumable" +
                 "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
 
@@ -42,7 +42,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return player.statLifeMax2 >= 200 && !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
+            return player.statLifeMax2 >= 140 && !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
         }
         public override bool? UseItem(Player player)
         {
@@ -65,7 +65,7 @@ namespace Redemption.Items.Usable.Summons
                 }
 
                 SoundEngine.PlaySound(SoundID.NPCDeath19, player.position);
-                int cap = (int)MathHelper.Min(100, player.statLife - 10);
+                int cap = (int)MathHelper.Min(70, player.statLife - 10);
                 if (cap > 0)
                     BaseAI.DamagePlayer(player, cap, 0, null, false, true);
             }
