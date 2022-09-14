@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
                 if (FrameState < 1)
                 {
-                    if (Main.rand.NextBool(300) && !Framing.GetTileSafely(ground.X, ground.Y).HasTile && host.ai[0] != 5)
+                    if (Main.rand.NextBool(300) && !Framing.GetTileSafely(ground.X, ground.Y).HasTile && host.ai[0] != 5 && host.ai[0] != 6)
                     {
                         FrameState = 1;
                         NPC.netUpdate = true;
@@ -363,6 +363,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     return false;
                 }
             }
+            damage *= 2;
             return true;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

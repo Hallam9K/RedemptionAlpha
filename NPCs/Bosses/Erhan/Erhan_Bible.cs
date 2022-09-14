@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Player player = Main.player[host.target];
-            if (!host.active || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
+            if (!host.active || (host.type == ModContent.NPCType<Erhan>() && host.ai[0] == 4) || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
                 Projectile.Kill();
             drawTimer++;
             Projectile.timeLeft = 10;

@@ -69,6 +69,7 @@ namespace Redemption.Tiles.Natural
             int height = tile.TileFrameY == 36 ? 18 : 16;
             Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile1_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
+        public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;

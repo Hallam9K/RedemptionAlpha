@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<GathicStone>();
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 0;
-            MineResist = 2.5f;
+            MineResist = 1.5f;
             AddMapEntry(new Color(81, 72, 65));
         }
     }
