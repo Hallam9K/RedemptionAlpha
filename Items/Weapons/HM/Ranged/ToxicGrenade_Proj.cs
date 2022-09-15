@@ -38,7 +38,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
         }
-        private int hitTarget;
         public override void Kill(int timeLeft)
         {
             if (!Main.dedServ)
@@ -49,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || !target.CanBeChasedBy() || target.whoAmI == hitTarget)
+                if (!target.active || !target.CanBeChasedBy())
                     continue;
 
                 if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))

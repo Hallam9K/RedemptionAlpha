@@ -113,13 +113,14 @@ namespace Redemption.NPCs.PreHM
         private bool PsychicHit;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
+            bool vDmg = false;
+            if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return false;
+                    return vDmg;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, ModContent.DustType<VoidFlame>(), CustomSounds.GuardBreak, 10, 2);
 
@@ -136,6 +137,8 @@ namespace Redemption.NPCs.PreHM
 
                 damage = 0;
                 PsychicHit = false;
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 return false;
             }
             return true;

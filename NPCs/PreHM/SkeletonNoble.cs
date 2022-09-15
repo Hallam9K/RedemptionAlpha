@@ -66,7 +66,7 @@ namespace Redemption.NPCs.PreHM
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SkeletonNobleBanner>();
-            NPC.RedemptionGuard().GuardPoints = 15;
+            NPC.RedemptionGuard().GuardPoints = 20;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -125,15 +125,16 @@ namespace Redemption.NPCs.PreHM
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (!NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
+            bool vDmg = false;
+            if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return false;
+                    return vDmg;
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Web, CustomSounds.GuardBreak);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Web, CustomSounds.GuardBreak, damage: NPC.lifeMax / 4);
             return true;
         }
 

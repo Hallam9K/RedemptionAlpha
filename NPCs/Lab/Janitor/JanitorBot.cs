@@ -95,18 +95,22 @@ namespace Redemption.NPCs.Lab.Janitor
                 new FlavorTextBestiaryInfoElement("Amidst all the ailments that germs can conjure, all the grime mankind can produce. We'll send unto them, only you. Scrape and Clean until it is done.")
             });
         }
+        private bool vDmg;
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (AIState is not ActionState.Slip && !NPC.RedemptionGuard().IgnoreArmour && !NPC.HasBuff(BuffID.BrokenArmor) && !NPC.RedemptionNPCBuff().stunned && NPC.RedemptionGuard().GuardPoints >= 0)
+            bool vDmg = false;
+            if (AIState is not ActionState.Slip && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref damage, SoundID.NPCHit4);
+                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return false;
+                    return vDmg;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
 
+            if (AIState is ActionState.Slip)
+                damage /= 4;
             damage *= 2;
             return true;
         }

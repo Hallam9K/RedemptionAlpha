@@ -21,14 +21,15 @@ namespace Redemption.Items.Weapons.HM.Ranged
             DisplayName.SetDefault("D.A.N");
             Tooltip.SetDefault("Fires two blasts of bullets per use\n" +
                 "Continuing to hold left-click will spin the weapon while firing, creating a spiral of bullets\n" +
-                "\nContinuing to hold left-click while aiming downwards will charge a purple beam that'll cause eruptions on impact");
+                "\nContinuing to hold left-click while aiming downwards will charge a purple beam that'll cause eruptions on impact\n" +
+                "66% chance to not consume ammo, 90% chance during the bullet spiral");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 35;
+            Item.damage = 30;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 110;
             Item.height = 44;
