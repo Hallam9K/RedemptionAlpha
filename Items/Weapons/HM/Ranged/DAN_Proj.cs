@@ -12,6 +12,7 @@ using Redemption.NPCs.Lab.MACE;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.Globals.Player;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -128,7 +129,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 }
                 if (Projectile.localAI[0] == 80)
                 {
-                    if (player.channel && (Projectile.rotation < MathHelper.Pi - 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0) && Projectile.rotation > 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0)))
+                    if (player.channel && player.GetModPlayer<EnergyPlayer>().statEnergy > 15 && (Projectile.rotation < MathHelper.Pi - 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0) && Projectile.rotation > 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0)))
                     {
                         Projectile.localAI[1] = 1;
                         SoundEngine.PlaySound(CustomSounds.ShieldActivate, Projectile.position);
@@ -203,6 +204,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             offset = 30;
                             spinRot = Projectile.rotation + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0);
                             player.RedemptionScreen().ScreenShakeIntensity += 20;
+                            player.GetModPlayer<EnergyPlayer>().statEnergy -= 15;
                             SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch, Projectile.position);
                             SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
                             player.velocity -= RedeHelper.PolarVector(6, (Main.MouseWorld - player.Center).ToRotation());

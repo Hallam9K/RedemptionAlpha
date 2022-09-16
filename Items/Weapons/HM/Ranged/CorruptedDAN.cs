@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
@@ -21,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             DisplayName.SetDefault("Corrupted D.A.N");
             Tooltip.SetDefault("Fires two blasts of rockets per use\n" +
                 "Continuing to hold left-click will spin the weapon while firing, creating a spiral of homing rockets\n" +
-                "\nContinuing to hold left-click while aiming downwards will charge a red beam that'll cause eruptions on impact\n" +
+                "\n(15[i:" + ModContent.ItemType<EnergyPack>() + "]) Continuing to hold left-click while aiming downwards will charge a red beam that'll cause eruptions on impact\n" +
                 "66% chance to not consume ammo, 90% chance during the homing rocket spiral");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

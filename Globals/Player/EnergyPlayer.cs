@@ -1,9 +1,3 @@
-using Redemption.Biomes;
-using Redemption.Items.Donator.Lizzy;
-using Redemption.Items.Donator.Uncon;
-using Redemption.Projectiles.Ranged;
-using System.Collections.Generic;
-using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
@@ -11,12 +5,14 @@ namespace Redemption.Globals.Player
 {
     public class EnergyPlayer : ModPlayer
     {
-        public int energyMax = 100;
-        public int statEnergy = 100;
+        public int energyMax;
+        public int statEnergy;
         public int energyTimer;
+        public int energyRegen;
         public override void ResetEffects()
         {
-            energyMax = 100;
+            energyMax = 0;
+            energyRegen = 0;
         }
         public override void UpdateDead()
         {
@@ -24,10 +20,12 @@ namespace Redemption.Globals.Player
         }
         public override void PostUpdate()
         {
-            if (energyTimer++ % 30 == 0)
+            if (energyTimer++ % (60 - energyRegen) == 0)
                 statEnergy++;
 
             statEnergy = (int)MathHelper.Clamp(statEnergy, 0, energyMax);
+            energyMax = (int)MathHelper.Clamp(energyMax, 0, 300);
+            energyRegen = (int)MathHelper.Max(0, energyRegen);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Redemption.Globals
         public bool IsAxe;
         public bool Unparryable;
         public bool RitDagger;
+        public bool EnergyBased;
         public override void SetDefaults(Projectile projectile)
         {
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))

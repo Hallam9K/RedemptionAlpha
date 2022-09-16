@@ -6,6 +6,8 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.BaseExtension;
+using static Humanizer.In;
+using Redemption.Globals.Player;
 
 namespace Redemption.Items.Armor.PostML.Xenium
 {
@@ -42,12 +44,15 @@ namespace Redemption.Items.Armor.PostML.Xenium
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
+                "Select a keybind for [Special Ability Key] in Controls";
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " to fire a virulent grenade from your shoulder launcher";
+                player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
+                    "Press " + key + " to fire a virulent grenade from your shoulder launcher";
             }
             player.RedemptionPlayerBuff().xeniumBonus = true;
+            player.GetModPlayer<EnergyPlayer>().energyRegen += 15;
         }
 
         public override void AddRecipes()

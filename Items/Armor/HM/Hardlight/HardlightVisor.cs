@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.HM;
 using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -13,7 +14,8 @@ namespace Redemption.Items.Armor.HM.Hardlight
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("13% increased ranged damage\n" +
-            "5% increased ranged critical strike chance");
+            "5% increased ranged critical strike chance\n" +
+            "Increased Energy regeneration if an Energy Pack is in your inventory");
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
@@ -31,6 +33,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void UpdateEquip(Player player)
         {
+            player.GetModPlayer<EnergyPlayer>().energyRegen += 10;
             player.GetDamage(DamageClass.Ranged) += .13f;
             player.GetCritChance(DamageClass.Ranged) += 5;
         }

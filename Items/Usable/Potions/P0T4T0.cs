@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -12,8 +14,9 @@ namespace Redemption.Items.Usable.Potions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("P0T4T0");
-            Tooltip.SetDefault("Medium improvements to all stats" +
-                               "\n'Now with 100% less AI!'");
+            Tooltip.SetDefault("Medium improvements to all stats\n" +
+                "Increased Energy regeneration" +
+                "\n'Now with 100% less AI!'");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(210, 145, 83),
@@ -23,12 +26,15 @@ namespace Redemption.Items.Usable.Potions
             ItemID.Sets.IsFood[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
-
         public override void SetDefaults()
         {
             Item.DefaultToFood(36, 30, BuffID.WellFed2, 72000);
             Item.value = Item.sellPrice(silver: 60);
             Item.rare = ItemRarityID.Orange;
+        }
+        public override void OnConsumeItem(Player player)
+        {
+            player.AddBuff(ModContent.BuffType<EnergyRegenBuff>(), 300);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Redemption.Globals.NPC
         public int GuardPoints;
         public bool IgnoreArmour;
         public bool GuardBroken;
+        public bool GuardPierce;
 
         public void GuardHit(Terraria.NPC npc, ref bool vanillaDamage, ref double damage, ref float knockback, SoundStyle sound, float dmgReduction = 0.25f, bool noNPCHitSound = false)
         {
@@ -28,11 +29,12 @@ namespace Redemption.Globals.NPC
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
             GuardPoints -= guardDamage;
 
-            if (npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned)
+            if (npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPierce)
             {
                 vanillaDamage = true;
                 damage /= 1.5f;
                 knockback /= 1.5f;
+                GuardPierce = false;
                 return;
             }
             npc.HitEffect();
@@ -77,6 +79,8 @@ namespace Redemption.Globals.NPC
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
                 damage *= 4;
+            if (projectile.Redemption().EnergyBased)
+                GuardPierce = true;
             if (ProjectileTags.Explosive.Has(projectile.type))
                 damage *= 4;
         }

@@ -29,6 +29,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
             Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().EnergyBased = true;
         }
         public bool offsetLeft = false;
         public Vector2 originalVelocity = Vector2.Zero;

@@ -28,6 +28,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.penetrate = 2;
             Projectile.timeLeft = 600;
             Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().EnergyBased = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

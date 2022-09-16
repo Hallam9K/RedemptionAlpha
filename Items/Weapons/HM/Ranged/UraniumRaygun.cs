@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -13,8 +15,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Uranium Raygun");
-            Tooltip.SetDefault("Fires rings of uranium"
-                + "\nCan pierce through tiles and enemies");
+            Tooltip.SetDefault("(2[i:" + ModContent.ItemType<EnergyPack>() + "]) Fires rings of uranium"
+                + "\nCan pierce through tiles and enemies\n" +
+                "Requires an Energy Pack to be in your inventory");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -36,6 +39,16 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.rare = ItemRarityID.Lime;
+        }
+        public override bool CanUseItem(Player player)
+        {
+            return player.GetModPlayer<EnergyPlayer>().statEnergy > 2;
+        }
+        public override bool? UseItem(Player player)
+        {
+            if (player.whoAmI == Main.myPlayer)
+                player.GetModPlayer<EnergyPlayer>().statEnergy -= 2;
+            return base.UseItem(player);
         }
         public override void AddRecipes()
         {

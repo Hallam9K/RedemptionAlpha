@@ -31,6 +31,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().EnergyBased = true;
         }
         public override void AI()
         {

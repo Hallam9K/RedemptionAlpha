@@ -554,10 +554,10 @@ namespace Redemption
             float timerMax = eP.energyMax;
             int timerProgress = (int)(timerBarInner.Height * (eP.statEnergy / timerMax));
             Vector2 drawPos = player.Center + new Vector2(40, 0) - Main.screenPosition;
-            spriteBatch.Draw(timerBar, drawPos, null, Color.White, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerBarInner.Width, timerProgress)), RedeColor.EnergyPulse, MathHelper.Pi, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBar, drawPos, null, Color.White * 0.75f, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerBarInner.Width, timerProgress)), RedeColor.EnergyPulse * 0.75f, MathHelper.Pi, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
-            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, ((int)(eP.statEnergy / timerMax * 100)).ToString() + "%", player.Center + new Vector2(30, -46) - Main.screenPosition, Color.White, 0, Vector2.Zero, Vector2.One);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, ((int)(eP.statEnergy / timerMax * 100)).ToString() + "%", player.Center + new Vector2(30, -36) - Main.screenPosition, Color.White * 0.75f, 0, Vector2.Zero, Vector2.One * 0.75f);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

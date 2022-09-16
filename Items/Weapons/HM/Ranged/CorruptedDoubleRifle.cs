@@ -5,6 +5,7 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.Audio;
@@ -20,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
-                "Every 3rd shot fires a small laser beam\n" +
+                "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory\n" +
                 "33% chance not to consume ammo");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
