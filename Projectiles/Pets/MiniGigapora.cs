@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Pets;
@@ -17,6 +18,7 @@ namespace Redemption.Projectiles.Pets
         {
             DisplayName.SetDefault("Mini Gigapora");
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -31,7 +33,7 @@ namespace Redemption.Projectiles.Pets
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            behindNPCs.Add(index);
+            behindNPCsAndTiles.Add(index);
         }
         private bool spawned;
         public override void AI()
@@ -100,6 +102,7 @@ namespace Redemption.Projectiles.Pets
         {
             DisplayName.SetDefault("Mini Gigapora");
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -114,7 +117,7 @@ namespace Redemption.Projectiles.Pets
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            behindNPCs.Add(index);
+            behindNPCsAndTiles.Add(index);
         }
         public void CheckActive(Player player)
         {
@@ -161,6 +164,7 @@ namespace Redemption.Projectiles.Pets
         {
             DisplayName.SetDefault("Mini Gigapora");
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -175,7 +179,7 @@ namespace Redemption.Projectiles.Pets
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            behindNPCs.Add(index);
+            behindNPCsAndTiles.Add(index);
         }
     }
     public class MiniGigapora_Tail : MiniGigapora_Body
@@ -184,6 +188,7 @@ namespace Redemption.Projectiles.Pets
         {
             DisplayName.SetDefault("Mini Gigapora");
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -198,7 +203,7 @@ namespace Redemption.Projectiles.Pets
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            behindNPCs.Add(index);
+            behindNPCsAndTiles.Add(index);
         }
     }
 }

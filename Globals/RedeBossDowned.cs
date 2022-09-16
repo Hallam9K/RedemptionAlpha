@@ -123,11 +123,11 @@ namespace Redemption.Globals
             if (downedSlayer)
                 downed.Add("downedSlayer");
             if (downedOmega1)
-                downed.Add("downedVlitch1");
+                downed.Add("downedOmega1");
             if (downedOmega2)
-                downed.Add("downedVlitch2");
+                downed.Add("downedOmega2");
             if (downedOmega3)
-                downed.Add("downedVlitch3");
+                downed.Add("downedOmega3");
             if (downedErhan)
                 downed.Add("downedErhan");
             if (nukeDropped)
@@ -170,9 +170,9 @@ namespace Redemption.Globals
             downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
             foundNewb = downed.Contains("foundNewb");
             downedSlayer = downed.Contains("downedSlayer");
-            downedOmega3 = downed.Contains("downedVlitch1");
-            downedOmega3 = downed.Contains("downedVlitch2");
-            downedOmega3 = downed.Contains("downedVlitch3");
+            downedOmega3 = downed.Contains("downedOmega1");
+            downedOmega3 = downed.Contains("downedOmega2");
+            downedOmega3 = downed.Contains("downedOmega3");
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
             slayerDeath = tag.GetInt("slayerDeath");

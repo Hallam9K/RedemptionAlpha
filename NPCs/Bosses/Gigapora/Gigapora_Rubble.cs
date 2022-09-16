@@ -9,7 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Projectiles.Magic
+namespace Redemption.NPCs.Bosses.Gigapora
 {
     public class Gigapora_Rubble : ModProjectile
     {

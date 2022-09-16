@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Terraria.ID;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -57,6 +58,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void AI()
         {
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(4, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
+            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.5f).UseColor(Color.Red).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+
+
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < MaxLaserLength; i += 10)
             {
@@ -86,7 +92,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!npc.active)
                 Projectile.Kill();
 
-            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(5, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(12, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
 
             Projectile.Center = npc.Center + RedeHelper.PolarVector(14, npc.rotation - 1.57f);
             Projectile.velocity = RedeHelper.PolarVector(10, npc.rotation - 1.57f);

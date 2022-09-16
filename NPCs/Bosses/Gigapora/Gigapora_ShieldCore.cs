@@ -12,6 +12,7 @@ using Redemption.Buffs.NPCBuffs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Base;
+using System;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -63,8 +64,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 6500;
-            NPC.damage = 60;
+            NPC.lifeMax = 7000;
+            NPC.damage = 80;
             NPC.defense = 25;
             NPC.knockBackResist = 0;
             NPC.width = 76;
@@ -157,24 +158,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.Rapidfire:
-                    NPC.velocity *= 0.98f;
-                    if (AITimer++ == 0)
-                        NPC.velocity = player.Center.DirectionTo(NPC.Center) * 6;
-
-                    if (AITimer++ % 3 == 0 && AITimer < 30)
-                    {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation() + TimerRand - MathHelper.ToRadians(another ? 50 : 25)), true, CustomSounds.Laser1);
-
-                        TimerRand += MathHelper.ToRadians(another ? 20 : 10);
-                        NPC.netUpdate = true;
-                    }
-                    if (AITimer >= 50)
-                    {
-                        AITimer = 0;
-                        TimerRand = 0;
-                        AIState = ActionState.Idle;
-                        NPC.netUpdate = true;
-                    }
+                    AIState = (ActionState)Main.rand.Next(2, 5);
                     break;
                 case ActionState.Dualcast:
                     NPC.velocity *= 0.98f;
@@ -205,13 +189,45 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
             }
-
+            OverlapCheck();
             if (NPC.ai[3] > 0)
             {
                 NPC.ai[3]++;
                 NPC.velocity *= 0.9f;
                 if (NPC.ai[3] >= 180)
                     NPC.ai[3] = 0;
+            }
+        }
+        private void OverlapCheck()
+        {
+            // If your minion is flying, you want to do this independently of any conditions
+            float overlapVelocity = 0.04f;
+
+            // Fix overlap with other minions
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC other = Main.npc[i];
+
+                if (i != NPC.whoAmI && other.active && Math.Abs(NPC.position.X - other.position.X) + Math.Abs(NPC.position.Y - other.position.Y) < NPC.width)
+                {
+                    if (NPC.position.X < other.position.X)
+                    {
+                        NPC.velocity.X -= overlapVelocity;
+                    }
+                    else
+                    {
+                        NPC.velocity.X += overlapVelocity;
+                    }
+
+                    if (NPC.position.Y < other.position.Y)
+                    {
+                        NPC.velocity.Y -= overlapVelocity;
+                    }
+                    else
+                    {
+                        NPC.velocity.Y += overlapVelocity;
+                    }
+                }
             }
         }
 

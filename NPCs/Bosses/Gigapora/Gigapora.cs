@@ -40,7 +40,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Gigabeam,
             Death,
             Flamethrowers,
-            BurrowAtk
+            BurrowAtk,
+            CrossBomb
         }
 
         public ActionState AIState
@@ -257,7 +258,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!player.active || player.dead)
                 return;
 
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.2f).UseColor(Color.OrangeRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             switch (AIState)
             {
                 case ActionState.Intro:
@@ -309,7 +309,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         if (Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                             speed = 12;
 
-                        WormMovement(player, speed, 0.05f);
+                        float turnSpeed = 0.06f;
+                        if (NPC.DistanceSQ(player.Center) <= 600 * 600)
+                            turnSpeed = 0.001f;
+                        WormMovement(player, speed, turnSpeed);
                     }
                     if (++AITimer > 600)
                     {
@@ -317,12 +320,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         AITimer = 0;
 
                         WeightedRandom<ActionState> choice = new(Main.rand);
-                        if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()) && Main.rand.NextBool(2))
+                        if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()))
                             choice.Add(ActionState.ProtectCore);
-                        else if (BodyState >= 4)
+                        if (BodyState >= 4 || NPC.life <= NPC.lifeMax / 2)
                             choice.Add(ActionState.Gigabeam, BodyState >= 5 ? 2 : 1);
                         choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
                         choice.Add(ActionState.BurrowAtk);
+                        choice.Add(ActionState.CrossBomb);
 
                         AIState = choice;
                         NPC.netUpdate = true;
@@ -342,7 +346,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                     if (AITimer > 0)
                                     {
                                         TimerRand = 0;
-                                        AITimer = 0;
+                                        AITimer = 440;
                                         AIState = ActionState.WormAILol;
                                     }
                                     else
@@ -519,6 +523,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 if (AITimer > 0)
                                 {
                                     TimerRand = 0;
+                                    AITimer = 0;
                                     AIState = ActionState.WormAILol;
                                 }
                                 else
@@ -595,6 +600,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             {
                                 if (AITimer > 0)
                                 {
+                                    AITimer = 300;
                                     TimerRand = 0;
                                     AIState = ActionState.WormAILol;
                                 }
@@ -637,6 +643,78 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 }
                             }
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                    }
+                    break;
+                case ActionState.CrossBomb:
+                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC core = Main.npc[i];
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                            continue;
+
+                        core.ai[1] = 1;
+                        core.ai[2] = 1;
+
+                    }
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                            {
+                                if (AITimer > 0)
+                                {
+                                    TimerRand = 0;
+                                    AITimer = 0;
+                                    AIState = ActionState.WormAILol;
+                                }
+                                else
+                                    TimerRand = 1;
+                            }
+                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                                NPC.velocity.X += 0.1f;
+                            else if (NPC.velocity.X > -6)
+                                NPC.velocity.X -= 0.1f;
+                            if (NPC.velocity.Y <= 20)
+                                NPC.velocity.Y += 0.2f;
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 1:
+                            if (NPC.DistanceSQ(targetPos) < 100 * 100 || AITimer++ >= 600)
+                            {
+                                NPC.velocity.X *= 0.1f;
+                                NPC.velocity.Y = -24;
+                                AITimer = 0;
+                                TimerRand = 2;
+                            }
+                            else
+                                Movement(targetPos, 0.4f, 20);
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 2:
+                            if (player.Center.Y + 100 > NPC.Center.Y)
+                                AITimer = 1;
+                            if (AITimer > 0)
+                            {
+                                AITimer++;
+                                NPC.velocity *= 0.94f;
+                                if (NPC.velocity.Y > -16 || AITimer >= 120)
+                                {
+                                    AITimer = 0;
+                                    TimerRand = 3;
+                                }
+                            }
+                            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                            break;
+                        case 3:
+                            NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() + 1.57f, (float)Math.PI / 120f);
+                            NPC.velocity = RedeHelper.PolarVector(-16, NPC.rotation + 1.57f);
+                            if (AITimer++ >= 280)
+                            {
+                                AITimer = 100;
+                                TimerRand = 0;
+                            }
                             break;
                     }
                     break;
