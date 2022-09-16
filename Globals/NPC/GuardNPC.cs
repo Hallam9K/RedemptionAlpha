@@ -32,8 +32,8 @@ namespace Redemption.Globals.NPC
             if (npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPierce)
             {
                 vanillaDamage = true;
-                damage /= 1.5f;
-                knockback /= 1.5f;
+                damage /= 2;
+                knockback /= 2;
                 GuardPierce = false;
                 return;
             }
