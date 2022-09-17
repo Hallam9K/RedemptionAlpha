@@ -300,22 +300,25 @@ namespace Redemption.NPCs.Friendly
 
             if (RedeBossDowned.nukeDropped)
             {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedGrassSeeds>());
-                if (Main.bloodMoon)
+                if (player.ZoneGraveyard)
                 {
-                    if (WorldGen.crimson)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedGrassSeeds>());
+                    if (Main.bloodMoon)
                     {
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimsonGrassSeeds>());
+                        if (WorldGen.crimson)
+                        {
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimsonGrassSeeds>());
+                        }
+                        else
+                        {
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
+                        }
                     }
-                    else
-                    {
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
-                    }
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
                 }
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CrystalSerum>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BleachedSolution>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GasMask>());

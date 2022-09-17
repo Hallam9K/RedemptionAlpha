@@ -339,7 +339,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     AITimer++;
                                     if (AITimer < 20)
                                     {
-                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), 92, RedeHelper.PolarVector(2, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1);
+                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), (int)(NPC.damage * 0.7f), RedeHelper.PolarVector(2, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1);
                                         NPC.velocity -= NPC.velocity.RotatedBy(Math.PI / 2) * NPC.velocity.Length() / NPC.Distance(host.Center);
                                     }
                                     else
@@ -391,7 +391,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     AITimer++;
                                     if (AITimer % 10 == 0)
                                     {
-                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), 92, RedeHelper.PolarVector(5, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1);
+                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), (int)(NPC.damage * 0.7f), RedeHelper.PolarVector(5, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1);
                                     }
                                     if (AITimer < 60)
                                         NPC.MoveToNPC(host, RedeHelper.PolarVector(-200, host.rotation), 18, 20);
@@ -455,7 +455,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     {
                                         NPC.velocity *= .96f;
                                         if (AITimer >= 130 && AITimer % 5 == 0 && AITimer < 200)
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver>(), NPC.damage, new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), false, SoundID.Item1);
                                     }
                                 }
                                 break;
@@ -481,7 +481,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         if (NPC.Distance(PosPlayer) < 300 || AITimer > 40)
                                         {
                                             NPC.rotation = 0;
-                                            NPC.Shoot(NPC.Center + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism>(), NPC.damage, RedeHelper.PolarVector(9, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1, ai0: NPC.whoAmI);
+                                            NPC.Shoot(NPC.Center + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism>(), (int)(NPC.damage * 0.9f), RedeHelper.PolarVector(9, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1, ai0: NPC.whoAmI);
                                             AITimer = 100;
                                         }
                                         else
@@ -537,7 +537,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         if (AITimer == 20)
                                         {
                                             SoundEngine.PlaySound(CustomSounds.OODashReady with { Pitch = 0.9f }, NPC.position);
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver2_Spawner>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver2_Spawner>(), (int)(NPC.damage * 0.9f), Vector2.Zero, false, SoundID.Item1);
                                         }
 
                                         if (AITimer == 50)
