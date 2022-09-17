@@ -1672,7 +1672,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     }
                                 }
                             }
-
                             else
                             {
                                 chance -= Main.rand.NextFloat(0.2f, 0.5f);
@@ -1680,7 +1679,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 AttackChoice = -1;
                                 NPC.netUpdate = true;
                             }
-
                             break;
                         #endregion
 

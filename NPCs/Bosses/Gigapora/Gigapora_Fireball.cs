@@ -23,8 +23,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public override void SetDefaults()
         {
-            Projectile.width = 60;
-            Projectile.height = 60;
+            Projectile.width = 30;
+            Projectile.height = 30;
             Projectile.hostile = true;
             Projectile.friendly = false;
             Projectile.tileCollide = true;
@@ -34,13 +34,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 99, 86), new Color(204, 15, 20)), new RoundCap(), new ArrowGlowPosition(), 150f, 450f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 99, 86), new Color(204, 15, 20)), new RoundCap(), new ArrowGlowPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         public override void AI()
         {
-            if (Projectile.wet && !Projectile.lavaWet)
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if (!npc.active || (Projectile.wet && !Projectile.lavaWet))
                 Projectile.Kill();
+
+            Projectile.position.X = npc.position.X + (npc.width / 2) - 30;
 
             int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.5f);
             Main.dust[dust].noGravity = true;

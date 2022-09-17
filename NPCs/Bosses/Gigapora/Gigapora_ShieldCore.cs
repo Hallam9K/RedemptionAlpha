@@ -146,11 +146,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     else
                         NPC.velocity *= 0.98f;
 
-                    if (AITimer++ % (another ? 90 : 60) == 0)
+                    if (AITimer++ % (another ? 120 : 90) == 0)
                     {
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, true, CustomSounds.Laser1);
                     }
-                    if (AITimer >= (another ? 220 : 180) && NPC.DistanceSQ(player.Center) <= 600 * 600)
+                    if (AITimer >= (another ? 340 : 220) && NPC.DistanceSQ(player.Center) <= 600 * 600)
                     {
                         AITimer = 0;
                         AIState = (ActionState)Main.rand.Next(2, 5);

@@ -283,7 +283,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                             if (Main.rand.NextBool(2))
                             {
-                                NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation), true, SoundID.DD2_BetsyFireballShot);
+                                NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation), true, SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
                                 for (int i = 0; i < 10; i++)
                                 {
                                     int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
@@ -294,7 +294,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             }
                             else
                             {
-                                NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(-Main.rand.NextFloat(24, 30), NPC.rotation), true, SoundID.DD2_BetsyFireballShot);
+                                NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation + MathHelper.Pi), true, SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
                                 for (int i = 0; i < 10; i++)
                                 {
                                     int d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
