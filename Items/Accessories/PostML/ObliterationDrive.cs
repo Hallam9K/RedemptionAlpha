@@ -164,17 +164,17 @@ namespace Redemption.Items.Accessories.PostML
                             if (!HitOnce)
                             {
                                 if (!Player.HasBuff(ModContent.BuffType<OblitBuff1>()) && !Player.HasBuff(ModContent.BuffType<OblitBuff2>()) && !Player.HasBuff(ModContent.BuffType<OblitBuff3>()) && !Player.HasBuff(ModContent.BuffType<OblitBuff4>()) && !Player.HasBuff(ModContent.BuffType<OblitBuff5>()))
-                                    Player.AddBuff(ModContent.BuffType<OblitBuff1>(), 300);
+                                    Player.AddBuff(ModContent.BuffType<OblitBuff1>(), 600);
                                 else if (Player.HasBuff(ModContent.BuffType<OblitBuff1>()))
-                                    Player.AddBuff(ModContent.BuffType<OblitBuff2>(), 300);
+                                    Player.AddBuff(ModContent.BuffType<OblitBuff2>(), 600);
                                 else if (Player.HasBuff(ModContent.BuffType<OblitBuff2>()))
-                                    Player.AddBuff(ModContent.BuffType<OblitBuff3>(), 300);
+                                    Player.AddBuff(ModContent.BuffType<OblitBuff3>(), 600);
                                 else if (Player.HasBuff(ModContent.BuffType<OblitBuff3>()))
-                                    Player.AddBuff(ModContent.BuffType<OblitBuff4>(), 300);
+                                    Player.AddBuff(ModContent.BuffType<OblitBuff4>(), 600);
                                 else if (Player.HasBuff(ModContent.BuffType<OblitBuff4>()))
-                                    Player.AddBuff(ModContent.BuffType<OblitBuff5>(), 300);
+                                    Player.AddBuff(ModContent.BuffType<OblitBuff5>(), 600);
                                 else if (Player.HasBuff(ModContent.BuffType<OblitBuff5>()))
-                                    Player.AddBuff(ModContent.BuffType<OblitBuff5>(), 300);
+                                    Player.AddBuff(ModContent.BuffType<OblitBuff5>(), 600);
                                 HitOnce = true;
                             }
                             npcsHit.Add(npc.whoAmI);
