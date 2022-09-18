@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
+using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Materials.HM;
 using System;
 using Terraria;
@@ -199,9 +201,12 @@ namespace Redemption.Items.Accessories.HM
         }
         private bool CanUseDash()
         {
+            Point tileBelow = Player.Bottom.ToTileCoordinates();
+            if (Player.GetModPlayer<ObliterationDashPlayer>().DashAccessoryEquipped && Player.GetModPlayer<ObliterationDashPlayer>().DashDelay == 0 && !Main.tile[tileBelow.X, tileBelow.Y].HasUnactuatedTile)
+                return false;
+            if (Player.dashType == 1 || Player.dashType == 3)
+                return false;
             return DashAccessoryEquipped
-                && Player.dashType == 0
-                && !Player.setSolar
                 && !Player.mount.Active
                 && !Player.HasBuff(ModContent.BuffType<StunnedDebuff>());
         }

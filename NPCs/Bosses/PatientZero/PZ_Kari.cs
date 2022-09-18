@@ -55,6 +55,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
             NPC.netAlways = true;
+            NPC.BossBar = Main.BigBossProgressBar.NeverValid;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2");
         }

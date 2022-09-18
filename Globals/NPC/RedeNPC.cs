@@ -409,27 +409,31 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {
-            DecapitationCondition decapitationDropCondition = new();
-            IItemDropRule conditionalRule = new LeadingConditionRule(decapitationDropCondition);
-            int itemType = ItemID.Skull;
-            if (npc.type == ModContent.NPCType<CorpseWalkerPriest>())
-                itemType = ModContent.ItemType<CorpseWalkerSkullVanity>();
-            else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
-                npc.type == ModContent.NPCType<SkeletonDuelist>() || npc.type == ModContent.NPCType<SkeletonFlagbearer>() ||
-                npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
-                npc.type == ModContent.NPCType<SkeletonWarden>())
-                itemType = ModContent.ItemType<EpidotrianSkull>();
+            if (NPCLists.SkeletonHumanoid.Contains(npc.type))
+            {
+                DecapitationCondition decapitationDropCondition = new();
+                IItemDropRule conditionalRule = new LeadingConditionRule(decapitationDropCondition);
+                int itemType = ItemID.Skull;
+                if (npc.type == ModContent.NPCType<CorpseWalkerPriest>())
+                    itemType = ModContent.ItemType<CorpseWalkerSkullVanity>();
+                else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
+                    npc.type == ModContent.NPCType<SkeletonDuelist>() || npc.type == ModContent.NPCType<SkeletonFlagbearer>() ||
+                    npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
+                    npc.type == ModContent.NPCType<SkeletonWarden>())
+                    itemType = ModContent.ItemType<EpidotrianSkull>();
 
-            IItemDropRule rule = ItemDropRule.Common(itemType);
-            conditionalRule.OnSuccess(rule);
-            npcLoot.Add(conditionalRule);
-
+                IItemDropRule rule = ItemDropRule.Common(itemType);
+                conditionalRule.OnSuccess(rule);
+                npcLoot.Add(conditionalRule);
+            }
             if (npc.type == NPCID.BoneSerpentHead)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
             if (npc.type == NPCID.Ghost || npc.type == NPCID.Wraith)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
             if (npc.type == NPCID.AngryBones || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.CursedSkull || npc.type == NPCID.DarkCaster)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
+            if (npc.type == NPCID.MoonLordCore)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

@@ -10,6 +10,7 @@ using Redemption.Items.Materials.HM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.Items.Usable
 {
@@ -39,7 +40,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 4, 8));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ObliterationDrive>()));
         }
         public override void PostUpdate()
         {
