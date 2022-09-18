@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Tiles
 {
-    public class GathicStoneWall : ModItem
+    public class GathicFroststoneBrickWall : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlacableWall((ushort)ModContent.WallType<GathicStoneWallTile>());
+            Item.DefaultToPlacableWall((ushort)ModContent.WallType<GathicFroststoneBrickWallTile>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = 999;
@@ -23,7 +23,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void AddRecipes()
         {
             CreateRecipe(4)
-                .AddIngredient(ModContent.ItemType<GathicStone>())
+                .AddIngredient(ModContent.ItemType<GathicFroststoneBrick>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

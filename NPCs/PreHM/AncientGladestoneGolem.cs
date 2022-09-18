@@ -335,10 +335,8 @@ namespace Redemption.NPCs.PreHM
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            int[] AncientTileArray = { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>() };
-
             float baseChance = SpawnCondition.Cavern.Chance;
-            float multiplier = AncientTileArray.Contains(Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType) ? .03f : 0.006f;
+            float multiplier = TileLists.AncientTileArray.Contains(Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType) ? .03f : 0.006f;
 
             return baseChance * multiplier;
         }

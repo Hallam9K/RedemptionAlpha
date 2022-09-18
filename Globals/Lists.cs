@@ -250,6 +250,7 @@ namespace Redemption.Globals
             TileID.Marble,
             ModContent.TileType<GathicStoneBrickTile>(),
             ModContent.TileType<GathicGladestoneBrickTile>(),
+            ModContent.TileType<GathicFroststoneBrickTile>(),
             ModContent.TileType<AncientHallBrickTile>(),
             ModContent.TileType<SlayerShipPanelTile>(),
             ModContent.TileType<LabPlatingTileUnsafe>()
@@ -263,9 +264,13 @@ namespace Redemption.Globals
             ModContent.TileType<LabDoorClosed>(),
             ModContent.TileType<PetrifiedWoodDoorClosed>()
         };
+
+        public static List<int> AncientTileArray = new()
+        {
+            ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>(), ModContent.TileType<GathicFroststoneTile>(), ModContent.TileType<GathicFroststoneBrickTile>()
+        };
         #endregion
     }
-
     public static class NPCLists
     {
         #region NPC Lists

@@ -6,6 +6,7 @@ using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Redemption.Tiles.Tiles;
 
 namespace Redemption.Tiles.Natural
 {
@@ -27,7 +28,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.Origin = new Point16(0, 0);
             TileObjectData.newTile.AnchorValidTiles = new int[]
             {
-                TileID.IceBlock, TileID.SnowBlock, TileID.SnowBrick, TileID.IceBrick, TileID.CorruptIce, TileID.FleshIce, TileID.HallowedIce
+                TileID.IceBlock, TileID.SnowBlock, TileID.SnowBrick, TileID.IceBrick, TileID.CorruptIce, TileID.FleshIce, TileID.HallowedIce, ModContent.TileType<GathicFroststoneTile>(), ModContent.TileType<GathicFroststoneBrickTile>()
             };
 
             // Attaches upside down

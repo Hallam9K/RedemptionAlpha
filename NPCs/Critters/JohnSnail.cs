@@ -1,3 +1,4 @@
+using Redemption.Items.Critters;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,6 +36,7 @@ namespace Redemption.NPCs.Critters
             NPC.aiStyle = NPCAIStyleID.Snail;
             AIType = NPCID.Snail;
             AnimationType = NPCID.Snail;
+            NPC.catchItem = (short)ModContent.ItemType<JohnSnailItem>();
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

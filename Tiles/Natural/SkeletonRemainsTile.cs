@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileSolid[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 2;
@@ -38,6 +39,7 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileSolid[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 1;

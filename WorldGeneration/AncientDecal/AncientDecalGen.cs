@@ -48,7 +48,6 @@ namespace Redemption.WorldGeneration
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
                 gen.Generate(origin.X, origin.Y, true, true);
             });
-
             switch (ID)
             {
                 case 2:
@@ -60,13 +59,12 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 13, origin.Y + 13, ModContent.TileType<ElderWoodClockTile>());
                     GenUtils.ObjectPlace(origin.X + 17, origin.Y + 13, ModContent.TileType<ElderWoodBedTile>());
                     if (WorldGen.genRand.NextBool(2))
-                        RedeGen.ElderWoodChest(origin.X + 15, origin.Y + 9);
+                        WorldGen.PlaceTile(origin.X + 15, origin.Y + 9, ModContent.TileType<PetrifiedWoodTile>(), true);
                     break;
                 case 3:
                     GenUtils.ObjectPlace(origin.X + 6, origin.Y + 14, ModContent.TileType<ElderWoodLampTile>(), 1);
                     break;
             }
-
             for (int i = origin.X; i < origin.X + 25; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 25; j++)
@@ -96,14 +94,13 @@ namespace Redemption.WorldGeneration
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
                 gen.Generate(origin.X, origin.Y, true, true);
             });
-
             switch (ID)
             {
                 case 1:
-                    RedeGen.ElderWoodChest(origin.X + 12, origin.Y + 17);
+                    WorldGen.PlaceTile(origin.X + 12, origin.Y + 17, ModContent.TileType<PetrifiedWoodTile>(), true);
                     break;
                 case 2:
-                    RedeGen.ElderWoodChest(origin.X + 10, origin.Y + 19);
+                    WorldGen.PlaceTile(origin.X + 10, origin.Y + 19, ModContent.TileType<PetrifiedWoodTile>(), true);
                     for (int i = origin.X + 8; i < origin.X + 14; i++)
                     {
                         for (int j = origin.Y + 17; j < origin.Y + 20; j++)
@@ -121,7 +118,7 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 14, origin.Y + 14, ModContent.TileType<ElderWoodTableTile>());
                     GenUtils.ObjectPlace(origin.X + 14, origin.Y + 12, ModContent.TileType<ElderWoodCandleTile>(), 1);
                     if (WorldGen.genRand.NextBool(2))
-                        RedeGen.ElderWoodChest(origin.X + 10, origin.Y + 14);
+                        WorldGen.PlaceTile(origin.X + 10, origin.Y + 14, ModContent.TileType<PetrifiedWoodTile>(), true);
                     break;
                 case 0:
                     GenUtils.ObjectPlace(origin.X + 11, origin.Y + 4, ModContent.TileType<ElderWoodDoorClosed>());
@@ -135,10 +132,9 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 17, origin.Y + 20, ModContent.TileType<ElderWoodWorkbenchTile>());
                     GenUtils.ObjectPlace(origin.X + 17, origin.Y + 19, ModContent.TileType<ElderWoodCandelabraTile>(), 1);
                     if (WorldGen.genRand.NextBool(2))
-                        RedeGen.ElderWoodChest(origin.X + 21, origin.Y + 18);
+                        WorldGen.PlaceTile(origin.X + 21, origin.Y + 18, ModContent.TileType<PetrifiedWoodTile>(), true);
                     break;
             }
-
             for (int i = origin.X; i < origin.X + 25; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 25; j++)
@@ -173,7 +169,7 @@ namespace Redemption.WorldGeneration
             {
                 case 2:
                     if (WorldGen.genRand.NextBool(2))
-                        RedeGen.ElderWoodChest(origin.X + 5, origin.Y + 18);
+                        WorldGen.PlaceTile(origin.X + 5, origin.Y + 18, ModContent.TileType<PetrifiedWoodTile>(), true);
                     for (int i = origin.X + 4; i < origin.X + 16; i++)
                     {
                         for (int j = origin.Y + 8; j < origin.Y + 20; j++)
@@ -190,10 +186,9 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 21, origin.Y + 7, ModContent.TileType<ElderWoodTableTile>());
                     GenUtils.ObjectPlace(origin.X + 19, origin.Y + 7, ModContent.TileType<ElderWoodChairTile>(), 0, 1);
                     GenUtils.ObjectPlace(origin.X + 22, origin.Y + 5, TileID.ClayPot);
-                    RedeGen.ElderWoodChest(origin.X + 10, origin.Y + 21);
+                    WorldGen.PlaceTile(origin.X + 10, origin.Y + 21, ModContent.TileType<PetrifiedWoodTile>(), true);
                     break;
             }
-
             for (int i = origin.X; i < origin.X + 25; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 25; j++)
