@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Projectiles;
 using System.Collections.Generic;
 using Terraria;
@@ -14,6 +15,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("4 summon tag damage\n" +
+                "Your summons will focus struck enemies\n" +
+                "Striking enemies with the tip of the whip will heal the user");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -21,14 +25,14 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             Item.width = 28;
             Item.height = 24;
-            Item.DefaultToWhip(ModContent.ProjectileType<RootTendril_Proj>(), 16, 4, 4);
-            Item.shootSpeed = 4;
+            Item.DefaultToWhip(ModContent.ProjectileType<RootTendril_Proj>(), 16, 1, 6);
+            Item.shootSpeed = 6;
             Item.rare = ItemRarityID.Green;
             Item.channel = true;
-            Item.value = Item.buyPrice(0, 0, 45, 0);
+            Item.value = Item.buyPrice(0, 3, 45, 0);
         }
         public override bool MeleePrefix() => true;
-        }
+    }
     public class RootTendril_Proj : ModProjectile
     {
         public override void SetStaticDefaults()
@@ -40,13 +44,31 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             Projectile.DefaultToWhip();
 
-            Projectile.WhipSettings.Segments = 20;
-            Projectile.WhipSettings.RangeMultiplier = 1f;
+            Projectile.WhipSettings.Segments = 10;
+            Projectile.WhipSettings.RangeMultiplier = 0.5f;
+            Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            //target.AddBuff(ModContent.BuffType<RootTendrilDebuff>(), 240);
-            Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
+            Player player = Main.player[Projectile.owner];
+            if (target.DistanceSQ(player.Center) > 130 * 130)
+            {
+                int steps = (int)player.Distance(target.Center) / 8;
+                for (int i = 0; i < steps; i++)
+                {
+                    if (Main.rand.NextBool(3))
+                    {
+                        Dust dust = Dust.NewDustDirect(Vector2.Lerp(player.Center, target.Center, (float)i / steps), 2, 2, DustID.LifeDrain);
+                        dust.velocity = target.DirectionTo(dust.position) * 2;
+                        dust.noGravity = true;
+                    }
+                }
+                player.statLife += 3;
+                player.HealEffect(3);
+            }
+            target.AddBuff(BuffID.BlandWhipEnemyDebuff, 180);
+            player.MinionAttackTargetNPC = target.whoAmI;
         }
         private static void DrawLine(List<Vector2> list)
         {

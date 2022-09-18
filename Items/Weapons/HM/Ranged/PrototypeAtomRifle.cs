@@ -7,6 +7,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.HM.Ammo;
+using Redemption.Globals.Player;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -14,7 +16,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Replaces normal bullets with Plasma Rounds");
+            Tooltip.SetDefault("(4[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Plasma Rounds\n" +
+                "Requires an Energy Pack to be in your inventory");
         }
 
         public override void SetDefaults()
@@ -57,12 +60,16 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PlasmaRound>(), damage, knockback, player.whoAmI);
-            Main.projectile[proj].hostile = false;
-            Main.projectile[proj].friendly = true;
-            Main.projectile[proj].DamageType = DamageClass.Ranged;
-            Main.projectile[proj].tileCollide = true;
-            Main.projectile[proj].netUpdate2 = true;
+            if (player.GetModPlayer<EnergyPlayer>().statEnergy > 4)
+            {
+                player.GetModPlayer<EnergyPlayer>().statEnergy -= 4;
+                int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PlasmaRound>(), damage, knockback, player.whoAmI);
+                Main.projectile[proj].hostile = false;
+                Main.projectile[proj].friendly = true;
+                Main.projectile[proj].DamageType = DamageClass.Ranged;
+                Main.projectile[proj].tileCollide = true;
+                Main.projectile[proj].netUpdate2 = true;
+            }
             return false;
         }
 

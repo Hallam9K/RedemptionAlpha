@@ -23,7 +23,7 @@ namespace Redemption.Items.Tools.PreHM
             Item.DamageType = DamageClass.Melee;
             Item.width = 42;
             Item.height = 42;
-            Item.useTime = 18;
+            Item.useTime = 14;
             Item.useAnimation = 22;
             Item.pick = 100;
             Item.useStyle = ItemUseStyleID.Swing;

@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -28,6 +29,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
             Projectile.extraUpdates = 1;
+            Projectile.Redemption().EnergyBased = true;
         }
 
         public override void AI()

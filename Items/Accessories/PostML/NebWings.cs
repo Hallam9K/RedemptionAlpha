@@ -20,8 +20,8 @@ namespace Redemption.Items.Accessories.PostML
 
         public override void SetDefaults()
 		{
-			Item.width = 70;
-            Item.height = 58;
+			Item.width = 38;
+            Item.height = 36;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.accessory = true;
             Item.expert = true;
@@ -34,7 +34,7 @@ namespace Redemption.Items.Accessories.PostML
             ascentWhenFalling = 0.95f;
 			ascentWhenRising = 0.35f;
 			maxCanAscendMultiplier = 1f;
-			maxAscentMultiplier = 5f;
+			maxAscentMultiplier = 4f;
 			constantAscend = 0.2f;
 		}
 	}

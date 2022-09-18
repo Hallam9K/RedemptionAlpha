@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.KSIII;
 using Terraria;

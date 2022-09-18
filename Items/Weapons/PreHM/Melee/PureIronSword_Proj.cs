@@ -241,7 +241,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200)
                     continue;
 
-                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileTags.Ice.Has(target.type) || ProjectileLists.IsTechnicallyMelee.Contains(target.type))
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileTags.Ice.Has(target.type) || target.Redemption().TechnicallyMelee)
                     continue;
 
                 DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 4, 4, nogravity: true);

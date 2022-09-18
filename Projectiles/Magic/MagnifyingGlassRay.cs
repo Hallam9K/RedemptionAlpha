@@ -77,9 +77,20 @@ namespace Redemption.Projectiles.Magic
             player.itemTime = 2;
             player.itemAnimation = 2;
 
-            if (player.channel)
-                Projectile.timeLeft = 20;
 
+            if (AITimer >= 80 && AITimer % 20 == 0)
+            {
+                int mana = player.inventory[player.selectedItem].mana;
+                if (BasePlayer.ReduceMana(player, mana / 2))
+                {
+                    if (player.channel)
+                        Projectile.timeLeft = 200;
+                }
+                else
+                {
+                    player.channel = false;
+                }
+            }
             #region Beginning And End Effects
             if (AITimer == 80)
                 SoundEngine.PlaySound(SoundID.Item20, Projectile.position);

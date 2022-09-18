@@ -26,6 +26,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().EnergyBased = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

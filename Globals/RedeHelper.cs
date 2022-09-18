@@ -664,10 +664,7 @@ namespace Redemption.Globals
         #region NPC Methods
 
         /// <summary>
-        /// For methods that have 'this NPC npc', instead of doing TTHelper.Shoot(), you can do npc.Shoot() instead.
-        /// For shooting projectiles easier. 'aimed' will make the projectile shoot at the target without the extra code, if thats true, also set 'speed'.
-        /// 'speed' and 'spread' is only needed if 'aimed' is true. 'spread' is optional.
-        /// Example: npc.Shoot(npc.Center, ModContent.ProjectileType<Bullet>(), 40, new Vector2(-5, 0), false, false, SoundID.Item1);
+        /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
         public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity,
             bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0)
@@ -687,7 +684,7 @@ namespace Redemption.Globals
             if (playSound)
                 SoundEngine.PlaySound(sound, proj.position);
 
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (proj.owner == Main.myPlayer)
             {
                 Projectile.NewProjectile(proj.GetSource_FromThis(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
@@ -989,46 +986,15 @@ namespace Redemption.Globals
             }
         }
 
-        /// <summary>
-        /// Checks if the npc can fall through platforms.
-        /// </summary>
-        /// <param name="canJump">Bool for if it can fall, set this to a bool in the npc.</param>
-        /// <param name="yOffset">Offset so the npc doesnt fall when the player is on the same plaform as it.</param>
-        public static void JumpDownPlatform(this Terraria.NPC npc, ref bool canJump, int yOffset = 12)
+        public static void PlatformFallCheck(this Terraria.NPC npc, ref bool canJump, int yOffset = 12)
         {
             Terraria.Player player = Main.player[npc.target];
-            Point tile = npc.Bottom.ToTileCoordinates();
-            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).TileType] && Main.tile[tile.X, tile.Y].HasTile &&
-                npc.Center.Y + yOffset < player.Center.Y)
+            if (npc.Center.Y + yOffset < player.Center.Y)
             {
-                Point tile2 = npc.BottomRight.ToTileCoordinates();
                 canJump = true;
-                if (Main.tile[tile.X - 1, tile.Y - 1].HasUnactuatedTile &&
-                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).TileType] ||
-                    Main.tile[tile2.X + 1, tile2.Y - 1].HasUnactuatedTile &&
-                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).TileType] || npc.collideX)
-                {
-                    npc.velocity.X = 0;
-                }
+                return;
             }
-        }
-
-        public static void JumpDownPlatform(this Terraria.NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
-        {
-            Point tile = npc.Bottom.ToTileCoordinates();
-            if (Main.tileSolidTop[Framing.GetTileSafely(tile.X, tile.Y).TileType] && Main.tile[tile.X, tile.Y].HasTile &&
-                npc.Center.Y + yOffset < vector.Y)
-            {
-                Point tile2 = npc.BottomRight.ToTileCoordinates();
-                canJump = true;
-                if (Main.tile[tile.X - 1, tile.Y - 1].HasUnactuatedTile &&
-                    Main.tileSolid[Framing.GetTileSafely(tile.X - 1, tile.Y - 1).TileType] ||
-                    Main.tile[tile2.X + 1, tile2.Y - 1].HasUnactuatedTile &&
-                    Main.tileSolid[Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).TileType] || npc.collideX)
-                {
-                    npc.velocity.X = 0;
-                }
-            }
+            canJump = false;
         }
 
         /// <summary>
@@ -1154,7 +1120,8 @@ namespace Redemption.Globals
                             Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
                             !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
                         {
-                            return new Vector2(tpTileX, tpY);
+                            if (WorldGen.InWorld(tpTileX, tpY))
+                                return new Vector2(tpTileX, tpY);
                         }
                     }
                 }

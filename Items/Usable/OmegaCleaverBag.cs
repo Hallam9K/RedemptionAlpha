@@ -40,7 +40,7 @@ namespace Redemption.Items.Usable
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 1, 4));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>(), 1));
         }
         public override void PostUpdate()

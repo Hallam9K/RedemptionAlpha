@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             NPC.aiStyle = -1;
             NPC.lifeMax = 2600;
-            NPC.damage = 21;
+            NPC.damage = 23;
             NPC.defense = 6;
             NPC.knockBackResist = 0f;
             NPC.width = 34;
@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

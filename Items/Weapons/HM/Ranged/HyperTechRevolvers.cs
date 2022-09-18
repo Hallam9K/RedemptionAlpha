@@ -23,8 +23,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hyper-Tech Revolvers");
-            Tooltip.SetDefault("Right-click to toss one in the air, catching it gives a short fire rate boost\n" +
-                "Missing the catch will cause you to only shoot one gun for 10 seconds\n" +
+            Tooltip.SetDefault("Right-click to toss one in the air, catching it gives a stackable fire rate boost\n" +
+                "Missing the catch will cause you to only shoot one gun for 5 seconds\n" +
                 "Replaces normal bullets with nano bullets");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 50;
+            Item.damage = 58;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 58;
             Item.height = 50;
@@ -57,7 +57,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override bool CanConsumeAmmo(Item ammo, Player player) => false;
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse == 2 && (player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] > 0 || player.HasBuff<RevolverTossCooldown>() || player.HasBuff<RevolverTossDebuff>()))
+            if (player.altFunctionUse == 2 && (player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] > 0 || player.HasBuff<RevolverTossDebuff>()))
                 return false;
             return true;
         }
@@ -70,7 +70,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (player.altFunctionUse == 2 && player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item7, player.Center);
-                player.AddBuff(ModContent.BuffType<RevolverTossCooldown>(), 600);
                 Projectile.NewProjectile(source, position, new Vector2(Main.rand.NextFloat(-3, 3), -10), ModContent.ProjectileType<HyperTechRevolvers_Proj2>(), 0, 0, player.whoAmI, -player.direction);
                 return false;
             }

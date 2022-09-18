@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.channel = true;
             Item.knockBack = 5f;
             Item.value = Item.buyPrice(0, 4, 0, 0);
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.LightRed;
             Item.autoReuse = false;
             Item.shoot = ModContent.ProjectileType<Chernobyl_Proj>();
             Item.noUseGraphic = true;

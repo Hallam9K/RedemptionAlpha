@@ -89,9 +89,9 @@ namespace Redemption.NPCs.HM
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.aiStyle = -1;
             NPC.value = 600;
-            NPC.knockBackResist = 0.1f; // TODO: Prototype Silver Banner
-            //Banner = NPC.type;
-            //BannerItem = ModContent.ItemType<HazmatZombieBanner>();
+            NPC.knockBackResist = 0.1f;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<PrototypeSilverBanner>();
         }
 
         private Vector2 moveTo;
@@ -145,10 +145,7 @@ namespace Redemption.NPCs.HM
                         AIState = ActionState.Idle;
                     }
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.8f, 8, 16, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -215,10 +212,7 @@ namespace Redemption.NPCs.HM
                         AIState = ActionState.Laser;
                     }
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
@@ -344,6 +338,7 @@ namespace Redemption.NPCs.HM
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)

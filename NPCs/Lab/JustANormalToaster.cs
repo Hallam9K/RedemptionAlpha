@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Lab
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return RedeBossDowned.downedVlitch3 ? "I am the toaster." : "Just a normal toaster.";
+            return RedeBossDowned.downedOmega3 ? "I am the toaster." : "Just a normal toaster.";
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

@@ -144,7 +144,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                             Main.dust[dustIndex].noGravity = true;
                         }
                         NPC.netUpdate = true;
-                        NPC.SetDefaults(ModContent.NPCType<KS3>());
+                        if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+                            NPC.SetDefaults(ModContent.NPCType<KS3_Clone>());
+                        else
+                            NPC.SetDefaults(ModContent.NPCType<KS3>());
                     }
                     break;
                 case 5:

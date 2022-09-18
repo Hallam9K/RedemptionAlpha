@@ -20,6 +20,8 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Single;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
+using Redemption.BaseExtension;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -312,6 +314,13 @@ namespace Redemption.NPCs.Friendly
                     shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
                     nextSlot++;
                 }
+            }
+            if (RedeWorld.deadRingerGiven)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRinger>());
+                shop.item[nextSlot].shopCustomPrice = new int?(30);
+                shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+                nextSlot++;
             }
         }
 

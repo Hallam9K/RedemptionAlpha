@@ -1,3 +1,5 @@
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -20,6 +22,15 @@ namespace Redemption.Items.Usable
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 0, 0);
             Item.rare = ItemRarityID.Orange;
+        }
+        public override void UpdateInventory(Player player)
+        {
+            if (!RedeWorld.deadRingerGiven)
+            {
+                RedeWorld.deadRingerGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
         }
     }
 }

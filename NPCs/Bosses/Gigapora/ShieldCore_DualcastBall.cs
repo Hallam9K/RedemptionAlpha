@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
             }
             if (targetted)
-                Projectile.Move(move, 18, 60);
+                Projectile.Move(move, 18, 80);
             else
                 Projectile.velocity *= 0.94f;
 

@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             else
             {
                 Projectile.alpha -= 10;
-                Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 200, 255);
+                Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 150, 255);
             }
             if (Projectile.timeLeft < 10)
             {

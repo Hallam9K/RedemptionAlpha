@@ -1,8 +1,11 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.Audio;
@@ -18,14 +21,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
-                "Every 3rd shot fires a small laser beam\n" +
+                "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory\n" +
                 "33% chance not to consume ammo");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 52;
+            Item.damage = 58;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 66;
             Item.height = 34;
@@ -57,17 +60,18 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<DoubleRifle>())
+                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 4)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 3)
                 .AddIngredient(ModContent.ItemType<Plating>(), 2)
-                .AddIngredient(ModContent.ItemType<OmegaBattery>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
         private int shotCount;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (shotCount++ >= 2)
+            if (shotCount++ >= 2 && player.GetModPlayer<EnergyPlayer>().statEnergy > 3)
             {
+                player.GetModPlayer<EnergyPlayer>().statEnergy -= 3;
                 SoundEngine.PlaySound(CustomSounds.PlasmaShot, player.position);
                 Projectile.NewProjectile(source, position + RedeHelper.PolarVector(2, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2), velocity / 60, ModContent.ProjectileType<CorruptedDoubleRifle_Beam>(), damage, knockback, player.whoAmI);
                 shotCount = 0;

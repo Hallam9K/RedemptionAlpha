@@ -45,38 +45,37 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private int bullet = 1;
         private bool swap;
         private bool reset;
-        private bool reset2;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             if (Projectile.ai[1]++ == 0 && Projectile.ai[0] == 1)
                 swap = true;
-            if (player.HasBuff<RevolverTossDebuff>() && !player.HasBuff<RevolverTossBuff>())
+
+            bool playerBuff = player.HasBuff<RevolverTossBuff>() || player.HasBuff<RevolverTossBuff2>() || player.HasBuff<RevolverTossBuff3>();
+            if (player.HasBuff<RevolverTossDebuff>() && !playerBuff)
             {
                 if (Projectile.ai[0] == 1)
                 {
                     Projectile.Kill();
                     return;
                 }
-                else if (Projectile.ai[0] != 1 && player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] > 0)
-                    reset = true;
             }
-            if (!player.HasBuff<RevolverTossCooldown>() && !player.HasBuff<RevolverTossDebuff>() && player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj>()] == 1)
+            if (player.HasBuff<RevolverTossDebuff>() && player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj>()] == 2)
+            {
+                Projectile.Kill();
+                return;
+            }
+            if (!player.HasBuff<RevolverTossDebuff>() && player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj>()] == 1 && player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] == 0)
             {
                 Projectile.Kill();
                 return;
             }
             if (player.ownedProjectileCounts[ModContent.ProjectileType<HyperTechRevolvers_Proj2>()] > 0)
             {
-                if (player.HasBuff<RevolverTossBuff>())
-                    reset2 = true;
+                if (playerBuff)
+                    reset = true;
             }
-            else if (reset2)
-            {
-                Projectile.Kill();
-                return;
-            }
-            if (reset && !player.HasBuff<RevolverTossCooldown>())
+            else if (reset)
             {
                 Projectile.Kill();
                 return;
@@ -125,11 +124,19 @@ namespace Redemption.Items.Weapons.HM.Ranged
             rotOffset += 0.1f;
             if (Main.myPlayer == Projectile.owner)
             {
+                int firerate = 10;
+                if (player.HasBuff<RevolverTossBuff>())
+                    firerate = 8;
+                else if (player.HasBuff<RevolverTossBuff2>())
+                    firerate = 6;
+                else if (player.HasBuff<RevolverTossBuff3>())
+                    firerate = 4;
+
                 if (!player.channel)
                     Projectile.Kill();
                 else
                 {
-                    if (++Projectile.localAI[1] % (player.HasBuff<RevolverTossBuff>() ? 4 : 10) == 0)
+                    if (++Projectile.localAI[1] % firerate == 0)
                     {
                         if (!swap)
                         {

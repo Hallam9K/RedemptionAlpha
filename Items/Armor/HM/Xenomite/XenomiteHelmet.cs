@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.HM;
 using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 
 namespace Redemption.Items.Armor.HM.Xenomite
 {
@@ -61,11 +62,14 @@ namespace Redemption.Items.Armor.HM.Xenomite
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
+                "Select a keybind for [Special Ability Key] in Controls";
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " to unleash toxic gas in a radius around the player, inflicting Burning Acid";
+                player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory" +
+                    "\nPress " + key + " to unleash toxic gas in a radius around the player, inflicting Burning Acid";
             }
+            player.GetModPlayer<EnergyPlayer>().energyRegen += 10;
             player.RedemptionPlayerBuff().xenomiteBonus = true;
         }
     }

@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldNight.Chance;
-            float multiplier = LanternNight.LanternsUp || Main.moonPhase == 0 ? 0.6f : 0.01f;
+            float multiplier = LanternNight.LanternsUp || Main.moonPhase == 0 ? 0.4f : 0.01f;
 
             return baseChance * multiplier;
         }

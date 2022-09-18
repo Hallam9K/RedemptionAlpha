@@ -50,9 +50,9 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 4)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 8)
                 .AddIngredient(ModContent.ItemType<Plating>(), 2)
-                .AddIngredient(ModContent.ItemType<OmegaBattery>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

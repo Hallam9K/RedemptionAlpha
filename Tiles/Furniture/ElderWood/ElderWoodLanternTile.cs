@@ -20,6 +20,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
             TileObjectData.newSubTile.LavaDeath = false;
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newSubTile.LavaPlacement = LiquidPlacement.Allowed;
             TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();

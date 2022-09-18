@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Melee;
 using Redemption.Items.Materials.HM;
+using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -14,6 +15,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Slayer's Rocket Fist");
             Tooltip.SetDefault("Punches enemies up-close\n" +
                 "Holding down left-click and hitting an enemy will fire a rocket fist if you are airborne");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

@@ -13,19 +13,34 @@ namespace Redemption.Globals.NPC
         public int GuardPoints;
         public bool IgnoreArmour;
         public bool GuardBroken;
+        public bool GuardPierce;
 
-        public void GuardHit(Terraria.NPC npc, ref double damage, SoundStyle sound, float dmgReduction = 0.25f)
+        public void GuardHit(Terraria.NPC npc, ref bool vanillaDamage, ref double damage, ref float knockback, SoundStyle sound, float dmgReduction = 0.25f, bool noNPCHitSound = false)
         {
-            if (IgnoreArmour || npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPoints < 0 || GuardBroken)
+            vanillaDamage = true;
+            if (IgnoreArmour || GuardPoints < 0 || GuardBroken)
+            {
+                IgnoreArmour = false;
                 return;
+            }
 
-            damage = (int)(damage * dmgReduction);
-            npc.HitEffect();
+            int guardDamage = (int)(damage * dmgReduction);
             SoundEngine.PlaySound(sound, npc.position);
-            if (npc.HitSound.HasValue)
+            CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
+            GuardPoints -= guardDamage;
+
+            if (npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPierce)
+            {
+                vanillaDamage = true;
+                damage /= 2;
+                knockback /= 2;
+                GuardPierce = false;
+                return;
+            }
+            npc.HitEffect();
+            if (!noNPCHitSound && npc.HitSound.HasValue)
                 SoundEngine.PlaySound(npc.HitSound.Value, npc.position);
-            CombatText.NewText(npc.getRect(), Colors.RarityPurple, (int)damage, true, true);
-            GuardPoints -= (int)damage;
+            vanillaDamage = false;
             damage = 0;
         }
         public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
@@ -64,6 +79,8 @@ namespace Redemption.Globals.NPC
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
                 damage *= 4;
+            if (projectile.Redemption().EnergyBased)
+                GuardPierce = true;
             if (ProjectileTags.Explosive.Has(projectile.type))
                 damage *= 4;
         }
@@ -72,31 +89,32 @@ namespace Redemption.Globals.NPC
             base.SetDefaults(npc);
             if (npc.type == NPCID.GreekSkeleton || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet ||
                 npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.GoblinWarrior)
-                GuardPoints = 15;
+                GuardPoints = 25;
             if (npc.type == NPCID.ArmoredSkeleton || npc.type == NPCID.ArmoredViking || npc.type == NPCID.PossessedArmor)
-                GuardPoints = 30;
+                GuardPoints = 80;
             if (npc.type == NPCID.BlueArmoredBones || npc.type == NPCID.BlueArmoredBonesMace || npc.type == NPCID.BlueArmoredBonesNoPants ||
                 npc.type == NPCID.BlueArmoredBonesSword || npc.type == NPCID.RustyArmoredBonesAxe ||
                 npc.type == NPCID.RustyArmoredBonesFlail || npc.type == NPCID.RustyArmoredBonesSword ||
                 npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
                 npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
-                GuardPoints = 60;
+                GuardPoints = 160;
             if (npc.type == NPCID.Paladin)
                 GuardPoints = 500;
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            bool vDmg = true;
             if (npc.type == NPCID.GreekSkeleton)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
+                if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
-                        return false;
+                        return vDmg;
                 }
-                GuardBreakCheck(npc, DustID.Gold, CustomSounds.GuardBreak);
+                GuardBreakCheck(npc, DustID.Gold, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle ||
                 npc.type == NPCID.ArmoredSkeleton || npc.type == NPCID.ArmoredViking || npc.type == NPCID.BlueArmoredBones ||
@@ -104,62 +122,62 @@ namespace Redemption.Globals.NPC
                 npc.type == NPCID.BlueArmoredBonesSword || npc.type == NPCID.RustyArmoredBonesAxe ||
                 npc.type == NPCID.RustyArmoredBonesFlail || npc.type == NPCID.RustyArmoredBonesSword)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
+                if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
-                        return false;
+                        return vDmg;
                 }
-                GuardBreakCheck(npc, DustID.Bone, CustomSounds.GuardBreak, damage: 50);
+                GuardBreakCheck(npc, DustID.Bone, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
                 npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
+                if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref damage, SoundID.NPCHit4);
+                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
-                        return false;
+                        return vDmg;
                 }
-                GuardBreakCheck(npc, DustID.Torch, CustomSounds.GuardBreak, damage: 50);
+                GuardBreakCheck(npc, DustID.Torch, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type == NPCID.PossessedArmor)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
+                if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
+                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
-                        return false;
+                        return vDmg;
                 }
-                GuardBreakCheck(npc, DustID.Demonite, CustomSounds.GuardBreak, damage: 10);
+                GuardBreakCheck(npc, DustID.Demonite, CustomSounds.GuardBreak, damage: npc.lifeMax / 2);
             }
             if (npc.type == NPCID.GoblinWarrior)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
+                if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref damage, SoundID.NPCHit4, 0.5f);
+                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4, 0.5f);
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
-                        return false;
+                        return vDmg;
                 }
-                GuardBreakCheck(npc, DustID.Iron, CustomSounds.GuardBreak, damage: 10);
+                GuardBreakCheck(npc, DustID.Iron, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type == NPCID.Paladin)
             {
-                if (!IgnoreArmour && !npc.HasBuff(BuffID.BrokenArmor) && !npc.RedemptionNPCBuff().stunned && GuardPoints >= 0)
+                if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref damage, SoundID.NPCHit4, 0.2f);
+                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4, 0.2f);
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
-                        return false;
+                        return vDmg;
                 }
                 GuardBreakCheck(npc, DustID.GoldCoin, CustomSounds.GuardBreak, damage: npc.lifeMax / 3);
             }

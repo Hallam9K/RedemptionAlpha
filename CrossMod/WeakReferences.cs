@@ -235,7 +235,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Omega Cleaver
-                bossChecklist.Call("AddBoss", mod, "1st Omega Prototype", ModContent.NPCType<OmegaCleaver>(), 12.5f, () => RedeBossDowned.downedVlitch1, () => true,
+                bossChecklist.Call("AddBoss", mod, "1st Omega Prototype", ModContent.NPCType<OmegaCleaver>(), 12.5f, () => RedeBossDowned.downedOmega1, () => true,
                     new List<int>
                     {
                         ModContent.ItemType<CleaverRelic>(),
@@ -253,7 +253,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Omega Gigapora
-                bossChecklist.Call("AddBoss", mod, "2nd Omega Prototype", ModContent.NPCType<Gigapora>(), 13.5f, () => RedeBossDowned.downedVlitch2, () => true,
+                bossChecklist.Call("AddBoss", mod, "2nd Omega Prototype", ModContent.NPCType<Gigapora>(), 13.5f, () => RedeBossDowned.downedOmega2, () => true,
                     new List<int>
                     {
                         ModContent.ItemType<GigaporaRelic>(),
@@ -270,7 +270,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Omega Obliterator
-                bossChecklist.Call("AddBoss", mod, "3rd Omega Prototype", ModContent.NPCType<OO>(), 18.05f, () => RedeBossDowned.downedVlitch3, () => true,
+                bossChecklist.Call("AddBoss", mod, "3rd Omega Prototype", ModContent.NPCType<OO>(), 18.05f, () => RedeBossDowned.downedOmega3, () => true,
                     new List<int>
                     {
                         ModContent.ItemType<OORelic>(),

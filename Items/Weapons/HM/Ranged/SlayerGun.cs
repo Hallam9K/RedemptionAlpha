@@ -9,6 +9,9 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.Creative;
+using Redemption.Items.Weapons.HM.Ammo;
+using Redemption.Globals.Player;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -17,9 +20,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hyper-Tech Blaster");
-            Tooltip.SetDefault("'Pewpewpewpewpewpewpew'"
-                + "\nReplaces normal bullets with Phantasmal Bolts"
-                + "\nRight-clicking changes type of fire");
+            Tooltip.SetDefault("\n(2-6[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Energy Bolts"
+                + "\nRight-clicking changes type of fire\n" +
+                "Requires an Energy Pack to be in your inventory");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
@@ -68,7 +71,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         break;
                 }
             }
-            return true;
+            return player.GetModPlayer<EnergyPlayer>().statEnergy > 2;
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
@@ -106,6 +109,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 switch (AttackMode)
                 {
                     case 0:
+                        player.GetModPlayer<EnergyPlayer>().statEnergy -= 2;
                         int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj].hostile = false;
                         Main.projectile[proj].friendly = true;
@@ -125,12 +129,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         {
                             Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
                             int proj3 = Projectile.NewProjectile(source, position, perturbedSpeed, ProjectileID.MartianTurretBolt, (int)(damage / 1.5f), knockback, player.whoAmI);
+                            Main.projectile[proj3].Redemption().EnergyBased = true;
                             Main.projectile[proj3].hostile = false;
                             Main.projectile[proj3].friendly = true;
                             Main.projectile[proj3].DamageType = DamageClass.Ranged;
                             Main.projectile[proj3].tileCollide = true;
                             Main.projectile[proj3].netUpdate2 = true;
                         }
+                        player.GetModPlayer<EnergyPlayer>().statEnergy -= 6;
                         int proj2 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj2].hostile = false;
                         Main.projectile[proj2].friendly = true;
@@ -143,7 +149,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         player.itemAnimationMax = Item.useTime * 2;
                         player.itemTime = Item.useTime * 2;
                         player.itemAnimation = Item.useTime * 2;
-
+                        player.GetModPlayer<EnergyPlayer>().statEnergy -= 2;
                         int proj4 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ReboundShot>(), damage, knockback, player.whoAmI);
                         Main.projectile[proj4].hostile = false;
                         Main.projectile[proj4].friendly = true;

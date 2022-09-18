@@ -18,6 +18,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Elder Wood Candle");

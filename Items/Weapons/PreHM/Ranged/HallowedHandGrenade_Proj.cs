@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 Projectile.alpha = 255;
                 if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 10;
-                SoundEngine.PlaySound(SoundID.Item14);
+                SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(255, 216, 0), DustID.GoldFlame, 0, 30, 3);
                 Rectangle boom = new((int)Projectile.Center.X - 150, (int)Projectile.Center.Y - 150, 300, 300);
                 for (int i = 0; i < Main.maxNPCs; i++)
@@ -64,6 +64,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[Projectile.whoAmI] = 20;
+
             if (Projectile.localAI[0] < 180)
                 Projectile.localAI[0] = 180;
         }

@@ -18,9 +18,9 @@ namespace Redemption.Globals
         public static bool downedEaglecrestGolem;
         public static bool foundNewb;
         public static bool downedSlayer;
-        public static bool downedVlitch1;
-        public static bool downedVlitch2;
-        public static bool downedVlitch3;
+        public static bool downedOmega1;
+        public static bool downedOmega2;
+        public static bool downedOmega3;
         public static bool downedErhan;
         public static int erhanDeath;
         public static int slayerDeath;
@@ -48,9 +48,9 @@ namespace Redemption.Globals
             downedEaglecrestGolem = false;
             foundNewb = false;
             downedSlayer = false;
-            downedVlitch1 = false;
-            downedVlitch2 = false;
-            downedVlitch3 = false;
+            downedOmega1 = false;
+            downedOmega2 = false;
+            downedOmega3 = false;
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
@@ -79,9 +79,9 @@ namespace Redemption.Globals
             downedEaglecrestGolem = false;
             foundNewb = false;
             downedSlayer = false;
-            downedVlitch1 = false;
-            downedVlitch2 = false;
-            downedVlitch3 = false;
+            downedOmega1 = false;
+            downedOmega2 = false;
+            downedOmega3 = false;
             downedErhan = false;
             erhanDeath = 0;
             slayerDeath = 0;
@@ -122,12 +122,12 @@ namespace Redemption.Globals
                 downed.Add("foundNewb");
             if (downedSlayer)
                 downed.Add("downedSlayer");
-            if (downedVlitch1)
-                downed.Add("downedVlitch1");
-            if (downedVlitch2)
-                downed.Add("downedVlitch2");
-            if (downedVlitch3)
-                downed.Add("downedVlitch3");
+            if (downedOmega1)
+                downed.Add("downedOmega1");
+            if (downedOmega2)
+                downed.Add("downedOmega2");
+            if (downedOmega3)
+                downed.Add("downedOmega3");
             if (downedErhan)
                 downed.Add("downedErhan");
             if (nukeDropped)
@@ -170,9 +170,9 @@ namespace Redemption.Globals
             downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
             foundNewb = downed.Contains("foundNewb");
             downedSlayer = downed.Contains("downedSlayer");
-            downedVlitch3 = downed.Contains("downedVlitch1");
-            downedVlitch3 = downed.Contains("downedVlitch2");
-            downedVlitch3 = downed.Contains("downedVlitch3");
+            downedOmega3 = downed.Contains("downedOmega1");
+            downedOmega3 = downed.Contains("downedOmega2");
+            downedOmega3 = downed.Contains("downedOmega3");
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
             slayerDeath = tag.GetInt("slayerDeath");
@@ -204,9 +204,9 @@ namespace Redemption.Globals
             var flags2 = new BitsByte();
             flags2[0] = foundNewb;
             flags2[1] = downedSlayer;
-            flags2[2] = downedVlitch1;
-            flags2[3] = downedVlitch2;
-            flags2[4] = downedVlitch3;
+            flags2[2] = downedOmega1;
+            flags2[3] = downedOmega2;
+            flags2[4] = downedOmega3;
             flags2[5] = downedErhan;
             flags2[6] = nukeDropped;
             flags2[7] = downedJanitor;
@@ -241,9 +241,9 @@ namespace Redemption.Globals
             BitsByte flags2 = reader.ReadByte();
             foundNewb = flags2[0];
             downedSlayer = flags2[1];
-            downedVlitch1 = flags2[2];
-            downedVlitch2 = flags2[3];
-            downedVlitch3 = flags2[4];
+            downedOmega1 = flags2[2];
+            downedOmega2 = flags2[3];
+            downedOmega3 = flags2[4];
             downedErhan = flags2[5];
             nukeDropped = flags2[6];
             downedJanitor = flags2[7];

@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Base;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -95,22 +96,32 @@ namespace Redemption.Projectiles.Magic
                 Player player = Main.player[Projectile.owner];
                 if (player.channel)
                 {
+                    int mana = player.inventory[player.selectedItem].mana;
                     if (Projectile.localAI[1] == 0)
                         SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
                     if (Projectile.localAI[1] == 120)
                     {
-                        SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 90, Projectile.ai[1]);
+                        if (BasePlayer.ReduceMana(player, (int)(mana * 1.5f)))
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 90, Projectile.ai[1]);
+                        }
                     }
                     if (Projectile.localAI[1] == 240)
                     {
-                        SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 180, Projectile.ai[1]);
+                        if (BasePlayer.ReduceMana(player, (int)(mana * 2f)))
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 180, Projectile.ai[1]);
+                        }
                     }
                     if (Projectile.localAI[1] == 360)
                     {
-                        SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 270, Projectile.ai[1]);
+                        if (BasePlayer.ReduceMana(player, (int)(mana * 2.5f)))
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.One, ModContent.ProjectileType<SoulScepterCharge>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.ai[0] + 270, Projectile.ai[1]);
+                        }
                     }
                 }
             }

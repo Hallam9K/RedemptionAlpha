@@ -84,13 +84,13 @@ namespace Redemption.Globals
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
                 }
             }
-            if (Terraria.NPC.downedBoss3 && (type == TileID.SnowBlock || TileID.Sets.Conversion.Ice[type]))
+            if (Terraria.NPC.downedBoss3 && TileID.Sets.Conversion.Ice[type])
             {
                 bool tileUp = !Framing.GetTileSafely(i, j - 1).HasTile;
                 bool tileDown = !Framing.GetTileSafely(i, j + 1).HasTile;
                 bool tileLeft = !Framing.GetTileSafely(i - 1, j).HasTile;
                 bool tileRight = !Framing.GetTileSafely(i + 1, j).HasTile;
-                if (Main.rand.NextBool(400))
+                if (Main.rand.NextBool(1200) && j > (int)WorldGen.rockLayer)
                 {
                     if (tileUp)
                     {

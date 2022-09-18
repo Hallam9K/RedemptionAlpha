@@ -160,10 +160,10 @@ namespace Redemption.NPCs.Friendly
             if (NPC.downedMoonlord)
                 chat.Add("An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with the lands outside this island, but I've met some of the more important figures. They seem like a good bunch.");
 
-            if (RedeBossDowned.downedVlitch1 || RedeBossDowned.downedVlitch2)
+            if (RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2)
                 chat.Add("You've defeated a Vlitch Overlord? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?");
 
-            if (RedeBossDowned.downedVlitch1 || RedeBossDowned.downedVlitch2)
+            if (RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2)
                 chat.Add("Why am I concerned about the Overlords? Well, our 'mother' isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even our father. I want you to be extremely careful around her. She doesn't mess around.");
 
             if (RedeBossDowned.downedSlayer)
@@ -300,22 +300,25 @@ namespace Redemption.NPCs.Friendly
 
             if (RedeBossDowned.nukeDropped)
             {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedGrassSeeds>());
-                if (Main.bloodMoon)
+                if (player.ZoneGraveyard)
                 {
-                    if (WorldGen.crimson)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedGrassSeeds>());
+                    if (Main.bloodMoon)
                     {
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimsonGrassSeeds>());
+                        if (WorldGen.crimson)
+                        {
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimsonGrassSeeds>());
+                        }
+                        else
+                        {
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
+                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
+                        }
                     }
-                    else
-                    {
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
-                        shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
-                    }
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
                 }
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CrystalSerum>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BleachedSolution>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GasMask>());

@@ -23,7 +23,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void AddRecipes()
         {
             CreateRecipe(4)
-                .AddIngredient(ModContent.ItemType<GathicStoneBrick>())
+                .AddIngredient(ModContent.ItemType<GathicStone>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

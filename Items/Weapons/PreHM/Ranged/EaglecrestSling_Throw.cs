@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                         SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center + Projectile.velocity * 40f,
                             RedeHelper.PolarVector(20, Projectile.rotation + (player.direction == 1 ? MathHelper.PiOver4 : MathHelper.Pi)),
-                            ModContent.ProjectileType<EaglecrestSling_Proj>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
+                            ModContent.ProjectileType<EaglecrestSling_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                     }
                 }
                 else if (Projectile.ai[0] >= 1)

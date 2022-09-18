@@ -76,7 +76,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
         }
-
+        public override bool Slope(int i, int j) => false;
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;

@@ -11,36 +11,13 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.Audio;
+using Redemption.Projectiles.Magic;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    //[AutoloadBossHead]
     public class Gigapora_BodySegment : Gigapora
     {
-        /*public static int coreHeadSlot = -1;
-        public static int tailHeadSlot = -1;
-        public override void Load()
-        {
-            string texture = BossHeadTexture + "2";
-            coreHeadSlot = Mod.AddBossHeadTexture(texture, -1);
-            string texture2 = BossHeadTexture + "3";
-            tailHeadSlot = Mod.AddBossHeadTexture(texture2, -1);
-        }
-
-        public override void BossHeadSlot(ref int index)
-        {
-            int slot = coreHeadSlot;
-            int slot2 = tailHeadSlot;
-            if (SegmentType >= 1 && SegmentType <= 6 && slot != -1)
-            {
-                index = slot;
-            }
-            if (SegmentType == 7 && slot != -1)
-            {
-                index = slot2;
-            }
-        }*/
-
         public new float[] oldrot = new float[6];
         public ref float SegmentType => ref NPC.ai[2];
         public override void SetStaticDefaults()
@@ -163,14 +140,40 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 NPC.width = 120;
                 NPC.height = 92;
             }
+            NPC host = Main.npc[(int)Host];
+            Point ground = NPC.Center.ToTileCoordinates();
             if (SegmentType == 7)
             {
                 NPC.width = 124;
                 NPC.height = 124;
+                if (host.ai[0] == 5 && host.ai[2] >= 3)
+                {
+                    if (Main.rand.NextBool(2) && !Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                    {
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(7, 31), NPC.rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-1, 1)), false, SoundID.Item1);
+                    }
+                    Vector2 gunPos = NPC.Center + RedeHelper.PolarVector(-52 * NPC.spriteDirection, NPC.rotation) + RedeHelper.PolarVector(36, NPC.rotation + MathHelper.PiOver2);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        int d = Dust.NewDust(gunPos, 40, 104, DustID.Smoke, 0, 0, Scale: 2);
+                        Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(8, 14), NPC.rotation + MathHelper.PiOver2);
+                        Main.dust[d].noGravity = true;
+                    }
+                    for (int i = 0; i < 6; i++)
+                    {
+                        int dust = Dust.NewDust(gunPos, 40, 104, ModContent.DustType<GlowDust>(), Scale: 0.5f);
+                        Main.dust[dust].noGravity = true;
+                        Color dustColor = new(253, 221, 3) { A = 0 };
+                        Main.dust[dust].color = dustColor;
+                        int dust2 = Dust.NewDust(gunPos, 40, 104, ModContent.DustType<GlowDust>(), Scale: 0.4f);
+                        Main.dust[dust2].noGravity = true;
+                        Color dustColor2 = new(253, 62, 3) { A = 0 };
+                        Main.dust[dust2].color = dustColor2;
+                    }
+                }
             }
             if (SegmentType <= 0)
             {
-                Point ground = NPC.Center.ToTileCoordinates();
                 if (!frameLag)
                 {
                     if (SegmentType >= -5)
@@ -181,59 +184,180 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
                 if (FrameState < 1)
                 {
-                    if (Main.rand.NextBool(300) && !Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                    if (Main.rand.NextBool(300) && !Framing.GetTileSafely(ground.X, ground.Y).HasTile && host.ai[0] != 5 && host.ai[0] != 6)
                     {
                         FrameState = 1;
+                        NPC.netUpdate = true;
+                    }
+                    if (host.ai[0] == 5 && host.ai[2] == 2 && SegmentType != -1 && SegmentType != -3 && SegmentType != -5 && SegmentType != -7 && SegmentType != -9 && SegmentType != -11)
+                    {
+                        FrameState = 1;
+                        NPC.netUpdate = true;
+                    }
+                    if (host.ai[0] == 7 && host.ai[2] == 3)
+                    {
+                        FrameState = 1;
+                        NPC.netUpdate = true;
                     }
                 }
                 else if (FrameState == 1)
                 {
                     Vector2 gunPos1 = NPC.Center + RedeHelper.PolarVector(36, NPC.rotation) + RedeHelper.PolarVector(18, NPC.rotation + MathHelper.PiOver2);
                     Vector2 gunPos2 = NPC.Center + RedeHelper.PolarVector(-36, NPC.rotation) + RedeHelper.PolarVector(18, NPC.rotation + MathHelper.PiOver2);
-                    if (Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                    if (host.ai[0] == 7 && host.ai[2] >= 3)
                     {
-                        ShootTimer = 0;
-                        FrameState = 0;
-                        NPC.netUpdate = true;
-                    }
-                    if (ShootTimer++ == 1)
-                    {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI, 1);
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI, -1);
-                    }
-                    if (ShootTimer == 60)
-                    {
-                        Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
-                        NPC.Shoot(gunPos1, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), true, SoundID.Item62);
-                        NPC.Shoot(gunPos2, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), true, SoundID.Item62);
-                        for (int i = 0; i < 10; i++)
+                        if (ShootTimer++ >= 30 && ShootTimer % 10 == 0)
                         {
-                            int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
-                            Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                            Main.dust[d].velocity *= 4.5f;
-                            Main.dust[d].noGravity = true;
-                            d = Dust.NewDust(gunPos2, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
-                            Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                            Main.dust[d].velocity *= 4.5f;
-                            Main.dust[d].noGravity = true;
+                            if (Main.rand.NextBool(10))
+                            {
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
+                                if (Main.rand.NextBool(2))
+                                    NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(8, 29), NPC.rotation), true, SoundID.Item61);
+                                else
+                                    NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(-Main.rand.Next(8, 29), NPC.rotation), true, SoundID.Item61);
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 2);
+                                    Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                    Main.dust[d].noGravity = true;
+                                    d = Dust.NewDust(gunPos2, 8, 20, DustID.Smoke, 0, 0, Scale: 2);
+                                    Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                    Main.dust[d].noGravity = true;
+                                }
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 2);
+                                    Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                    Main.dust[d].noGravity = true;
+                                    d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 2);
+                                    Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                    Main.dust[d].noGravity = true;
+                                }
+                            }
                         }
-                        for (int i = 0; i < 20; i++)
+                        if (ShootTimer >= 360)
                         {
-                            int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
-                            Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                            Main.dust[d].velocity *= 5f;
-                            Main.dust[d].noGravity = true;
-                            d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
-                            Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
-                            Main.dust[d].velocity *= 5f;
-                            Main.dust[d].noGravity = true;
+                            ShootTimer = 0;
+                            FrameState = 0;
+                            NPC.netUpdate = true;
                         }
                     }
-                    if (ShootTimer >= 80)
+                    else if (host.ai[0] == 5 && host.ai[2] >= 2)
                     {
-                        ShootTimer = 0;
-                        FrameState = 0;
-                        NPC.netUpdate = true;
+                        if (ShootTimer++ == 1)
+                        {
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_FlameTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate with { Pitch = -0.2f }, NPC.whoAmI, 1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_FlameTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate with { Pitch = -0.2f }, NPC.whoAmI, -1);
+                        }
+                        if (ShootTimer == 120)
+                        {
+                            SoundEngine.PlaySound(CustomSounds.GigaFlame with { Volume = 1.5f }, host.position);
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
+                            NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 1);
+                            NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, -1);
+                            for (int i = 0; i < 10; i++)
+                            {
+                                int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 4.5f;
+                                Main.dust[d].noGravity = true;
+                                d = Dust.NewDust(gunPos2, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 4.5f;
+                                Main.dust[d].noGravity = true;
+                            }
+                            for (int i = 0; i < 20; i++)
+                            {
+                                int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 5f;
+                                Main.dust[d].noGravity = true;
+                                d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 5f;
+                                Main.dust[d].noGravity = true;
+                            }
+                        }
+                        if (ShootTimer >= 120 && Main.rand.NextBool(50))
+                        {
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
+                            if (Main.rand.NextBool(2))
+                            {
+                                NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation), true, SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
+                                    Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                    Main.dust[d].velocity *= 5f;
+                                    Main.dust[d].noGravity = true;
+                                }
+                            }
+                            else
+                            {
+                                NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation + MathHelper.Pi), true, SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    int d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
+                                    Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                    Main.dust[d].velocity *= 5f;
+                                    Main.dust[d].noGravity = true;
+                                }
+                            }
+                        }
+                        if (ShootTimer >= 360)
+                        {
+                            ShootTimer = 0;
+                            FrameState = 0;
+                            NPC.netUpdate = true;
+                        }
+                    }
+                    else
+                    {
+                        if (Framing.GetTileSafely(ground.X, ground.Y).HasTile || (host.ai[0] == 5 && host.ai[2] <= 1) || (host.ai[0] == 7 && host.ai[2] <= 2))
+                        {
+                            ShootTimer = 0;
+                            FrameState = 0;
+                            NPC.netUpdate = true;
+                        }
+                        if (ShootTimer++ == 1)
+                        {
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI, 1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI, -1);
+                        }
+                        if (ShootTimer == 60)
+                        {
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
+                            NPC.Shoot(gunPos1, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), true, SoundID.Item62);
+                            NPC.Shoot(gunPos2, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), true, SoundID.Item62);
+                            for (int i = 0; i < 10; i++)
+                            {
+                                int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 4.5f;
+                                Main.dust[d].noGravity = true;
+                                d = Dust.NewDust(gunPos2, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(6, 8), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 4.5f;
+                                Main.dust[d].noGravity = true;
+                            }
+                            for (int i = 0; i < 20; i++)
+                            {
+                                int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 5f;
+                                Main.dust[d].noGravity = true;
+                                d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
+                                Main.dust[d].velocity = RedeHelper.PolarVector(Main.rand.NextFloat(-8, -6), NPC.rotation + Main.rand.NextFloat(-0.2f, 0.2f));
+                                Main.dust[d].velocity *= 5f;
+                                Main.dust[d].noGravity = true;
+                            }
+                        }
+                        if (ShootTimer >= 80)
+                        {
+                            ShootTimer = 0;
+                            FrameState = 0;
+                            NPC.netUpdate = true;
+                        }
                     }
                 }
             }
@@ -335,6 +459,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     return false;
                 }
             }
+            damage *= 2;
             return true;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

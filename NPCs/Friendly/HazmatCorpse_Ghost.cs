@@ -63,7 +63,8 @@ namespace Redemption.NPCs.Friendly
                 for (int i = 0; i < 25; i++)
                 {
                     int dustIndex = Dust.NewDust(NPC.Center, 2, 2, DustID.DungeonSpirit, 0f, 0f, 100, default, 2);
-                    Main.dust[dustIndex].velocity *= 5f;
+                    Main.dust[dustIndex].velocity *= 2f;
+                    Main.dust[dustIndex].noGravity = true;
                 }
                 DustHelper.DrawDustImage(NPC.Center, DustID.DungeonSpirit, 0.5f, "Redemption/Effects/DustImages/DeadRingerDust", 2, true, 0);
             }

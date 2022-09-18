@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Redemption.NPCs.Bosses.Erhan;
+using Humanizer;
+using Redemption.Base;
+using Microsoft.Xna.Framework;
+using Terraria.Audio;
+using Redemption.Globals;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -11,7 +16,8 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forbidden Ritual");
-            Tooltip.SetDefault("May draw unwanted attention"
+            Tooltip.SetDefault("May draw unwanted attention\n" +
+                "Requires the user to have at least 140 max life"
                 + "\nNot consumable" +
                 "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
 
@@ -36,7 +42,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
+            return player.statLifeMax2 >= 140 && !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
         }
         public override bool? UseItem(Player player)
         {
@@ -48,6 +54,20 @@ namespace Redemption.Items.Usable.Summons
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+
+                if (RedeBossDowned.erhanDeath > 0)
+                    return true;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust.NewDust(player.position, player.width, player.height, DustID.Blood);
+                    Dust.NewDust(player.position, player.width, player.height, DustID.Torch);
+                }
+
+                SoundEngine.PlaySound(SoundID.NPCDeath19, player.position);
+                int cap = (int)MathHelper.Min(70, player.statLife - 10);
+                if (cap > 0)
+                    BaseAI.DamagePlayer(player, cap, 0, null, false, true);
             }
             return true;
         }

@@ -55,7 +55,7 @@ namespace Redemption.Projectiles.Pets
 			else
 				Projectile.LookAtEntity(player);
 
-			if (RedeBossDowned.downedVlitch3 || NPC.AnyNPCs(ModContent.NPCType<KS3>()) || player.InModBiome<SlayerShipBiome>())
+			if (RedeBossDowned.downedOmega3 || NPC.AnyNPCs(ModContent.NPCType<KS3>()) || player.InModBiome<SlayerShipBiome>())
 				HeadType = 5;
 			else if (player.wellFed)
 				HeadType = 1;

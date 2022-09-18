@@ -90,15 +90,13 @@ namespace Redemption.NPCs.HM
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.aiStyle = -1;
             NPC.value = 9000;
-            NPC.knockBackResist = 0.001f; // TODO: Space Paladin Banner
-            //Banner = NPC.type;
-            //BannerItem = ModContent.ItemType<HazmatZombieBanner>();
+            NPC.knockBackResist = 0.001f;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<SpacePaladinBanner>();
         }
 
         private Vector2 moveTo;
         private int runCooldown;
-        private float shieldAlpha;
-        private bool shieldUp;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 120);
@@ -158,10 +156,7 @@ namespace Redemption.NPCs.HM
                         AIState = ActionState.Idle;
                     }
 
-                    bool jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
                     RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.6f, 28, 36, NPC.Center.Y > player.Center.Y);
                     break;
 
@@ -204,10 +199,7 @@ namespace Redemption.NPCs.HM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    jumpDownPlatforms = false;
-                    NPC.JumpDownPlatform(ref jumpDownPlatforms, 20);
-                    if (jumpDownPlatforms) { NPC.noTileCollide = true; }
-                    else { NPC.noTileCollide = false; }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.6f, 28, 36, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
@@ -256,6 +248,7 @@ namespace Redemption.NPCs.HM
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
@@ -341,7 +334,7 @@ namespace Redemption.NPCs.HM
             if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1)))
                 return;
 
-            if (projectile.Hitbox.Intersects(ShieldHitbox))
+            if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
                 if (projectile.penetrate != -1)

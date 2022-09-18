@@ -16,4 +16,15 @@ namespace Redemption.Walls
 			AddMapEntry(new Color(49, 43, 39));
 		}
 	}
+	public class GathicGladestoneBrickWallTileUnsafe : ModWall
+	{
+		public override string Texture => "Redemption/Walls/GathicGladestoneBrickWallTile";
+		public override void SetStaticDefaults()
+		{
+			Main.wallHouse[Type] = false;
+			DustType = ModContent.DustType<SlateDust>();
+			ItemDrop = ModContent.ItemType<GathicGladestoneBrickWall>();
+			AddMapEntry(new Color(49, 43, 39));
+		}
+	}
 }

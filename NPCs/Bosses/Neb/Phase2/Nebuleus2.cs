@@ -1552,6 +1552,40 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             scale = 1.5f;
             return null;
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemTags.Celestial.Has(item.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ItemTags.Nature.Has(item.type))
+                    damage = (int)(damage * 0.9f);
+
+                if (ItemTags.Psychic.Has(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemTags.Shadow.Has(item.type))
+                    damage = (int)(damage * 1.1f);
+            }
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileTags.Celestial.Has(projectile.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ProjectileTags.Nature.Has(projectile.type))
+                    damage = (int)(damage * 0.9f);
+
+                if (ProjectileTags.Psychic.Has(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileTags.Shadow.Has(projectile.type))
+                    damage = (int)(damage * 1.1f);
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
