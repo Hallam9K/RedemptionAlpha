@@ -21,6 +21,7 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.NPCs.Bosses.PatientZero;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -88,6 +89,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.boss = true;
             NPC.netAlways = true;
             NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
+            NPC.BossBar = ModContent.GetInstance<MACEHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusicMP");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
@@ -157,7 +159,7 @@ namespace Redemption.NPCs.Lab.MACE
 
         private Vector2 JawCenter;
         private Vector2 CraneOrigin;
-        private int GuardPointMax;
+        public int GuardPointMax;
         private int Phase;
         private int LaserTimer;
         public override void AI()

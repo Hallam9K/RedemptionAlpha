@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.DataStructures;
@@ -65,6 +67,28 @@ namespace Redemption.Tiles.Furniture.Misc
                         Main.tile[x, y].TileFrameX += 36;
                     }
                 }
+            }
+            return true;
+        }
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Rectangle rect = new(0, 0, flare.Width, flare.Height);
+            Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(211, 232, 169), new Color(247, 247, 169), new Color(211, 232, 169));
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
+            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+
+                spriteBatch.Draw(flare, new Vector2(((i + 1f) * 16) - (int)Main.screenPosition.X, ((j + 1f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
+                spriteBatch.Draw(flare, new Vector2(((i + 1f) * 16) - (int)Main.screenPosition.X, ((j + 1f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, -Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
             }
             return true;
         }

@@ -23,6 +23,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using static Terraria.ModLoader.PlayerDrawLayer;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.Globals.Player
 {
@@ -584,6 +585,12 @@ namespace Redemption.Globals.Player
                     Main.dust[dust].velocity.Y -= 0.5f;
                     drawInfo.DustCache.Add(dust);
                 }
+            }
+            if (Player.GetModPlayer<ObliterationDashPlayer>().DashTimer > 0)
+            {
+                r = 1f;
+                g = 0.5f;
+                b = 0.5f;
             }
         }
 

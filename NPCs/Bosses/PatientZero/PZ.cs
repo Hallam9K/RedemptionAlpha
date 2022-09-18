@@ -91,6 +91,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPC.dontTakeDamage = true;
             NPC.lavaImmune = true;
             NPC.netAlways = true;
+            NPC.BossBar = ModContent.GetInstance<PZHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
