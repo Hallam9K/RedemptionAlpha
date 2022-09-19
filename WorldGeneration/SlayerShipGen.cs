@@ -153,6 +153,12 @@ namespace Redemption.WorldGeneration
                 chest.item[3].stack = WorldGen.genRand.Next(8, 12);
 
                 chest.item[4].SetDefaults(Utils.Next(WorldGen.genRand, HoloChestLoot));
+
+                if (WorldGen.genRand.NextBool(2))
+                {
+                    chest.item[5].SetDefaults(ModContent.ItemType<EnergyCell>());
+                    chest.item[5].stack = WorldGen.genRand.Next(2, 5);
+                }
             }
         }
     }

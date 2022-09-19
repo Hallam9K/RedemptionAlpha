@@ -2,7 +2,6 @@
 
 TODO
 
-- Biocontainer tile for growing life fruits, found as primary loot in Holochests, maybe needs chlorophyte to grow?
 - Bio-Mechanical Heart(?) accessory that converts overflown energy to life (increased life regen when max energy), found in Holochests
 - Accessory that turns mana star drops into something else that do something upon pickup, found in Holochests
 - Lab enemies drop energy cells that you right-click to restore some energy

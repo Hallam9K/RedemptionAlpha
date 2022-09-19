@@ -32,6 +32,7 @@ using Terraria.GameContent.UI;
 using Redemption.Projectiles.Ranged;
 using System;
 using System.Collections.Generic;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.HM
 {
@@ -414,6 +415,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 1, 4, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 2, 2, 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 2, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 2, 1, 3));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
         public override void HitEffect(int hitDirection, double damage)
