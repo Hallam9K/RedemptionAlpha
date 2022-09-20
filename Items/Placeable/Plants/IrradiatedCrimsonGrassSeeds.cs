@@ -1,5 +1,6 @@
 using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,8 +12,9 @@ namespace Redemption.Items.Placeable.Plants
         {
             DisplayName.SetDefault("Irradiated Crimson Seeds");
             Tooltip.SetDefault("Plants irradiated crimson grass on dirt");
-		}		
-		
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+
         public override void SetDefaults()
         {
             Item.width = 22;

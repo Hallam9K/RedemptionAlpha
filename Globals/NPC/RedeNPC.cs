@@ -45,8 +45,13 @@ namespace Redemption.Globals.NPC
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
             if (type == NPCID.Cyborg)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GlobalDischarge>());
-            if (type == NPCID.Wizard && Terraria.NPC.downedGolemBoss)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Rockslide>());
+            if (type == NPCID.Wizard)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
+                if (Terraria.NPC.downedGolemBoss)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Rockslide>());
+            }
         }
         public override void ResetEffects(Terraria.NPC npc)
         {

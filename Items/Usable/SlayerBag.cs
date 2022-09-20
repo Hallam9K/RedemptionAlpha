@@ -51,6 +51,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PocketShieldGenerator>()));
         }
         public override Color? GetAlpha(Color lightColor)
         {

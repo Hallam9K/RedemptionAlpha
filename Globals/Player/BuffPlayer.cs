@@ -24,6 +24,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Redemption.Items.Accessories.PostML;
+using System;
 
 namespace Redemption.Globals.Player
 {
@@ -65,6 +66,10 @@ namespace Redemption.Globals.Player
         public float trappedSoulBoost;
         public bool brokenBlade;
         public bool shellCap;
+        public bool shieldGenerator;
+        public int shieldGeneratorLife = 400;
+        public int shieldGeneratorCD;
+        public float shieldGeneratorAlpha;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -127,6 +132,7 @@ namespace Redemption.Globals.Player
             ChickenForm = false;
             blastBattery = false;
             xenomiteBonus = false;
+            shieldGenerator = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -164,6 +170,8 @@ namespace Redemption.Globals.Player
             bileDebuff = false;
             trappedSoulTimer = 0;
             trappedSoulBoost = 0;
+            shieldGenerator = false;
+            shieldGeneratorAlpha = 0;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -593,11 +601,57 @@ namespace Redemption.Globals.Player
                 b = 0.5f;
             }
         }
-
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        {
+            if (shieldGenerator && shieldGeneratorCD <= 0)
+            {
+                for (int k = 0; k < 30; k++)
+                {
+                    Vector2 vector;
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    vector.X = (float)(Math.Sin(angle) * 60);
+                    vector.Y = (float)(Math.Cos(angle) * 60);
+                    Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost)];
+                    dust2.noGravity = true;
+                    dust2.velocity = -Player.DirectionTo(dust2.position) * 6f;
+                }
+                if (damage >= shieldGeneratorLife)
+                {
+                    SoundEngine.PlaySound(SoundID.NPCDeath56, Player.position);
+                    shieldGeneratorAlpha = 0;
+                    shieldGenerator = false;
+                    shieldGeneratorCD = 3600;
+                    damage *= 4;
+                    damage -= shieldGeneratorLife;
+                    shieldGeneratorLife = 400;
+                    for (int k = 0; k < 30; k++)
+                    {
+                        Vector2 vector;
+                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                        vector.X = (float)(Math.Sin(angle) * 60);
+                        vector.Y = (float)(Math.Cos(angle) * 60);
+                        Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost, Scale: 2)];
+                        dust2.noGravity = true;
+                        dust2.velocity = Player.DirectionTo(dust2.position) * 3f;
+                    }
+                    return true;
+                }
+                playSound = false;
+                SoundEngine.PlaySound(SoundID.NPCHit34, Player.position);
+                shieldGeneratorLife -= damage;
+                Player.noKnockback = true;
+                damage = 0;
+                return true;
+            }
+            return true;
+        }
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
-            if (MetalSet)
-                SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
+            if (!shieldGenerator || shieldGeneratorCD > 0)
+            {
+                if (MetalSet)
+                    SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
+            }
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)

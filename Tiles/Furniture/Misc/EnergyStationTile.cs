@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -22,6 +23,7 @@ namespace Redemption.Tiles.Furniture.Misc
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
@@ -37,6 +39,7 @@ namespace Redemption.Tiles.Furniture.Misc
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = DustID.Electric;
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

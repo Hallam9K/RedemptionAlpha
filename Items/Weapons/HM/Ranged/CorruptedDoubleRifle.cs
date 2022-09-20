@@ -69,7 +69,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         private int shotCount;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (shotCount++ >= 2 && player.GetModPlayer<EnergyPlayer>().statEnergy > 3)
+            if (shotCount++ >= 2 && player.GetModPlayer<EnergyPlayer>().statEnergy >= 3)
             {
                 player.GetModPlayer<EnergyPlayer>().statEnergy -= 3;
                 SoundEngine.PlaySound(CustomSounds.PlasmaShot, player.position);

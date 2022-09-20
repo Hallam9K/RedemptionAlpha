@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         }
         public override bool CanUseItem(Player player)
         {
-            return player.GetModPlayer<EnergyPlayer>().statEnergy > 2;
+            return player.GetModPlayer<EnergyPlayer>().statEnergy >= 2;
         }
         public override bool? UseItem(Player player)
         {

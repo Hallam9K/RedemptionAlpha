@@ -71,7 +71,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         break;
                 }
             }
-            return player.GetModPlayer<EnergyPlayer>().statEnergy > 2;
+            return player.GetModPlayer<EnergyPlayer>().statEnergy >= 2;
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)

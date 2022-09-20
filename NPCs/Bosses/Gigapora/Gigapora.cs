@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.height = 140;
             NPC.damage = 100;
             NPC.defense = 20;
-            NPC.lifeMax = 42000;
+            NPC.lifeMax = 60000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;
@@ -175,7 +175,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         private bool spawned;

@@ -13,6 +13,7 @@ Mods: {
 			XeniumLanceCooldown: "Xenium Lance Cooldown"
 			XenomiteCooldown: "Xenomite Gas Cooldown"
 			RevolverTossCooldown: "Revolver Cooldown"
+			NoitaBombCooldown: "Bomb Cooldown"
             
             # Debuffs
             AntibodiesDebuff: "Xenomite Antibodies"
@@ -55,6 +56,7 @@ Mods: {
             TeslaGeneratorBuff: "Tesla Field Generator"
             XeniumTurretBuff: "Xenium Autoturret"
             MicroshieldCoreBuff: "Microshield Core"
+            MicroshieldDroneBuff: "Microshield Drone"
             
             # Pets
             BabyRockpileBuff: "Baby Rockpile"
@@ -79,6 +81,7 @@ Mods: {
 			XeniumLanceCooldown: "The lance's battery is recharging"
 			XenomiteCooldown: "Your gas container is refilling"
 			RevolverTossCooldown: "You can't toss your revolver"
+			NoitaBombCooldown: "You cannot use the Pommisauva"
             
             # Debuffs
             AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."
@@ -121,6 +124,7 @@ Mods: {
             TeslaGeneratorBuff: "A small generator is creating a tesla field"
             XeniumTurretBuff: "Pewpewpewpewpewpew"
             MicroshieldCoreBuff: "A tiny shield core is defending you"
+            MicroshieldDroneBuff: "A microshield drone is defending you"
             
             # Pets
             BabyRockpileBuff: "Never seen a pile of rocks dance before"

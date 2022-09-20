@@ -7,6 +7,7 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PreHM
 {
+    [AutoloadEquip(EquipType.Face)]
     public class KeepersCirclet : ModItem
     {
         public override void SetStaticDefaults()
@@ -23,11 +24,10 @@ namespace Redemption.Items.Accessories.PreHM
             Item.height = 26;
             Item.value = Item.buyPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.LightRed;
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.accessory = true;
             if (!Main.dedServ)
-            {
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
-            }
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
