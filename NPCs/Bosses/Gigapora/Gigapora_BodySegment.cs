@@ -75,6 +75,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             rotation = NPC.rotation;
         }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            NPC host = Main.npc[(int)Host];
+            return host.ai[0] != 7;
+        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);

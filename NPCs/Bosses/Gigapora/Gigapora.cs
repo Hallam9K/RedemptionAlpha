@@ -173,6 +173,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             potionType = ItemID.GreaterHealingPotion;
         }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return AIState != ActionState.CrossBomb;
+        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
@@ -185,6 +189,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private float BodyTimer;
         private int BodyState;
         private int Ejected;
+        private bool xbombDone;
+        private bool flameDone;
         public override void AI()
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -323,10 +329,12 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()))
                             choice.Add(ActionState.ProtectCore);
                         if (BodyState >= 4 || NPC.life <= NPC.lifeMax / 2)
-                            choice.Add(ActionState.Gigabeam, BodyState >= 5 ? 2 : 1);
-                        choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
+                            choice.Add(ActionState.Gigabeam, BodyState >= 5 ? 1.5f : 1);
+                        if (!flameDone)
+                            choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
                         choice.Add(ActionState.BurrowAtk);
-                        choice.Add(ActionState.CrossBomb);
+                        if (!xbombDone)
+                            choice.Add(ActionState.CrossBomb);
 
                         AIState = choice;
                         NPC.netUpdate = true;
@@ -585,6 +593,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                             if (AITimer++ >= 200)
                             {
+                                flameDone = true;
+                                xbombDone = false;
                                 AITimer = 100;
                                 TimerRand = 0;
                             }
@@ -712,6 +722,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity = RedeHelper.PolarVector(-16, NPC.rotation + 1.57f);
                             if (AITimer++ >= 280)
                             {
+                                flameDone = false;
+                                xbombDone = true;
                                 AITimer = 100;
                                 TimerRand = 0;
                             }

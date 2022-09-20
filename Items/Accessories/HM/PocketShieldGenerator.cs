@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Pocket-Shield Generator");
             Tooltip.SetDefault("Summons a bubble shield that can protect the user from a high amount of damage before breaking\n" +
-                "However, on the impact that breaks the shield, the user will recieve 4x the damage it took in said impact\n" +
+                "However, on the impact that breaks the shield, the user will receive 4x the damage it took in said impact\n" +
                 "Once broken, has a 1 minute cooldown");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 9));
         }

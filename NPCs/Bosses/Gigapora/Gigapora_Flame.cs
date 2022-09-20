@@ -56,6 +56,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
             {
                 if (Main.rand.NextBool(40))
                 {
+                    ParticleManager.NewParticle(Projectile.Center + RedeHelper.PolarVector(i, npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), RedeHelper.PolarVector(Main.rand.Next(4, 19), npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), new EmberParticle(), Color.White, 1, 20, 1);
+                }
+                if (Main.rand.NextBool(200))
+                {
                     ParticleManager.NewParticle(Projectile.Center + RedeHelper.PolarVector(i, npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), RedeHelper.PolarVector(Main.rand.Next(3, 8), npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), new EmberParticle(), Color.White, 1, 20);
                 }
             }
