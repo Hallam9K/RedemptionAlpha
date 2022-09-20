@@ -94,7 +94,7 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub2>(), true, Main.rand.Next(10));
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<AncientShrub2>(), Main.rand.Next(10), 0, -1, -1);
             }
-            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(20) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub3>(), true, Main.rand.Next(6));
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<AncientShrub3>(), Main.rand.Next(6), 0, -1, -1);

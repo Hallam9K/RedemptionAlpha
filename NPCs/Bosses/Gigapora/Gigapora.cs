@@ -320,7 +320,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             turnSpeed = 0.001f;
                         WormMovement(player, speed, turnSpeed);
                     }
-                    if (++AITimer > 600)
+                    if (++AITimer > 500)
                     {
                         TimerRand = 0;
                         AITimer = 0;
@@ -580,16 +580,19 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         case 3:
                             AITimer++;
                             NPC.rotation.SlowRotation(1.57f + facing, (float)Math.PI / 200f);
-                            NPC.velocity = RedeHelper.PolarVector(-30 / ((AITimer / 20) + 1), NPC.rotation + 1.57f);
-                            if ((NPC.velocity.X > -6 && NPC.velocity.X < 6) || AITimer >= 80)
+                            NPC.velocity = RedeHelper.PolarVector(-30 / ((AITimer / 10) + 1), NPC.rotation + 1.57f);
+                            if ((NPC.velocity.X > -3 && NPC.velocity.X < 3) || AITimer >= 80)
                             {
                                 AITimer = 0;
                                 TimerRand = 4;
                             }
                             break;
                         case 4:
+                            bool s = player.Center.X < NPC.Center.X;
+                            if (facing == 0)
+                                s = player.Center.X > NPC.Center.X;
                             NPC.rotation.SlowRotation(1.57f + facing, (float)Math.PI / 200f);
-                            NPC.velocity = RedeHelper.PolarVector(-4 * ((AITimer / 200) + 1), NPC.rotation + 1.57f);
+                            NPC.velocity = RedeHelper.PolarVector((s ? -7 : -3) * ((AITimer / 200) + 1), NPC.rotation + 1.57f);
 
                             if (AITimer++ >= 200)
                             {

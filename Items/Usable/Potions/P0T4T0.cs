@@ -15,8 +15,8 @@ namespace Redemption.Items.Usable.Potions
         {
             DisplayName.SetDefault("P0T4T0");
             Tooltip.SetDefault("Medium improvements to all stats\n" +
-                "Increased Energy regeneration" +
-                "\n'Now with 100% less AI!'");
+                "'Now with 100% less AI!'\n" +
+                "Increases Energy regeneration");
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(210, 145, 83),

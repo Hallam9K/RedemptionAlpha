@@ -30,6 +30,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.penetrate = 20;
             Projectile.tileCollide = true;
             Projectile.Redemption().Unparryable = true;
+            Projectile.Redemption().EnergyBased = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

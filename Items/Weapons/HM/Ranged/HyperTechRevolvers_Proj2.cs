@@ -46,9 +46,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     {
                         SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.Center);
                         if (player.HasBuff<RevolverTossBuff2>())
-                            player.AddBuff(ModContent.BuffType<RevolverTossBuff2>(), 360);
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff2>(), 420);
                         else if (player.HasBuff<RevolverTossBuff3>())
-                            player.AddBuff(ModContent.BuffType<RevolverTossBuff3>(), 300);
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff3>(), 420);
                         else
                             player.AddBuff(ModContent.BuffType<RevolverTossBuff>(), 420);
                         Projectile.localAI[0] = 1;

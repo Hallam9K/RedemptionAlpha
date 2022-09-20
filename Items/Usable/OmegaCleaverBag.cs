@@ -22,6 +22,7 @@ namespace Redemption.Items.Usable
 		{
 			DisplayName.SetDefault("Treasure Box (Omega Cleaver)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            ItemID.Sets.BossBag[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 		public override void SetDefaults()
@@ -41,7 +42,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>(), 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>()));
         }
         public override void PostUpdate()
         {

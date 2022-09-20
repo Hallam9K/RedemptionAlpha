@@ -223,6 +223,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), false, SoundID.Item1);
                         }
                         summonTimer = 600;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);

@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void AI()
         {
-            if (Projectile.localAI[0]++ > 30)
+            if (Projectile.localAI[0]++ > 30 && !Main.rand.NextBool(6))
             {
                 for (int i = 0; i < 1; i++)
                 {

@@ -240,10 +240,15 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 }
             }
         }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.type == ProjectileID.LastPrismLaser)
+                damage /= 3;
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }
