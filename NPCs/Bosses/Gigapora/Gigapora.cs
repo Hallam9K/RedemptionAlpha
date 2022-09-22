@@ -328,8 +328,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         WeightedRandom<ActionState> choice = new(Main.rand);
                         if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()))
                             choice.Add(ActionState.ProtectCore);
-                        if (BodyState >= 4 || NPC.life <= NPC.lifeMax / 2)
-                            choice.Add(ActionState.Gigabeam, BodyState >= 5 ? 1.5f : 1);
+                        if (BodyState >= 5 || NPC.life <= NPC.lifeMax / 2)
+                            choice.Add(ActionState.Gigabeam, BodyState >= 7 ? 1.5f : 1);
                         if (!flameDone)
                             choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
                         choice.Add(ActionState.BurrowAtk);

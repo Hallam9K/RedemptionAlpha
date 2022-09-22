@@ -49,8 +49,10 @@ namespace Redemption.Items
             RedeBossDowned.voltBegin = false;
             RedeBossDowned.downedPZ = false;
             RedeBossDowned.downedNebuleus = false;
+            RedeBossDowned.downedADD = false;
             RedeBossDowned.nebDeath = 0;
             RedeBossDowned.oblitDeath = 0;
+            RedeBossDowned.ADDDeath = 0;
             player.Redemption().slayerStarRating = 0;
             RedeQuest.wayfarerVars[0] = 1;
 

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.KSIII;
@@ -24,7 +25,7 @@ namespace Redemption.Globals
     {
         public override bool PreDraw(SpriteBatch spriteBatch, Terraria.NPC npc, ref BossBarDrawParams drawParams)
         {
-            if (npc.type == ModContent.NPCType<EaglecrestGolem>())
+            if (npc.type == ModContent.NPCType<EaglecrestGolem>() || npc.type == ModContent.NPCType<EaglecrestGolem2>() || npc.type == ModContent.NPCType<Ukko>())
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/EaglecrestGolemBossBar").Value;
             if (npc.type == ModContent.NPCType<SoI>())
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/InfectionBossBar").Value;

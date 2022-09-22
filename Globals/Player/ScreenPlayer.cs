@@ -41,6 +41,7 @@ namespace Redemption
             ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
             cutscene = false;
+            customZoom = 0;
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
@@ -84,6 +85,7 @@ namespace Redemption
         public float timedZoomTimeMax = 0;
         public float timedZoomDuration = 0;
         public float timedZoomDurationMax = 0;
+        public float customZoom;
         public void TimedZoom(Vector2 zoom, int zoomTime, int zoomDuration)
         {
             timedZoom = zoom;

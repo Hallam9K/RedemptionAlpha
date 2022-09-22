@@ -14,6 +14,7 @@ using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
+using Redemption.NPCs.Bosses.ADD;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -123,6 +124,8 @@ namespace Redemption
                 SkyManager.Instance["MoR:NebP1"] = new NebSky();
                 Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:NebP2"] = new NebSky2();
+                Filters.Scene["MoR:Ukko"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.1f, 0.1f, 0f).UseOpacity(0.65f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:Ukko"] = new UkkoClouds();
             }
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
@@ -409,6 +412,8 @@ namespace Redemption
                 Vector2 idealScreenZoom = screenPlayer.timedZoom;
                 Transform.Zoom = Vector2.Lerp(new Vector2(1), idealScreenZoom, (float)Math.Sin(lerpAmount));
             }
+            if (screenPlayer.customZoom > 0)
+                Transform.Zoom = new Vector2(screenPlayer.customZoom);
         }
 
         public override void PreUpdateProjectiles()

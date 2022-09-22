@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 {
@@ -59,15 +60,23 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Projectile.rotation = Projectile.velocity.ToRotation();
             Vector2 origin = host.Center - new Vector2(-2 * host.spriteDirection, 18);
+            if (host.ai[0] == 3)
+                origin = host.Center;
+
             #region Beginning And End Effects
             if (AITimer == 0)
             {
+                if (host.type == ModContent.NPCType<EaglecrestGolem2>() && host.ai[0] == 3)
+                    Projectile.timeLeft = 20;
                 LaserScale = 0.1f;
             }
             else
                 Projectile.Center = origin - Vector2.Normalize(Projectile.velocity) * 16f;
 
-            Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * host.spriteDirection);
+            if (host.type == ModContent.NPCType<EaglecrestGolem2>() && host.ai[0] != 3)
+                Projectile.velocity = Projectile.velocity.RotatedBy(-0.024f * host.spriteDirection);
+            else
+                Projectile.velocity = Projectile.velocity.RotatedBy(-0.01f * host.spriteDirection);
 
             if (AITimer <= 10)
             {
@@ -186,32 +195,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             {
                 return false;
             }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            //writer.Write(maxLaserFrames);
-            //writer.Write(LaserFrameDelay);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            StopsOnTiles = reader.ReadBoolean();
-            //maxLaserFrames = reader.
         }
         #endregion
     }

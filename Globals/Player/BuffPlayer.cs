@@ -22,7 +22,6 @@ using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
-using static Terraria.ModLoader.PlayerDrawLayer;
 using Redemption.Items.Accessories.PostML;
 using System;
 
@@ -70,6 +69,7 @@ namespace Redemption.Globals.Player
         public int shieldGeneratorLife = 400;
         public int shieldGeneratorCD;
         public float shieldGeneratorAlpha;
+        public bool holyFire;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -133,6 +133,7 @@ namespace Redemption.Globals.Player
             blastBattery = false;
             xenomiteBonus = false;
             shieldGenerator = false;
+            holyFire = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -548,6 +549,14 @@ namespace Redemption.Globals.Player
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 60;
             }
+            if (holyFire)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 500;
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -600,6 +609,17 @@ namespace Redemption.Globals.Player
                 g = 0.5f;
                 b = 0.5f;
             }
+            if (holyFire)
+            {
+                if (Main.rand.NextBool(2)&& drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.YellowTorch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 2f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
@@ -621,7 +641,7 @@ namespace Redemption.Globals.Player
                     shieldGeneratorAlpha = 0;
                     shieldGenerator = false;
                     shieldGeneratorCD = 3600;
-                    damage *= 4;
+                    damage *= 3;
                     damage -= shieldGeneratorLife;
                     shieldGeneratorLife = 400;
                     for (int k = 0; k < 30; k++)
@@ -685,6 +705,9 @@ namespace Redemption.Globals.Player
 
             if (Player.FindBuffIndex(ModContent.BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was irradiated");
+
+            if (Player.FindBuffIndex(ModContent.BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was too glorious");
 
             return true;
         }

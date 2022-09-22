@@ -47,6 +47,7 @@ namespace Redemption.Globals.NPC
         public int infectedTime;
         public bool stomachAcid;
         public bool incisored;
+        public bool stoneskin;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -66,6 +67,7 @@ namespace Redemption.Globals.NPC
             stunned = false;
             stomachAcid = false;
             incisored = false;
+            stoneskin = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -306,6 +308,8 @@ namespace Redemption.Globals.NPC
             }
             if (rallied)
                 damage *= 0.85;
+            if (stoneskin)
+                damage *= 0.75;
             return true;
         }
         public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int damage, ref bool crit)

@@ -29,12 +29,12 @@ namespace Redemption.Items.Accessories.HM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!Main.playerInventory && !Main.inFancyUI)
+            if (!Main.playerInventory && !Main.inFancyUI && !Main.mapFullscreen)
                 player.Redemption().slayerCursor = true;
         }
         public override void UpdateVanity(Player player)
         {
-            if (!Main.playerInventory && !Main.inFancyUI)
+            if (!Main.playerInventory && !Main.inFancyUI && !Main.mapFullscreen)
                 player.Redemption().slayerCursor = true;
         }
     }

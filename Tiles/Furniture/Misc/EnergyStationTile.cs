@@ -50,7 +50,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public override bool RightClick(int i, int j)
         {
             SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.1f }, Main.LocalPlayer.position);
-            Main.LocalPlayer.AddBuff(ModContent.BuffType<EnergyStationBuff>(), 120);
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<EnergyStationBuff>(), 300);
             return true;
         }
         public override void NearbyEffects(int i, int j, bool closer)

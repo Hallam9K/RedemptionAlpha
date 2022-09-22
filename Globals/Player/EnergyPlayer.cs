@@ -13,10 +13,12 @@ namespace Redemption.Globals.Player
         public int statEnergy;
         public int energyTimer;
         public int energyRegen;
+        public bool stopEnergyRegen;
         public override void ResetEffects()
         {
             energyMax = 0;
             energyRegen = 0;
+            stopEnergyRegen = false;
         }
         public override void UpdateDead()
         {
@@ -37,7 +39,7 @@ namespace Redemption.Globals.Player
                 }
             }
             energyRegen = (int)MathHelper.Min(59, energyRegen);
-            if (energyTimer++ % (60 - energyRegen) == 0)
+            if (!stopEnergyRegen && energyTimer++ % (60 - energyRegen) == 0)
             {
                 if (Player.HasBuff<EnergyStationBuff>())
                     statEnergy += 3;
