@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using System;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {

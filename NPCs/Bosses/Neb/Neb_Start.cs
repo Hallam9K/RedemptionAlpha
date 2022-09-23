@@ -7,12 +7,10 @@ using Redemption.Globals;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.BaseExtension;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects.PrimitiveTrails;
 using ReLogic.Content;
 using Redemption.Base;
-using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.Neb
 {

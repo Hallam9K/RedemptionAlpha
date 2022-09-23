@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -20,7 +20,6 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Armor.Single;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
-using Redemption.BaseExtension;
 using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly

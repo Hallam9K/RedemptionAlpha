@@ -26,6 +26,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.scale *= 2;
+            Projectile.alpha = 255;
         }
         public int warningFrames;
         public int frameCounters;
@@ -53,7 +54,10 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.hostile = false;
 
             if (Projectile.localAI[0] == 1)
+            {
                 Projectile.position.Y -= 540;
+                Projectile.alpha = 0;
+            }
             if (Projectile.localAI[0] == 36)
             {
                 Player player = Main.player[Projectile.owner];

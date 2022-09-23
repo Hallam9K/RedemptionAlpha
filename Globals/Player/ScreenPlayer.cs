@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.ADD;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -123,6 +125,7 @@ namespace Redemption
         }
         public override void ModifyScreenPosition()
         {
+            ADDScreenLock();
             if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Vector2 idealScreenPosition = ScreenFocusPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
@@ -171,6 +174,28 @@ namespace Redemption
                     }
                 }
                 NebCutsceneflag = false;
+            }
+        }
+        public void ADDScreenLock()
+        {
+            Rectangle ADDscreen = NPC.AnyNPCs(ModContent.NPCType<Ukko>()) ? new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y) : Rectangle.Empty;
+            if (!ADDscreen.IsEmpty)
+            {
+                Vector2 pos = new(ADDscreen.Center.X, ADDscreen.Center.Y);
+                float x = Player.Center.X;
+                float y = Player.Center.Y;
+                if (ADDscreen.Width > Main.screenWidth)
+                    pos.X = MathHelper.Clamp(x, ADDscreen.X + Main.screenWidth / 2, ADDscreen.Right - Main.screenWidth / 2);
+                if (ADDscreen.Height > Main.screenHeight)
+                    pos.Y = MathHelper.Clamp(y, ADDscreen.Y + Main.screenHeight / 2, ADDscreen.Bottom - Main.screenHeight / 2);
+                pos -= new Vector2(Main.screenWidth, Main.screenHeight) / 2;
+
+                if (Redemption.Instance.currentScreen != ADDscreen)
+                {
+                    Redemption.Instance.cameraOffset = Main.screenPosition - pos;
+                    Redemption.Instance.currentScreen = ADDscreen;
+                }
+                Main.screenPosition = pos;
             }
         }
     }

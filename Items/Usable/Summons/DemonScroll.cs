@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Redemption.NPCs.Bosses.Erhan;
-using Humanizer;
 using Redemption.Base;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;

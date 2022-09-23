@@ -3,7 +3,6 @@ using System;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using System.IO;
 using Terraria.ModLoader.Utilities;
 using Redemption.Globals;
 using Terraria.DataStructures;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Obliterator;
 using Terraria.ModLoader;
@@ -29,6 +30,13 @@ namespace Redemption.Globals
                     break;
                 case "OC":
                     if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
+                    {
+                        DeactivateArena();
+                        return;
+                    }
+                    break;
+                case "ADD":
+                    if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
                     {
                         DeactivateArena();
                         return;

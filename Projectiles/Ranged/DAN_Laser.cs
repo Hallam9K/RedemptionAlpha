@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;

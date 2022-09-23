@@ -10,7 +10,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
-using Redemption.Tiles.Tiles;
 using System;
 using System.Linq;
 using Terraria;

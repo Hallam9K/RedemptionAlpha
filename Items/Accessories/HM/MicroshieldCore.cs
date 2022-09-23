@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Redemption.Buffs.Minions;
-using Redemption.Projectiles.Minions;
+﻿using Redemption.Buffs.Minions;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

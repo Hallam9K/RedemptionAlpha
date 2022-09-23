@@ -15,7 +15,6 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
-using Terraria.ModLoader.UI;
 
 namespace Redemption.NPCs.Wasteland
 {

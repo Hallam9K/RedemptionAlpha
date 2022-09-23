@@ -1,4 +1,3 @@
-using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
@@ -8,21 +7,16 @@ using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.Particles;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -317,10 +311,12 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Transform:
                     NPC.velocity *= 0.9f;
                     NPC.noGravity = true;
+                    NPC.noTileCollide = false;
                     NPC.dontTakeDamage = true;
                     if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
 
+                    NPC.velocity.Y = 2f;
                     for (int i = 0; i < 3; i++)
                     {
                         int dustIndex2 = Dust.NewDust(NPC.BottomLeft, NPC.width, 1, DustID.Sandnado, 0f, 0f, 100, default, 2f);
@@ -347,9 +343,15 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer == 60)
                             {
+                                for (int i = 0; i < 35; i++)
+                                {
+                                    int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, Scale: 2);
+                                    Main.dust[dustIndex2].velocity *= 3f;
+                                }
                                 player.RedemptionScreen().ScreenShakeIntensity += 14;
                                 SoundEngine.PlaySound(CustomSounds.Quake, NPC.position);
                                 SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
+                                SoundEngine.PlaySound(SoundID.NPCDeath43, NPC.position);
                                 flashOpacity = 1;
                             }
                             if (AITimer == 90)
@@ -361,9 +363,15 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer == 180)
                             {
+                                for (int i = 0; i < 35; i++)
+                                {
+                                    int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, Scale: 2);
+                                    Main.dust[dustIndex2].velocity *= 3f;
+                                }
                                 player.RedemptionScreen().ScreenShakeIntensity += 24;
                                 SoundEngine.PlaySound(CustomSounds.Quake with { Pitch = 0.1f }, NPC.position);
                                 SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = 0.1f }, NPC.position);
+                                SoundEngine.PlaySound(SoundID.NPCDeath43 with { Pitch = 0.1f }, NPC.position);
                                 flashOpacity = 1.5f;
                             }
                             if (AITimer == 210)
@@ -379,6 +387,11 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer == 290)
                             {
+                                for (int i = 0; i < 35; i++)
+                                {
+                                    int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, Scale: 2);
+                                    Main.dust[dustIndex2].velocity *= 3f;
+                                }
                                 SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.2f }, NPC.position);
                                 SoundEngine.PlaySound(CustomSounds.EnergyCharge with { Pitch = 0.1f }, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Thunder with { Pitch = -.2f }, NPC.position);

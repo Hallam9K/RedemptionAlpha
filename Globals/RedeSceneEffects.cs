@@ -8,7 +8,6 @@ using Redemption.NPCs.Bosses.Neb;
 using Terraria.Graphics.Effects;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
-using Terraria;
 using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.Globals

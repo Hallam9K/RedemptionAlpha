@@ -1,15 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Particles;
 using Redemption.Projectiles.Misc;
 
 namespace Redemption.Items.Weapons.HM.Ranged

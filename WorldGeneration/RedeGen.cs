@@ -40,8 +40,6 @@ using Redemption.NPCs.Bosses.KSIII;
 using System;
 using System.Threading;
 using Redemption.Items.Weapons.PreHM.Ritualist;
-using Redemption.Tiles.Furniture.Lab;
-using Redemption.Tiles.Furniture.PetrifiedWood;
 
 namespace Redemption.WorldGeneration
 {

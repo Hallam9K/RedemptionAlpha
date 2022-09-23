@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;

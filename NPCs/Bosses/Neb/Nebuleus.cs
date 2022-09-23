@@ -11,7 +11,6 @@ using Redemption.Projectiles.Misc;
 using System.IO;
 using System.Collections.Generic;
 using Redemption.Globals;
-using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.Audio;
 using Redemption.Base;

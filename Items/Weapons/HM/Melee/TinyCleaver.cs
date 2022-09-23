@@ -1,6 +1,4 @@
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.HM.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;

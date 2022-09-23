@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.NPCs.Bosses.ADD;
-using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.Rarities;
 using Terraria;

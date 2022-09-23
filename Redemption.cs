@@ -44,6 +44,7 @@ namespace Redemption
         public const string Abbreviation = "MoR";
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
+        public Rectangle currentScreen;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
 
@@ -105,6 +106,10 @@ namespace Redemption
                     PremultiplyTexture(ref iceMistTex);
                     Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref glowDustTex);
+                    Texture2D AkkaHealingSpiritTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaHealingSpirit", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref AkkaHealingSpiritTex);
+                    Texture2D AkkaIslandWarningTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaIslandWarning", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref AkkaIslandWarningTex);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
@@ -124,7 +129,7 @@ namespace Redemption
                 SkyManager.Instance["MoR:NebP1"] = new NebSky();
                 Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:NebP2"] = new NebSky2();
-                Filters.Scene["MoR:Ukko"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.1f, 0.1f, 0f).UseOpacity(0.65f), EffectPriority.VeryHigh);
+                Filters.Scene["MoR:Ukko"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0.1f, 0f).UseOpacity(0.3f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:Ukko"] = new UkkoClouds();
             }
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);

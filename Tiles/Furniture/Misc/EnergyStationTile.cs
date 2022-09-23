@@ -1,10 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
-using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Misc;
-using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

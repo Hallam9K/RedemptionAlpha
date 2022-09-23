@@ -1,17 +1,7 @@
-﻿using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.GameContent;
 using Terraria.Audio;
-using Redemption.Projectiles.Ranged;
-using Redemption.Base;
-using System.Collections.Generic;
 using Redemption.Buffs;
-using Redemption.Buffs.Cooldowns;
 using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Items.Weapons.HM.Ranged

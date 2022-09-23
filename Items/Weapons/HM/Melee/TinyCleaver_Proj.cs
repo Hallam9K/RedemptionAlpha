@@ -6,10 +6,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Projectiles.Melee;
-using Redemption.Base;
-using Redemption.BaseExtension;
 using ReLogic.Content;
 
 namespace Redemption.Items.Weapons.HM.Melee

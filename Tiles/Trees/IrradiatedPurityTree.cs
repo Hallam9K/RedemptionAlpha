@@ -6,7 +6,6 @@ using Redemption.Tiles.Tiles;
 using Terraria.GameContent;
 using Terraria;
 using ReLogic.Content;
-using Terraria.Enums;
 
 namespace Redemption.Tiles.Trees
 {

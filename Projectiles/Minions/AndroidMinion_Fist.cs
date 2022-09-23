@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
 using Redemption.BaseExtension;
-using log4net.Layout.Pattern;
 
 namespace Redemption.Projectiles.Minions
 {

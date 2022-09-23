@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
-using Redemption.Globals.Player;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

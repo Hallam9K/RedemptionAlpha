@@ -8,8 +8,6 @@ using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Projectiles.Hostile;
-using Redemption.Tiles.Tiles;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -5,8 +5,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.GameContent.UI.BigProgressBar;
-using Redemption.NPCs.Lab.MACE;
-using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

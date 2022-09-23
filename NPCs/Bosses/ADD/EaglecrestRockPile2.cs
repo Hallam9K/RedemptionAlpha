@@ -4,10 +4,8 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,5 +1,4 @@
 ﻿using Terraria.Audio;
-using Redemption.BaseExtension;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

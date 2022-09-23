@@ -15,7 +15,6 @@ using Redemption.Items.Accessories.PreHM;
 using ReLogic.Content;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader.UI;
 
 namespace Redemption.Globals
 {

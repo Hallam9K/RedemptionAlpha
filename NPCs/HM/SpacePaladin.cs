@@ -1,11 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
@@ -19,22 +16,15 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Buffs.NPCBuffs;
-using Terraria.Utilities;
-using Terraria.UI;
 using Redemption.Base;
-using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
-using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
-using Redemption.Projectiles.Ranged;
 using System;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
-using System.Security.Principal;
-using Redemption.NPCs.Lab.MACE;
 
 namespace Redemption.NPCs.HM
 {

@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 
 namespace Redemption.Buffs

@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.HM;
-using Redemption.NPCs.Bosses.Cleaver;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
@@ -12,7 +11,6 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Donator.Gonk;
-using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.Items.Usable
 {

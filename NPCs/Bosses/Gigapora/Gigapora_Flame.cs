@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Particles;
 using ReLogic.Content;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

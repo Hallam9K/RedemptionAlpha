@@ -9,7 +9,6 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.NPCs.Bosses.Erhan;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.GameContent.ItemDropRules;
 

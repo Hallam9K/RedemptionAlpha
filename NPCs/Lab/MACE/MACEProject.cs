@@ -21,7 +21,6 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
-using Redemption.NPCs.Bosses.PatientZero;
 
 namespace Redemption.NPCs.Lab.MACE
 {

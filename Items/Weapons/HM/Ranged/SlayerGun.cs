@@ -11,7 +11,6 @@ using Redemption.Items.Materials.HM;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
-using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {

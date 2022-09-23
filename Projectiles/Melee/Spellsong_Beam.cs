@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee

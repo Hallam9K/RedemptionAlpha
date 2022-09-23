@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Usable;

@@ -5,7 +5,6 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
-using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.HM.Ranged;

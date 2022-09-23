@@ -5,7 +5,6 @@ using Redemption.Items;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

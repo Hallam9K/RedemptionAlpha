@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals.Player;
-using Redemption.Tiles.Ores;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

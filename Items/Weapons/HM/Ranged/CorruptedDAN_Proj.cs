@@ -8,7 +8,6 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.Projectiles.Ranged;
-using Redemption.NPCs.Lab.MACE;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;

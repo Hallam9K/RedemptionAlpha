@@ -6,16 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
 using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Buffs.Debuffs;
-using Redemption.Base;
 using Redemption.Items.Usable;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
-using System;
 using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Friendly

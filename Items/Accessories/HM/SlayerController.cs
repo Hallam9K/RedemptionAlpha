@@ -3,10 +3,6 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Cooldowns;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Projectiles.Misc;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Accessories.HM
 {

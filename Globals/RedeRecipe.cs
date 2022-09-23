@@ -1,6 +1,5 @@
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Critters;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;

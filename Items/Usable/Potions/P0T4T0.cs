@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
-using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;

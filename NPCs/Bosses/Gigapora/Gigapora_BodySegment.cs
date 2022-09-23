@@ -11,7 +11,6 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.Audio;
-using Redemption.Projectiles.Magic;
 using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Gigapora

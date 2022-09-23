@@ -11,7 +11,6 @@ using Terraria.WorldBuilding;
 using Terraria.IO;
 using ReLogic.Content;
 using Redemption.Base;
-using Terraria.GameInput;
 
 namespace Redemption.WorldGeneration.Soulless
 {

@@ -1,6 +1,3 @@
-using Redemption.Globals;
-using Redemption.Items.Materials.HM;
-using Redemption.Projectiles.Melee;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

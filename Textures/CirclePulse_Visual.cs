@@ -1,10 +1,8 @@
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using Redemption.Globals;
 
 namespace Redemption.Textures
 {
