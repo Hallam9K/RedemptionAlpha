@@ -26,6 +26,7 @@ using Redemption.Items.Donator.Megaswave;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.HM.Melee;
+using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.Globals.NPC
 {
@@ -460,6 +461,10 @@ namespace Redemption.Globals.NPC
                 spawnRate = 20;
                 maxSpawns = 12;
             }
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Akka>()))
+                return;
+
+            maxSpawns = 0;
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)

@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.DeathSound = SoundID.NPCDeath39;
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -261,7 +261,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer >= 218)
                                     {
                                         if (!Main.dedServ)
-                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 
                                         if (RedeBossDowned.erhanDeath < 4)
                                         {
@@ -292,7 +292,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer >= 500)
                                     {
                                         if (!Main.dedServ)
-                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 
                                         if (RedeBossDowned.erhanDeath < 4)
                                         {
@@ -322,7 +322,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer >= 150)
                                 {
                                     if (!Main.dedServ)
-                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 
                                     TimerRand = 0;
                                     AITimer = 0;

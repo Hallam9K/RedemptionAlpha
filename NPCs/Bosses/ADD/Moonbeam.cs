@@ -25,7 +25,6 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.aiStyle = -1;
             Projectile.friendly = false;
             Projectile.penetrate = -1;
-            Projectile.alpha = 255;
             Projectile.timeLeft = 3600;
             Projectile.tileCollide = false;
         }
@@ -117,7 +116,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Texture2D texture2D20 = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Moonbeam_Beam").Value;
             Texture2D texture2D21 = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Moonbeam_End").Value;
             float num228 = LaserLength;
-            Color color44 = Color.White * 0.8f;
+            Color color44 = Color.White * 0.8f * Projectile.Opacity;
             Texture2D arg_AF99_1 = texture2D19;
             Vector2 arg_AF99_2 = Projectile.Center + new Vector2(0, Projectile.gfxOffY) - Main.screenPosition;
             Rectangle? sourceRectangle2 = null;
@@ -135,7 +134,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     {
                         rectangle7.Height = (int)(num228 - num229);
                     }
-                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(rectangle7), color44, Projectile.rotation, new Vector2(rectangle7.Width / 2, 0f), new Vector2(Math.Min(Projectile.ai[1], charge) / charge, 1f), SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Rectangle?(rectangle7), color44, Projectile.rotation, new Vector2(rectangle7.Width / 2, 0f), new Vector2(Math.Min(Projectile.ai[1], charge) / charge, 1f), SpriteEffects.None, 0f);
                     num229 += rectangle7.Height * Projectile.scale;
                     value20 += Projectile.velocity * rectangle7.Height * Projectile.scale;
                     rectangle7.Y += 16;

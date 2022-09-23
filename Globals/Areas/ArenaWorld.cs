@@ -36,7 +36,7 @@ namespace Redemption.Globals
                     }
                     break;
                 case "ADD":
-                    if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
+                    if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Akka>()))
                     {
                         DeactivateArena();
                         return;

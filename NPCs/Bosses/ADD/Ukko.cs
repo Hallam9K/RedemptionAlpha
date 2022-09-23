@@ -99,8 +99,13 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.75f;
+            damage *= 0.8f;
             return true;
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
+                damage = (int)(damage * .75f);
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
@@ -113,7 +118,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the times comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.")
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -192,61 +197,6 @@ namespace Redemption.NPCs.Bosses.ADD
                     NPC.LookAtEntity(player);
                 }
             }
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 6)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += 112;
-                if (NPC.frame.Y > (112 * 5))
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y = 0;
-                }
-            }
-            if (NPC.ai[3] == 1)
-            {
-                frameCounters++;
-                if (frameCounters > 6)
-                {
-                    wandFrame++;
-                    frameCounters = 0;
-                }
-                if (wandFrame >= 9)
-                {
-                    NPC.ai[3] = 0;
-                    wandFrame = 0;
-                    frameCounters = 0;
-                }
-            }
-            if (NPC.ai[3] == 2)
-            {
-                frameCounters++;
-                if (frameCounters > 3)
-                {
-                    chariotFrame++;
-                    frameCounters = 0;
-                }
-                if (chariotFrame >= 9)
-                {
-                    chariotFrame = 0;
-                }
-            }
-            if (NPC.ai[3] == 3)
-            {
-                frameCounters++;
-                if (frameCounters > 5)
-                {
-                    dischargeFrame++;
-                    frameCounters = 0;
-                }
-                if (dischargeFrame >= 12)
-                {
-                    frameCounters = 0;
-                    NPC.ai[3] = 0;
-                    dischargeFrame = 0;
-                }
-            }
-
             Vector2 ThunderwavePos = new(player.Center.X > NPC.Center.X ? player.Center.X - 700 : player.Center.X + 700, player.Center.Y);
             int akkaID = NPC.FindFirstNPC(ModContent.NPCType<Akka>());
             NPC akka;
@@ -265,6 +215,9 @@ namespace Redemption.NPCs.Bosses.ADD
             switch (AIState)
             {
                 case ActionState.Start:
+                    if (!Main.dedServ)
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Ukko", 60, 90, 0.8f, 0, Color.LightGoldenrodYellow, "Ancient God of Weather");
+
                     NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
                     NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
                     NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (118 * 16) - 10), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
@@ -1016,6 +969,63 @@ namespace Redemption.NPCs.Bosses.ADD
                     break;
             }
         }
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.frameCounter++;
+            if (NPC.frameCounter >= 6)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += 112;
+                if (NPC.frame.Y > (112 * 5))
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y = 0;
+                }
+            }
+            switch (NPC.ai[3])
+            {
+                case 1:
+                    frameCounters++;
+                    if (frameCounters > 6)
+                    {
+                        wandFrame++;
+                        frameCounters = 0;
+                    }
+                    if (wandFrame >= 9)
+                    {
+                        NPC.ai[3] = 0;
+                        wandFrame = 0;
+                        frameCounters = 0;
+                    }
+                    break;
+                case 2:
+                    frameCounters++;
+                    if (frameCounters > 3)
+                    {
+                        chariotFrame++;
+                        frameCounters = 0;
+                    }
+                    if (chariotFrame >= 9)
+                    {
+                        chariotFrame = 0;
+                    }
+                    break;
+                case 3:
+                    frameCounters++;
+                    if (frameCounters > 5)
+                    {
+                        dischargeFrame++;
+                        frameCounters = 0;
+                    }
+                    if (dischargeFrame >= 12)
+                    {
+                        frameCounters = 0;
+                        NPC.ai[3] = 0;
+                        dischargeFrame = 0;
+                    }
+                    break;
+            }
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return AttackID == 7;
@@ -1106,17 +1116,19 @@ namespace Redemption.NPCs.Bosses.ADD
             switch (NPC.ai[3])
             {
                 case 0:
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-                    for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                    if (!NPC.IsABestiaryIconDummy)
                     {
-                        Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                        for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                        {
+                            Vector2 oldPos = NPC.oldPos[i];
+                            spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        }
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     }
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
                     spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;

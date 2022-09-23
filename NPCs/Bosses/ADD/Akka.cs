@@ -93,8 +93,13 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.75f;
+            damage *= 0.8f;
             return true;
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
+                damage = (int)(damage * .75f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -102,7 +107,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 
-                new FlavorTextBestiaryInfoElement("")
+                new FlavorTextBestiaryInfoElement("Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.")
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -169,17 +174,6 @@ namespace Redemption.NPCs.Bosses.ADD
             Player player = Main.player[NPC.target];
             NPC.rotation = 0f;
             NPC.LookAtEntity(player);
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 6)
-            {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += 114;
-                if (NPC.frame.Y > (114 * 5))
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y = 0;
-                }
-            }
             /*if (NPC.ai[3] == 1)
             {
                 frameCounters++;
@@ -222,7 +216,12 @@ namespace Redemption.NPCs.Bosses.ADD
                                     NPC.spriteDirection = -1;
                                     NPC.velocity *= 0.9f;
                                     if (AITimer == 60)
+                                    {
+                                        if (!Main.dedServ)
+                                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.PaleGreen, "Ancient Goddess of Nature");
+
                                         EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
+                                    }
 
                                     if (AITimer++ >= 120)
                                     {
@@ -237,6 +236,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     else
                     {
+                        if (!Main.dedServ)
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.LightGreen, "Ancient Goddess of Nature");
+
                         AIState = ActionState.ResetVars;
                         AITimer = 0;
                         NPC.netUpdate = true;
@@ -384,13 +386,13 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (AITimer == 5)
                             {
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.position.Y - 4, 0f, -10f, ModContent.ProjectileType<Moonbeam>(), 0, 0, Main.myPlayer);
+                                Main.projectile[p].alpha = 150;
                                 Main.projectile[p].hostile = false;
-                                Main.projectile[p].netUpdate = true;
+                                Main.projectile[p].netUpdate2 = true;
                             }
                             if (AITimer == 25)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), 100 / 3, 1, Main.myPlayer);
-                                Main.projectile[p].netUpdate = true;
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), 100 / 3, 1, Main.myPlayer);
                             }
                             if (AITimer >= 70)
                             {
@@ -482,6 +484,20 @@ namespace Redemption.NPCs.Bosses.ADD
                     break;
             }
         }
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.frameCounter++;
+            if (NPC.frameCounter >= 6)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > frameHeight * 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y = 0;
+                }
+            }
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public Vector2 Pos()
         {
@@ -519,22 +535,24 @@ namespace Redemption.NPCs.Bosses.ADD
             Texture2D magicAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Spell").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
-            Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.LightSeaGreen * 0.7f, Color.LightGreen);
+            Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.SpringGreen * 0.7f, Color.LightGreen);
 
             //switch (NPC.ai[3])
             //{
             //    case 0:
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-            for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                Vector2 oldPos = NPC.oldPos[i];
-                spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                }
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             /*break;
         case 1:

@@ -28,12 +28,11 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.alpha = 0;
             Projectile.timeLeft = 2;
             Projectile.tileCollide = false;
-            Projectile.hide = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            behindNPCs.Add(index);
+            overPlayers.Add(index);
         }
         private Vector2 originPos;
         private Vector2 originPos2;

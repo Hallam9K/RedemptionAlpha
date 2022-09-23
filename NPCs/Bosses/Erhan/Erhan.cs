@@ -90,7 +90,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -325,6 +325,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 }
                                 if (AITimer == 552)
                                 {
+                                    if (!Main.dedServ)
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 200);
                                     ArmType = 2;
                                     HeadFrameY = 1;
@@ -340,7 +342,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
                                             "Anglonic High Priest");
-                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     }
                                     if (RedeBossDowned.erhanDeath == 0)
                                     {
@@ -373,7 +375,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
                                             "Anglonic High Priest");
-                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     }
                                     TimerRand = 0;
                                     AITimer = 0;

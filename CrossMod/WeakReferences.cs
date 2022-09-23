@@ -309,8 +309,8 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "Ancient Deity Duo",
                     new List<int>
                     {
-                        ModContent.NPCType<Ukko>()
-                        //ModContent.NPCType<Akka>()
+                        ModContent.NPCType<Ukko>(),
+                        ModContent.NPCType<Akka>()
                     }, 20.001f, () => RedeBossDowned.downedADD, () => RedeBossDowned.ADDDeath > 0,
                     new List<int>
                     {
