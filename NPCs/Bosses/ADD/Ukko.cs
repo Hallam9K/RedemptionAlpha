@@ -258,7 +258,6 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Attacks:
                     switch (AttackID)
                     {
-                        // Thunderclap
                         #region Thunderclap
                         case 0:
                             AITimer++;
@@ -276,7 +275,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Gust
                         #region Gust
                         case 1:
                             AITimer++;
@@ -302,7 +300,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Thunderwave
                         #region Thunderwave
                         case 2:
                             if (AITimer == 0)
@@ -338,7 +335,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Call Lightning
                         #region Call Lightning
                         case 3:
                             if (NPC.life < (int)(NPC.lifeMax * 0.6f))
@@ -380,7 +376,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Mending
                         #region Mending
                         case 4:
                             if (NPC.life < (int)(NPC.lifeMax * 0.5f) && mendingCooldown == 0)
@@ -392,6 +387,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.Quake with { Pitch = 0.2f }, NPC.position);
                                 }
+                                if (AITimer % 20 == 0)
+                                    SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                                 if (AITimer < 60)
                                 {
                                     for (int i = 0; i < 2; i++)
@@ -419,7 +416,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Stoneskin
                         #region Stoneskin
                         case 5:
                             if (NPC.life < (int)(NPC.lifeMax * 0.8f) && stoneskinCooldown == 0)
@@ -455,7 +451,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Dancing Lights
                         #region Dancing Lights
                         case 6:
                             if (player.ZoneHallow)
@@ -501,7 +496,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Lightning Chariot
                         #region Lightning Chariot
                         case 7:
                             if (chariotCooldown == 0)
@@ -561,7 +555,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Dust Devil
                         #region Dust Devil
                         case 8:
                             if (player.ZoneDesert)
@@ -596,7 +589,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Lightning Bolts
                         #region Lightning Bolts
                         case 9:
                             AITimer++;
@@ -615,7 +607,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Thunder Surge
                         #region Thunder Surge
                         case 10:
                             if (NPC.life < (int)(NPC.lifeMax * 0.8f))
@@ -642,7 +633,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Static Dualcast
                         #region Static Dualcast
                         case 11:
                             if (NPC.life < (int)(NPC.lifeMax * 0.5f))
@@ -691,7 +681,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Blizzard
                         #region Blizzard
                         case 12:
                             if (player.ZoneSnow)
@@ -728,7 +717,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Rain Cloud
                         #region Rain Cloud
                         case 13:
                             AITimer++;
@@ -746,7 +734,6 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         #endregion
 
-                        // Static Discharge
                         #region Static Discharge
                         case 14:
                             if (burstCooldown == 0)

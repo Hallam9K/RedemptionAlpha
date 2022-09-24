@@ -72,11 +72,13 @@ namespace Redemption.WorldGeneration
                     switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.AmberGemspark:
-                            Framing.GetTileSafely(i, j).ClearTile();
+                            if (Framing.GetTileSafely(i, j) != null)
+                                Framing.GetTileSafely(i, j).ClearTile();
                             GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
                             break;
                         case TileID.TeamBlockBlue:
-                            Framing.GetTileSafely(i, j).ClearTile();
+                            if (Framing.GetTileSafely(i, j) != null)
+                                Framing.GetTileSafely(i, j).ClearTile();
                             WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
                             break;
                     }
@@ -142,11 +144,13 @@ namespace Redemption.WorldGeneration
                     switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.AmberGemspark:
-                            Framing.GetTileSafely(i, j).ClearTile();
+                            if (Framing.GetTileSafely(i, j) != null)
+                                Framing.GetTileSafely(i, j).ClearTile();
                             GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
                             break;
                         case TileID.TeamBlockBlue:
-                            Framing.GetTileSafely(i, j).ClearTile();
+                            if (Framing.GetTileSafely(i, j) != null)
+                                Framing.GetTileSafely(i, j).ClearTile();
                             WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
                             break;
                     }
@@ -196,11 +200,13 @@ namespace Redemption.WorldGeneration
                     switch (Framing.GetTileSafely(i, j).TileType)
                     {
                         case TileID.AmberGemspark:
-                            Framing.GetTileSafely(i, j).ClearTile();
+                            if (Framing.GetTileSafely(i, j) != null)
+                                Framing.GetTileSafely(i, j).ClearTile();
                             GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
                             break;
                         case TileID.TeamBlockBlue:
-                            Framing.GetTileSafely(i, j).ClearTile();
+                            if (Framing.GetTileSafely(i, j) != null)
+                                Framing.GetTileSafely(i, j).ClearTile();
                             WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
                             break;
                     }
