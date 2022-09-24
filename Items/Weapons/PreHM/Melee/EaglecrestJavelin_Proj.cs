@@ -107,7 +107,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 Player player = Main.player[Projectile.owner];
                 if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                    player.RedemptionScreen().ScreenShakeIntensity = 15;
+                    player.RedemptionScreen().ScreenShakeIntensity += 15;
 
                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
                 for (int i = 0; i < 10; i++)

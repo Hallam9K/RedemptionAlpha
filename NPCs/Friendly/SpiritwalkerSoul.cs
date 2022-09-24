@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Friendly
 
                     if (AITimer >= 60)
                     {
-                        player.RedemptionScreen().ScreenShakeIntensity = AITimer / 30;
+                        player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, AITimer / 30);
                         for (int k = 0; k < 3; k++)
                         {
                             Vector2 vector;

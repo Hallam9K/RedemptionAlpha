@@ -363,9 +363,9 @@ namespace Redemption.NPCs.PreHM
                                 SoundEngine.PlaySound(SoundID.Item19, NPC.position);
                             if (AniFrameY is 4)
                             {
-                                Player player = Main.player[NPC.target];
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                player.RedemptionScreen().ScreenShakeIntensity = 5;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
                                 NPC.velocity.X = 2 * NPC.spriteDirection;
                             }
                             if (AniFrameY > 5)

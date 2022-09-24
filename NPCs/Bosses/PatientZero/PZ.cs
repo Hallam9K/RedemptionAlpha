@@ -720,7 +720,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                         case 1:
                             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                             player.RedemptionScreen().lockScreen = true;
-                            player.RedemptionScreen().ScreenShakeIntensity = 5;
+                            player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 5);
                             player.RedemptionScreen().TimedZoom(new Vector2(1.4f, 1.4f), 100, 100);
                             NPC.LockMoveRadius(player);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);

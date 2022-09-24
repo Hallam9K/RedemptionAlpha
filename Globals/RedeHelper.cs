@@ -523,9 +523,9 @@ namespace Redemption.Globals
         public static bool NextBool(this UnifiedRandom rand, int chance, int total) => rand.Next(total) < chance;
 
         public static Vector2 Spread(float xy) =>
-            new(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, xy - 1));
+            new(Main.rand.NextFloat(-xy, xy), Main.rand.NextFloat(-xy, xy));
 
-        public static Vector2 SpreadUp(float xy) => new(Main.rand.NextFloat(-xy, xy - 1), Main.rand.NextFloat(-xy, 0));
+        public static Vector2 SpreadUp(float xy) => new(Main.rand.NextFloat(-xy, xy), Main.rand.NextFloat(-xy, 0));
 
         public static void CreateDust(Terraria.Player player, int dust, int count)
         {

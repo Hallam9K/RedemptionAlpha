@@ -74,6 +74,7 @@ namespace Redemption.Tiles.Furniture.Misc
                 RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3", AssetRequestMode.ImmediateLoad).Value);
                 SoundEngine.PlaySound(SoundID.Item68, new Vector2(i * 16, j * 16));
                 SoundEngine.PlaySound(CustomSounds.Thunderstrike, new Vector2(i * 16, j * 16));
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = new Vector2(i * 16, j * 16);
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSigil>());
                 for (int w = -2; w < 3; w++)

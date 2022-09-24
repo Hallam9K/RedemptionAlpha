@@ -115,7 +115,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                             Projectile.Kill();
                         if (glowAmount >= 0.9f)
                         {
-                            player.RedemptionScreen().ScreenShakeIntensity = 10;
+                            player.RedemptionScreen().ScreenShakeIntensity += 10;
                             SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
                             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
                             for (int i = 0; i < 15; i++)

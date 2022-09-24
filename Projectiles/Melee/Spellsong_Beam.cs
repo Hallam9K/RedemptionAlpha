@@ -47,8 +47,8 @@ namespace Redemption.Projectiles.Melee
             RedeDraw.SpawnRing(Projectile.Center, Color.White, glowScale: 8);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.NebSound3 with { Volume = 0.5f, Pitch = 0.1f }, Projectile.position);
-            if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.RedemptionScreen().ScreenShakeIntensity += 7;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 7;
 
             for (int i = 0; i < Main.rand.Next(3, 5); i++)
             {

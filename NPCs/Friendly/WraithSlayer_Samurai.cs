@@ -227,8 +227,8 @@ namespace Redemption.NPCs.Friendly
                     }
                     if (NPC.frame.Y == 8 * frameHeight)
                     {
-                        if (NPC.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                            Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 5;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
 
                         NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), true, SoundID.Item71);
                         Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 280 : NPC.Center.X - 18), (int)NPC.Center.Y, 280, 60);

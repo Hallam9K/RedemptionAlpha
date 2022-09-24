@@ -89,8 +89,8 @@ namespace Redemption.Projectiles.Magic
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[Main.myPlayer];
-            if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                player.RedemptionScreen().ScreenShakeIntensity = 5;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
 
             if (Projectile.owner == Main.myPlayer)
             {

@@ -348,7 +348,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, Scale: 2);
                                     Main.dust[dustIndex2].velocity *= 3f;
                                 }
-                                player.RedemptionScreen().ScreenShakeIntensity += 14;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
                                 SoundEngine.PlaySound(CustomSounds.Quake, NPC.position);
                                 SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
                                 SoundEngine.PlaySound(SoundID.NPCDeath43, NPC.position);
@@ -368,7 +368,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, Scale: 2);
                                     Main.dust[dustIndex2].velocity *= 3f;
                                 }
-                                player.RedemptionScreen().ScreenShakeIntensity += 24;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 24;
                                 SoundEngine.PlaySound(CustomSounds.Quake with { Pitch = 0.1f }, NPC.position);
                                 SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = 0.1f }, NPC.position);
                                 SoundEngine.PlaySound(SoundID.NPCDeath43 with { Pitch = 0.1f }, NPC.position);
@@ -471,8 +471,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (Main.netMode != NetmodeID.SinglePlayer)
                                         NetMessage.SendData(MessageID.WorldData);
 
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.4f, scale: 6, noDust: true);
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.2f, shakeAmount: 40, scale: 10, noDust: true);
+                                    RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.6f, shakeAmount: 30, scale: 10, noDust: true);
                                     Main.NewLightning();
                                     SoundEngine.PlaySound(SoundID.Thunder, NPC.position);
 

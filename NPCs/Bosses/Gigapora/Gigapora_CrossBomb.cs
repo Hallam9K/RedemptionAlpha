@@ -54,6 +54,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     if (Projectile.localAI[0] == 80)
                     {
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                         SoundEngine.PlaySound(CustomSounds.PlasmaShot, Projectile.position);
                         for (int i = 0; i < 4; i++)

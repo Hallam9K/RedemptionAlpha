@@ -47,8 +47,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile projAim = Main.projectile[(int)Projectile.ai[0]];
             if (!projAim.active || projAim.type != ModContent.ProjectileType<KS3_SoSCrosshair>())
             {
-                if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<KS3_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                 Projectile.Kill();
@@ -64,8 +64,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.MissileExplosion with { PitchVariance = .1f }, Projectile.position);
 
-            if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<KS3_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
 

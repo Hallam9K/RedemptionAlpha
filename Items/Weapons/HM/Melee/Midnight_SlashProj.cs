@@ -100,7 +100,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 							if (tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
 							{
 								SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-								player.RedemptionScreen().ScreenShakeIntensity = 5;
+								player.RedemptionScreen().ScreenShakeIntensity += 5;
 								if (!hitOnce)
 									SpawnNebulaSparks();
 							}

@@ -304,7 +304,8 @@ namespace Redemption.NPCs.HM
                                     Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, -7);
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
-                                player.RedemptionScreen().ScreenShakeIntensity = 20;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {

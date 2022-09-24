@@ -290,7 +290,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                             SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                            player.RedemptionScreen().ScreenShakeIntensity = 14;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
                             HolyFlare = true;
                             TeleGlow = true;
                             TimerRand = 1;
@@ -536,7 +537,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 ArmType = 1;
                             if (AITimer >= 90 && AITimer % 5 == 0 && AITimer <= 130)
                             {
-                                player.RedemptionScreen().ScreenShakeIntensity = 4;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                                 TimerRand += (float)Math.PI / 15;
                                 if (TimerRand > (float)Math.PI)
                                 {
@@ -556,7 +558,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 if (AITimer > 130 && AITimer % 5 == 0 && AITimer <= 165)
                                 {
-                                    player.RedemptionScreen().ScreenShakeIntensity = 4;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                                     TimerRand -= (float)Math.PI / 13;
                                     if (TimerRand > (float)Math.PI)
                                     {
@@ -890,7 +893,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                         if (AITimer++ == 0)
                         {
                             SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                            player.RedemptionScreen().ScreenShakeIntensity = 14;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
                             TeleGlow = true;
                             HolyFlare = true;
                             NPC.alpha = 255;
@@ -1057,7 +1061,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer == 1384)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                                    player.RedemptionScreen().ScreenShakeIntensity = 14;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
                                     TeleGlow = true;
                                     HolyFlare = true;
                                     NPC.alpha = 255;

@@ -214,6 +214,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         {
                             if (Main.rand.NextBool(10))
                             {
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                                 if (Main.rand.NextBool(2))
                                     NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(8, 29), NPC.rotation), true, SoundID.Item61);
@@ -256,6 +257,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         if (ShootTimer == 120)
                         {
                             SoundEngine.PlaySound(CustomSounds.GigaFlame with { Volume = 1.5f }, host.position);
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
                             NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 1);
                             NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, -1);
@@ -284,6 +286,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         }
                         if (ShootTimer >= 120 && Main.rand.NextBool(50))
                         {
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                             if (Main.rand.NextBool(2))
                             {
@@ -330,6 +333,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         }
                         if (ShootTimer == 60)
                         {
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                             NPC.Shoot(gunPos1, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), true, SoundID.Item62);
                             NPC.Shoot(gunPos2, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), true, SoundID.Item62);

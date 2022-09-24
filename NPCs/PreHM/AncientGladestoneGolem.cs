@@ -18,6 +18,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -256,7 +257,8 @@ namespace Redemption.NPCs.PreHM
                             {
                                 Player player = Main.player[NPC.target];
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                player.RedemptionScreen().ScreenShakeIntensity = 6;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
                             }
                             if (NPC.frame.Y > 9 * frameHeight)
                                 AIState = ActionState.Threatened;
@@ -281,8 +283,8 @@ namespace Redemption.NPCs.PreHM
                                 NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
-                                Player player = Main.player[NPC.target];
-                                player.RedemptionScreen().ScreenShakeIntensity = 6;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
                             }
                             if (NPC.frame.Y > 9 * frameHeight)
                                 AIState = ActionState.Threatened;

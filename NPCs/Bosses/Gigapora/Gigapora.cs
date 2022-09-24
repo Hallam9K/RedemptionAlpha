@@ -493,7 +493,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.GigaLaserFire, NPC.position);
-                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(30, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                             }
 
@@ -639,7 +639,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                             break;
                         case 2:
-                            player.RedemptionScreen().ScreenShakeIntensity += 2;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                             int _ = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)player.position.Y / 16);
                             if (_ * 16 > NPC.Center.Y)
                             {
@@ -884,7 +885,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             if (AIState > ActionState.Intro && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
             {
-                player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
                 if (NPC.soundDelay == 0)
                 {
                     if (!Main.dedServ)

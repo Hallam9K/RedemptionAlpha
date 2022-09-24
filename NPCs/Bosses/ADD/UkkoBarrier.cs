@@ -78,12 +78,12 @@ namespace Redemption.NPCs.Bosses.ADD
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Vector2 drawPos = originPos;
-            drawPos.Y += projHeight * 20;
+            drawPos.Y += projHeight * 10;
             Vector2 origin = new(texture.Width - 65, texture.Height - 512);
             if (Projectile.spriteDirection == -1)
                 origin.X = 65;
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Main.EntitySpriteDraw(texture, drawPos + originPos2 - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * visibility, 0, origin, Projectile.scale, effects, 0);
                 Main.EntitySpriteDraw(texture, drawPos - originPos2 + new Vector2(50 * Projectile.spriteDirection, 0) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * 0.6f * visibility, 0, origin, Projectile.scale, effects, 0);
@@ -157,12 +157,12 @@ namespace Redemption.NPCs.Bosses.ADD
             var effects = Projectile.ai[1] >= 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 
             Vector2 drawPos = originPos;
-            drawPos.X += projHeight * 20;
+            drawPos.X += projHeight * 10;
             Vector2 origin = new(texture.Width - 65, texture.Height - 512);
             if (Projectile.ai[1] >= 0)
                 origin.Y = 65;
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Main.EntitySpriteDraw(texture, drawPos + originPos2 - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * visibility, MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
                 Main.EntitySpriteDraw(texture, drawPos - originPos2 + new Vector2(0, 50 * Projectile.ai[1] >= 0 ? 1 : -1) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * 0.6f * visibility, MathHelper.PiOver2, origin, Projectile.scale, effects, 0);

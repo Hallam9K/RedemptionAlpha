@@ -78,7 +78,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 SoundEngine.PlaySound(SoundID.Item122);
             if (AITimer >= 80)
             {
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 3;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             }

@@ -54,8 +54,8 @@ namespace Redemption.Projectiles.Ranged
             RedeDraw.SpawnRing(Projectile.Center, Color.LightBlue, glowScale: 3);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
-            if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.RedemptionScreen().ScreenShakeIntensity += 2;
+            player.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            player.RedemptionScreen().ScreenShakeIntensity += 2;
         }
     }
 }

@@ -32,7 +32,6 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
             if (Projectile.localAI[0] < 180)
@@ -43,8 +42,8 @@ namespace Redemption.Projectiles.Ranged
                 Projectile.velocity *= 0;
                 Projectile.alpha = 255;
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-                if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                    player.RedemptionScreen().ScreenShakeIntensity += 3;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
 
                 if (Projectile.owner == Main.myPlayer)
                 {

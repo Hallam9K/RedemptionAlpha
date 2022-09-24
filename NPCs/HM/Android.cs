@@ -365,7 +365,8 @@ namespace Redemption.NPCs.HM
                             SoundEngine.PlaySound(CustomSounds.MissileFire1 with { Volume = 0.5f }, NPC.position);
                             NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), false, SoundID.Item1, NPC.whoAmI, Variant);
                             NPC.velocity.X -= 3 * NPC.spriteDirection;
-                            player.RedemptionScreen().ScreenShakeIntensity += 3;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                         }
                         if (NPC.frame.Y > 22 * frameHeight)
                         {

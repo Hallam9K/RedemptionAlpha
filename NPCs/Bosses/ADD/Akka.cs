@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 110000;
+            NPC.lifeMax = 108000;
             NPC.damage = 115;
             NPC.defense = 50;
             NPC.knockBackResist = 0f;
@@ -90,11 +90,6 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.npcSlots = 10f;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
-        }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
-        {
-            damage *= 0.8f;
-            return true;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

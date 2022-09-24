@@ -91,7 +91,7 @@ namespace Redemption.Projectiles.Magic
                 {
                     if (BasePlayer.ReduceMana(player, mana * 2))
                     {
-                        player.RedemptionScreen().ScreenShakeIntensity = 6;
+                        player.RedemptionScreen().ScreenShakeIntensity += 6;
                         DustHelper.DrawCircle(Projectile.Center, DustID.Torch, 2, 4, 4, 1, 2, nogravity: true);
                         SoundEngine.PlaySound(SoundID.Item122, Projectile.position);
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2),

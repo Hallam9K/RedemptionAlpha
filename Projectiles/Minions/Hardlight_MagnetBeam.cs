@@ -81,8 +81,10 @@ namespace Redemption.Projectiles.Minions
                 LaserScale += 0.09f;
 
             if (Projectile.damage > 5 * 8)
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = Projectile.damage / (5 * 8);
-
+            {
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, Projectile.damage / (5 * 8));
+            }
             if (Projectile.timeLeft < 30 || !proj.active)
             {
                 Projectile.alpha += 4;

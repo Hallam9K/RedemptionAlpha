@@ -59,8 +59,8 @@ namespace Redemption.Projectiles.Ranged
             DustHelper.DrawCircle(Projectile.Center + vel, DustID.OrangeTorch, 1, 2, 2, nogravity: true);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
-            if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.RedemptionScreen().ScreenShakeIntensity = 3;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
         }
         public override void AI()
         {

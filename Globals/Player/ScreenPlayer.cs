@@ -79,6 +79,7 @@ namespace Redemption
         }
 
         public float ScreenShakeIntensity;
+        public Vector2 ScreenShakeOrigin = Vector2.Zero;
         public Vector2 ScreenFocusPosition;
         public float ScreenFocusInterpolant;
 
@@ -141,10 +142,17 @@ namespace Redemption
             }
             if (ScreenShakeIntensity > 0.1f)
             {
+                if (ScreenShakeOrigin != Vector2.Zero)
+                {
+                    float dist = Player.Distance(ScreenShakeOrigin) / 400;
+                    dist = MathHelper.Max(dist, 1);
+                    ScreenShakeIntensity /= dist;
+                }
                 Main.screenPosition += new Vector2(Main.rand.NextFloat(ScreenShakeIntensity),
                     Main.rand.NextFloat(ScreenShakeIntensity));
 
                 ScreenShakeIntensity *= 0.9f;
+                ScreenShakeOrigin = Vector2.Zero;
             }
             ScreenShakeIntensity = MathHelper.Clamp(ScreenShakeIntensity, 0, 200);
 

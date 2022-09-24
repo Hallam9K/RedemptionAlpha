@@ -106,7 +106,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     shakeTimer += 0.004f;
                     shakeTimer = MathHelper.Clamp(shakeTimer, 0, 1.2f);
 
-                    player.RedemptionScreen().ScreenShakeIntensity = shakeTimer * 10;
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(shakeTimer * 10, player.RedemptionScreen().ScreenShakeIntensity);
 
                     if (AITimer == 80)
                         NPC.alpha = 0;
@@ -114,7 +114,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (AITimer++ == 360)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch, NPC.position);
-                        player.RedemptionScreen().ScreenShakeIntensity = 18;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 18;
                         DustHelper.DrawDustImage(NPC.Center, DustID.Torch, 0.5f, "Redemption/Effects/DustImages/DemonShape", 3, true, 0);
                     }
                     break;
@@ -138,7 +138,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             Main.dust[dust].noGravity = true;
                         }
                         SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, NPC.position);
-                        player.RedemptionScreen().ScreenShakeIntensity = 4;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
                     }
                     if (AITimer >= 80)
                         NPC.noGravity = false;

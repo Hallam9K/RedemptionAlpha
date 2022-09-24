@@ -33,6 +33,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public override void AI()
         {
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(4, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.2f).UseColor(Color.OrangeRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
