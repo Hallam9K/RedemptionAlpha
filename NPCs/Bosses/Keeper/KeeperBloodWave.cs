@@ -26,7 +26,6 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

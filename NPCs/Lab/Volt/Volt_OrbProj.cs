@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Lab.Volt
             Projectile.ignoreWater = true;
             Projectile.alpha = 255;
             Projectile.timeLeft = 200;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

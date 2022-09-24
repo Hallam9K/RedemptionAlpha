@@ -65,7 +65,7 @@ namespace Redemption.Globals.NPC
             if (GuardPoints <= 0)
                 return;
 
-            if (ItemTags.Psychic.Has(item.type))
+            if (ItemLists.Psychic.Contains(item.type))
                 IgnoreArmour = true;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
                 damage *= 4;
@@ -75,13 +75,13 @@ namespace Redemption.Globals.NPC
             if (GuardPoints <= 0)
                 return;
 
-            if (ProjectileTags.Psychic.Has(projectile.type))
+            if (ProjectileLists.Psychic.Contains(projectile.type))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
                 damage *= 4;
             if (projectile.Redemption().EnergyBased)
                 GuardPierce = true;
-            if (ProjectileTags.Explosive.Has(projectile.type))
+            if (ProjectileLists.Explosive.Contains(projectile.type))
                 damage *= 4;
         }
         public override void SetDefaults(Terraria.NPC npc)

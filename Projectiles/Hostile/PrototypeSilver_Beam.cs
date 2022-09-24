@@ -29,7 +29,6 @@ namespace Redemption.Projectiles.Hostile
             Projectile.timeLeft = 1400;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

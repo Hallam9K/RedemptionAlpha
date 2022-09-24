@@ -44,7 +44,6 @@ namespace Redemption.Projectiles.Ritualist
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().RitDagger = true;
         }
         public override void AI()

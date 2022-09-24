@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
             Projectile.extraUpdates = 1;
         }
 

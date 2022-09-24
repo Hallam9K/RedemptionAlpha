@@ -21,7 +21,6 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
             Projectile.hide = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

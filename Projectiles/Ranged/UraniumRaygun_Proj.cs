@@ -28,7 +28,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.alpha = 50;
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 1;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().EnergyBased = true;
         }
         public bool offsetLeft = false;

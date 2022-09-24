@@ -1013,13 +1013,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
+                if (ItemLists.Celestial.Contains(item.type) || ItemLists.Psychic.Contains(item.type))
                     damage = (int)(damage * 0.9f);
 
-                if (ItemTags.Holy.Has(item.type))
+                if (ItemLists.Holy.Contains(item.type))
                     damage = (int)(damage * 0.5f);
 
-                if (ItemTags.Shadow.Has(item.type))
+                if (ItemLists.Shadow.Contains(item.type))
                     damage = (int)(damage * 1.25f);
             }
         }
@@ -1030,13 +1030,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
+                if (ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Psychic.Contains(projectile.type))
                     damage = (int)(damage * 0.9f);
 
-                if (ProjectileTags.Holy.Has(projectile.type))
+                if (ProjectileLists.Holy.Contains(projectile.type))
                     damage = (int)(damage * 0.5f);
 
-                if (ProjectileTags.Shadow.Has(projectile.type))
+                if (ProjectileLists.Shadow.Contains(projectile.type))
                     damage = (int)(damage * 1.25f);
             }
         }

@@ -68,12 +68,12 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool? CanBeHitByItem(Player player, Item item)
         {
-            return player.RedemptionAbility().SpiritwalkerActive || ItemTags.Arcane.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Holy.Has(item.type) || ItemTags.Psychic.Has(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || ItemLists.Arcane.Contains(item.type) || ItemLists.Celestial.Contains(item.type) || ItemLists.Holy.Contains(item.type) || ItemLists.Psychic.Contains(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
             Player player = Main.player[projectile.owner];
-            return player.RedemptionAbility().SpiritwalkerActive || ProjectileTags.Arcane.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type) || RedeConfigClient.Instance.ElementDisable;
+            return player.RedemptionAbility().SpiritwalkerActive || ProjectileLists.Arcane.Contains(projectile.type) || ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Holy.Contains(projectile.type) || ProjectileLists.Psychic.Contains(projectile.type) || RedeConfigClient.Instance.ElementDisable;
         }
         public override void AI()
         {

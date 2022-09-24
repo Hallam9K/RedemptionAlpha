@@ -23,7 +23,6 @@ namespace Redemption.Projectiles.Minions
             Projectile.tileCollide = true;
             Projectile.penetrate = 3;
             Projectile.timeLeft = 240;
-            Projectile.Redemption().Unparryable = true;
         }
         public void DoTrailCreation(TrailManager tManager)
         {

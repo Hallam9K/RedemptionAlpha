@@ -24,7 +24,6 @@ namespace Redemption.Projectiles.Magic
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

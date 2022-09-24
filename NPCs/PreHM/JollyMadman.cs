@@ -146,10 +146,10 @@ namespace Redemption.NPCs.PreHM
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemTags.Holy.Has(item.type))
+                if (ItemLists.Holy.Contains(item.type))
                     damage = (int)(damage * 2f);
 
-                if (ItemTags.Psychic.Has(item.type))
+                if (ItemLists.Psychic.Contains(item.type))
                     PsychicHit = true;
             }
         }
@@ -157,10 +157,10 @@ namespace Redemption.NPCs.PreHM
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileTags.Holy.Has(projectile.type))
+                if (ProjectileLists.Holy.Contains(projectile.type))
                     damage = (int)(damage * 2f);
 
-                if (ProjectileTags.Psychic.Has(projectile.type))
+                if (ProjectileLists.Psychic.Contains(projectile.type))
                     PsychicHit = true;
             }
         }

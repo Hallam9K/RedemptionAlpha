@@ -70,106 +70,106 @@ namespace Redemption.Globals.NPC
 
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type))
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type))
             {
                 #region Elemental Attributes
                 if (NPCLists.Plantlike.Contains(npc.type))
                 {
-                    if (ItemTags.Fire.Has(item.type))
+                    if (ItemLists.Fire.Contains(item.type))
                         damage = (int)(damage * 1.15f);
 
-                    if (ItemTags.Nature.Has(item.type))
+                    if (ItemLists.Nature.Contains(item.type))
                         damage = (int)(damage * 0.75f);
 
-                    if (ItemTags.Poison.Has(item.type))
+                    if (ItemLists.Poison.Contains(item.type))
                         damage = (int)(damage * 0.5f);
                 }
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
-                    if (ItemTags.Holy.Has(item.type))
+                    if (ItemLists.Holy.Contains(item.type))
                         damage = (int)(damage * 1.15f);
 
-                    if (ItemTags.Shadow.Has(item.type))
+                    if (ItemLists.Shadow.Contains(item.type))
                         damage = (int)(damage * 0.8f);
                 }
                 if (NPCLists.Demon.Contains(npc.type))
                 {
-                    if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type))
+                    if (ItemLists.Holy.Contains(item.type) || ItemLists.Celestial.Contains(item.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ItemTags.Fire.Has(item.type))
+                    if (ItemLists.Fire.Contains(item.type))
                         damage = (int)(damage * 0.5f);
 
-                    if (ItemTags.Water.Has(item.type) || ItemTags.Ice.Has(item.type))
+                    if (ItemLists.Water.Contains(item.type) || ItemLists.Ice.Contains(item.type))
                         damage = (int)(damage * 1.1f);
                 }
                 if (NPCLists.Spirit.Contains(npc.type))
                 {
-                    if (ItemTags.Holy.Has(item.type) || ItemTags.Celestial.Has(item.type) || ItemTags.Arcane.Has(item.type))
+                    if (ItemLists.Holy.Contains(item.type) || ItemLists.Celestial.Contains(item.type) || ItemLists.Arcane.Contains(item.type))
                         damage = (int)(damage * 1.15f);
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (ItemTags.Fire.Has(item.type))
+                    if (ItemLists.Fire.Contains(item.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ItemTags.Ice.Has(item.type))
+                    if (ItemLists.Ice.Contains(item.type))
                         damage = (int)(damage * 0.75f);
 
-                    if (ItemTags.Water.Has(item.type))
+                    if (ItemLists.Water.Contains(item.type))
                         damage = (int)(damage * 0.5f);
                 }
                 if (NPCLists.Cold.Contains(npc.type))
                 {
-                    if (ItemTags.Fire.Has(item.type))
+                    if (ItemLists.Fire.Contains(item.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ItemTags.Ice.Has(item.type))
+                    if (ItemLists.Ice.Contains(item.type))
                         damage = (int)(damage * 0.75f);
 
-                    if (ItemTags.Thunder.Has(item.type))
+                    if (ItemLists.Thunder.Contains(item.type))
                         damage = (int)(damage * 1.1f);
                 }
                 if (NPCLists.Infected.Contains(npc.type))
                 {
-                    if (ItemTags.Fire.Has(item.type))
+                    if (ItemLists.Fire.Contains(item.type))
                         damage = (int)(damage * 1.15f);
 
-                    if (ItemTags.Ice.Has(item.type))
+                    if (ItemLists.Ice.Contains(item.type))
                         damage = (int)(damage * 0.7f);
 
-                    if (ItemTags.Blood.Has(item.type))
+                    if (ItemLists.Blood.Contains(item.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ItemTags.Poison.Has(item.type))
+                    if (ItemLists.Poison.Contains(item.type))
                         damage = (int)(damage * 0.1f);
                 }
-                if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ItemTags.Thunder.Has(item.type))
+                if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ItemLists.Thunder.Contains(item.type))
                     damage = (int)(damage * 1.1f);
-                if (!npc.noTileCollide && npc.collideY && ItemTags.Earth.Has(item.type))
+                if (!npc.noTileCollide && npc.collideY && ItemLists.Earth.Contains(item.type))
                     damage = (int)(damage * 1.1f);
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
-                    if (ItemTags.Blood.Has(item.type) || ItemTags.Poison.Has(item.type))
+                    if (ItemLists.Blood.Contains(item.type) || ItemLists.Poison.Contains(item.type))
                         damage = (int)(damage * 0.5f);
 
-                    if (ItemTags.Thunder.Has(item.type))
+                    if (ItemLists.Thunder.Contains(item.type))
                         damage = (int)(damage * 1.1f);
 
-                    if (ItemTags.Water.Has(item.type))
+                    if (ItemLists.Water.Contains(item.type))
                         damage = (int)(damage * 1.25f);
                 }
                 if (!NPCLists.Inorganic.Contains(npc.type))
                 {
-                    if (ItemTags.Blood.Has(item.type))
+                    if (ItemLists.Blood.Contains(item.type))
                         damage = (int)(damage * 1.1f);
 
-                    if (ItemTags.Poison.Has(item.type))
+                    if (ItemLists.Poison.Contains(item.type))
                         damage = (int)(damage * 1.1f);
                 }
-                if (ItemTags.Poison.Has(item.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
+                if (ItemLists.Poison.Contains(item.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                     damage = (int)(damage * 1.15f);
-                if (ItemTags.Wind.Has(item.type) && (npc.noGravity || !npc.collideY))
+                if (ItemLists.Wind.Contains(item.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
                 #endregion
             }
@@ -177,7 +177,7 @@ namespace Redemption.Globals.NPC
             // Decapitation
             if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCLists.SkeletonHumanoid.Contains(npc.type))
             {
-                if (Main.rand.NextBool(200) && !ItemTags.BluntSwing.Has(item.type))
+                if (Main.rand.NextBool(200) && !ItemLists.BluntSwing.Contains(item.type))
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
@@ -195,106 +195,106 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileTags.NoElement.Has(projectile.type))
+            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileLists.NoElement.Contains(projectile.type))
             {
                 #region Elemental Attributes
                 if (NPCLists.Plantlike.Contains(npc.type))
                 {
-                    if (ProjectileTags.Fire.Has(projectile.type))
+                    if (ProjectileLists.Fire.Contains(projectile.type))
                         damage = (int)(damage * 1.15f);
 
-                    if (ProjectileTags.Nature.Has(projectile.type))
+                    if (ProjectileLists.Nature.Contains(projectile.type))
                         damage = (int)(damage * 0.75f);
 
-                    if (ProjectileTags.Poison.Has(projectile.type))
+                    if (ProjectileLists.Poison.Contains(projectile.type))
                         damage = (int)(damage * 0.5f);
                 }
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
-                    if (ProjectileTags.Holy.Has(projectile.type))
+                    if (ProjectileLists.Holy.Contains(projectile.type))
                         damage = (int)(damage * 1.15f);
 
-                    if (ProjectileTags.Shadow.Has(projectile.type))
+                    if (ProjectileLists.Shadow.Contains(projectile.type))
                         damage = (int)(damage * 0.8f);
                 }
                 if (NPCLists.Demon.Contains(npc.type))
                 {
-                    if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type))
+                    if (ProjectileLists.Holy.Contains(projectile.type) || ProjectileLists.Celestial.Contains(projectile.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ProjectileTags.Fire.Has(projectile.type))
+                    if (ProjectileLists.Fire.Contains(projectile.type))
                         damage = (int)(damage * 0.5f);
 
-                    if (ProjectileTags.Water.Has(projectile.type) || ProjectileTags.Ice.Has(projectile.type))
+                    if (ProjectileLists.Water.Contains(projectile.type) || ProjectileLists.Ice.Contains(projectile.type))
                         damage = (int)(damage * 1.1f);
                 }
                 if (NPCLists.Spirit.Contains(npc.type))
                 {
-                    if (ProjectileTags.Holy.Has(projectile.type) || ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Arcane.Has(projectile.type))
+                    if (ProjectileLists.Holy.Contains(projectile.type) || ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Arcane.Contains(projectile.type))
                         damage = (int)(damage * 1.15f);
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (ProjectileTags.Fire.Has(projectile.type))
+                    if (ProjectileLists.Fire.Contains(projectile.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ProjectileTags.Ice.Has(projectile.type))
+                    if (ProjectileLists.Ice.Contains(projectile.type))
                         damage = (int)(damage * 0.75f);
 
-                    if (ProjectileTags.Water.Has(projectile.type))
+                    if (ProjectileLists.Water.Contains(projectile.type))
                         damage = (int)(damage * 0.5f);
                 }
                 if (NPCLists.Cold.Contains(npc.type))
                 {
-                    if (ProjectileTags.Fire.Has(projectile.type))
+                    if (ProjectileLists.Fire.Contains(projectile.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ProjectileTags.Ice.Has(projectile.type))
+                    if (ProjectileLists.Ice.Contains(projectile.type))
                         damage = (int)(damage * 0.5f);
 
-                    if (ProjectileTags.Thunder.Has(projectile.type))
+                    if (ProjectileLists.Thunder.Contains(projectile.type))
                         damage = (int)(damage * 1.1f);
                 }
                 if (NPCLists.Infected.Contains(npc.type))
                 {
-                    if (ProjectileTags.Fire.Has(projectile.type))
+                    if (ProjectileLists.Fire.Contains(projectile.type))
                         damage = (int)(damage * 1.15f);
 
-                    if (ProjectileTags.Ice.Has(projectile.type))
+                    if (ProjectileLists.Ice.Contains(projectile.type))
                         damage = (int)(damage * 0.7f);
 
-                    if (ProjectileTags.Blood.Has(projectile.type))
+                    if (ProjectileLists.Blood.Contains(projectile.type))
                         damage = (int)(damage * 1.25f);
 
-                    if (ProjectileTags.Poison.Has(projectile.type))
+                    if (ProjectileLists.Poison.Contains(projectile.type))
                         damage = (int)(damage * 0.1f);
                 }
-                if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ProjectileTags.Thunder.Has(projectile.type))
+                if (((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet)) && ProjectileLists.Thunder.Contains(projectile.type))
                     damage = (int)(damage * 1.1f);
-                if (!npc.noTileCollide && npc.collideY && ProjectileTags.Earth.Has(projectile.type))
+                if (!npc.noTileCollide && npc.collideY && ProjectileLists.Earth.Contains(projectile.type))
                     damage = (int)(damage * 1.1f);
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
-                    if (ProjectileTags.Blood.Has(projectile.type) || ProjectileTags.Poison.Has(projectile.type))
+                    if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Poison.Contains(projectile.type))
                         damage = (int)(damage * 0.5f);
 
-                    if (ProjectileTags.Thunder.Has(projectile.type))
+                    if (ProjectileLists.Thunder.Contains(projectile.type))
                         damage = (int)(damage * 1.1f);
 
-                    if (ProjectileTags.Water.Has(projectile.type))
+                    if (ProjectileLists.Water.Contains(projectile.type))
                         damage = (int)(damage * 1.25f);
                 }
                 if (!NPCLists.Inorganic.Contains(npc.type))
                 {
-                    if (ProjectileTags.Blood.Has(projectile.type))
+                    if (ProjectileLists.Blood.Contains(projectile.type))
                         damage = (int)(damage * 1.1f);
 
-                    if (ProjectileTags.Poison.Has(projectile.type))
+                    if (ProjectileLists.Poison.Contains(projectile.type))
                         damage = (int)(damage * 1.1f);
                 }
-                if (ProjectileTags.Poison.Has(projectile.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
+                if (ProjectileLists.Poison.Contains(projectile.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                     damage = (int)(damage * 1.15f);
-                if (ProjectileTags.Wind.Has(projectile.type) && (npc.noGravity || !npc.collideY))
+                if (ProjectileLists.Wind.Contains(projectile.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
                 #endregion
             }
@@ -305,17 +305,17 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable && !ItemTags.NoElement.Has(item.type))
+            if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type))
             {
                 #region Elemental Attributes
                 if (NPCLists.Infected.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && ItemTags.Ice.Has(item.type))
+                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && ItemLists.Ice.Contains(item.type))
                         npc.AddBuff(ModContent.BuffType<PureChillDebuff>(), 600);
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && ItemTags.Ice.Has(item.type))
+                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && ItemLists.Ice.Contains(item.type))
                     {
                         SoundEngine.PlaySound(SoundID.Item30, npc.position);
                         npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
@@ -323,25 +323,25 @@ namespace Redemption.Globals.NPC
                 }
                 if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(4) && ItemTags.Fire.Has(item.type))
+                    if (Main.rand.NextBool(4) && ItemLists.Fire.Contains(item.type))
                         npc.AddBuff(BuffID.OnFire, 180);
                 }
                 if ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet))
                 {
-                    if (Main.rand.NextBool(2) && ItemTags.Thunder.Has(item.type))
+                    if (Main.rand.NextBool(2) && ItemLists.Thunder.Contains(item.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
                 if (!npc.noTileCollide && npc.collideY && npc.knockBackResist > 0)
                 {
-                    if (Main.rand.NextBool(8) && ItemTags.Earth.Has(item.type))
+                    if (Main.rand.NextBool(8) && ItemLists.Earth.Contains(item.type))
                         npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
                 }
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(4) && ItemTags.Water.Has(item.type))
+                    if (Main.rand.NextBool(4) && ItemLists.Water.Contains(item.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
-                if (ItemTags.Shadow.Has(item.type))
+                if (ItemLists.Shadow.Contains(item.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
@@ -353,17 +353,17 @@ namespace Redemption.Globals.NPC
         }
         public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileTags.NoElement.Has(projectile.type))
+            if (!RedeConfigClient.Instance.ElementDisable && !ProjectileLists.NoElement.Contains(projectile.type))
             {
                 #region Elemental Attributes
                 if (NPCLists.Infected.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && ProjectileTags.Ice.Has(projectile.type))
+                    if (Main.rand.NextBool(4) && npc.life < npc.lifeMax && ProjectileLists.Ice.Contains(projectile.type))
                         npc.AddBuff(ModContent.BuffType<PureChillDebuff>(), 600);
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && ProjectileTags.Ice.Has(projectile.type))
+                    if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && ProjectileLists.Ice.Contains(projectile.type))
                     {
                         SoundEngine.PlaySound(SoundID.Item30, npc.position);
                         npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
@@ -371,25 +371,25 @@ namespace Redemption.Globals.NPC
                 }
                 if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(4) && ProjectileTags.Fire.Has(projectile.type))
+                    if (Main.rand.NextBool(4) && ProjectileLists.Fire.Contains(projectile.type))
                         npc.AddBuff(BuffID.OnFire, 180);
                 }
                 if ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet))
                 {
-                    if (Main.rand.NextBool(2) && ProjectileTags.Thunder.Has(projectile.type))
+                    if (Main.rand.NextBool(2) && ProjectileLists.Thunder.Contains(projectile.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
                 if (!npc.noTileCollide && npc.collideY && npc.knockBackResist > 0)
                 {
-                    if (Main.rand.NextBool(8) && ProjectileTags.Earth.Has(projectile.type))
+                    if (Main.rand.NextBool(8) && ProjectileLists.Earth.Contains(projectile.type))
                         npc.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
                 }
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
-                    if (Main.rand.NextBool(4) && ProjectileTags.Water.Has(projectile.type))
+                    if (Main.rand.NextBool(4) && ProjectileLists.Water.Contains(projectile.type))
                         npc.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
                 }
-                if (ProjectileTags.Shadow.Has(projectile.type))
+                if (ProjectileLists.Shadow.Contains(projectile.type))
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);

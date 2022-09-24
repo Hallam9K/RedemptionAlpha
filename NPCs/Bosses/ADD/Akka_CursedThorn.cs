@@ -45,7 +45,6 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

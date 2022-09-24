@@ -29,7 +29,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 180;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 3;
-            Projectile.Redemption().Unparryable = true;
         }
         private float squish;
         public override void AI()

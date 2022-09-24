@@ -23,7 +23,6 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Projectile.friendly = false;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 600;
-            Projectile.Redemption().Unparryable = true;
         }
 
         private float glowRot;

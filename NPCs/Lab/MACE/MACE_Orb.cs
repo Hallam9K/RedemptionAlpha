@@ -24,7 +24,6 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 120;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

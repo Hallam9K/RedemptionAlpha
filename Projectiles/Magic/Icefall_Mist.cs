@@ -31,7 +31,6 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = Main.rand.Next(180, 281);
             Projectile.scale = Main.rand.NextFloat(0.4f, 0.7f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

@@ -33,7 +33,6 @@ namespace Redemption.Projectiles.Magic
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 140;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override Color? GetAlpha(Color lightColor) => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightYellow, Color.White, Color.LightYellow);

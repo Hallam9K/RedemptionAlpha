@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 360;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool CanHitPlayer(Player target) => Projectile.ai[1] >= 40;
         private bool Flare;

@@ -341,33 +341,33 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Resistances
-                if (ProjectileTags.Arcane.Has(proj.type))
+                if (ProjectileLists.Arcane.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[0]));
-                if (ProjectileTags.Fire.Has(proj.type))
+                if (ProjectileLists.Fire.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[1]));
-                if (ProjectileTags.Water.Has(proj.type))
+                if (ProjectileLists.Water.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[2]));
-                if (ProjectileTags.Ice.Has(proj.type))
+                if (ProjectileLists.Ice.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[3]));
-                if (ProjectileTags.Earth.Has(proj.type))
+                if (ProjectileLists.Earth.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[4]));
-                if (ProjectileTags.Wind.Has(proj.type))
+                if (ProjectileLists.Wind.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[5]));
-                if (ProjectileTags.Thunder.Has(proj.type))
+                if (ProjectileLists.Thunder.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[6]));
-                if (ProjectileTags.Holy.Has(proj.type))
+                if (ProjectileLists.Holy.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[7]));
-                if (ProjectileTags.Shadow.Has(proj.type))
+                if (ProjectileLists.Shadow.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[8]));
-                if (ProjectileTags.Nature.Has(proj.type))
+                if (ProjectileLists.Nature.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[9]));
-                if (ProjectileTags.Poison.Has(proj.type))
+                if (ProjectileLists.Poison.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[10]));
-                if (ProjectileTags.Blood.Has(proj.type))
+                if (ProjectileLists.Blood.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[11]));
-                if (ProjectileTags.Psychic.Has(proj.type))
+                if (ProjectileLists.Psychic.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[12]));
-                if (ProjectileTags.Celestial.Has(proj.type))
+                if (ProjectileLists.Celestial.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[13]));
                 #endregion
             }
@@ -392,33 +392,33 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Damage
-                if (ItemTags.Arcane.Has(item.type))
+                if (ItemLists.Arcane.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[0]));
-                if (ItemTags.Fire.Has(item.type))
+                if (ItemLists.Fire.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[1]));
-                if (ItemTags.Water.Has(item.type))
+                if (ItemLists.Water.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[2]));
-                if (ItemTags.Ice.Has(item.type))
+                if (ItemLists.Ice.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[3]));
-                if (ItemTags.Earth.Has(item.type))
+                if (ItemLists.Earth.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[4]));
-                if (ItemTags.Wind.Has(item.type))
+                if (ItemLists.Wind.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[5]));
-                if (ItemTags.Thunder.Has(item.type))
+                if (ItemLists.Thunder.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[6]));
-                if (ItemTags.Holy.Has(item.type))
+                if (ItemLists.Holy.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[7]));
-                if (ItemTags.Shadow.Has(item.type))
+                if (ItemLists.Shadow.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[8]));
-                if (ItemTags.Nature.Has(item.type))
+                if (ItemLists.Nature.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[9]));
-                if (ItemTags.Poison.Has(item.type))
+                if (ItemLists.Poison.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[10]));
-                if (ItemTags.Blood.Has(item.type))
+                if (ItemLists.Blood.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[11]));
-                if (ItemTags.Psychic.Has(item.type))
+                if (ItemLists.Psychic.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[12]));
-                if (ItemTags.Celestial.Has(item.type))
+                if (ItemLists.Celestial.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }
@@ -431,33 +431,33 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Damage
-                if (ProjectileTags.Arcane.Has(proj.type))
+                if (ProjectileLists.Arcane.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[0]));
-                if (ProjectileTags.Fire.Has(proj.type))
+                if (ProjectileLists.Fire.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[1]));
-                if (ProjectileTags.Water.Has(proj.type))
+                if (ProjectileLists.Water.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[2]));
-                if (ProjectileTags.Ice.Has(proj.type))
+                if (ProjectileLists.Ice.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[3]));
-                if (ProjectileTags.Earth.Has(proj.type))
+                if (ProjectileLists.Earth.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[4]));
-                if (ProjectileTags.Wind.Has(proj.type))
+                if (ProjectileLists.Wind.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[5]));
-                if (ProjectileTags.Thunder.Has(proj.type))
+                if (ProjectileLists.Thunder.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[6]));
-                if (ProjectileTags.Holy.Has(proj.type))
+                if (ProjectileLists.Holy.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[7]));
-                if (ProjectileTags.Shadow.Has(proj.type))
+                if (ProjectileLists.Shadow.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[8]));
-                if (ProjectileTags.Nature.Has(proj.type))
+                if (ProjectileLists.Nature.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[9]));
-                if (ProjectileTags.Poison.Has(proj.type))
+                if (ProjectileLists.Poison.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[10]));
-                if (ProjectileTags.Blood.Has(proj.type))
+                if (ProjectileLists.Blood.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[11]));
-                if (ProjectileTags.Psychic.Has(proj.type))
+                if (ProjectileLists.Psychic.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[12]));
-                if (ProjectileTags.Celestial.Has(proj.type))
+                if (ProjectileLists.Celestial.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }

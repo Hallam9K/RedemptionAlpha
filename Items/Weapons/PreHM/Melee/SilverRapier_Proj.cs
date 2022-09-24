@@ -26,7 +26,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.alpha = 255;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 8;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
 

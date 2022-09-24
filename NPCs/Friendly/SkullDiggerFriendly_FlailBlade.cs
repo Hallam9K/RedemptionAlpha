@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Friendly
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

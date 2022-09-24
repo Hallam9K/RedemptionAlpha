@@ -67,7 +67,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.timeLeft = 120;
             Projectile.alpha = 0;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

@@ -29,7 +29,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
         public float rot;
         public override void AI()
@@ -106,7 +105,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public float rot;
@@ -179,7 +177,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 16;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {
@@ -210,7 +207,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
         public float rot;
         public override void AI()

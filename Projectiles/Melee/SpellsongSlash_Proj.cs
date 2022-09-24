@@ -28,7 +28,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.Redemption().Unparryable = true;
         }
         private float squish;
         public override void AI()

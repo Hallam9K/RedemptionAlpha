@@ -24,7 +24,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
 

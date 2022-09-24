@@ -234,7 +234,7 @@ namespace Redemption.NPCs.PreHM
 
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
-                    if (Main.rand.NextBool(500) && !Main.dayTime && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileTags.WoodLeaf.Has(tile.TileType) && (Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWoodUnsafe || Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWood))
+                    if (Main.rand.NextBool(500) && !Main.dayTime && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileLists.WoodLeaf.Contains(tile.TileType) && (Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWoodUnsafe || Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWood))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(3000, 6000);

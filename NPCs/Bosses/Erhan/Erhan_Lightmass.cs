@@ -30,7 +30,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.penetrate = 1;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
-            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

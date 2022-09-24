@@ -21,7 +21,6 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.hostile = true;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 100;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

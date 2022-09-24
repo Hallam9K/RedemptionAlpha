@@ -23,7 +23,6 @@ namespace Redemption.Projectiles.Hostile
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 120;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

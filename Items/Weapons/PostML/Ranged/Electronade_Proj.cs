@@ -92,7 +92,6 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

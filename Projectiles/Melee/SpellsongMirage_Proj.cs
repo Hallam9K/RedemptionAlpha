@@ -31,7 +31,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.alpha = 255;
             Projectile.scale = 0.1f;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool? CanCutTiles() => false;
         public float rot;

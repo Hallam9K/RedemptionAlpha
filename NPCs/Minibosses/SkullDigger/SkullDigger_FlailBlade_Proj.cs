@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
             Projectile.alpha = 180;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

@@ -30,7 +30,6 @@ namespace Redemption.Projectiles.Minions
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 800;
-            Projectile.Redemption().Unparryable = true;
         }
 
         Vector2 vector;

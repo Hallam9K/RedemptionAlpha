@@ -25,7 +25,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
-            Projectile.Redemption().Unparryable = true;
         }
         public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
         public override void AI()
