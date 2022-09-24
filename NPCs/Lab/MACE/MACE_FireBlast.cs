@@ -32,7 +32,6 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.scale = 1;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

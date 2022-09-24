@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
@@ -30,12 +28,11 @@ namespace Redemption.Projectiles.Ranged
             Projectile.tileCollide = true;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().EnergyBased = true;
         }
         public override void AI()
         {
-            if (Projectile.localAI[0]++ > 30)
+            if (Projectile.localAI[0]++ > 30 && !Main.rand.NextBool(6))
             {
                 for (int i = 0; i < 1; i++)
                 {

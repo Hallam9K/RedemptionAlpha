@@ -4,8 +4,6 @@ using Redemption.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using Redemption.Globals;
-using Redemption.Buffs.Debuffs;
 using Redemption.BaseExtension;
 using Terraria.ID;
 

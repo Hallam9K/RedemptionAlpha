@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.ADD;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -41,6 +43,7 @@ namespace Redemption
             ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
             cutscene = false;
+            customZoom = 0;
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
@@ -76,6 +79,7 @@ namespace Redemption
         }
 
         public float ScreenShakeIntensity;
+        public Vector2 ScreenShakeOrigin = Vector2.Zero;
         public Vector2 ScreenFocusPosition;
         public float ScreenFocusInterpolant;
 
@@ -84,6 +88,7 @@ namespace Redemption
         public float timedZoomTimeMax = 0;
         public float timedZoomDuration = 0;
         public float timedZoomDurationMax = 0;
+        public float customZoom;
         public void TimedZoom(Vector2 zoom, int zoomTime, int zoomDuration)
         {
             timedZoom = zoom;
@@ -121,6 +126,7 @@ namespace Redemption
         }
         public override void ModifyScreenPosition()
         {
+            ADDScreenLock();
             if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Vector2 idealScreenPosition = ScreenFocusPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
@@ -136,10 +142,17 @@ namespace Redemption
             }
             if (ScreenShakeIntensity > 0.1f)
             {
+                if (ScreenShakeOrigin != Vector2.Zero)
+                {
+                    float dist = Player.Distance(ScreenShakeOrigin) / 400;
+                    dist = MathHelper.Max(dist, 1);
+                    ScreenShakeIntensity /= dist;
+                }
                 Main.screenPosition += new Vector2(Main.rand.NextFloat(ScreenShakeIntensity),
                     Main.rand.NextFloat(ScreenShakeIntensity));
 
                 ScreenShakeIntensity *= 0.9f;
+                ScreenShakeOrigin = Vector2.Zero;
             }
             ScreenShakeIntensity = MathHelper.Clamp(ScreenShakeIntensity, 0, 200);
 
@@ -169,6 +182,28 @@ namespace Redemption
                     }
                 }
                 NebCutsceneflag = false;
+            }
+        }
+        public void ADDScreenLock()
+        {
+            Rectangle ADDscreen = NPC.AnyNPCs(ModContent.NPCType<Ukko>()) ? new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y) : Rectangle.Empty;
+            if (!ADDscreen.IsEmpty)
+            {
+                Vector2 pos = new(ADDscreen.Center.X, ADDscreen.Center.Y);
+                float x = Player.Center.X;
+                float y = Player.Center.Y;
+                if (ADDscreen.Width > Main.screenWidth)
+                    pos.X = MathHelper.Clamp(x, ADDscreen.X + Main.screenWidth / 2, ADDscreen.Right - Main.screenWidth / 2);
+                if (ADDscreen.Height > Main.screenHeight)
+                    pos.Y = MathHelper.Clamp(y, ADDscreen.Y + Main.screenHeight / 2, ADDscreen.Bottom - Main.screenHeight / 2);
+                pos -= new Vector2(Main.screenWidth, Main.screenHeight) / 2;
+
+                if (Redemption.Instance.currentScreen != ADDscreen)
+                {
+                    Redemption.Instance.cameraOffset = Main.screenPosition - pos;
+                    Redemption.Instance.currentScreen = ADDscreen;
+                }
+                Main.screenPosition = pos;
             }
         }
     }

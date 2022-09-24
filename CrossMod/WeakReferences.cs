@@ -1,42 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria.ModLoader;
-using Redemption.Items;
 using Terraria.ID;
 using Redemption.NPCs.Bosses.Thorn;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Items.Usable;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Lore;
 using Redemption.Items.Placeable.MusicBoxes;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Usable.Potions;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Accessories.HM;
 using Redemption.NPCs.Lab;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Items.Weapons.HM.Magic;
-using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.Lab.Behemoth;
-using Redemption.Items.Weapons.HM.Summon;
 using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.Items.Donator.Gonk;
-using Redemption.Items.Donator.Uncon;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.Items.Tools.PostML;
@@ -47,6 +33,7 @@ using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Neb;
 using Terraria.Graphics.Shaders;
 using Terraria;
+using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.CrossMod
 {
@@ -305,6 +292,37 @@ namespace Redemption.CrossMod
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
+                #endregion
+
+                #region Ancient Deity Duo
+                bossChecklist.Call("AddBoss", mod, "Eaglecrest Golem Rematch", ModContent.NPCType<EaglecrestGolem2>(), 20f, () => RedeBossDowned.downedADD, () => RedeBossDowned.ADDDeath == 0, null, ModContent.ItemType<GolemEye>(), "Encase the [i:" + ModContent.ItemType<GolemEye>() + "] within the stones of its origins, and it's true power will present itself.", null,
+                (SpriteBatch sb, Rectangle rect, Color color) =>
+                {
+                    Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;
+                    Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                    sb.Draw(texture, centered, color);
+                }, "Redemption/NPCs/Minibosses/EaglecrestGolem/EaglecrestGolem_Head_Boss");
+
+                bossChecklist.Call("AddBoss", mod, "Ancient Deity Duo",
+                    new List<int>
+                    {
+                        ModContent.NPCType<Ukko>(),
+                        ModContent.NPCType<Akka>()
+                    }, 20.001f, () => RedeBossDowned.downedADD, () => RedeBossDowned.ADDDeath > 0,
+                    new List<int>
+                    {
+                        //ModContent.ItemType<ErhanRelic>(),
+                        //ModContent.ItemType<DevilsAdvocate>(),
+                        //ModContent.ItemType<ErhanTrophy>(),
+                        //ModContent.ItemType<ErhanHelmet>(),
+                    },
+                    ModContent.ItemType<AncientSigil>(), "Use an [i:" + ModContent.ItemType<AncientSigil>() + "] at day.", null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/UkkoAkka").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
                     }, null);

@@ -1446,16 +1446,16 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemTags.Celestial.Has(item.type))
+                if (ItemLists.Celestial.Contains(item.type))
                     damage = (int)(damage * 0.75f);
 
-                if (ItemTags.Nature.Has(item.type))
+                if (ItemLists.Nature.Contains(item.type))
                     damage = (int)(damage * 0.9f);
 
-                if (ItemTags.Psychic.Has(item.type))
+                if (ItemLists.Psychic.Contains(item.type))
                     damage = (int)(damage * 1.25f);
 
-                if (ItemTags.Shadow.Has(item.type))
+                if (ItemLists.Shadow.Contains(item.type))
                     damage = (int)(damage * 1.1f);
             }
         }
@@ -1463,16 +1463,16 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileTags.Celestial.Has(projectile.type))
+                if (ProjectileLists.Celestial.Contains(projectile.type))
                     damage = (int)(damage * 0.75f);
 
-                if (ProjectileTags.Nature.Has(projectile.type))
+                if (ProjectileLists.Nature.Contains(projectile.type))
                     damage = (int)(damage * 0.9f);
 
-                if (ProjectileTags.Psychic.Has(projectile.type))
+                if (ProjectileLists.Psychic.Contains(projectile.type))
                     damage = (int)(damage * 1.25f);
 
-                if (ProjectileTags.Shadow.Has(projectile.type))
+                if (ProjectileLists.Shadow.Contains(projectile.type))
                     damage = (int)(damage * 1.1f);
             }
         }

@@ -6,7 +6,6 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.BaseExtension;
-using static Humanizer.In;
 using Redemption.Globals.Player;
 
 namespace Redemption.Items.Armor.PostML.Xenium

@@ -3,10 +3,6 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Cooldowns;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Projectiles.Misc;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -29,12 +25,12 @@ namespace Redemption.Items.Accessories.HM
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (!Main.playerInventory && !Main.inFancyUI)
+            if (!Main.playerInventory && !Main.inFancyUI && !Main.mapFullscreen)
                 player.Redemption().slayerCursor = true;
         }
         public override void UpdateVanity(Player player)
         {
-            if (!Main.playerInventory && !Main.inFancyUI)
+            if (!Main.playerInventory && !Main.inFancyUI && !Main.mapFullscreen)
                 player.Redemption().slayerCursor = true;
         }
     }

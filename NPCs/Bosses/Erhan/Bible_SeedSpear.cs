@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.timeLeft = 120;
             Projectile.rotation = Main.rand.NextFloat(-0.3f, 0.3f);
             Projectile.scale = 0.01f;
-            Projectile.Redemption().Unparryable = true;
             Projectile.hide = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)

@@ -29,7 +29,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.friendly = false;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 200;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

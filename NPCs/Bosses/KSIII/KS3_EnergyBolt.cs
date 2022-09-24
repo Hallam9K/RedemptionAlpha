@@ -25,7 +25,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = false;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().EnergyBased = true;
         }
 

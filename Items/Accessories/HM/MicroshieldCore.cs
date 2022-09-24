@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Redemption.Buffs.Minions;
-using Redemption.Projectiles.Minions;
+﻿using Redemption.Buffs.Minions;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,24 +10,26 @@ namespace Redemption.Items.Accessories.HM
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Microshield Core");
-            Tooltip.SetDefault("Summons a small Shield Core that occasionally shoots lasers at enemies");
+            Tooltip.SetDefault("Summons a Microshield Drone that appears whenever a hostile projectile is shot at the player\n" +
+                "When a projectile hits the shield, it will release a discharge and reflect it\n" +
+                "The shield can take 500 damage, once destroyed, it will take 10 seconds to reactivate");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()
 		{
-            Item.DefaultToVanitypet(ModContent.ProjectileType<MicroshieldCore_Proj>(), ModContent.BuffType<MicroshieldCoreBuff>());
             Item.width = 18;
             Item.height = 34;
             Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.expert = true;
             Item.rare = ItemRarityID.Expert;
+            Item.accessory = true;
         }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddBuff(Item.buffType, 2);
-            return false;
+            if (hideVisual)
+                return;
+            player.AddBuff(ModContent.BuffType<MicroshieldDroneBuff>(), 2);
         }
     }
 }

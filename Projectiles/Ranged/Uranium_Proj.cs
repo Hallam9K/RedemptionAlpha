@@ -64,8 +64,8 @@ namespace Redemption.Projectiles.Ranged
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
-            if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.RedemptionScreen().ScreenShakeIntensity = 3;
+            player.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            player.RedemptionScreen().ScreenShakeIntensity += 3;
 
             for (int i = 0; i < 20; i++)
             {

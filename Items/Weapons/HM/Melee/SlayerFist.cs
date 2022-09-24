@@ -1,8 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Melee;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.Creative;
 

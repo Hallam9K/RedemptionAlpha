@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Usable;
 
 namespace Redemption.Items.Accessories.PreHM
 {

@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using System;
-using Redemption.DamageClasses;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {

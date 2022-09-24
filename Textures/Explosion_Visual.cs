@@ -49,7 +49,8 @@ namespace Redemption.Textures
             {
                 Glow = true;
                 Projectile.alpha = 255;
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = Projectile.ai[0];
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += Projectile.ai[0];
                 if (!noDust)
                 {
                     for (int i = 0; i < 15; i++)

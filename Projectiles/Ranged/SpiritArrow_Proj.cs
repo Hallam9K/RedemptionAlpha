@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;

@@ -1,6 +1,3 @@
-using Redemption.BaseExtension;
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Debuffs

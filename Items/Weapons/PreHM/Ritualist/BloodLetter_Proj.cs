@@ -1,15 +1,8 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals;
-using Redemption.BaseExtension;
-using Redemption.Projectiles.Melee;
-using Redemption.Buffs.Debuffs;
-using Redemption.DamageClasses;
 using Redemption.Globals.Player;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist

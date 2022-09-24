@@ -11,7 +11,6 @@ using Redemption.Items.Materials.HM;
 using Terraria.GameContent.Creative;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
-using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -71,7 +70,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         break;
                 }
             }
-            return player.GetModPlayer<EnergyPlayer>().statEnergy > 2;
+            return player.GetModPlayer<EnergyPlayer>().statEnergy >= 2;
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)

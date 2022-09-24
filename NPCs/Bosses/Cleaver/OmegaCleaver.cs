@@ -23,7 +23,6 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {

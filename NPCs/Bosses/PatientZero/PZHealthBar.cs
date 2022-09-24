@@ -5,8 +5,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.GameContent.UI.BigProgressBar;
-using Redemption.NPCs.Lab.MACE;
-using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -22,7 +20,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             }
             return null;
         }
-        public override string Texture => "Redemption/NPCs/Bosses/PatientZero/PZBossBar";
+        public override string Texture => "Redemption/Textures/BossBars/InfectionBossBar";
         public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent)
         {
             NPC npc = Main.npc[info.npcIndexToAimAt];

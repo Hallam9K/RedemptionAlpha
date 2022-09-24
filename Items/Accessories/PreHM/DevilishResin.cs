@@ -1,6 +1,4 @@
-﻿using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
-using Redemption.DamageClasses;
+﻿using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

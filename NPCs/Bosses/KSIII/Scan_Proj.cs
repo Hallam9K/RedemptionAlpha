@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Redemption.NPCs.HM;
 
 namespace Redemption.NPCs.Bosses.KSIII

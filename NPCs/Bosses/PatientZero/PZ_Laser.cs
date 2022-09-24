@@ -65,7 +65,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
 
             if (AITimer >= 85)
             {
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 2;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 2);
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             }

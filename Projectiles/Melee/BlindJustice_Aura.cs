@@ -27,7 +27,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 50;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

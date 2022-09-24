@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 300;
             Projectile.alpha = 0;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {

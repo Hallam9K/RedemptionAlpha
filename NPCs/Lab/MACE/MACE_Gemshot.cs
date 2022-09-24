@@ -31,7 +31,6 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.timeLeft = 400;
             Projectile.extraUpdates = 1;
             Projectile.scale = 0.2f;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

@@ -1,12 +1,9 @@
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.HM;
-using Redemption.Projectiles;
 using Redemption.Projectiles.Minions;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -59,7 +56,6 @@ namespace Redemption.Items.Weapons.HM.Summon
 
             Projectile.WhipSettings.Segments = 20;
             Projectile.WhipSettings.RangeMultiplier = 0.8f;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

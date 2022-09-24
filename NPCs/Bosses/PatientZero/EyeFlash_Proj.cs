@@ -23,7 +23,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 80;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {
@@ -63,7 +62,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 60;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

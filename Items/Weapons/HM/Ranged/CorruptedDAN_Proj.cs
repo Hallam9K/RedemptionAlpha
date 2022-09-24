@@ -8,7 +8,6 @@ using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.Projectiles.Ranged;
-using Redemption.NPCs.Lab.MACE;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
@@ -129,7 +128,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 }
                 if (Projectile.localAI[0] == 80)
                 {
-                    if (player.channel && player.GetModPlayer<EnergyPlayer>().statEnergy > 15 && (Projectile.rotation < MathHelper.Pi - 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0) && Projectile.rotation > 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0)))
+                    if (player.channel && player.GetModPlayer<EnergyPlayer>().statEnergy >= 15 && (Projectile.rotation < MathHelper.Pi - 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0) && Projectile.rotation > 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0)))
                     {
                         Projectile.localAI[1] = 1;
                         SoundEngine.PlaySound(CustomSounds.ShieldActivate, Projectile.position);

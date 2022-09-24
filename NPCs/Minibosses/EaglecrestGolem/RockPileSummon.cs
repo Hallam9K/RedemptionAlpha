@@ -1,3 +1,4 @@
+using Redemption.NPCs.Bosses.ADD;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -43,7 +44,12 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, ModContent.NPCType<EaglecrestRockPile>());
+                NPC host = Main.npc[(int)Projectile.ai[0]];
+                int type = ModContent.NPCType<EaglecrestRockPile>();
+                if (host.type == ModContent.NPCType<EaglecrestGolem2>())
+                    type = ModContent.NPCType<EaglecrestRockPile2>();
+
+                int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, type);
 
                 if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                     NetMessage.SendData(MessageID.SyncNPC, number: index);

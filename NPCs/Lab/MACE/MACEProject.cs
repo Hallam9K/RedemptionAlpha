@@ -21,7 +21,6 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
-using Redemption.NPCs.Bosses.PatientZero;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -241,7 +240,8 @@ namespace Redemption.NPCs.Lab.MACE
                                     float timer = TimerRand;
                                     Terraria.Graphics.Effects.Filters.Scene.Activate("MoR:Shockwave", NPC.Center)?.GetShader().UseProgress(timer).UseOpacity(100f * (1 - timer / 2f)).UseColor(1, 1, 6).UseTargetPosition(MouthOrigin);
 
-                                    player.RedemptionScreen().ScreenShakeIntensity = 20;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 20);
                                 }
                                 else
                                     Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
@@ -408,7 +408,10 @@ namespace Redemption.NPCs.Lab.MACE
                             else
                                 Terraria.Graphics.Effects.Filters.Scene["MoR:Shockwave"].Deactivate();
                             if (AITimer == 290)
-                                player.RedemptionScreen().ScreenShakeIntensity = 30;
+                            {
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
+                            }
 
                             if (AITimer == 320)
                                 JawOpen = false;
@@ -503,7 +506,8 @@ namespace Redemption.NPCs.Lab.MACE
                                 {
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
-                                    player.RedemptionScreen().ScreenShakeIntensity = 20;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
 
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
@@ -574,7 +578,8 @@ namespace Redemption.NPCs.Lab.MACE
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
-                                player.RedemptionScreen().ScreenShakeIntensity = 20;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
@@ -638,7 +643,8 @@ namespace Redemption.NPCs.Lab.MACE
                             SoundEngine.PlaySound(SoundID.NPCDeath14, NPC.position);
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.MACERoar, NPC.position);
-                            player.RedemptionScreen().ScreenShakeIntensity = 60;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 60);
 
                             if (Main.netMode != NetmodeID.Server)
                                 Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X, NPC.Center.Y + 18), NPC.velocity, ModContent.Find<ModGore>("Redemption/MACEGoreJaw").Type);

@@ -6,6 +6,7 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PreHM
 {
+    [AutoloadEquip(EquipType.Face)]
     public class CircletOfBrambles : ModItem
 	{
 		public override void SetStaticDefaults()

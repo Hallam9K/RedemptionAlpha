@@ -1,17 +1,7 @@
-﻿using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.GameContent;
 using Terraria.Audio;
-using Redemption.Projectiles.Ranged;
-using Redemption.Base;
-using System.Collections.Generic;
 using Redemption.Buffs;
-using Redemption.Buffs.Cooldowns;
 using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Items.Weapons.HM.Ranged
@@ -46,9 +36,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     {
                         SoundEngine.PlaySound(CustomSounds.ShootChange, Projectile.Center);
                         if (player.HasBuff<RevolverTossBuff2>())
-                            player.AddBuff(ModContent.BuffType<RevolverTossBuff2>(), 360);
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff2>(), 420);
                         else if (player.HasBuff<RevolverTossBuff3>())
-                            player.AddBuff(ModContent.BuffType<RevolverTossBuff3>(), 300);
+                            player.AddBuff(ModContent.BuffType<RevolverTossBuff3>(), 420);
                         else
                             player.AddBuff(ModContent.BuffType<RevolverTossBuff>(), 420);
                         Projectile.localAI[0] = 1;

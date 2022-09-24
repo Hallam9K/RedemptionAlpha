@@ -20,6 +20,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Treasure Box (Omega Obliterator)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            ItemID.Sets.BossBag[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 

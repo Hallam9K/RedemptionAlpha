@@ -23,7 +23,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

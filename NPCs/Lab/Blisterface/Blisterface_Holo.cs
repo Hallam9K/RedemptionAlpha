@@ -6,7 +6,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.WorldGeneration;
-using Redemption.NPCs.Lab.Behemoth;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {

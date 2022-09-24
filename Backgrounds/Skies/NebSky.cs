@@ -3,10 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.Utilities;
-using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using Redemption.NPCs.Bosses.Neb;
 
 namespace Redemption.Backgrounds.Skies
 {

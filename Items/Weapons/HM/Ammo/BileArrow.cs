@@ -1,5 +1,4 @@
 using Redemption.Items.Materials.HM;
-using Redemption.Projectiles.Ranged;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;

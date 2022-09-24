@@ -2,8 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
-using Terraria.ModLoader.Utilities;
-using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Redemption.BaseExtension;

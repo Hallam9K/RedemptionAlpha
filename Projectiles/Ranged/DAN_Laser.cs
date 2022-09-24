@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
@@ -29,7 +28,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 700;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().EnergyBased = true;
         }
         public override void AI()

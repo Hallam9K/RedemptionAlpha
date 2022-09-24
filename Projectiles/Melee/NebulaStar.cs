@@ -35,7 +35,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 360;
             Projectile.scale = Main.rand.NextFloat(1f, 1.2f);
             Projectile.localAI[0] = Main.rand.NextFloat(-0.3f, 0.3f);
-            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)
@@ -124,7 +123,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.3f, 0.5f);
-            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

@@ -1,15 +1,8 @@
-using Redemption.Biomes;
-using Redemption.Items.Donator.Lizzy;
-using Redemption.Items.Donator.Uncon;
-using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Redemption.BaseExtension;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.ID;

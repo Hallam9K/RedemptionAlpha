@@ -1,11 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
@@ -19,19 +16,15 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Buffs.NPCBuffs;
-using Terraria.Utilities;
-using Terraria.UI;
 using Redemption.Base;
-using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
-using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
-using Redemption.Projectiles.Ranged;
 using System;
 using System.Collections.Generic;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.HM
 {
@@ -44,6 +37,7 @@ namespace Redemption.NPCs.HM
             Alert = 3,
             Laser,
             Slash,
+            Stomp,
             Teleport
         }
 
@@ -102,6 +96,7 @@ namespace Redemption.NPCs.HM
             TimerRand = Main.rand.Next(80, 120);
         }
         private readonly List<int> projBlocked = new();
+        private Vector2 p;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -199,8 +194,161 @@ namespace Redemption.NPCs.HM
                     else if (runCooldown > 0)
                         runCooldown--;
 
+                    if (Main.rand.NextBool(150) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 80 * 80)
+                    {
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        AITimer = 0;
+                        NPC.velocity.X = 0;
+                        AIState = ActionState.Laser;
+                    }
+                    if (Main.rand.NextBool(150) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 60 * 60)
+                    {
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        TimerRand = 0;
+                        AITimer = 0;
+                        NPC.velocity.X = 0;
+                        AIState = ActionState.Stomp;
+                    }
+
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
                     RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.6f, 28, 36, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    break;
+
+                case ActionState.Laser:
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        moveTo = NPC.FindGround(20);
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = ActionState.Wander;
+                    }
+                    NPC.LookAtEntity(globalNPC.attacker);
+
+                    if (NPC.velocity.Y < 0)
+                        NPC.velocity.Y = 0;
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.9f;
+
+                    Vector2 originPos = NPC.Center + new Vector2(8 * NPC.spriteDirection, -50);
+                    if (++AITimer < 60)
+                    {
+                        for (int k = 0; k < 3; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 20);
+                            vector.Y = (float)(Math.Cos(angle) * 20);
+                            Dust dust2 = Main.dust[Dust.NewDust(originPos + vector, 2, 2, DustID.Frost)];
+                            dust2.noGravity = true;
+                            dust2.velocity = dust2.position.DirectionTo(originPos) * 2f;
+                        }
+                    }
+                    if (AITimer == 56 || AITimer == 61 || AITimer == 66 || AITimer == 71)
+                        p = globalNPC.attacker.Center;
+                    if (AITimer == 60 || AITimer == 65 || AITimer == 70 || AITimer == 75)
+                    {
+                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
+                        NPC.velocity.X -= 1 * NPC.spriteDirection;
+                    }
+                    if (AITimer >= 90)
+                    {
+                        AITimer = 0;
+                        AIState = ActionState.Alert;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+
+                case ActionState.Stomp:
+                    if (NPC.ThreatenedCheck(ref runCooldown, 300, 3))
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        moveTo = NPC.FindGround(20);
+                        TimerRand = Main.rand.Next(120, 260);
+                        AIState = ActionState.Wander;
+                    }
+
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.9f;
+
+                    switch (TimerRand)
+                    {
+                        case 0:
+                            NPC.knockBackResist = 0f;
+                            if (AITimer++ == 20)
+                            {
+                                NPC.LookAtEntity(globalNPC.attacker);
+                                NPC.velocity.Y = -Main.rand.Next(17, 21);
+                                NPC.velocity.X = Main.rand.Next(3, 8) * NPC.spriteDirection;
+                            }
+                            if (AITimer > 20)
+                                NPC.rotation += 0.1f * NPC.spriteDirection;
+
+                            if (AITimer > 20 && NPC.velocity.Y >= 0)
+                            {
+                                NPC.noGravity = true;
+                                AITimer = 0;
+                                NPC.velocity.Y = 24;
+                                NPC.velocity.X = 0;
+                                TimerRand = 1;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        case 1:
+                            if (BaseAI.HitTileOnSide(NPC, 3) || NPC.velocity.Y == 0)
+                            {
+                                NPC.noGravity = false;
+
+                                for (int i = 0; i < 40; i++)
+                                    Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, -7);
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
+
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    for (int i = 0; i < 8; i++)
+                                    {
+                                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.Center.Y + 42),
+                                            RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                                        Main.projectile[proj].tileCollide = false;
+                                        Main.projectile[proj].timeLeft = 200;
+                                        Main.projectile[proj].netUpdate2 = true;
+                                    }
+                                    for (int i = 0; i < 18; i++)
+                                    {
+                                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.Center.Y + 42),
+                                            RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                                        Main.projectile[proj].tileCollide = false;
+                                        Main.projectile[proj].timeLeft = 200;
+                                        Main.projectile[proj].netUpdate2 = true;
+                                    }
+                                }
+                                slamOrigin = NPC.Center;
+                                slam = true;
+
+                                AITimer = 0;
+                                TimerRand = 2;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                            {
+                                NPC.rotation.SlowRotation(0, (float)Math.PI / 10);
+                            }
+                            break;
+                        case 2:
+                            if (AITimer++ >= 20)
+                            {
+                                NPC.knockBackResist = 0.001f;
+                                AITimer = 0;
+                                TimerRand = 0;
+                                AIState = ActionState.Alert;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                    }
                     break;
 
                 case ActionState.Teleport:
@@ -247,6 +395,8 @@ namespace Redemption.NPCs.HM
                     }
                     break;
             }
+            if (slam)
+                SlamShockActive();
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
@@ -275,7 +425,8 @@ namespace Redemption.NPCs.HM
                 }
                 else
                 {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    if (AIState is not ActionState.Stomp && TimerRand <= 1)
+                        NPC.rotation = NPC.velocity.X * 0.05f;
                     NPC.frame.Y = 10 * frameHeight;
                 }
             }
@@ -311,9 +462,47 @@ namespace Redemption.NPCs.HM
                 }
             }
         }
+        private bool slam;
+        private int slamTimer;
+        private Vector2 slamOrigin;
+        public void SlamShockActive()
+        {
+            if (slamTimer++ % 1 == 0)
+            {
+                for (int i = -1; i <= 1; i += 2)
+                {
+                    Vector2 origin = slamOrigin;
+                    origin.X += slamTimer * 32 * i;
+                    int numtries = 0;
+                    int x = (int)(origin.X / 16);
+                    int y = (int)(origin.Y / 16);
+                    while (y < Main.maxTilesY - 10 && Main.tile[x, y] != null && !WorldGen.SolidTile2(x, y) && Main.tile[x - 1, y] != null && !WorldGen.SolidTile2(x - 1, y) && Main.tile[x + 1, y] != null && !WorldGen.SolidTile2(x + 1, y))
+                    {
+                        y++;
+                        origin.Y = y * 16;
+                    }
+                    while ((WorldGen.SolidOrSlopedTile(x, y) || WorldGen.SolidTile2(x, y)) && numtries < 20)
+                    {
+                        numtries++;
+                        y--;
+                        origin.Y = y * 16;
+                    }
+                    if (numtries >= 20)
+                        break;
+
+                    NPC.Shoot(origin - new Vector2(0, 8), ModContent.ProjectileType<SpacePaladin_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f });
+                }
+            }
+            if (slamTimer >= 60)
+            {
+                slam = false;
+                slamTimer = 0;
+                NPC.netUpdate = true;
+            }
+        }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (AIState is not ActionState.Alert)
+            if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 return;
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
             if (item.noMelee || item.damage <= 0 || (NPC.Center.X > player.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < player.Center.X && NPC.spriteDirection == -1))
@@ -328,7 +517,7 @@ namespace Redemption.NPCs.HM
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (AIState is not ActionState.Alert)
+            if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 return;
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
             if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1)))
@@ -359,13 +548,13 @@ namespace Redemption.NPCs.HM
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 pos = NPC.Center + new Vector2(0, 3);
 
-            if (AIState is not ActionState.Alert)
+            if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 spriteBatch.Draw(shieldBack, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 26 : -18, 6), NPC.scale, effects, 0);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glow, pos - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            if (AIState is not ActionState.Alert)
+            if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
             {
                 int UpperHeight = upper.Height / 12;
                 int UpperY = UpperHeight * NPC.frame.Y / 94;
@@ -373,7 +562,7 @@ namespace Redemption.NPCs.HM
                 spriteBatch.Draw(upper, pos - screenPos, UpperRect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
                 spriteBatch.Draw(upperGlow, pos - screenPos, UpperRect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
             }
-            if (AIState is ActionState.Alert)
+            if (AIState is ActionState.Alert || AIState is ActionState.Laser)
             {
                 int UpperAHeight = upperA.Height / 12;
                 int UpperAY = UpperAHeight * NPC.frame.Y / 94;
@@ -406,7 +595,7 @@ namespace Redemption.NPCs.HM
         }
 
         public override bool? CanHitNPC(NPC target) => false;
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Stomp && NPC.velocity.Length() > 0;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -414,6 +603,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 1, 4, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 2, 2, 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 2, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 2, 1, 3));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
         public override void HitEffect(int hitDirection, double damage)

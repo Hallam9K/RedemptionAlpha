@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -46,7 +45,6 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
             Projectile.WhipSettings.Segments = 10;
             Projectile.WhipSettings.RangeMultiplier = 0.5f;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using System;
 using Terraria;

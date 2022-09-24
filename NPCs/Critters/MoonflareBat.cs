@@ -57,12 +57,12 @@ namespace Redemption.NPCs.Critters
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (ItemTags.Shadow.Has(item.type))
+            if (ItemLists.Shadow.Contains(item.type))
                 damage = (int)(damage * 1.25f);
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (ProjectileTags.Shadow.Has(projectile.type))
+            if (ProjectileLists.Shadow.Contains(projectile.type))
                 damage = (int)(damage * 1.25f);
         }
 

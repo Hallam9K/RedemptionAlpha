@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetDefaults()
         {
             NPC.aiStyle = -1;
-            NPC.lifeMax = 7000;
+            NPC.lifeMax = 8000;
             NPC.damage = 80;
             NPC.defense = 25;
             NPC.knockBackResist = 0;
@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void OnKill()

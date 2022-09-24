@@ -8,12 +8,9 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
-using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
-using Redemption.Projectiles.Magic;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -94,7 +91,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.height = 140;
             NPC.damage = 100;
             NPC.defense = 20;
-            NPC.lifeMax = 42000;
+            NPC.lifeMax = 60000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;
@@ -173,9 +170,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             potionType = ItemID.GreaterHealingPotion;
         }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return AIState != ActionState.CrossBomb;
+        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         private bool spawned;
@@ -185,6 +186,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private float BodyTimer;
         private int BodyState;
         private int Ejected;
+        private bool xbombDone;
+        private bool flameDone;
         public override void AI()
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
@@ -314,7 +317,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             turnSpeed = 0.001f;
                         WormMovement(player, speed, turnSpeed);
                     }
-                    if (++AITimer > 600)
+                    if (++AITimer > 500)
                     {
                         TimerRand = 0;
                         AITimer = 0;
@@ -322,11 +325,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         WeightedRandom<ActionState> choice = new(Main.rand);
                         if (NPC.AnyNPCs(ModContent.NPCType<Gigapora_ShieldCore>()))
                             choice.Add(ActionState.ProtectCore);
-                        if (BodyState >= 4 || NPC.life <= NPC.lifeMax / 2)
-                            choice.Add(ActionState.Gigabeam, BodyState >= 5 ? 2 : 1);
-                        choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
+                        if (BodyState >= 5 || NPC.life <= NPC.lifeMax / 2)
+                            choice.Add(ActionState.Gigabeam, BodyState >= 7 ? 1.5f : 1);
+                        if (!flameDone)
+                            choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
                         choice.Add(ActionState.BurrowAtk);
-                        choice.Add(ActionState.CrossBomb);
+                        if (!xbombDone)
+                            choice.Add(ActionState.CrossBomb);
 
                         AIState = choice;
                         NPC.netUpdate = true;
@@ -488,7 +493,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.GigaLaserFire, NPC.position);
-                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(30, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                             }
 
@@ -572,19 +577,24 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         case 3:
                             AITimer++;
                             NPC.rotation.SlowRotation(1.57f + facing, (float)Math.PI / 200f);
-                            NPC.velocity = RedeHelper.PolarVector(-30 / ((AITimer / 20) + 1), NPC.rotation + 1.57f);
-                            if ((NPC.velocity.X > -6 && NPC.velocity.X < 6) || AITimer >= 80)
+                            NPC.velocity = RedeHelper.PolarVector(-30 / ((AITimer / 10) + 1), NPC.rotation + 1.57f);
+                            if ((NPC.velocity.X > -3 && NPC.velocity.X < 3) || AITimer >= 80)
                             {
                                 AITimer = 0;
                                 TimerRand = 4;
                             }
                             break;
                         case 4:
+                            bool s = player.Center.X < NPC.Center.X;
+                            if (facing == 0)
+                                s = player.Center.X > NPC.Center.X;
                             NPC.rotation.SlowRotation(1.57f + facing, (float)Math.PI / 200f);
-                            NPC.velocity = RedeHelper.PolarVector(-4 * ((AITimer / 200) + 1), NPC.rotation + 1.57f);
+                            NPC.velocity = RedeHelper.PolarVector((s ? -7 : -3) * ((AITimer / 200) + 1), NPC.rotation + 1.57f);
 
                             if (AITimer++ >= 200)
                             {
+                                flameDone = true;
+                                xbombDone = false;
                                 AITimer = 100;
                                 TimerRand = 0;
                             }
@@ -629,7 +639,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                             break;
                         case 2:
-                            player.RedemptionScreen().ScreenShakeIntensity += 2;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                             int _ = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)player.position.Y / 16);
                             if (_ * 16 > NPC.Center.Y)
                             {
@@ -712,6 +723,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             NPC.velocity = RedeHelper.PolarVector(-16, NPC.rotation + 1.57f);
                             if (AITimer++ >= 280)
                             {
+                                flameDone = false;
+                                xbombDone = true;
                                 AITimer = 100;
                                 TimerRand = 0;
                             }
@@ -872,7 +885,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             if (AIState > ActionState.Intro && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
             {
-                player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
                 if (NPC.soundDelay == 0)
                 {
                     if (!Main.dedServ)

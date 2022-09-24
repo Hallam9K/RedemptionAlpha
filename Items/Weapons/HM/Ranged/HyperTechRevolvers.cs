@@ -1,20 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Cooldowns;
 using Redemption.Buffs.Debuffs;
-using Redemption.Globals;
-using Redemption.Items.Materials.HM;
-using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {

@@ -1,11 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
@@ -19,18 +16,13 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Buffs.NPCBuffs;
-using Terraria.Utilities;
-using Terraria.UI;
-using Redemption.Base;
-using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
-using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
-using Redemption.Projectiles.Ranged;
 using System;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.HM
 {
@@ -471,6 +463,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 3, 2, 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 3, 1, 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 6, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 10));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
         public override void HitEffect(int hitDirection, double damage)

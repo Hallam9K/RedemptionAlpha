@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Lab.Behemoth
             Projectile.tileCollide = false;
             Projectile.alpha = 200;
             Projectile.timeLeft = 120;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Lab.Behemoth
             Projectile.timeLeft = 20;
             Projectile.scale = 0.1f;
             Projectile.hide = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

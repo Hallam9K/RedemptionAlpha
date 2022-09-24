@@ -52,7 +52,6 @@ namespace Redemption.Items.Accessories.HM
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

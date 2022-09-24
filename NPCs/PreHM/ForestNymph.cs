@@ -6,12 +6,8 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Usable;
-using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Hostile;
 using System;
 using System.Linq;
@@ -238,7 +234,7 @@ namespace Redemption.NPCs.PreHM
 
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
-                    if (Main.rand.NextBool(500) && !Main.dayTime && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileTags.WoodLeaf.Has(tile.TileType) && (Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWoodUnsafe || Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWood))
+                    if (Main.rand.NextBool(500) && !Main.dayTime && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileLists.WoodLeaf.Contains(tile.TileType) && (Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWoodUnsafe || Framing.GetTileSafely(NPC.Center).WallType == WallID.LivingWood))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(3000, 6000);

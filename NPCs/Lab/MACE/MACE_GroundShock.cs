@@ -27,7 +27,6 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 600;
-            Projectile.Redemption().Unparryable = true;
             Projectile.hide = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
@@ -36,6 +35,8 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            if (!target.noKnockback)
+                target.velocity.Y -= 4;
             target.AddBuff(BuffID.Electrified, 60);
             target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60);
         }

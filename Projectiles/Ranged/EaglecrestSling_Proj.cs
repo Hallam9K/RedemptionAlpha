@@ -62,9 +62,8 @@ namespace Redemption.Projectiles.Ranged
 
         public override void Kill(int timeLeft)
         {
-            Player player = Main.player[Projectile.owner];
-            if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                player.RedemptionScreen().ScreenShakeIntensity = 5;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
 
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)

@@ -32,7 +32,6 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 400;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public void DoTrailCreation(TrailManager tManager)

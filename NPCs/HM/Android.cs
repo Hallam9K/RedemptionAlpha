@@ -1,11 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
@@ -29,6 +26,7 @@ using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.HM
 {
@@ -367,7 +365,8 @@ namespace Redemption.NPCs.HM
                             SoundEngine.PlaySound(CustomSounds.MissileFire1 with { Volume = 0.5f }, NPC.position);
                             NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), false, SoundID.Item1, NPC.whoAmI, Variant);
                             NPC.velocity.X -= 3 * NPC.spriteDirection;
-                            player.RedemptionScreen().ScreenShakeIntensity += 3;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                         }
                         if (NPC.frame.Y > 22 * frameHeight)
                         {
@@ -474,6 +473,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 4, 1, 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 4, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 8, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 20));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
         public override void HitEffect(int hitDirection, double damage)

@@ -142,6 +142,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedPZ, -1);
         }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.type == ProjectileID.LastPrismLaser)
+                damage /= 3;
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FloppyDisk7>()));
@@ -715,7 +720,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                         case 1:
                             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                             player.RedemptionScreen().lockScreen = true;
-                            player.RedemptionScreen().ScreenShakeIntensity = 5;
+                            player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 5);
                             player.RedemptionScreen().TimedZoom(new Vector2(1.4f, 1.4f), 100, 100);
                             NPC.LockMoveRadius(player);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
@@ -831,7 +836,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         private void DespawnHandler()

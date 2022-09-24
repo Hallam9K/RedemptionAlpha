@@ -117,7 +117,6 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
             Projectile.scale = 0.1f;
-            Projectile.Redemption().Unparryable = true;
         }
         private float godrayFade;
         private NPC target;

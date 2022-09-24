@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
-            Projectile.Redemption().Unparryable = true;
         }
         public float rot;
         public float speed = 1;

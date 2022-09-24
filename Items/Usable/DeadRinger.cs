@@ -1,4 +1,3 @@
-using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent.Creative;

@@ -107,7 +107,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.GravityHammerSlam, Projectile.position);
-                            player.RedemptionScreen().ScreenShakeIntensity = 20;
+                            player.RedemptionScreen().ScreenShakeIntensity += 20;
                             SlamOrigin = new(Projectile.Center.X + (70 * Projectile.spriteDirection), Projectile.Center.Y);
                             miss = false;
                         }

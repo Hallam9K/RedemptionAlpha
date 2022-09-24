@@ -29,7 +29,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.timeLeft = 160;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

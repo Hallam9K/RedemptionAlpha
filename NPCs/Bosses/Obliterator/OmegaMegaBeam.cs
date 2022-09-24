@@ -6,6 +6,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.Audio;
 using Terraria.ID;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -66,7 +67,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (AITimer == 48)
                 SoundEngine.PlaySound(SoundID.Zombie104, Projectile.position);
             if (AITimer >= 48 && AITimer < 160)
-                Main.player[npc.target].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 40;
+                Main.player[npc.target].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 40);
             if (AITimer > 48 && AITimer <= 60)
             {
                 offset -= 4;

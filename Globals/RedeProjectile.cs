@@ -17,7 +17,6 @@ namespace Redemption.Globals
         public bool TechnicallyMelee;
         public bool IsHammer;
         public bool IsAxe;
-        public bool Unparryable;
         public bool RitDagger;
         public bool EnergyBased;
         public override void SetDefaults(Projectile projectile)
@@ -140,7 +139,6 @@ namespace Redemption.Globals
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
     }

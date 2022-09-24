@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.Items.Usable
 {
@@ -45,6 +45,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenomiteGlaive>(), ModContent.ItemType<CystlingSummon>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 30, 40));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NecklaceOfSight>()));
         }
         public override Color? GetAlpha(Color lightColor)
         {

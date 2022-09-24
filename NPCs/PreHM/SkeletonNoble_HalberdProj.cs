@@ -28,7 +28,6 @@ namespace Redemption.NPCs.PreHM
             Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override bool? CanHitNPC(NPC target)

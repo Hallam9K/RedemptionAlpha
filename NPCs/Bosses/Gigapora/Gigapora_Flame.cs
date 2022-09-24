@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Particles;
 using ReLogic.Content;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -36,6 +33,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public override void AI()
         {
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(4, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.3f).UseIntensity(0.2f).UseColor(Color.OrangeRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
@@ -55,6 +53,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
             for (int i = 0; i < 180; i += 10)
             {
                 if (Main.rand.NextBool(40))
+                {
+                    ParticleManager.NewParticle(Projectile.Center + RedeHelper.PolarVector(i, npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), RedeHelper.PolarVector(Main.rand.Next(4, 19), npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), new EmberParticle(), Color.White, 1, 20, 1);
+                }
+                if (Main.rand.NextBool(200))
                 {
                     ParticleManager.NewParticle(Projectile.Center + RedeHelper.PolarVector(i, npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), RedeHelper.PolarVector(Main.rand.Next(3, 8), npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0)), new EmberParticle(), Color.White, 1, 20);
                 }

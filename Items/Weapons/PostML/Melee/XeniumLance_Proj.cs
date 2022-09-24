@@ -30,7 +30,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
 

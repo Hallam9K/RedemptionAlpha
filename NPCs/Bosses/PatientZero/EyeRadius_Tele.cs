@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.timeLeft = 20;
             Projectile.scale = 0.1f;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void AI()
@@ -72,7 +71,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.timeLeft = 600;
             Projectile.scale = 0.1f;
-            Projectile.Redemption().Unparryable = true;
             Projectile.localAI[0] = 20;
         }
         public override bool ShouldUpdatePosition() => false;

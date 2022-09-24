@@ -29,7 +29,6 @@ namespace Redemption.Projectiles.Hostile
             Projectile.timeLeft = 1400;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {
@@ -65,8 +64,8 @@ namespace Redemption.Projectiles.Hostile
             RedeDraw.SpawnRing(Projectile.Center, Color.LightBlue, glowScale: 3);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast, Projectile.position);
-            if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.RedemptionScreen().ScreenShakeIntensity += 2;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
         }
     }
 }

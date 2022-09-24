@@ -26,7 +26,6 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.hide = true;
             Projectile.alpha = 255;
             Projectile.timeLeft = 60;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

@@ -82,7 +82,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.timeLeft = 300;
             Projectile.alpha = 255;
             Projectile.scale = 2;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

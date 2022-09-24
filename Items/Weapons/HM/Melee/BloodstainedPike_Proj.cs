@@ -30,7 +30,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.width = 40;
             Projectile.height = 40;
             Projectile.hide = true;
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
@@ -173,7 +172,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.penetrate = -1;
             Projectile.timeLeft = 900;
             Projectile.scale = 1.2f;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override bool? CanCutTiles() => false;

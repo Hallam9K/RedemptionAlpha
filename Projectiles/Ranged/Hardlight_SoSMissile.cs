@@ -44,8 +44,8 @@ namespace Redemption.Projectiles.Ranged
             Projectile projAim = Main.projectile[(int)Projectile.ai[0]];
             if (!projAim.active || projAim.type != ModContent.ProjectileType<Hardlight_SoSCrosshair>())
             {
-                if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                 Projectile.Kill();
@@ -62,8 +62,8 @@ namespace Redemption.Projectiles.Ranged
                 if (Projectile != proj && proj.identity == projAim.identity)
                 {
                     proj.localAI[0]++;
-                    if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                        Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
                     Projectile.Kill();
@@ -72,8 +72,8 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 12;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
 
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hardlight_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
             Projectile.Kill();

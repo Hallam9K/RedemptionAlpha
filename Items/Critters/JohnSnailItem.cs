@@ -2,7 +2,6 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
-using Redemption.NPCs.Wasteland;
 using Terraria.DataStructures;
 using Redemption.NPCs.Critters;
 

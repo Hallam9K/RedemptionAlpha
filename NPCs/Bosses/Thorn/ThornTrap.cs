@@ -22,7 +22,6 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

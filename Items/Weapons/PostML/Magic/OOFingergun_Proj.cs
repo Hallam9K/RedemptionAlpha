@@ -2,15 +2,9 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.GameContent;
-using Terraria.Audio;
-using Redemption.Projectiles.Ranged;
-using Redemption.BaseExtension;
-using ParticleLibrary;
-using Redemption.Particles;
 using Redemption.Base;
 
 namespace Redemption.Items.Weapons.PostML.Magic

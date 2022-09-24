@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
 using Redemption.BaseExtension;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee
@@ -29,7 +27,6 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 350;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {
@@ -49,8 +46,8 @@ namespace Redemption.Projectiles.Melee
             RedeDraw.SpawnRing(Projectile.Center, Color.White, glowScale: 8);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.NebSound3 with { Volume = 0.5f, Pitch = 0.1f }, Projectile.position);
-            if (Projectile.DistanceSQ(player.Center) < 600 * 600)
-                player.RedemptionScreen().ScreenShakeIntensity += 7;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 7;
 
             for (int i = 0; i < Main.rand.Next(3, 5); i++)
             {

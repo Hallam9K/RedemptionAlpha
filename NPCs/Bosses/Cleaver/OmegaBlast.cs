@@ -24,7 +24,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 200;
-            Projectile.Redemption().Unparryable = true;
         }
 
         public override void AI()

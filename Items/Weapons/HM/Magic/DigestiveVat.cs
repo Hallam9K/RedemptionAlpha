@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Magic;
 using Terraria;

@@ -40,8 +40,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             {
                 Projectile.velocity *= 0;
                 Projectile.alpha = 255;
-                if (Projectile.DistanceSQ(Main.player[Main.myPlayer].Center) < 800 * 800)
-                    Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 10;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 10;
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(255, 216, 0), DustID.GoldFlame, 0, 30, 3);
                 Rectangle boom = new((int)Projectile.Center.X - 150, (int)Projectile.Center.Y - 150, 300, 300);

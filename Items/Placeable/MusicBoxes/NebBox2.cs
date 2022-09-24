@@ -1,4 +1,3 @@
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.GameContent.Creative;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.MusicBoxes
 {
-	public class NebBox2 : ModItem
+    public class NebBox2 : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

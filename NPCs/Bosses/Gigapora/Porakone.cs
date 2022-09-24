@@ -143,7 +143,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     if (AITimer >= 180)
                     {
                         AITimer2 += 0.01f;
-                        player.RedemptionScreen().ScreenShakeIntensity = AITimer2 * 15;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(AITimer2 * 15, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
                         if (NPC.soundDelay == 0)
                         {
                             if (!Main.dedServ)

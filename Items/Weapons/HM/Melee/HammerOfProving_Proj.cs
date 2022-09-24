@@ -100,7 +100,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                     Dust.NewDust(new Vector2(Projectile.position.X, Projectile.Bottom.Y), Projectile.width, 2, DustID.Stone,
                                         -player.velocity.X * 0.6f, -player.velocity.Y * 0.6f, Scale: 2);
 
-                                player.RedemptionScreen().ScreenShakeIntensity = 2 * player.velocity.Y;
+                                player.RedemptionScreen().ScreenShakeIntensity += 2 * player.velocity.Y;
                                 Projectile.ai[1] = 1;
                             }
                             if ((!player.channel || player.velocity.Y <= 0) && Projectile.ai[0] >= 148 && Projectile.ai[1] == 0)

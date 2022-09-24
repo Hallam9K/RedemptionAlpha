@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
@@ -46,8 +45,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[Main.myPlayer];
-            if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                player.RedemptionScreen().ScreenShakeIntensity += 3;
+            player.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
+            player.RedemptionScreen().ScreenShakeIntensity += 3;
 
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)

@@ -80,8 +80,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) ||
-                                    (!ProjectileTags.Ice.Has(target.type) && (target.Redemption().Unparryable || ProjectileTags.Unparryable.Has(target.type))))
+                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || !ProjectileLists.Ice.Contains(target.type) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || Main.projPet[target.type])
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);

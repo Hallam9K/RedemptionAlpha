@@ -1,4 +1,3 @@
-using Redemption.Items.Materials.PreHM;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;

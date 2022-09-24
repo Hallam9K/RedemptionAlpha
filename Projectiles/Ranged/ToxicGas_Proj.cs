@@ -29,7 +29,6 @@ namespace Redemption.Projectiles.Misc
             Projectile.scale = Main.rand.NextFloat(0.5f, 0.8f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void AI()
         {

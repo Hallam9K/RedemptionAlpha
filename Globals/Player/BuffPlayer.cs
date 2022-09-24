@@ -22,8 +22,8 @@ using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
-using static Terraria.ModLoader.PlayerDrawLayer;
 using Redemption.Items.Accessories.PostML;
+using System;
 
 namespace Redemption.Globals.Player
 {
@@ -65,6 +65,11 @@ namespace Redemption.Globals.Player
         public float trappedSoulBoost;
         public bool brokenBlade;
         public bool shellCap;
+        public bool shieldGenerator;
+        public int shieldGeneratorLife = 400;
+        public int shieldGeneratorCD;
+        public float shieldGeneratorAlpha;
+        public bool holyFire;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -127,6 +132,8 @@ namespace Redemption.Globals.Player
             ChickenForm = false;
             blastBattery = false;
             xenomiteBonus = false;
+            shieldGenerator = false;
+            holyFire = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -164,6 +171,8 @@ namespace Redemption.Globals.Player
             bileDebuff = false;
             trappedSoulTimer = 0;
             trappedSoulBoost = 0;
+            shieldGenerator = false;
+            shieldGeneratorAlpha = 0;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -332,33 +341,33 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Resistances
-                if (ProjectileTags.Arcane.Has(proj.type))
+                if (ProjectileLists.Arcane.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[0]));
-                if (ProjectileTags.Fire.Has(proj.type))
+                if (ProjectileLists.Fire.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[1]));
-                if (ProjectileTags.Water.Has(proj.type))
+                if (ProjectileLists.Water.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[2]));
-                if (ProjectileTags.Ice.Has(proj.type))
+                if (ProjectileLists.Ice.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[3]));
-                if (ProjectileTags.Earth.Has(proj.type))
+                if (ProjectileLists.Earth.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[4]));
-                if (ProjectileTags.Wind.Has(proj.type))
+                if (ProjectileLists.Wind.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[5]));
-                if (ProjectileTags.Thunder.Has(proj.type))
+                if (ProjectileLists.Thunder.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[6]));
-                if (ProjectileTags.Holy.Has(proj.type))
+                if (ProjectileLists.Holy.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[7]));
-                if (ProjectileTags.Shadow.Has(proj.type))
+                if (ProjectileLists.Shadow.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[8]));
-                if (ProjectileTags.Nature.Has(proj.type))
+                if (ProjectileLists.Nature.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[9]));
-                if (ProjectileTags.Poison.Has(proj.type))
+                if (ProjectileLists.Poison.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[10]));
-                if (ProjectileTags.Blood.Has(proj.type))
+                if (ProjectileLists.Blood.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[11]));
-                if (ProjectileTags.Psychic.Has(proj.type))
+                if (ProjectileLists.Psychic.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[12]));
-                if (ProjectileTags.Celestial.Has(proj.type))
+                if (ProjectileLists.Celestial.Contains(proj.type))
                     damage = (int)(damage * (1 - ElementalResistance[13]));
                 #endregion
             }
@@ -383,33 +392,33 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Damage
-                if (ItemTags.Arcane.Has(item.type))
+                if (ItemLists.Arcane.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[0]));
-                if (ItemTags.Fire.Has(item.type))
+                if (ItemLists.Fire.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[1]));
-                if (ItemTags.Water.Has(item.type))
+                if (ItemLists.Water.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[2]));
-                if (ItemTags.Ice.Has(item.type))
+                if (ItemLists.Ice.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[3]));
-                if (ItemTags.Earth.Has(item.type))
+                if (ItemLists.Earth.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[4]));
-                if (ItemTags.Wind.Has(item.type))
+                if (ItemLists.Wind.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[5]));
-                if (ItemTags.Thunder.Has(item.type))
+                if (ItemLists.Thunder.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[6]));
-                if (ItemTags.Holy.Has(item.type))
+                if (ItemLists.Holy.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[7]));
-                if (ItemTags.Shadow.Has(item.type))
+                if (ItemLists.Shadow.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[8]));
-                if (ItemTags.Nature.Has(item.type))
+                if (ItemLists.Nature.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[9]));
-                if (ItemTags.Poison.Has(item.type))
+                if (ItemLists.Poison.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[10]));
-                if (ItemTags.Blood.Has(item.type))
+                if (ItemLists.Blood.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[11]));
-                if (ItemTags.Psychic.Has(item.type))
+                if (ItemLists.Psychic.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[12]));
-                if (ItemTags.Celestial.Has(item.type))
+                if (ItemLists.Celestial.Contains(item.type))
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }
@@ -422,33 +431,33 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Damage
-                if (ProjectileTags.Arcane.Has(proj.type))
+                if (ProjectileLists.Arcane.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[0]));
-                if (ProjectileTags.Fire.Has(proj.type))
+                if (ProjectileLists.Fire.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[1]));
-                if (ProjectileTags.Water.Has(proj.type))
+                if (ProjectileLists.Water.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[2]));
-                if (ProjectileTags.Ice.Has(proj.type))
+                if (ProjectileLists.Ice.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[3]));
-                if (ProjectileTags.Earth.Has(proj.type))
+                if (ProjectileLists.Earth.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[4]));
-                if (ProjectileTags.Wind.Has(proj.type))
+                if (ProjectileLists.Wind.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[5]));
-                if (ProjectileTags.Thunder.Has(proj.type))
+                if (ProjectileLists.Thunder.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[6]));
-                if (ProjectileTags.Holy.Has(proj.type))
+                if (ProjectileLists.Holy.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[7]));
-                if (ProjectileTags.Shadow.Has(proj.type))
+                if (ProjectileLists.Shadow.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[8]));
-                if (ProjectileTags.Nature.Has(proj.type))
+                if (ProjectileLists.Nature.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[9]));
-                if (ProjectileTags.Poison.Has(proj.type))
+                if (ProjectileLists.Poison.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[10]));
-                if (ProjectileTags.Blood.Has(proj.type))
+                if (ProjectileLists.Blood.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[11]));
-                if (ProjectileTags.Psychic.Has(proj.type))
+                if (ProjectileLists.Psychic.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[12]));
-                if (ProjectileTags.Celestial.Has(proj.type))
+                if (ProjectileLists.Celestial.Contains(proj.type))
                     damage = (int)(damage * (1 + ElementalDamage[13]));
                 #endregion
             }
@@ -540,6 +549,14 @@ namespace Redemption.Globals.Player
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 60;
             }
+            if (holyFire)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 500;
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -592,12 +609,69 @@ namespace Redemption.Globals.Player
                 g = 0.5f;
                 b = 0.5f;
             }
+            if (holyFire)
+            {
+                if (Main.rand.NextBool(2)&& drawInfo.shadow == 0f)
+                {
+                    int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.YellowTorch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 2f);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    drawInfo.DustCache.Add(dust);
+                }
+            }
         }
-
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        {
+            if (shieldGenerator && shieldGeneratorCD <= 0)
+            {
+                for (int k = 0; k < 30; k++)
+                {
+                    Vector2 vector;
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    vector.X = (float)(Math.Sin(angle) * 60);
+                    vector.Y = (float)(Math.Cos(angle) * 60);
+                    Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost)];
+                    dust2.noGravity = true;
+                    dust2.velocity = -Player.DirectionTo(dust2.position) * 6f;
+                }
+                if (damage >= shieldGeneratorLife)
+                {
+                    SoundEngine.PlaySound(SoundID.NPCDeath56, Player.position);
+                    shieldGeneratorAlpha = 0;
+                    shieldGenerator = false;
+                    shieldGeneratorCD = 3600;
+                    damage *= 3;
+                    damage -= shieldGeneratorLife;
+                    shieldGeneratorLife = 400;
+                    for (int k = 0; k < 30; k++)
+                    {
+                        Vector2 vector;
+                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                        vector.X = (float)(Math.Sin(angle) * 60);
+                        vector.Y = (float)(Math.Cos(angle) * 60);
+                        Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost, Scale: 2)];
+                        dust2.noGravity = true;
+                        dust2.velocity = Player.DirectionTo(dust2.position) * 3f;
+                    }
+                    return true;
+                }
+                playSound = false;
+                SoundEngine.PlaySound(SoundID.NPCHit34, Player.position);
+                shieldGeneratorLife -= damage;
+                Player.noKnockback = true;
+                damage = 0;
+                return true;
+            }
+            return true;
+        }
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
-            if (MetalSet)
-                SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
+            if (!shieldGenerator || shieldGeneratorCD > 0)
+            {
+                if (MetalSet)
+                    SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
+            }
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -631,6 +705,9 @@ namespace Redemption.Globals.Player
 
             if (Player.FindBuffIndex(ModContent.BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was irradiated");
+
+            if (Player.FindBuffIndex(ModContent.BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was too glorious");
 
             return true;
         }

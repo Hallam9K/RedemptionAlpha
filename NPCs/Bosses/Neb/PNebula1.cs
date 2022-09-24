@@ -8,7 +8,6 @@ using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.Base;
 using ParticleLibrary;
-using Redemption.Globals;
 using Redemption.Particles;
 
 namespace Redemption.NPCs.Bosses.Neb

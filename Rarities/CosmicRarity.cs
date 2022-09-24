@@ -1,11 +1,9 @@
-using Terraria;
 using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Terraria.ModLoader;
 
 namespace Redemption.Rarities
 {
-	public class CosmicRarity : ModRarity
+    public class CosmicRarity : ModRarity
 	{
 		public override Color RarityColor => RedeColor.NebColour;
 

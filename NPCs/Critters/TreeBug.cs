@@ -108,7 +108,7 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
-                    if (Main.rand.NextBool(500) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileTags.WoodLeaf.Has(tile.TileType))
+                    if (Main.rand.NextBool(500) && tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType] && TileLists.WoodLeaf.Contains(tile.TileType))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(180, 300);
@@ -160,7 +160,7 @@ namespace Redemption.NPCs.Critters
                         NPC.HealEffect(1);
                     }
 
-                    if (AITimer >= TimerRand || tile is not { HasUnactuatedTile: true } || !Main.tileSolid[tile.TileType] || !TileTags.WoodLeaf.Has(tile.TileType))
+                    if (AITimer >= TimerRand || tile is not { HasUnactuatedTile: true } || !Main.tileSolid[tile.TileType] || !TileLists.WoodLeaf.Contains(tile.TileType))
                     {
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);

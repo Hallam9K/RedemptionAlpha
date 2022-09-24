@@ -468,7 +468,8 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 {
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -0.1f * NPC.spriteDirection;
-                                    player.RedemptionScreen().ScreenShakeIntensity = 3;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, 3);
 
                                     if (AITimer % 2 == 0)
                                     {

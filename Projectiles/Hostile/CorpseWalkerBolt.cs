@@ -32,7 +32,6 @@ namespace Redemption.Projectiles.Hostile
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 120;
-            Projectile.Redemption().Unparryable = true;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) => Projectile.Kill();
         public override bool? CanHitNPC(NPC target)

@@ -51,6 +51,8 @@ namespace Redemption.Globals
 
             if (type == ModContent.TileType<IrradiatedDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()])
                 return false;
+            if (type == ModContent.TileType<AncientDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientDirtTile>()])
+                return false;
             if (type == ModContent.TileType<ShadestoneBrickTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneBrickTile>()])
                 return false;
             if (type == ModContent.TileType<ShadestoneTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneTile>()])

@@ -29,7 +29,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             Projectile.Redemption().TechnicallyMelee = true;
-            Projectile.Redemption().Unparryable = true;
         }
 
         private float rot;

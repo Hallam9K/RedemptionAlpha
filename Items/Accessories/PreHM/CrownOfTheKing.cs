@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Terraria;
 using Terraria.GameContent.Creative;

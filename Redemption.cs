@@ -14,6 +14,7 @@ using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
+using Redemption.NPCs.Bosses.ADD;
 using Redemption.UI;
 using ReLogic.Content;
 using System;
@@ -43,6 +44,7 @@ namespace Redemption
         public const string Abbreviation = "MoR";
         public const string EMPTY_TEXTURE = "Redemption/Empty";
         public Vector2 cameraOffset;
+        public Rectangle currentScreen;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
 
@@ -104,6 +106,10 @@ namespace Redemption
                     PremultiplyTexture(ref iceMistTex);
                     Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref glowDustTex);
+                    Texture2D AkkaHealingSpiritTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaHealingSpirit", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref AkkaHealingSpiritTex);
+                    Texture2D AkkaIslandWarningTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaIslandWarning", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref AkkaIslandWarningTex);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
@@ -123,6 +129,8 @@ namespace Redemption
                 SkyManager.Instance["MoR:NebP1"] = new NebSky();
                 Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:NebP2"] = new NebSky2();
+                Filters.Scene["MoR:Ukko"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0.1f, 0f).UseOpacity(0.3f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:Ukko"] = new UkkoClouds();
             }
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
@@ -409,6 +417,8 @@ namespace Redemption
                 Vector2 idealScreenZoom = screenPlayer.timedZoom;
                 Transform.Zoom = Vector2.Lerp(new Vector2(1), idealScreenZoom, (float)Math.Sin(lerpAmount));
             }
+            if (screenPlayer.customZoom > 0)
+                Transform.Zoom = new Vector2(screenPlayer.customZoom);
         }
 
         public override void PreUpdateProjectiles()
@@ -420,17 +430,18 @@ namespace Redemption
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            if (Main.LocalPlayer.HeldItem.CountsAsClass<DamageClasses.RitualistClass>())
+            BuffPlayer bP = Main.LocalPlayer.GetModPlayer<BuffPlayer>();
+            if (bP.shieldGenerator && bP.shieldGeneratorCD <= 0)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
-                LegacyGameInterfaceLayer SpiritGaugeUI = new("Redemption: Spirit Gauge UI",
+                LegacyGameInterfaceLayer ShieldGaugeUI = new("Redemption: Shield Gauge UI",
                     delegate
                     {
-                        DrawSpiritGauge(Main.spriteBatch);
+                        DrawShieldGenGauge(Main.spriteBatch);
                         return true;
                     },
                     InterfaceScaleType.UI);
-                layers.Insert(index, SpiritGaugeUI);
+                layers.Insert(index, ShieldGaugeUI);
             }
             EnergyPlayer eP = Main.LocalPlayer.GetModPlayer<EnergyPlayer>();
             if (eP.statEnergy < eP.energyMax)
@@ -444,6 +455,18 @@ namespace Redemption
                     },
                     InterfaceScaleType.UI);
                 layers.Insert(index, EnergyGaugeUI);
+            }
+            if (Main.LocalPlayer.HeldItem.CountsAsClass<DamageClasses.RitualistClass>())
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer SpiritGaugeUI = new("Redemption: Spirit Gauge UI",
+                    delegate
+                    {
+                        DrawSpiritGauge(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, SpiritGaugeUI);
             }
             if (Main.LocalPlayer.Redemption().slayerCursor)
             {
@@ -537,6 +560,30 @@ namespace Redemption
             spriteBatch.Draw(timerBarInner2, drawPos2, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner2.Height)), Color.White, 0f, timerBarInner2.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, (rP.SpiritLevel + 1).ToString(), player.Center + new Vector2(-46, 36) - Main.screenPosition, Color.White, 0, Vector2.Zero, Vector2.One);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawShieldGenGauge(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            BuffPlayer bP = player.GetModPlayer<BuffPlayer>();
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge").Value;
+            Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge_Fill").Value;
+            float timerMax = 400;
+            int timerProgress = (int)(timerBarInner.Width * (bP.shieldGeneratorLife / timerMax));
+            Vector2 drawPos = player.Center - new Vector2(0, 60) - Main.screenPosition;
+            spriteBatch.Draw(timerBar, drawPos, null, Color.White, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+
+            Texture2D shieldTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
+            Vector2 drawOrigin = new(shieldTex.Width / 2, shieldTex.Height / 2);
+
+            spriteBatch.Draw(shieldTex, player.Center - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 400) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, 0.5f, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

@@ -28,7 +28,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.alpha = 255;
             Length = 60;
             Rot = MathHelper.ToRadians(3);
-            Projectile.Redemption().Unparryable = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public void DoTrailCreation(TrailManager tManager)

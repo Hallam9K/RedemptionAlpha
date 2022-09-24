@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Items.Usable
 {
@@ -17,6 +18,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Treasure Box (Omega Gigapora)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            ItemID.Sets.BossBag[Type] = true;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
         }
 
@@ -36,6 +38,7 @@ namespace Redemption.Items.Usable
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 2, 4));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));
         }
         public override void PostUpdate()
         {

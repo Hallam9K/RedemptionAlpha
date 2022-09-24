@@ -1,18 +1,11 @@
 using Redemption.Items.Accessories.HM;
-using Redemption.Items.Lore;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Usable;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.HM.Magic;
-using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.HM.Ranged;
-using Redemption.Items.Weapons.HM.Summon;
-using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 

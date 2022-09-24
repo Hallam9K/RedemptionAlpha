@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.DeathSound = SoundID.NPCDeath39;
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -238,7 +238,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                             SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                            player.RedemptionScreen().ScreenShakeIntensity = 14;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
                             HolyFlare = true;
                             TeleGlow = true;
                             TimerRand = 1;
@@ -261,7 +262,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer >= 218)
                                     {
                                         if (!Main.dedServ)
-                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 
                                         if (RedeBossDowned.erhanDeath < 4)
                                         {
@@ -292,7 +293,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer >= 500)
                                     {
                                         if (!Main.dedServ)
-                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 
                                         if (RedeBossDowned.erhanDeath < 4)
                                         {
@@ -322,7 +323,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer >= 150)
                                 {
                                     if (!Main.dedServ)
-                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
 
                                     TimerRand = 0;
                                     AITimer = 0;
@@ -483,7 +484,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 ArmType = 1;
                             if (AITimer >= 90 && AITimer % 5 == 0 && AITimer <= 130)
                             {
-                                player.RedemptionScreen().ScreenShakeIntensity = 4;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                                 TimerRand += (float)Math.PI / 15;
                                 if (TimerRand > (float)Math.PI)
                                 {
@@ -503,7 +505,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 if (AITimer > 130 && AITimer % 5 == 0 && AITimer <= 165)
                                 {
-                                    player.RedemptionScreen().ScreenShakeIntensity = 4;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                                     TimerRand -= (float)Math.PI / 13;
                                     if (TimerRand > (float)Math.PI)
                                     {
@@ -1010,13 +1013,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemTags.Celestial.Has(item.type) || ItemTags.Psychic.Has(item.type))
+                if (ItemLists.Celestial.Contains(item.type) || ItemLists.Psychic.Contains(item.type))
                     damage = (int)(damage * 0.9f);
 
-                if (ItemTags.Holy.Has(item.type))
+                if (ItemLists.Holy.Contains(item.type))
                     damage = (int)(damage * 0.5f);
 
-                if (ItemTags.Shadow.Has(item.type))
+                if (ItemLists.Shadow.Contains(item.type))
                     damage = (int)(damage * 1.25f);
             }
         }
@@ -1027,13 +1030,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileTags.Celestial.Has(projectile.type) || ProjectileTags.Psychic.Has(projectile.type))
+                if (ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Psychic.Contains(projectile.type))
                     damage = (int)(damage * 0.9f);
 
-                if (ProjectileTags.Holy.Has(projectile.type))
+                if (ProjectileLists.Holy.Contains(projectile.type))
                     damage = (int)(damage * 0.5f);
 
-                if (ProjectileTags.Shadow.Has(projectile.type))
+                if (ProjectileLists.Shadow.Contains(projectile.type))
                     damage = (int)(damage * 1.25f);
             }
         }

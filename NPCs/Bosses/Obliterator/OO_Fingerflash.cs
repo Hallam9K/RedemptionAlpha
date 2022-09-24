@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using System;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Obliterator

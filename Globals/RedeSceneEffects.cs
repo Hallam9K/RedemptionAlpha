@@ -8,7 +8,7 @@ using Redemption.NPCs.Bosses.Neb;
 using Terraria.Graphics.Effects;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
-using Terraria;
+using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.Globals
 {
@@ -113,6 +113,22 @@ namespace Redemption.Globals
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
             return Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>());
+        }
+    }
+    public class UkkoSkyScene : ModSceneEffect
+    {
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override void SpecialVisuals(Terraria.Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("MoR:Ukko", isActive);
+            if (isActive)
+                SkyManager.Instance.Activate("MoR:Ukko");
+            else
+                SkyManager.Instance.Deactivate("MoR:Ukko");
+        }
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>());
         }
     }
 }

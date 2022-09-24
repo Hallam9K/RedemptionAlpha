@@ -7,12 +7,10 @@ using Redemption.Globals;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.BaseExtension;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects.PrimitiveTrails;
 using ReLogic.Content;
 using Redemption.Base;
-using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -127,7 +125,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual3>(), 0, new Vector2(0, 90), false, SoundID.Item1, NPC.whoAmI);
                     }
                     if (NPC.ai[2] >= 5)
-                        player.RedemptionScreen().ScreenShakeIntensity = 10;
+                        player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 10);
 
                     if (NPC.position.Y > player.position.Y - 80f)
                     {

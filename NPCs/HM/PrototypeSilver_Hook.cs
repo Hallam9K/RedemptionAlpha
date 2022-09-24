@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 
@@ -27,7 +25,6 @@ namespace Redemption.NPCs.HM
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             Projectile.Redemption().TechnicallyMelee = true;
-            Projectile.Redemption().Unparryable = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

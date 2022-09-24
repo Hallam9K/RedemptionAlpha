@@ -5,11 +5,9 @@ using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
-using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Magic;
@@ -51,6 +49,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PocketShieldGenerator>()));
         }
         public override Color? GetAlpha(Color lightColor)
         {

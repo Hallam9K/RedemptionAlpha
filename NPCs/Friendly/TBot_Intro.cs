@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Friendly
                         if (player.IsFullTBot())
                             playerTBot = true;
                         SoundEngine.PlaySound(SoundID.Dig, NPC.position);
-                        player.RedemptionScreen().ScreenShakeIntensity = 3;
+                        player.RedemptionScreen().ScreenShakeIntensity += 3;
                         for (int i = 0; i < 30; i++)
                             Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, 0, 0, default, 1);
                         NPC.velocity.X = 0;
