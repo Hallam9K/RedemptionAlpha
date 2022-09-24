@@ -18,7 +18,7 @@ namespace Redemption
         public bool CameraLockDisable;
 
         [Label("Disable Elements")]
-        [Tooltip("Disables elemental resistances and damage (DO NOT ENABLE ELEMENTS IF YOU HAVE ANOTHER CONTENT MOD ON)")]
+        [Tooltip("Disables elemental resistances and damage")]
         [DefaultValue(true)]
         public bool ElementDisable;
     }
