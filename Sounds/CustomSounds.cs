@@ -58,6 +58,9 @@ namespace Redemption
         public static readonly SoundStyle GravityHammerSlam = new("Redemption/Sounds/Custom/GravityHammerSlam") { Volume = 0.6f };
         public static readonly SoundStyle GrenadeLauncher = new("Redemption/Sounds/Custom/GrenadeLauncher");
         public static readonly SoundStyle GuardBreak = new("Redemption/Sounds/Custom/GuardBreak");
+        public static readonly SoundStyle Gun1KS = new("Redemption/Sounds/Custom/Gun1KS") { Volume = 1.5f };
+        public static readonly SoundStyle Gun2KS = new("Redemption/Sounds/Custom/Gun2KS") { Volume = 1.5f };
+        public static readonly SoundStyle Gun3KS = new("Redemption/Sounds/Custom/Gun3KS") { Volume = 1.5f };
         public static readonly SoundStyle Gun1 = new("Redemption/Sounds/Custom/Gun1");
         public static readonly SoundStyle Gun2 = new("Redemption/Sounds/Custom/Gun2");
         public static readonly SoundStyle Gun3 = new("Redemption/Sounds/Custom/Gun3");
@@ -84,6 +87,7 @@ namespace Redemption
         public static readonly SoundStyle Quake = new("Redemption/Sounds/Custom/Quake");
         public static readonly SoundStyle Reflect = new("Redemption/Sounds/Custom/Reflect") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle ShootChange = new("Redemption/Sounds/Custom/ShootChange");
+        public static readonly SoundStyle ShotgunBlastKS = new("Redemption/Sounds/Custom/ShotgunBlastKS") { Volume = 1.5f, PitchVariance = .1f };
         public static readonly SoundStyle ShotgunBlast1 = new("Redemption/Sounds/Custom/ShotgunBlast1") { PitchVariance = .1f };
         public static readonly SoundStyle Shriek = new("Redemption/Sounds/Custom/Shriek") { Volume = .4f };
         public static readonly SoundStyle Slam2 = new("Redemption/Sounds/Custom/Slam2") { Volume = .5f };
