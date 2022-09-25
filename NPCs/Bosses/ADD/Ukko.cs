@@ -653,6 +653,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (AITimer == 90)
                                     {
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2, 1);
                                     }
                                     if (AITimer >= 120)
                                     {

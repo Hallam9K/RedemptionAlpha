@@ -108,7 +108,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (Main.rand.NextBool(3))
                         {
                             SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 150), Projectile.Center.Y + Main.rand.Next(4, 8)), new Vector2(0f, 9f), ProjectileID.MartianTurretBolt, 85 / 3, 0, Projectile.owner, 0, 0);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 151), Projectile.Center.Y + Main.rand.Next(50, 55)), new Vector2(0f, 2f), ModContent.ProjectileType<UkkoCloud_Thunder>(), 85 / 4, 0, Projectile.owner, 0, 0);
                         }
                         if (++Projectile.localAI[1] >= 50)
                         {
