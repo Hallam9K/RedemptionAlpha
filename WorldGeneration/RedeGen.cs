@@ -449,8 +449,8 @@ namespace Redemption.WorldGeneration
                                         }
                                         if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<ElderWoodPlatformTile>())
                                             WorldGen.KillTile(tilesX + x, tilesY + y, true);
-                                        if (WorldGen.genRand.NextBool(2) && Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<AncientGoldCoinPileTile>())
-                                            WorldGen.KillTile(tilesX + x, tilesY + y, true);
+                                        if (WorldGen.genRand.NextBool(5) && Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<AncientGoldCoinPileTile>() && Framing.GetTileSafely(tilesX + x, tilesY + y - 1).TileType != ModContent.TileType<AncientGoldCoinPileTile>())
+                                            WorldGen.KillTile(tilesX + x, tilesY + y, noItem: true);
                                     }
                                 }
                             }
@@ -481,7 +481,7 @@ namespace Redemption.WorldGeneration
                 {
                     for (int i = 15; i < Main.maxTilesX - 15; i++)
                     {
-                        for (int j = (int)(Main.maxTilesY * .4f); j < (int)(Main.maxTilesY * .8); j++)
+                        for (int j = (int)(Main.maxTilesY * .3f); j < (int)(Main.maxTilesY * .9f); j++)
                         {
                             if (!WorldGen.InWorld(i, j))
                                 continue;
