@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {
-            target.AddBuff(BuffID.Venom, 600);
+            target.AddBuff(BuffID.Venom, 120);
         }
     }
 }

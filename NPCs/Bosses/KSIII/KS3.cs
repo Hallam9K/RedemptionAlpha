@@ -636,7 +636,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 40 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1KS);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -645,7 +645,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     for (int i = 0; i < 3; i++)
                                     {
                                         int rot = 25 * i;
-                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 25)), true, CustomSounds.Gun3);
+                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 25)), true, CustomSounds.Gun3KS);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                 }
@@ -661,7 +661,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 20 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1KS);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -670,7 +670,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     for (int i = 0; i < 5; i++)
                                     {
                                         int rot = 25 * i;
-                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, CustomSounds.Gun3);
+                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, CustomSounds.Gun3KS);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                 }
@@ -686,7 +686,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 if (AITimer % 35 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot), true, CustomSounds.Gun1KS);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -695,7 +695,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     for (int i = 0; i < 5; i++)
                                     {
                                         int rot = 25 * i;
-                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, CustomSounds.Gun3);
+                                        NPC.Shoot(GunOrigin, ProjectileID.MartianTurretBolt, 72, RedeHelper.PolarVector(8 + dmgIncrease, gunRot + MathHelper.ToRadians(rot - 50)), true, CustomSounds.Gun3KS);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                 }
@@ -761,7 +761,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.velocity.X = player.Center.X > NPC.Center.X ? -9 : 9;
                                     for (int i = 0; i < Main.rand.Next(5, 8); i++)
                                     {
-                                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(Main.rand.Next(8, 13) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, CustomSounds.ShotgunBlast1);
+                                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(Main.rand.Next(8, 13) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, CustomSounds.ShotgunBlastKS);
                                     }
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
@@ -795,7 +795,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             if (phase >= 5 ? AITimer == 40 : AITimer == 60)
                             {
-                                NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2);
+                                NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2KS);
                                 BodyState = (int)BodyAnim.GunShoot;
                                 NPC.netUpdate = true;
                             }
@@ -839,7 +839,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 if (phase >= 5 ? AITimer == 41 || AITimer == 44 || AITimer == 47 : AITimer == 61 || AITimer == 64 || AITimer == 67)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2);
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2KS);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
@@ -885,7 +885,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                 if (AITimer % 10 == 0)
                                 {
-                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, CustomSounds.Gun1);
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(7 + dmgIncrease, gunRot), true, CustomSounds.Gun1KS);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }

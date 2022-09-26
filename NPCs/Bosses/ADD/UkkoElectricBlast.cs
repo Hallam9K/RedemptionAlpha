@@ -23,11 +23,10 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 60;
-            Projectile.alpha = 60;
         }
         public override void AI()
         {
-            Projectile.scale += 0.2f;
+            Projectile.scale += 0.25f;
             if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
@@ -71,8 +70,8 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void SetDefaults()
         {
-            Projectile.width = 2000;
-            Projectile.height = 2000;
+            Projectile.width = 3000;
+            Projectile.height = 3000;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;

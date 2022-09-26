@@ -10,18 +10,18 @@ namespace Redemption.Walls
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.wallHouse[Type] = true;
+			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<SlateDust>();
 			ItemDrop = ModContent.ItemType<GathicGladestoneBrickWall>();
 			AddMapEntry(new Color(49, 43, 39));
 		}
 	}
-	public class GathicGladestoneBrickWallTileUnsafe : ModWall
+	public class GathicGladestoneBrickWallTileSafe : ModWall
 	{
 		public override string Texture => "Redemption/Walls/GathicGladestoneBrickWallTile";
 		public override void SetStaticDefaults()
 		{
-			Main.wallHouse[Type] = false;
+			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<SlateDust>();
 			ItemDrop = ModContent.ItemType<GathicGladestoneBrickWall>();
 			AddMapEntry(new Color(49, 43, 39));

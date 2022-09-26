@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlacableWall((ushort)ModContent.WallType<GathicGladestoneBrickWallTile>());
+            Item.DefaultToPlacableWall((ushort)ModContent.WallType<GathicGladestoneBrickWallTileSafe>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = 999;

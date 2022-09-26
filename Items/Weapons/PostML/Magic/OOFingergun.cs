@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 144;
+            Item.damage = 194;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 3;
             Item.width = 56;
@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<OOFingergun_Laser>();
-            Item.shootSpeed = 12;
+            Item.shootSpeed = 20;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

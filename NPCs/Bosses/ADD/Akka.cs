@@ -151,15 +151,17 @@ namespace Redemption.NPCs.Bosses.ADD
         }
 
 
-        public Vector2 MoveVector2;
-        public Vector2 MoveVector3;
-        public int islandCooldown = 10;
-        public int barkskinCooldown;
-        public int healingCooldown;
-        public int TremorTimer;
-        public bool teamAttackCheck;
-        public int frameCounters;
-        public int magicFrame;
+        private Vector2 MoveVector2;
+        private Vector2 MoveVector3;
+        private int islandCooldown = 10;
+        private int barkskinCooldown;
+        private int healingCooldown;
+        private int teamCooldown = 10;
+        private int TremorTimer;
+        private bool teamAttackCheck;
+        private int frameCounters;
+        private int magicFrame;
+        private int Frame;
         public override void AI()
         {
             Target();
@@ -169,7 +171,11 @@ namespace Redemption.NPCs.Bosses.ADD
             Player player = Main.player[NPC.target];
             NPC.rotation = 0f;
             NPC.LookAtEntity(player);
-            /*if (NPC.ai[3] == 1)
+
+            bool ukkoActive = false;
+            if (NPC.ai[3] > -1 && Main.npc[(int)NPC.ai[3]].active && Main.npc[(int)NPC.ai[3]].type == ModContent.NPCType<Ukko>())
+                ukkoActive = true;
+            if (Frame == 1)
             {
                 frameCounters++;
                 if (frameCounters > 6)
@@ -178,55 +184,50 @@ namespace Redemption.NPCs.Bosses.ADD
                     frameCounters = 0;
                 }
                 if (magicFrame >= 6)
-                {
                     magicFrame = 0;
-                }
-            }*/
-            //Vector2 EarthProtectPos = new(player.Center.X > NPC.Center.X ? player.Center.X - 500 : player.Center.X + 500, player.Center.Y - 100);
+            }
+            Vector2 EarthProtectPos = new(player.Center.X + (player.Center.X > NPC.Center.X ? -500 : 500), player.Center.Y - 100);
             switch (AIState)
             {
                 case ActionState.Start:
-                    if (NPC.ai[3] > -1)
+                    if (ukkoActive)
                     {
                         NPC ukko = Main.npc[(int)NPC.ai[3]];
-                        if (ukko.active && ukko.type == ModContent.NPCType<Ukko>())
+                        switch (AttackID)
                         {
-                            switch (AttackID)
-                            {
-                                case 0:
-                                    if (AITimer++ >= 80)
-                                    {
-                                        NPC.spriteDirection = -1;
-                                        if (NPC.DistanceSQ(ukko.Center + new Vector2(100, 0)) < 20 * 20)
-                                        {
-                                            AITimer = 0;
-                                            AttackID = 1;
-                                            NPC.netUpdate = true;
-                                        }
-                                        else
-                                            NPC.MoveToVector2(ukko.Center + new Vector2(100, 0), 35);
-                                    }
-                                    break;
-                                case 1:
+                            case 0:
+                                if (AITimer++ >= 80)
+                                {
                                     NPC.spriteDirection = -1;
-                                    NPC.velocity *= 0.9f;
-                                    if (AITimer == 60)
+                                    if (NPC.DistanceSQ(ukko.Center + new Vector2(100, 0)) < 20 * 20)
                                     {
-                                        if (!Main.dedServ)
-                                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.PaleGreen, "Ancient Goddess of Nature");
-
-                                        EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
-                                    }
-
-                                    if (AITimer++ >= 120)
-                                    {
-                                        AIState = ActionState.ResetVars;
                                         AITimer = 0;
-                                        AttackID = 0;
+                                        AttackID = 1;
                                         NPC.netUpdate = true;
                                     }
-                                    break;
-                            }
+                                    else
+                                        NPC.MoveToVector2(ukko.Center + new Vector2(100, 0), 35);
+                                }
+                                break;
+                            case 1:
+                                NPC.spriteDirection = -1;
+                                NPC.velocity *= 0.9f;
+                                if (AITimer == 60)
+                                {
+                                    if (!Main.dedServ)
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.PaleGreen, "Ancient Goddess of Nature");
+
+                                    EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
+                                }
+
+                                if (AITimer++ >= 120)
+                                {
+                                    AIState = ActionState.ResetVars; ;
+                                    AITimer = 0;
+                                    AttackID = 0;
+                                    NPC.netUpdate = true;
+                                }
+                                break;
                         }
                     }
                     else
@@ -234,7 +235,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (!Main.dedServ)
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.LightGreen, "Ancient Goddess of Nature");
 
-                        AIState = ActionState.ResetVars;
+                        AIState = ActionState.ResetVars; ;
                         AITimer = 0;
                         NPC.netUpdate = true;
                     }
@@ -246,6 +247,9 @@ namespace Redemption.NPCs.Bosses.ADD
                         barkskinCooldown--;
                     if (healingCooldown > 0)
                         healingCooldown--;
+                    if (teamCooldown > 0)
+                        teamCooldown--;
+                    Frame = 0;
                     MoveVector2 = Pos();
                     NPC.ai[0]++;
                     break;
@@ -254,7 +258,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     {
                         NPC.velocity *= 0;
                         NPC.ai[0]++;
-                        AttackID = Main.rand.Next(8);
+                        AttackID = Main.rand.Next(10);
                         NPC.netUpdate = true;
                     }
                     else
@@ -263,25 +267,23 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Attacks:
                     switch (AttackID)
                     {
-                        // Poison Spray
                         #region Poison Spray
                         case 0:
                             AITimer++;
-                            if (AITimer % 6 == 0 && AITimer < 60)
+                            if (AITimer % 3 == 0 && AITimer < 60)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<AkkaPoisonBubble>(), 60 / 3, 1);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<AkkaPoisonBubble>(), (int)(NPC.damage * 0.95f) / 4, 1);
                                 Main.projectile[p].netUpdate = true;
                             }
                             if (AITimer >= 65)
                             {
-                                NPC.ai[0] = 1;
+                                AIState = ActionState.ResetVars;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
                             break;
                         #endregion
 
-                        // Floating Island Yeet
                         #region Island Bombardment
                         case 1:
                             if (islandCooldown == 0)
@@ -292,27 +294,26 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.Quake with { Volume = 1.4f, PitchVariance = 0.1f });
 
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 0f, ModContent.ProjectileType<AkkaIslandSummoner>(), 200 / 3, 1, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 0f, ModContent.ProjectileType<AkkaIslandSummoner>(), (int)(NPC.damage * 1.5f) / 4, 1, Main.myPlayer);
                                     Main.projectile[p].netUpdate = true;
                                 }
                                 if (AITimer >= 200)
                                 {
                                     islandCooldown = 30;
-                                    NPC.ai[0] = 1;
+                                    AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
                                 }
                             }
                             else
                             {
-                                AttackID = Main.rand.Next(8);
+                                AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
                             break;
                         #endregion
 
-                        // Earth Tremor
                         #region Earth Tremor
                         case 2:
                             AITimer++;
@@ -337,14 +338,13 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (AITimer >= 180)
                             {
                                 TremorTimer = 0;
-                                NPC.ai[0] = 1;
+                                AIState = ActionState.ResetVars;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
                             break;
                         #endregion
 
-                        // Barkskin
                         #region Barkskin
                         case 3:
                             if (NPC.life < (int)(NPC.lifeMax * 0.8f) && barkskinCooldown == 0)
@@ -360,21 +360,20 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer >= 90)
                                 {
                                     barkskinCooldown = 10;
-                                    NPC.ai[0] = 1;
+                                    AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
                                 }
                             }
                             else
                             {
-                                AttackID = Main.rand.Next(8);
+                                AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
                             break;
                         #endregion
 
-                        // Moonbeam
                         #region Moonbeam
                         case 4:
                             AITimer++;
@@ -387,45 +386,25 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer == 25)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), 100 / 3, 1, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), (int)(NPC.damage * 0.98f) / 4, 1, Main.myPlayer);
                             }
                             if (AITimer >= 70)
                             {
-                                NPC.ai[0] = 1;
+                                AIState = ActionState.ResetVars;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
                             break;
                         #endregion
 
-                        // Entangle
                         #region Entangle
                         case 5:
-                            if (player.ZoneOverworldHeight)
-                            {
-                                AITimer++;
-                                if (AITimer % 10 == 0 && AITimer > 40 && AITimer < 160)
-                                {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X + Main.rand.Next(-300, 300), player.Center.Y + Main.rand.Next(-300, 0), 0f, 0f, ModContent.ProjectileType<AkkaSeed>(), 90 / 3, 3, Main.myPlayer);
-                                    Main.projectile[p].netUpdate = true;
-                                }
-                                if (AITimer >= 200)
-                                {
-                                    NPC.ai[0] = 1;
-                                    AITimer = 0;
-                                    NPC.netUpdate = true;
-                                }
-                            }
-                            else
-                            {
-                                AttackID = Main.rand.Next(8);
-                                AITimer = 0;
-                                NPC.netUpdate = true;
-                            }
+                            AttackID = Main.rand.Next(10);
+                            AITimer = 0;
+                            NPC.netUpdate = true;
                             break;
                         #endregion
 
-                        // Healing Spirit
                         #region Healing Spirit
                         case 6:
                             if (NPC.life < (int)(NPC.lifeMax * 0.6f) && healingCooldown == 0)
@@ -439,37 +418,86 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer >= 260)
                                 {
                                     healingCooldown = 20;
-                                    NPC.ai[0] = 1;
+                                    AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
                                 }
                             }
                             else
                             {
-                                AttackID = Main.rand.Next(8);
+                                AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
                             break;
                         #endregion
 
-                        // Thorn Whip
                         #region Thorn Whip
                         case 7:
-                            AITimer++;
-                            if (AITimer % 30 == 0 && AITimer < 100)
+                            AttackID = Main.rand.Next(10);
+                            AITimer = 0;
+                            NPC.netUpdate = true;
+                            break;
+                        #endregion
+
+                        #region TA: Bubbles
+                        case 8:
+                            if (teamCooldown == 0 && ukkoActive)
                             {
-                                float Speed = 16f;
-                                Vector2 vector8 = new(NPC.Center.X, NPC.Center.Y);
-                                int damage = 46;
-                                int type = ModContent.ProjectileType<Akka_CursedThorn>();
-                                float rotation = (float)Math.Atan2(vector8.Y - (player.position.Y + (player.height * 0.5f)), vector8.X - (player.position.X + (player.width * 0.5f)));
-                                int num54 = Projectile.NewProjectile(NPC.GetSource_FromAI(), vector8.X, vector8.Y, (float)(Math.Cos(rotation) * Speed * -1), (float)(Math.Sin(rotation) * Speed * -1), type, damage, 0f, 0);
-                                Main.projectile[num54].netUpdate = true;
+                                NPC ukko = Main.npc[(int)NPC.ai[3]];
+                                if (ukko.ai[1] == 15)
+                                {
+                                    if (NPC.DistanceSQ(ukko.Center) < 300 * 300)
+                                        NPC.velocity *= 0;
+                                    else
+                                        NPC.MoveToVector2(ukko.Center, 35);
+
+                                    if (AITimer++ % 2 == 0 && AITimer < 70)
+                                    {
+                                        for (int i = 0; i < 2; i++)
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16), false, SoundID.Item1);
+                                    }
+                                    if (AITimer >= 120)
+                                    {
+                                        teamCooldown = 4;
+                                        AIState = ActionState.ResetVars;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
                             }
-                            if (AITimer >= 120)
+                            else
                             {
-                                NPC.ai[0] = 1;
+                                AttackID = Main.rand.Next(10);
+                                AITimer = 0;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        #endregion
+
+                        #region TA: Earth Barrier
+                        case 9:
+                            if (teamCooldown == 0 && ukkoActive)
+                            {
+                                NPC ukko = Main.npc[(int)NPC.ai[3]];
+                                if (ukko.ai[1] == 16)
+                                {
+                                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PoisonStaff, Scale: 1.5f);
+                                    Frame = 1;
+                                    NPC.MoveToVector2(EarthProtectPos, 20);
+                                    NPC.netUpdate = true;
+                                    if (AITimer >= 100)
+                                    {
+                                        teamCooldown = 6;
+                                        AIState = ActionState.ResetVars;
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
                             }
@@ -532,42 +560,43 @@ namespace Redemption.NPCs.Bosses.ADD
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.SpringGreen * 0.7f, Color.LightGreen);
 
-            //switch (NPC.ai[3])
-            //{
-            //    case 0:
-            if (!NPC.IsABestiaryIconDummy)
+            switch (Frame)
             {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
-                {
-                    Vector2 oldPos = NPC.oldPos[i];
-                    spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                }
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            }
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-            /*break;
-        case 1:
-            int magicHeight = magicAni.Height / 6;
-            int magicY = magicHeight * magicFrame;
-            Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y);
+                case 0:
+                    if (!NPC.IsABestiaryIconDummy)
+                    {
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                        for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                        {
+                            Vector2 oldPos = NPC.oldPos[i];
+                            spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        }
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    }
+                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                    break;
+                case 1:
+                    int magicHeight = magicAni.Height / 6;
+                    int magicY = magicHeight * magicFrame;
+                    Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y);
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-            for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
-            {
-                Vector2 oldPos = NPC.oldPos[i];
-                spriteBatch.Draw(magicAni, oldPos + new Vector2(4, -16) + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
-            }
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                    for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                    {
+                        Vector2 oldPos = NPC.oldPos[i];
+                        spriteBatch.Draw(magicAni, oldPos + new Vector2(4, -16) + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
+                    }
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            spriteBatch.Draw(magicAni, drawCenter - screenPos, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
-            break;*/
+                    spriteBatch.Draw(magicAni, drawCenter - screenPos, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
+                    break;
+            }
             return false;
         }
 

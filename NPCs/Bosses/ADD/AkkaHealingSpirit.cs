@@ -44,10 +44,13 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC npc = Main.npc[p];
                 if (npc.active && !npc.immortal && !npc.dontTakeDamage && Projectile.alpha < 200 && Projectile.Hitbox.Intersects(npc.Hitbox))
                 {
-                    if (npc.life <= npc.lifeMax - 5)
+                    int healAmt = 3;
+                    if (npc.type == ModContent.NPCType<Ukko>())
+                        healAmt = 10;
+                    if (npc.life <= npc.lifeMax - healAmt)
                     {
-                        npc.life += 5;
-                        npc.HealEffect(5);
+                        npc.life += healAmt;
+                        npc.HealEffect(healAmt);
                         Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Water_Jungle);
                         dust.velocity = -npc.DirectionTo(dust.position);
                     }

@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 using Terraria.Audio;
+using System.Collections.Generic;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -25,6 +26,10 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 600;
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
         }
         public override void AI()
         {
@@ -65,7 +70,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             Projectile.localAI[0] = 2;
                         }
-                        /*else if (proj.type == ModContent.ProjectileType<AkkaPoisonBubble>())
+                        else if (proj.type == ModContent.ProjectileType<AkkaPoisonBubble>())
                         {
                             for (int i = 0; i < 20; i++)
                             {
@@ -82,7 +87,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 dust.velocity = -Projectile.DirectionTo(dust.position);
                             }
                             Projectile.localAI[0] = 4;
-                        }*/
+                        }
                     }
                 }
                 switch (Projectile.localAI[0])
@@ -108,7 +113,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (Main.rand.NextBool(3))
                         {
                             SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 150), Projectile.Center.Y + Main.rand.Next(4, 8)), new Vector2(0f, 9f), ProjectileID.MartianTurretBolt, 85 / 3, 0, Projectile.owner, 0, 0);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 151), Projectile.Center.Y + Main.rand.Next(50, 55)), new Vector2(0f, 2f), ModContent.ProjectileType<UkkoCloud_Thunder>(), 85 / 4, 0, Projectile.owner, 0, 0);
                         }
                         if (++Projectile.localAI[1] >= 50)
                         {
