@@ -25,7 +25,7 @@ namespace Redemption.WorldGeneration
             [new Color(100, 90, 70)] = ModContent.TileType<AncientDirtTile>(),
             [new Color(200, 200, 50)] = ModContent.TileType<AncientGoldCoinPileTile>(),
             [new Color(180, 180, 150)] = TileID.AmberGemspark,
-            [new Color(0, 0, 255)] = TileID.TeamBlockBlue,
+            [new Color(0, 0, 255)] = TileID.AmberGemsparkOff,
             [new Color(150, 150, 150)] = -2,
             [Color.Black] = -1
         };
@@ -73,13 +73,17 @@ namespace Redemption.WorldGeneration
                     {
                         case TileID.AmberGemspark:
                             if (Framing.GetTileSafely(i, j) != null)
-                                WorldGen.KillTile(i, j, noItem: true);
-                            GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
+                            {
+                                Framing.GetTileSafely(i, j).ClearTile();
+                                GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
+                            }
                             break;
-                        case TileID.TeamBlockBlue:
+                        case TileID.AmberGemsparkOff:
                             if (Framing.GetTileSafely(i, j) != null)
-                                WorldGen.KillTile(i, j, noItem: true);
-                            WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
+                            {
+                                Framing.GetTileSafely(i, j).ClearTile();
+                                WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
+                            }
                             break;
                     }
                     if (Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ElderWoodPlatformTile>() && WorldGen.InWorld(i, j))
@@ -145,13 +149,17 @@ namespace Redemption.WorldGeneration
                     {
                         case TileID.AmberGemspark:
                             if (Framing.GetTileSafely(i, j) != null)
-                                WorldGen.KillTile(i, j, noItem: true);
-                            GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
+                            {
+                                Framing.GetTileSafely(i, j).ClearTile();
+                                GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
+                            }
                             break;
-                        case TileID.TeamBlockBlue:
+                        case TileID.AmberGemsparkOff:
                             if (Framing.GetTileSafely(i, j) != null)
-                                WorldGen.KillTile(i, j, noItem: true);
-                            WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
+                            {
+                                Framing.GetTileSafely(i, j).ClearTile();
+                                WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
+                            }
                             break;
                     }
                     if (Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ElderWoodPlatformTile>() && WorldGen.InWorld(i, j))
@@ -201,13 +209,17 @@ namespace Redemption.WorldGeneration
                     {
                         case TileID.AmberGemspark:
                             if (Framing.GetTileSafely(i, j) != null)
-                                WorldGen.KillTile(i, j, noItem: true);
-                            GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
+                            {
+                                Framing.GetTileSafely(i, j).ClearTile();
+                                GenUtils.ObjectPlace(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>());
+                            }
                             break;
-                        case TileID.TeamBlockBlue:
+                        case TileID.AmberGemsparkOff:
                             if (Framing.GetTileSafely(i, j) != null)
-                                WorldGen.KillTile(i, j, noItem: true);
-                            WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
+                            {
+                                Framing.GetTileSafely(i, j).ClearTile();
+                                WorldGen.PlaceTile(i, j, ModContent.TileType<ElderWoodPlatformTile>(), true, false, -1);
+                            }
                             break;
                     }
                     if (Framing.GetTileSafely(i, j).TileType == ModContent.TileType<ElderWoodPlatformTile>() && WorldGen.InWorld(i, j))

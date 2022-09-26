@@ -164,7 +164,6 @@ namespace Redemption.NPCs.Bosses.ADD
         public int stoneskinCooldown;
         public int chariotCooldown;
         public int burstCooldown;
-        public int teamCooldown = 10;
         public int chariotFrame;
         public int dashCounter;
         public int dischargeFrame;
@@ -193,6 +192,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 }
             }
             Vector2 ThunderwavePos = new(player.Center.X > NPC.Center.X ? player.Center.X - 700 : player.Center.X + 700, player.Center.Y);
+            Vector2 EarthProtectPos = new Vector2(player.Center.X, player.Center.Y - 400);
             int akkaID = NPC.FindFirstNPC(ModContent.NPCType<Akka>());
             bool akkaActive = false;
             if (akkaID > -1 && Main.npc[akkaID].active && Main.npc[akkaID].type == ModContent.NPCType<Akka>())
@@ -236,8 +236,6 @@ namespace Redemption.NPCs.Bosses.ADD
                         chariotCooldown--;
                     if (burstCooldown > 0)
                         burstCooldown--;
-                    if (teamCooldown > 0)
-                        teamCooldown--;
                     MoveVector2 = Pos();
                     MoveVector3 = ChargePos();
                     NPC.ai[0]++;
@@ -248,6 +246,9 @@ namespace Redemption.NPCs.Bosses.ADD
                         NPC.velocity *= 0;
                         NPC.ai[0]++;
                         AttackID = Main.rand.Next(15);
+                        if (akkaActive && Main.npc[akkaID].ai[1] >= 8 && Main.npc[akkaID].ai[0] == 3)
+                            AttackID = Main.npc[akkaID].ai[1] + 7;
+
                         NPC.netUpdate = true;
                     }
                     else
@@ -784,6 +785,89 @@ namespace Redemption.NPCs.Bosses.ADD
                                 AttackID = Main.rand.Next(15);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
+                            }
+                            break;
+                        #endregion
+
+                        #region TA: Bubbles
+                        case 15:
+                            if (akkaActive)
+                            {
+                                if (AITimer++ == 102)
+                                {
+                                    NPC.ai[3] = 3;
+                                    SoundEngine.PlaySound(SoundID.Thunder, NPC.position);
+                                }
+                                if (AITimer < 152 && AITimer >= 102)
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado);
+                                        dust.velocity = -NPC.DirectionTo(dust.position);
+                                    }
+                                }
+                                if (AITimer == 152)
+                                {
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoElectricBlast>(), 0, Vector2.Zero, true, CustomSounds.Thunderstrike, NPC.whoAmI);
+                                }
+                                if (AITimer >= 180)
+                                {
+                                    AIState = ActionState.ResetVars;
+                                    AITimer = 0;
+                                    NPC.netUpdate = true;
+                                }
+                            }
+                            else
+                            {
+                                AttackID = Main.rand.Next(15);
+                                AITimer = 0;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        #endregion
+
+                        #region TA: Earth Barrier
+                        case 16:
+                            if (akkaActive)
+                            {
+                                NPC.MoveToVector2(EarthProtectPos, 30);
+                                if (AITimer++ == 6)
+                                {
+                                    if (player.ZoneHallow)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1);
+                                    else if (player.ZoneCorrupt)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 1);
+                                    else if (player.ZoneCrimson)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 3);
+                                    else if (player.ZoneDesert)
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 4);
+                                    else
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 2);
+                                }
+                                if (AITimer < 120)
+                                {
+                                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, Scale: 0.7f);
+                                    dust.velocity = -NPC.DirectionTo(dust.position);
+                                }
+                                if (AITimer > 120 && AITimer % 20 == 0)
+                                {
+                                    int speed = Main.rand.Next(4, 8);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(speed, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(speed, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2, 1);
+                                }
+                                if (AITimer == 295)
+                                {
+                                    Main.npc[akkaID].ai[2] = 100;
+                                    Main.npc[akkaID].netUpdate = true;
+                                }
+                                if (AITimer >= 300)
+                                {
+                                    AIState = ActionState.ResetVars;
+                                    AITimer = 0;
+                                    NPC.netUpdate = true;
+                                }
                             }
                             break;
                             #endregion

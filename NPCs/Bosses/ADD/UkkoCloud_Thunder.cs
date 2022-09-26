@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.extraUpdates = 100;
-            Projectile.timeLeft = 800;
+            Projectile.timeLeft = 300;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
         }
