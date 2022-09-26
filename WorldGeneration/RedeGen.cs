@@ -778,7 +778,7 @@ namespace Redemption.WorldGeneration
 
                     while (!placed)
                     {
-                        int placeX = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
+                        int placeX = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 
                         int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7));
 
