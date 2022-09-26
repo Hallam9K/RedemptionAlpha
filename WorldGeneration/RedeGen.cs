@@ -417,33 +417,40 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Vector2 origin = new(tilesX, tilesY);
-                            AncientDecalGen.PlaceR(origin.ToPoint(), WorldGen.genRand.Next(4));
+                            StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalR", origin.ToPoint16(), Mod);
                             for (int i = 0; i < roomNum - 2; i++)
                             {
                                 origin.X += 25;
-                                AncientDecalGen.PlaceM(origin.ToPoint(), WorldGen.genRand.Next(5));
+                                StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalM", origin.ToPoint16(), Mod);
                             }
                             origin.X += 25;
-                            AncientDecalGen.PlaceL(origin.ToPoint(), WorldGen.genRand.Next(4));
+                            StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/AncientDecalL", origin.ToPoint16(), Mod);
 
                             for (int x = 0; x < 25 * roomNum; x++)
                             {
                                 for (int y = 0; y < 25; y++)
                                 {
-                                    if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile && Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
+                                    if (WorldGen.InWorld(tilesX + x, tilesY + y))
                                     {
-                                        if (WorldGen.genRand.NextBool(8))
+                                        if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile && Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
                                         {
-                                            switch (WorldGen.genRand.Next(2))
+                                            if (WorldGen.genRand.NextBool(8))
                                             {
-                                                case 0:
-                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>());
-                                                    break;
-                                                case 1:
-                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>());
-                                                    break;
+                                                switch (WorldGen.genRand.Next(2))
+                                                {
+                                                    case 0:
+                                                        GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>());
+                                                        break;
+                                                    case 1:
+                                                        GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>());
+                                                        break;
+                                                }
                                             }
                                         }
+                                        if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<ElderWoodPlatformTile>())
+                                            WorldGen.KillTile(tilesX + x, tilesY + y, true);
+                                        if (WorldGen.genRand.NextBool(2) && Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<AncientGoldCoinPileTile>())
+                                            WorldGen.KillTile(tilesX + x, tilesY + y, true);
                                     }
                                 }
                             }
@@ -481,8 +488,13 @@ namespace Redemption.WorldGeneration
 
                             if (Framing.GetTileSafely(i, j).TileType == ModContent.TileType<PetrifiedWoodTile>())
                             {
-                                Framing.GetTileSafely(i, j).ClearTile();
-                                ElderWoodChest(i, j);
+                                if (Main.rand.NextBool(2))
+                                    WorldGen.KillTile(i, j, noItem: true);
+                                else
+                                {
+                                    Framing.GetTileSafely(i, j).ClearTile();
+                                    ElderWoodChest(i, j);
+                                }
                             }
                         }
                     }
@@ -634,10 +646,10 @@ namespace Redemption.WorldGeneration
 
                     Dictionary<Color, int> colorToWall = new()
                     {
-                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
-                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
-                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
-                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
                         [new Color(0, 255, 0)] = ModContent.WallType<AncientHallPillarWallTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
@@ -752,10 +764,10 @@ namespace Redemption.WorldGeneration
 
                     Dictionary<Color, int> colorToWall = new()
                     {
-                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
-                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
-                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
-                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
                         [new Color(0, 255, 0)] = ModContent.WallType<ElderWoodWallTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
@@ -988,10 +1000,10 @@ namespace Redemption.WorldGeneration
 
                     Dictionary<Color, int> colorToWall = new()
                     {
-                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTileUnsafe>(),
-                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTileUnsafe>(),
-                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTileUnsafe>(),
-                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTileUnsafe>(),
+                        [new Color(0, 0, 255)] = ModContent.WallType<GathicStoneBrickWallTile>(),
+                        [new Color(0, 0, 200)] = ModContent.WallType<GathicGladestoneBrickWallTile>(),
+                        [new Color(255, 0, 0)] = ModContent.WallType<GathicStoneWallTile>(),
+                        [new Color(200, 0, 0)] = ModContent.WallType<GathicGladestoneWallTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };

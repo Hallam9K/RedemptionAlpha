@@ -2,4 +2,4 @@ displayName = Mod of Redemption
 author = Hallam & Tied
 version = 0.8
 buildIgnore = *.csproj, *.user, obj\*, bin\*, lib\*, .vs\*, *.gif, *.piskel, Unused\*
-modReferences = CollisionLib, SubworldLibrary, ParticleLibrary
+modReferences = CollisionLib, SubworldLibrary, ParticleLibrary, StructureHelper
