@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -27,7 +28,7 @@ namespace Redemption.Tiles.Furniture.Misc
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Niric Cog");
             AddMapEntry(new Color(117, 117, 126), name);
-            DustType = DustID.Lead;
+            DustType = ModContent.DustType<NiricBrassDust>();
             HitSound = SoundID.Tink;
             MinPick = 200;
             MineResist = 10f;

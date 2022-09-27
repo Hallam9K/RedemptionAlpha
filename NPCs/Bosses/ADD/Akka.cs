@@ -152,13 +152,11 @@ namespace Redemption.NPCs.Bosses.ADD
 
 
         private Vector2 MoveVector2;
-        private Vector2 MoveVector3;
         private int islandCooldown = 10;
         private int barkskinCooldown;
         private int healingCooldown;
-        private int teamCooldown = 10;
+        public int teamCooldown = 10;
         private int TremorTimer;
-        private bool teamAttackCheck;
         private int frameCounters;
         private int magicFrame;
         private int Frame;
@@ -256,6 +254,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Idle:
                     if (NPC.DistanceSQ(MoveVector2) < 10 * 10)
                     {
+                        AITimer = 0;
                         NPC.velocity *= 0;
                         NPC.ai[0]++;
                         AttackID = Main.rand.Next(10);

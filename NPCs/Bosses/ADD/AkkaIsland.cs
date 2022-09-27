@@ -17,8 +17,8 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void SetDefaults()
         {
-            Projectile.width = 1696;
-            Projectile.height = 320;
+            Projectile.width = 776;
+            Projectile.height = 335;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;
@@ -27,6 +27,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.alpha = 255;
             Projectile.timeLeft = 600;
             Projectile.extraUpdates = 1;
+            Projectile.scale = 2;
         }
         public override void AI()
         {
@@ -46,9 +47,10 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
+                Main.EntitySpriteDraw(texture, drawPos + drawOrigin + new Vector2(0, 120), null, color, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
             }
-            return true;
+            Main.EntitySpriteDraw(texture, Projectile.Center + drawOrigin + new Vector2(0, 120) - Main.screenPosition, null, lightColor * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
+            return false;
         }
     }
     public class AkkaIslandSummoner : ModProjectile
@@ -99,8 +101,8 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void SetDefaults()
         {
-            Projectile.width = 1696;
-            Projectile.height = 320;
+            Projectile.width = 1448;
+            Projectile.height = 312;
             Projectile.penetrate = -1;
             Projectile.hostile = true;
             Projectile.friendly = false;
@@ -117,7 +119,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 Player player = Main.player[p];
                 if (player.active && !player.dead && Projectile.Hitbox.Intersects(player.Hitbox))
                 {
-                    player.velocity.Y = Projectile.velocity.Y;
+                    player.velocity.Y = Projectile.velocity.Y * 2;
                 }
             }
         }

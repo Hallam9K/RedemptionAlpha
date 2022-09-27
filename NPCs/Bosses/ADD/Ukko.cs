@@ -243,10 +243,11 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Idle:
                     if (NPC.DistanceSQ(MoveVector2) < 10 * 10)
                     {
+                        AITimer = 0;
                         NPC.velocity *= 0;
                         NPC.ai[0]++;
                         AttackID = Main.rand.Next(15);
-                        if (akkaActive && Main.npc[akkaID].ai[1] >= 8 && Main.npc[akkaID].ai[0] == 3)
+                        if (akkaActive && (Main.npc[akkaID].ModNPC as Akka).teamCooldown == 0 && Main.npc[akkaID].ai[1] >= 8 && Main.npc[akkaID].ai[0] == 3)
                             AttackID = Main.npc[akkaID].ai[1] + 7;
 
                         NPC.netUpdate = true;
