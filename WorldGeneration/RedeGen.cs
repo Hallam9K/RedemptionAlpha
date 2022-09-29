@@ -515,6 +515,31 @@ namespace Redemption.WorldGeneration
                                 {
                                     if (WorldGen.InWorld(tilesX + x, tilesY + y))
                                     {
+                                        List<int> GathicTileArray = new() { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>() };
+                                        for (int n = 1; n < 3; n++)
+                                        {
+                                            bool gathic = false;
+                                            bool tileUp = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x, tilesY + y - n).TileType);
+                                            bool tileDown = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x, tilesY + y + n).TileType);
+                                            bool tileLeft = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x - n, tilesY + y).TileType);
+                                            bool tileRight = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x + n, tilesY + y).TileType);
+                                            if (tileUp)
+                                                gathic = true;
+                                            else if (tileDown)
+                                                gathic = true;
+                                            else if (tileLeft)
+                                                gathic = true;
+                                            else if (tileRight)
+                                                gathic = true;
+
+                                            if (gathic && Main.rand.NextBool(n))
+                                            {
+                                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneTile>())
+                                                    Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = (ushort)ModContent.TileType<GathicColdstoneTile>();
+                                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneBrickTile>())
+                                                    Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = (ushort)ModContent.TileType<GathicColdstoneBrickTile>();
+                                            }
+                                        }
                                         if (WorldGen.genRand.NextBool(3))
                                         {
                                             if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneTile>())

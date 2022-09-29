@@ -17,6 +17,9 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Trophies;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -118,20 +121,20 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            /*npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThornBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<UkkoBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UkonKirvesTrophy>(), 10));
 
-            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
 
-            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
+            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
 
-            npcLoot.Add(notExpertRule);*/
+            npcLoot.Add(notExpertRule);
         }
         public override void OnKill()
         {

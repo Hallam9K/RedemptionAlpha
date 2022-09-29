@@ -40,6 +40,8 @@ namespace Redemption.Globals
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/OmegaBossBar").Value;
             if (npc.type == ModContent.NPCType<Thorn>())
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/ThornBossBar").Value;
+            if (npc.type == ModContent.NPCType<Akka>())
+                drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/AkkaBossBar").Value;
             return base.PreDraw(spriteBatch, npc, ref drawParams);
         }
     }
