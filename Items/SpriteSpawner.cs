@@ -39,7 +39,6 @@ namespace Redemption.Items
             Item.rare = ItemRarityID.Purple;
         }
         public override bool AltFunctionUse(Player player) => true;
-        private int dltype;
         public override bool? UseItem(Player player)
         {
             NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);

@@ -31,15 +31,15 @@ namespace Redemption.Items.Usable
 
         public override bool CanUseItem(Player player)
         {
-            return !player.Redemption().medKit && player.statLifeMax >= 500;
+            return player.ConsumedLifeCrystals == Player.LifeCrystalMax && player.ConsumedLifeFruit == Player.LifeFruitMax;
         }
 
         public override bool? UseItem(Player player)
         {
-            player.statLifeMax2 += 50;
-            player.statLife += 50;
-            if (Main.myPlayer == player.whoAmI)
-                player.HealEffect(50, true);
+            if (player.Redemption().medKit)
+                return null;
+
+            player.UseHealthMaxIncreasingItem(50);
 
             player.Redemption().medKit = true;
             SoundEngine.PlaySound(SoundID.Item43, player.position);
