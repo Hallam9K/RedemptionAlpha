@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Tooltip.SetDefault("\n(2-6[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Energy Bolts"
                 + "\nRight-clicking changes type of fire\n" +
                 "Requires an Energy Pack to be in your inventory");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

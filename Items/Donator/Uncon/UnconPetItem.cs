@@ -15,7 +15,7 @@ namespace Redemption.Items.Donator.Uncon
             Tooltip.SetDefault("Summons chibi Tremor\n" +
                 "'A broken sword not of this world, said to be a sign of the end times.'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

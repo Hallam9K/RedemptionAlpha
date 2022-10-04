@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 "Missing the catch will cause you to only shoot one gun for 5 seconds\n" +
                 "Replaces normal bullets with nano bullets");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

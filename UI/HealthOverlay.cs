@@ -74,7 +74,7 @@ namespace Redemption.UI
     {
         private readonly Dictionary<string, Asset<Texture2D>> vanillaAssetCache = new();
 
-        private Asset<Texture2D> heartTexture, barsFillingTexture;
+        private Asset<Texture2D> heartTexture, barPanelRightTexture;
 
         public override void PostDrawResource(ResourceOverlayDrawContext context)
         {
@@ -88,11 +88,18 @@ namespace Redemption.UI
 
             // NOTE: CompareAssets is defined below this method's body
             if (asset == TextureAssets.Heart || asset == TextureAssets.Heart2)
-                DrawClassicFancyOverlay(context);
+                DrawClassicFancyOverlay(context, 0);
             else if (CompareAssets(asset, fancyFolder + "Heart_Fill") || CompareAssets(asset, fancyFolder + "Heart_Fill_B"))
-                DrawClassicFancyOverlay(context);
+                DrawClassicFancyOverlay(context, 1);
             else if (CompareAssets(asset, barsFolder + "HP_Fill") || CompareAssets(asset, barsFolder + "HP_Fill_Honey"))
-                DrawBarsOverlay(context);
+            {
+                if (context.resourceNumber % 2 == 0)
+                    DrawBarsOverlay(context, 0);
+                else
+                    DrawBarsOverlay(context, 1);
+            }
+            else if (CompareAssets(asset, barsFolder + "HP_Panel_Right"))
+                DrawBarsPanelOverlay(context);
         }
         private bool CompareAssets(Asset<Texture2D> existingAsset, string compareAssetPath)
         {
@@ -102,11 +109,21 @@ namespace Redemption.UI
 
             return existingAsset == asset;
         }
-        private void DrawClassicFancyOverlay(ResourceOverlayDrawContext context)
+        private void DrawClassicFancyOverlay(ResourceOverlayDrawContext context, int style)
         {
             Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/HeartGal");
-            context.texture = heartTexture ??= tex;
-            context.Draw();
+            Asset<Texture2D> texFancy = ModContent.Request<Texture2D>("Redemption/Textures/HeartGal_Fancy");
+
+            if (style == 1)
+            {
+                context.texture = texFancy;
+                context.Draw();
+            }
+            else
+            {
+                context.texture = heartTexture ??= tex;
+                context.Draw();
+            }
 
             if (!Main.LocalPlayer.RedemptionPlayerBuff().shieldGenerator || Main.LocalPlayer.RedemptionPlayerBuff().shieldGeneratorCD > 0)
                 return;
@@ -117,12 +134,20 @@ namespace Redemption.UI
             context.Draw();
 
         }
-        private void DrawBarsOverlay(ResourceOverlayDrawContext context)
+        private void DrawBarsOverlay(ResourceOverlayDrawContext context, int style)
         {
-            Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/HPFillGal");
-            context.texture = barsFillingTexture ??= tex;
-            context.color = RedeColor.NebColour;
-            context.Draw();
+            if (style == 0)
+            {
+                Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/HPFillGal");
+                context.texture = tex;
+                context.Draw();
+            }
+            else
+            {
+                Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/HPFillGal2");
+                context.texture = tex;
+                context.Draw();
+            }
 
             if (!Main.LocalPlayer.RedemptionPlayerBuff().shieldGenerator || Main.LocalPlayer.RedemptionPlayerBuff().shieldGeneratorCD > 0)
                 return;
@@ -132,17 +157,20 @@ namespace Redemption.UI
             context.color = new Color(255, 255, 255, 150) * 0.6f;
             context.Draw();
         }
+        private void DrawBarsPanelOverlay(ResourceOverlayDrawContext context)
+        {
+            Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/HPFillGal_Panel_Right");
+            context.texture = barPanelRightTexture ??= tex;
+            context.Draw();
+        }
     }
     public class KSShieldHealthOverlay : ModResourceOverlay
     {
         private readonly Dictionary<string, Asset<Texture2D>> vanillaAssetCache = new();
-
-        private Asset<Texture2D> heartTexture, barsFillingTexture;
-
         public override void PostDrawResource(ResourceOverlayDrawContext context)
         {
             if (!Main.LocalPlayer.RedemptionPlayerBuff().shieldGenerator || Main.LocalPlayer.RedemptionPlayerBuff().shieldGeneratorCD > 0)
-                return; 
+                return;
             if (Main.LocalPlayer.Redemption().medKit || Main.LocalPlayer.Redemption().galaxyHeart)
                 return;
 

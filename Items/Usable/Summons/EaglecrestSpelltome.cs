@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Summons
             Tooltip.SetDefault("Calls upon Eaglecrest Golem"
                 + "\nSold by Zephos/Daerel after Eater of Worlds/Brain of Cthulhu is defeated");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 

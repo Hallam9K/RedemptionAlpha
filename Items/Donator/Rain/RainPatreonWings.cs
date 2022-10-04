@@ -14,7 +14,7 @@ namespace Redemption.Items.Donator.Rain
         {
             DisplayName.SetDefault("Wings of a Living Weapon");
             Tooltip.SetDefault("'Best hold back, you wouldn't want to hurt yourself'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

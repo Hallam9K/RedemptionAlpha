@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Tooltip.SetDefault("Throws three skulls from a flail\n" +
                 "The skulls will latch onto enemies, dealing damage for 5 seconds before letting go");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

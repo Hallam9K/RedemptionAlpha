@@ -12,7 +12,7 @@ namespace Redemption.Items.Tools.PostML
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Can mine Black Hardened Sludge");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

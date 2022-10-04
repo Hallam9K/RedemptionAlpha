@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable
             Item.damage = 0;
             Item.width = 22;
             Item.height = 34;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.rare = ItemRarityID.Lime;

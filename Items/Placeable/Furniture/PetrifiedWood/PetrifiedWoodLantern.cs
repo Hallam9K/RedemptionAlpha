@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodLanternTile>());
 			Item.width = 14;
 			Item.height = 32;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.value = 30;
 		}
 

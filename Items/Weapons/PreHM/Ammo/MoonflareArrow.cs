@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             Tooltip.SetDefault("Burns targets while the moon is out" +
 				"\nFlame intensity is based on moon phase");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+			SacrificeTotal = 99;
 		}
 
 		public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 14;
 			Item.height = 34;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.knockBack = 2.5f;
 			Item.value = 2;

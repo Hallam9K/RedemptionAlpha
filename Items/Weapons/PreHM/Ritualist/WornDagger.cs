@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Worn Dagger");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

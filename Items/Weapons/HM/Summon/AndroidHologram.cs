@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 		{
             Tooltip.SetDefault("Summons a little Android to fight for you");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
             DisplayName.SetDefault("Electric Hazard");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 3));
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            SacrificeTotal = 50;
         }
 
         public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<ElectricHazardTile>(), 0);
             Item.width = 32;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.buyPrice(0, 0, 15, 0);
         }

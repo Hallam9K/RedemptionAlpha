@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "Increases the user's fall speed while held\n" +
                 "Increased damage based on how fast the player is falling\n" +
                 "Stuns enemies if falling above a certain speed");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

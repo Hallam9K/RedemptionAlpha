@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Tooltip.SetDefault("Fires depleted uranium rods that explode upon impact\n" +
                 "Consumes uranium as ammo\n" +
                 "No ammo cost if the user has at least 10 uranium");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

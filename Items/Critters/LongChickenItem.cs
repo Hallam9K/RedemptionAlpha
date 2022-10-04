@@ -13,14 +13,14 @@ namespace Redemption.Items.Critters
         {
             DisplayName.SetDefault("L o n g  Chicken");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
         {
             Item.width = 64;
             Item.height = 26;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(silver: 10);
             Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;

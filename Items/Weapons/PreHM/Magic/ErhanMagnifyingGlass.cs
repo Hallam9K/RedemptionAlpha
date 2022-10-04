@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Tooltip.SetDefault("Hold left-click to charge a scorching ray" +
                 "\n'Super effective on insects'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

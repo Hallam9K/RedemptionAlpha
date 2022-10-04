@@ -14,7 +14,7 @@ namespace Redemption.Items.Tools.PreHM
 		{
 			DisplayName.SetDefault("Pure-Iron Hammer");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

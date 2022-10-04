@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PreHM
 			DisplayName.SetDefault("Cuddly Teratoma");
 			Tooltip.SetDefault("Summons a teratoma to latch onto you");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

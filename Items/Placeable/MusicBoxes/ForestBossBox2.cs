@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Ancient Deity Duo)");
 			Tooltip.SetDefault("Peritune - Havoc");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2"), ModContent.ItemType<ForestBossBox2>(), ModContent.TileType<ForestBossBoxTile2>());
 		}

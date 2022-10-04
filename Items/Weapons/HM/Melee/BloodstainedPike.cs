@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "The pike takes their life and becomes enchanted for 10 seconds");
 
             ItemID.Sets.Spears[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

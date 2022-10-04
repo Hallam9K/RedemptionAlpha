@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Produces extra small spirits on hit");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

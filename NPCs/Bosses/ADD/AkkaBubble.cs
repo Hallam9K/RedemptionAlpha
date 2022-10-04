@@ -76,6 +76,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void Kill(int timeLeft)
         {
+            if (!ZAPPED)
+                return;
+
             Projectile.hostile = true;
             SoundEngine.PlaySound(SoundID.Item54, Projectile.position);
             SoundEngine.PlaySound(CustomSounds.Zap2, Projectile.position);

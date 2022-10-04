@@ -17,7 +17,7 @@ namespace Redemption.Items.Accessories.PreHM
                  "\n10% increased Arcane elemental damage" +
                  "\n+20 max mana");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 10));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Potions
 		{
             Tooltip.SetDefault("Attackers also take damage, and get inflicted by poison");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
 
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 24;
             Item.height = 32;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 3, 0);
             Item.rare = ItemRarityID.Blue;
             Item.buffType = ModContent.BuffType<VendettaPotionBuff>();

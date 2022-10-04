@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 "\nIncreased damage the higher they fall");
             Item.staff[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

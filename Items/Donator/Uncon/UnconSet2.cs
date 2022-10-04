@@ -12,7 +12,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dominator Suit (Skinless)");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{
@@ -35,7 +35,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dominator Visage (Skinless)");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -60,7 +60,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dominator Boots (Skinless)");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

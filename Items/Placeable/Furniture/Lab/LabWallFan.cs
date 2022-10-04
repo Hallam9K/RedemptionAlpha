@@ -12,14 +12,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Laboratory Wall Fan");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabWallFanTile>(), 0);
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 800;
             Item.rare = ItemRarityID.LightPurple;
 		}

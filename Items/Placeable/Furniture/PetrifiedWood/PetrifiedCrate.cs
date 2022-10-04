@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
             Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.IsFishingCrate[Type] = true;
             ItemID.Sets.IsFishingCrateHardmode[Type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            SacrificeTotal = 10;
         }
 
         public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
             Item.width = 32;
             Item.height = 32;
             Item.rare = ItemRarityID.Green;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
         {

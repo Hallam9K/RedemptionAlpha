@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
             Tooltip.SetDefault("While in inventory, allows the user to use energy-based weaponry\n" +
                 "Energy-based weaponry can pierce through Guard Points\n" +
                 "Can be stacked up to 3 times, each giving +100 energy");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

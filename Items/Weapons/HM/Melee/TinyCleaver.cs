@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Tooltip.SetDefault("Swings causes the blade segments to detach, increasing range");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

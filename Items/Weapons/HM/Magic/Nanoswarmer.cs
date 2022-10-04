@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             Tooltip.SetDefault("Fires a barrage of nanites that enter enemies and destroy them from within\n" +
                 "'Nanomachines, son'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

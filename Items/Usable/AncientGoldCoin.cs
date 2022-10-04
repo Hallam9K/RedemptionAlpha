@@ -16,14 +16,14 @@ namespace Redemption.Items.Usable
                 "'Ancient gold coins used in the olden days of Gathuram'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.Gray;
             Item.useTurn = true;

@@ -14,7 +14,7 @@ namespace Redemption.Items.Donator.Rain
         {
             DisplayName.SetDefault("Form of a Living Weapon");
             Tooltip.SetDefault("'A body etched by agony and filled with strength'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{
@@ -40,7 +40,7 @@ namespace Redemption.Items.Donator.Rain
         {
             DisplayName.SetDefault("Horns of a Living Weapon");
             Tooltip.SetDefault("'Strange, you can't seem to smile'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -68,7 +68,7 @@ namespace Redemption.Items.Donator.Rain
         {
             DisplayName.SetDefault("Talons of a Living Weapon");
             Tooltip.SetDefault("'With claws like these, who needs a sword?'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -96,7 +96,7 @@ namespace Redemption.Items.Donator.Rain
             DisplayName.SetDefault("Tail of a Living Weapon");
             Tooltip.SetDefault("'You can feel every twitch, even the slightest breeze'");
             ArmorIDs.Back.Sets.DrawInTailLayer[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Back)] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

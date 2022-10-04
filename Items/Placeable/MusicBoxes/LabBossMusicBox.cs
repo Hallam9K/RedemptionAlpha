@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Abandoned Lab Minibosses)");
             Tooltip.SetDefault("inSignia - Safety Violation");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic"), ModContent.ItemType<LabBossMusicBox>(), ModContent.TileType<LabBossMusicBoxTile>());
 		}

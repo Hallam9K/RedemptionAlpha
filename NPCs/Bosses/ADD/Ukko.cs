@@ -401,8 +401,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                         Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 3f);
                                         dust.velocity = -NPC.DirectionTo(dust.position);
                                     }
-                                    NPC.life += 50;
-                                    NPC.HealEffect(50);
+                                    NPC.life += 100;
+                                    NPC.HealEffect(100);
                                 }
                                 if (AITimer >= 120)
                                 {
@@ -825,6 +825,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             else
                             {
+                                NPC.velocity *= 0;
                                 AttackID = Main.rand.Next(15);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -872,6 +873,13 @@ namespace Redemption.NPCs.Bosses.ADD
                                     AITimer = 0;
                                     NPC.netUpdate = true;
                                 }
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0;
+                                AttackID = Main.rand.Next(15);
+                                AITimer = 0;
+                                NPC.netUpdate = true;
                             }
                             break;
                             #endregion

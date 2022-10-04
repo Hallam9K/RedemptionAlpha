@@ -36,8 +36,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Length = 40;
             Rot = MathHelper.ToRadians(2);
             Projectile.alpha = 255;
+            Projectile.usesLocalNPCImmunity = true;
         }
-
         public override bool? CanHitNPC(NPC target) => !target.friendly && Timer < 15 && Projectile.ai[0] != 0 ? null : false;
 
         private Vector2 startVector;
@@ -226,6 +226,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
+
             Player player = Main.player[Projectile.owner];
             if (player.RedemptionPlayerBuff().dragonLeadBonus)
                 target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);

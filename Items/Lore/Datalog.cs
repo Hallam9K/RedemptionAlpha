@@ -14,7 +14,7 @@ namespace Redemption.Items.Lore
         {
             DisplayName.SetDefault("Data Log #1");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

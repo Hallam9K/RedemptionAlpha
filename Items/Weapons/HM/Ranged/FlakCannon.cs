@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 "\nHolding left-click will charge a stream of grenades with no additional ammo consumption\n" +
                 "'Quite the unreal bang bang and boom boom'");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

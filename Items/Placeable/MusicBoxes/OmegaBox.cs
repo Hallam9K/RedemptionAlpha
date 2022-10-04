@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Omega Prototypes)");
 			Tooltip.SetDefault("musicman - Armageddon Interface");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega1"), ModContent.ItemType<OmegaBox>(), ModContent.TileType<OmegaBoxTile>());
 		}
@@ -46,7 +46,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Omega Obliterator)");
 			Tooltip.SetDefault("Nick Nuwe - Chaos Attack");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2"), ModContent.ItemType<OmegaBox2>(), ModContent.TileType<OmegaBoxTile2>());
 		}

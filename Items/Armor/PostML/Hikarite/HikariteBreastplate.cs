@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.PostML.Hikarite
             Tooltip.SetDefault("14% increased damage"
                 + "\n12% increased critical strike chance");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

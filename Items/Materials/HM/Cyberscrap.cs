@@ -12,7 +12,7 @@ namespace Redemption.Items.Materials.HM
         {
             DisplayName.SetDefault("Cyberscrap");
             Tooltip.SetDefault("'Versatile, and can be used to make anything'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            SacrificeTotal = 50;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Materials.HM
             Item.DefaultToPlaceableTile(ModContent.TileType<JunkMetalTile>(), 0);
             Item.width = 38;
             Item.height = 28;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Cyan;
             Item.ammo = Item.type;

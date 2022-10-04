@@ -16,7 +16,7 @@ namespace Redemption.Items.Quest.KingSlayer
             DisplayName.SetDefault("Ship Wiring Kit");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
 

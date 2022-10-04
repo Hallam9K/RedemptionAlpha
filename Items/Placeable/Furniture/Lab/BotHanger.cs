@@ -14,14 +14,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Occupied Bot Hanger");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<BotHangerTile>(), 0);
             Item.width = 30;
             Item.height = 42;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
 		}

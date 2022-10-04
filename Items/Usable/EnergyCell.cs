@@ -16,13 +16,13 @@ namespace Redemption.Items.Usable
         {
             Tooltip.SetDefault("Right-click to recharge +20 Energy if an Energy Pack is in your inventory\n" +
                 "Automatically recharges when your Energy is low");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 10;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = 100;
             Item.rare = ItemRarityID.LightRed;
         }

@@ -11,14 +11,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Laboratory Railing (Left)");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabRailTile_L>(), 0);
             Item.width = 16;
             Item.height = 26;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 200;
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -36,14 +36,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Laboratory Railing (Middle)");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabRailTile_Mid>(), 0);
             Item.width = 20;
             Item.height = 26;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 200;
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -61,14 +61,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Laboratory Railing (Right)");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabRailTile_R>(), 0);
             Item.width = 16;
             Item.height = 26;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 200;
             Item.rare = ItemRarityID.LightPurple;
         }

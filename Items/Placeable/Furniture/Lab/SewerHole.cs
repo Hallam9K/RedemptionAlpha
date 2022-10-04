@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 			Item.DefaultToPlaceableTile(ModContent.TileType<SewerHoleTile>(), 0);
 			Item.width = 26;
 			Item.height = 28;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = 100;
 			Item.rare = ItemRarityID.LightPurple;
 		}

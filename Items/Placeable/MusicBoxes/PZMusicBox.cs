@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			DisplayName.SetDefault("Music Box (Patient Zero)");
             Tooltip.SetDefault("Universe & OmegaFerretMusic - Element-88");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2"), ModContent.ItemType<PZMusicBox>(), ModContent.TileType<PZMusicBoxTile>());
 		}

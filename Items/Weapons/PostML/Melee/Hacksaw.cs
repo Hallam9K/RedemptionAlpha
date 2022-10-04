@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             DisplayName.SetDefault("Automated Hacksaw");
             Tooltip.SetDefault("Right-click to change attack modes");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

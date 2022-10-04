@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "Strikes the ground with lightning wherever it lands, dealing Thunder damage");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

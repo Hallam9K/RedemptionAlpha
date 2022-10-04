@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Trojan Chicken Replica");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<TrojanChickenTile>(), 0);
 			Item.width = 38;
 			Item.height = 26;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 50, 0);
 		}

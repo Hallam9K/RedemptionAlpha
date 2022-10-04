@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

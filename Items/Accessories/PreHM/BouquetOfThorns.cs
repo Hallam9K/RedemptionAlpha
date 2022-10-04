@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PreHM
 			DisplayName.SetDefault("Bouquet of Thorns");
 			Tooltip.SetDefault("Summons a bouquet of thorns to follow you");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

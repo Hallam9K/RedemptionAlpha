@@ -13,7 +13,7 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Ranger's Mutagen");
             Tooltip.SetDefault("15% increased ranged damage"
                 + "\n10% increased ranged critical strike chance");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

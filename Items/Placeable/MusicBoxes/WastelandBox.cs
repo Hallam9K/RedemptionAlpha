@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Wasteland)");
 			Tooltip.SetDefault("Musearys - The Wastelands");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland"), ModContent.ItemType<WastelandBox>(), ModContent.TileType<WastelandBoxTile>());
 		}

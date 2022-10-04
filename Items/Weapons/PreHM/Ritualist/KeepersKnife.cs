@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
                 "Deals double damage to undead" +
                 "\n'O murderer, let my knife pierce true'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

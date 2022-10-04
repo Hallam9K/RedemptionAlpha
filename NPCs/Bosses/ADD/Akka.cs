@@ -471,6 +471,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             else
                             {
+                                NPC.velocity *= 0;
                                 AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -500,6 +501,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             else
                             {
+                                NPC.velocity *= 0;
                                 AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;

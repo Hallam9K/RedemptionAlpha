@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodCandleTile>(), 0);
 			Item.width = 16;
 			Item.height = 18;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 		}
 
 		public override void AddRecipes()

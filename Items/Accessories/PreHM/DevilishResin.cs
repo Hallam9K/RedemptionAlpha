@@ -13,7 +13,7 @@ namespace Redemption.Items.Accessories.PreHM
             Tooltip.SetDefault("Critters are attracted to you" +
                 "\nShy critters won't fear you"
                 + "\n'YOU STINK!'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

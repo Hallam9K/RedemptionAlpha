@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<DoppelsSwordTile>(), 0);
 			Item.width = 46;
 			Item.height = 50;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 0, 50, 0);
 		}

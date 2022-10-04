@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Tooltip.SetDefault("Shoots a spread of stingers");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
             Tooltip.SetDefault("5% increased damage\n" +
             "4% increased critical strike chance");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void UpdateEquip(Player player)

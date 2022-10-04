@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (King Slayer III)");
 			Tooltip.SetDefault("William 'GoukisanNG' Prevett - Betrayal of Fear");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer"), ModContent.ItemType<KSBox>(), ModContent.TileType<KSBoxTile>());
 		}

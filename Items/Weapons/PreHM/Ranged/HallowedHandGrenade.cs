@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

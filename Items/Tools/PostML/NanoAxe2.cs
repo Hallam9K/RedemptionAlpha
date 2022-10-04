@@ -13,7 +13,7 @@ namespace Redemption.Items.Tools.PostML
         {
             DisplayName.SetDefault("CREATIVE PICKAXE OF RECOLOURED DOOOOOOOM!!!!");
             Tooltip.SetDefault("Developer/builder tool.");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Small Laboratory Door");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             Item.DefaultToPlaceableTile(ModContent.TileType<LabDoorClosed>(), 0);
             Item.width = 18;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 1500;
             Item.rare = ItemRarityID.LightPurple;
         }

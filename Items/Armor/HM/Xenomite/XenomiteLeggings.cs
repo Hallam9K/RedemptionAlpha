@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
 			Tooltip.SetDefault("4% increased damage and critical strike chance\n" +
 				"8% increased movement speed");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Xenomite Wings");
             Tooltip.SetDefault("Allows flight and slow fall");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(100, 7f, 2.5f);
         }
         public override void SetDefaults()

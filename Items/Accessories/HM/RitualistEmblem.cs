@@ -12,7 +12,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Ritualist Emblem");
             Tooltip.SetDefault("15% increased ritual damage");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Geiger-Muller");
             Tooltip.SetDefault("Lab issued Geiger counter. The louder it gets, the higher the chance of you getting irradiated.");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

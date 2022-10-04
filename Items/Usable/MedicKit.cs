@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable
         {
             Tooltip.SetDefault("Permanently increases maximum life by 50"
                 + "\nCan only be used if the max amount of life fruit has been consumed");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

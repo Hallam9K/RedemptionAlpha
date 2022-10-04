@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Tooltip.SetDefault("After every 3rd hit, the following thrust will additionally fire a damaging egg");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

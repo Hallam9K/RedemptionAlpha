@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			DisplayName.SetDefault("Music Box (Hall of Heroes)");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/HallofHeroes"), ModContent.ItemType<HallOfHeroesBox>(), ModContent.TileType<HallOfHeroesBoxTile>());
 		}

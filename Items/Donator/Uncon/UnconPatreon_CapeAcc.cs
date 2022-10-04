@@ -13,7 +13,7 @@ namespace Redemption.Items.Donator.Uncon
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Dominator Coat Cape");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{

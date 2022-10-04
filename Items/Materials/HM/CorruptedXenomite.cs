@@ -13,14 +13,14 @@ namespace Redemption.Items.Materials.HM
         {
             Tooltip.SetDefault("'Infects mechanical things'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
             Item.height = 24;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Red;
         }

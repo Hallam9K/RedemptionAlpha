@@ -10,7 +10,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 		public override void SetStaticDefaults()
 		{
             Tooltip.SetDefault("Throw an energy-filled grenade");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             Tooltip.SetDefault("After the player's Spirit Level increases, the following successful hit spawns a flower\n" +
                 "The flower gives slightly increased life regeneration and knockback immunity while in its radius");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -10,14 +10,14 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneBrickTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
     }

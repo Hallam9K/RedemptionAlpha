@@ -12,14 +12,14 @@ namespace Redemption.Items.Critters
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hazmat Bunny");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 26;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(silver: 2);
             Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;

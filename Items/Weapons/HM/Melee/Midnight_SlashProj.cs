@@ -29,9 +29,10 @@ namespace Redemption.Items.Weapons.HM.Melee
 			Projectile.hostile = false;
 			Projectile.penetrate = -1;
 			Projectile.Redemption().IsAxe = true;
-		}
+            Projectile.usesLocalNPCImmunity = true;
+        }
 
-		public override bool? CanCutTiles()
+        public override bool? CanCutTiles()
 		{
 			return false;
 		}

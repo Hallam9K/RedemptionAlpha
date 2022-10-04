@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Long Shadestone Table");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneTable2Tile>(), 0);
             Item.width = 58;
             Item.height = 24;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 500;
             Item.rare = ItemRarityID.Blue;
         }

@@ -16,7 +16,7 @@ namespace Redemption.Items.Usable.Summons
             Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable");
 
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
         }
 

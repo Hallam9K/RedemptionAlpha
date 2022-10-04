@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<DangerTapeTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 0, 1, 25);
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -30,7 +30,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Danger Tape");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
@@ -38,7 +38,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<DangerTape2Tile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 0, 1, 25);
             Item.rare = ItemRarityID.LightPurple;
         }

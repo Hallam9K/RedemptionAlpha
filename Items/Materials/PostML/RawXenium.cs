@@ -12,14 +12,14 @@ namespace Redemption.Items.Materials.PostML
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Use a Xenium Refinery to craft Xenium Bars");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            SacrificeTotal = 50;
         }
 
         public override void SetDefaults()
         {
             Item.width = 20;
             Item.height = 20;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 15, 0);
             Item.rare = ItemRarityID.Purple;
         }

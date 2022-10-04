@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Tooltip.SetDefault("'Yes, he did name his weapon after himself...'");
 
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

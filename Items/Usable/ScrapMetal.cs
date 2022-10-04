@@ -14,12 +14,12 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("'Surely I can get something useful from this scrap...'"
                 + "\n{$CommonItemTooltip.RightClickToOpen}");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            SacrificeTotal = 10;
         }
 
         public override void SetDefaults()
         {
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.width = 42;
             Item.height = 28;

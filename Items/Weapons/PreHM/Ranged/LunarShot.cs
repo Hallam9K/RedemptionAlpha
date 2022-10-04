@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 "\nLunar Bolts summon bats while the moon is out" +
                 "\nSummons an extra bat while it's a full moon");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

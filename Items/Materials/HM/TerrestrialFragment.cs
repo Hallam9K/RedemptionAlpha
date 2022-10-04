@@ -14,14 +14,14 @@ namespace Redemption.Items.Materials.HM
             Tooltip.SetDefault("'The blessing of life resides within this fragment'");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 24;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 20, 0);
             Item.rare = ItemRarityID.Cyan;
         }

@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "Deals double damage against demonic enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

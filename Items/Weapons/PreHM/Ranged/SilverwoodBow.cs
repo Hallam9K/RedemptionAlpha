@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             DisplayName.SetDefault("Daerel's Silverwood Bow");
             Tooltip.SetDefault("20% chance not to consume ammo"
                 + "\nShoots silverwood arrows that stick onto enemies, draining their life");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -75,7 +75,7 @@ namespace Redemption.Tiles.Furniture.Misc
             Item.DefaultToPlaceableTile(ModContent.TileType<NirinCogMediumTile>(), 0);
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = ItemRarityID.Blue;
         }
@@ -145,7 +145,7 @@ namespace Redemption.Tiles.Furniture.Misc
             Item.DefaultToPlaceableTile(ModContent.TileType<NirinCogBigTile>(), 0);
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Blue;
         }

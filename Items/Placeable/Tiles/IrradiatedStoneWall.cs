@@ -10,14 +10,14 @@ namespace Redemption.Items.Placeable.Tiles
     {
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
+			SacrificeTotal = 400;
 		}
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlacableWall((ushort)ModContent.WallType<IrradiatedStoneWallTile>());
 			Item.width = 24;
 			Item.height = 24;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.value = Item.buyPrice(0, 0, 1, 0);
 		}
 

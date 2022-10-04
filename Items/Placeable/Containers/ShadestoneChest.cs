@@ -9,14 +9,14 @@ namespace Redemption.Items.Placeable.Containers
 	{
         public override void SetStaticDefaults()
         {
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneChestTile>(), 0);
 			Item.width = 28;
 			Item.height = 28;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = 500;
 			Item.rare = ItemRarityID.Blue;
 		}

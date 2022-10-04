@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
             Tooltip.SetDefault("+1 increased summon damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

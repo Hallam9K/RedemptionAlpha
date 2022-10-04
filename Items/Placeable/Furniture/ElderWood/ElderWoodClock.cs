@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 		{
             Tooltip.SetDefault("'Strange... It has only 8 numbers...'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodClockTile>(), 0);
 			Item.width = 18;
 			Item.height = 40;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = 500;
 		}
 

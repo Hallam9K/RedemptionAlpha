@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Tooltip.SetDefault("Hold to swing the sling around the player, release to toss the pebble");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

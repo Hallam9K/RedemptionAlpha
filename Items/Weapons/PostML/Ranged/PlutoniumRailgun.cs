@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             Tooltip.SetDefault("(9[i:" + ModContent.ItemType<EnergyPack>() + "]) Shoots three piercing beams of plutonium, each consuming 3 Energy\n" +
                 "Requires an Energy Pack to be in your inventory");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
+			SacrificeTotal = 400;
 		}
 
 		public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 			Item.DefaultToPlacableWall((ushort)ModContent.WallType<PetrifiedWoodFenceTile>());
 			Item.width = 32;
 			Item.height = 28;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 
 		public override void AddRecipes()

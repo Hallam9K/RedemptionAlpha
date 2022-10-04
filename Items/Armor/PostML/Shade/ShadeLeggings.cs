@@ -18,7 +18,7 @@ namespace Redemption.Items.Armor.PostML.Shade
                 "15% increased ritual critical strike chance\n" +
                 "30% increased movement speed");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

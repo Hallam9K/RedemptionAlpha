@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         {
             Tooltip.SetDefault("Reduces damage taken by 4%");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

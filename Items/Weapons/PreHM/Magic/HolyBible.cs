@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 "Shoots 4 short-ranged rays of light\n" +
                 "'You dare question the words of the mighty Jimmy!?'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -27,7 +27,7 @@ namespace Redemption.Items.Usable.Summons
                 "\nOnly usable after Plantera has been defeated"
                 + "\nNot consumable");
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

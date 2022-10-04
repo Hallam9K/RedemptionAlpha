@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Firebreak");
             Tooltip.SetDefault("Rains down fire from the skies when hitting a target");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

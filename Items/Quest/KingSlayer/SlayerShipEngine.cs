@@ -15,7 +15,7 @@ namespace Redemption.Items.Quest.KingSlayer
             DisplayName.SetDefault("Ship AFTL Engine");
             Tooltip.SetDefault("'Stands for Almost-Faster-Than-Light'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
 

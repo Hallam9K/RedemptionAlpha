@@ -17,14 +17,14 @@ namespace Redemption.Items.Materials.PreHM
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
 		{
             Item.width = 20;
             Item.height = 18;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 3000;
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.UseSound = SoundID.Item3;

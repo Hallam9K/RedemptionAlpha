@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.PostML
         {
             DisplayName.SetDefault("Mysterious Skull");
             Tooltip.SetDefault("Summons a certain spooky skeleton");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

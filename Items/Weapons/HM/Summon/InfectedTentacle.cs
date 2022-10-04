@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Summon
             Tooltip.SetDefault("Your summons will focus struck enemies\n" +
                 "Strike enemies to summon a friendly hive cyst\n" +
                 "Inflicts Infection");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

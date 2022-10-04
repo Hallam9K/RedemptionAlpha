@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		{
 			DisplayName.SetDefault("Corpse-Walker Staff");
 			Tooltip.SetDefault("Summons a Corpse-Walker Skull to fight for you");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

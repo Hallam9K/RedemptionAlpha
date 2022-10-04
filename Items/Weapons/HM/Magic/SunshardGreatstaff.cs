@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 "\nCasts a holy ray of light every 3 consecutive shots");
             Item.staff[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         private float glowRot = 0;

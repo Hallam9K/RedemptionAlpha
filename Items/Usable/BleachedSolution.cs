@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable
 			Item.height = 12;
 			Item.value = Item.buyPrice(0, 0, 25, 0);
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 		}
 	}

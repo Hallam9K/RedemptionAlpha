@@ -15,14 +15,14 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Falls from the sky, turns the small blast radius into plutonium");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 24;
             Item.height = 14;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;

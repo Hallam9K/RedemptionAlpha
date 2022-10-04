@@ -13,7 +13,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dominator Suit");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Body.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
@@ -43,7 +43,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dominator Visage");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -73,7 +73,7 @@ namespace Redemption.Items.Donator.Uncon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dominator Boots");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
             ArmorIDs.Legs.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
         }

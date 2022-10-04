@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.Single
             Tooltip.SetDefault("25% damage reduction and knockback immunity towards falling entities\n" +
                 "'Time for crab'");
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

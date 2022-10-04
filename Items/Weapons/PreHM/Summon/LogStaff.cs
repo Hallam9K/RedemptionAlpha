@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		{
 			DisplayName.SetDefault("Log Staff");
             Tooltip.SetDefault("Summons a small log that fires acorns in an arc");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

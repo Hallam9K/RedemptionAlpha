@@ -12,14 +12,14 @@ namespace Redemption.Items.Materials.PreHM
             Tooltip.SetDefault("'It's moving..." +
 				"\nOh nevermind, it's just the wind.'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			SacrificeTotal = 100;
 		}
 
 		public override void SetDefaults()
 		{
 			Item.width = 26;
 			Item.height = 24;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.value = Item.sellPrice(0, 0, 0, 8);
 		}
     }

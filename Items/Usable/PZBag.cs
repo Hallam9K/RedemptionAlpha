@@ -16,11 +16,11 @@ namespace Redemption.Items.Usable
 		{
 			DisplayName.SetDefault("Treasure Bag (Patient Zero)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+			SacrificeTotal = 3;
 		}
 		public override void SetDefaults()
 		{
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.width = 24;
 			Item.height = 24;

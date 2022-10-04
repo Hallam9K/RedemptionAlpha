@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "Deals more damage to ghostly enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

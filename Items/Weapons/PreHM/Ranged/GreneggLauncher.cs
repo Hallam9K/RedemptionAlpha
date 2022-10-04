@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             DisplayName.SetDefault("Grenegg Launcher");
             Tooltip.SetDefault("Uses Egg Bombs as ammo");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

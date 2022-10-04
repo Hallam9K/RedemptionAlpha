@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.PostML
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Summons a lil Xenomite Elemental to light your way!");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

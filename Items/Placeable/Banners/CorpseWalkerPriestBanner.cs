@@ -11,14 +11,14 @@ namespace Redemption.Items.Placeable.Banners
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Corpse-Walker Priest Banner");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<CorpseWalkerPriestBannerTile>(), 0);
             Item.width = 12;
             Item.height = 28;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.buyPrice(0, 0, 10, 0);
         }

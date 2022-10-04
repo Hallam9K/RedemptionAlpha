@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("Let the Keeper's spirit rest" +
                 "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "]");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

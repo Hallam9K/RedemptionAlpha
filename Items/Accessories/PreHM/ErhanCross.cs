@@ -24,7 +24,7 @@ namespace Redemption.Items.Accessories.PreHM
                 "\n10% increased Holy elemental resistance" +
                 "\n10% decreased Shadow elemental resistance");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

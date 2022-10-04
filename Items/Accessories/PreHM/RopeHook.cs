@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
         {
             Tooltip.SetDefault("Affected by gravity");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

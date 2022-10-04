@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 		{
             Tooltip.SetDefault("'Uncomfortable and feels rough...'");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodBedTile>(), 0);
 			Item.width = 34;
 			Item.height = 18;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = 2000;
 		}
 

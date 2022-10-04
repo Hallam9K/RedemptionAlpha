@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 "Overcharging causes it to do less damage but have a wider radius");
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

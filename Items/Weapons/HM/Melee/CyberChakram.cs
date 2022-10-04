@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.HM.Melee
 	{
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{
-			Item.damage = 60;
+			Item.damage = 39;
             Item.DamageType = DamageClass.Melee;
             Item.width = 30;
             Item.height = 30;

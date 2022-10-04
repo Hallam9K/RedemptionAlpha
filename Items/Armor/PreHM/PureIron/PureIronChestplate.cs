@@ -17,7 +17,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
             Tooltip.SetDefault("7% increased damage\n" +
                 "Immunity to most fire-related debuffs");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

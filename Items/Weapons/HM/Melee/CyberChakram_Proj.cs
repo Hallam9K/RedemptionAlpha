@@ -30,8 +30,13 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.timeLeft = 600;
             Projectile.light = 0.5f;
             Projectile.extraUpdates = 1;
+            Projectile.usesLocalNPCImmunity = true;
         }
-
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
+        }
         public override void AI()
         {
             Player p = Main.player[Projectile.owner];

@@ -15,7 +15,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlacableWall((ushort)ModContent.WallType<SlayerShipPanelWallTile>());
             Item.width = 24;
             Item.height = 24;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
 		}
     }
 }

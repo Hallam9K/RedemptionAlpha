@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
 			Tooltip.SetDefault("5% increased damage\n" +
 				"10% increased movement speed");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

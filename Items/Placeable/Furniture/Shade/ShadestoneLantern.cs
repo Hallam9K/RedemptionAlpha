@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneLanternTile>(), 0);
             Item.width = 16;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 30;
             Item.rare = ItemRarityID.Blue;
         }

@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		{
             Tooltip.SetDefault("Occasionally spawns chicken eggs");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -21,7 +21,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<ChickenCoopTile>(), 0);
 			Item.width = 44;
 			Item.height = 42;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 15, 0);
 		}

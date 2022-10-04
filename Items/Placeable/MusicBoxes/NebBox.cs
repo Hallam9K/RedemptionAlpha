@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Nebuleus)");
 			Tooltip.SetDefault("musicman - Interstellar Isolation");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod1"), ModContent.ItemType<NebBox>(), ModContent.TileType<NebBoxTile>());
 		}

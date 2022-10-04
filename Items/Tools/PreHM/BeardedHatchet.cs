@@ -15,7 +15,7 @@ namespace Redemption.Items.Tools.PreHM
             Tooltip.SetDefault("Increased chance to decapitate skeletons, guaranteeing skull drops" +
                 "\nDeals 45% more damage to skeletons");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

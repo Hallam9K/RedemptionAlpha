@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "Blocks physical projectiles");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

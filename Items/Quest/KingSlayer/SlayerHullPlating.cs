@@ -13,7 +13,7 @@ namespace Redemption.Items.Quest.KingSlayer
         {
             DisplayName.SetDefault("Ship Hull Plating");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
 

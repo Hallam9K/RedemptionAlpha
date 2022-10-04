@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Containers
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Standard Security Locker");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Containers
 			Item.DefaultToPlaceableTile(ModContent.TileType<StandardLabLockerTile>(), 0);
 			Item.width = 30;
 			Item.height = 24;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = 5000;
 			Item.rare = ItemRarityID.LightPurple;
 		}

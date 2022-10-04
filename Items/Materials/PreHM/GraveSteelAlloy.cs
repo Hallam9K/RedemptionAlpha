@@ -10,13 +10,13 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 24;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 0, 10);
             Item.rare = ItemRarityID.Blue;
             Item.useTurn = true;

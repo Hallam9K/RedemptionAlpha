@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Plants
         {
             Tooltip.SetDefault("'An exceptionally rare flower with an eternal lifetime.'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Plants
             Item.DefaultToPlaceableTile(ModContent.TileType<AnglonicMysticBlossomTile>(), 0);
             Item.width = 34;
             Item.height = 30;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 7, 5, 0);
             Item.rare = ItemRarityID.Pink;
         }

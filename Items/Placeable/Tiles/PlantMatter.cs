@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
             Tooltip.SetDefault("Use at an Extractinator");
             ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            SacrificeTotal = 50;
         }
 
         public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<PlantMatterTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
         }
 
         public override void ExtractinatorUse(ref int resultType, ref int resultStack)

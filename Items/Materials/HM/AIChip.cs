@@ -19,7 +19,7 @@ namespace Redemption.Items.Materials.HM
         {
             Item.width = 24;
             Item.height = 26;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 250000;
             Item.rare = ItemRarityID.Pink;
         }

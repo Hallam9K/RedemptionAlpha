@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Reverts xenomite infection to a previous stage\n" +
                 "Cures green rashes\n"
                 + "\n'Label says 'Do not swallow.' Why would you do that?'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
         public override void SetDefaults()
         {
@@ -23,7 +23,7 @@ namespace Redemption.Items.Usable.Potions
             Item.useTurn = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.width = 12;
             Item.height = 38;
