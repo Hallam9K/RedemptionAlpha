@@ -49,8 +49,8 @@ namespace Redemption.NPCs.HM
                     Projectile.ai[1] = 1;
                     break;
                 case 1:
-                    if (host.Redemption().attacker is Player && Projectile.Hitbox.Intersects(host.Redemption().attacker.Hitbox))
-                        host.Redemption().attacker.position = Projectile.position;
+                    if (host.Redemption().attacker is Player attackerPlayer && Projectile.Hitbox.Intersects(attackerPlayer.Hitbox))
+                        attackerPlayer.position = Projectile.position;
                     Projectile.velocity *= 0.96f;
                     if (Projectile.velocity.Length() < 5)
                     {
@@ -60,8 +60,8 @@ namespace Redemption.NPCs.HM
                     break;
                 case 2:
                     Projectile.tileCollide = false;
-                    if (host.Redemption().attacker is Player && Projectile.Hitbox.Intersects(host.Redemption().attacker.Hitbox))
-                        host.Redemption().attacker.position = Projectile.position;
+                    if (host.Redemption().attacker is Player attackerPlayer2 && Projectile.Hitbox.Intersects(attackerPlayer2.Hitbox))
+                        attackerPlayer2.position = Projectile.position;
                     Projectile.Move(originPos, 20, 20);
                     if (Projectile.DistanceSQ(originPos) < 20 * 20)
                     {

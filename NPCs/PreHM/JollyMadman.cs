@@ -296,22 +296,22 @@ namespace Redemption.NPCs.PreHM
                     if (NPC.frame.Y == 6 * 62 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
-                        if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                        if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
-                            (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 10;
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage, 5, hitDirection, NPC);
-                            (globalNPC.attacker as NPC).AddBuff(BuffID.Bleeding, 1000);
-                            (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+                            attackerNPC.immune[NPC.whoAmI] = 10;
+                            int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                            BaseAI.DamageNPC(attackerNPC, damage, 5, hitDirection, NPC);
+                            attackerNPC.AddBuff(BuffID.Bleeding, 1000);
+                            attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                         }
-                        else if (globalNPC.attacker is Player)
+                        else if (globalNPC.attacker is Player attackerPlayer)
                         {
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, damage, 5, hitDirection, NPC);
+                            int hitDirection = NPC.Center.X > attackerPlayer.Center.X ? -1 : 1;
+                            BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
                             if (globalNPC.attacker is Player && (Main.rand.NextBool(2) || Main.expertMode))
                             {
-                                (globalNPC.attacker as Player).AddBuff(BuffID.Bleeding, 1000);
-                                (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+                                attackerPlayer.AddBuff(BuffID.Bleeding, 1000);
+                                attackerPlayer.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                             }
                         }
                     }

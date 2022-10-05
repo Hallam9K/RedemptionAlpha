@@ -285,7 +285,7 @@ namespace Redemption.NPCs.PreHM
 
                     if (AITimer++ == 0)
                     {
-                        if ((globalNPC.attacker is NPC && (globalNPC.attacker as NPC).life >= NPC.life) || NPC.DistanceSQ(globalNPC.attacker.Center) <= 100 * 100)
+                        if ((globalNPC.attacker is NPC attackerNPC2 && attackerNPC2.life >= NPC.life) || NPC.DistanceSQ(globalNPC.attacker.Center) <= 100 * 100)
                         {
                             EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
                             AITimer = 0;
@@ -374,7 +374,7 @@ namespace Redemption.NPCs.PreHM
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    if ((globalNPC.attacker is NPC && (globalNPC.attacker as NPC).life >= NPC.life) || Personality is PersonalityState.Shy)
+                    if ((globalNPC.attacker is NPC attackerNPC && attackerNPC.life >= NPC.life) || Personality is PersonalityState.Shy)
                     {
                         RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
                         break;
@@ -407,20 +407,20 @@ namespace Redemption.NPCs.PreHM
                     if (NPC.frame.Y == 7 * 94 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
-                        if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                        if (globalNPC.attacker is NPC attackerNPC2 && attackerNPC2.immune[NPC.whoAmI] <= 0)
                         {
-                            (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 10;
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage, 5, hitDirection, NPC);
+                            attackerNPC2.immune[NPC.whoAmI] = 10;
+                            int hitDirection = NPC.Center.X > attackerNPC2.Center.X ? -1 : 1;
+                            BaseAI.DamageNPC(attackerNPC2, damage, 5, hitDirection, NPC);
                             if (Main.rand.NextBool(3))
-                                (globalNPC.attacker as NPC).AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
+                                attackerNPC2.AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
                         }
-                        else if (globalNPC.attacker is Player)
+                        else if (globalNPC.attacker is Player attackerPlayer)
                         {
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, damage, 5, hitDirection, NPC);
+                            int hitDirection = NPC.Center.X > attackerPlayer.Center.X ? -1 : 1;
+                            BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
                             if (Main.rand.NextBool(3) && globalNPC.attacker is Player)
-                                (globalNPC.attacker as Player).AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
+                                attackerPlayer.AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
                         }
                     }
                     break;

@@ -400,7 +400,7 @@ namespace Redemption.Globals.NPC
             if (RedeProjectile.projOwners.TryGetValue(projectile.whoAmI, out (Entity entity, IEntitySource source) value))
             {
                 bool g = false;
-                if (value.entity is Terraria.NPC && (value.entity as Terraria.NPC).whoAmI == npc.whoAmI)
+                if (value.entity is Terraria.NPC valueNPC && valueNPC.whoAmI == npc.whoAmI)
                     g = true;
 
                 if (!g)

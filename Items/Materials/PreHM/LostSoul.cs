@@ -39,9 +39,9 @@ namespace Redemption.Items.Materials.PreHM
         {
             if (source is EntitySource_CatchEntity sourceParent)
             {
-                if (sourceParent.CaughtEntity is NPC)
+                if (sourceParent.CaughtEntity is NPC caughtNPC)
                 {
-                    float scale = (Main.npc[sourceParent.CaughtEntity.whoAmI].ModNPC as LostSoulNPC).Scale;
+                    float scale = (Main.npc[caughtNPC.whoAmI].ModNPC as LostSoulNPC).Scale;
                     int dropAmount = (int)(scale / 2 * 10);
                     Item.stack = 1 + dropAmount;
                 }
