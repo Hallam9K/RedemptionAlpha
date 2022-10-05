@@ -17,7 +17,7 @@ namespace Redemption.UI
 
         public override void PostDrawResource(ResourceOverlayDrawContext context)
         {
-            if (!Main.LocalPlayer.Redemption().medKit || Main.LocalPlayer.Redemption().galaxyHeart)
+            if (Main.LocalPlayer.Redemption().heartStyle != 1)
                 return;
 
             Asset<Texture2D> asset = context.texture;
@@ -78,7 +78,7 @@ namespace Redemption.UI
 
         public override void PostDrawResource(ResourceOverlayDrawContext context)
         {
-            if (!Main.LocalPlayer.Redemption().medKit && !Main.LocalPlayer.Redemption().galaxyHeart)
+            if (Main.LocalPlayer.Redemption().heartStyle != 2)
                 return;
 
             Asset<Texture2D> asset = context.texture;
@@ -134,7 +134,7 @@ namespace Redemption.UI
             context.Draw();
 
         }
-        private void DrawBarsOverlay(ResourceOverlayDrawContext context, int style)
+        private static void DrawBarsOverlay(ResourceOverlayDrawContext context, int style)
         {
             if (style == 0)
             {
@@ -171,7 +171,7 @@ namespace Redemption.UI
         {
             if (!Main.LocalPlayer.RedemptionPlayerBuff().shieldGenerator || Main.LocalPlayer.RedemptionPlayerBuff().shieldGeneratorCD > 0)
                 return;
-            if (Main.LocalPlayer.Redemption().medKit || Main.LocalPlayer.Redemption().galaxyHeart)
+            if (Main.LocalPlayer.Redemption().heartStyle != 0)
                 return;
 
             Asset<Texture2D> asset = context.texture;
@@ -195,14 +195,14 @@ namespace Redemption.UI
 
             return existingAsset == asset;
         }
-        private void DrawClassicFancyOverlay(ResourceOverlayDrawContext context)
+        private static void DrawClassicFancyOverlay(ResourceOverlayDrawContext context)
         {
             Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/OHeartKSShield");
             context.texture = tex;
             context.color = new Color(255, 255, 255, 150) * 0.6f;
             context.Draw();
         }
-        private void DrawBarsOverlay(ResourceOverlayDrawContext context)
+        private static void DrawBarsOverlay(ResourceOverlayDrawContext context)
         {
             Asset<Texture2D> tex = ModContent.Request<Texture2D>("Redemption/Textures/OHPFillKSShield");
             context.texture = tex;

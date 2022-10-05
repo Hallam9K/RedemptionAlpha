@@ -36,6 +36,7 @@ namespace Redemption.Items.Usable
 
         public override bool? UseItem(Player player)
         {
+            player.Redemption().heartStyle = 1;
             if (player.Redemption().medKit)
                 return null;
 

@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
+using SteelSeries.GameSense;
 
 namespace Redemption.Globals.Player
 {
@@ -29,6 +30,7 @@ namespace Redemption.Globals.Player
         public int hitTarget2 = -1;
         public bool medKit;
         public bool galaxyHeart;
+        public int heartStyle;
         public bool stalkerSilence;
         public float musicVolume;
         public int slayerStarRating;
@@ -157,6 +159,7 @@ namespace Redemption.Globals.Player
             if (galaxyHeart) saveS.Add("galaxyHeart");
 
             tag["saveS"] = saveS;
+            tag["heartStyle"] = heartStyle;
         }
 
         public override void LoadData(TagCompound tag)
@@ -167,6 +170,8 @@ namespace Redemption.Globals.Player
             omegaGiftGiven = saveS.Contains("omegaGiftGiven");
             medKit = saveS.Contains("medKit");
             galaxyHeart = saveS.Contains("galaxyHeart");
+
+            heartStyle = tag.GetInt("heartStyle");
         }
     }
 }
