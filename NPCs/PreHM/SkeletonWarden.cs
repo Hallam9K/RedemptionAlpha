@@ -331,12 +331,12 @@ namespace Redemption.NPCs.PreHM
                                 attackerNPC.velocity.X += NPC.velocity.X * attackerNPC.knockBackResist;
                                 BaseAI.DamageNPC(attackerNPC, NPC.damage, 11, hitDirection, NPC);
                             }
-                            else if (globalNPC.attacker is Player attackerPlayer)
+                            else if (globalNPC.attacker is Player attackerPlayer2)
                             {
-                                int hitDirection = NPC.Center.X > attackerPlayer.Center.X ? -1 : 1;
-                                if (!attackerPlayer.noKnockback)
-                                    attackerPlayer.velocity.X += NPC.velocity.X / 2;
-                                BaseAI.DamagePlayer(attackerPlayer, NPC.damage, 11, hitDirection, NPC);
+                                int hitDirection = NPC.Center.X > attackerPlayer2.Center.X ? -1 : 1;
+                                if (!attackerPlayer2.noKnockback)
+                                    attackerPlayer2.velocity.X += NPC.velocity.X / 2;
+                                BaseAI.DamagePlayer(attackerPlayer2, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
                     }
@@ -400,12 +400,12 @@ namespace Redemption.NPCs.PreHM
                                 attackerNPC.velocity.X += NPC.velocity.X * attackerNPC.knockBackResist;
                                 BaseAI.DamageNPC(attackerNPC, NPC.damage, 11, hitDirection, NPC);
                             }
-                            else if (globalNPC.attacker is Player attackerPlayer)
+                            else if (globalNPC.attacker is Player attackerPlayer3)
                             {
-                                int hitDirection = NPC.Center.X > attackerPlayer.Center.X ? -1 : 1;
-                                if (!attackerPlayer.noKnockback)
-                                    attackerPlayer.velocity.X += NPC.velocity.X / 2;
-                                BaseAI.DamagePlayer(attackerPlayer, NPC.damage, 11, hitDirection, NPC);
+                                int hitDirection = NPC.Center.X > attackerPlayer3.Center.X ? -1 : 1;
+                                if (!attackerPlayer3.noKnockback)
+                                    attackerPlayer3.velocity.X += NPC.velocity.X / 2;
+                                BaseAI.DamagePlayer(attackerPlayer3, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
                     }
