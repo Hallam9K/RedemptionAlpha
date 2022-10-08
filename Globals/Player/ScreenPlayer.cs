@@ -186,7 +186,7 @@ namespace Redemption
         }
         public void ADDScreenLock()
         {
-            Rectangle ADDscreen = NPC.AnyNPCs(ModContent.NPCType<Ukko>()) ? new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y) : Rectangle.Empty;
+            Rectangle ADDscreen = NPC.AnyNPCs(ModContent.NPCType<Ukko>()) || NPC.AnyNPCs(ModContent.NPCType<Akka>()) ? new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y) : Rectangle.Empty;
             if (!ADDscreen.IsEmpty)
             {
                 Vector2 pos = new(ADDscreen.Center.X, ADDscreen.Center.Y);
