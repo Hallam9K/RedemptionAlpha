@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                 if (SegmentType <= 0)
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGore2").Type);
-                if (SegmentType >= 1 && SegmentType <= 6)
+                else if (SegmentType >= 1 && SegmentType <= 6)
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGore3").Type);
                 else
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GigaporaGore4").Type);
