@@ -224,7 +224,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         AIState = ActionState.Hiding;
                     }
-                    if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
+                    if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -265,7 +265,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         AIState = ActionState.Wander;
                     }
-                    if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
+                    if (globalNPC.attacker is Player attackerPlayer2 && (NPC.PlayerDead() || attackerPlayer2.RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         AITimer = 0;
@@ -320,20 +320,20 @@ namespace Redemption.NPCs.PreHM
                     if (AITimer >= 10 && globalNPC.attacker.Hitbox.Intersects(KnifeHitbox))
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
-                        if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                        if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
-                            (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 20;
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                            attackerNPC.immune[NPC.whoAmI] = 20;
+                            int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                            BaseAI.DamageNPC(attackerNPC, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
                             if (Main.rand.NextBool(3))
-                                (globalNPC.attacker as NPC).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
+                                attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
-                        else if (globalNPC.attacker is Player)
+                        else if (globalNPC.attacker is Player attackerPlayer3)
                         {
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                            int hitDirection = NPC.Center.X > attackerPlayer3.Center.X ? -1 : 1;
+                            BaseAI.DamagePlayer(attackerPlayer3, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
                             if (Main.rand.NextBool(3) && globalNPC.attacker is Player)
-                                (globalNPC.attacker as Player).AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
+                                attackerPlayer3.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
                     }
                     break;

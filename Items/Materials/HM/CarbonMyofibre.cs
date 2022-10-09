@@ -10,14 +10,14 @@ namespace Redemption.Items.Materials.HM
         {
             DisplayName.SetDefault("Carbon Myofibre");
             Tooltip.SetDefault("'Elastic and strong'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            SacrificeTotal = 50;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 26;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = 5000;
             Item.rare = ItemRarityID.Pink;
         }

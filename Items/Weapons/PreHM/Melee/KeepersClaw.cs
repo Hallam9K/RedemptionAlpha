@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "\n'The hand of my beloved, cold and dead...'");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

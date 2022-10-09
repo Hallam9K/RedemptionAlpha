@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             Tooltip.SetDefault("'Woah...'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 2;
+            SacrificeTotal = 2;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.height = 20;
             Item.damage = 10;
             Item.knockBack = 3;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.useStyle = ItemUseStyleID.Swing;

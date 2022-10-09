@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestonePillar1Tile>(), 0);
             Item.width = 30;
             Item.height = 48;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Blue;
         }
     }
@@ -38,7 +38,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestonePillar2Tile>(), 0);
             Item.width = 30;
             Item.height = 48;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Blue;
         }
     }

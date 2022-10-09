@@ -12,7 +12,7 @@ namespace Redemption.Items.Donator.Lizzy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Beezard Outfit");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Body.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
@@ -46,7 +46,7 @@ namespace Redemption.Items.Donator.Lizzy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Beezard Hood");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -80,7 +80,7 @@ namespace Redemption.Items.Donator.Lizzy
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Beezard Pants");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
         }
 
@@ -115,7 +115,7 @@ namespace Redemption.Items.Donator.Lizzy
         {
             DisplayName.SetDefault("Beezard Abdomen");
             ArmorIDs.Back.Sets.DrawInTailLayer[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Back)] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

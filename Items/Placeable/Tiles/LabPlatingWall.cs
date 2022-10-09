@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Laboratory Panel Wall"); 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
+            SacrificeTotal = 400;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlacableWall((ushort)ModContent.WallType<LabPlatingWallTile>());
             Item.width = 24;
             Item.height = 24;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.LightPurple;
 		}

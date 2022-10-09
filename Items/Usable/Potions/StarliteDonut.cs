@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(114, 167, 111)
             };
             ItemID.Sets.IsFood[Type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()

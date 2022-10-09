@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Tooltip.SetDefault("Left click to do a close ranged combo attack\n" +
                 "Right click to thrust forward, doing more damage at the tail end of the thrust");
             ItemID.Sets.Spears[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

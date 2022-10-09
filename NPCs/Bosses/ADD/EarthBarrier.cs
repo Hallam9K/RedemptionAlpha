@@ -28,18 +28,24 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+            int akka = NPC.FindFirstNPC(ModContent.NPCType<Akka>());
+
             Projectile.velocity *= 0;
             Projectile.position = new Vector2(player.Center.X - 112, player.Center.Y - 250);
 
             Projectile.frame = (int)Projectile.ai[0];
-            if (Projectile.timeLeft < 40)
+            if (Projectile.timeLeft < 40 || akka <= -1 || !Main.npc[akka].active || Main.npc[akka].type != ModContent.NPCType<Akka>())
             {
+                if (Projectile.timeLeft > 40)
+                    Projectile.timeLeft = 40;
                 Projectile.alpha += 10;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
             }
             if (Projectile.alpha > 0 && Projectile.timeLeft >= 60)
+            {
                 Projectile.alpha -= 10;
+            }
 
             var list = Main.projectile.Where(x => x.Hitbox.Intersects(Projectile.Hitbox));
             foreach (var proj in list)

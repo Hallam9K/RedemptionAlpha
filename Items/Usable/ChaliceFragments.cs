@@ -19,7 +19,7 @@ namespace Redemption.Items.Usable
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

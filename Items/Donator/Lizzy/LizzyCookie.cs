@@ -16,7 +16,7 @@ namespace Redemption.Items.Donator.Lizzy
             Tooltip.SetDefault("Summons a chibi Lizzy\n" +
                 "'\"Baked\" with love'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

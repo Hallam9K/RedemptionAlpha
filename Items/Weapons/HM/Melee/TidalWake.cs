@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Tidal Wake");
             Tooltip.SetDefault("Turns into a whirlpool, pulling in weak enemies\n" +
                 "Slain enemies affected by the whirlpool will heal the user");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

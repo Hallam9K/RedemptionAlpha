@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.HM
             DisplayName.SetDefault("Broken Blade");
             Tooltip.SetDefault("Hitting enemies with physical melee has a chance to summon a Phantom Cleaver above their heads" +
                 "\n10% increased physical melee damage");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

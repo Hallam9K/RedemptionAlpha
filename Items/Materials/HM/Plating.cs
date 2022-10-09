@@ -10,14 +10,14 @@ namespace Redemption.Items.Materials.HM
         {
             DisplayName.SetDefault("Plating");
             Tooltip.SetDefault("Resistant to extreme impacts");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = 65000;
             Item.rare = ItemRarityID.Lime;
         }

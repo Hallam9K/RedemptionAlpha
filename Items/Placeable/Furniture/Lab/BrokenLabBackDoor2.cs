@@ -11,14 +11,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Broken Laboratory Back Door");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<BrokenLabBackDoor2Tile>(), 0);
             Item.width = 34;
             Item.height = 34;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 100;
             Item.rare = ItemRarityID.LightPurple;
 		}

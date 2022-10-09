@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             Tooltip.SetDefault("Conjures a massive mask");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

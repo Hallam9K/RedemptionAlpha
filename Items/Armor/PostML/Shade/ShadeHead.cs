@@ -20,7 +20,7 @@ namespace Redemption.Items.Armor.PostML.Shade
                 + "\n15% increased ritual critical strike chance"
                 + "\n[c/bdffff:Maximum Spirit Level +2]");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

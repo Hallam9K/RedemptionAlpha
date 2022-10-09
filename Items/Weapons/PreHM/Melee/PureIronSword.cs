@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "Holding left-click and hitting enemies will charge an Arctic Spin Slash");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

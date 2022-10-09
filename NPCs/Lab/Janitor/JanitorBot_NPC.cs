@@ -111,6 +111,9 @@ namespace Redemption.NPCs.Lab.Janitor
         {
             Player player = Main.player[Main.myPlayer];
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabHologramDevice>());
+            if (RedeBossDowned.downedBehemoth)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OmegaTransmitter>());
+
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlating>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatingWall>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatform>());

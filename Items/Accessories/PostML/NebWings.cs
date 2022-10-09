@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Nebuleus Wings");
             Tooltip.SetDefault("Allows flight and slow fall"
                 + "\nUse dyes to make it look fabulous!");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(220, 7f, 2.5f);
         }
 

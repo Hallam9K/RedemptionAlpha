@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			SacrificeTotal = 100;
 		}
 
 		public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.useTime = 10;
 			Item.holdStyle = ItemHoldStyleID.HoldFront;
 			Item.autoReuse = true;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<WastelandTorchTile>();
 			Item.width = 10;

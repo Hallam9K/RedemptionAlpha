@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             DisplayName.SetDefault("Omega Finger Gun");
             Tooltip.SetDefault("Gradually increases fire rate");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

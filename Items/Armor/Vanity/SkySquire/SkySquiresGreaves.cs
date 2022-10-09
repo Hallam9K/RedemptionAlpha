@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.Vanity.SkySquire
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sky Squire's Greaves");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable.Summons
                 "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
 
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 

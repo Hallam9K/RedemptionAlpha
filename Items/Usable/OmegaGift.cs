@@ -15,7 +15,7 @@ namespace Redemption.Items.Usable
             DisplayName.SetDefault("Omega's Gift");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n" +
                 "'Gift from my friends to you'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

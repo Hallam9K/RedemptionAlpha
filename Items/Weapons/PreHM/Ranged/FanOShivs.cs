@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 "\nConsumes throwing knives if any are in your inventory, increasing damage" +
                 "\n'I'm sorry, Edwin...'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

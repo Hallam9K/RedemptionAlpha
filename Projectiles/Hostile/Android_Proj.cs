@@ -70,12 +70,12 @@ namespace Redemption.Projectiles.Hostile
                         targetted = true;
                     }
                 }
-                if (attacker is NPC)
+                if (attacker is NPC npc)
                 {
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC target = Main.npc[i];
-                        if (!target.active || target.whoAmI != (attacker as NPC).whoAmI || target.Redemption().invisible || !target.chaseable || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
+                        if (!target.active || target.whoAmI != npc.whoAmI || target.Redemption().invisible || !target.chaseable || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
                             continue;
 
                         Vector2 newMove = target.Center - Projectile.Center;

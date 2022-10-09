@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Ham Sandwich");
             Tooltip.SetDefault("'Unleash doomsday upon this fragile universe'" +
                 "\nSummons !!??");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -40,7 +40,7 @@ namespace Redemption.Items.Accessories.PreHM
             DisplayName.SetDefault("Crown of the King");
             Tooltip.SetDefault("Become the Mighty King Chicken!\n" +
                 "'The king's spirit lives on'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             SetupDrawing();
         }
         public override void SetDefaults()

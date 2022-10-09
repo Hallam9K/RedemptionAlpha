@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
+			SacrificeTotal = 400;
 		}
 
 		public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Tiles
 			Item.DefaultToPlacableWall((ushort)ModContent.WallType<ElderWoodWallTile>());
 			Item.width = 24;
 			Item.height = 24;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 
 		public override void AddRecipes()

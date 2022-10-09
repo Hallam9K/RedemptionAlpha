@@ -16,6 +16,10 @@ using Terraria.GameContent.Bestiary;
 using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Terraria.GameContent.UI;
+using Redemption.Tiles.Trophies;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -107,20 +111,20 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            /*npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThornBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AkkaBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AkanKirvesTrophy>(), 10));
 
-            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
 
-            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
+            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AkkaMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
 
-            npcLoot.Add(notExpertRule);*/
+            npcLoot.Add(notExpertRule);
         }
         public override void OnKill()
         {
@@ -152,13 +156,11 @@ namespace Redemption.NPCs.Bosses.ADD
 
 
         private Vector2 MoveVector2;
-        private Vector2 MoveVector3;
         private int islandCooldown = 10;
         private int barkskinCooldown;
         private int healingCooldown;
-        private int teamCooldown = 10;
+        public int teamCooldown = 10;
         private int TremorTimer;
-        private bool teamAttackCheck;
         private int frameCounters;
         private int magicFrame;
         private int Frame;
@@ -256,6 +258,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Idle:
                     if (NPC.DistanceSQ(MoveVector2) < 10 * 10)
                     {
+                        AITimer = 0;
                         NPC.velocity *= 0;
                         NPC.ai[0]++;
                         AttackID = Main.rand.Next(10);
@@ -468,6 +471,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             else
                             {
+                                NPC.velocity *= 0;
                                 AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -497,6 +501,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             else
                             {
+                                NPC.velocity *= 0;
                                 AttackID = Main.rand.Next(10);
                                 AITimer = 0;
                                 NPC.netUpdate = true;

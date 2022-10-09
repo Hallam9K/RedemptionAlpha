@@ -938,14 +938,14 @@ namespace Redemption.Globals
         public static bool Sight(this Terraria.NPC npc, Entity codable, float range = -1, bool facingTarget = true,
             bool lineOfSight = false, bool canSeeHiding = false, bool blind = false, float moveThreshold = 2, int headOffset = 0)
         {
-            if (codable == null || !codable.active || (codable is Terraria.Player && (codable as Terraria.Player).dead))
+            if (codable == null || !codable.active || (codable is Terraria.Player codablePlayer && codablePlayer.dead))
                 return false;
 
-            if (!canSeeHiding && codable is Terraria.NPC && (codable as Terraria.NPC).Redemption().invisible)
+            if (!canSeeHiding && codable is Terraria.NPC codableNPC && codableNPC.Redemption().invisible)
                 return false;
-            if (!canSeeHiding && codable is Terraria.Player && (codable as Terraria.Player).invis)
+            if (!canSeeHiding && codable is Terraria.Player codablePlayer2 && codablePlayer2.invis)
                 return false;
-            if (!canSeeHiding && codable is Projectile && (codable as Projectile).alpha >= 200)
+            if (!canSeeHiding && codable is Projectile codableProj && codableProj.alpha >= 200)
                 return false;
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;

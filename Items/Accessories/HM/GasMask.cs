@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.HM
             DisplayName.SetDefault("Gas Mask");
             Tooltip.SetDefault("Grants immunity to Radioactive Fallout\n" +
                 "'Hudda hudda!'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

@@ -44,7 +44,7 @@ namespace Redemption.Items.Accessories.PostML
                 + "\nGreatly extends underwater breathing"
                 + "\nGrants immunity to Radioactive Fallout and all infection debuffs"
                 + "\nGrants protection against up to mid-level radiation");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             SetupDrawing();
         }
 

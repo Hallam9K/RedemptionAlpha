@@ -14,7 +14,7 @@ namespace Redemption.Items.Donator.Gonk
             DisplayName.SetDefault("Samus Head");
             Tooltip.SetDefault("Summons a chibi Samus\n");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

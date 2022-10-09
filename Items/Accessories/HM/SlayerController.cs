@@ -12,7 +12,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Slayer's Gamer Controller");
             Tooltip.SetDefault("Changes your cursor to a cyan crosshair");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

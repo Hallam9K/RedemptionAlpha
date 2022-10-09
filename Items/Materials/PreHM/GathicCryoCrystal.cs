@@ -15,14 +15,14 @@ namespace Redemption.Items.Materials.PreHM
             Tooltip.SetDefault("Makes the player chilled when held\n" +
                 "'A freezing cold crystal'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 24;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.Orange;
             Item.consumable = true;

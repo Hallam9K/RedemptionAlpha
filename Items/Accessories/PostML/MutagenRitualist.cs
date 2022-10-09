@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Ritualist's Mutagen");
             Tooltip.SetDefault("15% increased ritual damage"
                 + "\n10% increased ritual critical strike chance");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

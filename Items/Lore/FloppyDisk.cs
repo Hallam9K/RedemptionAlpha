@@ -10,7 +10,7 @@ namespace Redemption.Items.Lore
 		{
             DisplayName.SetDefault("Floppy Disk");
             Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{

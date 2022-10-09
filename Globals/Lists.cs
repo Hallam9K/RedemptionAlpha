@@ -197,7 +197,7 @@ namespace Redemption.Globals
 
         public static List<int> AncientTileArray = new()
         {
-            ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>(), ModContent.TileType<GathicFroststoneTile>(), ModContent.TileType<GathicFroststoneBrickTile>()
+            ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>(), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<GathicGladestoneBrickTile>(), ModContent.TileType<GathicFroststoneTile>(), ModContent.TileType<GathicFroststoneBrickTile>(), ModContent.TileType<GathicColdstoneTile>(), ModContent.TileType<GathicColdstoneBrickTile>()
         };
         public static List<int> WoodLeaf = new()
         {

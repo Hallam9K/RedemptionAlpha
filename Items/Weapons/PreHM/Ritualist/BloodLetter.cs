@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             Tooltip.SetDefault("Holding left-click will drain the player's Spirit Gauge in exchange for increased life regeneration\n" +
                 "Right-click for a normal slash");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

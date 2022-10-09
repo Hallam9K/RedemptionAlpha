@@ -323,12 +323,6 @@ namespace Redemption.WorldGeneration
                 {
                     #region Dragon-Lead
                     progress.Message = "Generating dragon fossils";
-                    Dictionary<Color, int> colorToTile = new()
-                    {
-                        [new Color(255, 0, 0)] = ModContent.TileType<DragonLeadOre2Tile>(),
-                        [new Color(150, 150, 150)] = -2, //turn into air
-                        [Color.Black] = -1 //don't touch when genning
-                    };
                     for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 2E-05); k++)
                     {
                         bool placed = false;
@@ -341,15 +335,16 @@ namespace Redemption.WorldGeneration
                             if (!WorldGen.InWorld(tilesX, tilesY))
                                 continue;
 
-                            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/DL" + (WorldGen.genRand.Next(11) + 1),
-                                AssetRequestMode.ImmediateLoad).Value;
+                            int index = WorldGen.genRand.Next(11);
+                            Point16 dims = new();
+                            StructureHelper.Generator.GetMultistructureDimensions("WorldGeneration/DragonLeadM", Mod, index, ref dims);
 
                             bool whitelist = false;
                             int stoneScore = 0;
                             int emptyScore = 0;
-                            for (int x = 0; x < tex.Width; x++)
+                            for (int x = 0; x < dims.X; x++)
                             {
-                                for (int y = 0; y < tex.Height; y++)
+                                for (int y = 0; y < dims.Y; y++)
                                 {
                                     int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
                                     if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type))
@@ -369,11 +364,16 @@ namespace Redemption.WorldGeneration
                                 continue;
 
                             Point16 origin = new(tilesX, tilesY);
-                            GenUtils.InvokeOnMainThread(() =>
+                            StructureHelper.Generator.GenerateMultistructureSpecific("WorldGeneration/DragonLeadM", origin, Mod, index);
+
+                            for (int x = 0; x < dims.X; x++)
                             {
-                                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                                gen.Generate(origin.X, origin.Y, true, true);
-                            });
+                                for (int y = 0; y < dims.Y; y++)
+                                {
+                                    if (WorldGen.InWorld(tilesX + x, tilesY + y) && WorldGen.genRand.NextBool(10) && Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<DragonLeadOre2Tile>())
+                                        Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = TileID.Stone;
+                                }
+                            }
                             placed = true;
                         }
                     }
@@ -462,10 +462,125 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
+                tasks.Insert(ShiniesIndex + 6, new PassLegacy("Generating Icy Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    #region Frozen Ancient Decal
+                    progress.Message = "Carving gathic caverns 2: Frozen Edition";
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 16E-07); k++)
+                    {
+                        bool placed = false;
+                        int attempts = 0;
+                        while (!placed && attempts++ < 10000)
+                        {
+                            int tilesX = WorldGen.genRand.Next(60, Main.maxTilesX - 250);
+                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .8));
+                            if (!WorldGen.InWorld(tilesX, tilesY))
+                                continue;
+
+                            int roomNum = 1;
+                            bool blacklist = false;
+                            int iceScore = 0;
+                            int emptyScore = 0;
+                            for (int x = 0; x < 30 * roomNum; x++)
+                            {
+                                for (int y = 0; y < 30; y++)
+                                {
+                                    int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
+                                    if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type))
+                                    {
+                                        blacklist = true;
+                                        break;
+                                    }
+                                    if (type == TileID.IceBlock || type == TileID.SnowBlock)
+                                        iceScore++;
+                                    else
+                                        emptyScore++;
+                                }
+                            }
+                            if (blacklist)
+                                continue;
+                            if (iceScore < (int)(emptyScore * 1.5))
+                                continue;
+
+                            Vector2 origin = new(tilesX, tilesY);
+                            StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalR", origin.ToPoint16(), Mod);
+                            for (int i = 0; i < roomNum; i++)
+                            {
+                                origin.X += 30;
+                                StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/IceDecalM", origin.ToPoint16(), Mod);
+                            }
+                            origin.X += 30;
+                            StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalL", origin.ToPoint16(), Mod);
+
+                            for (int x = 0; x < 30 * (roomNum + 2); x++)
+                            {
+                                for (int y = 0; y < 30; y++)
+                                {
+                                    if (WorldGen.InWorld(tilesX + x, tilesY + y))
+                                    {
+                                        List<int> GathicTileArray = new() { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>() };
+                                        for (int n = 1; n < 3; n++)
+                                        {
+                                            bool gathic = false;
+                                            bool tileUp = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x, tilesY + y - n).TileType);
+                                            bool tileDown = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x, tilesY + y + n).TileType);
+                                            bool tileLeft = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x - n, tilesY + y).TileType);
+                                            bool tileRight = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x + n, tilesY + y).TileType);
+                                            if (tileUp)
+                                                gathic = true;
+                                            else if (tileDown)
+                                                gathic = true;
+                                            else if (tileLeft)
+                                                gathic = true;
+                                            else if (tileRight)
+                                                gathic = true;
+
+                                            if (gathic && Main.rand.NextBool(n))
+                                            {
+                                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneTile>())
+                                                    Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = (ushort)ModContent.TileType<GathicColdstoneTile>();
+                                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneBrickTile>())
+                                                    Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = (ushort)ModContent.TileType<GathicColdstoneBrickTile>();
+                                            }
+                                        }
+                                        if (WorldGen.genRand.NextBool(3))
+                                        {
+                                            if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneTile>())
+                                                Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = TileID.IceBlock;
+                                            if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneBrickTile>())
+                                                Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = TileID.IceBrick;
+                                            if (Framing.GetTileSafely(tilesX + x, tilesY + y).WallType == ModContent.WallType<GathicFroststoneWallTile>())
+                                                Framing.GetTileSafely(tilesX + x, tilesY + y).WallType = WallID.IceUnsafe;
+                                            if (Framing.GetTileSafely(tilesX + x, tilesY + y).WallType == ModContent.WallType<GathicFroststoneBrickWallTile>())
+                                                Framing.GetTileSafely(tilesX + x, tilesY + y).WallType = WallID.IceBrick;
+                                        }
+                                        if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile && Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
+                                        {
+                                            if (WorldGen.genRand.NextBool(8))
+                                            {
+                                                switch (WorldGen.genRand.Next(2))
+                                                {
+                                                    case 0:
+                                                        GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>());
+                                                        break;
+                                                    case 1:
+                                                        GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>());
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            placed = true;
+                        }
+                    }
+                    #endregion
+                }));
             }
             if (ShiniesIndex2 != -1)
             {
-                tasks.Insert(ShiniesIndex2 + 1, new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 2, new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Placing the Abandoned Lab in the island which is not\nactually canonically meant to be there but that'll change in 0.9";
                     Point origin = new((int)(Main.maxTilesX * 0.55f), (int)(Main.maxTilesY * 0.65f));
@@ -480,7 +595,7 @@ namespace Redemption.WorldGeneration
                     delete.Place(origin, WorldGen.structures);
                     biome.Place(origin, WorldGen.structures);
                 }));
-                tasks.Insert(ShiniesIndex2 + 2, new PassLegacy("Ancient Decal Chests", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 3, new PassLegacy("Ancient Decal Chests", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     for (int i = 15; i < Main.maxTilesX - 15; i++)
                     {
@@ -502,7 +617,7 @@ namespace Redemption.WorldGeneration
                         }
                     }
                 }));
-                tasks.Insert(ShiniesIndex2 + 3, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Surface Portal
                     progress.Message = "Thinking with portals";
@@ -628,7 +743,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Underground Portal
                     progress.Message = "Thinking with portals";
@@ -746,7 +861,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Ancient Hut", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Ancient Hut", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Ancient Hut
                     Mod mod = Redemption.Instance;
@@ -869,7 +984,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Hall of Heroes", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Hall of Heroes", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Hall of Heroes
                     progress.Message = "Unearthing Halls";
@@ -986,7 +1101,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Tied Lair", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Tied Lair", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Tied Lair
                     Mod mod = Redemption.Instance;
@@ -1070,7 +1185,7 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 9, origin.Y + 5, (ushort)ModContent.TileType<HangingTiedTile>());
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 9, new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
                     Point origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);

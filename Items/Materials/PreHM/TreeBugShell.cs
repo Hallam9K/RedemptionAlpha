@@ -11,14 +11,14 @@ namespace Redemption.Items.Materials.PreHM
         {
             DisplayName.SetDefault("Tree Bug Shell");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            SacrificeTotal = 3;
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
             Item.height = 22;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(copper: 50);
             Item.rare = ItemRarityID.White;
         }

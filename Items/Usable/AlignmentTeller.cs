@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("Tells you your current alignment"
                 + "\n[c/ffea9b:A sentient treasure, cursed with visions of what is yet to come]");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         private float glowRot = 0;

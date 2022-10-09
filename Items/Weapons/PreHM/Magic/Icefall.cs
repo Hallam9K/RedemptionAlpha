@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             DisplayName.SetDefault("Icefall");
             Tooltip.SetDefault("Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

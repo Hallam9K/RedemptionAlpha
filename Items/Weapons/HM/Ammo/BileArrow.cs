@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
 		{
             DisplayName.SetDefault("Bile Arrow");
             Tooltip.SetDefault("Decreases target's defense and drains life");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            SacrificeTotal = 99;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
             Item.DamageType = DamageClass.Ranged;
             Item.width = 14;
             Item.height = 38;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.knockBack = 3f;
             Item.value = 17;

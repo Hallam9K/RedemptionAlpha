@@ -16,7 +16,7 @@ namespace Redemption.Items.Materials.PreHM
         {
             DisplayName.SetDefault("Eye of the Eaglecrest Golem");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

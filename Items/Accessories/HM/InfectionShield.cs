@@ -24,7 +24,7 @@ namespace Redemption.Items.Accessories.HM
                 + "\n8% increased melee critical strike chance"
                 + "\nInflicts Infection upon dashing into an enemy"
                 + "\nReleases acid-like sparks as you move");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

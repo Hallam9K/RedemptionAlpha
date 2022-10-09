@@ -13,14 +13,14 @@ namespace Redemption.Items.Critters
         {
             DisplayName.SetDefault("Grand Larva");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 36;
             Item.height = 30;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.bait = 55;

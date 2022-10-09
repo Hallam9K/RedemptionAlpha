@@ -13,14 +13,14 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Use on an unconsious town npc to wake them up" +
                 "\nConsume to cure most debuffs");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 4;
+            SacrificeTotal = 4;
         }
 
         public override void SetDefaults()
         {
             Item.width = 20;
             Item.height = 38;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.healLife = 100;

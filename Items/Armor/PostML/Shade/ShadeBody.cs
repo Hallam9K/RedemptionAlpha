@@ -19,7 +19,7 @@ namespace Redemption.Items.Armor.PostML.Shade
             Tooltip.SetDefault("10% increased ritual damage\n" +
                 "\n[c/bdffff:Maximum Spirit Level +2]");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

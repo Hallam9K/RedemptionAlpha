@@ -39,7 +39,7 @@ namespace Redemption.Items.Accessories.HM
 			Tooltip.SetDefault("Grants immunity to the Abandoned Lab and Wasteland water"
                 + "\nGreatly extends underwater breathing"
                 + "\nGrants protection against low-level radiation");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
 			SetupDrawing();
 		}
 

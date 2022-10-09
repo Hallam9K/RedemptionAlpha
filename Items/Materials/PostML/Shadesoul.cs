@@ -22,13 +22,13 @@ namespace Redemption.Items.Materials.PostML
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            SacrificeTotal = 10;
         }
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 30;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = 200;
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.useAnimation = 30;
@@ -41,9 +41,9 @@ namespace Redemption.Items.Materials.PostML
         {
             if (source is EntitySource_CatchEntity sourceParent)
             {
-                if (sourceParent.CaughtEntity is NPC)
+                if (sourceParent.CaughtEntity is NPC caughtNPC)
                 {
-                    float scale = (Main.npc[sourceParent.CaughtEntity.whoAmI].ModNPC as ShadesoulNPC).Scale;
+                    float scale = (Main.npc[caughtNPC.whoAmI].ModNPC as ShadesoulNPC).Scale;
                     int dropAmount = (int)(scale / 2 * 10);
                     Item.stack = 1 + dropAmount;
                 }

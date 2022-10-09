@@ -25,7 +25,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 20;
             Item.height = 26;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Purple;
         }

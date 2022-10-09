@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Tooltip.SetDefault("Critical strikes release homing lightmass");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -20,13 +20,13 @@ namespace Redemption.Items.Materials.PreHM
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            SacrificeTotal = 10;
         }
         public override void SetDefaults()
         {
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 50;
             Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;
@@ -39,9 +39,9 @@ namespace Redemption.Items.Materials.PreHM
         {
             if (source is EntitySource_CatchEntity sourceParent)
             {
-                if (sourceParent.CaughtEntity is NPC)
+                if (sourceParent.CaughtEntity is NPC caughtNPC)
                 {
-                    float scale = (Main.npc[sourceParent.CaughtEntity.whoAmI].ModNPC as LostSoulNPC).Scale;
+                    float scale = (Main.npc[caughtNPC.whoAmI].ModNPC as LostSoulNPC).Scale;
                     int dropAmount = (int)(scale / 2 * 10);
                     Item.stack = 1 + dropAmount;
                 }

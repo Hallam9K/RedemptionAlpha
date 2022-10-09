@@ -16,7 +16,7 @@ namespace Redemption.Items.Donator.Lantard
             DisplayName.SetDefault("Fluffy Scarf");
             Tooltip.SetDefault("Summons a chibi Ralsei");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

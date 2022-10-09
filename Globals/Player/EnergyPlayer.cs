@@ -42,7 +42,7 @@ namespace Redemption.Globals.Player
             if (!stopEnergyRegen && energyTimer++ % (60 - energyRegen) == 0)
             {
                 if (Player.HasBuff<EnergyStationBuff>())
-                    statEnergy += 3;
+                    statEnergy += 5;
                 else
                     statEnergy++;
             }

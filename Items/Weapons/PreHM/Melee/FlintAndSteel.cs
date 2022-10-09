@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Tooltip.SetDefault("Releases a tiny spark which lights enemies on fire\n" +
                 "'Doesn't work on obsidian'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

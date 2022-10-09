@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.Single
             Tooltip.SetDefault("'Comes from an ashen world'");
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

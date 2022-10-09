@@ -14,7 +14,7 @@ namespace Redemption.Items
                 + "\n[c/b8eff5:... Stupid dumb idiot.]"
                 + "\n'It's just a piece of painted wood in the shape of a medal...'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace Redemption.Items
             Item.DefaultToPlaceableTile(ModContent.TileType<SlayerMedalTile>());
             Item.width = 16;
             Item.height = 26;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = 1;
             Item.rare = ItemRarityID.Blue;
         }

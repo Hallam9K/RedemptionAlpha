@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             DisplayName.SetDefault("Double Rifle");
             Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
                 "33% chance not to consume ammo");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

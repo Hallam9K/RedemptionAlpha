@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor.PostML.Hikarite
                 + "\n8% increased critical strike chance" +
                 "\n20% increased movement speed");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

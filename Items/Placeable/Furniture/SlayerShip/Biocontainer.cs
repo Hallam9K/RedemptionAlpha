@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
 			Item.DefaultToPlaceableTile(ModContent.TileType<BiocontainerTile>(), 0);
 			Item.width = 32;
 			Item.height = 30;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Cyan;
 		}

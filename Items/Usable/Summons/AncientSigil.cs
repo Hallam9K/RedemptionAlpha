@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable.Summons
                 + "\nOnly usable at day"
                 + "\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }

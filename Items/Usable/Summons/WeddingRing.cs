@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable.Summons
 				+ "\nNot consumable" +
 				"\n[i:" + ModContent.ItemType<GoodRoute>() + "]");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 		}
 

@@ -13,7 +13,7 @@ namespace Redemption.Items.Donator.Arche
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iridescent Outfit");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{
@@ -38,7 +38,7 @@ namespace Redemption.Items.Donator.Arche
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iridescent Hat");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
         }
 
@@ -65,7 +65,7 @@ namespace Redemption.Items.Donator.Arche
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iridescent Leggings");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

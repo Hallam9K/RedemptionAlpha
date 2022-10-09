@@ -13,7 +13,7 @@ namespace Redemption.Items.Donator.Arche
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Iridescent Cape");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{

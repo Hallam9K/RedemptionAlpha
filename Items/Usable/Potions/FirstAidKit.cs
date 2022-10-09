@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable.Potions
             DisplayName.SetDefault("First-Aid Kit");
             Tooltip.SetDefault("Does not give Potion Sickness\n" +
                 "'These are in limited supply'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Usable.Potions
             Item.width = 20;
             Item.height = 22;
             Item.useTurn = true;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.healLife = 175;
             Item.useAnimation = 40;
             Item.useTime = 40;

@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
             DisplayName.SetDefault("Pure-Iron Greaves");
             Tooltip.SetDefault("8% increased critical strike chance");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

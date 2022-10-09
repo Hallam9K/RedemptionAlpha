@@ -9,11 +9,11 @@ namespace Redemption.Items.Placeable.Plants
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Grows in the Wasteland");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
 		{
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
             Item.width = 16;
             Item.height = 20;
             Item.value = 150;

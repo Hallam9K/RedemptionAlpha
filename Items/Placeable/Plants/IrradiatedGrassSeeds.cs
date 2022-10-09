@@ -12,14 +12,14 @@ namespace Redemption.Items.Placeable.Plants
         {
             DisplayName.SetDefault("Irradiated Seeds");
             Tooltip.SetDefault("Plants irradiated grass on dirt");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
 			Item.height = 18;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Green;
 			Item.value = 10;
 

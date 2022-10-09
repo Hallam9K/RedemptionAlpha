@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.Vanity
             Tooltip.SetDefault("'For a wedding that never came to be...'");
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

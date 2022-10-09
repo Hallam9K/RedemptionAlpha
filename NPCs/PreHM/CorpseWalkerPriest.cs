@@ -191,7 +191,7 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                         Healing = false;
                     }
-                    if (Healing && globalNPC.attacker is NPC && (globalNPC.attacker as NPC).life >= (globalNPC.attacker as NPC).lifeMax)
+                    if (Healing && globalNPC.attacker is NPC attackerNPC && attackerNPC.life >= attackerNPC.lifeMax)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;

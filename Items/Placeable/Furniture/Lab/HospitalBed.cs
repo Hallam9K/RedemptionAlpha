@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Hospital Bed");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 			Item.DefaultToPlaceableTile(ModContent.TileType<HospitalBedTile>(), 0);
             Item.width = 38;
             Item.height = 24;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = 6000;
 		}

@@ -31,6 +31,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.alpha = 255;
             Length = 78;
             Rot = MathHelper.ToRadians(3);
+            Projectile.usesLocalNPCImmunity = true;
         }
         private Vector2 startVector;
         private Vector2 vector;

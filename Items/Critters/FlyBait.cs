@@ -13,14 +13,14 @@ namespace Redemption.Items.Critters
         {
             DisplayName.SetDefault("Fly");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 10;
             Item.height = 8;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Blue;
             Item.bait = 5;
             Item.useAnimation = 30;

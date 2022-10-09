@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Tooltip.SetDefault("Casts a large amount of rocks to float above the player\n" +
                 "Release left-click to launch them at cursor point");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

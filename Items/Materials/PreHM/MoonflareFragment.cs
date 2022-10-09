@@ -18,13 +18,13 @@ namespace Redemption.Items.Materials.PreHM
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+            SacrificeTotal = 10;
         }
         public override void SetDefaults()
         {
             Item.width = 16;
             Item.height = 20;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = 15;
             Item.rare = ItemRarityID.Blue;
         }

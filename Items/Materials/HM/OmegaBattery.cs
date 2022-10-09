@@ -12,13 +12,13 @@ namespace Redemption.Items.Materials.HM
 		{
 			DisplayName.SetDefault("Omega Battery");
 			Main.RegisterItemAnimation(Item.type, (DrawAnimation)new DrawAnimationVertical(4, 3));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 		public override void SetDefaults()
 		{
 			Item.width = 18;
 			Item.height = 40;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Red;
 		}

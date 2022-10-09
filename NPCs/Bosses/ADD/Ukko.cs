@@ -17,6 +17,9 @@ using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Trophies;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -118,20 +121,20 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            /*npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ThornBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<UkkoBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UkonKirvesTrophy>(), 10));
 
-            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
 
-            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
+            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
 
-            npcLoot.Add(notExpertRule);*/
+            npcLoot.Add(notExpertRule);
         }
         public override void OnKill()
         {
@@ -243,10 +246,11 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Idle:
                     if (NPC.DistanceSQ(MoveVector2) < 10 * 10)
                     {
+                        AITimer = 0;
                         NPC.velocity *= 0;
                         NPC.ai[0]++;
                         AttackID = Main.rand.Next(15);
-                        if (akkaActive && Main.npc[akkaID].ai[1] >= 8 && Main.npc[akkaID].ai[0] == 3)
+                        if (akkaActive && (Main.npc[akkaID].ModNPC as Akka).teamCooldown == 0 && Main.npc[akkaID].ai[1] >= 8 && Main.npc[akkaID].ai[0] == 3)
                             AttackID = Main.npc[akkaID].ai[1] + 7;
 
                         NPC.netUpdate = true;
@@ -397,8 +401,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                         Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 3f);
                                         dust.velocity = -NPC.DirectionTo(dust.position);
                                     }
-                                    NPC.life += 50;
-                                    NPC.HealEffect(50);
+                                    NPC.life += 100;
+                                    NPC.HealEffect(100);
                                 }
                                 if (AITimer >= 120)
                                 {
@@ -821,6 +825,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             else
                             {
+                                NPC.velocity *= 0;
                                 AttackID = Main.rand.Next(15);
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -868,6 +873,13 @@ namespace Redemption.NPCs.Bosses.ADD
                                     AITimer = 0;
                                     NPC.netUpdate = true;
                                 }
+                            }
+                            else
+                            {
+                                NPC.velocity *= 0;
+                                AttackID = Main.rand.Next(15);
+                                AITimer = 0;
+                                NPC.netUpdate = true;
                             }
                             break;
                             #endregion

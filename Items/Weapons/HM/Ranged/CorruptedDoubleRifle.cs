@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
                 "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory\n" +
                 "33% chance not to consume ammo");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

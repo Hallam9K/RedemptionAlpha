@@ -14,14 +14,14 @@ namespace Redemption.Items.Materials.PostML
         {
             DisplayName.SetDefault("Plutonium");
             Tooltip.SetDefault("Right-click to recharge +30 Energy if an Energy Pack is in your inventory");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<PlutoniumTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = 10000;
             Item.rare = ItemRarityID.Cyan;
         }

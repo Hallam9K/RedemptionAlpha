@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Furniture.Archcloth
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.Archcloth
 			Item.DefaultToPlaceableTile(ModContent.TileType<ArchclothThroneTile>(), 0);
 			Item.width = 26;
 			Item.height = 36;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 30, 0, 0);
 		}

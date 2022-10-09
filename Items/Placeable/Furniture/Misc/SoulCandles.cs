@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		{
             Tooltip.SetDefault("Creates a small aura that instantly kills any soulless enemies that enter" +
                 "\nLife regen is disabled in the aura");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

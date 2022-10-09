@@ -13,7 +13,7 @@ namespace Redemption.Items.Accessories.HM
             Tooltip.SetDefault("Summons a Microshield Drone that appears whenever a hostile projectile is shot at the player\n" +
                 "When a projectile hits the shield, it will release a discharge and reflect it\n" +
                 "The shield can take 500 damage, once destroyed, it will take 10 seconds to reactivate");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

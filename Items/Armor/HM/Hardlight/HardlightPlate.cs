@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
         {
             Tooltip.SetDefault("10% increased damage");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void UpdateEquip(Player player)

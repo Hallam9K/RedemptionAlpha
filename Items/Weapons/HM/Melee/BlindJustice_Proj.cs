@@ -30,6 +30,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.height = 76;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
+            Projectile.usesLocalNPCImmunity = true;
         }
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;

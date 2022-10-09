@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Potions
 		{
             Tooltip.SetDefault("Shops have lower prices"
                 + "\nEnemies drop more gold");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
 
 		public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 32;
             Item.height = 30;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.buffType = ModContent.BuffType<CharismaPotionBuff>();

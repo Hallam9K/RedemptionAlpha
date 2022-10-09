@@ -324,19 +324,19 @@ namespace Redemption.NPCs.PreHM
                         if ((NPC.frame.Y >= 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldRaisedHitbox)) ||
                             (NPC.frame.Y < 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldHitbox)))
                         {
-                            if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                            if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                             {
-                                (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 25;
-                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                                globalNPC.attacker.velocity.X += NPC.velocity.X * (globalNPC.attacker as NPC).knockBackResist;
-                                BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 11, hitDirection, NPC);
+                                attackerNPC.immune[NPC.whoAmI] = 25;
+                                int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                                attackerNPC.velocity.X += NPC.velocity.X * attackerNPC.knockBackResist;
+                                BaseAI.DamageNPC(attackerNPC, NPC.damage, 11, hitDirection, NPC);
                             }
-                            else if (globalNPC.attacker is Player)
+                            else if (globalNPC.attacker is Player attackerPlayer2)
                             {
-                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                                if (!(globalNPC.attacker as Player).noKnockback)
-                                    globalNPC.attacker.velocity.X += NPC.velocity.X / 2;
-                                BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 11, hitDirection, NPC);
+                                int hitDirection = NPC.Center.X > attackerPlayer2.Center.X ? -1 : 1;
+                                if (!attackerPlayer2.noKnockback)
+                                    attackerPlayer2.velocity.X += NPC.velocity.X / 2;
+                                BaseAI.DamagePlayer(attackerPlayer2, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
                     }
@@ -393,19 +393,19 @@ namespace Redemption.NPCs.PreHM
                         if ((NPC.frame.Y >= 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldRaisedHitbox)) ||
                             (NPC.frame.Y < 13 * 64 && globalNPC.attacker.Hitbox.Intersects(ShieldHitbox)))
                         {
-                            if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                            if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                             {
-                                (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 25;
-                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                                globalNPC.attacker.velocity.X += NPC.velocity.X * (globalNPC.attacker as NPC).knockBackResist;
-                                BaseAI.DamageNPC(globalNPC.attacker as NPC, NPC.damage, 11, hitDirection, NPC);
+                                attackerNPC.immune[NPC.whoAmI] = 25;
+                                int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                                attackerNPC.velocity.X += NPC.velocity.X * attackerNPC.knockBackResist;
+                                BaseAI.DamageNPC(attackerNPC, NPC.damage, 11, hitDirection, NPC);
                             }
-                            else if (globalNPC.attacker is Player)
+                            else if (globalNPC.attacker is Player attackerPlayer3)
                             {
-                                int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                                if (!(globalNPC.attacker as Player).noKnockback)
-                                    globalNPC.attacker.velocity.X += NPC.velocity.X / 2;
-                                BaseAI.DamagePlayer(globalNPC.attacker as Player, NPC.damage, 11, hitDirection, NPC);
+                                int hitDirection = NPC.Center.X > attackerPlayer3.Center.X ? -1 : 1;
+                                if (!attackerPlayer3.noKnockback)
+                                    attackerPlayer3.velocity.X += NPC.velocity.X / 2;
+                                BaseAI.DamagePlayer(attackerPlayer3, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
                     }
@@ -432,7 +432,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
                     }
-                    if (globalNPC.attacker is Player && (NPC.PlayerDead() || (globalNPC.attacker as Player).RedemptionPlayerBuff().skeletonFriendly))
+                    if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);

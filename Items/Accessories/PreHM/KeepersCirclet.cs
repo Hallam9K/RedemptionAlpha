@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.PreHM
             DisplayName.SetDefault("Keeper's Circlet");
             Tooltip.SetDefault("Humanoid skeletons become friendly");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

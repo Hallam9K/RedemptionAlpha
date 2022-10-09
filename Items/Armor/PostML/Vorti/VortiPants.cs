@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PostML.Vorti
 
             ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
             ArmorIDs.Legs.Sets.IncompatibleWithFrogLeg[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

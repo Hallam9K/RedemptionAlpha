@@ -11,14 +11,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Laboratory Platform");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 200;
+            SacrificeTotal = 200;
         }
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<LabPlatformTile>(), 0);
             Item.width = 28;
             Item.height = 14;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 100;
             Item.rare = ItemRarityID.LightPurple;
         }

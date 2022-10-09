@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		{
 			DisplayName.SetDefault("Diseased Meatball");
             Tooltip.SetDefault("Summons a Cystling to fight for you");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

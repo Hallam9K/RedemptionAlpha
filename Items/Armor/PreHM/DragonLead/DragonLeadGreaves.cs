@@ -17,7 +17,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             Tooltip.SetDefault("8% increased critical strike chance\n" +
                 "10% increased movement speed");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

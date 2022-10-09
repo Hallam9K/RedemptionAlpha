@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			DisplayName.SetDefault("Music Box (Abandoned Lab)");
             Tooltip.SetDefault("inSignia - Facility of Contagion");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabMusic"), ModContent.ItemType<LabMusicBox>(), ModContent.TileType<LabMusicBoxTile>());
 		}

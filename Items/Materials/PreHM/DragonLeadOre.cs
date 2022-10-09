@@ -13,13 +13,13 @@ namespace Redemption.Items.Materials.PreHM
         {
             DisplayName.SetDefault("Dragon-Lead Ore");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 22;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 11, 0);
             Item.rare = ItemRarityID.Orange;
             Item.useTurn = true;

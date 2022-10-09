@@ -20,7 +20,7 @@ namespace Redemption.Items.Accessories.HM
                 + "\nDouble tap a direction to dash" +
                 "\nDashing into projectiles will reflect them" +
                 "\nCan't reflect projectiles exceeding 200 damage");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

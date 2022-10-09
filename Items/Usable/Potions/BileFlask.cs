@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Potions
         {
             DisplayName.SetDefault("Flask of Bile");
             Tooltip.SetDefault("Melee attacks inflict Burning Acid");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
 
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 22;
             Item.height = 24;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.buffType = ModContent.BuffType<BileFlaskBuff>();

@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable.Summons
                 + "\nOnly usable at night"
                 + "\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
         }
 

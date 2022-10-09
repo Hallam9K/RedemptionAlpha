@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Tooltip.SetDefault("(2[i:" + ModContent.ItemType<EnergyPack>() + "]) Fires rings of uranium"
                 + "\nCan pierce through tiles and enemies\n" +
                 "Requires an Energy Pack to be in your inventory");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

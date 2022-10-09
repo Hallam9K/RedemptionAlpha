@@ -10,14 +10,14 @@ namespace Redemption.Items.Materials.HM
         {
             DisplayName.SetDefault("Capacitator");
             Tooltip.SetDefault("'Holds a high amount of energy'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 26;
             Item.height = 30;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = 65000;
             Item.rare = ItemRarityID.Lime;
         }

@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Tooltip.SetDefault("4 summon tag damage\n" +
                 "Your summons will focus struck enemies\n" +
                 "Striking enemies with the tip of the whip will heal the user");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

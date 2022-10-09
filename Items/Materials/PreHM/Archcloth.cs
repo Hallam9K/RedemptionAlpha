@@ -11,14 +11,14 @@ namespace Redemption.Items.Materials.PreHM
         {
             Tooltip.SetDefault("'Expensive, purple cloth only used by the Nobles of Anglon'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 34;
             Item.height = 26;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Orange;
         }

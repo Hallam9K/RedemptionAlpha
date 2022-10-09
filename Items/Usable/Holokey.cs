@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("'Unlocks Holochests found in a crashed spaceship'"
                 + "\nOnly one is needed");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
 

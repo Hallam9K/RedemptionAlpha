@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.PreHM
             Tooltip.SetDefault("Every 5th use of a magic weapon shoots a spread of stingers" +
                 "\nIncreased life regeneration while in the Jungle");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

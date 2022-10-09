@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Slayer's Rocket Fist");
             Tooltip.SetDefault("Punches enemies up-close\n" +
                 "Holding down left-click and hitting an enemy will fire a rocket fist if you are airborne");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

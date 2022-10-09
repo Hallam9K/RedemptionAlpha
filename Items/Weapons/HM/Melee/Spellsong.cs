@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "\nHolding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

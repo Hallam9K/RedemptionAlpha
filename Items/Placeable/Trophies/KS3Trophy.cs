@@ -12,14 +12,14 @@ namespace Redemption.Items.Placeable.Trophies
 		{
 			DisplayName.SetDefault("King Slayer III Trophy");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<KS3TrophyTile>(), 0);
 			Item.width = 32;
 			Item.height = 32;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = Item.sellPrice(0, 1, 33, 0);
 			Item.rare = ItemRarityID.Blue;
 		}

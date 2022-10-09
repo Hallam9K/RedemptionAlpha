@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Summons a baby rockpile to dance for you");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

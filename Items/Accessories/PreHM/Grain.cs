@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PreHM
 			DisplayName.SetDefault("Pile o' Grain");
 			Tooltip.SetDefault("Summons a pet chicken");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

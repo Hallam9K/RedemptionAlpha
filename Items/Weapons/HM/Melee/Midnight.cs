@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "\nNebula Stars slowly chase targets while spewing nebula sparks" +
                 "\nCan't create nebula stars while at least 4 are already active");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
+using SteelSeries.GameSense;
 
 namespace Redemption.Globals.Player
 {
@@ -29,6 +30,7 @@ namespace Redemption.Globals.Player
         public int hitTarget2 = -1;
         public bool medKit;
         public bool galaxyHeart;
+        public int heartStyle;
         public bool stalkerSilence;
         public float musicVolume;
         public int slayerStarRating;
@@ -79,25 +81,18 @@ namespace Redemption.Globals.Player
                 hitTarget2 = target.whoAmI;
             }
         }
-
+        public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
+        {
+            health = StatModifier.Default;
+            health.Base = (medKit ? 50 : 0) + (galaxyHeart ? 50 : 0);
+            // Alternatively:  health = StatModifier.Default with { Base = exampleLifeFruits * ExampleLifeFruit.LifePerFruit };
+            mana = StatModifier.Default;
+        }
         public override void PostUpdateMiscEffects()
         {
-            Player.statLifeMax2 += (medKit ? 50 : 0) + (galaxyHeart ? 50 : 0);
-
             if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
             {
                 Asset<Texture2D> emptyTex = ModContent.Request<Texture2D>("Redemption/Empty");
-                Asset<Texture2D> heartMed = ModContent.Request<Texture2D>("Redemption/Textures/HeartMed");
-                Asset<Texture2D> heartGalaxy = ModContent.Request<Texture2D>("Redemption/Textures/HeartGal");
-                Asset<Texture2D> heart2 = ModContent.Request<Texture2D>("Terraria/Images/Heart2");
-                int totalHealthBoost = (medKit ? 1 : 0) + (galaxyHeart ? 1 : 0);
-                TextureAssets.Heart2 = totalHealthBoost switch
-                {
-                    1 => heartMed,
-                    2 => heartGalaxy,
-                    _ => heart2,
-                };
-
                 Asset<Texture2D> cursor0 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_0");
                 Asset<Texture2D> cursor1 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_1");
                 Asset<Texture2D> cursor11 = ModContent.Request<Texture2D>("Terraria/Images/UI/Cursor_11");
@@ -164,6 +159,7 @@ namespace Redemption.Globals.Player
             if (galaxyHeart) saveS.Add("galaxyHeart");
 
             tag["saveS"] = saveS;
+            tag["heartStyle"] = heartStyle;
         }
 
         public override void LoadData(TagCompound tag)
@@ -174,6 +170,8 @@ namespace Redemption.Globals.Player
             omegaGiftGiven = saveS.Contains("omegaGiftGiven");
             medKit = saveS.Contains("medKit");
             galaxyHeart = saveS.Contains("galaxyHeart");
+
+            heartStyle = tag.GetInt("heartStyle");
         }
     }
 }

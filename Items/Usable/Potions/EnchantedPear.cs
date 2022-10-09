@@ -12,7 +12,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Massive improvements to all stats" +
                 "\n'I eat pears'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable.Potions
             Item.useTurn = true;
             Item.useAnimation = 14;
             Item.useTime = 14;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.width = 28;
             Item.height = 30;

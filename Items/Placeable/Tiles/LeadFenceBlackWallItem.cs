@@ -14,7 +14,7 @@ namespace Redemption.Items.Placeable.Tiles
 			Item.DefaultToPlacableWall((ushort)ModContent.WallType<LeadFenceBlackWall>());
 			Item.width = 16;
 			Item.height = 16;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 	}
 }

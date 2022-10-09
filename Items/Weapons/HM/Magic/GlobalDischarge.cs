@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 "Keeping the sphere active for too long will cause the user to take damage as well");
             Item.staff[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

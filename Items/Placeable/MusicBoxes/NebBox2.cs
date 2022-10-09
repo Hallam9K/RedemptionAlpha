@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Nebuleus' Final Form)");
 			Tooltip.SetDefault("musicman - Hypernova");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod2"), ModContent.ItemType<NebBox2>(), ModContent.TileType<NebBox2Tile>());
 		}

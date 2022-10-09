@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable.Potions
                 + "\nFatigue and Nausea"
                 + "\n- After successful use, you will feel weak and fragile, this will go away in a few minutes.'");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 4;
+            SacrificeTotal = 4;
         }
 
         public override void SetDefaults()
@@ -34,7 +34,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 20;
             Item.height = 26;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;
         }

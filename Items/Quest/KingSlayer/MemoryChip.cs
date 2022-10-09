@@ -12,7 +12,7 @@ namespace Redemption.Items.Quest.KingSlayer
             DisplayName.SetDefault("Memory Chip");
             Tooltip.SetDefault("Has no use to you, but it would be a good idea to keep it for now...");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
 

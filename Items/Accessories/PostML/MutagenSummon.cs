@@ -13,7 +13,7 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Summoner's Mutagen");
             Tooltip.SetDefault("15% increased summon damage"
                 + "\n10% increased summon critical strike chance");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

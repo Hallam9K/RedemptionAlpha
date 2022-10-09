@@ -18,7 +18,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
             Tooltip.SetDefault("10% increased damage"
                 + "\n15% increased critical strike chance");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

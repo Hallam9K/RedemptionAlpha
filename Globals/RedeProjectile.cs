@@ -78,33 +78,28 @@ namespace Redemption.Globals
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
             Entity attacker = null;
-            if (source is EntitySource_ItemUse && projectile.friendly && !projectile.hostile)
+            if (source is EntitySource_ItemUse item && projectile.friendly && !projectile.hostile)
             {
-                EntitySource_ItemUse sourceItem = source as EntitySource_ItemUse;
-                attacker = sourceItem.Entity;
+                attacker = item.Entity;
             }
-            else if (source is EntitySource_Buff && projectile.friendly && !projectile.hostile)
+            else if (source is EntitySource_Buff buff && projectile.friendly && !projectile.hostile)
             {
-                EntitySource_Buff sourceBuff = source as EntitySource_Buff;
-                attacker = sourceBuff.Entity;
+                attacker = buff.Entity;
             }
-            else if (source is EntitySource_ItemUse_WithAmmo && projectile.friendly && !projectile.hostile)
+            else if (source is EntitySource_ItemUse_WithAmmo itemAmmo && projectile.friendly && !projectile.hostile)
             {
-                EntitySource_ItemUse_WithAmmo sourceItemAmmo = source as EntitySource_ItemUse_WithAmmo;
-                attacker = sourceItemAmmo.Entity;
+                attacker = itemAmmo.Entity;
             }
-            else if (source is EntitySource_Mount && projectile.friendly && !projectile.hostile)
+            else if (source is EntitySource_Mount mount && projectile.friendly && !projectile.hostile)
             {
-                EntitySource_Mount sourceMount = source as EntitySource_Mount;
-                attacker = sourceMount.Entity;
+                attacker = mount.Entity;
             }
-            else if (source is EntitySource_Parent)
+            else if (source is EntitySource_Parent parent)
             {
-                EntitySource_Parent sourceParent = source as EntitySource_Parent;
-                if (sourceParent.Entity is Projectile)
-                    attacker = Main.player[(sourceParent.Entity as Projectile).owner];
+                if (parent.Entity is Projectile proj)
+                    attacker = Main.player[proj.owner];
                 else
-                    attacker = sourceParent.Entity;
+                    attacker = parent.Entity;
             }
             if (attacker != null)
             {

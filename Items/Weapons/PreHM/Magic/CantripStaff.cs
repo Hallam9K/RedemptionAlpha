@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 "\nCasts a larger fireball every 4 consecutive shots");
             Item.staff[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

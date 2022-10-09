@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PreHM
 			DisplayName.SetDefault("Devil's Advocate");
 			Tooltip.SetDefault("Summons a tiny angel and devil to follow you");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

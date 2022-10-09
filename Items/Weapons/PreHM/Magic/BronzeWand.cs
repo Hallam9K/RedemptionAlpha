@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 "\nWater orbs home in on enemies after 6 consecutive shots");
             Item.staff[Item.type] = true;
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

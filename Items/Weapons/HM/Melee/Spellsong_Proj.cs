@@ -32,6 +32,12 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.alpha = 255;
             Length = 76;
             Rot = MathHelper.ToRadians(3);
+            Projectile.usesLocalNPCImmunity = true;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
         }
         private Vector2 startVector;
         private Vector2 vector;
@@ -189,9 +195,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (Timer > 8 && Projectile.ai[0] < 2)
-                return false;
-            return Timer < 20 && Projectile.ai[0] == 2 ? null : false;
+            return (Timer < 20 && Projectile.ai[0] == 2) || (Timer <= 8 && Projectile.ai[0] < 2) ? null : false;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

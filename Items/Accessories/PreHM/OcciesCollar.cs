@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PreHM
 			DisplayName.SetDefault("Occie's Collar");
 			Tooltip.SetDefault("Summons Occie, Octavia's cat, to follow you");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()

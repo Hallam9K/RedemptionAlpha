@@ -21,7 +21,7 @@ namespace Redemption.Items.Accessories.PostML
                 "Dashing through enemies gives the player a stack of Obliteration Motivation" +
                 "\nObliteration Motivation increases damage, defense and reduces the dash cooldown, at the cost of decreased life regen" +
                 "\nStacks up to 5 times");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

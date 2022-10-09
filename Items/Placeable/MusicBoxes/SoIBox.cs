@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			DisplayName.SetDefault("Music Box (Seed of Infection)");
             Tooltip.SetDefault("musicman - Virogenesis");
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossXeno1"), ModContent.ItemType<SoIBox>(), ModContent.TileType<SoIBoxTile>());
 		}

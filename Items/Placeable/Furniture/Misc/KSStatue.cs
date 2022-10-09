@@ -23,7 +23,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
             Item.DefaultToPlaceableTile(ModContent.TileType<KSStatueTile>(), 0);
             Item.width = 30;
             Item.height = 44;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<LegendaryRarity>();
             Item.value = Item.sellPrice(5, 0, 0, 0);
         }

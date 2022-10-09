@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		{
             Tooltip.SetDefault("Right-click the placed warhead to view the side panel" +
                 "\nDetonation will create a wasteland");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 
 		public override void SetDefaults()
