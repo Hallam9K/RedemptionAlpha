@@ -17,5 +17,6 @@ namespace Redemption
         public static Color COLOR_GLOWPULSE => Color.White * (Main.mouseTextColor / 255f);
         public static Color RedPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.White, Color.Red * 0.6f, Color.White);
         public static Color EnergyPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightBlue, Color.IndianRed, Color.LightGreen, Color.LightGoldenrodYellow, Color.LightBlue);
+        public static Color GreenPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.Green, Color.LightGreen, Color.White, Color.LightGreen);
     }
 }
