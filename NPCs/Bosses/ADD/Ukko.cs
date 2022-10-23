@@ -20,6 +20,7 @@ using Terraria.GameContent.UI;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -51,7 +52,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ukko");
-            Main.npcFrameCount[NPC.type] = 6;
+            Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.TrailCacheLength[NPC.type] = 8;
             NPCID.Sets.TrailingMode[NPC.type] = 0;
 
@@ -161,15 +162,15 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public Vector2 MoveVector2;
         public Vector2 MoveVector3;
-        public int wandFrame;
         public int frameCounters;
         public int mendingCooldown;
         public int stoneskinCooldown;
         public int chariotCooldown;
         public int burstCooldown;
         public int chariotFrame;
+        public int jyrinaFrame;
         public int dashCounter;
-        public int dischargeFrame;
+        public int swipeFrame;
         public bool akkaArrive;
 
         public override void AI()
@@ -195,7 +196,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 }
             }
             Vector2 ThunderwavePos = new(player.Center.X > NPC.Center.X ? player.Center.X - 700 : player.Center.X + 700, player.Center.Y);
-            Vector2 EarthProtectPos = new Vector2(player.Center.X, player.Center.Y - 400);
+            Vector2 EarthProtectPos = new(player.Center.X, player.Center.Y - 400);
+            Vector2 HammerPos = new(NPC.Center.X - (24 * NPC.spriteDirection), NPC.Center.Y - 101);
             int akkaID = NPC.FindFirstNPC(ModContent.NPCType<Akka>());
             bool akkaActive = false;
             if (akkaID > -1 && Main.npc[akkaID].active && Main.npc[akkaID].type == ModContent.NPCType<Akka>())
@@ -239,6 +241,8 @@ namespace Redemption.NPCs.Bosses.ADD
                         chariotCooldown--;
                     if (burstCooldown > 0)
                         burstCooldown--;
+                    NPC.ai[3] = 0;
+                    swipeFrame = 0;
                     MoveVector2 = Pos();
                     MoveVector3 = ChargePos();
                     NPC.ai[0]++;
@@ -268,9 +272,10 @@ namespace Redemption.NPCs.Bosses.ADD
                             AITimer++;
                             if (AITimer == 8)
                             {
-                                NPC.ai[3] = 1;
                                 NPC.Shoot(player.Center, ModContent.ProjectileType<UkkoStrike>(), (int)(NPC.damage * 0.92f), Vector2.Zero, false, SoundID.Item1);
                             }
+                            if (AITimer == 20)
+                                NPC.ai[3] = 3;
                             if (AITimer >= 60)
                             {
                                 AIState = ActionState.ResetVars;
@@ -298,6 +303,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer >= 50)
                             {
+                                NPC.ai[3] = 0;
                                 AIState = ActionState.ResetVars;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -363,10 +369,14 @@ namespace Redemption.NPCs.Bosses.ADD
                                 }
                                 if ((!akkaActive ? AITimer % 15 == 0 : AITimer % 20 == 0) && AITimer > 40 && AITimer < 160)
                                 {
+                                    NPC.ai[3] = 3;
+                                    frameCounters = 0;
+                                    swipeFrame = 0;
                                     NPC.Shoot(player.Center + new Vector2(Main.rand.Next(-300, 301)), ModContent.ProjectileType<UkkoStrike>(), (int)(NPC.damage * 0.92f), Vector2.Zero, false, SoundID.Item1);
                                 }
                                 if (AITimer >= 180)
                                 {
+                                    NPC.ai[3] = 0;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
@@ -388,14 +398,17 @@ namespace Redemption.NPCs.Bosses.ADD
                                 AITimer++;
                                 if (AITimer == 2)
                                 {
-                                    NPC.ai[3] = 1;
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.Quake with { Pitch = 0.2f }, NPC.position);
                                 }
                                 if (AITimer % 20 == 0)
+                                {
+                                    NPC.ai[3] = 3;
                                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
+                                }
                                 if (AITimer < 60)
                                 {
+                                    NPC.ai[3] = 3;
                                     for (int i = 0; i < 2; i++)
                                     {
                                         Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 3f);
@@ -406,6 +419,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 }
                                 if (AITimer >= 120)
                                 {
+                                    NPC.ai[3] = 0;
                                     mendingCooldown = 20;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
@@ -441,6 +455,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 }
                                 if (AITimer >= 90)
                                 {
+                                    NPC.ai[3] = 0;
                                     stoneskinCooldown = 10;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
@@ -461,25 +476,27 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (player.ZoneHallow)
                             {
                                 AITimer++;
-                                if (AITimer == 1)
-                                {
-                                    NPC.ai[3] = 1;
-                                }
                                 if (AITimer == 30)
                                 {
+                                    NPC.ai[3] = 1;
                                     for (int i = 0; i < 10; i++)
                                     {
-                                        int dustIndex = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.PinkTorch, 0f, 0f, 100, default, 3f);
+                                        int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PinkTorch, Scale: 3f);
                                         Main.dust[dustIndex].velocity *= 4.2f;
                                     }
                                     for (int i = 0; i < 10; i++)
                                     {
-                                        int dustIndex = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.GoldFlame, 0f, 0f, 100, default, 3f);
+                                        int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GoldFlame, Scale: 3f);
                                         Main.dust[dustIndex].velocity *= 4.2f;
                                     }
                                 }
                                 if (AITimer > 80 && AITimer < 160)
                                 {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        int dustIndex = Dust.NewDust(HammerPos - new Vector2(1, 1), 1, 1, DustID.PinkTorch, Scale: 2f);
+                                        Main.dust[dustIndex].velocity *= 10f;
+                                    }
                                     if (Main.rand.NextBool(3))
                                     {
                                         NPC.Shoot(player.Center + RedeHelper.PolarVector(Main.rand.Next(300, 601), Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoDancingLights>(), 0, RedeHelper.Spread(1), false, SoundID.Item1);
@@ -487,6 +504,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 }
                                 if (AITimer >= 200)
                                 {
+                                    NPC.ai[3] = 0;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
@@ -506,10 +524,12 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (chariotCooldown == 0)
                             {
                                 NPC.ai[3] = 2;
-                                if (NPC.velocity.X < 0)
+                                if (NPC.velocity.X < 0 && dashCounter >= 2)
                                 {
                                     NPC.rotation += (float)Math.PI;
                                 }
+                                else
+                                    NPC.rotation = 0;
                                 if (AITimer == 0)
                                 {
                                     if (NPC.DistanceSQ(MoveVector3) < 200 * 200)
@@ -578,6 +598,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoGust>(), NPC.damage, RedeHelper.Spread(10), false, SoundID.Item1);
                                     }
                                 }
+                                if (AITimer == 70)
+                                    NPC.ai[3] = 0;
                                 if (AITimer >= 80)
                                 {
                                     AIState = ActionState.ResetVars;
@@ -599,12 +621,17 @@ namespace Redemption.NPCs.Bosses.ADD
                             AITimer++;
                             if (AITimer % 10 == 0 && AITimer < 50)
                             {
+                                for (int i = 0; i < 3; i++)
+                                    DustHelper.DrawParticleElectricity(HammerPos, HammerPos + RedeHelper.PolarVector(90, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+
+                                NPC.ai[3] = 1;
                                 Vector2 ai = RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi));
                                 float ai2 = Main.rand.Next(100);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoLightning>(), (int)(NPC.damage * 0.9f) / 4, 0, Main.myPlayer, ai.ToRotation(), ai2);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), HammerPos, RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoLightning>(), (int)(NPC.damage * 0.9f) / 4, 0, Main.myPlayer, ai.ToRotation(), ai2);
                             }
                             if (AITimer >= 50)
                             {
+                                NPC.ai[3] = 0;
                                 AIState = ActionState.ResetVars;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -622,6 +649,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                     NPC.ai[3] = 1;
                                     NPC.Shoot(player.Center, ModContent.ProjectileType<StormSummonerPro>(), (int)(NPC.damage * 0.92f), Vector2.Zero, false, SoundID.Item1, Main.rand.Next(4));
                                 }
+                                if (AITimer == 20)
+                                    NPC.ai[3] = 3;
                                 if (AITimer >= 80)
                                 {
                                     AIState = ActionState.ResetVars;
@@ -645,9 +674,11 @@ namespace Redemption.NPCs.Bosses.ADD
                                 AITimer++;
                                 if (AITimer < 60)
                                 {
-                                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 0.7f);
-                                    dust.velocity = -NPC.DirectionTo(dust.position);
+                                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 1.5f);
+                                    dust.velocity = -NPC.DirectionTo(dust.position) * 2f;
                                 }
+                                if (AITimer == 42)
+                                    NPC.ai[3] = 3;
                                 if (AITimer == 60)
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
@@ -655,6 +686,11 @@ namespace Redemption.NPCs.Bosses.ADD
                                 }
                                 if (NPC.life < (int)(NPC.lifeMax * 0.3f))
                                 {
+                                    if (AITimer == 72)
+                                    {
+                                        swipeFrame = 0;
+                                        NPC.ai[3] = 3;
+                                    }
                                     if (AITimer == 90)
                                     {
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
@@ -731,8 +767,11 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC.ai[3] = 1;
                                 NPC.Shoot(player.Center - new Vector2(0, 200), ModContent.ProjectileType<UkkoRainCloud>(), 0, Vector2.Zero, false, SoundID.Item1);
                             }
+                            if (AITimer == 40)
+                                NPC.ai[3] = 0;
                             if (AITimer >= 60)
                             {
+                                NPC.ai[3] = 0;
                                 AIState = ActionState.ResetVars;
                                 AITimer = 0;
                                 NPC.netUpdate = true;
@@ -747,37 +786,49 @@ namespace Redemption.NPCs.Bosses.ADD
                                 AITimer++;
                                 if (AITimer == 2)
                                 {
-                                    NPC.ai[3] = 3;
+                                    NPC.ai[3] = 1;
                                     SoundEngine.PlaySound(SoundID.Thunder);
                                 }
                                 if (AITimer < 52)
                                 {
-                                    for (int i = 0; i < 2; i++)
+                                    for (int k = 0; k < 2; k++)
                                     {
-                                        Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 1f);
-                                        dust.velocity = -NPC.DirectionTo(dust.position);
+                                        Vector2 vector;
+                                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                        vector.X = (float)(Math.Sin(angle) * 90);
+                                        vector.Y = (float)(Math.Cos(angle) * 90);
+                                        Dust dust2 = Main.dust[Dust.NewDust(HammerPos + vector, 2, 2, DustID.Sandnado, Scale: 2)];
+                                        dust2.noGravity = true;
+                                        dust2.velocity = dust2.position.DirectionTo(HammerPos) * 9f;
                                     }
                                 }
                                 if (AITimer == 52)
                                 {
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.Zap2, NPC.position);
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 10;
                                     for (int i = -16; i <= 16; i++)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 10 * Vector2.UnitX.RotatedBy(Math.PI / 16 * i), false, SoundID.Item1);
+                                        NPC.Shoot(HammerPos, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 10 * Vector2.UnitX.RotatedBy(Math.PI / 16 * i), false, SoundID.Item1);
                                     }
                                 }
                                 if (AITimer == 58)
                                 {
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.Zap2, NPC.position);
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
                                     for (int i = -8; i <= 8; i++)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 8 * Vector2.UnitX.RotatedBy(Math.PI / 8 * i), false, SoundID.Item1);
+                                        NPC.Shoot(HammerPos, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 8 * Vector2.UnitX.RotatedBy(Math.PI / 8 * i), false, SoundID.Item1);
                                     }
                                 }
+                                if (AITimer == 70)
+                                    NPC.ai[3] = 0;
                                 if (AITimer >= 160)
                                 {
+                                    NPC.ai[3] = 0;
                                     burstCooldown = 8;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
@@ -799,7 +850,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             {
                                 if (AITimer++ == 102)
                                 {
-                                    NPC.ai[3] = 3;
+                                    NPC.ai[3] = 1;
                                     SoundEngine.PlaySound(SoundID.Thunder, NPC.position);
                                 }
                                 if (AITimer < 152 && AITimer >= 102)
@@ -810,8 +861,13 @@ namespace Redemption.NPCs.Bosses.ADD
                                         dust.velocity = -NPC.DirectionTo(dust.position);
                                     }
                                 }
+                                if (AITimer == 134)
+                                    NPC.ai[3] = 3;
                                 if (AITimer == 152)
                                 {
+                                    for (int i = 0; i < Main.rand.Next(9, 14); i++)
+                                        DustHelper.DrawParticleElectricity(NPC.Center, NPC.Center + RedeHelper.PolarVector(Main.rand.Next(160, 210), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 3, 40, 0.1f, 1);
+
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoElectricBlast>(), 0, Vector2.Zero, true, CustomSounds.Thunderstrike, NPC.whoAmI);
@@ -1003,57 +1059,53 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void FindFrame(int frameHeight)
         {
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 6)
+            if ((NPC.velocity.X < -3 && NPC.spriteDirection == -1) || (NPC.velocity.X > 3 && NPC.spriteDirection == 1))
+                NPC.frame.Y = frameHeight * 3;
+            else if ((NPC.velocity.X < -3 && NPC.spriteDirection == 1) || (NPC.velocity.X > 3 && NPC.spriteDirection == -1))
+                NPC.frame.Y = frameHeight * 4;
+            else
             {
-                NPC.frameCounter = 0;
-                NPC.frame.Y += 112;
-                if (NPC.frame.Y > (112 * 5))
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 6)
                 {
                     NPC.frameCounter = 0;
-                    NPC.frame.Y = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > frameHeight * 2)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y = 0;
+                    }
                 }
             }
             switch (NPC.ai[3])
             {
-                case 1:
-                    frameCounters++;
-                    if (frameCounters > 6)
-                    {
-                        wandFrame++;
-                        frameCounters = 0;
-                    }
-                    if (wandFrame >= 9)
-                    {
-                        NPC.ai[3] = 0;
-                        wandFrame = 0;
-                        frameCounters = 0;
-                    }
-                    break;
                 case 2:
                     frameCounters++;
-                    if (frameCounters > 3)
+                    if (frameCounters % 3 == 0)
                     {
                         chariotFrame++;
-                        frameCounters = 0;
+                        jyrinaFrame++;
                     }
-                    if (chariotFrame >= 9)
-                    {
+                    if (chariotFrame >= 3)
                         chariotFrame = 0;
+                    if (jyrinaFrame >= 9)
+                    {
+                        jyrinaFrame = 0;
+                        frameCounters = 0;
                     }
                     break;
                 case 3:
                     frameCounters++;
                     if (frameCounters > 5)
                     {
-                        dischargeFrame++;
+                        swipeFrame++;
                         frameCounters = 0;
                     }
-                    if (dischargeFrame >= 12)
+                    if (swipeFrame >= 6)
                     {
                         frameCounters = 0;
                         NPC.ai[3] = 0;
-                        dischargeFrame = 0;
+                        swipeFrame = 0;
                     }
                     break;
             }
@@ -1137,14 +1189,18 @@ namespace Redemption.NPCs.Bosses.ADD
             Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
             Texture2D wandAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_WandRaise").Value;
             Texture2D wandGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_WandRaise_Glow").Value;
-            Texture2D dischargeAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Burst").Value;
-            Texture2D dischargeGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Burst_Glow").Value;
+            Texture2D swipeAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Swipe").Value;
+            Texture2D swipeGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Swipe_Glow").Value;
+            Texture2D swipeSlash = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Swipe_Slash").Value;
             Texture2D chariotAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Chariot").Value;
             Texture2D chariotGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Chariot_Glow").Value;
+            Texture2D jyrina = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Jyrina").Value;
+            Texture2D jyrinaGlow = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Jyrina_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGoldenrodYellow, Color.LightYellow * 0.7f, Color.LightGoldenrodYellow);
 
+            Vector2 n = new(14 * NPC.spriteDirection, 0);
             switch (NPC.ai[3])
             {
                 case 0:
@@ -1156,67 +1212,78 @@ namespace Redemption.NPCs.Bosses.ADD
                         for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                         {
                             Vector2 oldPos = NPC.oldPos[i];
-                            spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                            spriteBatch.Draw(texture, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                         }
                         spriteBatch.End();
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     }
-                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-                    spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                    spriteBatch.Draw(texture, NPC.Center - n - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                    spriteBatch.Draw(glowMask, NPC.Center - n - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;
                 case 1:
-                    int wandHeight = wandAni.Height / 9;
-                    int wandY = wandHeight * wandFrame;
-                    Vector2 wandDrawCenter = new(NPC.Center.X + 4, NPC.Center.Y - 16);
+                    Vector2 wandDrawCenter = new(13 * NPC.spriteDirection, -28);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(wandAni, oldPos + new Vector2(4, -16) + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, wandY, wandAni.Width, wandHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(wandAni.Width / 2f, wandHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(wandAni, oldPos + new Vector2(13 * NPC.spriteDirection, -28) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), null, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    spriteBatch.Draw(wandAni, wandDrawCenter - screenPos, new Rectangle?(new Rectangle(0, wandY, wandAni.Width, wandHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(wandAni.Width / 2f, wandHeight / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(wandGlow, wandDrawCenter - screenPos, new Rectangle?(new Rectangle(0, wandY, wandAni.Width, wandHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(wandAni.Width / 2f, wandHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(wandAni, NPC.Center - n + wandDrawCenter - screenPos, null, drawColor * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(wandGlow, NPC.Center - n + wandDrawCenter - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0f);
                     break;
                 case 2:
-                    int chariotHeight = chariotAni.Height / 9;
+                    int chariotHeight = chariotAni.Height / 3;
                     int chariotY = chariotHeight * chariotFrame;
-                    Vector2 chariotDrawCenter = new(NPC.Center.X, NPC.Center.Y);
+
+                    int jyrinaHeight = jyrina.Height / 9;
+                    int jyrinaY = jyrinaHeight * jyrinaFrame;
+                    Vector2 jyrinaDrawCenter = new(NPC.Center.X, NPC.Center.Y);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(chariotAni, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(chariotAni, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(jyrina, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Width, jyrinaHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(jyrina.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    spriteBatch.Draw(chariotAni, chariotDrawCenter - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(chariotGlow, chariotDrawCenter - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(chariotAni, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(chariotGlow, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
+
+                    spriteBatch.Draw(jyrina, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Width, jyrinaHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(jyrina.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(jyrinaGlow, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Width, jyrinaHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(jyrina.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
                     break;
                 case 3:
-                    int dischargeHeight = dischargeAni.Height / 12;
-                    int dischargeY = dischargeHeight * dischargeFrame;
-                    Vector2 dischargeDrawCenter = new(NPC.Center.X + 4, NPC.Center.Y - 16);
+                    int swipeHeight = swipeAni.Height / 6;
+                    int swipeY = swipeHeight * swipeFrame;
+                    Vector2 swipeDrawCenter = new(14 * NPC.spriteDirection, -9);
+
+                    int swipeSHeight = swipeSlash.Height / 6;
+                    int swipeSY = swipeSHeight * swipeFrame;
+                    Vector2 swipeSDrawCenter = new(41 * NPC.spriteDirection, -41);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(dischargeAni, oldPos + new Vector2(4, -16) + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, dischargeY, dischargeAni.Width, dischargeHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(dischargeAni.Width / 2f, dischargeHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(swipeAni, oldPos + new Vector2(14 * NPC.spriteDirection, -9) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    spriteBatch.Draw(dischargeAni, dischargeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, dischargeY, dischargeAni.Width, dischargeHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(dischargeAni.Width / 2f, dischargeHeight / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(dischargeGlow, dischargeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, dischargeY, dischargeAni.Width, dischargeHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(dischargeAni.Width / 2f, dischargeHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(swipeAni, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(swipeGlow, swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
+
+                    spriteBatch.Draw(swipeSlash, NPC.Center - n + swipeSDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeSY, swipeSlash.Width, swipeSHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeSlash.Width / 2f, swipeSHeight / 2f), NPC.scale, effects, 0f);
                     break;
             }
             return false;
