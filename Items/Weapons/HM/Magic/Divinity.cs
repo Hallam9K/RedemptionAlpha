@@ -51,6 +51,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<HolyBible>())
+                .AddIngredient(ItemID.BeetleHusk, 4)
                 .AddIngredient(ItemID.LunarTabletFragment, 10)
                 .AddIngredient(ItemID.SoulofLight, 15)
                 .AddIngredient(ItemID.SoulofSight, 15)
@@ -58,6 +59,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 .Register();
             CreateRecipe()
                 .AddIngredient(ItemID.SpellTome)
+                .AddIngredient(ItemID.BeetleHusk, 4)
                 .AddIngredient(ItemID.LunarTabletFragment, 10)
                 .AddIngredient(ItemID.SoulofLight, 15)
                 .AddIngredient(ItemID.SoulofSight, 15)
