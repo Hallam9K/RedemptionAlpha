@@ -40,6 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         private float shake;
         private float alphaTimer;
         private float glowTimer;
+        private float shotOff2 = 0.4f;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -111,7 +112,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 }
                 else
                 {
-                    if (player.channel && player.GetModPlayer<EnergyPlayer>().statEnergy > 0)
+                    if (player.channel && player.GetModPlayer<EnergyPlayer>().statEnergy >= 2)
                     {
                         glowTimer++;
                         for (int k = 0; k < 1 + (Projectile.localAI[0] / 120); k++)
@@ -123,18 +124,33 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                             dVector.Y = (float)(Math.Cos(angle) * 20);
                             ParticleManager.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 1f, new LightningParticle(), Color.White, 1f, 5);
                         }
-                        shake += 0.01f;
+                        shake += 0.02f;
                         Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
 
-                        if (Projectile.localAI[0]++ >= 300)
+                        if (Projectile.localAI[0]++ > 0 && Projectile.localAI[0] % 20 == 0 && Projectile.localAI[0] < 180)
+                        {
+                            player.GetModPlayer<EnergyPlayer>().statEnergy -= 2;
+                            SoundEngine.PlaySound(CustomSounds.Zap2 with { Pitch = 0.3f }, player.position);
+                            SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch with { Volume = 0.6f }, Projectile.position);
+
+                            offset = 10;
+                            rotOffset = -0.02f;
+                            float shotOff = MathHelper.Max(shotOff2, 0);
+                            for (int i = 0; i < Main.rand.Next(4, 6); i++)
+                            {
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation() + Main.rand.NextFloat(-shotOff, shotOff)), ModContent.ProjectileType<XeniumElectrolaser_Beam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
+                            }
+                            shotOff2 -= 0.06f;
+                        }
+                        if (Projectile.localAI[0] >= 180)
                             player.channel = false;
-                        if (Projectile.localAI[0] % 60 == 0)
+                        if (Projectile.localAI[0] % 40 == 0)
                         {
                             SoundEngine.PlaySound(CustomSounds.ShieldActivate with { Volume = 0.6f, Pitch = Projectile.localAI[0] / 300 }, Projectile.position);
                             player.GetModPlayer<EnergyPlayer>().statEnergy -= 3;
                         }
                     }
-                    else
+                    else if (Projectile.localAI[0] >= 180 && player.GetModPlayer<EnergyPlayer>().statEnergy >= 2)
                     {
                         if (Projectile.localAI[0] < 400)
                         {
@@ -148,14 +164,12 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                                 else
                                     SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch with { Volume = 0.6f }, Projectile.position);
 
-                                int damage = (int)(Projectile.damage * (Projectile.localAI[0] / 40));
-                                offset = 10 * Projectile.localAI[0] / 180;
-                                rotOffset = -0.02f - Projectile.localAI[0] / 600;
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<XeniumElectrolaser_Beam>(), (int)MathHelper.Clamp(damage, Projectile.damage / 2, Projectile.damage * 15), Projectile.knockBack, player.whoAmI, Projectile.localAI[0] / 180);
+                                offset = 20;
+                                rotOffset = -0.08f;
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<XeniumElectrolaser_Beam>(), Projectile.damage * 5, Projectile.knockBack, player.whoAmI, 40);
 
-                                player.RedemptionScreen().ScreenShakeIntensity += 2 + Projectile.localAI[0] / 30;
-                                if (Projectile.localAI[0] >= 60)
-                                    player.velocity -= RedeHelper.PolarVector(1 + Projectile.localAI[0] / 120, (Main.MouseWorld - player.Center).ToRotation());
+                                player.RedemptionScreen().ScreenShakeIntensity += 20;
+                                player.velocity -= RedeHelper.PolarVector(3, (Main.MouseWorld - player.Center).ToRotation());
                             }
                             Projectile.localAI[0] = 400;
                         }
@@ -165,6 +179,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                                 Projectile.Kill();
                         }
                     }
+                    else
+                        Projectile.Kill();
                 }
             }
             shake = MathHelper.Min(shake, 3f);
@@ -180,7 +196,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             Vector2 v = RedeHelper.PolarVector(-16 + offset, Projectile.velocity.ToRotation());
-            float timerMax = 300;
+            float timerMax = 180;
             int timerProgress = (int)(glow.Width * (glowTimer / timerMax));
 
             Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation + (rotOffset * Projectile.spriteDirection), drawOrigin, Projectile.scale, spriteEffects, 0);

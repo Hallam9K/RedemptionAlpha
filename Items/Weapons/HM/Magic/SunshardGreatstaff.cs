@@ -25,7 +25,6 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
 
         private float glowRot = 0;
-
         public override void SetDefaults()
         {
             Item.damage = 65;
@@ -47,14 +46,12 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.shoot = ModContent.ProjectileType<Sunshard>();
 
         }
-
         private int CastCount;
         public override void HoldItem(Player player)
         {
             if (!player.channel)
                 CastCount = 0;
         }
-
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float numberProjectiles = 5;
@@ -77,7 +74,6 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
             return false;
         }
-
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             Vector2 Offset = Vector2.Normalize(velocity) * 70f;
@@ -87,7 +83,6 @@ namespace Redemption.Items.Weapons.HM.Magic
                 position += Offset;
             }
         }
-
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -99,7 +94,6 @@ namespace Redemption.Items.Weapons.HM.Magic
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
-
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())

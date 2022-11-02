@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC npc = Main.npc[p];
                 if (npc.active && !npc.immortal && !npc.dontTakeDamage && Projectile.alpha < 200 && Projectile.Hitbox.Intersects(npc.Hitbox))
                 {
-                    int healAmt = 5;
+                    int healAmt = 1;
                     if (npc.type == ModContent.NPCType<Ukko>())
                         healAmt = 20;
                     if (npc.life <= npc.lifeMax - healAmt)

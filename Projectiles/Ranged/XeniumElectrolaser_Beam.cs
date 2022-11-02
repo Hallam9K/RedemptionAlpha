@@ -27,22 +27,26 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 700;
             Projectile.penetrate = 8;
             Projectile.tileCollide = true;
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().EnergyBased = true;
         }
         public override void AI()
         {
-            Projectile.width = Projectile.height = 4 + ((int)Projectile.ai[0] * 5);
+            Projectile.width = Projectile.height = 4 + ((int)Projectile.ai[0] / 2);
             if (Projectile.localAI[0]++ > 5)
             {
                 for (int i = 0; i < 1; i++)
                 {
                     Vector2 v = Projectile.position;
                     v -= Projectile.velocity * (i * 0.25f);
-                    ParticleManager.NewParticle(v, Vector2.Zero, new LightningParticle(), Color.White, 1 + Projectile.ai[0], 5);
+                    ParticleManager.NewParticle(v, Vector2.Zero, new LightningParticle(), Color.White, 1 + Projectile.ai[0] / 10, 5);
                 }
             }
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.localNPCImmunity[target.whoAmI] = 100;
+            target.immune[Projectile.owner] = 0;
         }
         public override void Kill(int timeLeft)
         {
@@ -50,7 +54,7 @@ namespace Redemption.Projectiles.Ranged
             RedeDraw.SpawnRing(Projectile.Center, Color.LightGreen);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast with { Volume = 0.5f }, Projectile.position);
-            player.RedemptionScreen().ScreenShakeIntensity += 3 + (Projectile.ai[0] * 5);
+            player.RedemptionScreen().ScreenShakeIntensity += Projectile.ai[0];
         }
     }
     public class XeniumElectrolaser_Beam2 : ModProjectile

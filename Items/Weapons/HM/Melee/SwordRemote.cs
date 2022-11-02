@@ -25,6 +25,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 + "\nCalls upon the Omega Cleaver to unleash a devastating attack" +
                 "\nRight-Click to switch mode of attack" +
                 "\n10 second cooldown");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
