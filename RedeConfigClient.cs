@@ -19,7 +19,6 @@ namespace Redemption
 
         [Label("Disable Elements")]
         [Tooltip("Disables elemental resistances and damage")]
-        [DefaultValue(true)]
         public bool ElementDisable;
     }
 }
