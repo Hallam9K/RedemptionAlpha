@@ -44,8 +44,11 @@ namespace Redemption.Projectiles.Magic
                 Projectile.Kill();
 
             if (Projectile.owner == Main.myPlayer && player.channel)
-            {
                 Projectile.Center = Main.MouseWorld;
+            else
+            {
+                if (sun.ModProjectile is Divinity_Sun sunEntity && sunEntity.mark != Vector2.Zero)
+                    Projectile.Center = sunEntity.mark;
             }
             Projectile.alpha -= 10;
             Projectile.alpha = (int)MathHelper.Max(Projectile.alpha, 0);

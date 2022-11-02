@@ -138,7 +138,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                             float shotOff = MathHelper.Max(shotOff2, 0);
                             for (int i = 0; i < Main.rand.Next(4, 6); i++)
                             {
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation() + Main.rand.NextFloat(-shotOff, shotOff)), ModContent.ProjectileType<XeniumElectrolaser_Beam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 1);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation() + Main.rand.NextFloat(-shotOff, shotOff)), ModContent.ProjectileType<XeniumElectrolaser_Beam>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, player.whoAmI, 1);
                             }
                             shotOff2 -= 0.06f;
                         }

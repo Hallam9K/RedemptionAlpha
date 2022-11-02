@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.CrossMod;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
@@ -441,6 +442,18 @@ namespace Redemption
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
             BuffPlayer bP = Main.LocalPlayer.GetModPlayer<BuffPlayer>();
+            if (Main.LocalPlayer.HasBuff<StunnedDebuff>())
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer StunUI = new("Redemption: Stun UI",
+                    delegate
+                    {
+                        DrawStunStars(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, StunUI);
+            }
             if (bP.shieldGenerator && bP.shieldGeneratorCD <= 0)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
@@ -615,6 +628,22 @@ namespace Redemption
             spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerBarInner.Width, timerProgress)), RedeColor.EnergyPulse * 0.75f, MathHelper.Pi, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, ((int)(eP.statEnergy / timerMax * 100)).ToString() + "%", player.Center + new Vector2(30, -36) - Main.screenPosition, Color.White * 0.75f, 0, Vector2.Zero, Vector2.One * 0.75f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawStunStars(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D starTex = ModContent.Request<Texture2D>("Redemption/Textures/StunVisual").Value;
+            int height = starTex.Height / 4;
+            int y = height * player.RedemptionPlayerBuff().stunFrame;
+            Vector2 drawOrigin = new(starTex.Width / 2, height / 2);
+
+            spriteBatch.Draw(starTex, player.Center - new Vector2(0, 34) - Main.screenPosition, new Rectangle?(new Rectangle(0, y, starTex.Width, height)), Color.White, 0, drawOrigin, 1, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

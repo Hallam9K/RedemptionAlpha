@@ -121,6 +121,7 @@ namespace Redemption
         public static readonly SoundStyle MACERoar = new("Redemption/Sounds/Custom/MaceRoar") { PitchVariance = .1f };
         public static readonly SoundStyle GigaFlame = new("Redemption/Sounds/Custom/GigaFlame") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
         public static readonly SoundStyle WindLong = new("Redemption/Sounds/Custom/WindLong1") { Volume = .5f, PitchVariance = .1f };
-        public static readonly SoundStyle Jyrina = new("Redemption/Sounds/Custom/Jyrina1") { Volume = 1f, PitchVariance = .2f };
+        public static readonly SoundStyle Jyrina = new("Redemption/Sounds/Custom/Jyrina1") { PitchVariance = .2f };
+        public static readonly SoundStyle Synth = new("Redemption/Sounds/Custom/SynthSound");
 }
 }

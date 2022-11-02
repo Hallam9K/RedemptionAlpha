@@ -599,7 +599,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    spriteBatch.Draw(magicAni, drawCenter - screenPos, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(magicAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
                     break;
             }
             return false;
