@@ -153,7 +153,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         }
                         break;
                     case 1:
-                        if (player.DistanceSQ(Projectile.Center) > 1200 * 1200)
+                        if (player.DistanceSQ(Projectile.Center) > 1800 * 1800)
                         {
                             staff.active = false;
                             Projectile.Kill();
