@@ -34,6 +34,8 @@ namespace Redemption.Particles
         }
         private void Spawn()
         {
+            if (ai[1] == 1)
+                timeLeft *= 20;
             timeLeftMax = timeLeft;
             size = Main.rand.NextFloat(2f, 4f) / 10f;
         }
@@ -66,6 +68,11 @@ namespace Redemption.Particles
                     bright = Color.Multiply(new(255, 182, 49, 0), opacity);
                     mid = Color.Multiply(new(255, 182, 49, 0), opacity);
                     dark = Color.Multiply(new(255, 105, 43, 0), opacity);
+                    break;
+                case 5:
+                    bright = Color.Multiply(new(186, 255, 185, 0), opacity);
+                    mid = Color.Multiply(new(76, 240, 107, 0), opacity);
+                    dark = Color.Multiply(new(23, 165, 107, 0), opacity);
                     break;
             }
             Color emberColor = Color.Multiply(Color.Lerp(bright, dark, (float)(timeLeftMax - timeLeft) / timeLeftMax), opacity);

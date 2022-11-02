@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Tooltip.SetDefault("Summons a friendly Xenium Autoturret to fight for you"
                 + "\nFires bullets from your inventory"
                 + "\n80% chance not to consume ammo");
-
+            SacrificeTotal = 1;
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }

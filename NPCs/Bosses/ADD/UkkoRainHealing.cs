@@ -42,11 +42,12 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC npc = Main.npc[p];
                 if (npc.active && !npc.immortal && !npc.dontTakeDamage && Projectile.Hitbox.Intersects(npc.Hitbox))
                 {
-                    if (npc.life < npc.lifeMax - 1000)
+                    if (npc.life < npc.lifeMax - 100)
                     {
                         npc.AddBuff(BuffID.Wet, 600);
-                        npc.life += 1000;
-                        npc.HealEffect(1000);
+                        npc.life += 100;
+                        npc.HealEffect(100);
+                        Projectile.Kill();
                     }
                 }
             }

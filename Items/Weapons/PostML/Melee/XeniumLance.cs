@@ -8,6 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Buffs.Cooldowns;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -104,18 +105,15 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     Level = 0;
                 }
             }
-            
-           
-
             Cooldown = 40;
-
             return false;
         }
-
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 15)
+                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 8)
                 .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .Register();
         }

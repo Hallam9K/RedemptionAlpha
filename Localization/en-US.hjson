@@ -14,6 +14,7 @@ Mods: {
 			XenomiteCooldown: "Xenomite Gas Cooldown"
 			RevolverTossCooldown: "Revolver Cooldown"
 			NoitaBombCooldown: "Bomb Cooldown"
+			XeniumElectrolaserCooldown: "Xenium Electrolaser Cooldown"
             
             # Debuffs
             AntibodiesDebuff: "Xenomite Antibodies"
@@ -82,6 +83,7 @@ Mods: {
 			XenomiteCooldown: "Your gas container is refilling"
 			RevolverTossCooldown: "You can't toss your revolver"
 			NoitaBombCooldown: "You cannot use the Pommisauva"
+			XeniumElectrolaserCooldown: "The electrolaser's battery is recharging"
             
             # Debuffs
             AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."

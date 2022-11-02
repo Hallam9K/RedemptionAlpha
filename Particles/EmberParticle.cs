@@ -35,24 +35,30 @@ namespace Redemption.Particles
                 if (ai[1] == 1)
                     return;
 
-                float sineX = (float)Math.Sin(Main.GlobalTimeWrappedHourly * speedX);
+                if (ai[1] == 2)
+                {
+                    velocity *= 0.9f;
+                }
+                else
+                {
+                    float sineX = (float)Math.Sin(Main.GlobalTimeWrappedHourly * speedX);
 
-                // Makes the particle change directions or speeds.
-                // Timer is used for keeping track of the current cycle
-                if (timer == 0)
-                    NewMovementCycle();
+                    // Makes the particle change directions or speeds.
+                    // Timer is used for keeping track of the current cycle
+                    if (timer == 0)
+                        NewMovementCycle();
 
-                // Adds the wind velocity to the particle.
-                // It adds less the faster it is already going.
-                velocity += new Vector2(Main.windSpeedCurrent * (Main.windPhysicsStrength * 3f) * MathHelper.Lerp(1f, 0.1f, Math.Abs(velocity.X) / 6f), 0f);
-                // Add the sine component to the velocity.
-                // This is scaled by the mult, which changes every cycle.
-                velocity += new Vector2(sineX * mult, -Main.rand.NextFloat(1f, 2f) / 100f);
+                    // Adds the wind velocity to the particle.
+                    // It adds less the faster it is already going.
+                    velocity += new Vector2(Main.windSpeedCurrent * (Main.windPhysicsStrength * 3f) * MathHelper.Lerp(1f, 0.1f, Math.Abs(velocity.X) / 6f), 0f);
+                    // Add the sine component to the velocity.
+                    // This is scaled by the mult, which changes every cycle.
+                    velocity += new Vector2(sineX * mult, -Main.rand.NextFloat(1f, 2f) / 100f);
 
-                // Clamp the velocity so the particle doesnt go too fast.
-                Utils.Clamp(velocity.X, -6f, 6f);
-                Utils.Clamp(velocity.Y, -6f, 6f);
-
+                    // Clamp the velocity so the particle doesnt go too fast.
+                    Utils.Clamp(velocity.X, -6f, 6f);
+                    Utils.Clamp(velocity.Y, -6f, 6f);
+                }
                 // Decrement the timer
                 timer--;
             }
@@ -74,7 +80,7 @@ namespace Redemption.Particles
             float pixelRatio = 1f / 64f;
             spriteBatch.Draw(glow, VisualPosition, new Rectangle(0, 0, 64, 64), glowColor, rotation, new Vector2(32f, 32f), 1f * size * scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(circle, VisualPosition - new Vector2(1.5f, 1.5f), new Rectangle(0, 0, 64, 64), emberColor, rotation, Vector2.Zero, 1f * pixelRatio * 3f * size * scale, SpriteEffects.None, 0f);
-            if (ai[1] != 1)
+            if (ai[1] < 1)
                 spriteBatch.Draw(ember, VisualPosition, new Rectangle(0, 0, 3, 3), color, rotation, new Vector2(1.5f, 1.5f), 1f * scale, SpriteEffects.None, 0f);
             return false;
         }
