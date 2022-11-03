@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;

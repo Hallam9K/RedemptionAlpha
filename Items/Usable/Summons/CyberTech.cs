@@ -2,7 +2,6 @@ using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.KSIII;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

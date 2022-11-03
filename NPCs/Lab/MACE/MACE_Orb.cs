@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {

@@ -1,7 +1,6 @@
 ﻿using Redemption.Buffs;
 using Redemption.Items.Placeable.Plants;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

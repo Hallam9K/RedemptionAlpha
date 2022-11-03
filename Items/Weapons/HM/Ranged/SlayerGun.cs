@@ -8,7 +8,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
-using Terraria.GameContent.Creative;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
 

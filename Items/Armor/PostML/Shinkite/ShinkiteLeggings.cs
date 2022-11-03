@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 
 namespace Redemption.Items.Armor.PostML.Shinkite

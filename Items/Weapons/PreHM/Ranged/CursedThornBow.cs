@@ -2,7 +2,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent.Creative;
 using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged

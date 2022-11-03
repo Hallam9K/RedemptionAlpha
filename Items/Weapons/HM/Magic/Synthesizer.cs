@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.Items.Materials.HM;
-using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.Audio;
@@ -24,17 +24,26 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.height = 34;
             Item.value = Item.sellPrice(0, 4, 50, 0);
             Item.noMelee = true;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Guitar;
             Item.useAnimation = 32;
             Item.useTime = 32;
-            Item.knockBack = 0f;
+            Item.knockBack = 1f;
             Item.rare = ItemRarityID.LightRed;
-            Item.damage = 52;
+            Item.damage = 62;
             Item.shoot = ModContent.ProjectileType<Synthesizer_Proj>();
-            Item.shootSpeed = 11f;
+            Item.shootSpeed = 0;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 8;
             Item.autoReuse = true;
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            int floor = BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16);
+            position = new Vector2(player.Center.X, floor * 16 - 10);
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(4, 0);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -78,16 +87,16 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 60;
+            Projectile.timeLeft = 40;
         }
         public override void AI()
         {
-            if (Projectile.localAI[0]++ % 2 == 0 && Main.myPlayer == Projectile.owner)
+            if (Projectile.localAI[0]++ % 3 == 0 && Main.myPlayer == Projectile.owner)
             {
                 for (int i = -1; i <= 1; i += 2)
                 {
                     Vector2 origin = Projectile.Center;
-                    origin.X += Projectile.localAI[0] * 32 * i;
+                    origin.X += Projectile.localAI[0] * 14 * i;
                     int numtries = 0;
                     int x = (int)(origin.X / 16);
                     int y = (int)(origin.Y / 16);
@@ -105,7 +114,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                     if (numtries >= 20)
                         break;
 
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin - new Vector2(0, 8), new Vector2(0, -15), ModContent.ProjectileType<SynthNote_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin + new Vector2(0, 18), new Vector2(0, -14), ModContent.ProjectileType<SynthNote_Proj>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
         }

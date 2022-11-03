@@ -1,7 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 using Terraria;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;

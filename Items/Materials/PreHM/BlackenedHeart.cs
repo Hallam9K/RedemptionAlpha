@@ -3,7 +3,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Rarities;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Materials.PreHM
 {

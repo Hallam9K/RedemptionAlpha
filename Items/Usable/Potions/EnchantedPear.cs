@@ -1,5 +1,4 @@
 using Redemption.Buffs;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

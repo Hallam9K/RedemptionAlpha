@@ -1,11 +1,10 @@
 using Redemption.Tiles.Furniture.PetrifiedWood;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 {
-	public class PetrifiedWoodBed : ModItem
+    public class PetrifiedWoodBed : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

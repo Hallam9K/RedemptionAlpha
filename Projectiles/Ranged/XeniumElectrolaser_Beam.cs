@@ -5,7 +5,6 @@ using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged

@@ -1,6 +1,5 @@
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Plants
 {

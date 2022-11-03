@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.GameContent;
@@ -12,7 +11,6 @@ using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Globals.Player;
-using System.Net;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {

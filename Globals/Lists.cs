@@ -9,7 +9,6 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Ranged;
 using Redemption.Items.Weapons.PreHM.Ammo;
 using Redemption.Projectiles.Magic;
-using Terraria;
 using Redemption.NPCs.Bosses.Thorn;
 using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Melee;

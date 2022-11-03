@@ -1,5 +1,4 @@
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
@@ -9,7 +8,7 @@ using Redemption.Projectiles.Minions;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
-	public class CorpseWalkerStaff : ModItem
+    public class CorpseWalkerStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

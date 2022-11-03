@@ -1,12 +1,11 @@
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.HM
 {
-	public class OmegaBattery : ModItem
+    public class OmegaBattery : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

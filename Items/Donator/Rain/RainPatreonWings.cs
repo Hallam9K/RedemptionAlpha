@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.HM;
-using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 
 namespace Redemption.Items.Donator.Rain

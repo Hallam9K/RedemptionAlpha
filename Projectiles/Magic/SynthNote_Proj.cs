@@ -33,17 +33,16 @@ namespace Redemption.Projectiles.Magic
         }
         public override void AI()
         {
+            Projectile.velocity.Y += 0.3f;
+            if (Projectile.timeLeft < 20)
+            {
+                Projectile.alpha += 20;
+                if (Projectile.alpha >= 255)
+                    Projectile.Kill();
+                return;
+            }
             Projectile.alpha -= 20;
             Projectile.alpha = (int)MathHelper.Max(Projectile.alpha, 0);
-            Projectile.velocity.Y += 0.2f;
-        }
-        public override void Kill(int timeLeft)
-        {
-            for (int i = 0; i < 14; i++)
-            {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy, Scale: 2);
-                Main.dust[dust].noGravity = true;
-            }
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
@@ -61,7 +60,7 @@ namespace Redemption.Projectiles.Magic
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + origin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
             }
 
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, 0);
@@ -75,6 +74,9 @@ namespace Redemption.Projectiles.Magic
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (target.knockBackResist > 0)
+                target.velocity.Y -= 7 * target.knockBackResist;
+
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
             else if (Main.rand.NextBool(6))

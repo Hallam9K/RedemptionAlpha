@@ -7,7 +7,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using ParticleLibrary;
 using Redemption.Particles;

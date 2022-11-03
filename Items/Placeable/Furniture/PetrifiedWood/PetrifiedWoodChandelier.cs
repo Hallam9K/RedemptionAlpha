@@ -1,5 +1,4 @@
 using Redemption.Tiles.Furniture.PetrifiedWood;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.NPCs.Bosses.Gigapora

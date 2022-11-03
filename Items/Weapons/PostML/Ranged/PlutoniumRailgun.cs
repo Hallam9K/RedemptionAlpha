@@ -7,7 +7,6 @@ using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.HM;
-using Terraria.GameContent.Creative;
 using Terraria.DataStructures;
 using Redemption.Globals.Player;
 using Redemption.Globals;

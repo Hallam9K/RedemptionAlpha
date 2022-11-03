@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Banners;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Banners
 {

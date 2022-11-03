@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.DamageClasses;

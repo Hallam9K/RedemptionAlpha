@@ -5,7 +5,6 @@ using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;

@@ -10,11 +10,9 @@ using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
 using Redemption.Items.Usable;
 using Terraria.Utilities;
-using IL.Terraria.GameContent.RGB;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
 using Redemption.NPCs.Critters;
-using Microsoft.Xna.Framework;
 
 namespace Redemption.Tiles.Trees
 {

@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.Cooldowns;
-using Redemption.Globals;
 using Redemption.Items.Weapons.HM.Magic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 

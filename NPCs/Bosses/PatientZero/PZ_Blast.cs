@@ -6,7 +6,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

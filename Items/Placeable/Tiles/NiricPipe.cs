@@ -1,9 +1,7 @@
-using Redemption.Globals;
 using Redemption.Tiles.Tiles;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Tiles
 {

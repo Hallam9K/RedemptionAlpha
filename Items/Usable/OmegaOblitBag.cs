@@ -4,13 +4,13 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
-using Terraria.GameContent.Creative;
 using Terraria.GameContent;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.Items.Usable
 {
@@ -38,6 +38,7 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OOMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 4, 8));

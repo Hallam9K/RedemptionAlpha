@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.Base;
 using Microsoft.Xna.Framework;

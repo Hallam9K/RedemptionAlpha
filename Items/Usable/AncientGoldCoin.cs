@@ -3,7 +3,6 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Redemption.Tiles.Tiles;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Usable
 {

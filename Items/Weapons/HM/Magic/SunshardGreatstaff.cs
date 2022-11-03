@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using System.Collections.Generic;
 using Redemption.Projectiles.Magic;
-using Terraria.GameContent.Creative;
 using Redemption.Globals;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;

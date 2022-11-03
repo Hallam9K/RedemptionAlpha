@@ -6,7 +6,6 @@ using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {

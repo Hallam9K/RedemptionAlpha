@@ -1,5 +1,4 @@
 using Redemption.Tiles.Containers;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

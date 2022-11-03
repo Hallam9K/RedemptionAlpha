@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
-using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Terraria.Localization;
 using Redemption.BaseExtension;

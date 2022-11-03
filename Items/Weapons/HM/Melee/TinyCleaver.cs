@@ -1,7 +1,6 @@
 using Redemption.Items.Materials.HM;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

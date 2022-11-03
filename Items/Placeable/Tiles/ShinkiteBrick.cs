@@ -1,6 +1,5 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,7 +1,6 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Ores;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PostML

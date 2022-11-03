@@ -2,7 +2,6 @@ using Redemption.DamageClasses;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -25,6 +25,7 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Usable;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -160,6 +161,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OOMask>(), 7));
+
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 4, 8));

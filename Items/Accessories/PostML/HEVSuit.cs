@@ -4,7 +4,6 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Usable.Potions;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;

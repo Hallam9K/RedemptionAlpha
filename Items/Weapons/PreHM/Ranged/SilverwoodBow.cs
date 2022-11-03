@@ -4,7 +4,6 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {

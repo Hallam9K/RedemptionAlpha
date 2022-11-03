@@ -1,17 +1,11 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.NPCs.Bosses.Thorn;
 using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PostML.Melee;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Materials.PostML;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Usable
 {

@@ -1,13 +1,12 @@
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Redemption.NPCs.Bosses.Thorn;
 
 namespace Redemption.Items.Usable.Summons
 {
-	public class HeartOfThorns : ModItem
+    public class HeartOfThorns : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

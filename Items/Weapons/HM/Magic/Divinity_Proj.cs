@@ -8,15 +8,11 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Redemption.Base;
-using Redemption.Buffs.NPCBuffs;
 using Terraria.GameContent;
 using Redemption.Particles;
 using ParticleLibrary;
 using Redemption.Effects.PrimitiveTrails;
-using ReLogic.Content;
 using Redemption.Projectiles.Magic;
-using Redemption.Projectiles.Minions;
-using Microsoft.CodeAnalysis;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
