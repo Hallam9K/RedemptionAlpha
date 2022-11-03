@@ -15,12 +15,9 @@ namespace Redemption.Items.Weapons.HM.Melee
     public class BlindJustice_Proj : TrueMeleeProjectile
     {
         public override string Texture => "Redemption/Items/Weapons/HM/Melee/BlindJustice";
-        public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blind Justice, Demon's Terror");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -42,10 +39,6 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = Projectile.rotation;
-
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -154,7 +147,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 1.1f, 1.2f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
