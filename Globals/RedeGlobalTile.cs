@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
@@ -8,6 +9,7 @@ using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using Redemption.Tiles.Tiles;
+using System.Reflection.Metadata;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

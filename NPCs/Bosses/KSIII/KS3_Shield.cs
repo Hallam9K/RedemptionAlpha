@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     continue;
 
                 SoundEngine.PlaySound(SoundID.NPCDeath56, Projectile.position);
-                for (int k = 0; k < 20; k++)
+                for (int k = 0; k < 60; k++)
                 {
                     Vector2 vector;
                     double angle = Main.rand.NextDouble() * 2d * Math.PI;

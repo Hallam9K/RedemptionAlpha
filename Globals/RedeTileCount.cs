@@ -15,7 +15,6 @@ namespace Redemption.Globals
         public int WastelandCorruptTileCount;
         public int WastelandCrimsonTileCount;
         public int SoullessTileCount;
-
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
             Main.SceneMetrics.SandTileCount += tileCounts[ModContent.TileType<IrradiatedSandTile>()] + tileCounts[ModContent.TileType<IrradiatedSandstoneTile>()];

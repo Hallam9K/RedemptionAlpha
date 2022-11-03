@@ -204,7 +204,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         public override bool CheckActive()
         {
-            return AIState != ActionState.SpareCountdown;
+            return AIState <= ActionState.PhysicalAttacks;
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {

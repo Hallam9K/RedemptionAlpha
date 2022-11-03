@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.BaseExtension;
 using Terraria.Graphics.Effects;
+using Redemption.Base;
 
 namespace Redemption.Globals.Player
 {
@@ -14,9 +15,13 @@ namespace Redemption.Globals.Player
         public int irradiatedLevel;
         public int irradiatedTimer;
         public int irradiatedEffect;
+        public float RadNoiseIntensity = 0f;
+        public float RadNoiseIntensity2 = 0f;
 
         public override void PostUpdateMiscEffects()
         {
+            UpdateFilterEffects();
+            RadNoiseIntensity = 0;
             if (irradiatedLevel == 0)
                 return;
 
@@ -331,8 +336,52 @@ namespace Redemption.Globals.Player
             if (irradiatedLevel > 5)
                 irradiatedLevel = 5;
         }
-        public override void PreUpdate()
+        private void UpdateFilterEffects()
         {
+            if (irradiatedLevel > 0)
+            {
+                if (!Filters.Scene["MoR:RadiationNoiseEffect"].IsActive())
+                    Filters.Scene.Activate("MoR:RadiationNoiseEffect");
+
+                float timerMax = 58000;
+                float timerMin = 38000;
+                switch (irradiatedLevel)
+                {
+                    case 2:
+                        timerMax = 56000;
+                        timerMin = 36000;
+                        break;
+                    case 3:
+                        timerMax = 49000;
+                        timerMin = 32000;
+                        break;
+                    case 4:
+                        timerMax = 41000;
+                        timerMin = 30000;
+                        break;
+                    case 5:
+                        timerMax = 32000;
+                        timerMin = 26000;
+                        break;
+                }
+                if (irradiatedTimer > 0 && irradiatedTimer < 60)
+                {
+                    timerMax = 60;
+                    timerMin = 600;
+                }
+                if (irradiatedTimer >= 60 && irradiatedTimer < 180)
+                {
+                    timerMax = 60;
+                    timerMin = 780;
+                }
+                RadNoiseIntensity = 1f * Utils.GetLerpValue(timerMin - 600, timerMax, irradiatedTimer, true);
+                Filters.Scene["MoR:RadiationNoiseEffect"].GetShader().UseIntensity(RadNoiseIntensity);
+            }
+            else
+            {
+                if (Filters.Scene["MoR:RadiationNoiseEffect"].IsActive())
+                    Filters.Scene.Deactivate("MoR:RadiationNoiseEffect");
+            }
         }
         public override void UpdateDead()
         {
