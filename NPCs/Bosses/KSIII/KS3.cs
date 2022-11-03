@@ -607,6 +607,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                     if (BodyState is (int)BodyAnim.Idle && NPC.velocity.Length() < 1f)
                                     {
+                                        gunRot = 0;
                                         BodyState = (int)BodyAnim.IdlePhysical;
                                         AITimer = 0;
                                         AIState = ActionState.PhysicalAttacks;
@@ -761,7 +762,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.velocity *= 0.96f;
                                 if (AITimer == 260)
                                 {
-                                    NPC.velocity.X = player.Center.X > NPC.Center.X ? -9 : 9;
+                                    NPC.velocity.X = -9 * NPC.spriteDirection;
                                     for (int i = 0; i < Main.rand.Next(5, 8); i++)
                                     {
                                         NPC.Shoot(GunOrigin, ModContent.ProjectileType<KS3_EnergyBolt>(), 72, RedeHelper.PolarVector(Main.rand.Next(8, 13) + dmgIncrease, gunRot + Main.rand.NextFloat(-0.14f, 0.14f)), true, CustomSounds.ShotgunBlastKS);
@@ -783,31 +784,45 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                         #region Rebound Shot
                         case 3:
-                            gunRot.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 60f);
-                            SnapGunToFiringArea();
-                            AITimer++;
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -450 : 450, -10);
-                            NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
-
-                            if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                            if (AITimer == 0)
                             {
-                                ArmsFrameY = 1;
-                                ArmsFrameX = 0;
-                                BodyState = (int)BodyAnim.Gun;
-                            }
-
-                            if (phase >= 5 ? AITimer == 40 : AITimer == 60)
-                            {
-                                NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2KS);
-                                BodyState = (int)BodyAnim.GunShoot;
+                                if (phase < 5)
+                                    AITimer = 1;
+                                else
+                                {
+                                    AttackChoice = Main.rand.Next(1, 6);
+                                    AITimer = 0;
+                                }
                                 NPC.netUpdate = true;
                             }
-                            if (phase >= 5 ? AITimer > 60 : AITimer > 90)
+                            else
                             {
-                                chance -= Main.rand.NextFloat(0.05f, 0.1f);
-                                AITimer = 0;
-                                AttackChoice = -1;
-                                NPC.netUpdate = true;
+                                gunRot.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 60f);
+                                SnapGunToFiringArea();
+                                AITimer++;
+                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -450 : 450, -10);
+                                NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
+
+                                if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
+                                {
+                                    ArmsFrameY = 1;
+                                    ArmsFrameX = 0;
+                                    BodyState = (int)BodyAnim.Gun;
+                                }
+
+                                if (AITimer == 40)
+                                {
+                                    NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2KS);
+                                    BodyState = (int)BodyAnim.GunShoot;
+                                    NPC.netUpdate = true;
+                                }
+                                if (AITimer > 60)
+                                {
+                                    chance -= Main.rand.NextFloat(0.05f, 0.1f);
+                                    AITimer = 0;
+                                    AttackChoice = -1;
+                                    NPC.netUpdate = true;
+                                }
                             }
                             break;
                         #endregion
@@ -840,13 +855,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     BodyState = (int)BodyAnim.Gun;
                                 }
 
-                                if (phase >= 5 ? AITimer == 41 || AITimer == 44 || AITimer == 47 : AITimer == 61 || AITimer == 64 || AITimer == 67)
+                                int startShot = 61;
+                                if (phase >= 5)
+                                    startShot = 41;
+                                if (AITimer >= startShot && AITimer % 3 == 0 && AITimer <= startShot + (phase >= 5 ? 15 : 9))
                                 {
                                     NPC.Shoot(GunOrigin, ModContent.ProjectileType<ReboundShot>(), 72, RedeHelper.PolarVector(15 + dmgIncrease, gunRot), true, CustomSounds.Gun2KS);
                                     BodyState = (int)BodyAnim.GunShoot;
                                     NPC.netUpdate = true;
                                 }
-                                if (phase >= 5 ? AITimer > 61 : AITimer > 91)
+                                if (phase >= 5 ? AITimer > 67 : AITimer > 91)
                                 {
                                     chance -= Main.rand.NextFloat(0.05f, 0.1f);
                                     AITimer = 0;
@@ -938,7 +956,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer == 1)
                                 {
                                     if (BodyState is (int)BodyAnim.Idle)
+                                    {
+                                        gunRot = 0;
                                         BodyState = (int)BodyAnim.IdlePhysical;
+                                    }
 
                                     if (BodyState is (int)BodyAnim.IdlePhysical && NPC.velocity.Length() < 1f)
                                     {
@@ -987,13 +1008,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 NPC.velocity *= 0.96f;
-                                if (AITimer == 120)
+                                if (AITimer == 105)
                                     BodyState = (int)BodyAnim.RocketFist;
 
-                                if (AITimer == 135)
+                                if (AITimer == 120)
                                     NPC.Shoot(new Vector2(NPC.Center.X + 15 * NPC.spriteDirection, NPC.Center.Y - 11), ModContent.ProjectileType<KS3_Fist>(), 102, new Vector2(10 * NPC.spriteDirection, 0), true, CustomSounds.MissileFire1);
 
-                                if (AITimer > 170)
+                                if (AITimer > 150)
                                 {
                                     chance -= Main.rand.NextFloat(0.03f, 0.1f);
                                     AITimer = 0;
@@ -1035,7 +1056,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 {
                                     NPC.velocity *= 0.9f;
                                     if (AITimer == 120)
+                                    {
+                                        ArmsFrameY = 5;
+                                        ArmsCounter = 0;
                                         BodyState = (int)BodyAnim.Grenade;
+                                    }
 
                                     if (AITimer == 140)
                                         NPC.Shoot(new Vector2(NPC.Center.X + 21 * NPC.spriteDirection, NPC.Center.Y - 17), ModContent.ProjectileType<KS3_FlashGrenade>(), 78, new Vector2(10 * NPC.spriteDirection, -6), true, SoundID.Item1);
@@ -1161,6 +1186,27 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                         for (int i = 0; i < 18; i++)
                                             NPC.Shoot(new Vector2(NPC.Center.X + 2 * NPC.spriteDirection, NPC.Center.Y - 16), ModContent.ProjectileType<KS3_Surge2>(), 0, RedeHelper.PolarVector(14, MathHelper.ToRadians(20) * i), false, SoundID.Item1);
+
+                                        if (phase > 2 && Main.expertMode)
+                                        {
+                                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                            {
+                                                for (int i = 0; i < 8; i++)
+                                                {
+                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                                                    Main.projectile[proj].tileCollide = false;
+                                                    Main.projectile[proj].timeLeft = 200;
+                                                    Main.projectile[proj].netUpdate2 = true;
+                                                }
+                                                for (int i = 0; i < 18; i++)
+                                                {
+                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPC.damage / 4, 0, Main.myPlayer);
+                                                    Main.projectile[proj].tileCollide = false;
+                                                    Main.projectile[proj].timeLeft = 200;
+                                                    Main.projectile[proj].netUpdate2 = true;
+                                                }
+                                            }
+                                        }
                                     }
                                     if (AITimer > 232)
                                     {
@@ -1534,6 +1580,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                         #region Shoulder Bash
                         case 2:
                             AITimer++;
+                            if (AITimer == 1)
+                                Teleport(false, Vector2.Zero);
                             if (AITimer < 100)
                             {
                                 NPC.rotation = NPC.velocity.X * 0.01f;
@@ -1668,6 +1716,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         NPC.rotation = 0;
                                         NPC.velocity *= 0f;
                                         chance -= Main.rand.NextFloat(0.2f, 0.5f);
+                                        NPC.frame.Y = 4 * 80;
+                                        if (NPC.frame.X < 4 * NPC.frame.Width)
+                                            NPC.frame.X = 4 * NPC.frame.Width;
                                         BodyState = (int)BodyAnim.IdlePhysical;
                                         AITimer = 0;
                                         AttackChoice = -1;
@@ -1678,6 +1729,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 chance -= Main.rand.NextFloat(0.2f, 0.5f);
+                                NPC.frame.Y = 4 * 80;
+                                if (NPC.frame.X < 4 * NPC.frame.Width)
+                                    NPC.frame.X = 4 * NPC.frame.Width;
                                 BodyState = (int)BodyAnim.IdlePhysical;
                                 AttackChoice = -1;
                                 NPC.netUpdate = true;
@@ -1688,17 +1742,29 @@ namespace Redemption.NPCs.Bosses.KSIII
                         #region Iron Pummel
                         case 4:
                             AITimer++;
+                            if (AITimer == 1 && NPC.DistanceSQ(player.Center) > 300 * 300)
+                                Teleport(false, Vector2.Zero);
                             NPC.rotation = NPC.velocity.X * 0.01f;
                             ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -60 : 60, 20);
                             if (AITimer < 100)
                             {
                                 NPC.LookAtEntity(player);
-                                if (NPC.DistanceSQ(ShootPos) < 50 * 50 || AITimer > 40)
+                                if (NPC.DistanceSQ(player.Center + ShootPos) < 50 * 50 || AITimer > 40)
                                 {
                                     AITimer = 100;
 
-                                    NPC.frame.X = 0;
+                                    NPC.frameCounter = 0;
                                     BodyState = Main.rand.NextBool(2) ? (int)BodyAnim.Pummel1 : (int)BodyAnim.Pummel2;
+                                    if (BodyState is (int)BodyAnim.Pummel1)
+                                    {
+                                        NPC.frame.Y = 3 * 80;
+                                        NPC.frame.X = 6 * NPC.frame.Width;
+                                    }
+                                    else
+                                    {
+                                        NPC.frame.Y = 4 * 80;
+                                        NPC.frame.X = 1 * NPC.frame.Width;
+                                    }
                                     NPC.netUpdate = true;
                                 }
                                 else
@@ -1708,7 +1774,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 NPC.velocity *= 0.9f;
                                 if (AITimer == 105)
-                                    NPC.Dash(10, false, SoundID.Item74, player.Center);
+                                {
+                                    gunRot += 1;
+                                    NPC.Dash(10, false, CustomSounds.Swoosh1, player.Center);
+                                }
 
                                 if (AITimer >= 105 && AITimer <= 115)
                                 {
@@ -1739,7 +1808,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 if (AITimer > 140)
                                 {
-                                    if (RedeHelper.Chance(0.35f))
+                                    if (gunRot <= 1 || RedeHelper.Chance(0.35f))
                                     {
                                         AITimer = 0;
                                         NPC.netUpdate = true;
@@ -1791,6 +1860,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 if (AITimer > 240)
                                 {
+                                    NPC.frame.Y = 4 * 80;
+                                    if (NPC.frame.X < 4 * NPC.frame.Width)
+                                        NPC.frame.X = 4 * NPC.frame.Width;
+
                                     BodyState = (int)BodyAnim.IdlePhysical;
                                     chance -= Main.rand.NextFloat(0.05f, 0.2f);
                                     AITimer = 0;
@@ -2797,7 +2870,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.frame.X = 0;
                                 NPC.frame.Y = 4 * frameHeight;
                             }
-                            if (NPC.frame.Y == 4 * frameHeight && NPC.frame.X > 0 * NPC.frame.Width)
+                            if (NPC.frame.Y == 4 * frameHeight && NPC.frame.X > 0)
                             {
                                 NPC.frame.Y = 4 * frameHeight;
                                 NPC.frame.X = 4 * NPC.frame.Width;
@@ -2832,7 +2905,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.frameCounter = 0;
                             NPC.frame.X += NPC.frame.Width;
                             if (NPC.frame.X > 7 * NPC.frame.Width)
-                                NPC.frame.X = 4;
+                                NPC.frame.X = 4 * NPC.frame.Width;
                         }
                         break;
                     case (int)BodyAnim.ShoulderBash:
@@ -2843,7 +2916,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NPC.frameCounter = 0;
                             NPC.frame.X += NPC.frame.Width;
                             if (NPC.frame.X > 6 * NPC.frame.Width)
-                                NPC.frame.X = 2;
+                                NPC.frame.X = 2 * NPC.frame.Width;
                         }
                         break;
                     case (int)BodyAnim.ShoulderBashEnd:
