@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Patient Zero)");
-            Tooltip.SetDefault("Universe & OmegaFerretMusic - Element-88");
+            Tooltip.SetDefault("Universe - Xenostate");
 			SacrificeTotal = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2"), ModContent.ItemType<PZMusicBox>(), ModContent.TileType<PZMusicBoxTile>());
