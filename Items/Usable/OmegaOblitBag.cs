@@ -41,7 +41,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OOMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 4, 8));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 4, 8));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ObliterationDrive>()));
         }
         public override void PostUpdate()

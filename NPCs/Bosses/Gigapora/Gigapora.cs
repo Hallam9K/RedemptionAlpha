@@ -163,7 +163,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 2, 4));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
         }
         public override void BossLoot(ref string name, ref int potionType)

@@ -55,7 +55,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<DAN>())
-                .AddIngredient(ModContent.ItemType<OmegaBattery>())
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
                 .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 8)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
                 .AddIngredient(ModContent.ItemType<Plating>(), 4)

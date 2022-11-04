@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
@@ -63,6 +64,17 @@ namespace Redemption.Items.Weapons.HM.Magic
                 };
                 tooltips.Add(line);
             }
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.SpellTome)
+                .AddIngredient(ItemID.BeetleHusk, 4)
+                .AddIngredient(ItemID.LunarTabletFragment, 10)
+                .AddIngredient(ItemID.SoulofNight, 15)
+                .AddIngredient(ItemID.SoulofMight, 15)
+                .AddTile(TileID.Bookcases)
+                .Register();
         }
     }
 }

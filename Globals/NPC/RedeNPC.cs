@@ -27,6 +27,7 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.NPCs.Bosses.ADD;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Globals.NPC
 {
@@ -45,12 +46,17 @@ namespace Redemption.Globals.NPC
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
             if (type == NPCID.Cyborg)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GlobalDischarge>());
+            if (type == NPCID.Clothier)
+            {
+                if (RedeBossDowned.downedThorn)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ThornPlush>());
+                if (RedeBossDowned.downedEaglecrestGolem)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestGolemPlush>());
+            }
             if (type == NPCID.Wizard)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
-                if (Terraria.NPC.downedGolemBoss)
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Rockslide>());
             }
         }
         public override void ResetEffects(Terraria.NPC npc)

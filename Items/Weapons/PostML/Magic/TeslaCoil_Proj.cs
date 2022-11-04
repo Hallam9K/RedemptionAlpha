@@ -108,7 +108,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                             {
                                                 if (Projectile.ai[1] == 1)
                                                 { 
-                                                    if (npc.whoAmI != whoAmI || !Main.rand.NextBool(3))
+                                                    if (npc.whoAmI != whoAmI || !Main.rand.NextBool(2))
                                                         continue;
                                                 }
                                             }

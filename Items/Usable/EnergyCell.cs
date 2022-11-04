@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals.Player;
+using Redemption.Items.Materials.HM;
+using Redemption.Tiles.Furniture.Lab;
+using Redemption.Tiles.Furniture.Misc;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -30,6 +33,13 @@ namespace Redemption.Items.Usable
         {
             SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.5f }, player.position);
             player.GetModPlayer<EnergyPlayer>().statEnergy += 20;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(3)
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
+                .AddTile(ModContent.TileType<EnergyStationTile>())
+                .Register();
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {

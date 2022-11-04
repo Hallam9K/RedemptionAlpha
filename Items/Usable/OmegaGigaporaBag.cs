@@ -36,7 +36,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 2, 4));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));
         }
         public override void PostUpdate()
