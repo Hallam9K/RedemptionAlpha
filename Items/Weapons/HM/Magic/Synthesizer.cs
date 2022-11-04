@@ -47,9 +47,9 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            float cursorPosFromPlayer = player.Distance(Main.MouseWorld) / (Main.screenHeight / 2 / 24);
             if (!Main.dedServ)
             {
-                float cursorPosFromPlayer = player.Distance(Main.MouseWorld) / (Main.screenHeight / 2 / 24);
                 if (cursorPosFromPlayer > 24) cursorPosFromPlayer = 1;
                 else cursorPosFromPlayer = (cursorPosFromPlayer / 12) - 1;
                 if (!Main.dedServ)
@@ -58,7 +58,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                     SoundEngine.PlaySound(s, player.Center);
                 }
             }
-            return true;
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Main.myPlayer, cursorPosFromPlayer);
+            return false;
         }
         public override void AddRecipes()
         {
@@ -96,7 +97,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 for (int i = -1; i <= 1; i += 2)
                 {
                     Vector2 origin = Projectile.Center;
-                    origin.X += Projectile.localAI[0] * 14 * i;
+                    origin.X += Projectile.localAI[0] * (14 + (Projectile.ai[0] * 4)) * i;
                     int numtries = 0;
                     int x = (int)(origin.X / 16);
                     int y = (int)(origin.Y / 16);

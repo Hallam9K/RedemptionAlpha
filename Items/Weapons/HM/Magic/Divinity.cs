@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 100;
+            Item.damage = 120;
             Item.height = 30;
             Item.width = 36;
             Item.useTime = 40;

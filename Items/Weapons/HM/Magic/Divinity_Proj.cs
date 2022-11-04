@@ -224,7 +224,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 target.immune[Projectile.whoAmI] = 20;
                 int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
                 BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.25f)), 7, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 0.75f)), 4, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.25f)), 4, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                 target.AddBuff(BuffID.OnFire3, 600);
             }
             for (int i = 0; i < 20; i++)

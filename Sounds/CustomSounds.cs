@@ -123,5 +123,6 @@ namespace Redemption
         public static readonly SoundStyle WindLong = new("Redemption/Sounds/Custom/WindLong1") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle Jyrina = new("Redemption/Sounds/Custom/Jyrina1") { PitchVariance = .2f };
         public static readonly SoundStyle Synth = new("Redemption/Sounds/Custom/SynthSound");
+        public static readonly SoundStyle ElectricLoop = new("Redemption/Sounds/Custom/ElectricLoop") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
 }
 }

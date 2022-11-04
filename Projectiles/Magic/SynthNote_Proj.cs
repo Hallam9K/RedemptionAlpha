@@ -30,6 +30,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 80;
             Projectile.frame = Main.rand.Next(2);
             Projectile.alpha = 255;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void AI()
         {
@@ -74,6 +75,9 @@ namespace Redemption.Projectiles.Magic
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
+
             if (target.knockBackResist > 0)
                 target.velocity.Y -= 7 * target.knockBackResist;
 
