@@ -5358,6 +5358,9 @@ namespace Redemption.Base
                     ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
 
+                    if (Main.player[p.owner].accDreamCatcher)
+                        Main.player[p.owner].addDPS(parsedDamage);
+
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
 
@@ -5374,6 +5377,9 @@ namespace Redemption.Base
                     NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
                     PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
                     PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
+
+                    if (player.accDreamCatcher)
+                        player.addDPS(parsedDamage);
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
