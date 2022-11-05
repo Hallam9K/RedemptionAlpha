@@ -352,6 +352,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
+                if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                {
+                    if (Main.rand.NextBool(8) && npc.lifeMax > 5)
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
+                }
                 #endregion
             }
 
@@ -399,6 +404,11 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
+                }
+                if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                {
+                    if (Main.rand.NextBool(8) && npc.lifeMax > 5)
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
                 #endregion
             }

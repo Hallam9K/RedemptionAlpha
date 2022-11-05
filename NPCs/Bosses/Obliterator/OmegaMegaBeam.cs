@@ -50,6 +50,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 150;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         private float offset;
         public override void AI()

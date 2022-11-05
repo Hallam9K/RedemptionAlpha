@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using Terraria.ID;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -49,6 +50,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 120;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         private bool faceLeft;

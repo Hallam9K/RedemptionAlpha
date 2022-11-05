@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -47,6 +48,7 @@ namespace Redemption.NPCs.Lab.Volt
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 80;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

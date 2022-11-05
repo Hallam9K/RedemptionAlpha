@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -55,6 +56,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.tileCollide = false;
             Projectile.timeLeft = 200;
             Projectile.alpha = 255;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;

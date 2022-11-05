@@ -9,6 +9,7 @@ using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using Terraria.Audio;
 using Terraria.ID;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -51,6 +52,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 140;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

@@ -17,6 +17,7 @@ using Redemption.Buffs;
 using Redemption.Items.Usable;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -340,6 +341,9 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GolemEye>());
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
+
+            if (NPC.downedMoonlord)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MythrilsBane>());
 
             /*if (RedeBossDowned.downedMossyGoliath)
             {

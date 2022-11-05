@@ -9,6 +9,7 @@ using Redemption.Base;
 using Terraria.Audio;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -53,6 +54,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         float attackCounter = 0;
 

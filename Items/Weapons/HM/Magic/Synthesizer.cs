@@ -29,11 +29,11 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.useTime = 32;
             Item.knockBack = 1f;
             Item.rare = ItemRarityID.LightRed;
-            Item.damage = 62;
+            Item.damage = 42;
             Item.shoot = ModContent.ProjectileType<Synthesizer_Proj>();
             Item.shootSpeed = 0;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 8;
+            Item.mana = 15;
             Item.autoReuse = true;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

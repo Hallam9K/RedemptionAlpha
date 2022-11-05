@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Redemption.Globals;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -49,6 +50,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 820;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override void AI()
         {

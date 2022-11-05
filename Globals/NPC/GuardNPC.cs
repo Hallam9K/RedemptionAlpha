@@ -29,7 +29,7 @@ namespace Redemption.Globals.NPC
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
             GuardPoints -= guardDamage;
 
-            if (npc.HasBuff(BuffID.BrokenArmor) || npc.RedemptionNPCBuff().stunned || GuardPierce)
+            if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || GuardPierce)
             {
                 vanillaDamage = true;
                 damage /= 2;

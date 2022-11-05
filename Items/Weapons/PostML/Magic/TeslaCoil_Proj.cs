@@ -94,7 +94,10 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                         else
                                             lightningArc2 = Main.MouseWorld;
                                     }
-                                    DustHelper.DrawParticleElectricity(lightningArc, lightningArc2, new LightningParticle(), 1f, 20, 0.05f);
+                                    float lagReduce = 0.05f;
+                                    if (lightningArc.DistanceSQ(lightningArc2) > 400 * 400)
+                                        lagReduce = 0.2f;
+                                    DustHelper.DrawParticleElectricity(lightningArc, lightningArc2, new LightningParticle(), 1f, 20, lagReduce);
                                     for (int i = 0; i < Main.maxNPCs; i++)
                                     {
                                         NPC npc = Main.npc[i];

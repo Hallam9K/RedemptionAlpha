@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using System.Collections.Generic;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {

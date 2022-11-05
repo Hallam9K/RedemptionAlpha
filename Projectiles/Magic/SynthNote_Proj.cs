@@ -80,11 +80,6 @@ namespace Redemption.Projectiles.Magic
 
             if (target.knockBackResist > 0)
                 target.velocity.Y -= 7 * target.knockBackResist;
-
-            if (Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
-            else if (Main.rand.NextBool(6))
-                target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 150);
         }
     }
 }
