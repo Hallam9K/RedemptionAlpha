@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Friendly
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 2:
+                    default:
                         button = "Feel free to stay here";
                         button2 = "Who are you?";
                         break;
@@ -227,7 +227,7 @@ namespace Redemption.NPCs.Friendly
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 2:
+                    default:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. I'm Daerel, by the way. Nice to meet you.";

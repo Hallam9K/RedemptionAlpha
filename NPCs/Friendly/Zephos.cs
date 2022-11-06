@@ -179,7 +179,7 @@ namespace Redemption.NPCs.Friendly
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 2:
+                    default:
                         button = "Feel free to stay here";
                         button2 = "Who are you?";
                         break;
@@ -220,7 +220,7 @@ namespace Redemption.NPCs.Friendly
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 2:
+                    default:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Pleasure to meet ya.";
