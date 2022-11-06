@@ -186,11 +186,6 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ItemID.Ruby);
                 shop.item[nextSlot++].SetDefaults(ItemID.Diamond);
             }
-            if (Main.hardMode)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AncientAutoPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DubiousWatcherPainting>());
-            }
         }
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
