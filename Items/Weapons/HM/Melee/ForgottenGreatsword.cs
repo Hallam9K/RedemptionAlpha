@@ -4,14 +4,15 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Melee
+namespace Redemption.Items.Weapons.HM.Melee
 {
-    public class ForgottenSword : ModItem
+    public class ForgottenGreatsword : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sword of the Forgotten");
-            Tooltip.SetDefault("Spins the blade around the player and sets ablaze, flinging embers in its wake");
+            DisplayName.SetDefault("Ophos' Forgotten Greatsword");
+            Tooltip.SetDefault("Spins the blade around the player and sets ablaze\n" +
+                "Forms a firestorm that engulfs the player, release left-click to disperse it, launching nearby enemies away");
 
             SacrificeTotal = 1;
         }
@@ -19,10 +20,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 68;
-            Item.height = 68;
-            Item.rare = ItemRarityID.Green;
-            Item.value = Item.sellPrice(silver: 65);
+            Item.width = 70;
+            Item.height = 70;
+            Item.rare = ItemRarityID.Yellow;
+            Item.value = Item.sellPrice(gold: 18);
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -33,7 +34,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.channel = true;
 
             // Weapon Properties
-            Item.damage = 28;
+            Item.damage = 58;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -41,16 +42,16 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<ForgottenSword_Proj>();
+            Item.shoot = ModContent.ProjectileType<ForgottenGreatsword_Proj>();
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())
             {
                 TooltipLine line = new(Mod, "Lore",
-                    "'Found in the Demonhollow by a set of human explorers from Anglon. The weapon is crafted from bone and\n" +
-                    "a metal named \"Charred Iron\" by those whom discovered it, and was attributed to a fabled blacksmith named\n" +
-                    "Ophos due to its use of Firestorm magic. Yet the lack of many of his trademarks put doubt on that claim.'")
+                    "'A silver sword with a steel handle, forged by Ophos, a fabled blacksmith from what is now Hye Anglon.\n" +
+                    "Said to be proficient in Firestorm magic, he would mark his works with a gem that imbued his weapons with his magical power.\n" +
+                    "This weapon in particular uses a traditional design of the Territory of Northhill.'")
                 {
                     OverrideColor = Color.LightGray
                 };

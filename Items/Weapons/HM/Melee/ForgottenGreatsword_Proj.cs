@@ -8,21 +8,21 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.Projectiles.Melee;
 
-namespace Redemption.Items.Weapons.PreHM.Melee
+namespace Redemption.Items.Weapons.HM.Melee
 {
-    public class ForgottenSword_Proj : TrueMeleeProjectile
+    public class ForgottenGreatsword_Proj : TrueMeleeProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sword of the Forgotten");
+            DisplayName.SetDefault("Ophos' Forgotten Greatsword");
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override bool ShouldUpdatePosition() => false;
-
         public override void SetSafeDefaults()
         {
             Projectile.width = 192;
@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 8;
+            Projectile.idStaticNPCHitCooldown = 6;
         }
         private int dir = 1;
         private int heatFrame = 1;
@@ -58,18 +58,23 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 if (Projectile.localAI[0]++ == 0)
                 {
-                    SoundEngine.PlaySound(SoundID.Item1, player.Center);
+                    SoundEngine.PlaySound(SoundID.Item71 with { Volume = 0.6f }, player.Center);
                     dir = player.direction;
                 }
                 if (Projectile.localAI[0] >= 10)
                 {
-                    SoundEngine.PlaySound(SoundID.Item1, player.Center);
+                    SoundEngine.PlaySound(SoundID.Item71 with { Volume = 0.6f }, player.Center);
                     dir *= -1;
                     Projectile.localAI[0] = 1;
                 }
                 if (Projectile.localAI[1] % 50 == 0)
                 {
-                    SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack with { Pitch = -0.1f }, player.Center);
+                    SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, player.Center);
+                }
+                if (Projectile.localAI[1] == 60)
+                {
+                    SoundEngine.PlaySound(CustomSounds.FlameRise, player.Center);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<Firestorm_Proj>(), Projectile.damage, 0, player.whoAmI);
                 }
 
                 Player.CompositeArmStretchAmount arm = Player.CompositeArmStretchAmount.Full;
@@ -80,8 +85,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
                 player.SetCompositeArmFront(true, arm, MathHelper.PiOver2);
 
-                if (Main.rand.NextBool(20))
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, new Vector2(Main.rand.Next(-8, 9), -Main.rand.Next(1, 5)), Main.rand.Next(400, 403), Projectile.damage / 3, 1, player.whoAmI);
+                if (Main.rand.NextBool(10))
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, new Vector2(Main.rand.Next(-14, 15), -Main.rand.Next(1, 9)), Main.rand.Next(400, 403), Projectile.damage / 3, 1, player.whoAmI);
 
                 if (Projectile.localAI[1]++ >= 20 && !player.channel)
                     Projectile.Kill();
@@ -89,12 +94,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Projectile.Center = player.MountedCenter;
 
-            if (Main.rand.NextBool(8))
+            if (Main.rand.NextBool(6))
                 ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), RedeHelper.Spread(2), new EmberParticle(), Color.White, 1);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 260);
+            target.AddBuff(BuffID.OnFire3, 300);
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

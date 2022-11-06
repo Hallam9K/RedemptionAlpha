@@ -440,7 +440,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 30)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I still have this hope in my mind that you're mortal,\nso even if I can't figure out how to kill you...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I still have this hope in my mind that you're mortal,\nso even if I can't figure out how to kill thee...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                             }
                             if (NPC.ai[2] == 330)
                             {

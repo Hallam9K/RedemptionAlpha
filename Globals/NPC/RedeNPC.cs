@@ -459,6 +459,7 @@ namespace Redemption.Globals.NPC
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
             globalLoot.Add(ItemDropRule.ByCondition(new YoyosTidalWake(), ModContent.ItemType<TidalWake>(), 200));
+            globalLoot.Add(ItemDropRule.ByCondition(new OphosSwordCondition(), ModContent.ItemType<ForgottenGreatsword>(), 200));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
