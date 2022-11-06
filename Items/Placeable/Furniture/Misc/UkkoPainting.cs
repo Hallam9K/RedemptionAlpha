@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Old Man Yells At Cloud");
+			DisplayName.SetDefault("Ukko Huutaa Pilvelle");
             Tooltip.SetDefault("'A. Tied'");
             SacrificeTotal = 1;
 		}
