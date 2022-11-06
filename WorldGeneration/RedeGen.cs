@@ -40,6 +40,7 @@ using Redemption.NPCs.Bosses.KSIII;
 using System;
 using System.Threading;
 using Redemption.Items.Weapons.PreHM.Ritualist;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.WorldGeneration
 {
@@ -1283,7 +1284,7 @@ namespace Redemption.WorldGeneration
                 Chest chest = Main.chest[PlacementSuccess];
 
                 if (ID == 1)
-                    chest.item[slot].SetDefaults(ModContent.ItemType<ForgottenSword>());
+                    chest.item[slot].SetDefaults(ModContent.ItemType<CantripStaff>());
                 else if (ID == 2)
                     chest.item[slot].SetDefaults(ModContent.ItemType<DeadRinger>());
                 else

@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Melee;
-using Terraria.GameContent.Creative;
 using Terraria.Audio;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;

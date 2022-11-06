@@ -2,7 +2,6 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
-using Terraria.GameContent.Creative;
 using Terraria.DataStructures;
 
 namespace Redemption.Items.Critters

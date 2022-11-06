@@ -2,11 +2,10 @@ using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
 using Redemption.Tiles.Trophies;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Trophies
 {
-	public class PZTrophy : ModItem
+    public class PZTrophy : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

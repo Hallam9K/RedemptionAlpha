@@ -7,7 +7,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 
 namespace Redemption.NPCs.Bosses.Erhan

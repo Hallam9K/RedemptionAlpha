@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {

@@ -3,7 +3,6 @@ using Redemption.Buffs.Pets;
 using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

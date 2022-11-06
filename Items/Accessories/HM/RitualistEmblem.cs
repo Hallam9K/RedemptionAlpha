@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.DamageClasses;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Accessories.HM
 {

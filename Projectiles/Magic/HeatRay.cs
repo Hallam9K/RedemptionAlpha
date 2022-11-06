@@ -57,6 +57,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 180;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

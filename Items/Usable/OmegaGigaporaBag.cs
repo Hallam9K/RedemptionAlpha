@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
@@ -37,7 +36,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaBattery>(), 1, 2, 4));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));
         }
         public override void PostUpdate()

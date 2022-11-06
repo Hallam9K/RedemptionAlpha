@@ -6,6 +6,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Redemption.NPCs.Bosses.ADD;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 {
@@ -52,6 +53,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             Projectile.timeLeft = 60;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 5;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override void AI()

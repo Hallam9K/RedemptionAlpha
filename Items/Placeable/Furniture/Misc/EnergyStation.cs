@@ -1,7 +1,6 @@
 using Terraria.ID;
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;

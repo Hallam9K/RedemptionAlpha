@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Redemption.Projectiles.Pets;
@@ -9,7 +8,7 @@ using Redemption.Buffs.Pets;
 
 namespace Redemption.Items.Accessories.PreHM
 {
-	public class StonePuppet : ModItem
+    public class StonePuppet : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

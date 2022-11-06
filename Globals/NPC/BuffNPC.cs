@@ -48,6 +48,7 @@ namespace Redemption.Globals.NPC
         public bool stomachAcid;
         public bool incisored;
         public bool stoneskin;
+        public bool brokenArmor;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -68,6 +69,7 @@ namespace Redemption.Globals.NPC
             stomachAcid = false;
             incisored = false;
             stoneskin = false;
+            brokenArmor = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -310,6 +312,8 @@ namespace Redemption.Globals.NPC
                 damage *= 0.85;
             if (stoneskin)
                 damage *= 0.75;
+            if (brokenArmor)
+                damage += npc.defense / 2;
             return true;
         }
         public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int damage, ref bool crit)

@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -27,6 +28,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.penetrate = -1;
             Projectile.timeLeft = 3600;
             Projectile.tileCollide = false;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         internal const float charge = 60f;
         public float LaserLength { get { return Projectile.localAI[1]; } set { Projectile.localAI[1] = value; } }

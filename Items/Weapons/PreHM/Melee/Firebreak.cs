@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Melee;
-using Terraria.GameContent.Creative;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 

@@ -27,6 +27,8 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.NPCs.Bosses.ADD;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.Globals.NPC
 {
@@ -45,12 +47,17 @@ namespace Redemption.Globals.NPC
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
             if (type == NPCID.Cyborg)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GlobalDischarge>());
+            if (type == NPCID.Clothier)
+            {
+                if (RedeBossDowned.downedThorn)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ThornPlush>());
+                if (RedeBossDowned.downedEaglecrestGolem)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestGolemPlush>());
+            }
             if (type == NPCID.Wizard)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
-                if (Terraria.NPC.downedGolemBoss)
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Rockslide>());
             }
         }
         public override void ResetEffects(Terraria.NPC npc)
@@ -346,6 +353,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
+                if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                {
+                    if (Main.rand.NextBool(8) && npc.lifeMax > 5)
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
+                }
                 #endregion
             }
 
@@ -394,6 +406,11 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(6) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
+                if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                {
+                    if (Main.rand.NextBool(8) && npc.lifeMax > 5)
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
+                }
                 #endregion
             }
 
@@ -437,12 +454,15 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
             if (npc.type == NPCID.AngryBones || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.CursedSkull || npc.type == NPCID.DarkCaster)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
+            if (npc.type == NPCID.Demon || npc.type == NPCID.VoodooDemon || npc.type == NPCID.FireImp)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type == NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
             globalLoot.Add(ItemDropRule.ByCondition(new YoyosTidalWake(), ModContent.ItemType<TidalWake>(), 200));
+            globalLoot.Add(ItemDropRule.ByCondition(new OphosSwordCondition(), ModContent.ItemType<ForgottenGreatsword>(), 200));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {

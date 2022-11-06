@@ -3,7 +3,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 using Redemption.Projectiles.Ranged;
 using Terraria.DataStructures;
 using Terraria.Audio;

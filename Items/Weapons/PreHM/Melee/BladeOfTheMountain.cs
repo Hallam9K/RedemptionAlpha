@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -35,7 +34,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 60;
             Item.useTime = 60;
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
 
             // Weapon Properties
             Item.damage = 78;

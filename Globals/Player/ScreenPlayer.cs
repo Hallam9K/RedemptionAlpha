@@ -28,6 +28,12 @@ namespace Redemption
         public float yeet2;
         public override void PostUpdate()
         {
+            if (cutscene)
+            {
+                WorldGen.spawnEye = false;
+                WorldGen.spawnHardBoss = 0;
+                RedeWorld.spawnKeeper = false;
+            }
             if (rumbleDuration > 0)
             {
                 rumbleDuration--;

@@ -455,9 +455,9 @@ namespace Redemption.NPCs.Friendly
                     if (RedeWorld.slayerRep == 2)
                         return "I did say I'm part of the Heroes, but I'm considering leaving. It's getting in the way of my... other projects.";
                     else if (RedeWorld.slayerRep == 3)
-                        return "The members of the Heroes are all dumbasses. The leader just travels around the world not doing anything, and I don't even know what the other 2 members are up to.";
+                        return "The members of the Heroes are all dingbats. The leader just travels around the world without aim, and I don't even know what the other 2 members are up to.";
                     else if (RedeWorld.slayerRep >= 4)
-                        return Main.rand.NextBool(3) ? "... There's something strange about the Demigod's statue... It doesn't look like him. Did someone change it?" : "There are 4 members of the Heroes. The first is that damn demigod, honestly he's a chill guy, I just hate how much stronger he is compared to me. The 2nd member is some moron who's supposedly invincible, not once have I seen him get hurt. 3rd is... Well she's probably the most normal out of all of us, but I don't know what she's up to now.";
+                        return Main.rand.NextBool(3) ? "... There's something strange about the Demigod's statue... It doesn't look like him. Did someone change it?" : "There are 4 members of the Heroes. The first is that demigod doofus, honestly he's a chill guy, I just hate how much stronger he is compared to me. The 2nd member is some moron who's supposedly invincible, not once have I seen him get hurt. 3rd is... Well she's probably the most normal out of all of us, but I don't know what she's up to now.";
                     else
                         return "You saw my statue there? Yeah, I'm part of the Heroes. But it's pretty boring, I'm always assigned to kill the weaklings, like the Keeper.";
                 case 6:

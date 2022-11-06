@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Base;
 

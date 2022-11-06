@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Misc

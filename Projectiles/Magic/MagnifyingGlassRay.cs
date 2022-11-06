@@ -9,6 +9,7 @@ using Terraria.ID;
 using Redemption.Globals;
 using System;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -54,6 +55,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 200;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Magic;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;

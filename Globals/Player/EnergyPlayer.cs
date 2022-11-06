@@ -10,7 +10,7 @@ namespace Redemption.Globals.Player
     public class EnergyPlayer : ModPlayer
     {
         public int energyMax;
-        public int statEnergy;
+        public int statEnergy = 300;
         public int energyTimer;
         public int energyRegen;
         public bool stopEnergyRegen;

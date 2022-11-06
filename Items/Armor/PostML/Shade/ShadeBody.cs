@@ -3,7 +3,6 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;

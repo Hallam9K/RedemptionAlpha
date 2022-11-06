@@ -5,7 +5,6 @@ using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -41,7 +40,6 @@ namespace Redemption.Items.Usable
         {
             Lighting.AddLight(Item.Center, Color.Lime.ToVector3() * 0.6f * Main.essScale);
         }
-
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;

@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Redemption.NPCs.Bosses.Erhan;
+using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -49,6 +50,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 180;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override void AI()

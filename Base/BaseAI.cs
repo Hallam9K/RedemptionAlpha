@@ -705,9 +705,9 @@ namespace Redemption.Base
                             closestPoint = corner;
                         }
                     }
-                    if (closestPoint == topLeft || closestPoint == bottomRight) { destVec = rand.NextBool(2)? topRight : bottomLeft; }
+                    if (closestPoint == topLeft || closestPoint == bottomRight) { destVec = rand.NextBool(2) ? topRight : bottomLeft; }
                     else
-                    if (closestPoint == topRight || closestPoint == bottomLeft) { destVec = rand.NextBool(2)? topLeft : bottomRight; }
+                    if (closestPoint == topRight || closestPoint == bottomLeft) { destVec = rand.NextBool(2) ? topLeft : bottomRight; }
                 }
                 ai[0] = destVec.X; ai[1] = destVec.Y;
                 if (Main.netMode == NetmodeID.Server) { npc.netUpdate = true; }
@@ -2215,7 +2215,7 @@ namespace Redemption.Base
                 {
                     p.netUpdate = true;
                     Collision.HitTiles(p.position, p.velocity, p.width, p.height);
-                    if (playSound) { SoundEngine.PlaySound(SoundID.Dig,p.position); }
+                    if (playSound) { SoundEngine.PlaySound(SoundID.Dig, p.position); }
                 }
             }
         }
@@ -3158,7 +3158,7 @@ namespace Redemption.Base
                 }
                 else
                 {
-                    if (!Main.rand.NextBool(80)|| (double)ai[2] != 0) return;
+                    if (!Main.rand.NextBool(80) || (double)ai[2] != 0) return;
                     ai[2] = 200f;
                     npc.direction *= -1;
                     npc.netUpdate = true;
@@ -3223,7 +3223,7 @@ namespace Redemption.Base
                 int tileX2 = (int)((npc.Center.X + 15 * npc.direction) / 16f);
                 int tileY2 = (int)((npc.position.Y + npc.height - 16f) / 16f);
                 //Main.tile[tileX2 - npc.direction, tileY2 + 1].halfBrick();
-                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].HasUnactuatedTile && Main.tile[tileX2, tileY2 - 2].TileType == 10 && (Main.rand.NextBool(10)|| seekHouse))
+                if (canOpenDoors && Main.tile[tileX2, tileY2 - 2].HasUnactuatedTile && Main.tile[tileX2, tileY2 - 2].TileType == 10 && (Main.rand.NextBool(10) || seekHouse))
                 {
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         return;
@@ -4200,7 +4200,7 @@ namespace Redemption.Base
                             if (npc.position.X + npc.width > tPos.X && npc.position.X < tPos.X + 16f && npc.position.Y + npc.height > tPos.Y && npc.position.Y < tPos.Y + 16f)
                             {
                                 canMove = true;
-                                if (spawnTileDust && Main.rand.NextBool(100)&& checkTile.HasUnactuatedTile)
+                                if (spawnTileDust && Main.rand.NextBool(100) && checkTile.HasUnactuatedTile)
                                 {
                                     WorldGen.KillTile(tX, tY, true, true);
                                 }
@@ -5358,6 +5358,22 @@ namespace Redemption.Base
                     ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
 
+                    if (!npc.immortal && npc.canGhostHeal && p.DamageType == DamageClass.Magic && Main.player[p.owner].setNebula && Main.player[p.owner].nebulaCD == 0 && Main.rand.NextBool(3))
+                    {
+                        Main.player[p.owner].nebulaCD = 30;
+                        int num35 = Utils.SelectRandom(Main.rand, 3453, 3454, 3455);
+                        int num36 = Item.NewItem(p.GetSource_OnHit(npc), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, num35);
+                        Main.item[num36].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+                        Main.item[num36].velocity.X = Main.rand.Next(10, 31) * 0.2f * (float)hitDirection;
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num36);
+                        }
+                    }
+
+                    if (Main.player[p.owner].accDreamCatcher)
+                        Main.player[p.owner].addDPS(parsedDamage);
+
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                         NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
 
@@ -5374,6 +5390,9 @@ namespace Redemption.Base
                     NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
                     PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
                     PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
+
+                    if (player.accDreamCatcher)
+                        player.addDPS(parsedDamage);
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {

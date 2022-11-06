@@ -1,7 +1,6 @@
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Tiles.Furniture.Lab;
 

@@ -15,7 +15,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
-using SteelSeries.GameSense;
 
 namespace Redemption.Globals.Player
 {

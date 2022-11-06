@@ -5,7 +5,6 @@ using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Volt
 {

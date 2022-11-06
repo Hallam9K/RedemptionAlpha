@@ -4,6 +4,7 @@ using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

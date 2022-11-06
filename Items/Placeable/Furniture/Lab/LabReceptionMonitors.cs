@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Furniture.Lab;
-using Terraria.GameContent.Creative;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 

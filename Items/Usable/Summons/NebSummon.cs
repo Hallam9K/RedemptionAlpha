@@ -9,7 +9,6 @@ using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
-using Terraria.GameContent.Creative;
 using Redemption.Globals;
 using Terraria.Audio;
 

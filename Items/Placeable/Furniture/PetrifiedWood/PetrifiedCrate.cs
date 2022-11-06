@@ -5,7 +5,6 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

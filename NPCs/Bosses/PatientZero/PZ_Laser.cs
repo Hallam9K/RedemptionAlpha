@@ -49,6 +49,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
             Projectile.alpha = 255;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override bool CanHitPlayer(Player target) => AITimer >= 85;
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 85 ? null : false;

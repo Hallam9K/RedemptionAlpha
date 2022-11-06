@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using IL.Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.ADD
 {

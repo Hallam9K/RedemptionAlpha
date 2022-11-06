@@ -76,10 +76,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             for (int i = 0; i < Main.maxProjectiles; i++)
                             {
                                 Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
+                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || Main.projPet[target.type])
+                                if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
+                                    continue;
+
+                                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || target.Redemption().ParryBlacklist || Main.projPet[target.type])
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);

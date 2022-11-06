@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Buffs.Debuffs;
-using Terraria.GameContent.Creative;
 using Redemption.Globals.Player;
 using Redemption.BaseExtension;
 

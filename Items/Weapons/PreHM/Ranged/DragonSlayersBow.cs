@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {

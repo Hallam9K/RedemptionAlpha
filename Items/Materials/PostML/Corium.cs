@@ -2,7 +2,6 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Ores;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;

@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Armor.Vanity.TBot;
-using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
 

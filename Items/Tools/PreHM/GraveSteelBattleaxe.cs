@@ -1,5 +1,4 @@
 ﻿using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

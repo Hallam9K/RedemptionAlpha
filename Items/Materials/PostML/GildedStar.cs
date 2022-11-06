@@ -1,6 +1,5 @@
 using Redemption.Rarities;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PostML

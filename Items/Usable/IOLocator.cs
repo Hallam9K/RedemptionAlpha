@@ -4,7 +4,6 @@ using Redemption.Base;
 using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

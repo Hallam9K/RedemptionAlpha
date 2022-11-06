@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Items.Materials.HM;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -20,7 +19,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             Item.damage = 160;
             Item.DamageType = DamageClass.Melee;
-            Item.width = 24;
+            Item.width = 46;
             Item.height = 24;
             Item.useAnimation = 30;
             Item.useTime = 30;

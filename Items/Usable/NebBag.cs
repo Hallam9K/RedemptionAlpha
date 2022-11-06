@@ -3,7 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
-using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;

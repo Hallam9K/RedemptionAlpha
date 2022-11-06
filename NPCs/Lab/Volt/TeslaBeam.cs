@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -47,6 +48,7 @@ namespace Redemption.NPCs.Lab.Volt
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override void AI()

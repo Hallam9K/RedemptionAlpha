@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
 using static Redemption.NPCs.Critters.Chicken;
-using Terraria.GameContent.Creative;
 using Terraria.DataStructures;
 
 namespace Redemption.Items.Critters

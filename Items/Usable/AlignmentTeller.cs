@@ -4,7 +4,6 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

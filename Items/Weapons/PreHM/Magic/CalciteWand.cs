@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Projectiles.Magic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

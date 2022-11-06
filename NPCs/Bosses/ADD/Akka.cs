@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Terraria.DataStructures;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +15,6 @@ using Terraria.GameContent.Bestiary;
 using Redemption.Base;
 using Terraria.Graphics.Shaders;
 using Terraria.GameContent.UI;
-using Redemption.Tiles.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
@@ -95,8 +93,40 @@ namespace Redemption.NPCs.Bosses.ADD
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemLists.Blood.Contains(item.type) || ItemLists.Earth.Contains(item.type) || ItemLists.Nature.Contains(item.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ItemLists.Poison.Contains(item.type) || ItemLists.Water.Contains(item.type))
+                    damage = (int)(damage * 0.9f);
+
+                if (ItemLists.Fire.Contains(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemLists.Wind.Contains(item.type))
+                    damage = (int)(damage * 1.1f);
+            }
+        }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Nature.Contains(projectile.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ProjectileLists.Poison.Contains(projectile.type) || ProjectileLists.Water.Contains(projectile.type))
+                    damage = (int)(damage * 0.9f);
+
+                if (ProjectileLists.Fire.Contains(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileLists.Wind.Contains(projectile.type))
+                    damage = (int)(damage * 1.1f);
+            }
+
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
                 damage = (int)(damage * .75f);
         }
@@ -604,7 +634,6 @@ namespace Redemption.NPCs.Bosses.ADD
             }
             return false;
         }
-
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)

@@ -1,12 +1,11 @@
 using Redemption.Tiles.Trophies;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Trophies
 {
-	public class OORelic : ModItem
+    public class OORelic : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

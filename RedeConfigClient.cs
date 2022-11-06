@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 namespace Redemption
@@ -19,7 +18,6 @@ namespace Redemption
 
         [Label("Disable Elements")]
         [Tooltip("Disables elemental resistances and damage")]
-        [DefaultValue(true)]
         public bool ElementDisable;
     }
 }

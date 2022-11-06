@@ -28,6 +28,7 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using System.Linq;
+using Redemption.Items.Weapons.PostML.Magic;
 
 namespace Redemption.WorldGeneration
 {
@@ -416,7 +417,7 @@ namespace Redemption.WorldGeneration
 
             int[] LabChestLoot = new int[]
             {
-                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>()
+                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>(), ModContent.ItemType<TeslaCoil>()
             };
             int[] FloppyDiskLoot = new int[]
             {

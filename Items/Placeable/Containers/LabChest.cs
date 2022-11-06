@@ -1,7 +1,6 @@
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Containers;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

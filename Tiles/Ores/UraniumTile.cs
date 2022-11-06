@@ -37,7 +37,6 @@ namespace Redemption.Tiles.Ores
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
-
             Player player = Main.LocalPlayer;
             Radiation modPlayer = player.RedemptionRad();
             BuffPlayer suit = player.RedemptionPlayerBuff();

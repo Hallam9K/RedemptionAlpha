@@ -338,7 +338,7 @@ namespace Redemption.Globals
                 }
                 if (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Nature") { OverrideColor = Color.LawnGreen };
+                    TooltipLine line = new(Mod, "Element", "Nature Bonus: Has a chance to drop a defence pickup upon hitting enemies inflicted with a non-fire debuff") { OverrideColor = Color.LawnGreen };
                     tooltips.Add(line);
                 }
                 if (ItemLists.Poison.Contains(item.type) || ProjectileLists.Poison.Contains(item.shoot))

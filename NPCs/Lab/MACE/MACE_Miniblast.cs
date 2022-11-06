@@ -6,7 +6,6 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Lab.MACE
 {

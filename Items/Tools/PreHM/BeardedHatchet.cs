@@ -3,7 +3,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
 
 namespace Redemption.Items.Tools.PreHM

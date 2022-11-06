@@ -449,38 +449,24 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (!Main.dedServ)
                         {
                             if (NPC.ai[2] == 60)
-                            {
-                                if (RedeWorld.alignment < 0)
-                                {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(player.name + ", I've been observing you from afar,\nI've seen the calamity you've caused,\nthe power you've gained...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
-                                }
-                                else
-                                {
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(player.name + ", I've been observing you from afar,\nyou've been gaining a lot of power...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
-                                }
-                            }
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, you have brought me here thyself.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                             if (NPC.ai[2] == 360)
                             {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I fear I may be too late,\nbut your existence has brought a disequilibrium upon this world...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                if (RedeWorld.alignment < 0)
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My eyes have loomed upon thee long enough, it is time to quell thine flame.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                else
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Forgive my prying eyes, for I have been observing thee from afar.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                             }
                             if (NPC.ai[2] == 660)
-                            {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If I don't stop you now, you may grow too strong for anyone to handle...", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
-                            }
-                            if (NPC.ai[2] == 860)
-                            {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But enough chatter, I'm sure you're not interested in what I have to say.", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
-                            }
-                            if (NPC.ai[2] == 1060)
-                            {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Just know, " + player.name + ", I am doing this for your sake too...", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
-                            }
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The daring hunt of all that threaten thee brings a chill through my body.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            if (NPC.ai[2] == 960)
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thy presence is all-consuming within my thoughts, but I shan't run from this opportunity gifted to me.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                             if (NPC.ai[2] == 1260)
-                            {
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you lose to me... Maybe the Demigod won't notice you.", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
-                            }
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The chatter ends here. Prove to me your resolve, and I will show my own.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            if (NPC.ai[2] == 1560)
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you lose to me, you may be spared from watchers far greater than I.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         }
-                        if (NPC.ai[2] >= 1460)
+                        if (NPC.ai[2] >= 1860)
                         {
                             RedeBossDowned.nebDeath = 1;
                             NPC.ai[3] = 0;
@@ -1333,24 +1319,24 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (NPC.ai[2] == 980)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Whether it be intelligence, power, or something else,\nI still remember...", 240, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 1220)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("And those you slain can be brought back...\nAs if the fight never happened.", 240, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Time in the confines of this island seems to be dictated by powers unknown.", 240, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 1460)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 80, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 1540)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Say, if you killed someone unaffected...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Say, if you killed someone unaffected by such powers...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 1720)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Would they die for good?", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 1900)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Whatever the case may be, I no longer wish to fight you...", 220, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 2120)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "I'm sorry for assuming you were bad." : "Not like I could do anything to stop you.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "You hath proven thy resolve." : "Not like I could do anything to stop thee.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 2300)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Looking back at it, you've actually defeated many evils." : "I hope you find it in your heart to stop your rampage.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "And I... hath failed once more." : "I hope you find it in thine heart to stop thy rampage.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                     }
                     if (RedeWorld.alignment >= 0)
                     {
                         if (NPC.ai[2] == 2480 && RedeBossDowned.nebDeath < 5 && !Main.dedServ)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("As for myself I will be leaving, but we can always spar again. Goodbye.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I will be leaving forthwith, but we can always spar again. Farewell.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] >= 2660)
                         {
                             NPC.life = 1;
@@ -1411,9 +1397,9 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (NPC.ai[2] == 30)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You still want to fight?", 150, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 170)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Maybe you are mistaken, I'm not evil..." : "Of course it wouldn't be that easy...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Of course it wouldn't be that easy...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 350)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Do you just want to spar perhaps... ?" : "You've had your chance at redemption, so don't blame me...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You've had thy chance at redemption, so don't blame me...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 530)
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... When you die a thousand times!", 180, 1, 0.6f, "Nebuleus:", 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0);
                         if (NPC.ai[2] == 420)
@@ -1469,7 +1455,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             if (NPC.ai[2] == 30)
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                             if (NPC.ai[2] == 150)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Thank you...\nPlease, continue slaying evil, this world could do with a hero." : "Thank you...\nAt first I thought the concept of not killing was foreign to you.", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Thank you...\nPlease, continue slaying evil, this world could do with a hero." : "Thank you...\nAt first I thought the concept of mercy was foreign to thee.", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
                         }
                         if (NPC.ai[2] > 380)
                         {

@@ -5,7 +5,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;

@@ -54,6 +54,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 120;
+            Projectile.Redemption().ParryBlacklist = true;
         }
 
         public override void AI()

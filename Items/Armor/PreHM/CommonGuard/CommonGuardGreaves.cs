@@ -1,14 +1,13 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Armor.PreHM.CommonGuard
 {
-	[AutoloadEquip(EquipType.Legs)]
+    [AutoloadEquip(EquipType.Legs)]
 	public class CommonGuardGreaves : ModItem
 	{
 		public override void SetStaticDefaults()

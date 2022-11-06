@@ -1,7 +1,6 @@
 using Redemption.Globals;
 using Redemption.Tiles.Furniture.Misc;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

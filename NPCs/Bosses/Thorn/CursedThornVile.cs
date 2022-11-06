@@ -5,7 +5,6 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {

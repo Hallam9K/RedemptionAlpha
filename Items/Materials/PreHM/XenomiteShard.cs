@@ -2,7 +2,6 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Redemption.Tiles.Ores;
 
 namespace Redemption.Items.Materials.PreHM

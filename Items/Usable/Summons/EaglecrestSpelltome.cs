@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Usable.Summons
 {

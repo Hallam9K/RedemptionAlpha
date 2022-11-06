@@ -3,7 +3,6 @@ using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

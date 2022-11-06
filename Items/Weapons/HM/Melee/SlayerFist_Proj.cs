@@ -25,7 +25,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.height = 40;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Length = 16;
+            Length = 12;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

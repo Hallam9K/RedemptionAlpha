@@ -8,7 +8,6 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Particles;
 
 namespace Redemption.Items.Weapons.PostML.Ranged

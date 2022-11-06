@@ -133,7 +133,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.timeLeft = 10;
             Projectile staff = Main.projectile[(int)Projectile.ai[0]];
             Player player = Main.player[staff.owner];
-            if ((!staff.active || staff.type != ModContent.ProjectileType<GlobalDischarge_Proj>() || player.DistanceSQ(Projectile.Center) > 900 * 900))
+            if ((!staff.active || staff.type != ModContent.ProjectileType<GlobalDischarge_Proj>() || player.DistanceSQ(Projectile.Center) > 1400 * 1400))
             {
                 if (Projectile.ai[1] > 0)
                 {

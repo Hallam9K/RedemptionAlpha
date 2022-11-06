@@ -8,15 +8,11 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Redemption.Base;
-using Redemption.Buffs.NPCBuffs;
 using Terraria.GameContent;
 using Redemption.Particles;
 using ParticleLibrary;
 using Redemption.Effects.PrimitiveTrails;
-using ReLogic.Content;
 using Redemption.Projectiles.Magic;
-using Redemption.Projectiles.Minions;
-using Microsoft.CodeAnalysis;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -153,7 +149,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         }
                         break;
                     case 1:
-                        if (player.DistanceSQ(Projectile.Center) > 1200 * 1200)
+                        if (player.DistanceSQ(Projectile.Center) > 1800 * 1800)
                         {
                             staff.active = false;
                             Projectile.Kill();
@@ -227,8 +223,8 @@ namespace Redemption.Items.Weapons.HM.Magic
 
                 target.immune[Projectile.whoAmI] = 20;
                 int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
-                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.25f)), 7, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 0.75f)), 4, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.5f)), 7, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.25f)), 4, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                 target.AddBuff(BuffID.OnFire3, 600);
             }
             for (int i = 0; i < 20; i++)

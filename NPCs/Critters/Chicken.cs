@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Critters
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChickenEgg>(), 1, 1, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ChickenEgg>(), 2, 1, 2));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>()));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

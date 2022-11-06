@@ -8,6 +8,7 @@ using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -48,6 +49,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;
             Projectile.alpha = 255;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override bool CanHitPlayer(Player target) => AITimer >= 20;
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 20 ? null : false;

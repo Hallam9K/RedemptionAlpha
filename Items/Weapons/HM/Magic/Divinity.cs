@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Magic;
@@ -21,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 100;
+            Item.damage = 120;
             Item.height = 30;
             Item.width = 36;
             Item.useTime = 40;
@@ -51,6 +50,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<HolyBible>())
+                .AddIngredient(ItemID.BeetleHusk, 4)
                 .AddIngredient(ItemID.LunarTabletFragment, 10)
                 .AddIngredient(ItemID.SoulofLight, 15)
                 .AddIngredient(ItemID.SoulofSight, 15)
@@ -58,6 +58,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 .Register();
             CreateRecipe()
                 .AddIngredient(ItemID.SpellTome)
+                .AddIngredient(ItemID.BeetleHusk, 4)
                 .AddIngredient(ItemID.LunarTabletFragment, 10)
                 .AddIngredient(ItemID.SoulofLight, 15)
                 .AddIngredient(ItemID.SoulofSight, 15)

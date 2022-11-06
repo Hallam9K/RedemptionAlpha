@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria;
 using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 
 namespace Redemption.Items.Donator.Arche

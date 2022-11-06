@@ -2,7 +2,6 @@ using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
 using Redemption.Tiles.Trophies;
-using Terraria.GameContent.Creative;
 
 namespace Redemption.Items.Placeable.Trophies
 {

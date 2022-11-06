@@ -15,7 +15,6 @@ using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
-using Redemption.NPCs.Bosses.ADD;
 using Redemption.UI;
 using ReLogic.Content;
 using System;

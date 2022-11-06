@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Tiles.Natural;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

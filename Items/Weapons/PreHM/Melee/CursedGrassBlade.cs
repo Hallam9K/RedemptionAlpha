@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Melee;
-using Terraria.GameContent.Creative;
 using Terraria.DataStructures;
 
 namespace Redemption.Items.Weapons.PreHM.Melee

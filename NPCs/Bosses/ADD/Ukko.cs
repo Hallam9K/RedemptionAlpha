@@ -101,8 +101,40 @@ namespace Redemption.NPCs.Bosses.ADD
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemLists.Blood.Contains(item.type) || ItemLists.Earth.Contains(item.type) || ItemLists.Thunder.Contains(item.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ItemLists.Poison.Contains(item.type) || ItemLists.Water.Contains(item.type) || ItemLists.Wind.Contains(item.type))
+                    damage = (int)(damage * 0.9f);
+
+                if (ItemLists.Ice.Contains(item.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ItemLists.Shadow.Contains(item.type))
+                    damage = (int)(damage * 1.1f);
+            }
+        }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Thunder.Contains(projectile.type))
+                    damage = (int)(damage * 0.75f);
+
+                if (ProjectileLists.Poison.Contains(projectile.type) || ProjectileLists.Water.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type))
+                    damage = (int)(damage * 0.9f);
+
+                if (ProjectileLists.Ice.Contains(projectile.type))
+                    damage = (int)(damage * 1.25f);
+
+                if (ProjectileLists.Shadow.Contains(projectile.type))
+                    damage = (int)(damage * 1.1f);
+            }
+
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
                 damage = (int)(damage * .75f);
         }

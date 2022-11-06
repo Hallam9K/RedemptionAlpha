@@ -10,7 +10,6 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

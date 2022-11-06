@@ -5,7 +5,6 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -56,7 +55,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<DAN>())
-                .AddIngredient(ModContent.ItemType<OmegaBattery>())
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
                 .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 8)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
                 .AddIngredient(ModContent.ItemType<Plating>(), 4)

@@ -1,7 +1,7 @@
+using Microsoft.Xna.Framework;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +13,7 @@ namespace Redemption.Items.Materials.HM
         {
             Tooltip.SetDefault("'Infects mechanical things'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             SacrificeTotal = 25;
         }
 
@@ -24,11 +25,15 @@ namespace Redemption.Items.Materials.HM
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Red;
         }
+        public override void PostUpdate()
+        {
+            Lighting.AddLight(Item.Center, Color.Red.ToVector3() * 0.6f * Main.essScale);
+        }
         public override void AddRecipes()
         {
             CreateRecipe(5)
                 .AddIngredient(ModContent.ItemType<XenomiteItem>(), 5)
-                .AddIngredient(ModContent.ItemType<OmegaBattery>())
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
                 .AddTile(ModContent.TileType<GirusCorruptorTile>())
                 .Register();
         }

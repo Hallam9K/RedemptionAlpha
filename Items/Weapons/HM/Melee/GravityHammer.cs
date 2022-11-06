@@ -1,7 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee

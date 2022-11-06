@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Dusts.Tiles;
@@ -9,7 +8,7 @@ using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
 {
-	public class WastelandTorch : ModItem
+    public class WastelandTorch : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

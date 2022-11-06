@@ -1,6 +1,5 @@
 using Redemption.Items.Placeable.Furniture.ElderWood;
 using Redemption.Tiles.Tiles;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
