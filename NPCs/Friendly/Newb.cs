@@ -14,6 +14,7 @@ using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -185,6 +186,8 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ItemID.Ruby);
                 shop.item[nextSlot++].SetDefaults(ItemID.Diamond);
             }
+            if (Main.hardMode)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AncientAutoPainting>());
         }
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)

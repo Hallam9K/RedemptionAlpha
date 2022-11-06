@@ -24,7 +24,6 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = DustID.WoodFurniture;
-            MineResist = 1f;
 			AddMapEntry(new Color(151, 107, 75));
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
