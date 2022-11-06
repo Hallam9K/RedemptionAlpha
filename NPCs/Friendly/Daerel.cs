@@ -357,7 +357,10 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DubiousWatcherPainting>());
             }
             if (NPC.downedPlantBoss)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<UkkoPainting>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
+            }
 
             /*if (RedeBossDowned.downedMossyGoliath)
             {
