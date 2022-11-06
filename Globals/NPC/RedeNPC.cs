@@ -28,6 +28,7 @@ using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.Globals.NPC
 {
@@ -453,6 +454,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
             if (npc.type == NPCID.AngryBones || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.CursedSkull || npc.type == NPCID.DarkCaster)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
+            if (npc.type == NPCID.Demon || npc.type == NPCID.VoodooDemon || npc.type == NPCID.FireImp)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type == NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
         }
