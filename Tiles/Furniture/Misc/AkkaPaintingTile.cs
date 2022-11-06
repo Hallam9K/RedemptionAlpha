@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Quest.KingSlayer;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
