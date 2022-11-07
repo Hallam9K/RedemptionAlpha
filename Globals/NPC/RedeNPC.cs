@@ -59,6 +59,11 @@ namespace Redemption.Globals.NPC
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
             }
+            if (type == NPCID.Princess)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HamPatPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<TiedBoiPainting>());
+            }
         }
         public override void ResetEffects(Terraria.NPC npc)
         {

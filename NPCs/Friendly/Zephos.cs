@@ -357,11 +357,15 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AncientAutoPainting>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DubiousWatcherPainting>());
             }
+            if (RedeBossDowned.downedSlayer)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KSPainting>());
             if (NPC.downedPlantBoss)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<UkkoPainting>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
             }
+            if (NPC.downedMoonlord)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<WardenPainting>());
 
             if (NPC.downedMoonlord)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MythrilsBane>());

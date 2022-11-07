@@ -21,6 +21,7 @@ using Redemption.Items.Armor.Single;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -290,6 +291,12 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<Violin>());
             shop.item[nextSlot].shopCustomPrice = new int?(20);
             shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            if (RedeBossDowned.downedSkullDigger)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<SkullDiggerPainting>());
+                shop.item[nextSlot].shopCustomPrice = new int?(12);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
             if (NPC.downedPlantBoss)
             {
                 shop.item[nextSlot].SetDefaults(ItemID.Ectoplasm);
