@@ -350,6 +350,11 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
+            if (NPC.downedBoss3)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MudGuardianPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SkeletonGuardianPainting>());
+            }
             if (Main.hardMode)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AkkaPainting>());

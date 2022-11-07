@@ -34,10 +34,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            float num = 0;
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-            if (Projectile.spriteDirection == -1)
-                num = MathHelper.Pi;
             if (Main.myPlayer == Projectile.owner)
             {
                 float scaleFactor6 = 1f;
@@ -61,7 +58,6 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 Projectile.netUpdate = true;
             }
             Projectile.Center = player.MountedCenter;
-            Projectile.rotation = Projectile.velocity.ToRotation() + num;
             Projectile.spriteDirection = Projectile.direction;
             Projectile.timeLeft = 2;
             player.ChangeDir(Projectile.direction);
@@ -69,6 +65,11 @@ namespace Redemption.Items.Weapons.PostML.Magic
             player.itemTime = 2;
             player.itemAnimation = 2;
             player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * Projectile.direction, Projectile.velocity.X * Projectile.direction);
+
+            float num = 0;
+            if (Projectile.spriteDirection == -1)
+                num = MathHelper.Pi;
+            Projectile.rotation = Projectile.velocity.ToRotation() + num;
 
             Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(19 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-2, Projectile.rotation + MathHelper.PiOver2);
             offset -= 3;

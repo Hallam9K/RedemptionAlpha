@@ -14,8 +14,8 @@ namespace Redemption.Tiles.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = false;
             DustType = ModContent.DustType<NiricBrassDust>();
-            MinPick = 200;
-            MineResist = 4f;
+            MinPick = 210;
+            MineResist = 5f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(149, 106, 54));
             ItemDrop = ModContent.ItemType<NiricPipe>();

@@ -1232,6 +1232,11 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
 
+                if (RedeHelper.GenChance(.05f))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<Violin>());
+                    chest.item[slot++].stack = 1;
+                }
                 if (RedeHelper.GenChance(.6f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<GraveSteelAlloy>());
