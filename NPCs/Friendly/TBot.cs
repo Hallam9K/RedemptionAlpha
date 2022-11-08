@@ -23,9 +23,6 @@ using Redemption.Items.Lore;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
-using Humanizer;
-using Microsoft.CodeAnalysis;
-using static Humanizer.In;
 using Redemption.Items;
 
 namespace Redemption.NPCs.Friendly
