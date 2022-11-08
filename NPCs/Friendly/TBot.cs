@@ -215,7 +215,9 @@ namespace Redemption.NPCs.Friendly
 
             button2 = "Read Floppy Disk";
             if (NextPage)
-                button2 = "Next Page";
+                button2 = "Next Page (1/2)";
+            if (FDisk >= 20)
+                button2 += " (2/2)";
         }
 
         public static int FDisk;

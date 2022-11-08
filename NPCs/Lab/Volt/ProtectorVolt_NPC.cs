@@ -99,11 +99,11 @@ namespace Redemption.NPCs.Lab.Volt
                     button = "Challenge!";
                     break;
                 case 22:
-                    button = "Insurgents";
+                    button = "Insurgents (2/2)";
                     break;
             }
             if (NextPage)
-                button = "Next Page";
+                button = "Next Page (1/2)";
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
