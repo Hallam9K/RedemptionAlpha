@@ -10,15 +10,15 @@ using Redemption.Globals.NPC;
 namespace Redemption.Projectiles.Melee
 {
     public class PZGauntlet_Proj2 : ModProjectile
-	{
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infectious Fist");
             Main.projFrames[Projectile.type] = 7;
         }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             Projectile.width = 14;
             Projectile.height = 14;
             Projectile.friendly = true;
@@ -70,23 +70,13 @@ namespace Redemption.Projectiles.Melee
         private static void AdjustMagnitude(ref Vector2 vector)
         {
             float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 12f)
+            if (magnitude > 16f)
             {
-                vector *= 12f / magnitude;
+                vector *= 16f / magnitude;
             }
         }
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 25; i++)
-            {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenTorch, Scale: 2f);
-                Main.dust[dustIndex].velocity *= 0.1f;
-            }
-            for (int i = 0; i < 15; i++)
-            {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy);
-                Main.dust[dustIndex].velocity *= 0.4f;
-            }
         }
         public override bool PreDraw(ref Color lightColor)
         {

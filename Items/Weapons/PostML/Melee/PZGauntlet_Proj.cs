@@ -10,7 +10,7 @@ using Redemption.BaseExtension;
 using Terraria.Audio;
 using System.Collections.Generic;
 
-namespace Redemption.Items.Weapons.HM.Melee
+namespace Redemption.Items.Weapons.PostML.Melee
 {
     public class PZGauntlet_Proj : TrueMeleeProjectile
     {
@@ -50,9 +50,9 @@ namespace Redemption.Items.Weapons.HM.Melee
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver2 + player.fullRotation;
             else
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver2 + player.fullRotation;
 
             if (Main.myPlayer == Projectile.owner)
             {
@@ -85,7 +85,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             dust.fadeIn = 0.5f;
                             dust.noGravity = true;
                         }
-                        if (Timer >= 24)
+                        if (Timer >= 20)
                             Projectile.Kill();
                         break;
                     case 1:
@@ -98,17 +98,17 @@ namespace Redemption.Items.Weapons.HM.Melee
                         else
                             Projectile.Kill();
 
-                        if (Timer < 20)
+                        if (Timer < 40)
                         {
                             player.Redemption().contactImmune = true;
                             player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation());
+                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() + player.fullRotation);
                             vector = startVector * Length;
                         }
                         if (Timer >= 16 && Timer % 2 == 0 && Timer < 30)
                         {
                             SoundEngine.PlaySound(CustomSounds.Swoosh1 with { Volume = 0.4f }, Projectile.Center);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(15, (Main.MouseWorld - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<PZGauntlet_Proj2>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, player.whoAmI);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(16, (Main.MouseWorld - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<PZGauntlet_Proj2>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, player.whoAmI);
                         }
                         if (Timer <= 5 && !player.channel)
                             Projectile.Kill();
@@ -125,6 +125,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
+            player.immune = true;
+            player.immuneTime = 10;
             if (Main.myPlayer == Projectile.owner)
             {
                 player.velocity.X = -player.velocity.X / 2;

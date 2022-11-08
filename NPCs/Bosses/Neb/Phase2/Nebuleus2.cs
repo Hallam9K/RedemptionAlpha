@@ -20,6 +20,7 @@ using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -434,38 +435,42 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                     if (RedeBossDowned.nebDeath == 5)
                     {
                         if (NPC.ai[2] < 930)
-                            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        {
+                            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                            player.RedemptionScreen().lockScreen = true;
+                            NPC.LockMoveRadius(player);
+                        }
                         if (!Main.dedServ)
                         {
                             if (NPC.ai[2] == 30)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I still have this hope in my mind that you're mortal,\nso even if I can't figure out how to kill thee...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I still have this hope in my mind that you're mortal,\nso even if I can't figure out how to be rid of you...", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             if (NPC.ai[2] == 330)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... There are still many great foes ahead of you!", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... There are still many foes greater than I!", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             if (NPC.ai[2] == 530)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Epidotra's Protector...", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Epidotra's Protector...", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0,true);
                             }
                             if (NPC.ai[2] == 630)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... The Royal Knight...", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... The Royal Knight...", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             if (NPC.ai[2] == 730)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... and the Demigod of Light...", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... and the Demigod of Light...", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             if (NPC.ai[2] == 830)
                             {
                                 SoundEngine.PlaySound(SoundID.MenuTick);
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But enough talk, I'm your opponent!", 200, 1, 0.6f, "Nebuleus:", 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But enough talk, I'm your opponent!", 200, 1, 0.6f, "Nebuleus:", 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                         }
                         if (NPC.ai[2] >= 1030)
