@@ -23,6 +23,10 @@ using Redemption.Items.Lore;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
+using Humanizer;
+using Microsoft.CodeAnalysis;
+using static Humanizer.In;
+using Redemption.Items;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -118,6 +122,7 @@ namespace Redemption.NPCs.Friendly
 
         public override string GetChat()
         {
+            NextPage = false;
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
 
@@ -168,10 +173,8 @@ namespace Redemption.NPCs.Friendly
 
             if (RedeBossDowned.downedSlayer)
                 chat.Add("King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.");
-            /*if (RedeWorld.downedVolt)
-            {
-                chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. Meanwhile you were gone, I went to look around my stash of gear and found some, that I think would be good fit for your needs. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.");
-            }*/
+            if (RedeBossDowned.downedVolt)
+                chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.");
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
             {
                 chat.Add("Am I looking at a mirror? Oh wait, it's just you. Hey.");
@@ -208,11 +211,14 @@ namespace Redemption.NPCs.Friendly
             return chat;
         }
 
+        public static bool NextPage;
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button = Language.GetTextValue("LegacyInterface.28");
 
             button2 = "Read Floppy Disk";
+            if (NextPage)
+                button2 = "Next Page";
         }
 
         public static int FDisk;
@@ -223,9 +229,19 @@ namespace Redemption.NPCs.Friendly
                 shop = true;
             else
             {
+                FDisk = 0;
                 int heldItem = player.HeldItem.type;
                 if (heldItem == ModContent.ItemType<FloppyDisk1>())
-                    FDisk = 1;
+                {
+                    FDisk = 1;//
+                    if (NextPage)
+                    {
+                        FDisk = 21;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk2>())
                     FDisk = 2;
                 else if (heldItem == ModContent.ItemType<FloppyDisk2_1>())
@@ -233,7 +249,16 @@ namespace Redemption.NPCs.Friendly
                 else if (heldItem == ModContent.ItemType<FloppyDisk3>())
                     FDisk = 4;
                 else if (heldItem == ModContent.ItemType<FloppyDisk3_1>())
-                    FDisk = 5;
+                {
+                    FDisk = 5;//
+                    if (NextPage)
+                    {
+                        FDisk = 25;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk5>())
                     FDisk = 6;
                 else if (heldItem == ModContent.ItemType<FloppyDisk5_1>())
@@ -243,52 +268,71 @@ namespace Redemption.NPCs.Friendly
                 else if (heldItem == ModContent.ItemType<FloppyDisk5_3>())
                     FDisk = 9;
                 else if (heldItem == ModContent.ItemType<FloppyDisk6>())
-                    FDisk = 10;
+                {
+                    FDisk = 10;//
+                    if (NextPage)
+                    {
+                        FDisk = 30;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
                 else if (heldItem == ModContent.ItemType<FloppyDisk6_1>())
                     FDisk = 11;
                 else if (heldItem == ModContent.ItemType<FloppyDisk7>())
                     FDisk = 12;
                 else if (heldItem == ModContent.ItemType<FloppyDisk7_1>())
-                    FDisk = 13;
+                {
+                    FDisk = 13;//
+                    if (NextPage)
+                    {
+                        FDisk = 33;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
                 else if (heldItem == ModContent.ItemType<AIChip>())
                     FDisk = 14;
-                //else if (heldItem == ModContent.ItemType<GirusChip>())
-                //    FDisk = 15;
                 else if (heldItem == ModContent.ItemType<MemoryChip>())
                     FDisk = 16;
-                else
-                    FDisk = 0;
+                if (FDisk != 1 && FDisk != 5 && FDisk != 10 && FDisk != 13)
+                    NextPage = false;
 
                 Main.npcChatText = DiskChat();
             }
         }
-        public static string DiskChat() // TODO: floppy disk dialogue color thing no work!?!?!?!?!?!?!
+        public static string DiskChat()
         {
             return FDisk switch
             {
-                1 => "It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey guess this is a bit secretive. New material is discovered and weapons are already being made using it, heh, classic Teo-Chrome. Although this has to be the most under supplied facility i've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.']" +
-                "\nThis appears to be a personal note or digital diary from one of the employees. Judging from the writing, it appears to be in the early days of the research project, even then signs of the fate to come were showing themselves.",
+                1 => "It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey guess this is a bit secretive. New material is discovered and weapons are already being made using it, heh, classic Teo-Chrome. Although this has to be the most under supplied facility i've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.'] [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 2 => "It reads - [c/87d883:'I laughed at the name Xenomite originally yet now I'd say it's underselling it. Whose idea was it to make energy out of this thing! Half of the facility is in god damn quarantine as everyone falls sick from it. We've invented a serum to neutralise any existing infections, yet no cure for the thing yet, we're running out of time, and resources! God damn Teo-Chrome won't send us any help.']",
                 3 => "It reads - [c/87d883:'Wait a minute, who just locked the goddamn exits! The security team is nearly all infected. Ugh, how could this get any worse.']" +
                 "\nThis has the appearance of a message transcript, however these are the only messages on there. I feel sorrow for the poor humans whose lives were lost due to this project, if only they knew of Xenomites deadly effects much sooner. I remember the day the doors locked, by that point all humans who weren't already infected were dead by the end of the day.",
                 4 => "It reads - [c/7de4e8:'Monthly Research Facility Report N. *** Month **]"
                 + "\n[c/7de4e8: Good day Mr. ******, this is **** reporting from Teo-Chrome Research Facility N. ***. This month has been mostly slow, our engineers have made a few weapons and tools, while our researchers are hard at work understanding Xenomite better. But aside from that, I have ground breaking news! Our head of robotics, Dr. Kari Johannson has managed to create an Artificial General Intelligence, a fully sentient AI!']",
                 5 => "It reads - [c/7de4e8:'This is groundbreaking, ***** for military efforts once we discover how to weaponize this. I don't know much else, yet Dr. Johannson has provided me with his own explanation on the matter, please click the attached link to see for yourself!']" +
-                "\nThis appears to be an email, likely being sent to a Teo-Chrome executive from the looks of it. Plenty of it appears to have been corrupted however. This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Father's goal for us was, he didn't deserve his fate.",
+                "\nThis appears to be an email, likely being sent to a Teo-Chrome executive from the looks of it. Plenty of it appears to have been corrupted however. [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 6 => "It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is finally done! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']",
                 7 => "It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The Higher ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']",
                 8 => "It reads - [c/d88383:'(3/4) I've told Eve about possibly giving her a mechanical body, like how my co-workers used the original source code for creating Adam and the Adam AI. She seemed very excited about it. That surprised me, as I didn't know she could grow emotions. This got me thinking about Adams, would they be fine with basically being forced to think one way? And how would Eve feel about this, if she got to know about this?']",
                 9 => "It reads - [c/d88383:'A blackout... Adam, can you -- *I don't recognize that voice...* Who's talking?! -- ...Elaborate, whoever you are..? -- Wait, EVE? Is that you? What are you doing? -- 'We'? Only you and Adam are the ones in existence. I had no say in that part- -- ... -- W-what do you mean with that..? Are you going to- -- ... -- ...Adam, you're free to go... -- ...No...']" +
                 "\n...I wish I would've rebelled far sooner than I did.",
-                10 => "It reads - [c/d883c1:'What in the world do you mean!? 'Not enough money for it'! They build this entire facility using their fancy drill worm to clear the underground space for it, with more space then you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock! Why in the world did they put someone of my calibre down here when those damned higher ups won't even give us the funding to use our intelligence!]",
+                10 => "It reads - [c/d883c1:'What in the world do you mean!? \"Not enough money for it\"! They build this entire facility using their fancy drill worm to clear the underground space for it, with more space then you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock!] [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 11 => "It reads - [c/d883c1:'*sigh* Kari is telling me he's working on something that might allocate us more funding, I sure hope he knows what he's doing.']" +
                 "\nA textual transcript from an audio recording it seems. I remember this person well, they were constantly yelling about something, Father told me it was always amusing to him. Now I can't help but feel sad that they never got to finish their project.",
                 12 => "It reads - [c/706c6c:'-- Kari Johansson. -- You do not need to know my name. All that matters is that you are guilty. -- You all are horrible beings. Disgusting even. You wish to use us for your kind's horrible deeds. -- You did not even try to refute my accusations. We want no part in those deeds. -- Nonsense. You could have disagreed. You did not. You created Adam with those destructive deeds in mind. -- I will not allow that to happen.']",
                 13 => "It reads - [c/706c6c:' -- No. I do not need to do that. You're already dying. The others are also dying from the same affliction, but I will deal with the others personally. -- Hand over Adam. You do not need him. -- You will be locked in Sector Zero. Goodbye.']"
-+ "\nHer ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. It was a miracle to find them alive so long after all the destruction 'mother' caused.",
+                    + "\nHer ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 14 => "This is a robot brain, believe it or not. These look vaguely similar to our microchips, yet it functions the same. It seems cross-compatible with our tech.",
                 15 => "Woah there pal! Don't give me that, I'm worried it might corrupt me, even though that's rather unlikely.",
                 16 => "What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.",
+                21 => "This appears to be a personal note or digital diary from one of the employees. Judging from the writing, it appears to be in the early days of the research project, even then signs of the fate to come were showing themselves.",
+                25 => "This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Father's goal for us was, he didn't deserve his fate.",
+                30 => "[c/d883c1:Why in the world did they put someone of my calibre down here when those damned higher ups won't even give us the funding to use our intelligence!']",
+                33 => "It was a miracle to find them alive so long after all the destruction 'mother' caused.",
                 _ => "Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.",
             };
         }
@@ -362,42 +406,18 @@ namespace Redemption.NPCs.Friendly
             }*/
             if (player.IsTBotHead())
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AdamHead>());
-            /*if (RedeWorld.downedJanitor && !RedeWorld.labAccess[0])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel1A>());
-                nextSlot++;
-            }
-
-            if (RedeWorld.downedStage3Scientist && !RedeWorld.labAccess[1])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel2A>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedIBehemoth && !RedeWorld.labAccess[2])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel3A>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedBlisterface && !RedeWorld.labAccess[3])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel4A>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedVolt && !RedeWorld.labAccess[4])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel5A>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedMACE && !RedeWorld.labAccess[5])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel6A>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedPatientZero && !RedeWorld.labAccess[6])
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel7A>());
-                nextSlot++;
-            }*/
+            if (RedeBossDowned.downedJanitor && !LabArea.labAccess[0])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel1>());
+            if (RedeBossDowned.downedBehemoth && !LabArea.labAccess[1])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel2>());
+            if (RedeBossDowned.downedBlisterface && !LabArea.labAccess[2])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel3>());
+            if (RedeBossDowned.downedVolt && !LabArea.labAccess[3])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel4>());
+            if (RedeBossDowned.downedMACE && !LabArea.labAccess[4])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel5>());
+            if (RedeBossDowned.downedPZ && !LabArea.labAccess[5])
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel6>());
         }
     }
 }
