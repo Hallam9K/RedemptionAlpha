@@ -16,6 +16,7 @@ namespace Redemption.Items.Accessories.PreHM
             DisplayName.SetDefault("Shell Necklace");
             Tooltip.SetDefault("10% increased Nature elemental damage and resistance\n" +
                 "'Makes you feel one with nature'");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -125,5 +125,7 @@ namespace Redemption
         public static readonly SoundStyle Synth = new("Redemption/Sounds/Custom/SynthSound");
         public static readonly SoundStyle ElectricLoop = new("Redemption/Sounds/Custom/ElectricLoop") { MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };
         public static readonly SoundStyle FlameRise = new("Redemption/Sounds/Custom/FlameRise");
+        public static readonly SoundStyle WindUp = new("Redemption/Sounds/Custom/WindUp") { PitchVariance = .1f };
+        public static readonly SoundStyle Violin = new("Redemption/Sounds/Custom/Violin");
     }
 }

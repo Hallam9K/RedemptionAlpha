@@ -21,6 +21,7 @@ using Redemption.Items.Armor.Single;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -271,55 +272,54 @@ namespace Redemption.NPCs.Friendly
         {
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<BronzeWand>());
             shop.item[nextSlot].shopCustomPrice = new int?(30);
-            shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            nextSlot++;
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientDirt>());
             shop.item[nextSlot].shopCustomPrice = new int?(1);
-            shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            nextSlot++;
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElderWood>());
-            shop.item[nextSlot].shopCustomPrice = new int?(2);
-            shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            nextSlot++;
+            shop.item[nextSlot].shopCustomPrice = new int?(1);
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<GathicStone>());
-            shop.item[nextSlot].shopCustomPrice = new int?(3);
-            shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            nextSlot++;
+            shop.item[nextSlot].shopCustomPrice = new int?(1);
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<WeddingRing>());
             shop.item[nextSlot].shopCustomPrice = new int?(15);
-            shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            nextSlot++;
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<LostSoul>());
             shop.item[nextSlot].shopCustomPrice = new int?(4);
-            shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            nextSlot++;
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Violin>());
+            shop.item[nextSlot].shopCustomPrice = new int?(20);
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            if (RedeBossDowned.downedSkullDigger)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<SkullDiggerPainting>());
+                shop.item[nextSlot].shopCustomPrice = new int?(12);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
             if (NPC.downedPlantBoss)
             {
                 shop.item[nextSlot].SetDefaults(ItemID.Ectoplasm);
                 shop.item[nextSlot].shopCustomPrice = new int?(NPC.downedGolemBoss ? 6 : 10);
-                shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-                nextSlot++;
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
             if (RedeBossDowned.keeperSaved)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<GrimShard>());
                 shop.item[nextSlot].shopCustomPrice = new int?(6);
-                shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-                nextSlot++;
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
                 if (Main.expertMode)
                 {
                     shop.item[nextSlot].SetDefaults(ModContent.ItemType<HeartInsignia>());
                     shop.item[nextSlot].shopCustomPrice = new int?(30);
-                    shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-                    nextSlot++;
+                    shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
                 }
             }
             if (RedeWorld.deadRingerGiven)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRinger>());
                 shop.item[nextSlot].shopCustomPrice = new int?(30);
-                shop.item[nextSlot].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-                nextSlot++;
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
         }
 

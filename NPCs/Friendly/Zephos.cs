@@ -19,6 +19,7 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -179,7 +180,7 @@ namespace Redemption.NPCs.Friendly
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 2:
+                    default:
                         button = "Feel free to stay here";
                         button2 = "Who are you?";
                         break;
@@ -220,7 +221,7 @@ namespace Redemption.NPCs.Friendly
             {
                 switch (RedeQuest.wayfarerVars[0])
                 {
-                    case 2:
+                    default:
                         if (firstButton)
                         {
                             Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Pleasure to meet ya.";
@@ -327,7 +328,7 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FlintAndSteel>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BeardedHatchet>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CantripStaff>());
-            //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IronfurAmulet>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LeatherSheath>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Archcloth>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SilverRapier>());
@@ -343,8 +344,29 @@ namespace Redemption.NPCs.Friendly
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
 
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
+            if (NPC.downedBoss1)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
+            if (NPC.downedBoss3)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MudGuardianPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SkeletonGuardianPainting>());
+            }
             if (Main.hardMode)
+            {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AkkaPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AncientAutoPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DubiousWatcherPainting>());
+            }
+            if (RedeBossDowned.downedSlayer)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KSPainting>());
+            if (NPC.downedPlantBoss)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<UkkoPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
+            }
+            if (NPC.downedMoonlord)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<WardenPainting>());
 
             if (NPC.downedMoonlord)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MythrilsBane>());

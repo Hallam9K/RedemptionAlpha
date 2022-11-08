@@ -72,6 +72,8 @@ namespace Redemption.Globals.Player
         public bool holyFire;
         public int stunTimer;
         public int stunFrame;
+        public bool bowString;
+        public bool leatherSheath;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -136,6 +138,8 @@ namespace Redemption.Globals.Player
             xenomiteBonus = false;
             shieldGenerator = false;
             holyFire = false;
+            bowString = false;
+            leatherSheath = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -436,6 +440,9 @@ namespace Redemption.Globals.Player
             }
             if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                 target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
+            if (leatherSheath && target.life >= target.lifeMax)
+                crit = true;
+
             damage = (int)(damage * TrueMeleeDamage);
         }
         public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -477,6 +484,8 @@ namespace Redemption.Globals.Player
             {
                 if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                     target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
+                if (leatherSheath && target.life >= target.lifeMax)
+                    crit = true;
 
                 damage = (int)(damage * TrueMeleeDamage);
             }
