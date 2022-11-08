@@ -48,6 +48,21 @@ namespace Redemption.Items.Usable.Summons
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+
+                int golem = NPC.FindFirstNPC(type);
+                if (golem > -1)
+                {
+                    int steps = (int)Main.npc[golem].Distance(player.Center) / 8;
+                    for (int i = 0; i < steps; i++)
+                    {
+                        if (Main.rand.NextBool(2))
+                        {
+                            Dust dust = Dust.NewDustDirect(Vector2.Lerp(Main.npc[golem].Center, player.Center, (float)i / steps), 2, 2, DustID.Sandnado, Scale: 4);
+                            dust.velocity = -player.DirectionTo(dust.position) * 2;
+                            dust.noGravity = true;
+                        }
+                    }
+                }
             }
             return true;
         }

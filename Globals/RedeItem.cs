@@ -28,6 +28,11 @@ namespace Redemption.Globals
         public bool TechnicallyHammer;
         public bool TechnicallyAxe;
 
+        public override void ModifyShootStats(Item item, Terraria.Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (player.RedemptionPlayerBuff().bowString && item.useAmmo == AmmoID.Arrow)
+                velocity *= 1.2f;
+        }
         public override void ModifyHitNPC(Item item, Terraria.Player player, Terraria.NPC target, ref int damage,
             ref float knockBack, ref bool crit)
         {

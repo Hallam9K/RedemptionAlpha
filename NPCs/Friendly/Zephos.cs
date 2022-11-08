@@ -19,6 +19,7 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -327,7 +328,7 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FlintAndSteel>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BeardedHatchet>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CantripStaff>());
-            //shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IronfurAmulet>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LeatherSheath>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Archcloth>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SilverRapier>());

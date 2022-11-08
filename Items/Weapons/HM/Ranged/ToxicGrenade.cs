@@ -34,6 +34,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.consumable = true;
             Item.shoot = ModContent.ProjectileType<ToxicGrenade_Proj>();
             Item.shootSpeed = 11f;
+            Item.ammo = Item.type;
         }
         public override void AddRecipes()
         {

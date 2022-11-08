@@ -31,8 +31,14 @@ namespace Redemption.Projectiles.Misc
         }
         public override void AI()
         {
+            if (Projectile.ai[0] != 0)
+                Projectile.usesLocalNPCImmunity = false;
             if (Projectile.localAI[0] == 0)
+            {
+                if (Projectile.ai[0] != 0)
+                    Projectile.timeLeft = 180;
                 Projectile.localAI[0] = Main.rand.Next(1, 3);
+            }
 
             if (Projectile.localAI[0] == 1)
                 Projectile.rotation -= 0.01f;
@@ -68,8 +74,11 @@ namespace Redemption.Projectiles.Misc
             if (Main.rand.NextBool(5))
                 target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);
 
-            Projectile.localNPCImmunity[target.whoAmI] = 30;
-            target.immune[Projectile.owner] = 0;
+            if (Projectile.ai[0] == 0)
+            {
+                Projectile.localNPCImmunity[target.whoAmI] = 30;
+                target.immune[Projectile.owner] = 0;
+            }
         }
         public override bool PreDraw(ref Color lightColor)
         {
