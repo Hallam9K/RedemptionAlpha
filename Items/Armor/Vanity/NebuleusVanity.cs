@@ -6,7 +6,7 @@ using Redemption.Rarities;
 namespace Redemption.Items.Armor.Vanity
 {
     [AutoloadEquip(EquipType.Body)]
-	class NebuleusVanity : ModItem
+	public class NebuleusVanity : ModItem
 	{
         public override void Load()
         {

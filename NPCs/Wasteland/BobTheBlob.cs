@@ -7,6 +7,7 @@ using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Items.Donator.Sneaklone;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;

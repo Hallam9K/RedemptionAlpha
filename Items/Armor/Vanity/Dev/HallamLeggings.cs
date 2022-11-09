@@ -11,6 +11,7 @@ namespace Redemption.Items.Armor.Vanity.Dev
         {
             DisplayName.SetDefault("Halm's Casual Jeans");
             Tooltip.SetDefault("'Great for impersonating devs!'");
+            ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
             SacrificeTotal = 1;
         }
         public override void SetDefaults()
@@ -21,6 +22,11 @@ namespace Redemption.Items.Armor.Vanity.Dev
             Item.value = Item.sellPrice(1, 0, 0, 0);
             Item.expert = true;
             Item.vanity = true;
+        }
+        public override void SetMatch(bool male, ref int equipSlot, ref bool robes)
+        {
+            if (male) equipSlot = Redemption.halmMaleLegID;
+            if (!male) equipSlot = Redemption.halmFemLegID;
         }
     }
 }

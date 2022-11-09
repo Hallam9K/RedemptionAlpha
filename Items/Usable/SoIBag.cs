@@ -11,6 +11,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Items.Usable
 {

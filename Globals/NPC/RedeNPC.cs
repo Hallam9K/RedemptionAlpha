@@ -31,6 +31,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Armor.Single;
 using Redemption.Buffs;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Globals.NPC
 {

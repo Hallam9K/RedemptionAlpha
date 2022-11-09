@@ -11,7 +11,6 @@ namespace Redemption.Items.Armor.Vanity.Dev
         {
             DisplayName.SetDefault("Halm's Casual Hoodie");
             Tooltip.SetDefault("'Great for impersonating devs!'");
-            ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = false;
             ArmorIDs.Body.Sets.HidesHands[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = false;
             SacrificeTotal = 1;
         }

@@ -9,6 +9,7 @@ using Redemption.Items.Materials.HM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Items.Usable
 {

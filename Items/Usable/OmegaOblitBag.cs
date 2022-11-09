@@ -11,6 +11,7 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Items.Usable
 {

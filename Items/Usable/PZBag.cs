@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Weapons.PostML.Melee;
 using Terraria;
 using Terraria.GameContent;

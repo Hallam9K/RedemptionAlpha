@@ -10,6 +10,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Donator.Gonk;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Items.Usable
 {
