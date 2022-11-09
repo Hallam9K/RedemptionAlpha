@@ -12,6 +12,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             Tooltip.SetDefault("Turns into a whirlpool, pulling in weak enemies\n" +
                 "Slain enemies affected by the whirlpool will heal the user");
             SacrificeTotal = 1;
+            ItemID.Sets.Yoyo[Item.type] = true;
+            ItemID.Sets.GamepadExtraRange[Item.type] = 15;
+            ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
         }
         public override void SetDefaults()
         {

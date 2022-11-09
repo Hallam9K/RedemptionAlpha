@@ -15,13 +15,12 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void SetDefaults()
         {
-            Projectile.extraUpdates = 0;
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.aiStyle = 99;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.MeleeNoSpeed;
             Projectile.Redemption().TechnicallyMelee = true;
             ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 16f;
             ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 310f;

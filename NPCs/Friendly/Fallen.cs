@@ -249,7 +249,7 @@ namespace Redemption.NPCs.Friendly
                 }
                 else
                 {
-                    Main.npcChatText = "You don't seem to have any fragments on your possession.";
+                    Main.npcChatText = "You don't seem to have any fragments on your possession. Once a weapon is repaired by my hands, it'll never be broken again!";
                     for (int k = 0; k < Frag.Length; k++)
                     {
                         if (Frag[k] >= 0)

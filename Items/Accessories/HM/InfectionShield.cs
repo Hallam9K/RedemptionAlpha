@@ -232,7 +232,8 @@ namespace Redemption.Items.Accessories.HM
 
         public override void AI()
         {
-            int DustID2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 20, default, 0.7f);
+            int DustID2 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy, 0, 0, 20, default, 0.7f);
+            Main.dust[DustID2].velocity *= 0.5f;
             Main.dust[DustID2].noGravity = true;
             for (int p = 0; p < Main.maxNPCs; p++)
             {

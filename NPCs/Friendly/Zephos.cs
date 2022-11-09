@@ -366,10 +366,10 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
             }
             if (NPC.downedMoonlord)
+            {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<WardenPainting>());
-
-            if (NPC.downedMoonlord)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MythrilsBane>());
+            }
 
             /*if (RedeBossDowned.downedMossyGoliath)
             {

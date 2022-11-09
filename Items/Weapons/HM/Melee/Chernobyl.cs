@@ -10,12 +10,15 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chernobyl");
+            ItemID.Sets.Yoyo[Item.type] = true;
+            ItemID.Sets.GamepadExtraRange[Item.type] = 15;
+            ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
             SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {
             Item.damage = 40;
-            Item.DamageType = DamageClass.Melee;
+            Item.DamageType = DamageClass.MeleeNoSpeed;
             Item.useTime = 20;
             Item.useAnimation = 25;
             Item.useStyle = ItemUseStyleID.Shoot;

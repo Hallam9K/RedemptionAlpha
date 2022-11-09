@@ -22,6 +22,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         }
         public override void AI()
         {
+            Projectile.position = Main.player[Projectile.owner].position;
             Projectile.timeLeft = 10;
             if (Projectile.ai[0]++ >= 540)
                 RedeSystem.Silence = true;

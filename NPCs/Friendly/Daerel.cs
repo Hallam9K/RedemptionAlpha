@@ -19,6 +19,7 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -370,7 +371,10 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
             }
             if (NPC.downedMoonlord)
+            {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<WardenPainting>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DarkSteelBow>());
+            }
 
             /*if (RedeBossDowned.downedMossyGoliath)
             {
