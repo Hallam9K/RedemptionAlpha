@@ -59,7 +59,6 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod2");
-            //bossBag = ModContent.ItemType<NebBag>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -77,6 +76,11 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
+            if (!Main.expertMode && Main.rand.NextBool(7))
+            {
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusMask>());
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusVanity>());
+            }
             if (!RedeBossDowned.downedNebuleus)
             {
                 RedeWorld.alignment -= 4;
@@ -118,7 +122,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<NebuleusMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
 

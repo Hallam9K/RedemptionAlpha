@@ -34,6 +34,15 @@ namespace Redemption.Items.Usable
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 		public override bool CanRightClick() => true;
+        public override void RightClick(Player player)
+        {
+            if (Main.rand.NextBool(20))
+            {
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+            }
+        }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));

@@ -15,6 +15,11 @@ using Redemption.Particles;
 using Redemption.Base;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Trophies;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Bosses.Neb.Clone
 {
@@ -54,7 +59,6 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod2");
-            //bossBag = ModContent.ItemType<NebBag>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -71,6 +75,11 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
+            if (!Main.expertMode && Main.rand.NextBool(7))
+            {
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusMask>());
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusVanity>());
+            }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
             if (RedeBossDowned.nebDeath < 7)
             {
@@ -81,6 +90,24 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
 
             if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendData(MessageID.WorldData);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<NebBag>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebuleusTrophy>(), 10));
+            // TODO: Neb relic
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<GildedBonnet>(), 4));
+
+            LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
+
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
+
+            npcLoot.Add(notExpertRule);
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {

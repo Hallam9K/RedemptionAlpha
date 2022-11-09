@@ -1,7 +1,12 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Melee;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
@@ -43,6 +48,21 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<ForgottenGreatsword_Proj>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<ForgottenSword>())
+                .AddIngredient(ModContent.ItemType<OphosNotes>())
+                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("Repaired by the Fallen"), _ => false))
+                .Register();
+        }
+        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };
+        public override bool AllowPrefix(int pre)
+        {
+            if (Array.IndexOf(unwantedPrefixes, pre) > -1)
+                return false;
+            return true;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

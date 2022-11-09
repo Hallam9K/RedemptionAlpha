@@ -27,9 +27,15 @@ namespace Redemption.Items.Usable
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
 		}
-		public override bool CanRightClick()
-		{
-			return true;
+		public override bool CanRightClick() => true;
+        public override void RightClick(Player player)
+        {
+            if (Main.rand.NextBool(20))
+            {
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+            }
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {

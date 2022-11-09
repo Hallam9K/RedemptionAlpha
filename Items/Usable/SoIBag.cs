@@ -38,6 +38,15 @@ namespace Redemption.Items.Usable
         }
 
         public override bool CanRightClick() => true;
+        public override void RightClick(Player player)
+        {
+            if (Main.rand.NextBool(20))
+            {
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+            }
+        }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
