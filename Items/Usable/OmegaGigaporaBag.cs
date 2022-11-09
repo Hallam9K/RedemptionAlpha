@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.Items.Usable
 {
@@ -35,6 +36,7 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DrillHeadHead>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));

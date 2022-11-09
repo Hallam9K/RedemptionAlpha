@@ -7,7 +7,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.ADD
+namespace Redemption.Projectiles.Ranged
 {
     public class XeniumBubble_Proj : ModProjectile
     {
