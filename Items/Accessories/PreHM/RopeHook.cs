@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PreHM
 {
-    class RopeHook : ModItem
+    public class RopeHook : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -32,7 +32,7 @@ namespace Redemption.Items.Accessories.PreHM
                 .Register();
         }
     }
-    class RopeHook_Proj : ModProjectile
+    public class RopeHook_Proj : ModProjectile
     {
         private static Asset<Texture2D> chainTexture;
         public override void Load()
