@@ -31,6 +31,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Armor.Single;
 using Redemption.Buffs;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Globals.NPC
 {
@@ -67,6 +68,11 @@ namespace Redemption.Globals.NPC
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HamPatPainting>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<TiedBoiPainting>());
+                if (Main.expertMode && Terraria.NPC.boughtCat)
+                {
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HallamHoodie>());
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HallamLeggings>());
+                }
             }
         }
         public override void ResetEffects(Terraria.NPC npc)
@@ -473,7 +479,6 @@ namespace Redemption.Globals.NPC
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
             globalLoot.Add(ItemDropRule.ByCondition(new YoyosTidalWake(), ModContent.ItemType<TidalWake>(), 200));
-            globalLoot.Add(ItemDropRule.ByCondition(new OphosSwordCondition(), ModContent.ItemType<ForgottenGreatsword>(), 200));
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Items;
 using Redemption.Items.Armor.Vanity.TBot;
 using Terraria;
 using Terraria.GameContent;
@@ -55,6 +56,7 @@ namespace Redemption.NPCs.Lab.Volt
         }
         private readonly float gunRot = 4.9742f;
         public static int ChatNumber = 0;
+        public static bool NextPage;
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button2 = "Cycle Dialogue";
@@ -96,24 +98,33 @@ namespace Redemption.NPCs.Lab.Volt
                 case 11:
                     button = "Challenge!";
                     break;
+                case 22:
+                    button = "Insurgents (2/2)";
+                    break;
             }
+            if (NextPage)
+                button = "Next Page (1/2)";
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
             if (firstButton)
             {
-                if (ChatNumber == 11)
-                    NPC.Transform(ModContent.NPCType<ProtectorVolt>());
-                else
-                    Main.npcChatText = ChitChat();
-
                 switch (ChatNumber)
                 {
                     case 0:
                         RedeQuest.voltVars[0] = true;
                         break;
                     case 2:
+                        if (NextPage)
+                        {
+                            ChatNumber = 22;
+                            NextPage = false;
+                        }
+                        else
+                        {
+                            NextPage = true;
+                        }
                         RedeQuest.voltVars[1] = true;
                         break;
                     case 5:
@@ -122,11 +133,32 @@ namespace Redemption.NPCs.Lab.Volt
                     case 8:
                         RedeQuest.voltVars[3] = true;
                         break;
+                    case 22:
+                        if (NextPage)
+                            NextPage = false;
+                        else
+                        {
+                            ChatNumber = 2;
+                            NextPage = true;
+                        }
+                        RedeQuest.voltVars[1] = true;
+                        break;
                 }
+                if (ChatNumber != 2 && ChatNumber != 22)
+                    NextPage = false;
+
+                if (ChatNumber == 11)
+                    NPC.Transform(ModContent.NPCType<ProtectorVolt>());
+                else
+                    Main.npcChatText = ChitChat();
             }
             else
             {
+                NextPage = false;
                 bool skip = true;
+                if (ChatNumber == 22)
+                    ChatNumber = 2;
+
                 while (skip)
                 {
                     ChatNumber++;
@@ -148,7 +180,7 @@ namespace Redemption.NPCs.Lab.Volt
             }
         }
 
-        public static string ChitChat() // TODO: Custom dialogue UI since text too long
+        public static string ChitChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
             switch (ChatNumber)
@@ -159,23 +191,23 @@ namespace Redemption.NPCs.Lab.Volt
                 case 1:
                     chat.Add("The leader of the insurgents, or the Alpha as they call themselves, is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.");
                     break;
-                case 2:
-                    chat.Add("Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful snipers the humans made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent variant, yet I don't know where it came from, logs do not track the humans creating it. I wonder if the insurgents have someone constructed their own. Thankfully for us, Talos hasn't been seen for some time now.");
+                case 2://
+                    chat.Add("Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:" + ModContent.ItemType<NextPageArrow>() + "]");
                     break;
                 case 3:
-                    chat.Add("Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him, what we can assume to be him, we only identified it was Zeroth via his weapon at the scene.");
+                    chat.Add("Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him - we only identified it was Zeroth via his weapon at the scene.");
                     break;
                 case 4:
                     chat.Add("Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.");
                     break;
                 case 5:
-                    chat.Add("Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back, it broke...");
+                    chat.Add("Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...");
                     break;
                 case 6:
                     chat.Add("One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.");
                     break;
                 case 7:
-                    chat.Add("Sector Zero yes, If I am correct it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and The Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus does however.");
+                    chat.Add("Sector Zero yes? If I am correct, it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and the Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus forbids us however.");
                     break;
                 case 8:
                     chat.Add("Our leader, she freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.");
@@ -186,11 +218,15 @@ namespace Redemption.NPCs.Lab.Volt
                 case 10:
                     chat.Add("Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. However she put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.");
                     break;
+                case 22:
+                    chat.Add("I wonder if the insurgents have someone constructing their own variant of xenomite. Thankfully for us, Talos hasn't been seen for some time now.");
+                    break;
             }
             return chat;
         }
         public override string GetChat()
         {
+            NextPage = false;
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
 

@@ -6,6 +6,9 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Intruder;
+using Redemption.Items.Donator.Sneaklone;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
@@ -108,6 +111,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 26, 48));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 1, 6, 12));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit>(), 10));
+            npcLoot.Add(ItemDropRule.OneFromOptions(3, ModContent.ItemType<IntruderMask>(), ModContent.ItemType<IntruderArmour>(), ModContent.ItemType<IntruderPants>()));
             npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 20, 40));
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 1000));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));

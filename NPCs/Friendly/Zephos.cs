@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Materials.HM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -344,6 +345,9 @@ namespace Redemption.NPCs.Friendly
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
 
+            if (NPC.downedGolemBoss)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
+
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
@@ -366,10 +370,10 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
             }
             if (NPC.downedMoonlord)
+            {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<WardenPainting>());
-
-            if (NPC.downedMoonlord)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MythrilsBane>());
+            }
 
             /*if (RedeBossDowned.downedMossyGoliath)
             {

@@ -24,7 +24,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = false;
             Projectile.width = 14;
             Projectile.height = 14;
-            Projectile.alpha = 0;
             Projectile.timeLeft = 120;
         }
 

@@ -8,6 +8,8 @@ using Terraria.GameContent;
 using Redemption.Items.Materials.HM;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Dev;
 
 namespace Redemption.Items.Usable
 {
@@ -33,8 +35,18 @@ namespace Redemption.Items.Usable
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
         public override bool CanRightClick() => true;
+        public override void RightClick(Player player)
+        {
+            if (Main.rand.NextBool(20))
+            {
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsSuit>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<TiedsLeggings>());
+            }
+        }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DrillHeadHead>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));

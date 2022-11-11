@@ -21,7 +21,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.height = 32;
 			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.White;
-			Item.value = Item.buyPrice(0, 0, 75, 0);
+			Item.value = Item.buyPrice(0, 10, 0, 0);
 		}
 	}
 }

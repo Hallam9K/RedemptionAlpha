@@ -17,6 +17,8 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Intruder;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -235,6 +237,7 @@ namespace Redemption.NPCs.Wasteland
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 2, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 4, 1, 2));
+            npcLoot.Add(ItemDropRule.OneFromOptions(50, ModContent.ItemType<IntruderMask>(), ModContent.ItemType<IntruderArmour>(), ModContent.ItemType<IntruderPants>()));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.CorruptPenguin, false);
             foreach (var dropRule in dropRules)

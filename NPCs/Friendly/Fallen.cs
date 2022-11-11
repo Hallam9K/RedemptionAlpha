@@ -22,6 +22,8 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -229,7 +231,9 @@ namespace Redemption.NPCs.Friendly
             {
                 int[] Frag = new int[] {
                     player.FindItem(ModContent.ItemType<ZweihanderFragment1>()),
-                    player.FindItem(ModContent.ItemType<ZweihanderFragment2>()) };
+                    player.FindItem(ModContent.ItemType<ZweihanderFragment2>()),
+                    player.FindItem(ModContent.ItemType<ForgottenSword>()),
+                    player.FindItem(ModContent.ItemType<OphosNotes>()) };
 
                 if (Frag[0] >= 0 && Frag[1] >= 0)
                 {
@@ -241,19 +245,35 @@ namespace Redemption.NPCs.Friendly
                         player.inventory[Frag[1]] = new Item();
 
                     Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
-                    Main.npcChatText = "All done and repaired, here you go.";
+                    Main.npcChatText = "All done and repaired, here you go. The Zweihander is a fine blade, it originates from my home domain - Gathuram.";
                     player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<Zweihander>());
+
+                    SoundEngine.PlaySound(SoundID.Item37, NPC.position);
+                    return;
+                }
+                else if (Frag[2] >= 0 && Frag[3] >= 0)
+                {
+                    player.inventory[Frag[2]].stack--;
+                    player.inventory[Frag[3]].stack--;
+                    if (player.inventory[Frag[2]].stack <= 0)
+                        player.inventory[Frag[2]] = new Item();
+                    if (player.inventory[Frag[3]].stack <= 0)
+                        player.inventory[Frag[3]] = new Item();
+
+                    Main.npcChatCornerItem = ModContent.ItemType<ForgottenGreatsword>();
+                    Main.npcChatText = "I recall hearing mumblings about this \"Ophos\" man, even all the way in Gathuram. Although my memory is vague, these notes are testament enough of his high renown among Epidotra's blacksmiths.";
+                    player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForgottenGreatsword>());
 
                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
                     return;
                 }
                 else
                 {
-                    Main.npcChatText = "You don't seem to have any fragments on your possession.";
+                    Main.npcChatText = "You don't seem to have any fragments on your possession. Once a weapon is repaired by my hands, it'll never be broken again!";
                     for (int k = 0; k < Frag.Length; k++)
                     {
                         if (Frag[k] >= 0)
-                            Main.npcChatText = "You have fragments, but none of them are from the same weapon.";
+                            Main.npcChatText = "You have fragments, but none of them are for the same weapon.";
                     }
                     SoundEngine.PlaySound(SoundID.MenuTick);
                 }

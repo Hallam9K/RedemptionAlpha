@@ -2,6 +2,7 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria;
 
 namespace Redemption.Globals
 {
@@ -53,17 +54,5 @@ namespace Redemption.Globals
 		}
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
-	}
-	public class OphosSwordCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && info.player.ZoneSnow && Terraria.NPC.downedGolemBoss)
-				return true;
-
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped from enemies in the ice biome after Golem is defeated";
 	}
 }

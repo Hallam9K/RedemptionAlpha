@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             name.SetDefault("Slayer's Gaming Chair");
             AddMapEntry(new Color(107, 111, 127), name);
         }
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => RedeBossDowned.downedOmega3;
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus;
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerChair>());

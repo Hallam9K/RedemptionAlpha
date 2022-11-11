@@ -17,6 +17,8 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Armor.Vanity.Intruder;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -289,6 +291,7 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.OneFromOptions(2,
                 new int[] { ItemID.Daybloom, ItemID.Blinkroot, ItemID.Moonglow, ItemID.Waterleaf, ModContent.ItemType<Nightshade>() }));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AnglonicMysticBlossom>(), 100));
+            npcLoot.Add(ItemDropRule.OneFromOptions(50, ModContent.ItemType<IntruderMask>(), ModContent.ItemType<IntruderArmour>(), ModContent.ItemType<IntruderPants>()));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
         }
 

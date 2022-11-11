@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -68,7 +69,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .AddTile(TileID.Anvils)
                 .Register();
         }
-
+        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };
+        public override bool AllowPrefix(int pre)
+        {
+            if (Array.IndexOf(unwantedPrefixes, pre) > -1)
+                return false;
+            return true;
+        }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())

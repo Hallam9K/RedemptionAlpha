@@ -19,13 +19,12 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void SetDefaults()
         {
-            Projectile.extraUpdates = 0;
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.aiStyle = 99;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = DamageClass.MeleeNoSpeed;
             Projectile.alpha = 255;
             Projectile.scale = 0.1f;
             Projectile.Redemption().TechnicallyMelee = true;

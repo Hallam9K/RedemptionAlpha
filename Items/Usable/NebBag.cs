@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Globals;
 
 namespace Redemption.Items.Usable
 {
@@ -31,9 +32,18 @@ namespace Redemption.Items.Usable
             Item.expert = true;
         }
         public override bool CanRightClick() => true;
+        public override void RightClick(Player player)
+        {
+            if (Main.rand.NextBool(7))
+            {
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<NebuleusMask>());
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<NebuleusVanity>());
+            }
+        }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebuleusMask>(), 7));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<StrangeSkull>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HamSandwich>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));

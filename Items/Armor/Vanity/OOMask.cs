@@ -18,7 +18,7 @@ namespace Redemption.Items.Armor.Vanity
         {
             Item.width = 24;
             Item.height = 18;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Green;
             Item.vanity = true;
         }
     }
