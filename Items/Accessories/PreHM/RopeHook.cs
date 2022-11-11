@@ -57,7 +57,7 @@ namespace Redemption.Items.Accessories.PreHM
 
         public override bool? SingleGrappleHook(Player player) => true;
 
-        public override void AI()
+        public override void PostAI()
         {
             Projectile.velocity.Y += 0.6f;
         }
