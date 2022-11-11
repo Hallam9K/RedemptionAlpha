@@ -8,6 +8,7 @@ using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -17,6 +18,7 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
             TileObjectData.newTile.Width = 6;
             TileObjectData.newTile.Height = 10;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };

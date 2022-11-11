@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -14,6 +15,7 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
             TileObjectData.newTile.Width = 11;
             TileObjectData.newTile.Height = 11;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
