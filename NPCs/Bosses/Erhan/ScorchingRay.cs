@@ -8,52 +8,33 @@ using Redemption.Base;
 using Terraria.ID;
 using Terraria.Audio;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class ScorchingRay : ModProjectile
+    public class ScorchingRay : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 1;
-        public int LaserSegmentLength = 60;
-        public int LaserWidth = 76;
-        public int LaserEndSegmentLength = 60;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 30;
-
-        public int MaxLaserLength = 1800;
-        public int maxLaserFrames = 1;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = false;
+        private new const float FirstSegmentDrawDist = 30;
         // >
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Scorching Ray");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
-            Projectile.width = LaserWidth;
-            Projectile.height = LaserWidth;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 200;
             Projectile.alpha = 255;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 1;
+            LaserSegmentLength = 60;
+            LaserWidth = 76;
+            LaserEndSegmentLength = 60;
+            MaxLaserLength = 1800;
+            StopsOnTiles = false;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
@@ -103,53 +84,11 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             #endregion
 
-            #region Frame and Timer Updates
-            /*++Projectile.frameCounter;
-            if (Projectile.frameCounter >= LaserFrameDelay)
-            {
-                Projectile.frameCounter = 0;
-                Frame++;
-                if (Frame >= maxLaserFrames)
-                {
-                    Frame = 0;
-                }
-            }*/
             ++AITimer;
-            #endregion
 
-            #region misc
-            //CutTiles();
             if (AITimer >= 80)
-                CastLights();
-            #endregion
+                CastLights(new Vector3(1f, 0.7f, 0f));
         }
-
-        #region Laser AI Submethods
-        private void EndpointTileCollision()
-        {
-            for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
-            {
-                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
-                {
-                    LaserLength -= LaserSegmentLength;
-                    break;
-                }
-            }
-        }
-        public override void CutTiles()
-        {
-            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            Utils.PlotTileLine(Projectile.Center, Projectile.Center + unit * LaserLength, (Projectile.width + 16) * Projectile.scale, DelegateMethods.CutTiles);
-        }
-        private void CastLights()
-        {
-            // Cast a light along the line of the Laser
-            DelegateMethods.v3_1 = new Vector3(1f, 0.7f, 0f);
-            Utils.PlotTileLine(Projectile.Center, Projectile.Center + new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserLength, 26, DelegateMethods.CastLight);
-        }
-        #endregion
 
         #region Drawcode
         // The core function of drawing a Laser, you shouldn't need to touch this

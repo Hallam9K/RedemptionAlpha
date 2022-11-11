@@ -3,11 +3,13 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.NPCs.HM;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
     public class Scan_Proj : ModProjectile
     {
+        public override string Texture => "Redemption/Textures/Ray";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Scan");
@@ -64,8 +66,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            //Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/Ray").Value;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

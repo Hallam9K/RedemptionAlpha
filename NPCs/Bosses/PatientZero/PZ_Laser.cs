@@ -12,34 +12,11 @@ using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
-    public class PZ_Laser : ModProjectile
+    public class PZ_Laser : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 0.1f;
-        public int LaserSegmentLength = 46;
-        public int LaserWidth = 40;
-        public int LaserEndSegmentLength = 46;
-        
-        //should be set to about half of the end length
-        private readonly float FirstSegmentDrawDist = 23;
-
-        public int MaxLaserLength = 1840;
-        public int maxLaserFrames = 3;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = true;
-        // >
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Xenium Laser");
-        public override void SetDefaults()
+        private new readonly float FirstSegmentDrawDist = 23;
+        public override void SetSafeStaticDefaults() => DisplayName.SetDefault("Xenium Laser");
+        public override void SetSafeDefaults()
         {
             Projectile.width = 36;
             Projectile.height = 36;
@@ -49,7 +26,12 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
             Projectile.alpha = 255;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 0.1f;
+            LaserSegmentLength = 46;
+            LaserWidth = 40;
+            LaserEndSegmentLength = 46;
+            MaxLaserLength = 1840;
+            maxLaserFrames = 3;
         }
         public override bool CanHitPlayer(Player target) => AITimer >= 85;
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 85 ? null : false;
@@ -130,7 +112,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.velocity = Vector2.Normalize(Projectile.velocity);        
+            Projectile.velocity = Vector2.Normalize(Projectile.velocity);
 
             #endregion
 
@@ -157,7 +139,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
 
         #region Laser AI Submethods
-        private void EndpointTileCollision()
+        public override void EndpointTileCollision()
         {
             for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
             {
@@ -231,29 +213,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             {
                 return false;
             }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            StopsOnTiles = reader.ReadBoolean();
         }
         #endregion
     }

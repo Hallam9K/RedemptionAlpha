@@ -13,39 +13,14 @@ using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
-    public class RedPrism : ModProjectile
+    public class RedPrism : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 1;
-        public int LaserSegmentLength = 30;
-        public int LaserWidth = 46;
-        public int LaserEndSegmentLength = 40;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 20;
-
-        public int MaxLaserLength = 1800;
-        internal const float charge = 30f;
-        public int maxLaserFrames = 1;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = false;
-        // >
-        public override void SetStaticDefaults()
+        private new const float FirstSegmentDrawDist = 20;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Phantom Cleaver");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 30;
             Projectile.height = 30;
@@ -54,10 +29,13 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 1;
+            LaserSegmentLength = 30;
+            LaserWidth = 46;
+            LaserEndSegmentLength = 40;
+            MaxLaserLength = 1800;
+            StopsOnTiles = false;
         }
-        float attackCounter = 0;
-
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -105,22 +83,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             ++AITimer;
         }
-
-        #region Laser AI Submethods
-        private void EndpointTileCollision()
-        {
-            for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
-            {
-                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
-                {
-                    LaserLength -= LaserSegmentLength;
-                    break;
-                }
-            }
-        }
-        #endregion
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -164,80 +126,16 @@ namespace Redemption.NPCs.Bosses.Cleaver
             return false;
         }
         #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(attackCounter);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            attackCounter = reader.ReadSingle();
-            StopsOnTiles = reader.ReadBoolean();
-        }
-        #endregion
     }
-    public class RedPrism_F : ModProjectile
+    public class RedPrism_F : LaserProjectile
     {
         public override string Texture => "Redemption/NPCs/Bosses/Cleaver/RedPrism";
-        public float AITimer
+        private new const float FirstSegmentDrawDist = 20;
+        public override void SetSafeStaticDefaults()
         {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
+            DisplayName.SetDefault("Phantom Cleaver");
         }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 1;
-        public int LaserSegmentLength = 30;
-        public int LaserWidth = 46;
-        public int LaserEndSegmentLength = 40;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 20;
-
-        public int MaxLaserLength = 1800;
-        internal const float charge = 30f;
-        public int maxLaserFrames = 1;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = false;
-        // >
-
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 30;
             Projectile.height = 30;
@@ -246,9 +144,13 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
+            LaserScale = 1;
+            LaserSegmentLength = 30;
+            LaserWidth = 46;
+            LaserEndSegmentLength = 40;
+            MaxLaserLength = 1800;
+            StopsOnTiles = false;
         }
-        float attackCounter = 0;
-
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -296,22 +198,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             ++AITimer;
         }
-
-        #region Laser AI Submethods
-        private void EndpointTileCollision()
-        {
-            for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
-            {
-                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
-                {
-                    LaserLength -= LaserSegmentLength;
-                    break;
-                }
-            }
-        }
-        #endregion
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -353,49 +239,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(attackCounter);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            attackCounter = reader.ReadSingle();
-            StopsOnTiles = reader.ReadBoolean();
         }
         #endregion
     }

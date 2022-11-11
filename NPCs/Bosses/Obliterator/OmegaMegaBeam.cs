@@ -7,41 +7,18 @@ using Redemption.Base;
 using Terraria.Audio;
 using Terraria.ID;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
-    public class OmegaMegaBeam : ModProjectile
+    public class OmegaMegaBeam : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 1;
-        public int LaserSegmentLength = 96;
-        public int LaserWidth = 156;
-        public int LaserEndSegmentLength = 96;
-
-        //should be set to about half of the end length
-        private float FirstSegmentDrawDist = 40;
-
-        public int MaxLaserLength = 1920;
-        public int maxLaserFrames = 3;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = false;
-        // >
-        public override void SetStaticDefaults()
+        private new float FirstSegmentDrawDist = 40;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Obliterator Beam");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 156;
             Projectile.height = 156;
@@ -50,7 +27,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 150;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 1;
+            LaserSegmentLength = 96;
+            LaserWidth = 156;
+            LaserEndSegmentLength = 96;
+            MaxLaserLength = 1920;
+            maxLaserFrames = 3;
+            StopsOnTiles = false;
         }
         private float offset;
         public override void AI()
@@ -103,7 +86,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             }
             ++AITimer;
         }
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -145,24 +127,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, LaserWidth * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }
