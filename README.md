@@ -4,9 +4,6 @@ TODO
 
 - Bio-Mechanical Heart(?) accessory that converts overflown energy to life (increased life regen when max energy), found in Holochests
 - Accessory that turns mana star drops into something else that do something upon pickup, found in Holochests
-- Lab enemies drop energy cells that you right-click to restore some energy
-- Code Divinity, a spell tome that flashes bright lights at the enemy, doing holy and fire damage. (it would look like a mini version of Seth's heat snaps from Split mod probably)
-- Code Steampunk Minigun, just a minigun that replaces normal bullets with high velocity ones
 - Reduced player knockback effect from the Egg Shelld accessory (player knockback changing is wack)
 
 MULTIPLAYER BUGS (PLS HELP US :sadcat:)
