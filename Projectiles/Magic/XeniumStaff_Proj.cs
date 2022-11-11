@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 30;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 5;
+            Projectile.idStaticNPCHitCooldown = 8;
         }
 
         public override void AI()
@@ -33,7 +33,7 @@ namespace Redemption.Projectiles.Magic
             if (AITimer == 0)
                 LaserScale = 0.1f;
             else
-                Projectile.Center = player.Center + Vector2.Normalize(Projectile.velocity) * 36f;
+                Projectile.Center = player.Center + Vector2.Normalize(Projectile.velocity) * 48f;
 
             if (AITimer <= 10)
             {

@@ -26,7 +26,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 200;
+            Item.damage = 170;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 14;
             Item.width = 58;
@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.UseSound = SoundID.Item117;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<XeniumBubble_Proj>();
-            Item.shootSpeed = 14f;
+            Item.shootSpeed = 13f;
         }
         public override bool AltFunctionUse(Player player) => true;
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
@@ -59,10 +59,12 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
                 return false;
             }
-            for (int i = 0; i < 2; i++)
+            int numberProjectiles = 2;
+            for (int i = 0; i < numberProjectiles; i++)
             {
-                velocity += velocity.RotatedByRandom(0.4f);
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+                velocity *= Main.rand.NextFloat(0.7f, 1.5f);
+                Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(15));
+                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
             }
             return false;
         }

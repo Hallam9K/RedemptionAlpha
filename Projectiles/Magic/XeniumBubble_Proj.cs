@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = 1;
             Projectile.hostile = false;
             Projectile.friendly = true;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 600;
             Projectile.alpha = 10;
@@ -46,27 +46,36 @@ namespace Redemption.Projectiles.Magic
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
-                RedeDraw.SpawnExplosion(Projectile.Center, new Color(76, 240, 107), DustID.Smoke, 0, 10, 1, 1);
+                RedeDraw.SpawnExplosion(Projectile.Center, new Color(76, 240, 107), DustID.Smoke, 0, 10, 1, 2);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumBoom_Proj>(), 0, 0, Main.myPlayer);
 
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || !target.CanBeChasedBy())
+                    if (!target.active || (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy))
                         continue;
 
-                    if (Projectile.DistanceSQ(target.Center) > 120 * 120)
+                    if (Projectile.DistanceSQ(target.Center) > 140 * 140)
                         continue;
 
                     int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
-                    BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
+                    BaseAI.DamageNPC(target, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile);
                 }
             }
             for (int i = 0; i < 20; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy, Scale: 2);
-                Main.dust[dustIndex].velocity *= 5f;
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Clentaminator_Green, Scale: 2);
             }
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            SoundEngine.PlaySound(SoundID.Item54, Projectile.position);
+            if (Projectile.velocity.X != oldVelocity.X)
+                Projectile.velocity.X = -oldVelocity.X;
+            if (Projectile.velocity.Y != oldVelocity.Y)
+                Projectile.velocity.Y = -oldVelocity.Y;
+            Projectile.velocity *= 0.95f;
+            return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -80,7 +89,7 @@ namespace Redemption.Projectiles.Magic
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            float squish = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.1f, 0.9f, 1.1f);
+            float squish = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.3f, -0.3f, 0.3f);
             Vector2 scale = new(Projectile.scale + squish, Projectile.scale - squish);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, scale, effects, 0);
