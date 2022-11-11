@@ -434,6 +434,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     #region Dramatic Entrance
                     NPC.LookAtEntity(player);
                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.ai[2]++;
                     if (NPC.ai[2] >= 60)
                     {
@@ -453,6 +454,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         {
                             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                             player.RedemptionScreen().lockScreen = true;
+                            player.RedemptionScreen().cutscene = true;
                             NPC.LockMoveRadius(player);
                         }
                         if (!Main.dedServ)
@@ -1314,6 +1316,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                     {
@@ -1403,6 +1406,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     NPC.LookAtEntity(player);
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod2");
@@ -1447,6 +1451,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     NPC.LookAtEntity(player);
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     NPC.ai[2]++;
                     if (!Main.dedServ)

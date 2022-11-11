@@ -328,6 +328,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     gunRot = NPC.spriteDirection == 1 ? 0f : (float)Math.PI;
                     AITimer++;
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     if (RedeBossDowned.slayerDeath < 3)
                     {
@@ -2277,6 +2278,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
@@ -2330,6 +2332,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     #region Spared
                     NPC.LookAtEntity(player);
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     if (AITimer++ == 0)
                     {

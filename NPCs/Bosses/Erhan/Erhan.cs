@@ -311,6 +311,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                                     player.RedemptionScreen().lockScreen = true;
+                                    player.RedemptionScreen().cutscene = true;
                                     NPC.LockMoveRadius(player);
                                 }
                                 if (AITimer == 130)
@@ -939,6 +940,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             case 1:
                                 player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                                 player.RedemptionScreen().lockScreen = true;
+                                player.RedemptionScreen().cutscene = true;
                                 NPC.LockMoveRadius(player);
                                 NPC.velocity *= 0.9f;
                                 if (!Main.dedServ)
