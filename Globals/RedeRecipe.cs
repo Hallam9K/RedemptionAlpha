@@ -1,5 +1,6 @@
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Critters;
+using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
@@ -55,7 +56,16 @@ namespace Redemption.Globals
             PlantRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Daybloom)}", ItemID.Daybloom, ItemID.Waterleaf, ItemID.Blinkroot, ItemID.Deathweed, ItemID.Fireblossom, ItemID.Moonglow, ItemID.Shiverthorn, ModContent.ItemType<Nightshade>());
             RecipeGroup.RegisterGroup("Redemption:Plants", PlantRecipeGroup);
         }
+        public override void PostAddRecipes()
+        {
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
 
+                if (recipe.HasResult(ItemID.Zenith))
+                    recipe.AddIngredient<GildedStar>(10);
+            }
+        }
         public override void AddRecipes()
         {
             Recipe.Create(ItemID.GreenDye)
@@ -91,6 +101,12 @@ namespace Redemption.Globals
             Recipe.Create(ItemID.DryadLoincloth)
                 .AddIngredient(ItemID.Vine, 4)
                 .AddTile(TileID.Loom)
+                .Register();
+
+            Recipe.Create(ItemID.NightOwlPotion)
+                .AddIngredient(ItemID.BottledWater)
+                .AddIngredient<Nightshade>()
+                .AddTile(TileID.Bottles)
                 .Register();
 
             // Living Furniture
