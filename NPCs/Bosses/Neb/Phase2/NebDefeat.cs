@@ -43,8 +43,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                     Projectile.frame = 0;
                 }
             }
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = Projectile.Center;
-            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+            player.RedemptionScreen().ScreenFocusPosition = Projectile.Center;
+            player.RedemptionScreen().lockScreen = true;
             player.RedemptionScreen().cutscene = true;
             Projectile.localAI[0]++;
             Projectile.velocity.X = 0;

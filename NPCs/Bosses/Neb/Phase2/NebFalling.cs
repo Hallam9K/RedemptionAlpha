@@ -31,8 +31,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Projectile.localAI[0]++;
             Projectile.velocity.Y += 0.2f;
             Projectile.rotation += 0.01f;
-            player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = Projectile.Center;
-            player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+            player.RedemptionScreen().ScreenFocusPosition = Projectile.Center;
+            player.RedemptionScreen().lockScreen = true;
             player.RedemptionScreen().cutscene = true;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)

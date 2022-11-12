@@ -132,11 +132,11 @@ namespace Redemption.Globals
 
         public override void SetDefaults()
         {
-            SetSafeDefaults();
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
             Projectile.Redemption().TechnicallyMelee = true;
+            SetSafeDefaults();
         }
     }
     public abstract class LaserProjectile : ModProjectile

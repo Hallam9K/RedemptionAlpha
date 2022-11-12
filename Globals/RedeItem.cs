@@ -318,7 +318,7 @@ namespace Redemption.Globals
                 }
                 if (ItemLists.Celestial.Contains(item.type) || ProjectileLists.Celestial.Contains(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Celestial") { OverrideColor = Color.Pink };
+                    TooltipLine line = new(Mod, "Element", "Celestial Bonus: Hitting foes can create stars around them, restoring life and mana once the foe is slain") { OverrideColor = Color.Pink };
                     tooltips.Add(line);
                 }
                 if (ItemLists.Earth.Contains(item.type) || ProjectileLists.Earth.Contains(item.shoot))
