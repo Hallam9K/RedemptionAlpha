@@ -30,11 +30,23 @@ namespace Redemption.Projectiles.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame <= 3;
         public override void AI()
         {
-            if (++Projectile.frameCounter >= 5)
+            if (Projectile.timeLeft > 90)
             {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 7)
-                    Projectile.Kill();
+                if (++Projectile.frameCounter >= 5)
+                {
+                    Projectile.frameCounter = 0;
+                    if (++Projectile.frame >= 3)
+                        Projectile.frame = 2;
+                }
+            }
+            else
+            {
+                if (++Projectile.frameCounter >= 5)
+                {
+                    Projectile.frameCounter = 0;
+                    if (++Projectile.frame >= 7)
+                        Projectile.Kill();
+                }
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             if (Projectile.localAI[0] == 0f)

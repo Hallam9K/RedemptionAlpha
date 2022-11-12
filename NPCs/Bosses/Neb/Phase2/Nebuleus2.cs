@@ -414,7 +414,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                     #region Dramatic Entrance
                     NPC.LookAtEntity(player);
                     if (RedeBossDowned.nebDeath != 5)
+                    {
                         player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                        player.RedemptionScreen().cutscene = true;
+                    }
 
                     if (NPC.ai[2] == 1)
                     {
@@ -443,6 +446,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         {
                             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                             player.RedemptionScreen().lockScreen = true;
+                            player.RedemptionScreen().cutscene = true;
                             NPC.LockMoveRadius(player);
                         }
                         if (!Main.dedServ)

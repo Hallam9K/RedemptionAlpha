@@ -13,37 +13,14 @@ using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
-    public class OO_StunBeam : ModProjectile
+    public class OO_StunBeam : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 0.1f;
-        public int LaserSegmentLength = 220;
-        public int LaserWidth = 30;
-        public int LaserEndSegmentLength = 38;
-
-        //should be set to about half of the end length
-        private readonly float FirstSegmentDrawDist = 96;
-
-        public int MaxLaserLength = 1760;
-        public int maxLaserFrames = 3;
-        public int LaserFrameDelay = 5;
-        // >
-        public override void SetStaticDefaults()
+        private new readonly float FirstSegmentDrawDist = 96;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Stun Beam");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 22;
             Projectile.height = 22;
@@ -52,7 +29,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 140;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 0.1f;
+            LaserSegmentLength = 220;
+            LaserWidth = 30;
+            LaserEndSegmentLength = 38;
+            MaxLaserLength = 1760;
+            maxLaserFrames = 3;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
@@ -100,7 +82,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             }
             ++AITimer;
         }
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -142,24 +123,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 22 * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }

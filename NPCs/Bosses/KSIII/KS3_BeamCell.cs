@@ -6,42 +6,19 @@ using Terraria.ModLoader;
 using Terraria.GameContent;
 using Terraria.ID;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
-    public class KS3_BeamCell : ModProjectile
+    public class KS3_BeamCell : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 0;
-        public int LaserSegmentLength = 34;
-        public int LaserWidth = 22;
-        public int LaserEndSegmentLength = 10;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 5;
-
-        public int MaxLaserLength = 2000;
-        public int maxLaserFrames = 2;
-        public int LaserFrameDelay = 10;
-        public bool StopsOnTiles = false;
-        // >
-        public override void SetStaticDefaults()
+        private new const float FirstSegmentDrawDist = 5;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Beam Cell");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 10;
             Projectile.height = 10;
@@ -50,7 +27,15 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 120;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserLength = 0;
+            LaserScale = 0;
+            LaserSegmentLength = 34;
+            LaserWidth = 22;
+            LaserEndSegmentLength = 10;
+            MaxLaserLength = 2000;
+            maxLaserFrames = 2;
+            LaserFrameDelay = 10;
+            StopsOnTiles = false;
         }
 
         private bool faceLeft;
@@ -121,28 +106,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             ++AITimer;
             #endregion
-
-            #region misc
-            //CutTiles();
-            //CastLights();
-            #endregion
         }
-
-        #region Laser AI Submethods
-        private void EndpointTileCollision()
-        {
-            for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
-            {
-                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
-                {
-                    LaserLength -= LaserSegmentLength;
-                    break;
-                }
-            }
-        }
-        #endregion
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -175,47 +139,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            StopsOnTiles = reader.ReadBoolean();
         }
         #endregion
     }

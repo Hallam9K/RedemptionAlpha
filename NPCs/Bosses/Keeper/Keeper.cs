@@ -670,6 +670,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.SkullDiggerSummon:
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     Reap = false;
 
@@ -692,6 +693,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.Teddy:
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     Unveiled = true;
 
@@ -791,6 +793,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     {
                         player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                         player.RedemptionScreen().lockScreen = true;
+                        player.RedemptionScreen().cutscene = true;
                         NPC.LockMoveRadius(player);
                     }
                     player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, 3);

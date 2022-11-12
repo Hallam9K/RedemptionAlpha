@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -41,7 +42,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
         }
         public override void PostUpdate()

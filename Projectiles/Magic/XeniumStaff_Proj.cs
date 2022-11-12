@@ -3,62 +3,43 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Enums;
 using Terraria.GameContent;
-using Redemption.NPCs.Bosses.Erhan;
-using Redemption.BaseExtension;
 using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class HolyBible_Ray : LaserProjectile
+    public class XeniumStaff_Proj : LaserProjectile
     {
-        public override string Texture => "Redemption/Projectiles/Magic/SunshardRay";
-        private new const float FirstSegmentDrawDist = 7;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Ray");
+            DisplayName.SetDefault("Xenium Ray");
         }
-
         public override void SetSafeDefaults()
         {
+            Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 180;
-            LaserSegmentLength = 16;
-            LaserWidth = 20;
-            LaserEndSegmentLength = 14;
-            MaxLaserLength = 112;
-            StopsOnTiles = false;
+            Projectile.timeLeft = 30;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 8;
         }
 
         public override void AI()
         {
-            Projectile proj = Main.projectile[(int)Projectile.ai[0]];
+            Player player = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (proj.type == ModContent.ProjectileType<Erhan_Bible>())
-            {
-                MaxLaserLength = 64;
-                Projectile.hostile = true;
-                Projectile.friendly = false;
-            }
-            else
-            {
-                Projectile.hostile = false;
-                Projectile.friendly = true;
-            }
             #region Beginning And End Effects
             if (AITimer == 0)
                 LaserScale = 0.1f;
             else
-                Projectile.Center = proj.Center - Vector2.Normalize(Projectile.velocity) * 10f;
-
-            Projectile.velocity = Projectile.velocity.RotatedBy(-0.08f * proj.spriteDirection);
+                Projectile.Center = player.Center + Vector2.Normalize(Projectile.velocity) * 48f;
 
             if (AITimer <= 10)
+            {
                 LaserScale += 0.09f;
-            else if (Projectile.timeLeft < 10 || !proj.active)
+            }
+            else if (!player.channel || Projectile.timeLeft < 10 || !player.active)
             {
                 if (Projectile.timeLeft > 10)
                 {
@@ -80,6 +61,21 @@ namespace Redemption.Projectiles.Magic
             #endregion
 
             ++AITimer;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile p = Main.projectile[i];
+                if (!p.active || p.type != ModContent.ProjectileType<XeniumBubble_Proj>())
+                    continue;
+
+                Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
+                float point = 0f;
+                if (Collision.CheckAABBvLineCollision(p.Hitbox.TopLeft(), p.Hitbox.Size(), Projectile.Center,
+                    Projectile.Center + unit * LaserLength, 20 * LaserScale, ref point))
+                {
+                    p.ai[0] = 1;
+                    p.Kill();
+                }
+            }
         }
         #region Drawcode
         // The core function of drawing a Laser, you shouldn't need to touch this
@@ -90,6 +86,8 @@ namespace Redemption.Projectiles.Magic
             for (float i = transDist; i <= (maxDist * (1 / LaserScale)); i += LaserSegmentLength)
             {
                 //Color c = Color.White;
+
+
                 var origin = start + i * unit;
                 Main.EntitySpriteDraw(texture, origin - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
                     new Rectangle((int)(LaserWidth * Frame), LaserEndSegmentLength, LaserWidth, LaserSegmentLength), color, r,
@@ -112,24 +110,6 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * (LaserLength - 32), 48 * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }

@@ -9,6 +9,7 @@ using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using Redemption.Tiles.Tiles;
+using System.Linq;
 using System.Reflection.Metadata;
 using Terraria;
 using Terraria.DataStructures;
@@ -122,31 +123,27 @@ namespace Redemption.Globals
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
-            if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].HasTile && RedeTileHelper.CannotMineTileBelow[Main.tile[i, j - 1].TileType])
                 return false;
             return base.CanKillTile(i, j, type, ref blockDamaged);
         }
 
         public override bool CanExplode(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>()))
+            if (Main.tile[i, j - 1].HasTile && RedeTileHelper.CannotMineTileBelow[Main.tile[i, j - 1].TileType])
                 return false;
             return base.CanExplode(i, j, type);
         }
 
         public override bool Slope(int i, int j, int type)
         {
-            if (Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].TileType == ModContent.TileType<GathuramPortalTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<AnglonPortalTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<HKStatueTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<JStatueTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<KSStatueTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<NStatueTile>() ||
-                Main.tile[i, j - 1].TileType == ModContent.TileType<SlayerChairTile>()))
+            if (Main.tile[i, j - 1].HasTile && RedeTileHelper.CannotMineTileBelow[Main.tile[i, j - 1].TileType])
                 return false;
             return base.Slope(i, j, type);
         }
+    }
+    public static class RedeTileHelper
+    {
+        public static bool[] CannotMineTileBelow = TileID.Sets.Factory.CreateBoolSet();
     }
 }

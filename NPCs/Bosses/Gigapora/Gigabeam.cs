@@ -14,34 +14,14 @@ using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
-    public class Gigabeam : ModProjectile
+    public class Gigabeam : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 0.1f;
-        public int LaserSegmentLength = 800;
-        public int LaserWidth = 176;
-        public int LaserEndSegmentLength = 200;
-
-        private readonly float FirstSegmentDrawDist = 460;
-
-        public int MaxLaserLength = 2400;
-        // >
-        public override void SetStaticDefaults()
+        private new readonly float FirstSegmentDrawDist = 460;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Gigabeam");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 100;
             Projectile.height = 100;
@@ -51,7 +31,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.tileCollide = false;
             Projectile.timeLeft = 350;
             Projectile.hide = true;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 0.1f;
+            LaserSegmentLength = 800;
+            LaserWidth = 176;
+            LaserEndSegmentLength = 200;
+            MaxLaserLength = 2400;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
@@ -193,27 +177,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             {
                 return false;
             }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
         }
         #endregion
     }

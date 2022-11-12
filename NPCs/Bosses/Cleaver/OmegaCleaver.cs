@@ -793,6 +793,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     {
                         player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                         player.RedemptionScreen().lockScreen = true;
+                        player.RedemptionScreen().cutscene = true;
                         AITimer++;
                         rot.SlowRotation(0, (float)Math.PI / 60f);
                         NPC.rotation = rot;

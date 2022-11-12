@@ -13,38 +13,15 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class MagnifyingGlassRay : ModProjectile
+    public class MagnifyingGlassRay : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 0.5f;
-        public int LaserSegmentLength = 20;
-        public int LaserWidth = 17;
-        public int LaserEndSegmentLength = 20;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 10;
-
-        public int MaxLaserLength = 1200;
-        public int maxLaserFrames = 1;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = true;
-        // >
-        public override void SetStaticDefaults()
+        private new const float FirstSegmentDrawDist = 10;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Scorching Ray");
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 14;
             Projectile.height = 14;
@@ -55,7 +32,11 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 200;
             Projectile.alpha = 255;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 0.5f;
+            LaserSegmentLength = 20;
+            LaserWidth = 17;
+            LaserEndSegmentLength = 20;
+            MaxLaserLength = 1200;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
@@ -127,48 +108,11 @@ namespace Redemption.Projectiles.Magic
             }
             #endregion
 
-            #region Frame and Timer Updates
-            /*++Projectile.frameCounter;
-            if (Projectile.frameCounter >= LaserFrameDelay)
-            {
-                Projectile.frameCounter = 0;
-                Frame++;
-                if (Frame >= maxLaserFrames)
-                {
-                    Frame = 0;
-                }
-            }*/
             ++AITimer;
-            #endregion
 
-            #region misc
-            //CutTiles();
             if (AITimer >= 80)
-                CastLights();
-            #endregion
+                CastLights(new Vector3(1f, 0.7f, 0f));
         }
-
-        #region Laser AI Submethods
-        private void EndpointTileCollision()
-        {
-            for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
-            {
-                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
-                {
-                    LaserLength -= LaserSegmentLength - 20;
-                    break;
-                }
-            }
-        }
-        private void CastLights()
-        {
-            // Cast a light along the line of the Laser
-            DelegateMethods.v3_1 = new Vector3(1f, 0.7f, 0f);
-            Utils.PlotTileLine(Projectile.Center, Projectile.Center + new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserLength, 26, DelegateMethods.CastLight);
-        }
-        #endregion
-
         #region Drawcode
         // The core function of drawing a Laser, you shouldn't need to touch this
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
@@ -215,50 +159,6 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            //writer.Write(maxLaserFrames);
-            //writer.Write(LaserFrameDelay);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            StopsOnTiles = reader.ReadBoolean();
-            //maxLaserFrames = reader.
         }
         #endregion
     }

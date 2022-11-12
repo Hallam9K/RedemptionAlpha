@@ -12,37 +12,15 @@ using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
-    public class OO_NormalBeam : ModProjectile
+    public class OO_NormalBeam : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 1;
-        public int LaserSegmentLength = 22;
-        public int LaserWidth = 22;
-        public int LaserEndSegmentLength = 22;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 12;
-
-        public int MaxLaserLength = 1760;
-        // >
-
-        public override void SetStaticDefaults()
+        private new const float FirstSegmentDrawDist = 12;
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Omega Beam");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 22;
             Projectile.height = 22;
@@ -51,7 +29,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 100;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 1;
+            LaserSegmentLength = 22;
+            LaserWidth = 22;
+            LaserEndSegmentLength = 22;
+            MaxLaserLength = 1760;
         }
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
@@ -62,7 +44,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             #region Beginning And End Effects
             if (AITimer == 0)
             {
-                if(Projectile.ai[1] > 2)
+                if (Projectile.ai[1] > 2)
                     Projectile.timeLeft = 180;
 
                 if (Projectile.ai[1] == 4)
@@ -134,7 +116,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             LaserLength = MaxLaserLength;
             ++AITimer;
         }
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -176,24 +157,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, LaserWidth * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }

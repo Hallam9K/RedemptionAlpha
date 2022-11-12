@@ -12,36 +12,15 @@ using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
-    public class CosmicEye_Beam : ModProjectile
+    public class CosmicEye_Beam : LaserProjectile
     {
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 1;
-        public int LaserSegmentLength = 28;
-        public int LaserWidth = 26;
-        public int LaserEndSegmentLength = 28;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 14;
-
-        public int MaxLaserLength = 2000;
-        // >
+        private new const float FirstSegmentDrawDist = 14;
         public override bool ShouldUpdatePosition() => false;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Ray");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 14;
             Projectile.height = 14;
@@ -50,7 +29,11 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 140;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 1;
+            LaserSegmentLength = 28;
+            LaserWidth = 26;
+            LaserEndSegmentLength = 28;
+            MaxLaserLength = 2000;
         }
         public override void AI()
         {
@@ -88,14 +71,13 @@ namespace Redemption.NPCs.Bosses.Neb
 
             #endregion
 
-                LaserLength = MaxLaserLength;
+            LaserLength = MaxLaserLength;
             ++AITimer;
         }
         public override bool CanHitPlayer(Player target)
         {
             return AITimer > 20;
         }
-
         #region Drawcode
         public void DrawLaser(Texture2D texture, Vector2 start, Vector2 unit, float rotation = 0f, float scale = 1f, float maxDist = 2000f, Color color = default, int transDist = 1)
         {
@@ -125,24 +107,6 @@ namespace Redemption.NPCs.Bosses.Neb
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-        #endregion
-
-        #region Collisions
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         #endregion
     }

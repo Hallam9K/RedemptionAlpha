@@ -77,6 +77,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                 player.RedemptionScreen().lockScreen = true;
+                player.RedemptionScreen().cutscene = true;
             }
             switch (TimerRand)
             {

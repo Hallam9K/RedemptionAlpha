@@ -13,50 +13,30 @@ using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
-    public class RayOfGuidance : ModProjectile
+    public class RayOfGuidance : LaserProjectile
     {
         public override string Texture => "Redemption/NPCs/Bosses/Erhan/ScorchingRay";
-        public float AITimer
-        {
-            get => Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
-        }
-        public float Frame
-        {
-            get => Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
-        }
-        public float LaserLength = 0;
-        public float LaserScale = 2;
-        public int LaserSegmentLength = 60;
-        public int LaserWidth = 76;
-        public int LaserEndSegmentLength = 60;
-
-        //should be set to about half of the end length
-        private const float FirstSegmentDrawDist = 30;
-
-        public int MaxLaserLength = 1800;
-        public int maxLaserFrames = 1;
-        public int LaserFrameDelay = 5;
-        public bool StopsOnTiles = false;
+        private new const float FirstSegmentDrawDist = 30;
         // >
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Ray of Guidance");
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
-            Projectile.width = LaserWidth;
-            Projectile.height = LaserWidth;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 400;
             Projectile.alpha = 255;
-            Projectile.Redemption().ParryBlacklist = true;
+            LaserScale = 2;
+            LaserSegmentLength = 60;
+            LaserWidth = 76;
+            LaserEndSegmentLength = 60;
+            MaxLaserLength = 1800;
+            StopsOnTiles = false;
         }
 
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
@@ -112,39 +92,9 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             ++AITimer;
 
-            #region misc
-            //CutTiles();
             if (AITimer >= 80)
-                CastLights();
-            #endregion
+                CastLights(new Vector3(1f, 0.7f, 0f));
         }
-
-        #region Laser AI Submethods
-        private void EndpointTileCollision()
-        {
-            for (LaserLength = FirstSegmentDrawDist; LaserLength < MaxLaserLength; LaserLength += LaserSegmentLength)
-            {
-                Vector2 start = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength;
-                if (!Collision.CanHitLine(Projectile.Center, 1, 1, start, 1, 1))
-                {
-                    LaserLength -= LaserSegmentLength;
-                    break;
-                }
-            }
-        }
-        public override void CutTiles()
-        {
-            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            Utils.PlotTileLine(Projectile.Center, Projectile.Center + unit * LaserLength, (Projectile.width + 16) * Projectile.scale, DelegateMethods.CutTiles);
-        }
-        private void CastLights()
-        {
-            // Cast a light along the line of the Laser
-            DelegateMethods.v3_1 = new Vector3(1f, 0.7f, 0f);
-            Utils.PlotTileLine(Projectile.Center, Projectile.Center + new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserLength, 26, DelegateMethods.CastLight);
-        }
-        #endregion
 
         #region Drawcode
         // The core function of drawing a Laser, you shouldn't need to touch this
@@ -209,32 +159,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 return false;
             }
-        }
-        #endregion
-
-        #region MP Sync
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(LaserLength);
-            writer.Write(LaserScale);
-            writer.Write(LaserSegmentLength);
-            writer.Write(LaserEndSegmentLength);
-            writer.Write(LaserWidth);
-            writer.Write(MaxLaserLength);
-            //writer.Write(maxLaserFrames);
-            //writer.Write(LaserFrameDelay);
-            writer.Write(StopsOnTiles);
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            LaserLength = reader.ReadSingle();
-            LaserScale = reader.ReadSingle();
-            LaserSegmentLength = reader.ReadInt32();
-            LaserEndSegmentLength = reader.ReadInt32();
-            LaserWidth = reader.ReadInt32();
-            MaxLaserLength = reader.ReadInt32();
-            StopsOnTiles = reader.ReadBoolean();
-            //maxLaserFrames = reader.
         }
         #endregion
     }

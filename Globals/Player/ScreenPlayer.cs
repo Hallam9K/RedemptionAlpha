@@ -15,6 +15,7 @@ namespace Redemption
         public int interpolantTimer;
         public bool lockScreen = false;
         public bool cutscene;
+        public bool cutsceneEnd;
         public override void Initialize()
         {
             NebCutsceneflag = false;
@@ -30,6 +31,7 @@ namespace Redemption
         {
             if (cutscene)
             {
+                cutsceneEnd = true;
                 WorldGen.spawnEye = false;
                 WorldGen.spawnHardBoss = 0;
                 RedeWorld.spawnKeeper = false;
@@ -48,12 +50,23 @@ namespace Redemption
             }
             ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
+            if (cutsceneEnd && !cutscene)
+            {
+                Player.immune = true;
+                Player.immuneTime = 120;
+                cutsceneEnd = false;
+            }
             cutscene = false;
             customZoom = 0;
         }
+        public override void UpdateEquips()
+        {
+            if (cutscene)
+                Player.wingTime = Player.wingTimeMax;
+        }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
-            return !cutscene;
+            return !cutsceneEnd;
         }
         public override bool CanUseItem(Item item)
         {

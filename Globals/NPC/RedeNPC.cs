@@ -32,6 +32,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Armor.Single;
 using Redemption.Buffs;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Projectiles.Misc;
 
 namespace Redemption.Globals.NPC
 {
@@ -371,8 +372,13 @@ namespace Redemption.Globals.NPC
                 }
                 if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    if (Main.rand.NextBool(8) && npc.lifeMax > 5)
+                    if (Main.rand.NextBool(8) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
+                }
+                if (ItemLists.Celestial.Contains(item.type))
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4) && npc.CanBeChasedBy())
+                        Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, player.whoAmI, npc.whoAmI);
                 }
                 #endregion
             }
@@ -425,8 +431,13 @@ namespace Redemption.Globals.NPC
                 }
                 if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    if (Main.rand.NextBool(8) && npc.lifeMax > 5)
+                    if (Main.rand.NextBool(8) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
+                }
+                if (ProjectileLists.Celestial.Contains(projectile.type))
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4) && npc.CanBeChasedBy())
+                        Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, projectile.owner, npc.whoAmI);
                 }
                 #endregion
             }
