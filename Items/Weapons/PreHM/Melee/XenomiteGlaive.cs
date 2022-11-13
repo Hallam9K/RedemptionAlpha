@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetDefaults()
         {
-            Item.damage = 12;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Melee;
             Item.width = 90;
             Item.height = 90;

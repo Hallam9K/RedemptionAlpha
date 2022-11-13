@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.friendly = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Projectile.spriteDirection = player.direction;
                     Projectile.rotation = MathHelper.PiOver2 * player.direction;
 
-                    glow += 0.015f;
+                    glow += 0.02f;
                     glow = MathHelper.Clamp(glow, 0, 0.4f);
                     if (glow >= 0.4 && Projectile.localAI[0] == 0)
                     {
