@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Terraria;
