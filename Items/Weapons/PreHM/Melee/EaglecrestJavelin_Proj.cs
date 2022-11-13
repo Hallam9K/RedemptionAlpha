@@ -39,6 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;
 
         private float glow;
+        private int thunderCooldown;
         public override void AI()
         {
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
@@ -100,6 +101,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else if (Projectile.ai[0] < 31)
                 player.itemRotation -= MathHelper.ToRadians(-20f * player.direction);
+
+            thunderCooldown--;
         }
         public override void Kill(int timeLeft)
         {
@@ -117,7 +120,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
 
-            StrikeLightning();
+            if (thunderCooldown <= 0)
+            {
+                StrikeLightning();
+                thunderCooldown = 10;
+            }
         }
         private void StrikeLightning()
         {
@@ -179,9 +186,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.hostile = false;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.extraUpdates = 100;
-            Projectile.timeLeft = 800;
+            Projectile.timeLeft = 80;
             Projectile.penetrate = -1;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

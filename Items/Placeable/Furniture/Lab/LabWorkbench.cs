@@ -25,7 +25,6 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         {
             CreateRecipe()
                .AddIngredient(ModContent.ItemType<LabPlating>(), 10)
-               .AddTile(TileID.WorkBenches)
                .Register();
         }
     }
