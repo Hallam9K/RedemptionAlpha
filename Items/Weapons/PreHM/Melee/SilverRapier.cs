@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.channel = true;
 
             // Weapon Properties
-            Item.damage = 18;
+            Item.damage = 20;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;

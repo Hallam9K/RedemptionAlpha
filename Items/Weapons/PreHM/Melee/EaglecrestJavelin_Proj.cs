@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.friendly = true;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 6;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ownerHitCheck = true;
@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Projectile.spriteDirection = player.direction;
                     Projectile.rotation = MathHelper.PiOver2 * player.direction;
 
-                    glow += 0.015f;
+                    glow += 0.02f;
                     glow = MathHelper.Clamp(glow, 0, 0.4f);
                     if (glow >= 0.4 && Projectile.localAI[0] == 0)
                     {
@@ -104,24 +104,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void Kill(int timeLeft)
         {
             if (Projectile.ai[0] >= 1)
-            {
-                Player player = Main.player[Projectile.owner];
-                if (Projectile.DistanceSQ(player.Center) < 800 * 800)
-                    player.RedemptionScreen().ScreenShakeIntensity += 15;
-
-                SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
-                for (int i = 0; i < 10; i++)
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,
-                        -Projectile.velocity.X * 0.01f, -Projectile.velocity.Y * 0.6f, Scale: 2);
-                for (int i = 0; i < 3; i++)
-                    DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(0, 400), Projectile.Center, new LightningParticle(), 2f, 30, 0.1f, 1);
-                DustHelper.DrawCircle(Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
-
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
-                if (Projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
-            }
+                StrikeLightning();
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -133,8 +116,28 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
-        }
 
+            StrikeLightning();
+        }
+        private void StrikeLightning()
+        {
+            Player player = Main.player[Projectile.owner];
+            if (Projectile.DistanceSQ(player.Center) < 800 * 800)
+                player.RedemptionScreen().ScreenShakeIntensity += 15;
+
+            SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
+            for (int i = 0; i < 10; i++)
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,
+                    -Projectile.velocity.X * 0.01f, -Projectile.velocity.Y * 0.6f, Scale: 2);
+            for (int i = 0; i < 3; i++)
+                DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(0, 400), Projectile.Center, new LightningParticle(), 2f, 30, 0.1f, 1);
+            DustHelper.DrawCircle(Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
+
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
+            if (Projectile.owner == Main.myPlayer)
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
