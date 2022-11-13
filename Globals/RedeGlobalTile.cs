@@ -89,7 +89,7 @@ namespace Redemption.Globals
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
                 }
             }
-            if (Terraria.NPC.downedBoss3 && TileID.Sets.Conversion.Ice[type])
+            if (Terraria.NPC.downedBoss3 && TileID.Sets.Conversion.Ice[type] && RedeWorld.alignment >= 0)
             {
                 bool tileUp = !Framing.GetTileSafely(i, j - 1).HasTile;
                 bool tileDown = !Framing.GetTileSafely(i, j + 1).HasTile;

@@ -54,7 +54,7 @@ namespace Redemption.Tiles.Tiles
             bool tileDown = !Framing.GetTileSafely(i, j + 1).HasTile;
             bool tileLeft = !Framing.GetTileSafely(i - 1, j).HasTile;
             bool tileRight = !Framing.GetTileSafely(i + 1, j).HasTile;
-            if (Main.rand.NextBool(500) && j > (int)WorldGen.rockLayer && NPC.downedBoss3)
+            if (Main.rand.NextBool(500) && j > (int)WorldGen.rockLayer && NPC.downedBoss3 && RedeWorld.alignment >= 0)
             {
                 if (tileUp)
                 {
