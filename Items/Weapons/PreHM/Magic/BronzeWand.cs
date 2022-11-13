@@ -22,13 +22,13 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 16;
+            Item.damage = 19;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.width = 46;
             Item.height = 46;
-            Item.useTime = 32;
-            Item.useAnimation = 32;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 5;
