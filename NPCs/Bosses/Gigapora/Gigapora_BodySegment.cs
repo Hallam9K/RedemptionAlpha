@@ -106,7 +106,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (!target.active || target.minion || !target.friendly || target.damage <= 0)
                     continue;
 
-                if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !NPC.Hitbox.Intersects(target.Hitbox))
+                if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist || !NPC.Hitbox.Intersects(target.Hitbox))
                     continue;
 
                 if (NPC.immortal)

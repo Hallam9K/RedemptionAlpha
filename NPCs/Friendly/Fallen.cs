@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Friendly
             {
                 case 0:
                     if (RedeBossDowned.keeperSaved)
-                        chat.Add("You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. If you need Grim Shards, I'll sell them now for you. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something worse.", 3);
+                        chat.Add("You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something far worse.", 3);
 
                     chat.Add("I may be undead, but I hope for a world where no tears are shed, and no pain is spread. A world of peace. That is who I was before dying, and despite the undead tendency to be more aggressive, I feel the same as I always have.");
                     chat.Add("Do not worry, human. I bring no hatred where I go, despite my undead look, I won't harm you. And I hope you won't harm me either.");
@@ -189,7 +189,7 @@ namespace Redemption.NPCs.Friendly
                     break;
                 case 1:
                     if (RedeBossDowned.keeperSaved)
-                        chat.Add("You saved the Keeper? Bah, I guess that's nice of ya. If you need Grim Shards, I'll sell them now for you.", 3);
+                        chat.Add("You saved the Keeper? Bah, I guess that's nice of ya.", 3);
 
                     chat.Add("I'm not very interested in talking, what ya want?");
                     chat.Add("Darkness... Ha! What a strange term. You humans fear it more than death itself. You cower in the face of the overwhelming shadow of the night. Pitiful creature! It is not the darkness you should fear, but what lurks within it. So, did I spook ya?! Hahaha!");
@@ -201,7 +201,7 @@ namespace Redemption.NPCs.Friendly
                     break;
                 case 2:
                     if (RedeBossDowned.keeperSaved)
-                        chat.Add("You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs. If you need Grim Shards, I'll sell them now for you.", 3);
+                        chat.Add("You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs.", 3);
 
                     chat.Add("In my first few days of becoming Fallen, every other undead tried to kill me. It was a very scary experience, but I escaped the catacombs and now I'm here.");
                     chat.Add("Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a Pure-Iron helmet right now in fact.");

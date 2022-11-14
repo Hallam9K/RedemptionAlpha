@@ -89,7 +89,7 @@ namespace Redemption.Items.Accessories.PreHM
                     if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     Projectile.ai[1] = 10;

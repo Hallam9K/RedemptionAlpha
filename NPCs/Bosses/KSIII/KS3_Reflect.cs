@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.Redemption().TechnicallyMelee)
+                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist)
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))

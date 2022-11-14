@@ -83,7 +83,7 @@ namespace Redemption.Projectiles.Minions
             for (int j = 0; j < Main.maxProjectiles; j++)
             {
                 Projectile projectile = Main.projectile[j];
-                if (!projectile.active || projectile.type == Type || !projectile.hostile || projectile.damage <= 0 || projectile.velocity == Vector2.Zero || projectile.Redemption().TechnicallyMelee)
+                if (!projectile.active || projectile.type == Type || !projectile.hostile || projectile.damage <= 0 || projectile.velocity == Vector2.Zero || projectile.Redemption().TechnicallyMelee || projectile.Redemption().ParryBlacklist)
                     iLoveRedemption = false;
                 else
                 {

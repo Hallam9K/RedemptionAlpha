@@ -372,7 +372,7 @@ namespace Redemption.Globals.NPC
                 }
                 if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    if (Main.rand.NextBool(8) && npc.CanBeChasedBy())
+                    if (Main.rand.NextBool(6) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
                 if (ItemLists.Celestial.Contains(item.type))
@@ -431,7 +431,7 @@ namespace Redemption.Globals.NPC
                 }
                 if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    if (Main.rand.NextBool(8) && npc.CanBeChasedBy())
+                    if (Main.rand.NextBool(6) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
                 if (ProjectileLists.Celestial.Contains(projectile.type))

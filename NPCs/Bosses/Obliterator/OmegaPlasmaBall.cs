@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     if (!proj.active || proj.type == Type || proj.hostile || proj.minion || !proj.friendly || proj.damage < 5)
                         continue;
 
-                    if (proj.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(proj.Hitbox))
+                    if (proj.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(proj.Hitbox) || target.Redemption().ParryBlacklist)
                         continue;
 
                     SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);

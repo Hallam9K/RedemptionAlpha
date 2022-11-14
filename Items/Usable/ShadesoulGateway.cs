@@ -15,6 +15,7 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("Opens a portal to the Soulless Caverns" +
                 "\nCan also be used to leave the Soulless Caverns" +
                 "\n'You feel keeping the gateway opened would be a bad idea...'");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
