@@ -11,9 +11,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mineral Powder");
+            DisplayName.SetDefault("Magic Mineral Powder");
             Tooltip.SetDefault("Converts basic ores into hardmode ores");
-            SacrificeTotal = 25;
+            SacrificeTotal = 99;
         }
 
         public override void SetDefaults()
@@ -24,6 +24,7 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.buyPrice(0, 0, 25, 0);
             Item.shoot = ModContent.ProjectileType<OrePowder_Proj>();
+            Item.shootSpeed = 11;
         }
     }
     public class OrePowder_Proj : ModProjectile
@@ -31,20 +32,27 @@ namespace Redemption.Items.Usable
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mineral Powder");
+            DisplayName.SetDefault("Magic Mineral Powder");
         }
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.VilePowder);
+            Projectile.width += 8;
+            Projectile.height += 8;
+            Projectile.timeLeft = 60;
         }
         public override void AI()
         {
             if (Projectile.owner == Main.myPlayer)
                 Convert((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, 2);
 
-            Projectile.velocity *= 0.98f;
             int[] OreDust = new int[] { DustID.CopperCoin, DustID.SilverCoin, DustID.GoldCoin, DustID.PlatinumCoin };
-            Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, Utils.Next(Main.rand, OreDust));
+            for (int i = 0; i < 3; i++)
+            {
+                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, Utils.Next(Main.rand, OreDust), Scale: 1);
+                Main.dust[d].velocity *= 0.3f;
+                Main.dust[d].noGravity = true;
+            }
         }
         public static void Convert(int i, int j, int size = 4)
         {
