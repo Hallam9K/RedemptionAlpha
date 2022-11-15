@@ -34,6 +34,7 @@ using Redemption.Buffs;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Projectiles.Misc;
 using Redemption.Items.Weapons.PreHM.Summon;
+using System;
 
 namespace Redemption.Globals.NPC
 {
@@ -197,6 +198,8 @@ namespace Redemption.Globals.NPC
                 if (ItemLists.Wind.Contains(item.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
 
+                elementDmg = (int)Math.Round(elementDmg * 100);
+                elementDmg /= 100;
                 if (elementDmg >= 1.1f)
                     CombatText.NewText(npc.getRect(), Color.CornflowerBlue, "+" + elementDmg, true, true);
                 else if (elementDmg <= 0.9f)
@@ -256,7 +259,7 @@ namespace Redemption.Globals.NPC
                         elementDmg *= 1.25f;
 
                     if (ProjectileLists.Fire.Contains(projectile.type))
-                        elementDmg *= 0.5f;
+                        elementDmg *= 0.75f;
 
                     if (ProjectileLists.Water.Contains(projectile.type) || ProjectileLists.Ice.Contains(projectile.type))
                         elementDmg *= 1.1f;
@@ -330,6 +333,8 @@ namespace Redemption.Globals.NPC
                 if (ProjectileLists.Wind.Contains(projectile.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
 
+                elementDmg = (int)Math.Round(elementDmg * 100);
+                elementDmg /= 100;
                 if (elementDmg >= 1.1f)
                     CombatText.NewText(npc.getRect(), Color.CornflowerBlue, "+" + elementDmg, true, true);
                 else if (elementDmg <= 0.9f)
@@ -390,7 +395,8 @@ namespace Redemption.Globals.NPC
                 }
                 if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    if (Main.rand.NextBool(6) && npc.CanBeChasedBy())
+                    int c = player.RedemptionPlayerBuff().shellNecklace ? 4 : 6;
+                    if (Main.rand.NextBool(c) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
                 if (ItemLists.Celestial.Contains(item.type))
@@ -449,7 +455,8 @@ namespace Redemption.Globals.NPC
                 }
                 if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    if (Main.rand.NextBool(6) && npc.CanBeChasedBy())
+                    int c = Main.player[projectile.owner].RedemptionPlayerBuff().shellNecklace ? 4 : 6;
+                    if (Main.rand.NextBool(c) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
                 if (ProjectileLists.Celestial.Contains(projectile.type))

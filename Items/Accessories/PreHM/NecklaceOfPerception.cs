@@ -15,6 +15,7 @@ namespace Redemption.Items.Accessories.PreHM
                 "Increases movement speed while an enemy is near\n" +
                 "8% increased critical strike chance\n"
                 + "Improves vision");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

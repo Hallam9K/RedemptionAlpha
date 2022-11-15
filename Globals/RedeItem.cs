@@ -15,6 +15,7 @@ using Redemption.Items.Accessories.PreHM;
 using ReLogic.Content;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Globals.Player;
 
 namespace Redemption.Globals
 {
@@ -38,6 +39,59 @@ namespace Redemption.Globals
         {
             if ((item.axe > 0 || TechnicallyAxe) && crit)
                 damage += damage / 2;
+        }
+        public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
+        {
+            BuffPlayer modPlayer = player.RedemptionPlayerBuff();
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (modPlayer.powerCell)
+                {
+                    if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
+                        crit += 6;
+                    if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
+                        crit += 6;
+                }
+                if (modPlayer.sacredCross && (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot)))
+                    crit += 6;
+            }
+        }
+        public override void ModifyWeaponDamage(Item item, Terraria.Player player, ref StatModifier damage)
+        {
+            BuffPlayer modPlayer = player.RedemptionPlayerBuff();
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Damage
+                if (ItemLists.Arcane.Contains(item.type) || ProjectileLists.Arcane.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[0];
+                if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[1];
+                if (ItemLists.Water.Contains(item.type) || ProjectileLists.Water.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[2];
+                if (ItemLists.Ice.Contains(item.type) || ProjectileLists.Ice.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[3];
+                if (ItemLists.Earth.Contains(item.type) || ProjectileLists.Earth.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[4];
+                if (ItemLists.Wind.Contains(item.type) || ProjectileLists.Wind.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[5];
+                if (ItemLists.Thunder.Contains(item.type) || ProjectileLists.Thunder.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[6];
+                if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[7];
+                if (ItemLists.Shadow.Contains(item.type) || ProjectileLists.Shadow.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[8];
+                if (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[9];
+                if (ItemLists.Poison.Contains(item.type) || ProjectileLists.Poison.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[10];
+                if (ItemLists.Blood.Contains(item.type) || ProjectileLists.Blood.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[11];
+                if (ItemLists.Psychic.Contains(item.type) || ProjectileLists.Psychic.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[12];
+                if (ItemLists.Celestial.Contains(item.type) || ProjectileLists.Celestial.Contains(item.shoot))
+                    damage += modPlayer.ElementalDamage[13];
+                #endregion
+            }
         }
         public override bool OnPickup(Item item, Terraria.Player player)
         {

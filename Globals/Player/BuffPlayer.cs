@@ -75,7 +75,10 @@ namespace Redemption.Globals.Player
         public bool bowString;
         public bool leatherSheath;
         public bool sandDust;
-        public bool badtime = false;
+        public bool badtime;
+        public bool powerCell;
+        public bool sacredCross;
+        public bool shellNecklace;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -144,6 +147,9 @@ namespace Redemption.Globals.Player
             leatherSheath = false;
             sandDust = false;
             badtime = false;
+            powerCell = false;
+            sacredCross = false;
+            shellNecklace = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -411,39 +417,6 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitNPC(Item item, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                #region Elemental Damage
-                if (ItemLists.Arcane.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[0]));
-                if (ItemLists.Fire.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[1]));
-                if (ItemLists.Water.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[2]));
-                if (ItemLists.Ice.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[3]));
-                if (ItemLists.Earth.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[4]));
-                if (ItemLists.Wind.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[5]));
-                if (ItemLists.Thunder.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[6]));
-                if (ItemLists.Holy.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[7]));
-                if (ItemLists.Shadow.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[8]));
-                if (ItemLists.Nature.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[9]));
-                if (ItemLists.Poison.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[10]));
-                if (ItemLists.Blood.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[11]));
-                if (ItemLists.Psychic.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[12]));
-                if (ItemLists.Celestial.Contains(item.type))
-                    damage = (int)(damage * (1 + ElementalDamage[13]));
-                #endregion
-            }
             if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                 target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
             if (leatherSheath && target.life >= target.lifeMax)
@@ -453,39 +426,6 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                #region Elemental Damage
-                if (ProjectileLists.Arcane.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[0]));
-                if (ProjectileLists.Fire.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[1]));
-                if (ProjectileLists.Water.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[2]));
-                if (ProjectileLists.Ice.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[3]));
-                if (ProjectileLists.Earth.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[4]));
-                if (ProjectileLists.Wind.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[5]));
-                if (ProjectileLists.Thunder.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[6]));
-                if (ProjectileLists.Holy.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[7]));
-                if (ProjectileLists.Shadow.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[8]));
-                if (ProjectileLists.Nature.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[9]));
-                if (ProjectileLists.Poison.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[10]));
-                if (ProjectileLists.Blood.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[11]));
-                if (ProjectileLists.Psychic.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[12]));
-                if (ProjectileLists.Celestial.Contains(proj.type))
-                    damage = (int)(damage * (1 + ElementalDamage[13]));
-                #endregion
-            }
             if (proj.Redemption().TechnicallyMelee)
             {
                 if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
@@ -511,6 +451,12 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
+            if (sacredCross && ProjectileLists.Holy.Contains(proj.type) && crit && proj.type != ModContent.ProjectileType<Lightmass>())
+            {
+                SoundEngine.PlaySound(SoundID.Item101, Player.Center);
+                for (int i = 0; i < Main.rand.Next(3, 6); i++)
+                    Projectile.NewProjectile(proj.GetSource_FromThis(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 15, proj.knockBack / 4, Main.myPlayer);
+            }
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -523,6 +469,12 @@ namespace Redemption.Globals.Player
             if (brokenBlade && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
+            }
+            if (sacredCross && ItemLists.Holy.Contains(item.type) && crit)
+            {
+                SoundEngine.PlaySound(SoundID.Item101, Player.Center);
+                for (int i = 0; i < Main.rand.Next(3, 6); i++)
+                    Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 15, item.knockBack / 4, Main.myPlayer);
             }
         }
         public override void UpdateBadLifeRegen()

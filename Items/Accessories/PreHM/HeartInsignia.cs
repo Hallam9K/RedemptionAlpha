@@ -14,6 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
             DisplayName.SetDefault("Heart Insignia");
             Tooltip.SetDefault("Picking up hearts give a short boost to life regen" +
                 "\n15% increased Shadow and Blood elemental damage and resistance");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
