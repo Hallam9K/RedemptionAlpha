@@ -168,11 +168,21 @@ namespace Redemption.NPCs.Friendly
                 if (PartyGirlID >= 0)
                     chat.Add("I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...", 0.2);
 
+                if (Main.LocalPlayer.ZoneGraveyard)
+                    chat.Add("The atmosphere here is making my spine shiver, please let me live somewhere less spooky.");
                 chat.Add("Need anything? I can restring your bow, or poison your weapon. It'll cost you though.");
                 if (!NPC.homeless)
                 {
+                    if (Main.raining && Main.LocalPlayer.ZoneOverworldHeight)
+                        chat.Add("The tipper-tapper of rain in the confines of a cosy home never gets old.");
+
                     chat.Add("You don't mind me staying here, right?");
                     chat.Add("I've been travelling this land for a while, but staying in a house is nice.");
+                }
+                else
+                {
+                    if (Main.raining && Main.LocalPlayer.ZoneOverworldHeight)
+                        chat.Add("I'm only a fan of rain while in the confines of a cosy home, not when it's dampening my clothes.");
                 }
                 chat.Add("I got some pretty nice loot I can sell you, I kinda need money right now.");
                 chat.Add("My favourite colour is green, not sure why I'm telling you though...");

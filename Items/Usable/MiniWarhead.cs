@@ -17,6 +17,7 @@ namespace Redemption.Items.Usable
             DisplayName.SetDefault("Mini Warhead");
             Tooltip.SetDefault("A huge explosion that will destroy most tiles\n" +
                 "'I don't want to set the world on fire'");
+            SacrificeTotal = 5;
         }
 
         public override void SetDefaults()

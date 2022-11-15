@@ -1037,7 +1037,7 @@ namespace Redemption.Globals
                 npc.velocity.X < moveSpeed &&
                 vector.X > npc.Center.X) //handles movement to the right. Clamps at velMaxX.
             {
-                if (npc.HasBuff(BuffID.Confused) && !npc.boss)
+                if (npc.confused && !npc.boss)
                 {
                     npc.velocity.X -= moveInterval;
                     if (npc.velocity.X < -moveSpeed)
@@ -1058,7 +1058,7 @@ namespace Redemption.Globals
                 npc.velocity.X > -moveSpeed &&
                 vector.X < npc.Center.X) //handles movement to the left. Clamps at -velMaxX.
             {
-                if (npc.HasBuff(BuffID.Confused) && !npc.boss)
+                if (npc.confused && !npc.boss)
                 {
                     npc.velocity.X += moveInterval;
                     if (npc.velocity.X < moveSpeed)

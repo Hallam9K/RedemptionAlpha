@@ -7,7 +7,7 @@ using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
-    public class XenomiteGlaive : ModItem
+    public class XenoXyston : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.knockBack = 6f;
             Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Green;
-            Item.shoot = ModContent.ProjectileType<XenomiteGlaive_Proj>();
+            Item.shoot = ModContent.ProjectileType<XenoXyston_Proj>();
             Item.noUseGraphic = true;
             Item.noMelee = true;
             if (!Main.dedServ)

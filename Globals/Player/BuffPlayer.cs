@@ -74,6 +74,8 @@ namespace Redemption.Globals.Player
         public int stunFrame;
         public bool bowString;
         public bool leatherSheath;
+        public bool sandDust;
+        public bool badtime = false;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -140,6 +142,8 @@ namespace Redemption.Globals.Player
             holyFire = false;
             bowString = false;
             leatherSheath = false;
+            sandDust = false;
+            badtime = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -179,6 +183,8 @@ namespace Redemption.Globals.Player
             trappedSoulBoost = 0;
             shieldGenerator = false;
             shieldGeneratorAlpha = 0;
+            sandDust = false;
+            badtime = false;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -578,6 +584,16 @@ namespace Redemption.Globals.Player
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 500;
             }
+            if (sandDust)
+                Player.statDefense -= 8;
+            if (badtime)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 1000;
+                Player.statDefense -= 99;
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -632,7 +648,7 @@ namespace Redemption.Globals.Player
             }
             if (holyFire)
             {
-                if (Main.rand.NextBool(2)&& drawInfo.shadow == 0f)
+                if (Main.rand.NextBool(2) && drawInfo.shadow == 0f)
                 {
                     int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.YellowTorch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 2f);
                     Main.dust[dust].noGravity = true;

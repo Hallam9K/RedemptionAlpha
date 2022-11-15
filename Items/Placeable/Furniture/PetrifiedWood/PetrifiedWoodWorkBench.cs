@@ -24,7 +24,6 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 		{
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<Tiles.PetrifiedWood>(), 10)
-				.AddTile(TileID.WorkBenches)
 				.Register();
         }
 	}

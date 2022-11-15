@@ -20,8 +20,9 @@ namespace Redemption.Items.Usable
 		{
             DisplayName.SetDefault("Lab Access Panel - Alpha");
             Tooltip.SetDefault("Opens up the alpha sector of the lab");
-		}
-		
+            SacrificeTotal = 1;
+        }
+
         public override void SetDefaults()
         {
             Item.width = 20;
@@ -73,6 +74,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Lab Access Panel - Gamma");
             Tooltip.SetDefault("Opens up the gamma sector of the lab");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -115,6 +117,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Lab Access Panel - Sigma");
             Tooltip.SetDefault("Opens up the sigma sector of the lab");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -157,6 +160,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Lab Access Panel - Omicron");
             Tooltip.SetDefault("Opens up the omicron sector of the lab");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -200,6 +204,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Lab Access Panel - 0");
             Tooltip.SetDefault("Opens up the vault sector of the lab");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -241,6 +246,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Lab Access Panel - Master");
             Tooltip.SetDefault("Opens up all sectors of the lab");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)

@@ -10,6 +10,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Novelty Mop");
             Tooltip.SetDefault("'Not as lethal as Janitor's'");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

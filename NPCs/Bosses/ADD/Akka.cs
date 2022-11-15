@@ -18,6 +18,7 @@ using Terraria.GameContent.UI;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -98,16 +99,16 @@ namespace Redemption.NPCs.Bosses.ADD
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemLists.Blood.Contains(item.type) || ItemLists.Earth.Contains(item.type) || ItemLists.Nature.Contains(item.type))
-                    damage = (int)(damage * 0.75f);
+                    NPC.Redemption().elementDmg *= 0.75f;
 
                 if (ItemLists.Poison.Contains(item.type) || ItemLists.Water.Contains(item.type))
-                    damage = (int)(damage * 0.9f);
+                    NPC.Redemption().elementDmg *= 0.9f;
 
                 if (ItemLists.Fire.Contains(item.type))
-                    damage = (int)(damage * 1.25f);
+                    NPC.Redemption().elementDmg *= 1.25f;
 
                 if (ItemLists.Wind.Contains(item.type))
-                    damage = (int)(damage * 1.1f);
+                    NPC.Redemption().elementDmg *= 1.1f;
             }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -115,16 +116,16 @@ namespace Redemption.NPCs.Bosses.ADD
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Nature.Contains(projectile.type))
-                    damage = (int)(damage * 0.75f);
+                    NPC.Redemption().elementDmg *= 0.75f;
 
                 if (ProjectileLists.Poison.Contains(projectile.type) || ProjectileLists.Water.Contains(projectile.type))
-                    damage = (int)(damage * 0.9f);
+                    NPC.Redemption().elementDmg *= 0.9f;
 
                 if (ProjectileLists.Fire.Contains(projectile.type))
-                    damage = (int)(damage * 1.25f);
+                    NPC.Redemption().elementDmg *= 1.25f;
 
                 if (ProjectileLists.Wind.Contains(projectile.type))
-                    damage = (int)(damage * 1.1f);
+                    NPC.Redemption().elementDmg *= 1.1f;
             }
 
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])

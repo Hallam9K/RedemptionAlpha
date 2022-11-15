@@ -36,7 +36,6 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             CreateRecipe()
                 .AddIngredient(ItemID.WoodYoyo)
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
                 .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

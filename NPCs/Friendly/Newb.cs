@@ -15,6 +15,7 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -169,22 +170,28 @@ namespace Redemption.NPCs.Friendly
         {
             shop.item[nextSlot++].SetDefaults(ItemID.DirtBlock);
             shop.item[nextSlot++].SetDefaults(ItemID.MudBlock);
-            if (NPC.downedBoss1)
+            if (NPC.downedBoss1 || NPC.downedSlimeKing || RedeBossDowned.downedThorn || RedeBossDowned.downedErhan)
             {
                 shop.item[nextSlot++].SetDefaults(ItemID.Amethyst);
                 shop.item[nextSlot++].SetDefaults(ItemID.Topaz);
             }
-            if (NPC.downedBoss2)
+            if (NPC.downedBoss2 || RedeBossDowned.downedKeeper)
             {
                 shop.item[nextSlot++].SetDefaults(ItemID.Sapphire);
                 shop.item[nextSlot++].SetDefaults(ItemID.Emerald);
                 shop.item[nextSlot].SetDefaults(ItemID.Geode);
                 shop.item[nextSlot++].shopCustomPrice = Item.buyPrice(0, NPC.downedBoss3 ? 1 : 2, 0, 0);
             }
-            if (NPC.downedBoss3)
+            if (NPC.downedBoss3 || RedeBossDowned.downedSeed)
             {
                 shop.item[nextSlot++].SetDefaults(ItemID.Ruby);
                 shop.item[nextSlot++].SetDefaults(ItemID.Diamond);
+            }
+            if (Main.LocalPlayer.ZoneRockLayerHeight)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OreBomb>());
+                if (Main.hardMode)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OrePowder>());
             }
         }
 

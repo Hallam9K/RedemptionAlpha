@@ -24,7 +24,6 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 		{
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<Tiles.ElderWood>(), 10)
-				.AddTile(TileID.WorkBenches)
 				.Register();
         }
 	}

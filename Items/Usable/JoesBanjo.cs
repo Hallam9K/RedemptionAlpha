@@ -14,6 +14,7 @@ namespace Redemption.Items.Usable
             DisplayName.SetDefault("Joe's Banjo");
             Tooltip.SetDefault("Playable Instrument" +
                 "\n'Kazooie not included'");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

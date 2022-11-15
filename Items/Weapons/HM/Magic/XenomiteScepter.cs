@@ -15,6 +15,7 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Helix Scepter");
             Tooltip.SetDefault("Casts infectious helix bolts\n" +
                 "Every consecutive shot increases the velocity of the bolts");
             Item.staff[Item.type] = true;
@@ -71,8 +72,8 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 15)
-                .AddIngredient(ModContent.ItemType<ToxicBile>(), 5)
+                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

@@ -14,6 +14,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Violin");
             Tooltip.SetDefault("Playable Instrument");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

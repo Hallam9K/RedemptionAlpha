@@ -108,7 +108,7 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DAN>(), 2));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 26, 48));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ModContent.ItemType<XenomiteShard>(), 1, 26, 48));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 1, 6, 12));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit>(), 10));
             npcLoot.Add(ItemDropRule.OneFromOptions(3, ModContent.ItemType<IntruderMask>(), ModContent.ItemType<IntruderArmour>(), ModContent.ItemType<IntruderPants>()));

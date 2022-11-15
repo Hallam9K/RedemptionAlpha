@@ -51,7 +51,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (!target.active || Projectile.whoAmI == target.whoAmI || target.minion || !target.friendly || target.hostile || target.damage <= 5 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox))
+                if (!target.active || Projectile.whoAmI == target.whoAmI || target.minion || !target.friendly || target.hostile || target.damage <= 5 || target.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(target.Hitbox) || target.Redemption().ParryBlacklist)
                     continue;
 
                 if (!Main.dedServ)

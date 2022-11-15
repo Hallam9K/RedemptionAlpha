@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +
-                "Strikes the ground with lightning wherever it lands, dealing Thunder damage");
+                "Strikes the ground and foe alike with lightning, dealing Thunder damage");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 60;
             Item.useTime = 60;
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
 
             // Weapon Properties
             Item.damage = 32;

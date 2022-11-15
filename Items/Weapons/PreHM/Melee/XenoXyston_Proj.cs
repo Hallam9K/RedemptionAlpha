@@ -9,11 +9,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
-    public class XenomiteGlaive_Proj : TrueMeleeProjectile
+    public class XenoXyston_Proj : TrueMeleeProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Glaive");
+            DisplayName.SetDefault("Xeno Xyston");
         }
         public override void SetSafeDefaults()
         {

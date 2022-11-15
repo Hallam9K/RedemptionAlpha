@@ -67,6 +67,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 Main.dust[dust].velocity *= 2;
                 Main.dust[dust].noGravity = true;
             }
+            for (int g = 0; g < 3; g++)
+            {
+                int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Main.rand.Next(61, 64));
+                Main.gore[goreIndex].velocity.X *= 3f;
+            }
 
             if (Projectile.owner == Main.myPlayer)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ToxicGas_Proj>(), Projectile.damage / 2, 0, Projectile.owner);
