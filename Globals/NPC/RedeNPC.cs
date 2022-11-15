@@ -197,10 +197,10 @@ namespace Redemption.Globals.NPC
                 if (ItemLists.Wind.Contains(item.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
 
-                if (elementDmg >= 1.15f)
-                    CombatText.NewText(npc.getRect(), Color.CornflowerBlue, "+Strong", true, true);
-                else if (elementDmg <= 0.85f)
-                    CombatText.NewText(npc.getRect(), Color.IndianRed, "-Weak", true, true);
+                if (elementDmg >= 1.1f)
+                    CombatText.NewText(npc.getRect(), Color.CornflowerBlue, "+" + elementDmg, true, true);
+                else if (elementDmg <= 0.9f)
+                    CombatText.NewText(npc.getRect(), Color.IndianRed, "-" + elementDmg, true, true);
 
                 damage = (int)(damage * elementDmg);
                 elementDmg = 1;
@@ -330,10 +330,10 @@ namespace Redemption.Globals.NPC
                 if (ProjectileLists.Wind.Contains(projectile.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
 
-                if (elementDmg >= 1.15f)
-                    CombatText.NewText(npc.getRect(), Color.CornflowerBlue, "+Strong", true, true);
-                else if (elementDmg <= 0.85f)
-                    CombatText.NewText(npc.getRect(), Color.IndianRed, "-Weak", true, true);
+                if (elementDmg >= 1.1f)
+                    CombatText.NewText(npc.getRect(), Color.CornflowerBlue, "+" + elementDmg, true, true);
+                else if (elementDmg <= 0.9f)
+                    CombatText.NewText(npc.getRect(), Color.IndianRed, "-" + elementDmg, true, true);
 
                 damage = (int)(damage * elementDmg);
                 elementDmg = 1;
