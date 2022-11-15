@@ -145,7 +145,7 @@ namespace Redemption.Globals
         }
         public override void UpdateArmorSet(Terraria.Player player, string set)
         {
-            if (set == copperSet || set == tinSet || set == ironSet || set == leadSet)
+            if (set == copperSet || set == tinSet)
             {
                 player.setBonus += "\n20% increased Thunder elemental resistance";
                 player.RedemptionPlayerBuff().ElementalResistance[6] += 0.2f;
@@ -170,7 +170,7 @@ namespace Redemption.Globals
                 player.setBonus += "\n20% increased Arcane elemental damage";
                 player.RedemptionPlayerBuff().ElementalDamage[0] += 0.2f;
             }
-            if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet)
+            if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet || set == ironSet || set == leadSet)
             {
                 player.setBonus += "\n20% increased Earth elemental resistance";
                 player.RedemptionPlayerBuff().ElementalDamage[4] += 0.2f;

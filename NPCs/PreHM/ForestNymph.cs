@@ -794,8 +794,12 @@ namespace Redemption.NPCs.PreHM
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.HerbBag, 1, 1, 2));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AnglonicMysticBlossom>(), 25));
-            npcLoot.Add(ItemDropRule.Common(ItemID.MetalDetector, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AnglonicMysticBlossom>(), 2));
+            var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Nymph, false);
+            foreach (var dropRule in dropRules)
+            {
+                npcLoot.Add(dropRule);
+            }
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {

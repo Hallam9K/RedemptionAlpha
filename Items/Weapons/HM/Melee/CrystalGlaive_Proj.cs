@@ -23,8 +23,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.Spear);
-            Projectile.width = 34;
-            Projectile.height = 34;
+            Projectile.width = 50;
+            Projectile.height = 50;
             Projectile.alpha = 255;
             Length = 60;
             Rot = MathHelper.ToRadians(3);
@@ -77,7 +77,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         speed *= 0.8f;
                         vector = startVector.RotatedBy(Rot) * Length;
                     }
-                    if (Timer >= 22)
+                    if (Timer >= 18)
                         Projectile.Kill();
 
                     Length = MathHelper.Clamp(Length, 60, 120);
@@ -103,7 +103,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         speed *= 0.8f;
                         vector = startVector.RotatedBy(Rot) * Length;
                     }
-                    if (Timer >= 22)
+                    if (Timer >= 18)
                         Projectile.Kill();
 
                     Length = MathHelper.Clamp(Length, 60, 120);
@@ -117,7 +117,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     speed -= 0.02f;
                     Length *= speed;
                     vector = startVector * Length;
-                    if (Timer >= 22)
+                    if (Timer >= 18)
                         Projectile.Kill();
 
                     Length = MathHelper.Clamp(Length, 60, 180);
@@ -149,7 +149,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     speed -= 0.02f;
                     Length *= speed;
                     vector = startVector * Length;
-                    if (Timer >= 22)
+                    if (Timer >= 18)
                         Projectile.Kill();
 
                     Length = MathHelper.Clamp(Length, 60, 180);

@@ -513,6 +513,11 @@ namespace Redemption.Globals.NPC
                 spawnRate = 20;
                 maxSpawns = 12;
             }
+            if (player.InModBiome<WastelandPurityBiome>())
+            {
+                spawnRate = 30;
+                maxSpawns = 10;
+            }
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Akka>()))
                 return;
 
@@ -563,7 +568,10 @@ namespace Redemption.Globals.NPC
                 bool tileCheck = GrassTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
 
                 pool.Clear();
-                pool.Add(NPCID.ToxicSludge, 0.3f);
+                pool.Add(NPCID.ToxicSludge, !Terraria.NPC.downedMechBossAny ? 0.8f : 0.3f);
+                pool.Add(NPCID.GreenJellyfish, spawnInfo.Water && !Terraria.NPC.downedMechBossAny ? 0.6f : 0);
+                pool.Add(ModContent.NPCType<BloatedGoldfish>(), spawnInfo.Water ? 2f : 0);
+                pool.Add(ModContent.NPCType<RadioactiveJelly>(), spawnInfo.Water && Terraria.NPC.downedMechBossAny ? 1f : 0);
                 pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
                 pool.Add(ModContent.NPCType<BobTheBlob>(), 0.05f);
                 pool.Add(ModContent.NPCType<RadioactiveSlime>(), 0.9f);
@@ -578,6 +586,10 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<SneezyFlinx>(), 0.8f);
                     pool.Add(ModContent.NPCType<SicklyWolf>(), 0.7f);
                     pool.Add(ModContent.NPCType<SicklyPenguin>(), 0.6f);
+                }
+                if (spawnInfo.Player.InModBiome<WastelandDesertBiome>())
+                {
+                    pool.Add(ModContent.NPCType<BloatedGhoul>(), 1f);
                 }
             }
             if (spawnInfo.Player.RedemptionScreen().cutscene)

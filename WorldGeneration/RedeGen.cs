@@ -1190,7 +1190,7 @@ namespace Redemption.WorldGeneration
                     if (Main.dungeonX < Main.maxTilesX / 2)
                         origin = new Point((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
 
-                    origin.Y = BaseWorldGen.GetFirstTileFloor(origin.X, origin.Y, true);
+                    origin.Y = GetTileFloorIgnoreTree(origin.X, origin.Y, true);
                     origin.X -= 60;
 
                     WorldUtils.Gen(origin, new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
@@ -1205,6 +1205,16 @@ namespace Redemption.WorldGeneration
                     biome.Place(origin, WorldGen.structures);
                 }));
             }
+        }
+        private static int GetTileFloorIgnoreTree(int x, int startY, bool solid = true)
+        {
+            if (!WorldGen.InWorld(x, startY)) return startY;
+            for (int y = startY; y < Main.maxTilesY - 10; y++)
+            {
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType]) && tile.TileType != TileID.LivingWood && tile.TileType != TileID.LeafBlock) { return y; }
+            }
+            return Main.maxTilesY - 10;
         }
         public static void ElderWoodChest(int x, int y, int ID = 0)
         {

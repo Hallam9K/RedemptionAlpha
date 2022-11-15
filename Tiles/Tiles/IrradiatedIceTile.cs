@@ -71,7 +71,7 @@ namespace Redemption.Tiles.Tiles
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
             Tile tileBelow2 = Framing.GetTileSafely(i, j + 2);
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
-            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
+            if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
                 NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);

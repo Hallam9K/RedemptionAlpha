@@ -26,7 +26,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.width = 52;
             Item.height = 52;
             Item.rare = ItemRarityID.LightRed;
-            Item.value = Item.sellPrice(gold: 3);
+            Item.value = Item.sellPrice(gold: 5);
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 125;
+            Item.damage = 120;
             Item.knockBack = 7f;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
