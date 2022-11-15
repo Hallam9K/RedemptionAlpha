@@ -147,7 +147,7 @@ namespace Redemption.NPCs.PreHM
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemLists.Holy.Contains(item.type))
-                    damage = (int)(damage * 2f);
+                    NPC.Redemption().elementDmg *= 2f;
 
                 if (ItemLists.Psychic.Contains(item.type))
                     PsychicHit = true;
@@ -158,7 +158,7 @@ namespace Redemption.NPCs.PreHM
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileLists.Holy.Contains(projectile.type))
-                    damage = (int)(damage * 2f);
+                    NPC.Redemption().elementDmg *= 2f;
 
                 if (ProjectileLists.Psychic.Contains(projectile.type))
                     PsychicHit = true;

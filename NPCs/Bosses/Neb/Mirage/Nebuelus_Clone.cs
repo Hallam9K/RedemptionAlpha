@@ -19,6 +19,7 @@ using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Usable;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Neb.Clone
 {
@@ -1304,16 +1305,16 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemLists.Celestial.Contains(item.type))
-                    damage = (int)(damage * 0.75f);
+                    NPC.Redemption().elementDmg *= 0.75f;
 
                 if (ItemLists.Nature.Contains(item.type))
-                    damage = (int)(damage * 0.9f);
+                    NPC.Redemption().elementDmg *= 0.9f;
 
                 if (ItemLists.Psychic.Contains(item.type))
-                    damage = (int)(damage * 1.25f);
+                    NPC.Redemption().elementDmg *= 1.25f;
 
                 if (ItemLists.Shadow.Contains(item.type))
-                    damage = (int)(damage * 1.1f);
+                    NPC.Redemption().elementDmg *= 1.1f;
             }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -1321,16 +1322,16 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileLists.Celestial.Contains(projectile.type))
-                    damage = (int)(damage * 0.75f);
+                    NPC.Redemption().elementDmg *= 0.75f;
 
                 if (ProjectileLists.Nature.Contains(projectile.type))
-                    damage = (int)(damage * 0.9f);
+                    NPC.Redemption().elementDmg *= 0.9f;
 
                 if (ProjectileLists.Psychic.Contains(projectile.type))
-                    damage = (int)(damage * 1.25f);
+                    NPC.Redemption().elementDmg *= 1.25f;
 
                 if (ProjectileLists.Shadow.Contains(projectile.type))
-                    damage = (int)(damage * 1.1f);
+                    NPC.Redemption().elementDmg *= 1.1f;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

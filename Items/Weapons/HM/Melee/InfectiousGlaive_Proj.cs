@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(187, 241, 96), new Color(0, 98, 94)), new NoCap(), new DefaultTrailPosition(), 150f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(187, 241, 96), new Color(0, 98, 94)), new RoundCap(), new DefaultTrailPosition(), 100f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
         }
 
         private Vector2 vector;
