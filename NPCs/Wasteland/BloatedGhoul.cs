@@ -256,7 +256,7 @@ namespace Redemption.NPCs.Wasteland
             int gotNPC = GetNearestNPC();
             if (NPC.Sight(player, 800, true, true))
             {
-                SoundEngine.PlaySound(SoundID.Zombie2, NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie55, NPC.position);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
@@ -264,7 +264,7 @@ namespace Redemption.NPCs.Wasteland
             }
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 800, true, true))
             {
-                SoundEngine.PlaySound(SoundID.Zombie3, NPC.position);
+                SoundEngine.PlaySound(SoundID.Zombie56, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
@@ -329,7 +329,7 @@ namespace Redemption.NPCs.Wasteland
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "")
+                    "Ghouls irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.")
             });
         }
     }
