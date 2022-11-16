@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs
@@ -11,9 +12,18 @@ namespace Redemption.Buffs
             Description.SetDefault("Empowered by ancient lihzahrd powers");
             Main.buffNoTimeDisplay[Type] = true;
         }
-        // TODO: look up whip buffs
-        public override void Update(Player player, ref int buffIndex)
+    }
+    public class SunAuraBuffNPC : GlobalNPC
+    {
+        public override bool InstancePerEntity => true;
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            Player player = Main.player[projectile.owner];
+            if (player.HasBuff<SunAuraBuff>() && !projectile.npcProj && !projectile.trap && (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]))
+            {
+                damage = (int)(damage * .08f);
+                npc.AddBuff(BuffID.OnFire3, 120);
+            }
         }
     }
 }

@@ -114,6 +114,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Drone Missile");
             Main.projFrames[Projectile.type] = 2;
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
         }
 
         public override void SetDefaults()

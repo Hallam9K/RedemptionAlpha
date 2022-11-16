@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 		{
 			DisplayName.SetDefault("Sun Deity Staff");
             Tooltip.SetDefault("Summons a golem guardian that emits an empowering aura\n" +
-                "Within the aura, minions inflict a strong 'On Fire!' debuff and damage is increased by 8%");
+                "Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%");
 			SacrificeTotal = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;

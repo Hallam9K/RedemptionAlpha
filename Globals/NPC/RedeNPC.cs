@@ -103,7 +103,7 @@ namespace Redemption.Globals.NPC
                 #region Elemental Attributes
                 if (NPCLists.Plantlike.Contains(npc.type))
                 {
-                    if (ItemLists.Fire.Contains(item.type))
+                    if (ItemLists.Fire.Contains(item.type) || ItemLists.Wind.Contains(item.type))
                         elementDmg *= 1.15f;
 
                     if (ItemLists.Nature.Contains(item.type))
@@ -155,7 +155,21 @@ namespace Redemption.Globals.NPC
                     if (ItemLists.Ice.Contains(item.type))
                         elementDmg *= 0.75f;
 
-                    if (ItemLists.Thunder.Contains(item.type))
+                    if (ItemLists.Thunder.Contains(item.type) || ItemLists.Wind.Contains(item.type))
+                        elementDmg *= 1.1f;
+
+                    if (ItemLists.Poison.Contains(item.type))
+                        elementDmg *= 0.9f;
+                }
+                if (NPCLists.Hot.Contains(npc.type))
+                {
+                    if (ItemLists.Fire.Contains(item.type))
+                        elementDmg *= 0.5f;
+
+                    if (ItemLists.Ice.Contains(item.type))
+                        elementDmg *= 1.25f;
+
+                    if (ItemLists.Water.Contains(item.type) || ItemLists.Wind.Contains(item.type) || ItemLists.Poison.Contains(item.type))
                         elementDmg *= 1.1f;
                 }
                 if (NPCLists.Infected.Contains(npc.type))
@@ -194,6 +208,17 @@ namespace Redemption.Globals.NPC
 
                     if (ItemLists.Poison.Contains(item.type))
                         elementDmg *= 1.1f;
+                }
+                if (NPCLists.Hallowed.Contains(npc.type))
+                {
+                    if (ItemLists.Celestial.Contains(item.type))
+                        elementDmg *= 0.9f;
+
+                    if (ItemLists.Holy.Contains(item.type))
+                        elementDmg *= 0.5f;
+
+                    if (ItemLists.Shadow.Contains(item.type))
+                        elementDmg *= 1.25f;
                 }
                 if (ItemLists.Poison.Contains(item.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                     elementDmg *= 1.15f;
@@ -238,7 +263,7 @@ namespace Redemption.Globals.NPC
                 #region Elemental Attributes
                 if (NPCLists.Plantlike.Contains(npc.type))
                 {
-                    if (ProjectileLists.Fire.Contains(projectile.type))
+                    if (ProjectileLists.Fire.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type))
                         elementDmg *= 1.15f;
 
                     if (ProjectileLists.Nature.Contains(projectile.type))
@@ -290,7 +315,21 @@ namespace Redemption.Globals.NPC
                     if (ProjectileLists.Ice.Contains(projectile.type))
                         elementDmg *= 0.5f;
 
-                    if (ProjectileLists.Thunder.Contains(projectile.type))
+                    if (ProjectileLists.Thunder.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type))
+                        elementDmg *= 1.1f;
+
+                    if (ProjectileLists.Poison.Contains(projectile.type))
+                        elementDmg *= 0.9f;
+                }
+                if (NPCLists.Hot.Contains(npc.type))
+                {
+                    if (ProjectileLists.Fire.Contains(projectile.type))
+                        elementDmg *= 0.5f;
+
+                    if (ProjectileLists.Ice.Contains(projectile.type))
+                        elementDmg *= 1.25f;
+
+                    if (ProjectileLists.Water.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type) || ProjectileLists.Poison.Contains(projectile.type))
                         elementDmg *= 1.1f;
                 }
                 if (NPCLists.Infected.Contains(npc.type))
@@ -329,6 +368,17 @@ namespace Redemption.Globals.NPC
 
                     if (ProjectileLists.Poison.Contains(projectile.type))
                         elementDmg *= 1.1f;
+                }
+                if (NPCLists.Hallowed.Contains(npc.type))
+                {
+                    if (ProjectileLists.Celestial.Contains(projectile.type))
+                        elementDmg *= 0.9f;
+
+                    if (ProjectileLists.Holy.Contains(projectile.type))
+                        elementDmg *= 0.5f;
+
+                    if (ProjectileLists.Shadow.Contains(projectile.type))
+                        elementDmg *= 1.25f;
                 }
                 if (ProjectileLists.Poison.Contains(projectile.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
                     elementDmg *= 1.15f;
