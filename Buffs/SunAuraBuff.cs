@@ -21,7 +21,7 @@ namespace Redemption.Buffs
             Player player = Main.player[projectile.owner];
             if (player.HasBuff<SunAuraBuff>() && !projectile.npcProj && !projectile.trap && (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]))
             {
-                damage = (int)(damage * .08f);
+                damage = (int)(damage * 1.08f);
                 npc.AddBuff(BuffID.OnFire3, 120);
             }
         }
