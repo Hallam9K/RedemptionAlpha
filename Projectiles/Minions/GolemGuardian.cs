@@ -1,26 +1,20 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
-using Redemption.Buffs.Minions;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Textures;
-using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Redemption.Projectiles.Minions
 {
-    public class GraniteGuardian : ModProjectile
+    public class GolemGuardian : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Granite Guardian");
-            Main.projFrames[Projectile.type] = 6;
+            DisplayName.SetDefault("Golem Guardian");
+            Main.projFrames[Projectile.type] = 5;
             Main.projPet[Projectile.type] = true;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
@@ -30,8 +24,8 @@ namespace Redemption.Projectiles.Minions
 
         public override void SetDefaults()
         {
-            Projectile.width = 62;
-            Projectile.height = 58;
+            Projectile.width = 82;
+            Projectile.height = 128;
             Projectile.tileCollide = true;
             Projectile.sentry = true;
             Projectile.timeLeft = Projectile.SentryLifeTime;
@@ -45,11 +39,11 @@ namespace Redemption.Projectiles.Minions
         public override bool? CanDamage() => false;
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, 0.4f, 0.5f, 0.7f);
-            if (++Projectile.frameCounter >= 3)
+            Lighting.AddLight(Projectile.Center, 0.8f, 0.6f, 0.6f);
+            if (++Projectile.frameCounter >= 4)
             {
                 Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 6)
+                if (++Projectile.frame >= 5)
                     Projectile.frame = 0;
             }
             Player owner = Main.player[Projectile.owner];
@@ -64,10 +58,10 @@ namespace Redemption.Projectiles.Minions
                 if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) > 400 * 400)
                     continue;
 
-                player.AddBuff(ModContent.BuffType<GraniteAuraBuff>(), 4);
+                player.AddBuff(ModContent.BuffType<SunAuraBuff>(), 4);
             }
             if (Projectile.localAI[0]++ % 40 == 0)
-                RedeDraw.SpawnCirclePulse(Projectile.Center, Color.CornflowerBlue, 1.1f, Projectile);
+                RedeDraw.SpawnCirclePulse(Projectile.Center, Color.Goldenrod, 1.1f, Projectile);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
@@ -94,7 +88,7 @@ namespace Redemption.Projectiles.Minions
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
-            int height = texture.Height / 6;
+            int height = texture.Height / 5;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);

@@ -35,6 +35,8 @@ using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Projectiles.Misc;
 using Redemption.Items.Weapons.PreHM.Summon;
 using System;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Weapons.HM.Summon;
 
 namespace Redemption.Globals.NPC
 {
@@ -113,7 +115,7 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
                     if (ItemLists.Holy.Contains(item.type))
-                        elementDmg *= 1.15f;
+                        elementDmg *= 1.2f;
 
                     if (ItemLists.Shadow.Contains(item.type))
                         elementDmg *= 0.8f;
@@ -248,7 +250,7 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
                     if (ProjectileLists.Holy.Contains(projectile.type))
-                        elementDmg *= 1.15f;
+                        elementDmg *= 1.2f;
 
                     if (ProjectileLists.Shadow.Contains(projectile.type))
                         elementDmg *= 0.8f;
@@ -395,7 +397,11 @@ namespace Redemption.Globals.NPC
                 }
                 if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    int c = player.RedemptionPlayerBuff().shellNecklace ? 4 : 6;
+                    int c = 6;
+                    if (player.RedemptionPlayerBuff().shellNecklace)
+                        c = (int)(c * 0.75f);
+                    if (player.RedemptionPlayerBuff().forestCore)
+                        c = (int)(c * 0.75f);
                     if (Main.rand.NextBool(c) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
@@ -455,7 +461,11 @@ namespace Redemption.Globals.NPC
                 }
                 if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
                 {
-                    int c = Main.player[projectile.owner].RedemptionPlayerBuff().shellNecklace ? 4 : 6;
+                    int c = 6;
+                    if (Main.player[projectile.owner].RedemptionPlayerBuff().shellNecklace)
+                        c = (int)(c * 0.75f);
+                    if (Main.player[projectile.owner].RedemptionPlayerBuff().forestCore)
+                        c = (int)(c * 0.75f);
                     if (Main.rand.NextBool(c) && npc.CanBeChasedBy())
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<NaturePickup>(), noGrabDelay: true);
                 }
@@ -515,6 +525,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 10));
             if (npc.type == NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
+            if (npc.type == NPCID.Golem)
+                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

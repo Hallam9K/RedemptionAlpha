@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.HM
 {
+    [AutoloadEquip(EquipType.Neck)]
     public class SacredCross : ModItem
     {
         public override void SetStaticDefaults()
@@ -43,6 +44,19 @@ namespace Redemption.Items.Accessories.HM
             modPlayer.ElementalResistance[7] += 0.12f;
             player.longInvince = true;
             modPlayer.sacredCross = true;
+        }
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            if (slot < 10)
+            {
+                int maxAccessoryIndex = 5 + player.extraAccessorySlots;
+                for (int i = 3; i < 3 + maxAccessoryIndex; i++)
+                {
+                    if (slot != i && player.armor[i].type == ModContent.ItemType<GracesGuidance>())
+                        return false;
+                }
+            }
+            return true;
         }
     }
 }

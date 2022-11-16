@@ -24,6 +24,8 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Accessories.PostML;
 using System;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Globals.Player
 {
@@ -79,6 +81,8 @@ namespace Redemption.Globals.Player
         public bool powerCell;
         public bool sacredCross;
         public bool shellNecklace;
+        public bool gracesGuidance;
+        public bool forestCore;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -150,6 +154,8 @@ namespace Redemption.Globals.Player
             powerCell = false;
             sacredCross = false;
             shellNecklace = false;
+            gracesGuidance = false;
+            forestCore = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -451,7 +457,7 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if (sacredCross && ProjectileLists.Holy.Contains(proj.type) && crit && proj.type != ModContent.ProjectileType<Lightmass>())
+            if ((sacredCross || gracesGuidance) && ProjectileLists.Holy.Contains(proj.type) && crit && proj.type != ModContent.ProjectileType<Lightmass>())
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -470,7 +476,7 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if (sacredCross && ItemLists.Holy.Contains(item.type) && crit)
+            if ((sacredCross || gracesGuidance) && ItemLists.Holy.Contains(item.type) && crit)
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -600,14 +606,8 @@ namespace Redemption.Globals.Player
             }
             if (holyFire)
             {
-                if (Main.rand.NextBool(2) && drawInfo.shadow == 0f)
-                {
-                    int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, DustID.YellowTorch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 2f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity *= 1.8f;
-                    Main.dust[dust].velocity.Y -= 0.5f;
-                    drawInfo.DustCache.Add(dust);
-                }
+                if (Main.rand.NextBool(4) && !Main.gamePaused)
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, 0, 1);
             }
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)

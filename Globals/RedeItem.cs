@@ -16,6 +16,9 @@ using ReLogic.Content;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Globals.Player;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Weapons.HM.Summon;
 
 namespace Redemption.Globals
 {
@@ -48,12 +51,21 @@ namespace Redemption.Globals
                 if (modPlayer.powerCell)
                 {
                     if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
+                        crit += 4;
+                    if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
+                        crit += 4;
+                }
+                if (modPlayer.gracesGuidance)
+                {
+                    if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
                         crit += 6;
                     if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
                         crit += 6;
                 }
                 if (modPlayer.sacredCross && (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot)))
                     crit += 6;
+                if (modPlayer.forestCore && player.dryadWard && (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot)))
+                    crit += 10;
             }
         }
         public override void ModifyWeaponDamage(Item item, Terraria.Player player, ref StatModifier damage)
@@ -110,6 +122,8 @@ namespace Redemption.Globals
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 6));
             if (item.type == ItemID.JungleFishingCrateHard)
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));
+            if (item.type == ItemID.GolemBossBag)
+                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemStaff>(), 7));
         }
 
         #region Vanilla Set Bonuses
@@ -397,7 +411,7 @@ namespace Redemption.Globals
                 }
                 if (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot))
                 {
-                    TooltipLine line = new(Mod, "Element", "Nature Bonus: Has a chance to drop a defence pickup upon hitting enemies inflicted with a non-fire debuff") { OverrideColor = Color.LawnGreen };
+                    TooltipLine line = new(Mod, "Element", "Nature Bonus: Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff") { OverrideColor = Color.LawnGreen };
                     tooltips.Add(line);
                 }
                 if (ItemLists.Poison.Contains(item.type) || ProjectileLists.Poison.Contains(item.shoot))

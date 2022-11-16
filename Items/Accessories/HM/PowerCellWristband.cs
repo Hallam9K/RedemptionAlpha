@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
@@ -12,7 +13,7 @@ namespace Redemption.Items.Accessories.HM
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Power Cell Wristband");
-            Tooltip.SetDefault("6% increased critical strike chance for Fire and Holy elemental weapons\n" +
+            Tooltip.SetDefault("4% increased critical strike chance for Fire and Holy elemental weapons\n" +
                 "Stacks if both elements are present\n" +
                 "An aura of fire surrounds you while holding a Fire or Holy elemental weapon\n" +
                 "'Fueled with the sun itself'");
@@ -26,6 +27,8 @@ namespace Redemption.Items.Accessories.HM
             Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;
+            if (!Main.dedServ)
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
         public override void AddRecipes()
         {
@@ -42,7 +45,7 @@ namespace Redemption.Items.Accessories.HM
             if (player.whoAmI == Main.myPlayer && player.active && !player.dead && (ItemLists.Fire.Contains(player.HeldItem.type) || ProjectileLists.Fire.Contains(player.HeldItem.shoot) || ItemLists.Holy.Contains(player.HeldItem.type) || ProjectileLists.Holy.Contains(player.HeldItem.shoot)))
             {
                 if (timer++ % 30 == 0)
-                    RedeDraw.SpawnCirclePulse(player.Center, Color.DarkOrange, 0.8f, player);
+                    RedeDraw.SpawnCirclePulse(player.Center, Color.DarkOrange * 0.8f, 0.8f, player);
 
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
@@ -55,5 +58,18 @@ namespace Redemption.Items.Accessories.HM
             }
             player.RedemptionPlayerBuff().powerCell = true;
 		}
-	}
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            if (slot < 10)
+            {
+                int maxAccessoryIndex = 5 + player.extraAccessorySlots;
+                for (int i = 3; i < 3 + maxAccessoryIndex; i++)
+                {
+                    if (slot != i && player.armor[i].type == ModContent.ItemType<GracesGuidance>())
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
 }

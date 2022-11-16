@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -203,6 +204,8 @@ namespace Redemption.NPCs.Friendly
                 itemIds.Add(ItemID.NaturesGift);
             else if (Main.rand.NextBool(4))
                 itemIds.Add(ItemID.JungleRose);
+            else if (Main.rand.NextBool(10))
+                itemIds.Add(ModContent.ItemType<ForestCore>());
 
             var items = new List<Item>();
             foreach (int itemId in itemIds)
