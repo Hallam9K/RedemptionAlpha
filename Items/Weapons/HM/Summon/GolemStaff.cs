@@ -8,14 +8,15 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Summon
+namespace Redemption.Items.Weapons.HM.Summon
 {
-    public class GaucheStaff : ModItem
+    public class GolemStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Summons a granite guardian that emits an empowering aura\n" +
-                "Within the aura, whip speed and damage is increased by 15%");
+			DisplayName.SetDefault("Sun Deity Staff");
+            Tooltip.SetDefault("Summons a golem guardian that emits an empowering aura\n" +
+                "Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%");
 			SacrificeTotal = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
@@ -27,17 +28,17 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.DamageType = DamageClass.Summon;
 			Item.sentry = true;
 			Item.width = 48;
-			Item.height = 56;
+			Item.height = 48;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noMelee = true;
-			Item.value = Item.sellPrice(0, 1, 80, 0);
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(0, 7, 80, 0);
+			Item.rare = ItemRarityID.Lime;
 			Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
 			Item.autoReuse = false;
-			Item.shoot = ModContent.ProjectileType<GraniteGuardian>();
-			Item.mana = 20;
+			Item.shoot = ModContent.ProjectileType<GolemGuardian>();
+			Item.mana = 28;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
@@ -52,7 +53,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
 			int floor = BaseWorldGen.GetFirstTileFloor((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
-			position = new Vector2(Main.MouseWorld.X, floor * 16 - 30);
+			position = new Vector2(Main.MouseWorld.X, floor * 16 - 64);
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{

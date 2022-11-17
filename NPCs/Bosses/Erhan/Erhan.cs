@@ -1336,14 +1336,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemLists.Celestial.Contains(item.type) || ItemLists.Psychic.Contains(item.type))
+                if (ItemLists.Psychic.Contains(item.type))
                     NPC.Redemption().elementDmg *= 0.9f;
-
-                if (ItemLists.Holy.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.5f;
-
-                if (ItemLists.Shadow.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
             }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -1353,14 +1347,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Psychic.Contains(projectile.type))
+                if (ProjectileLists.Psychic.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 0.9f;
-
-                if (ProjectileLists.Holy.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.5f;
-
-                if (ProjectileLists.Shadow.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
             }
         }
 

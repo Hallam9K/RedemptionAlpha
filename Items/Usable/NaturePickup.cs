@@ -35,7 +35,7 @@ namespace Redemption.Items.Usable
                 int dust = Dust.NewDust(new Vector2(Item.position.X, Item.position.Y), Item.width, Item.height, DustID.GreenTorch, 0, 0, 20, Scale: 2);
                 Main.dust[dust].noGravity = true;
             }
-            player.AddBuff(BuffID.DryadsWard, 300);
+            player.AddBuff(BuffID.DryadsWard, player.RedemptionPlayerBuff().forestCore ? 420 : 300);
             return false;
         }
         public override void PostUpdate()

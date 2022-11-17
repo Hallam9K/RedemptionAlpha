@@ -14,6 +14,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 2;
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
 

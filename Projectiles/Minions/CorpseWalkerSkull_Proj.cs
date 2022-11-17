@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Redemptive Spark");
             Main.projFrames[Projectile.type] = 5;
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

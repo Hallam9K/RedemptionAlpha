@@ -63,7 +63,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 				var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
 				projectile.originalDamage = Item.damage;
 			}
-			if (player.ownedProjectileCounts[type] == player.maxTurrets)
+			if (player.ownedProjectileCounts[type] >= player.maxTurrets)
 			{
 				for (int g = 0; g < Main.maxProjectiles; ++g)
 				{

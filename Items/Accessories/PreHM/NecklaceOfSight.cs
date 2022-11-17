@@ -14,6 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
             Tooltip.SetDefault("Increases movement speed while an enemy is close\n" +
                 "6% increased critical strike chance\n"
                 + "Improves vision");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

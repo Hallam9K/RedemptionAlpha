@@ -51,6 +51,7 @@ namespace Redemption.Globals.NPC
         public bool brokenArmor;
         public bool sandDust;
         public bool badtime;
+        public bool holyFire;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -74,6 +75,7 @@ namespace Redemption.Globals.NPC
             brokenArmor = false;
             sandDust = false;
             badtime = false;
+            holyFire = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -292,6 +294,15 @@ namespace Redemption.Globals.NPC
                     npc.velocity.Y *= 0.4f;
                 }
             }
+            if (holyFire)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 400;
+                if (damage < 10)
+                    damage = 10;
+            }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
@@ -455,6 +466,11 @@ namespace Redemption.Globals.NPC
                 drawColor = new Color(52, 178, 108);
                 if (Main.rand.NextBool(4))
                     Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.ToxicBubble, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Alpha: 100);
+            }
+            if (holyFire)
+            {
+                if (Main.rand.NextBool(4) && !Main.gamePaused)
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, 0, 1);
             }
         }
 

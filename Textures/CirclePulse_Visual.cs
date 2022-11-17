@@ -24,9 +24,15 @@ namespace Redemption.Textures
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
         }
-
+        public Entity entityTarget;
         public override void AI()
         {
+            if (entityTarget != null)
+            {
+                if (entityTarget.active)
+                    Projectile.Center = entityTarget.Center;
+            }
+
             Projectile.timeLeft = 10;
             Projectile.velocity *= 0;
             Projectile.localAI[0]++;

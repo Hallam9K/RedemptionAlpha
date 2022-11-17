@@ -15,6 +15,7 @@ namespace Redemption.Items.Accessories.PreHM
         {
             DisplayName.SetDefault("Shell Necklace");
             Tooltip.SetDefault("10% increased Nature elemental damage and resistance\n" +
+                "Increased chance of Nature Boons to drop from the Nature elemental bonus\n" +
                 "'Makes you feel one with nature'");
             SacrificeTotal = 1;
         }
@@ -34,6 +35,7 @@ namespace Redemption.Items.Accessories.PreHM
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
             modPlayer.ElementalDamage[9] += 0.1f;
             modPlayer.ElementalResistance[9] += 0.1f;
+            modPlayer.shellNecklace = true;
         }
         public override void AddRecipes()
         {

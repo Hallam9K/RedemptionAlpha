@@ -11,6 +11,7 @@ namespace Redemption.Items.Accessories.PreHM
         {
             DisplayName.SetDefault("Egg Shelld");
             Tooltip.SetDefault("When below 25% health, you will ignore knockback");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.Effects.PrimitiveTrails;
+using Terraria.ID;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -12,6 +13,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Energy Bolt");
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
         }
         public override void SetDefaults()
         {

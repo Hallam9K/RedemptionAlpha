@@ -15,6 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -373,6 +374,7 @@ namespace Redemption.NPCs.PreHM
             npcLoot.Add(ItemDropRule.OneFromOptions(2,
                 new int[] { ItemID.Daybloom, ItemID.Blinkroot, ItemID.Moonglow, ItemID.Waterleaf, ModContent.ItemType<Nightshade>() }));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AnglonicMysticBlossom>(), 100));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ForestCore>(), 60));
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

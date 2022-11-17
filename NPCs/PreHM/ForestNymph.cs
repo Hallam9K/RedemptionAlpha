@@ -6,6 +6,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Projectiles.Hostile;
@@ -795,6 +796,7 @@ namespace Redemption.NPCs.PreHM
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.HerbBag, 1, 1, 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AnglonicMysticBlossom>(), 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ForestCore>(), 8));
             var dropRules = Main.ItemDropsDB.GetRulesForNPCID(NPCID.Nymph, false);
             foreach (var dropRule in dropRules)
             {
