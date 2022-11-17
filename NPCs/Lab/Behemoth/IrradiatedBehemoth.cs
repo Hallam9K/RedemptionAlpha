@@ -119,12 +119,16 @@ namespace Redemption.NPCs.Lab.Behemoth
                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, NPC.velocity, ModContent.Find<ModGore>("Redemption/IBGoreHead").Type);
             }
         }
+        public override bool PreKill()
+        {
+            if (!RedeBossDowned.downedBehemoth)
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IB_GirusTalk>(), 0, 0, Main.myPlayer);
+            return true;
+        }
         public override void OnKill()
         {
             if (!LabArea.labAccess[1])
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel2>());
-            if (!RedeBossDowned.downedBehemoth)
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IB_GirusTalk>(), 0, 0, Main.myPlayer);
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedBehemoth, -1);
         }
