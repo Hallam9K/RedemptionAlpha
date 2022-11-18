@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("That was a little disappointing to be honest.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 900)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I suppose that's what's to be expected from minimal changes to Teochrome’s original design.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I suppose that's what's to be expected from minimal changes to Teochrome's original design.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 1300)
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Oh well! I got some results that'll prove useful later on.", 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
