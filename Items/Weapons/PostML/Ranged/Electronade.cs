@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 		{
             Item.width = 16;
             Item.height = 20;
-            Item.damage = 160;
+            Item.damage = 190;
             Item.knockBack = 5;
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 2, 54, 0);

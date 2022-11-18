@@ -84,7 +84,7 @@ namespace Redemption.NPCs.Friendly
             if (Main.netMode != NetmodeID.Server)
             {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
-                NPC.frame.X = 0;
+                NPC.frame.X = RedeBossDowned.downedNebuleus ? NPC.frame.Width : 0;
             }
         }
 
@@ -95,7 +95,11 @@ namespace Redemption.NPCs.Friendly
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
-
+        public override void AI()
+        {
+            if (RedeWorld.newbGone)
+                NPC.active = false;
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
@@ -108,7 +112,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            return RedeBossDowned.foundNewb;
+            return RedeBossDowned.foundNewb && !RedeWorld.newbGone;
         }
 
         public override List<string> SetNPCNameList()
@@ -120,42 +124,53 @@ namespace Redemption.NPCs.Friendly
         {
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
-            if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
+            if (RedeBossDowned.downedNebuleus)
             {
-                chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?");
-            }
-            if (player.RedemptionPlayerBuff().ChickenForm)
-            {
-                chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");
+                if (RedeBossDowned.nebDeath > 6)
+                {
+                    chat.Add("I saw what you did.");
+                    chat.Add("It is all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now. I have something to say to you, but I am still not ready.");
+                }
+                chat.Add("My death, my sleep within the earth, it had undone myself. But as my time awake grows longer, my lost self returns.");
+                chat.Add("I can feel my memories arise from their deep slumber in my wreached curse. There is something I must do. I know that much, yet I am uncertain as to what it is.");
+
             }
             else
-                chat.Add("Chickens very funny! I fed chicken grain but I threw a crown on floor instead, but chicken pecked it anyway! ... And then it exploded!!");/*
-            if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
             {
-                chat.Add("Do I know you?");
-            }*/
-            chat.Add("My shoes aren't muddy! Where is all the mud!?");
-            chat.Add("Trees here are funny colours! Where are yellow leaves! They all green! ... Green is good colour too.", 0.6);
-            chat.Add("What's your name? Is it Garry? I bet it's Garry! Garry the Gentle is your name now!", 0.4);
-            chat.Add("This island is not MY island! Where are my people!?", 0.4);
-            chat.Add("They're coming, the red is coming! Don't stay! ... Oh hewwo!", 0.2);
-            chat.Add("Me like emeralds, they green! Rubies me hate! Too red!", 0.2);
-            chat.Add("What is beyond portal? Let's find out Johnny! ... Wait that isn't right name...", 0.2);
-            chat.Add("Me sowwy! Me go with shiny knight!", 0.2);
-            if (RedeWorld.alignment < 0)
-                chat.Add("Your ambitions are futile and will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.", 0.05);
-            chat.Add("Who you? You human?");
-            chat.Add("Me find shiny stones!");
-            chat.Add("You look stupid! Haha!");
-            chat.Add("My dirt is 10% off!");
-            chat.Add("Heheheh!");
-            chat.Add("Hewwo! I am Newb!");
+                if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
+                    chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?");
+                if (player.RedemptionPlayerBuff().ChickenForm)
+                    chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");
+                else
+                    chat.Add("Chickens very funny! I fed chicken grain but I threw a crown on floor instead, but chicken pecked it anyway! ... And then it exploded!!");/*
+                if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
+                {
+                    chat.Add("Do I know you?");
+                }*/
+                chat.Add("My shoes aren't muddy! Where is all the mud!?");
+                chat.Add("Trees here are funny colours! Where are yellow leaves! They all green! ... Green is good colour too.", 0.6);
+                chat.Add("What's your name? Is it Garry? I bet it's Garry! Garry the Gentle is your name now!", 0.4);
+                chat.Add("This island is not MY island! Where are my people!?", 0.4);
+                chat.Add("They're coming, the red is coming! Don't stay! ... Oh hewwo!", 0.2);
+                chat.Add("Me like emeralds, they green! Rubies me hate! Too red!", 0.2);
+                chat.Add("What is beyond portal? Let's find out Johnny! ... Wait that isn't right name...", 0.2);
+                chat.Add("Me sowwy! Me go with shiny knight!", 0.2);
+                if (RedeWorld.alignment < 0)
+                    chat.Add("Your ambitions are futile and will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.", 0.05);
+                chat.Add("Who you? You human?");
+                chat.Add("Me find shiny stones!");
+                chat.Add("You look stupid! Haha!");
+                chat.Add("My dirt is 10% off!");
+                chat.Add("Heheheh!");
+                chat.Add("Hewwo! I am Newb!");
+            }
             return chat;
         }
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button = Language.GetTextValue("LegacyInterface.28");
+            if (!RedeBossDowned.downedNebuleus)
+                button = Language.GetTextValue("LegacyInterface.28");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)

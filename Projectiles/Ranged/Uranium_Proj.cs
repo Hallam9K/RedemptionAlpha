@@ -103,6 +103,10 @@ namespace Redemption.Projectiles.Ranged
                 BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
             }
         }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            BlastSpawn();
+        }
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();

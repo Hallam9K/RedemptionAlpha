@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ModLoader;
@@ -21,6 +22,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override void AI()
         {
@@ -28,21 +30,15 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 Projectile.frameCounter = 0;
                 if (++Projectile.frame >= 9)
-                {
                     Projectile.frame = 7;
-                }
             }
             Projectile.localAI[0] += 1f;
             Projectile.velocity.X *= 0.00f;
             Projectile.velocity.Y += 1.00f;
             if (Projectile.localAI[0] >= 160)
-            {
                 Projectile.alpha += 10;
-            }
             if (Projectile.alpha >= 255)
-            {
                 Projectile.Kill();
-            }
             for (int p = 0; p < Main.maxPlayers; p++)
             {
                 Player player = Main.player[p];

@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.useTime = 32;
             Item.knockBack = 1f;
             Item.rare = ItemRarityID.LightRed;
-            Item.damage = 42;
+            Item.damage = 48;
             Item.shoot = ModContent.ProjectileType<Synthesizer_Proj>();
             Item.shootSpeed = 0;
             Item.DamageType = DamageClass.Magic;

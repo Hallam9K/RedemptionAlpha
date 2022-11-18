@@ -68,6 +68,7 @@ namespace Redemption.Globals
         public static bool[] omegaTransmitReady = new bool[3];
         public static bool apidroidKilled;
         public static bool deadRingerGiven;
+        public static bool newbGone;
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -193,6 +194,21 @@ namespace Redemption.Globals
                         spawnKeeper = false;
                         break;
                     }
+                }
+            }
+            #endregion
+
+            #region Fool Leaving
+            if (!newbGone && Main.dayTime && RedeBossDowned.downedNebuleus && Terraria.NPC.AnyNPCs(ModContent.NPCType<Newb>()))
+            {
+                if (Main.time == 1 && Main.rand.NextBool(2))
+                {
+                    newbGone = true;
+                    string status = "The Fool has left...";
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.SandyBrown);
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), Color.SandyBrown);
                 }
             }
             #endregion
@@ -399,6 +415,7 @@ namespace Redemption.Globals
             labSafe = false;
             apidroidKilled = false;
             deadRingerGiven = false;
+            newbGone = false;
             if (Terraria.NPC.downedPlantBoss)
                 omegaTransmitReady[0] = true;
             else
@@ -427,6 +444,7 @@ namespace Redemption.Globals
             labSafe = false;
             apidroidKilled = false;
             deadRingerGiven = false;
+            newbGone = false;
             omegaTransmitReady[0] = false;
             omegaTransmitReady[1] = false;
             omegaTransmitReady[2] = false;
@@ -444,6 +462,8 @@ namespace Redemption.Globals
                 lists.Add("apidroidKilled");
             if (deadRingerGiven)
                 lists.Add("deadRingerGiven");
+            if (newbGone)
+                lists.Add("newbGone");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -468,6 +488,7 @@ namespace Redemption.Globals
             labSafe = lists.Contains("labSafe");
             apidroidKilled = lists.Contains("apidroidKilled");
             deadRingerGiven = lists.Contains("deadRingerGiven");
+            newbGone = lists.Contains("newbGone");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -477,6 +498,7 @@ namespace Redemption.Globals
             flags[1] = labSafe;
             flags[2] = apidroidKilled;
             flags[3] = deadRingerGiven;
+            flags[4] = newbGone;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -494,6 +516,7 @@ namespace Redemption.Globals
             labSafe = flags[1];
             apidroidKilled = flags[2];
             deadRingerGiven = flags[3];
+            newbGone = flags[4];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

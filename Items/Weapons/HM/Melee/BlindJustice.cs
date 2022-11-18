@@ -80,6 +80,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (player.altFunctionUse == 2)
             {
                 SoundEngine.PlaySound(SoundID.Item71, player.position);
+                damage = (int)(damage * 0.75f);
                 type = ModContent.ProjectileType<SpectralScythe_Proj>();
             }
             else

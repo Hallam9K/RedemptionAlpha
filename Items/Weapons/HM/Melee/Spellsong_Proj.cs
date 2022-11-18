@@ -182,7 +182,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center - RedeHelper.PolarVector(4, Projectile.rotation),
                                 RedeHelper.PolarVector(1, (Projectile.Center - player.Center).ToRotation()),
-                                ModContent.ProjectileType<Spellsong_Beam>(), Projectile.damage / 3, Projectile.knockBack, Projectile.owner);
+                                ModContent.ProjectileType<Spellsong_Beam>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
                         }
                         if (Timer >= 54 * SwingSpeed)
                             Projectile.Kill();
