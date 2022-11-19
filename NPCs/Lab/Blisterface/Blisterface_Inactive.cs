@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
 using Terraria.Audio;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -39,8 +40,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPC.noGravity = true;
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
-            NPC.aiStyle = 16;
-            AIType = NPCID.Piranha;
             AnimationType = NPCID.Piranha;
         }
         public override bool CheckActive()
@@ -66,6 +65,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                 NPC.SetDefaults(ModContent.NPCType<Blisterface>());
                 NPC.netUpdate = true;
             }
+            BaseAI.AIFish(NPC, ref NPC.ai, true);
         }
         public override void FindFrame(int frameHeight)
         {

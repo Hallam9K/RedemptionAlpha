@@ -8,6 +8,7 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Globals;
+using Redemption.Items.Materials.PostML;
 
 namespace Redemption.Items.Usable
 {
@@ -44,6 +45,7 @@ namespace Redemption.Items.Usable
         {
             itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
             itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<StrangeSkull>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HamSandwich>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));

@@ -21,6 +21,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.PostML;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -125,6 +126,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
 
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
 
             npcLoot.Add(notExpertRule);
@@ -608,13 +611,29 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         case 2:
                             NPC.LookAtEntity(player);
                             NPC.ai[2]++;
-                            if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
-                            if (NPC.ai[2] == 2)
+                            if (circleRadius > 600)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X - 900, NPC.Center.Y - 900), ModContent.ProjectileType<CosmicEye2>(), 150, new Vector2(0, 10), true, CustomSounds.NebSound1, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X - 900, NPC.Center.Y + 900), ModContent.ProjectileType<CosmicEye2>(), 150, new Vector2(10, 0), true, CustomSounds.NebSound1, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X + 900, NPC.Center.Y + 900), ModContent.ProjectileType<CosmicEye2>(), 150, new Vector2(0, -10), true, CustomSounds.NebSound1, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X + 900, NPC.Center.Y - 900), ModContent.ProjectileType<CosmicEye2>(), 150, new Vector2(-10, 0), true, CustomSounds.NebSound1, NPC.whoAmI);
+                                circleRadius--;
+                            }
+                            if (NPC.ai[2] == 1)
+                                circleRadius = 1100;
+                            if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
+                            for (int k = 0; k < 6; k++)
+                            {
+                                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                vector.X = (float)(Math.Sin(angle) * circleRadius);
+                                vector.Y = (float)(Math.Cos(angle) * circleRadius);
+                                Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.Enchanted_Pink, 0f, 0f, 100, default, 2f)];
+                                dust2.noGravity = true;
+                                dust2.velocity = -NPC.DirectionTo(dust2.position) * 2f;
+                            }
+                            if (NPC.Distance(player.Center) > circleRadius)
+                            {
+                                Vector2 movement = NPC.Center - player.Center;
+                                float difference = movement.Length() - circleRadius;
+                                movement.Normalize();
+                                movement *= difference < 17f ? difference : 17f;
+                                player.position += movement;
                             }
                             if (NPC.ai[2] == 30)
                             {
@@ -729,10 +748,11 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             }
                             for (int k = 0; k < 6; k++)
                             {
+                                Vector2 vectorC;
                                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                                vector.X = (float)(Math.Sin(angle) * circleRadius);
-                                vector.Y = (float)(Math.Cos(angle) * circleRadius);
-                                Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.Enchanted_Pink, 0f, 0f, 100, default, 2f)];
+                                vectorC.X = (float)(Math.Sin(angle) * circleRadius);
+                                vectorC.Y = (float)(Math.Cos(angle) * circleRadius);
+                                Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vectorC, 2, 2, DustID.Enchanted_Pink, 0f, 0f, 100, default, 2f)];
                                 dust2.noGravity = true;
                                 dust2.velocity = -NPC.DirectionTo(dust2.position) * 2f;
                             }
@@ -1322,7 +1342,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         #region Shining Aurora
                         case 16:
                             NPC.LookAtEntity(player);
-                            if (circleRadius > 700)
+                            if (circleRadius > 800)
                             {
                                 circleRadius--;
                             }
@@ -1346,21 +1366,22 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             NPC.ai[2]++;
                             if (NPC.ai[2] == 5)
                             {
-                                circleRadius = 900;
+                                SoundEngine.PlaySound(SoundID.Item159);
+                                circleRadius = 1300;
                                 eyeFlare = true;
                                 NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<NebRing>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                             }
                             if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
                             if (NPC.ai[2] > 30 && NPC.ai[2] <= 300)
                             {
-                                attackTimer[0] += (float)Math.PI / 15;
+                                attackTimer[0] += (float)Math.PI / 5 / 400 * NPC.ai[2];
                                 if (attackTimer[0] > (float)Math.PI)
                                 {
                                     attackTimer[0] -= (float)Math.PI * 2;
                                 }
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(2f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(1f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
                                         ModContent.ProjectileType<StarBolt>(), 150 / 3, 0f, Main.myPlayer);
                                 }
                             }
@@ -1381,8 +1402,30 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         case 17:
                             NPC.LookAtEntity(player);
                             NPC.ai[2]++;
+                            if (NPC.ai[2] > 85)
+                            {
+                                for (int k = 0; k < 6; k++)
+                                {
+                                    Vector2 vectorC;
+                                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vectorC.X = (float)(Math.Sin(angle) * circleRadius);
+                                    vectorC.Y = (float)(Math.Cos(angle) * circleRadius);
+                                    Dust dust2 = Main.dust[Dust.NewDust(vector + vectorC, 2, 2, DustID.Enchanted_Pink, 0f, 0f, 100, default, 2f)];
+                                    dust2.noGravity = true;
+                                    dust2.velocity = -NPC.DirectionTo(dust2.position) * 2f;
+                                }
+                                if (vector.Distance(player.Center) > circleRadius)
+                                {
+                                    Vector2 movement = vector - player.Center;
+                                    float difference = movement.Length() - circleRadius;
+                                    movement.Normalize();
+                                    movement *= difference < 17f ? difference : 17f;
+                                    player.position += movement;
+                                }
+                            }
                             if (NPC.ai[2] == 1)
                             {
+                                circleRadius = 700;
                                 eyeFlare = true;
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.NebSound2, NPC.position);
@@ -1469,7 +1512,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 player.AddBuff(ModContent.BuffType<NebHealBuff>(), 20);
             }
             #region Teleporting
-            if (Vector2.Distance(NPC.Center, player.Center) >= 950 && NPC.ai[0] > 0 && NPC.ai[1] != 2 && NPC.ai[1] != 4 && NPC.ai[1] != 5 && NPC.ai[1] != 10 && NPC.ai[1] != 11 && NPC.ai[1] != 12 && NPC.ai[1] != 15 && NPC.ai[1] != 17 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
+            if (Vector2.Distance(NPC.Center, player.Center) >= 950 && NPC.ai[0] > 0 && NPC.ai[1] != 2 && NPC.ai[1] != 4 && NPC.ai[1] != 5 && NPC.ai[1] != 10 && NPC.ai[1] != 11 && NPC.ai[1] != 12 && NPC.ai[1] < 15 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
             {
                 Teleport(false, Vector2.Zero);
             }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.Audio;
@@ -38,8 +39,13 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             if (Main.rand.NextBool(8))
             {
+                int egg = ModContent.ItemType<ChickenEgg>();
+                if (Main.rand.NextBool(200))
+                    egg = ModContent.ItemType<GoldChickenEgg>();
+                if (Main.rand.NextBool(10000))
+                    egg = ModContent.ItemType<SussyEgg>();
                 SoundEngine.PlaySound(SoundID.Item16, new Vector2(i * 16, j * 16));
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, egg);
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

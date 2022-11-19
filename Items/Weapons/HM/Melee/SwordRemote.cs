@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Tooltip.SetDefault("'Size does matter'"
                 + "\nCalls upon the Omega Cleaver to unleash a devastating attack" +
                 "\nRight-Click to switch mode of attack" +
-                "\n10 second cooldown");
+                "\n20 second cooldown");
             SacrificeTotal = 1;
         }
 
@@ -90,7 +90,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                player.AddBuff(ModContent.BuffType<SwordRemoteCooldown>(), 600, true);
+                player.AddBuff(ModContent.BuffType<SwordRemoteCooldown>(), 1200, true);
                 switch (AttackMode)
                 {
                     case 0:
@@ -315,7 +315,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (Projectile.localAI[1] >= 60 && Projectile.localAI[1] % 5 == 0 && Projectile.localAI[1] < 130)
                             {
                                 if (Main.myPlayer == Projectile.owner)
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), ModContent.ProjectileType<PhantomCleaver_F>(), 1000, Projectile.knockBack, Main.myPlayer);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), ModContent.ProjectileType<PhantomCleaver_F>(), 500, Projectile.knockBack, Main.myPlayer);
                             }
                             if (Projectile.localAI[1] > 140)
                             {
@@ -362,7 +362,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                                         repeat = 1;
                                 }
                                 if (Main.myPlayer == Projectile.owner)
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y) + RedeHelper.PolarVector(134, Projectile.rotation + (float)-Math.PI / 2), RedeHelper.PolarVector(9, Projectile.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism_F>(), 1000, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y) + RedeHelper.PolarVector(134, Projectile.rotation + (float)-Math.PI / 2), RedeHelper.PolarVector(9, Projectile.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism_F>(), 1400, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
                             }
                             if (Projectile.localAI[1] > 40)
                             {

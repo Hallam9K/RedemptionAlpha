@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 			Item.DefaultToPlaceableTile(ModContent.TileType<KeeperBoxTile>(), 0);
 			Item.createTile = ModContent.TileType<KeeperBoxTile>();
 			Item.width = 32;
-			Item.height = 26;
+			Item.height = 32;
 			Item.rare = ItemRarityID.LightRed;
 			Item.accessory = true;
 		}

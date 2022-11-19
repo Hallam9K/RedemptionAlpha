@@ -13,6 +13,7 @@ using Terraria.Utilities;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -196,6 +197,9 @@ namespace Redemption.NPCs.PreHM
 
         public override void OnKill()
         {
+            if (HatType is HatState.Serb)
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Marshmallow);
+
             if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0)
             {
                 Main.NewText("A blobble swarm approaches!", Color.PaleGreen);

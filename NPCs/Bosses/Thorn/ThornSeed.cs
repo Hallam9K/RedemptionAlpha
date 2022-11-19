@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,6 +26,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 120;
             Projectile.alpha = 0;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
