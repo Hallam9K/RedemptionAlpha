@@ -20,6 +20,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Usable;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.PostML;
 
 namespace Redemption.NPCs.Bosses.Neb.Clone
 {
@@ -105,6 +106,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
 
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
 
             npcLoot.Add(notExpertRule);

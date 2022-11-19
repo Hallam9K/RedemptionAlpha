@@ -21,6 +21,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.PostML;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -125,6 +126,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusMask>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.NeverTrue(), ModContent.ItemType<NebuleusVanity>(), 7));
 
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LifeFragment>(), 1, 20, 40));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
 
             npcLoot.Add(notExpertRule);

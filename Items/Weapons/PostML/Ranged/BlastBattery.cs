@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.useTurn = true;
             Item.noMelee = true;
             Item.noUseGraphic = false;
-            Item.shoot = ModContent.ProjectileType<BlastBattery_Crosshair>();
+            Item.shoot = ModContent.ProjectileType<BlastBattery_Missile>();
             Item.useAmmo = AmmoID.Rocket;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;

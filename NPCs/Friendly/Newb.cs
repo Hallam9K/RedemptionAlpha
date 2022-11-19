@@ -131,8 +131,8 @@ namespace Redemption.NPCs.Friendly
                     chat.Add("I saw what you did.");
                     chat.Add("It is all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now. I have something to say to you, but I am still not ready.");
                 }
-                chat.Add("My death, my sleep within the earth, it had undone myself. But as my time awake grows longer, my lost self returns.");
-                chat.Add("I can feel my memories arise from their deep slumber in my wreached curse. There is something I must do. I know that much, yet I am uncertain as to what it is.");
+                chat.Add("My death, my sleep within the earth, had undone myself. But as my time awake grows longer, my lost self returns.");
+                chat.Add("I can feel my memories arise from their deep slumber. There is something I must do, I know that much, yet I am uncertain as to what it is.");
 
             }
             else

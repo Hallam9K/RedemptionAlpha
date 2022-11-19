@@ -12,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.WorldGeneration;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -58,8 +59,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPC.SpawnWithHigherTime(30);
             NPC.noGravity = true;
             NPC.noTileCollide = false;
-            NPC.aiStyle = 16;
-            AIType = NPCID.Piranha;
             NPC.boss = true;
             NPC.netAlways = true;
             if (!Main.dedServ)
@@ -193,6 +192,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     }
                     break;
             }
+            BaseAI.AIFish(NPC, ref NPC.ai, true);
         }
         private bool GlowActive;
         private int GlowTimer;
