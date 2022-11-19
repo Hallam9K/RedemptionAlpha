@@ -26,6 +26,8 @@ using Redemption.Items.Accessories.PostML;
 using System;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.NPCs.Bosses.Neb.Clone;
 
 namespace Redemption.Globals.Player
 {
@@ -275,6 +277,8 @@ namespace Redemption.Globals.Player
                 if (Player.wingTime > Player.wingTimeMax)
                     Player.wingTime = Player.wingTimeMax;
             }
+            if (Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>()))
+                Player.wingTime = Player.wingTimeMax;
         }
         public override void PostUpdateEquips()
         {
