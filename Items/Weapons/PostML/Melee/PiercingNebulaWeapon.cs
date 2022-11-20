@@ -18,7 +18,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Piercing Nebula");
-            Tooltip.SetDefault("'Penetrates through even the fabric of space'");
+            Tooltip.SetDefault("Deals less damage the further away the target\n" +
+                "'Penetrates through even the fabric of space'");
             SacrificeTotal = 1;
         }
 
@@ -38,7 +39,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.UseSound = SoundID.Item125;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<PNebula1_Friendly>();
-            Item.shootSpeed = 18f;
+            Item.shootSpeed = 9f;
             Item.rare = ModContent.RarityType<CosmicRarity>();
         }
         public override void AddRecipes()
@@ -51,37 +52,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            switch (Main.rand.Next(4))
-            {
-                case 0:
-                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    break;
-                case 1:
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Projectile.NewProjectile(source, position, velocity.RotatedBy(i == 0 ? 0.5f : -0.5f), ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    }
-                    break;
-                case 2:
-                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Projectile.NewProjectile(source, position, velocity.RotatedBy(i == 0 ? 0.78f : -0.78f), ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    }
-                    break;
-                case 3:
-                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Projectile.NewProjectile(source, position, velocity.RotatedBy(i == 0 ? 0.6f : -0.6f), ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    }
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Projectile.NewProjectile(source, position, velocity.RotatedBy(i == 0 ? 1.2f : -1.2f), ModContent.ProjectileType<PNebula1_Friendly>(), damage, knockback, Main.myPlayer);
-                    }
-                    break;
-            }
-            return false;
+            return true;
         }
     }
 }

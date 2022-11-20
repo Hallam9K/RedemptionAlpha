@@ -7,7 +7,9 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Globals;
 using Terraria.DataStructures;
-using Redemption.NPCs.Bosses.Neb;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Terraria.ID;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -18,6 +20,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Piercing Nebula");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
@@ -27,74 +31,82 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 180;
+            Projectile.timeLeft = 120;
             Projectile.tileCollide = false;
-            Projectile.extraUpdates = 1;
+            Projectile.extraUpdates = 4;
             Projectile.usesLocalNPCImmunity = true;
         }
         public float vectorOffset = 0f;
         public bool offsetLeft = false;
         public Vector2 originalVelocity = Vector2.Zero;
-        private NPC target;
         public override void OnSpawn(IEntitySource source)
         {
-            if (proType != 0)
+            if (proType == 0)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula2_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<PNebula3_Friendly>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
             }
         }
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
+            Projectile.alpha += 2;
             Projectile.localAI[0]++;
-            if (Projectile.localAI[0] >= 30)
-            {
-                if (proType != 0)
-                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Pink, 0.6f, 0, 1);
+            if (proType != 0)
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.HotPink * (Projectile.Opacity * 2.4f), 1f * Projectile.Opacity, 0, 2);
 
-                if (originalVelocity == Vector2.Zero)
-                    originalVelocity = Projectile.velocity;
-                if (proType != 0)
-                {
-                    if (offsetLeft)
-                    {
-                        vectorOffset -= 0.5f;
-                        if (vectorOffset <= -1.3f)
-                        {
-                            vectorOffset = -1.3f;
-                            offsetLeft = false;
-                        }
-                    }
-                    else
-                    {
-                        vectorOffset += 0.5f;
-                        if (vectorOffset >= 1.3f)
-                        {
-                            vectorOffset = 1.3f;
-                            offsetLeft = true;
-                        }
-                    }
-                    float velRot = BaseUtility.RotationTo(Projectile.Center, Projectile.Center + originalVelocity);
-                    Projectile.velocity = BaseUtility.RotateVector(default, new Vector2(Projectile.velocity.Length(), 0f), velRot + (vectorOffset * 0.5f));
-                }
-                Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
-            }
-            if (proType == 0 && RedeHelper.ClosestNPC(ref target, 800, Projectile.Center, true))
+            if (originalVelocity == Vector2.Zero)
+                originalVelocity = Projectile.velocity;
+            if (proType != 0)
             {
-                float shootSpeed = player.inventory[player.selectedItem].shootSpeed;
-                Projectile.rotation.SlowRotation(Projectile.DirectionTo(target.Center).ToRotation() + 1.57f, (float)Math.PI / 80f);
-                Projectile.velocity = RedeHelper.PolarVector(shootSpeed, Projectile.rotation + 1.57f);
+                if (offsetLeft)
+                {
+                    vectorOffset -= 0.5f;
+                    if (vectorOffset <= -1.3f)
+                    {
+                        vectorOffset = -1.3f;
+                        offsetLeft = false;
+                    }
+                }
+                else
+                {
+                    vectorOffset += 0.5f;
+                    if (vectorOffset >= 1.3f)
+                    {
+                        vectorOffset = 1.3f;
+                        offsetLeft = true;
+                    }
+                }
+                float velRot = BaseUtility.RotationTo(Projectile.Center, Projectile.Center + originalVelocity);
+                Projectile.velocity = BaseUtility.RotateVector(default, new Vector2(Projectile.velocity.Length(), 0f), velRot + (vectorOffset * 0.5f));
             }
+            Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;
         }
-        public override Color? GetAlpha(Color lightColor)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            return Color.White * Projectile.Opacity;
+            damage = damage * Projectile.timeLeft / 120;
+            if (damage < 40)
+                damage = 40;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (proType == 0)
+            {
+                Vector2 drawOrigin = new(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+                for (int k = 0; k < Projectile.oldPos.Length; k++)
+                {
+                    Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                    Color color = Projectile.GetAlpha(new Color(255, 255, 255, 0)) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                    Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                }
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                return false;
+            }
+            return true;
         }
     }
     public class PNebula2_Friendly : PNebula1_Friendly
