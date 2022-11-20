@@ -23,6 +23,7 @@ using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -36,7 +37,10 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 5;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 CustomTexturePath = "Redemption/Textures/Bestiary/Nebuleus_Bestiary"

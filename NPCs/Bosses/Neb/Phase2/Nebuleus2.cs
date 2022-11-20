@@ -22,6 +22,7 @@ using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -35,7 +36,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         {
             DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 9;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true

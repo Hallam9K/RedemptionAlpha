@@ -16,4 +16,18 @@ namespace Redemption.Buffs
             player.lifeRegen += 5;
         }
     }
+    public class VigourousBuff : ModBuff
+    {
+        public override string Texture => "Redemption/Buffs/NebHealBuff";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Vigorous Spirit");
+            Description.SetDefault("Greatly increased life regeneration");
+            Main.buffNoTimeDisplay[Type] = false;
+        }
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.lifeRegen += 5;
+        }
+    }
 }

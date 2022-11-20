@@ -21,6 +21,7 @@ using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Usable;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.Neb.Clone
 {
@@ -35,7 +36,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             DisplayName.SetDefault("Nebuleus Mirage");
             Main.npcFrameCount[NPC.type] = 5;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
