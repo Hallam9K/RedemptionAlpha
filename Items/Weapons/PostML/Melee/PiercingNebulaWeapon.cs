@@ -1,4 +1,8 @@
+using IL.Terraria.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
@@ -8,6 +12,7 @@ using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,11 +26,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Tooltip.SetDefault("Deals less damage the further away the target\n" +
                 "'Penetrates through even the fabric of space'");
             SacrificeTotal = 1;
+            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 444;
+            Item.damage = 333;
             Item.DamageType = DamageClass.Melee;
             Item.width = 82;
             Item.height = 82;
@@ -41,6 +47,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.shoot = ModContent.ProjectileType<PNebula1_Friendly>();
             Item.shootSpeed = 9f;
             Item.rare = ModContent.RarityType<CosmicRarity>();
+            if (!Main.dedServ)
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture).Value;
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            type = ModContent.ProjectileType<PiercingNebulaWeapon_Proj>();
         }
         public override void AddRecipes()
         {
@@ -49,10 +61,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 .AddIngredient(ModContent.ItemType<LifeFragment>(), 8)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
-        }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            return true;
         }
     }
 }

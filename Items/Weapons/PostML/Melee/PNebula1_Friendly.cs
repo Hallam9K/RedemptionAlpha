@@ -10,6 +10,8 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -52,7 +54,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.alpha += 2;
             Projectile.localAI[0]++;
             if (proType != 0)
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.HotPink * (Projectile.Opacity * 2.4f), 1f * Projectile.Opacity, 0, 2);
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.HotPink * (Projectile.Opacity * 2f), 1f * Projectile.Opacity, 0, 2);
 
             if (originalVelocity == Vector2.Zero)
                 originalVelocity = Projectile.velocity;
@@ -83,8 +85,15 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Projectile.localNPCImmunity[target.whoAmI] = 10;
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;
+
+            if (proType != 0)
+                return;
+            Main.player[Projectile.owner].RedemptionScreen().ScreenShakeIntensity += 2;
+            SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
+            Texture2D tex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/GiantStar_Proj").Value;
+            RedeDraw.SpawnExplosion(Projectile.Center, Main.DiscoColor * 0.6f, 6, 0, 30, 2, 1 * Projectile.Opacity, true, tex, Main.rand.NextFloat(0, MathHelper.TwoPi));
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

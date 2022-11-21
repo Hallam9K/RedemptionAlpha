@@ -18,7 +18,8 @@ namespace Redemption.Items.Usable
 		{
 			DisplayName.SetDefault("Treasure Bag (Patient Zero)");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-			SacrificeTotal = 3;
+            ItemID.Sets.BossBag[Type] = true;
+            SacrificeTotal = 3;
 		}
 		public override void SetDefaults()
 		{

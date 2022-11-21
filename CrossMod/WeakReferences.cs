@@ -277,6 +277,7 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "Patient Zero", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => true,
                     new List<int>
                     {
+                        ModContent.ItemType<PZRelic>(),
                         ModContent.ItemType<Keycard2>(),
                         ModContent.ItemType<NanoPickaxe>(),
                         ModContent.ItemType<Electronade>(),

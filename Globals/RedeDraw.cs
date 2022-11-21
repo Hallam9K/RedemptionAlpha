@@ -88,12 +88,13 @@ namespace Redemption.Globals
                 (Main.projectile[p].ModProjectile as CirclePulse_Visual).entityTarget = target;
             }
         }
-        public static void SpawnExplosion(Vector2 center, Color color, int dustID = DustID.Torch, float shakeAmount = 7, int dustAmount = 30, float dustScale = 2, float scale = 4f, bool noDust = false, Texture2D tex = null)
+        public static void SpawnExplosion(Vector2 center, Color color, int dustID = DustID.Torch, float shakeAmount = 7, int dustAmount = 30, float dustScale = 2, float scale = 4f, bool noDust = false, Texture2D tex = null, float rot = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int p = Projectile.NewProjectile(null, center, Vector2.Zero, ModContent.ProjectileType<Explosion_Visual>(), 0, 0,
                     Main.myPlayer, shakeAmount, dustAmount);
+                Main.projectile[p].rotation = rot;
                 if (Main.projectile[p].ModProjectile is Explosion_Visual explode)
                 {
                     explode.color = color;

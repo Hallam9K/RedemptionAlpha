@@ -103,7 +103,6 @@ namespace Redemption
         public static readonly SoundStyle Thunderstrike = new("Redemption/Sounds/Custom/Thunderstrike") { Volume = .7f, PitchVariance = .1f };
         public static readonly SoundStyle Transformation = new("Redemption/Sounds/Custom/Transformation") { Volume = .7f, PitchVariance = .1f };
         public static readonly SoundStyle VomitAttack = new("Redemption/Sounds/Custom/VomitAttack") { PitchVariance = .1f };
-        public static readonly SoundStyle WorldTree = new("Redemption/Sounds/Custom/WorldTree") { PitchVariance = .1f };
         public static readonly SoundStyle Zap1 = new("Redemption/Sounds/Custom/Zap1") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle Zap2 = new("Redemption/Sounds/Custom/Zap2") { PitchVariance = .1f };
         public static readonly SoundStyle Voice1 = new("Redemption/Sounds/Custom/Voice1") { MaxInstances = 10, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest };

@@ -117,6 +117,32 @@ namespace Redemption.Globals
 
             return foundTarget;
         }
+        public static bool ClosestProj(this Projectile projectile, ref Projectile target, float maxDistance, Vector2 position,
+    bool ignoreTiles = false, int overrideTarget = -1, int type = -1)
+        {
+            bool foundTarget = false;
+            if (overrideTarget != -1 && (Main.npc[overrideTarget].Center - position).Length() < maxDistance)
+            {
+                target = Main.projectile[overrideTarget];
+                return true;
+            }
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                float distance = (proj.Center - position).Length();
+                if (!(distance < maxDistance) || !proj.active || proj.whoAmI == projectile.whoAmI || !Collision.CanHit(position, 0, 0, proj.Center, 0, 0) && !ignoreTiles)
+                    continue;
+
+                if (type != 1 && proj.type != type)
+                    continue;
+
+                target = proj;
+                foundTarget = true;
+                maxDistance = (target.Center - position).Length();
+            }
+
+            return foundTarget;
+        }
         //used by minions to give each minion of the same type a unique identifier so they don't stack
         public static int MinionHordeIdentity(Projectile projectile)
         {

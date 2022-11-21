@@ -24,6 +24,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
+using Redemption.Textures;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -470,7 +471,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             if (NPC.ai[2] == 360)
                             {
                                 if (RedeWorld.alignment < 0)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My eyes have loomed upon thee long enough, it is time to quell thy flame.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My eyes have loomed upon thee long enough, it is time to take action.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                                 else
                                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Forgive my prying eyes, for I have been observing thee from afar.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }

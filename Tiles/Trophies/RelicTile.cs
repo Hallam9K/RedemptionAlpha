@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Trophies
 		public const int FrameWidth = 18 * 3;
 		public const int FrameHeight = 18 * 4;
 		public const int HorizontalFrames = 1;
-		public const int VerticalFrames = 8;
+		public const int VerticalFrames = 9;
 
 		public Asset<Texture2D> RelicTexture;
 
@@ -92,6 +92,9 @@ namespace Redemption.Tiles.Trophies
 					break;
 				case 7:
 					itemType = ModContent.ItemType<OORelic>();
+					break;
+				case 8:
+					itemType = ModContent.ItemType<PZRelic>();
 					break;
 
 			}
