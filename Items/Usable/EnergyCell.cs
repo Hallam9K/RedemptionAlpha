@@ -16,7 +16,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Right-click to recharge +20 Energy if an Energy Pack is in your inventory\n" +
+            Tooltip.SetDefault("Right-click to recharge +100 Energy if an Energy Pack is in your inventory\n" +
                 "Automatically recharges when your Energy is low");
             SacrificeTotal = 25;
         }
@@ -32,7 +32,7 @@ namespace Redemption.Items.Usable
         public override void RightClick(Player player)
         {
             SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.5f }, player.position);
-            player.GetModPlayer<EnergyPlayer>().statEnergy += 20;
+            player.GetModPlayer<EnergyPlayer>().statEnergy += 100;
         }
         public override void AddRecipes()
         {
