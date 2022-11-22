@@ -90,7 +90,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
                 Vector2 diff = list[i + 1] - element;
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
-                Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
+                Color color = Lighting.GetColor(element.ToTileCoordinates(), new(Main.DiscoR, Main.DiscoG, Main.DiscoB, 0));
                 Vector2 scale = new(1, (diff.Length() + 2) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
@@ -105,7 +105,50 @@ namespace Redemption.Items.Weapons.PostML.Summon
 
             DrawLine(list);
 
-            Main.DrawWhip_WhipBland(Projectile, list);
+            SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.instance.LoadProjectile(Type);
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
+
+            Vector2 pos = list[0];
+
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                Rectangle frame = new(0, 0, 16, 26);
+                Vector2 origin = new(8, 8);
+                float scale = 1;
+
+                if (i == list.Count - 2)
+                {
+                    frame.Y = 118;
+                    frame.Height = 20;
+                }
+                else if (i > 10)
+                {
+                    frame.Y = 90;
+                    frame.Height = 20;
+                }
+                else if (i > 5)
+                {
+                    frame.Y = 62;
+                    frame.Height = 20;
+                }
+                else if (i > 0)
+                {
+                    frame.Y = 34;
+                    frame.Height = 20;
+                }
+
+                Vector2 element = list[i];
+                Vector2 diff = list[i + 1] - element;
+
+                float rotation = diff.ToRotation() - MathHelper.PiOver2;
+                Color color = new(Main.DiscoR, Main.DiscoG, Main.DiscoB, 160);
+
+                Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, flip, 0);
+
+                pos += diff;
+            }
             return false;
         }
     }

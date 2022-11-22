@@ -31,7 +31,7 @@ namespace Redemption.Projectiles.Minions
             LaserSegmentLength = 28;
             LaserWidth = 26;
             LaserEndSegmentLength = 28;
-            MaxLaserLength = 600;
+            MaxLaserLength = 800;
             Projectile.usesLocalNPCImmunity = true;
         }
         public override void AI()
@@ -63,7 +63,8 @@ namespace Redemption.Projectiles.Minions
 
             #endregion
 
-            LaserLength = MaxLaserLength;
+            float dist = Main.npc[(int)eye.ai[0]].Distance(eye.Center);
+            LaserLength = Math.Min(dist, MaxLaserLength);
             ++AITimer;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

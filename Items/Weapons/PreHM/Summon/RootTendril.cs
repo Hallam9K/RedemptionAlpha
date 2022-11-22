@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             Projectile.DefaultToWhip();
 
-            Projectile.WhipSettings.Segments = 10;
+            Projectile.WhipSettings.Segments = 11;
             Projectile.WhipSettings.RangeMultiplier = 0.5f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
@@ -93,9 +93,52 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             List<Vector2> list = new();
             Projectile.FillWhipControlPoints(Projectile, list);
 
-            DrawLine(list);
+            //DrawLine(list);
 
-            Main.DrawWhip_WhipBland(Projectile, list);
+            SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.instance.LoadProjectile(Type);
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
+
+            Vector2 pos = list[0];
+
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                Rectangle frame = new(0, 0, 16, 26);
+                Vector2 origin = new(8, 8);
+                float scale = 1;
+
+                if (i == list.Count - 2)
+                {
+                    frame.Y = 120;
+                    frame.Height = 18;
+                }
+                else if (i > 10)
+                {
+                    frame.Y = 92;
+                    frame.Height = 16;
+                }
+                else if (i > 5)
+                {
+                    frame.Y = 64;
+                    frame.Height = 16;
+                }
+                else if (i > 0)
+                {
+                    frame.Y = 36;
+                    frame.Height = 16;
+                }
+
+                Vector2 element = list[i];
+                Vector2 diff = list[i + 1] - element;
+
+                float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
+                Color color = Lighting.GetColor(element.ToTileCoordinates());
+
+                Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, flip, 0);
+
+                pos += diff;
+            }
             return false;
         }
     }
