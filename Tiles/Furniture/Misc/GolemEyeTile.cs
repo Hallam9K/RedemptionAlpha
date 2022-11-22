@@ -93,14 +93,34 @@ namespace Redemption.Tiles.Furniture.Misc
             if (!NPC.downedMoonlord)
                 return true;
 
-            Texture2D hint = ModContent.Request<Texture2D>("Redemption/Textures/GolemEyeHint").Value;
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Rectangle rect2 = new(0, 0, hint.Width, hint.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
             Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
+            Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(241, 215, 108), new Color(255, 255, 255), new Color(241, 215, 108));
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+
+            spriteBatch.Draw(flare, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
+            spriteBatch.Draw(flare, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, -Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            return true;
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            if (!NPC.downedMoonlord)
+                return;
+
+            Texture2D hint = ModContent.Request<Texture2D>("Redemption/Textures/GolemEyeHint").Value;
+            Rectangle rect2 = new(0, 0, hint.Width, hint.Height);
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
             Vector2 origin2 = new(hint.Width / 2f, hint.Height / 2f);
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(241, 215, 108), new Color(255, 255, 255), new Color(241, 215, 108));
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.7f, 0.1f, 0.7f);
@@ -110,12 +130,8 @@ namespace Redemption.Tiles.Furniture.Misc
 
             spriteBatch.Draw(hint, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect2), color * scale, 0, origin2, 1, 0, 1f);
 
-            spriteBatch.Draw(flare, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
-            spriteBatch.Draw(flare, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, -Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
-
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            return true;
         }
         public override void RandomUpdate(int i, int j)
         {

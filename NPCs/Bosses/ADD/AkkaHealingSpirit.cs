@@ -27,6 +27,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void AI()
         {
+            NPC akka = Main.npc[(int)Projectile.ai[0]];
+            if (akka.active && akka.type == ModContent.NPCType<Akka>())
+                Projectile.Center = akka.Center;
             if (Projectile.localAI[0] == 1f)
             {
                 Projectile.alpha += 6;

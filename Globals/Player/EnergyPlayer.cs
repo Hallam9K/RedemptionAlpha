@@ -32,7 +32,7 @@ namespace Redemption.Globals.Player
                 if (cell >= 0)
                 {
                     SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.5f }, Player.position);
-                    Player.GetModPlayer<EnergyPlayer>().statEnergy += 20;
+                    Player.GetModPlayer<EnergyPlayer>().statEnergy += 100;
                     Player.inventory[cell].stack--;
                     if (Player.inventory[cell].stack <= 0)
                         Player.inventory[cell] = new Item();

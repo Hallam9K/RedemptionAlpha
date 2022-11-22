@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Bosses.ADD
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-
+        public int GuardPointMax;
         public override void SetDefaults()
         {
             NPC.lifeMax = 108000;
@@ -91,6 +91,9 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.boss = true;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
+            GuardPointMax = NPC.lifeMax / 50;
+            NPC.RedemptionGuard().GuardBroken = true;
+            NPC.BossBar = ModContent.GetInstance<AkkaHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
         }
@@ -130,6 +133,20 @@ namespace Redemption.NPCs.Bosses.ADD
 
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
                 damage = (int)(damage * .75f);
+        }
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            bool vDmg = false;
+            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            {
+                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.Dig with { Pitch = -.1f });
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                    return vDmg;
+            }
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.t_LivingWood, SoundID.Item43, 10, 1, 2000);
+            return true;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -279,7 +296,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.ResetVars:
                     if (islandCooldown > 0)
                         islandCooldown--;
-                    if (barkskinCooldown > 0)
+                    if (barkskinCooldown > 0 && NPC.RedemptionGuard().GuardPoints <= 0)
                         barkskinCooldown--;
                     if (healingCooldown > 0)
                         healingCooldown--;
@@ -386,13 +403,28 @@ namespace Redemption.NPCs.Bosses.ADD
                         case 3:
                             if (NPC.life < (int)(NPC.lifeMax * 0.8f) && barkskinCooldown == 0)
                             {
-                                AITimer++;
+                                if (AITimer++ == 0)
+                                {
+                                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                                    {
+                                        AttackID = Main.rand.Next(10);
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
                                 if (AITimer < 60)
                                 {
                                     Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.t_LivingWood, 0f, 0f, 100, default, 2f);
                                     dust.velocity = -NPC.DirectionTo(dust.position);
 
-                                    NPC.AddBuff(ModContent.BuffType<StoneskinBuff>(), 3600);
+                                    NPC.AddBuff(ModContent.BuffType<StoneskinBuff>(), 600);
+                                }
+                                if (AITimer == 60)
+                                {
+                                    SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, NPC.position);
+                                    DustHelper.DrawCircle(NPC.Center, DustID.DryadsWard, 10, 1, 1, 1, 3, nogravity: true);
+                                    NPC.RedemptionGuard().GuardPoints = GuardPointMax;
+                                    NPC.RedemptionGuard().GuardBroken = false;
                                 }
                                 if (AITimer >= 90)
                                 {
@@ -449,8 +481,16 @@ namespace Redemption.NPCs.Bosses.ADD
                                 AITimer++;
                                 if (AITimer % 10 == 0 && AITimer > 20 && AITimer < 200)
                                 {
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaHealingSpirit>(), 0, 0, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaHealingSpirit>(), 0, 0, Main.myPlayer, NPC.whoAmI);
                                     Main.projectile[p].netUpdate = true;
+                                }
+                                if (ukkoActive && AITimer > 20 && AITimer < 200)
+                                {
+                                    NPC ukko = Main.npc[(int)NPC.ai[3]];
+                                    if (NPC.DistanceSQ(ukko.Center) < 200 * 200)
+                                        NPC.velocity *= 0;
+                                    else
+                                        NPC.MoveToVector2(ukko.Center, 35);
                                 }
                                 if (AITimer >= 260)
                                 {
@@ -520,7 +560,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC ukko = Main.npc[(int)NPC.ai[3]];
                                 if (ukko.ai[1] == 16)
                                 {
-                                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PoisonStaff, Scale: 1.5f);
+                                    int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PoisonStaff, Scale: 1.5f);
+                                    Main.dust[d].noGravity = true;
                                     Frame = 1;
                                     NPC.MoveToVector2(EarthProtectPos, 20);
                                     NPC.netUpdate = true;
