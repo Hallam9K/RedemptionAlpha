@@ -487,11 +487,15 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (ukkoActive && AITimer > 20 && AITimer < 200)
                                 {
                                     NPC ukko = Main.npc[(int)NPC.ai[3]];
+                                    Frame = 1;
+                                    NPC.LookAtEntity(ukko);
                                     if (NPC.DistanceSQ(ukko.Center) < 200 * 200)
                                         NPC.velocity *= 0;
                                     else
                                         NPC.MoveToVector2(ukko.Center, 35);
                                 }
+                                else
+                                    Frame = 0;
                                 if (AITimer >= 260)
                                 {
                                     healingCooldown = 20;
