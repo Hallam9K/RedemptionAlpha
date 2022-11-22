@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -22,6 +23,11 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
             Projectile.timeLeft = 500;
+            Projectile.hide = true;
+        }
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindProjectiles.Add(index);
         }
         public override void AI()
         {

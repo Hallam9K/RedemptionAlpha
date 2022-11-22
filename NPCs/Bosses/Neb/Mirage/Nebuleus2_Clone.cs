@@ -58,6 +58,9 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             NPC.aiStyle = -1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.knockBackResist = 0f;
+            NPC.npcSlots = 10f;
+            NPC.SpawnWithHigherTime(30);
+            NPC.value = Item.buyPrice(0, 30, 0, 0);
             NPC.noGravity = true;
             NPC.boss = true;
             NPC.netAlways = true;
@@ -184,6 +187,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         }
         public override void AI()
         {
+            NPC.DiscourageDespawn(60);
+
             Main.time = 16200;
             Main.dayTime = false;
             for (int k = oldPos.Length - 1; k > 0; k--)

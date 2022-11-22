@@ -214,6 +214,9 @@ namespace Redemption.NPCs.Bosses.ADD
             DespawnHandler();
 
             Player player = Main.player[NPC.target];
+            if (player.active && !player.dead)
+                NPC.DiscourageDespawn(60);
+
             if (AIState is not ActionState.AkkaSummon)
             {
                 if (AttackID == 7)
@@ -1145,11 +1148,6 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return AttackID == 7;
-        }
-        public override bool CheckActive()
-        {
-            player = Main.player[NPC.target];
-            return !player.active || player.dead;
         }
         public Vector2 Pos()
         {

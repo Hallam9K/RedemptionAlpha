@@ -64,16 +64,16 @@ namespace Redemption.Projectiles.Magic
                 {
                     if (ClosestProj(ref closeProj, 2000, Projectile.Center, true, -1, Type))
                     {
-                        int steps = (int)Projectile.Distance(closeProj.Center) / 2;
+                        int steps = (int)Projectile.Distance(closeProj.Center) / 3;
                         for (int i = 0; i < steps; i++)
-                            ParticleManager.NewParticle(Vector2.Lerp(Projectile.Center, closeProj.Center, (float)i / steps), Vector2.Zero, new GlowParticle2(), Color.White, 0.1f, 0, 1);
+                            ParticleManager.NewParticle(Vector2.Lerp(Projectile.Center, closeProj.Center, (float)i / steps), Vector2.Zero, new GlowParticle2(), Color.White, 0.14f, 0, 1);
                     }
                 }
                 else
                 {
-                    int steps = (int)Projectile.Distance(pos) / 2;
+                    int steps = (int)Projectile.Distance(pos) / 3;
                     for (int i = 0; i < steps; i++)
-                        ParticleManager.NewParticle(Vector2.Lerp(Projectile.Center, pos, (float)i / steps), Vector2.Zero, new GlowParticle2(), Color.White, 0.1f, 0, 1);
+                        ParticleManager.NewParticle(Vector2.Lerp(Projectile.Center, pos, (float)i / steps), Vector2.Zero, new GlowParticle2(), Color.White, 0.14f, 0, 1);
                 }
                 Projectile.ai[0] = 1;
             }

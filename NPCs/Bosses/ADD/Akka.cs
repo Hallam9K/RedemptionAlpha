@@ -205,6 +205,9 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.rotation = 0f;
             NPC.LookAtEntity(player);
 
+            if (player.active && !player.dead)
+                NPC.DiscourageDespawn(60);
+
             bool ukkoActive = false;
             if (NPC.ai[3] > -1 && Main.npc[(int)NPC.ai[3]].active && Main.npc[(int)NPC.ai[3]].type == ModContent.NPCType<Ukko>())
                 ukkoActive = true;
@@ -566,10 +569,6 @@ namespace Redemption.NPCs.Bosses.ADD
         private void Target()
         {
             player = Main.player[NPC.target];
-        }
-        public override bool CheckActive()
-        {
-            return !player.active || player.dead;
         }
 
         private void DespawnHandler()
