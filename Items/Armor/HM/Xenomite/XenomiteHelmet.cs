@@ -61,13 +61,16 @@ namespace Redemption.Items.Armor.HM.Xenomite
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
+            player.setBonus = "6% increased damage\n" +
+                "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
                 "Select a keybind for [Special Ability Key] in Controls";
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory" +
+                player.setBonus = "6% increased damage\n" + 
+                    "Increased Energy regeneration if an Energy Pack is in your inventory" +
                     "\nPress " + key + " to unleash toxic gas in a radius around the player, inflicting Burning Acid";
             }
+            player.GetDamage<GenericDamageClass>() += .06f;
             player.GetModPlayer<EnergyPlayer>().energyRegen += 10;
             player.RedemptionPlayerBuff().xenomiteBonus = true;
         }

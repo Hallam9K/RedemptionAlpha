@@ -44,7 +44,6 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.shoot = ModContent.ProjectileType<XeniumTurret>();
             Item.mana = 10;
         }
-
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             player.AddBuff(Item.buffType, 2);
@@ -54,7 +53,6 @@ namespace Redemption.Items.Weapons.PostML.Summon
 
             return false;
         }
-
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -64,6 +62,5 @@ namespace Redemption.Items.Weapons.PostML.Summon
                 .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .Register();
         }
-
     }
 }

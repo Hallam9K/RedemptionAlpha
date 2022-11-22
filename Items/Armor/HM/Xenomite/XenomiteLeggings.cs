@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
 			Item.height = 18;
 			Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Lime;
-			Item.defense = 8;
+			Item.defense = 10;
 		}
 
 		public override void UpdateEquip(Player player)

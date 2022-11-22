@@ -79,7 +79,6 @@ namespace Redemption.Projectiles.Minions
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-
         }
 
         public override bool? CanHitNPC(NPC target)
