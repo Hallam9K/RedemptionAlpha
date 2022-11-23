@@ -1586,6 +1586,9 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
             {
+                ScreenPlayer.NebCutsceneflag = false;
+                ScreenPlayer.NebCutscene = false;
+
                 NPC.velocity *= 0.96f;
                 NPC.velocity.Y -= 1;
                 if (NPC.timeLeft > 10)
