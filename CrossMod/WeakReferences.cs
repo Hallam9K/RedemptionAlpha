@@ -317,8 +317,10 @@ namespace Redemption.CrossMod
                     {
                         //ModContent.ItemType<ErhanRelic>(),
                         //ModContent.ItemType<DevilsAdvocate>(),
-                        //ModContent.ItemType<ErhanTrophy>(),
-                        //ModContent.ItemType<ErhanHelmet>(),
+                        ModContent.ItemType<UkonKirvesTrophy>(),
+                        ModContent.ItemType<AkanKirvesTrophy>(),
+                        ModContent.ItemType<UkkoMask>(),
+                        ModContent.ItemType<AkkaMask>(),
                     },
                     ModContent.ItemType<AncientSigil>(), "Use an [i:" + ModContent.ItemType<AncientSigil>() + "] at day.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -333,9 +335,9 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "Nebuleus", ModContent.NPCType<Nebuleus>(), 21f, () => RedeBossDowned.downedNebuleus, () => true,
                     new List<int>
                     {
-                        //ModContent.ItemType<NebTrophy>(),
-                        //ModContent.ItemType<NebMask>(),
-                        //ModContent.ItemType<NebBox>()
+                        ModContent.ItemType<NebuleusTrophy>(),
+                        ModContent.ItemType<NebuleusMask>(),
+                        ModContent.ItemType<NebBox>()
                     },
                     ModContent.ItemType<NebSummon>(), "Use a [i:" + ModContent.ItemType<NebSummon>() + "] at night, dropped from Star Serpents in the sky.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
