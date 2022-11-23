@@ -187,8 +187,6 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         }
         public override void AI()
         {
-            NPC.DiscourageDespawn(60);
-
             Main.time = 16200;
             Main.dayTime = false;
             for (int k = oldPos.Length - 1; k > 0; k--)
@@ -1499,6 +1497,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                 }
                 return;
             }
+            else NPC.DiscourageDespawn(60);
         }
         public void RazzleDazzle()
         {

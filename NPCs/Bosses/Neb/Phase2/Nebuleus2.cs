@@ -207,8 +207,6 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         }
         public override void AI()
         {
-            NPC.DiscourageDespawn(60);
-
             Main.time = 16200;
             Main.dayTime = false;
             if (!title)
@@ -1596,6 +1594,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 }
                 return;
             }
+            else NPC.DiscourageDespawn(60);
         }
         public void RazzleDazzle()
         {

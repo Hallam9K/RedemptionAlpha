@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Magic
                     if (!target.active || (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy))
                         continue;
 
-                    if (Projectile.DistanceSQ(target.Center) > 140 * 140)
+                    if (Projectile.DistanceSQ(target.Center) > 160 * 160)
                         continue;
 
                     int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
@@ -64,6 +64,7 @@ namespace Redemption.Projectiles.Magic
             for (int i = 0; i < 20; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Clentaminator_Green, Scale: 2);
+                Main.dust[dustIndex].noGravity = true;
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
