@@ -376,7 +376,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             }
             #endregion
 
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             if (NPC.ai[0] > 4)
             {
@@ -1278,7 +1279,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                 SoundEngine.PlaySound(CustomSounds.Teleport1, NPC.position);
             RazzleDazzle();
         }
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
@@ -1292,9 +1293,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                 {
                     NPC.timeLeft = 10;
                 }
-                return;
+                return true;
             }
             else NPC.DiscourageDespawn(60);
+            return false;
         }
         public void RazzleDazzle()
         {
