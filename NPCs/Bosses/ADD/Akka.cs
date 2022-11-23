@@ -81,8 +81,8 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.knockBackResist = 0f;
             NPC.value = Item.buyPrice(0, 8, 0, 0);
             NPC.aiStyle = -1;
-            NPC.width = 46;
-            NPC.height = 108;
+            NPC.width = 66;
+            NPC.height = 124;
             NPC.HitSound = SoundID.Dig;
             NPC.DeathSound = SoundID.NPCDeath3;
             NPC.noTileCollide = true;
@@ -209,9 +209,6 @@ namespace Redemption.NPCs.Bosses.ADD
         private int healingCooldown;
         public int teamCooldown = 10;
         private int TremorTimer;
-        private int frameCounters;
-        private int magicFrame;
-        private int Frame;
         public override void AI()
         {
             Target();
@@ -228,17 +225,6 @@ namespace Redemption.NPCs.Bosses.ADD
             bool ukkoActive = false;
             if (NPC.ai[3] > -1 && Main.npc[(int)NPC.ai[3]].active && Main.npc[(int)NPC.ai[3]].type == ModContent.NPCType<Ukko>())
                 ukkoActive = true;
-            if (Frame == 1)
-            {
-                frameCounters++;
-                if (frameCounters > 6)
-                {
-                    magicFrame++;
-                    frameCounters = 0;
-                }
-                if (magicFrame >= 6)
-                    magicFrame = 0;
-            }
             Vector2 EarthProtectPos = new(player.Center.X + (player.Center.X > NPC.Center.X ? -500 : 500), player.Center.Y - 100);
             switch (AIState)
             {
@@ -564,7 +550,9 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC ukko = Main.npc[(int)NPC.ai[3]];
                                 if (ukko.ai[1] == 16)
                                 {
-                                    int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PoisonStaff, Scale: 1.5f);
+                                    int d = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.PoisonStaff);
+                                    Main.dust[d].velocity.X = 0;
+                                    Main.dust[d].velocity.Y -= 5;
                                     Main.dust[d].noGravity = true;
                                     Frame = 1;
                                     NPC.MoveToVector2(EarthProtectPos, 20);
@@ -591,6 +579,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     break;
             }
         }
+        private int frameCounters;
+        private int magicFrame;
+        private int Frame;
         public override void FindFrame(int frameHeight)
         {
             NPC.frameCounter++;
@@ -603,6 +594,17 @@ namespace Redemption.NPCs.Bosses.ADD
                     NPC.frameCounter = 0;
                     NPC.frame.Y = 0;
                 }
+            }
+            if (Frame == 1)
+            {
+                frameCounters++;
+                if (frameCounters > 6)
+                {
+                    magicFrame++;
+                    frameCounters = 0;
+                }
+                if (magicFrame >= 6)
+                    magicFrame = 0;
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -636,6 +638,7 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Texture2D magicAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Spell").Value;
+            Texture2D magicGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Spell_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.SpringGreen * 0.7f, Color.LightGreen);
@@ -656,12 +659,14 @@ namespace Redemption.NPCs.Bosses.ADD
                         spriteBatch.End();
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     }
-                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                    spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;
                 case 1:
                     int magicHeight = magicAni.Height / 6;
                     int magicY = magicHeight * magicFrame;
-                    Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y);
+                    int magicGlowHeight = magicGlow.Height / 6;
+                    int magicGlowY = magicGlowHeight * magicFrame;
+                    Vector2 glowCenter = NPC.Center + new Vector2(15 * NPC.spriteDirection, -24);
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -669,12 +674,13 @@ namespace Redemption.NPCs.Bosses.ADD
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(magicAni, oldPos + new Vector2(4, -16) + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(magicAni, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    spriteBatch.Draw(magicAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(magicAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(magicGlow, glowCenter - screenPos, new Rectangle?(new Rectangle(0, magicGlowY, magicGlow.Width, magicGlowHeight)), Color.White * NPC.Opacity, NPC.rotation, new Vector2(magicGlow.Width / 2f, magicGlowHeight / 2f), NPC.scale, effects, 0f);
                     break;
             }
             return false;

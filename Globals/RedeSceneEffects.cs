@@ -64,9 +64,11 @@ namespace Redemption.Globals
         public override void SpecialVisuals(Terraria.Player player, bool isActive)
         {
             if (isActive)
+            {
                 Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1.2f).UseIntensity(1f)
                     .UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
+                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
+            }
             player.ManageSpecialBiomeVisuals("MoR:IslandEffect", isActive);
         }
         public override bool IsSceneEffectActive(Terraria.Player player)

@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -40,6 +41,18 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.alpha += 10;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
+            }
+            else
+            {
+                Vector2 handPos1 = Main.npc[akka].Center + new Vector2(39 * Main.npc[akka].spriteDirection, -21);
+                Vector2 handPos2 = Main.npc[akka].Center + new Vector2(-11 * Main.npc[akka].spriteDirection, -17);
+
+                Dust dust = Dust.NewDustDirect(handPos1 - new Vector2(8, 8), 16, 16, DustID.PoisonStaff, Scale: 2);
+                dust.velocity = -Projectile.DirectionTo(dust.position) * 20;
+                dust.noGravity = true;
+                dust = Dust.NewDustDirect(handPos2 - new Vector2(8, 8), 16, 16, DustID.PoisonStaff, Scale: 2);
+                dust.velocity = -Projectile.DirectionTo(dust.position) * 20;
+                dust.noGravity = true;
             }
             if (Projectile.alpha > 0 && Projectile.timeLeft >= 60)
             {
