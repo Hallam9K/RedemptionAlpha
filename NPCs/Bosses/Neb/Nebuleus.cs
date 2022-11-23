@@ -960,7 +960,7 @@ namespace Redemption.NPCs.Bosses.Neb
                                 NPC.ai[2] = 0;
                                 NPC.netUpdate = true;
                             }
-                            if (NPC.ai[2] >= 240 && !ChainHitBoxArea[0].Intersects(PlayerSafeHitBox)
+                            if (NPC.ai[2] >= 140 && !ChainHitBoxArea[0].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[1].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[2].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[3].Intersects(PlayerSafeHitBox)

@@ -385,14 +385,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
 
             DespawnHandler();
 
-            if (NPC.ai[0] > 1 && NPC.ai[1] != 10)
-            {
+            if (NPC.ai[0] > 1)
                 NPC.dontTakeDamage = false;
-            }
             else
-            {
                 NPC.dontTakeDamage = true;
-            }
             switch ((int)NPC.ai[0])
             {
                 case 0:
@@ -1013,7 +1009,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 NPC.ai[2] = 0;
                                 NPC.netUpdate = true;
                             }
-                            if (NPC.ai[2] >= 240 && !ChainHitBoxArea[0].Intersects(PlayerSafeHitBox)
+                            if (NPC.ai[2] >= 140 && !ChainHitBoxArea[0].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[1].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[2].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[3].Intersects(PlayerSafeHitBox)
