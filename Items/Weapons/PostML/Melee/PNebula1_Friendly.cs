@@ -30,6 +30,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.aiStyle = -1;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;

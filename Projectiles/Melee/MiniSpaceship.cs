@@ -29,12 +29,12 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.timeLeft = 800;
+            Projectile.timeLeft = 900;
         }
 
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
+            //tManager.CreateTrail(Projectile, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
         }
 
         private Vector2 move;
@@ -59,6 +59,11 @@ namespace Redemption.Projectiles.Melee
             RedePlayer modPlayer = player.Redemption();
             if (Projectile.localAI[0] == 0)
             {
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    player.Redemption().hitTarget = -1;
+                    player.Redemption().hitTarget2 = -1;
+                }
                 DustHelper.DrawCircle(Projectile.Center, DustID.Frost, 2, 2, 2, 1, 2, nogravity: true);
                 Projectile.localAI[0] = 1;
             }
