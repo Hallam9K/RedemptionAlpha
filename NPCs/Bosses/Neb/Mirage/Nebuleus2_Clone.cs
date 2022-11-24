@@ -104,8 +104,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<NebBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebuleusTrophy>(), 10));
-            // TODO: Neb relic
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<NebRelic>()));
 
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<GildedBonnet>(), 4));
 

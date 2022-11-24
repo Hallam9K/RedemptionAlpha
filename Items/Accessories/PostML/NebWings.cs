@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.PostML
             Tooltip.SetDefault("Allows flight and slow fall"
                 + "\nUse dyes to make it look fabulous!");
             SacrificeTotal = 1;
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(220, 7f, 2.5f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(220, 7f, 2.5f, true, 6, 1);
         }
 
         public override void SetDefaults()
@@ -36,5 +36,10 @@ namespace Redemption.Items.Accessories.PostML
 			maxAscentMultiplier = 4f;
 			constantAscend = 0.2f;
 		}
-	}
+        public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
+        {
+            speed = 6;
+            acceleration = 1f;
+        }
+    }
 }

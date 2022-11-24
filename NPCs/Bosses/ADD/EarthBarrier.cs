@@ -3,6 +3,9 @@ using Terraria.ModLoader;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -48,10 +51,10 @@ namespace Redemption.NPCs.Bosses.ADD
                 Vector2 handPos2 = Main.npc[akka].Center + new Vector2(-11 * Main.npc[akka].spriteDirection, -17);
 
                 Dust dust = Dust.NewDustDirect(handPos1 - new Vector2(8, 8), 16, 16, DustID.PoisonStaff, Scale: 2);
-                dust.velocity = -Projectile.DirectionTo(dust.position) * 20;
+                dust.velocity = -Projectile.DirectionTo(dust.position) * 30;
                 dust.noGravity = true;
                 dust = Dust.NewDustDirect(handPos2 - new Vector2(8, 8), 16, 16, DustID.PoisonStaff, Scale: 2);
-                dust.velocity = -Projectile.DirectionTo(dust.position) * 20;
+                dust.velocity = -Projectile.DirectionTo(dust.position) * 30;
                 dust.noGravity = true;
             }
             if (Projectile.alpha > 0 && Projectile.timeLeft >= 60)
@@ -67,6 +70,20 @@ namespace Redemption.NPCs.Bosses.ADD
                     proj.Kill();
                 }
             }
+        }
+        private float drawTimer;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int height = texture.Height / 5;
+            int y = height * Projectile.frame;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 origin = new(texture.Width / 2f, height / 2f);
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.LightGreen * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, 0);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, 0, 0);
+            return false;
         }
     }
 }

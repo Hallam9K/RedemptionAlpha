@@ -127,6 +127,13 @@ namespace Redemption.Globals.Player
                     itemDrop = ModContent.ItemType<PetrifiedCrate>();
             }
         }
+        public override void OnEnterWorld(Terraria.Player player)
+        {
+            if (Main.dedServ)
+            {
+                Main.NewText("-------------------\nMod of Redemption does not yet support multiplayer. You can play it but not complete it, so switch to singleplayer.\n-------------------", 244, 71, 255);
+            }
+        }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
             if (!mediumCoreDeath && (Player.name.Contains("Liz") || Player.name.Contains("Lizzy") || Player.name.Contains("Elizabeth")))

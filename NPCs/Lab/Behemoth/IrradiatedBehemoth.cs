@@ -174,6 +174,8 @@ namespace Redemption.NPCs.Lab.Behemoth
                         NPC.dontTakeDamage = false;
                         AIState = ActionState.Crawl;
                         NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
                     break;
                 case ActionState.Gas:

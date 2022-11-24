@@ -162,7 +162,7 @@ namespace Redemption.NPCs.Bosses.ADD
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AkkaBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AkanKirvesTrophy>(), 10));
 
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<AkkaRelic>()));
 
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
