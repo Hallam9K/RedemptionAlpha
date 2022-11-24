@@ -5,6 +5,9 @@ using Terraria.ModLoader;
 using System.Linq;
 using Terraria.Audio;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -145,6 +148,26 @@ namespace Redemption.NPCs.Bosses.ADD
                         break;
                 }
             }
+        }
+        private float drawTimer;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int height = texture.Height / 3;
+            int y = height * Projectile.frame;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 origin = new(texture.Width / 2f, height / 2f);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), lightColor * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, 0, 0);
+            return false;
         }
     }
 }

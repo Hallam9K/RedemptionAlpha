@@ -21,6 +21,7 @@ using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Usable;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
+using Terraria.DataStructures;
 
 namespace Redemption.NPCs.Bosses.Neb.Clone
 {
@@ -35,7 +36,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             DisplayName.SetDefault("Nebuleus Mirage");
             Main.npcFrameCount[NPC.type] = 5;
-
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
+            {
+                ImmuneToAllBuffsThatAreNotWhips = true
+            });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -53,6 +57,9 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             NPC.aiStyle = -1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.knockBackResist = 0f;
+            NPC.npcSlots = 10f;
+            NPC.SpawnWithHigherTime(30);
+            NPC.value = Item.buyPrice(0, 30, 0, 0);
             NPC.noGravity = true;
             NPC.boss = true;
             NPC.netAlways = true;
@@ -96,8 +103,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<NebBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebuleusTrophy>(), 10));
-            // TODO: Neb relic
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ErhanRelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<NebRelic>()));
 
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<GildedBonnet>(), 4));
 
@@ -369,7 +376,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             }
             #endregion
 
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             if (NPC.ai[0] > 4)
             {
@@ -885,7 +893,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                                 NPC.ai[2] = 0;
                                 NPC.netUpdate = true;
                             }
-                            if (NPC.ai[2] >= 240 && !ChainHitBoxArea[0].Intersects(PlayerSafeHitBox)
+                            if (NPC.ai[2] >= 140 && !ChainHitBoxArea[0].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[1].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[2].Intersects(PlayerSafeHitBox)
                                 && !ChainHitBoxArea[3].Intersects(PlayerSafeHitBox)
@@ -1271,19 +1279,24 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                 SoundEngine.PlaySound(CustomSounds.Teleport1, NPC.position);
             RazzleDazzle();
         }
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
             {
+                ScreenPlayer.NebCutsceneflag = false;
+                ScreenPlayer.NebCutscene = false;
+
                 NPC.velocity *= 0.96f;
                 NPC.velocity.Y -= 1;
                 if (NPC.timeLeft > 10)
                 {
                     NPC.timeLeft = 10;
                 }
-                return;
+                return true;
             }
+            else NPC.DiscourageDespawn(60);
+            return false;
         }
         public void RazzleDazzle()
         {

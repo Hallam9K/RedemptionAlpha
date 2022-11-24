@@ -37,6 +37,9 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using System;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.HM.Summon;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.NPCs.Bosses.Neb.Clone;
 
 namespace Redemption.Globals.NPC
 {
@@ -626,10 +629,6 @@ namespace Redemption.Globals.NPC
                 spawnRate = 30;
                 maxSpawns = 10;
             }
-            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Akka>()))
-                return;
-
-            maxSpawns = 0;
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {

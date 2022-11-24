@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Bosses.ADD
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-
+        public int GuardPointMax;
         public override void SetDefaults()
         {
             NPC.lifeMax = 145000;
@@ -98,6 +98,9 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.boss = true;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
+            GuardPointMax = NPC.lifeMax / 50;
+            NPC.RedemptionGuard().GuardBroken = true;
+            NPC.BossBar = ModContent.GetInstance<UkkoHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
         }
@@ -138,6 +141,20 @@ namespace Redemption.NPCs.Bosses.ADD
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
                 damage = (int)(damage * .75f);
         }
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            bool vDmg = false;
+            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            {
+                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.DD2_WitherBeastCrystalImpact);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                    return vDmg;
+            }
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, CustomSounds.EarthBoom, 10, 1, 2000);
+            return true;
+        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
@@ -157,7 +174,7 @@ namespace Redemption.NPCs.Bosses.ADD
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<UkkoBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UkonKirvesTrophy>(), 10));
 
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ThornRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<UkkoRelic>()));
 
             //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
 
@@ -214,6 +231,9 @@ namespace Redemption.NPCs.Bosses.ADD
             DespawnHandler();
 
             Player player = Main.player[NPC.target];
+            if (player.active && !player.dead)
+                NPC.DiscourageDespawn(60);
+
             if (AIState is not ActionState.AkkaSummon)
             {
                 if (AttackID == 7)
@@ -267,7 +287,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.ResetVars:
                     if (mendingCooldown > 0)
                         mendingCooldown--;
-                    if (stoneskinCooldown > 0 && !NPC.HasBuff(ModContent.BuffType<StoneskinBuff>()))
+                    if (stoneskinCooldown > 0 && NPC.RedemptionGuard().GuardPoints <= 0)
                         stoneskinCooldown--;
                     if (chariotCooldown > 0)
                         chariotCooldown--;
@@ -471,7 +491,15 @@ namespace Redemption.NPCs.Bosses.ADD
                         case 5:
                             if (NPC.life < (int)(NPC.lifeMax * 0.8f) && stoneskinCooldown == 0)
                             {
-                                AITimer++;
+                                if (AITimer++ == 0)
+                                {
+                                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                                    {
+                                        AttackID = Main.rand.Next(15);
+                                        AITimer = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
                                 if (AITimer == 2)
                                 {
                                     NPC.ai[3] = 1;
@@ -483,7 +511,14 @@ namespace Redemption.NPCs.Bosses.ADD
                                     Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Sandnado, 0f, 0f, 100, default, 3f);
                                     dust.velocity = -NPC.DirectionTo(dust.position);
 
-                                    NPC.AddBuff(ModContent.BuffType<StoneskinBuff>(), 3600);
+                                    NPC.AddBuff(ModContent.BuffType<StoneskinBuff>(), 600);
+                                }
+                                if (AITimer == 60)
+                                {
+                                    SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, NPC.position);
+                                    DustHelper.DrawCircle(NPC.Center, DustID.Sandnado, 10, 1, 1, 1, 2, nogravity: true);
+                                    NPC.RedemptionGuard().GuardPoints = GuardPointMax;
+                                    NPC.RedemptionGuard().GuardBroken = false;
                                 }
                                 if (AITimer >= 90)
                                 {
@@ -1145,11 +1180,6 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return AttackID == 7;
-        }
-        public override bool CheckActive()
-        {
-            player = Main.player[NPC.target];
-            return !player.active || player.dead;
         }
         public Vector2 Pos()
         {

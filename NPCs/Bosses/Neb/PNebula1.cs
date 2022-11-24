@@ -159,6 +159,8 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Piercing Nebula");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
@@ -222,10 +224,6 @@ namespace Redemption.NPCs.Bosses.Neb
             else
                 Projectile.hostile = false;
         }
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White * Projectile.Opacity;
-        }
         public override bool ShouldUpdatePosition()
         {
             if (Projectile.localAI[0] >= 30)
@@ -236,7 +234,21 @@ namespace Redemption.NPCs.Bosses.Neb
         public override bool PreDraw(ref Color lightColor)
         {
             if (Projectile.localAI[0] >= 30)
+            {
+                if (proType == 0)
+                {
+                    Vector2 drawOrigin = new(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+                    for (int k = 0; k < Projectile.oldPos.Length; k++)
+                    {
+                        Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                        Color color = Projectile.GetAlpha(new Color(255, 255, 255, 0)) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                        Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                    }
+                    Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                    return false;
+                }
                 return true;
+            }
             else
                 return false;
         }

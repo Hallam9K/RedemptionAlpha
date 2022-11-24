@@ -277,6 +277,7 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "Patient Zero", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => true,
                     new List<int>
                     {
+                        ModContent.ItemType<PZRelic>(),
                         ModContent.ItemType<Keycard2>(),
                         ModContent.ItemType<NanoPickaxe>(),
                         ModContent.ItemType<Electronade>(),
@@ -316,8 +317,10 @@ namespace Redemption.CrossMod
                     {
                         //ModContent.ItemType<ErhanRelic>(),
                         //ModContent.ItemType<DevilsAdvocate>(),
-                        //ModContent.ItemType<ErhanTrophy>(),
-                        //ModContent.ItemType<ErhanHelmet>(),
+                        ModContent.ItemType<UkonKirvesTrophy>(),
+                        ModContent.ItemType<AkanKirvesTrophy>(),
+                        ModContent.ItemType<UkkoMask>(),
+                        ModContent.ItemType<AkkaMask>(),
                     },
                     ModContent.ItemType<AncientSigil>(), "Use an [i:" + ModContent.ItemType<AncientSigil>() + "] at day.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -332,9 +335,9 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "Nebuleus", ModContent.NPCType<Nebuleus>(), 21f, () => RedeBossDowned.downedNebuleus, () => true,
                     new List<int>
                     {
-                        //ModContent.ItemType<NebTrophy>(),
-                        //ModContent.ItemType<NebMask>(),
-                        //ModContent.ItemType<NebBox>()
+                        ModContent.ItemType<NebuleusTrophy>(),
+                        ModContent.ItemType<NebuleusMask>(),
+                        ModContent.ItemType<NebBox>()
                     },
                     ModContent.ItemType<NebSummon>(), "Use a [i:" + ModContent.ItemType<NebSummon>() + "] at night, dropped from Star Serpents in the sky.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -345,11 +348,11 @@ namespace Redemption.CrossMod
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
                         sb.End();
-                        sb.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        sb.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
                         GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                         sb.Draw(wingTex, centered, color);
                         sb.End();
-                        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
                     }, null);
                 #endregion
 

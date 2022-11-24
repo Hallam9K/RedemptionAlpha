@@ -26,7 +26,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 170;
+            Item.damage = 180;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 14;
             Item.width = 58;

@@ -157,6 +157,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<PZBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZTrophy>(), 10));
 
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PZRelic>()));
+
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
 
