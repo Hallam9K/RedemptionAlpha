@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingFlameDye);
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.SolarDye);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

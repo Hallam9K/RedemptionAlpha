@@ -1047,7 +1047,7 @@ namespace Redemption.Globals
         {
             for (int i = 0; i < BuffLoader.BuffCount; i++)
             {
-                if (npc.HasBuff(i) && Main.debuff[i])
+                if (npc.HasBuff(i) && (Main.debuff[i] || npc.HasBuff(BuffID.BetsysCurse)|| npc.HasBuff(BuffID.Daybreak)|| npc.HasBuff(BuffID.Frostburn2)|| npc.HasBuff(BuffID.OnFire3)|| npc.HasBuff(BuffID.ShadowFlame)))
                     return true;
             }
             return false;

@@ -90,6 +90,7 @@ namespace Redemption.Projectiles.Melee
                         {
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch, Projectile.position);
+                            player.AddBuff(BuffID.OnFire, 180);
                             Projectile.Kill();
                         }
                     }
@@ -135,13 +136,13 @@ namespace Redemption.Projectiles.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/Star").Value;
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/RedEyeFlare").Value;
             Rectangle rect2 = new(0, 0, flare.Width, flare.Height);
             Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
             if (Projectile.localAI[0] < 2)
             {
-                Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.OrangeRed) * 0.6f, Projectile.rotation, origin2, Projectile.scale * 2.5f, SpriteEffects.None, 0);
-                Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.OrangeRed) * 0.6f, -Projectile.rotation, origin2, Projectile.scale * 2.5f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.OrangeRed) * 0.6f, Projectile.rotation, origin2, Projectile.scale * 2f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.OrangeRed) * 0.6f, -Projectile.rotation, origin2, Projectile.scale * 2f, SpriteEffects.None, 0);
             }
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
