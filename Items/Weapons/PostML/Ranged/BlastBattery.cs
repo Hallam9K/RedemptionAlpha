@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
@@ -69,6 +71,18 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 return true;
 
             return false;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<RoboBrain>())
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>(), 2)
+                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 12)
+                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 4)
+                .AddIngredient(ModContent.ItemType<Plating>(), 2)
+                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }
