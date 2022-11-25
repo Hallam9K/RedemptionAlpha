@@ -34,14 +34,19 @@ namespace Redemption.Globals.Player
         public float musicVolume;
         public int slayerStarRating;
         public bool contactImmune;
+        public bool contactImmuneTrue;
         public bool slayerCursor;
         public Rectangle meleeHitbox;
 
         public override void ResetEffects()
         {
-            contactImmune = false;
+            if (contactImmune)
+                contactImmuneTrue = true;
+            else
+                contactImmuneTrue = false;
             meleeHitbox = Rectangle.Empty;
             slayerCursor = false;
+            contactImmune = false;
         }
         public override void Initialize()
         {
@@ -58,7 +63,7 @@ namespace Redemption.Globals.Player
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
-            if (damageSource.SourceNPCIndex >= 0 && contactImmune)
+            if (damageSource.SourceNPCIndex >= 0 && contactImmuneTrue)
                 return false;
             return true;
         }

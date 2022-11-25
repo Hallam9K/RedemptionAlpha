@@ -21,6 +21,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Particles;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -182,7 +183,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
 
-            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Ukonnuoli>()));
 
             npcLoot.Add(notExpertRule);
         }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -22,7 +23,6 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;
-            Projectile.alpha = 0;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.scale *= 2;
@@ -67,6 +67,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Bottom.Y), Projectile.velocity, ModContent.ProjectileType<UkkoStrikeZap>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
             }
         }
+        private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -79,6 +80,9 @@ namespace Redemption.NPCs.Bosses.ADD
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, position, new Rectangle?(rect), Projectile.GetAlpha(Color.LightGoldenrodYellow), Projectile.rotation + MathHelper.PiOver2, origin, Projectile.scale, 0);
+
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation + MathHelper.PiOver2, origin, Projectile.scale, 0, 0);
 
             int height2 = warning.Height / 2;
@@ -124,7 +128,8 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, Scale: 1.2f);
+                    int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, newColor: Color.Yellow, Scale: 1.2f);
+                    Main.dust[dustIndex].noGravity = true;
                     Main.dust[dustIndex].velocity *= 2;
                 }
                 Projectile.localAI[0] = 1;

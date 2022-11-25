@@ -52,6 +52,7 @@ namespace Redemption.Globals.NPC
         public bool sandDust;
         public bool badtime;
         public bool holyFire;
+        public bool ukonArrow;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -76,6 +77,7 @@ namespace Redemption.Globals.NPC
             sandDust = false;
             badtime = false;
             holyFire = false;
+            ukonArrow = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -302,6 +304,22 @@ namespace Redemption.Globals.NPC
                 npc.lifeRegen -= 400;
                 if (damage < 10)
                     damage = 10;
+            }
+            if (ukonArrow)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                int arrowCount = 0;
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.type == ModContent.ProjectileType<UkonvasaraArrow>() && p.ai[0] == 1f && p.ai[1] == npc.whoAmI)
+                        arrowCount++;
+                }
+                npc.lifeRegen -= arrowCount * 100;
+                if (damage < arrowCount * 50)
+                    damage = arrowCount * 50;
             }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)

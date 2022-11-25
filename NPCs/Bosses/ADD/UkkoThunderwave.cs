@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -32,7 +34,27 @@ namespace Redemption.NPCs.Bosses.ADD
             tManager.CreateTrail(Projectile, new StandardColorTrail(Color.White), new RoundCap(), new ZigZagTrailPosition(6), 80f, 250f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
         }
 
-        public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
+        private float drawTimer;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int height = texture.Height / 8;
+            int y = height * Projectile.frame;
+            Vector2 position = Projectile.Center - Main.screenPosition;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 origin = new(texture.Width / 2f, height / 2f);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, position, new Rectangle?(rect), Projectile.GetAlpha(Color.LightGoldenrodYellow), Projectile.rotation, origin, Projectile.scale, 0);
+
+            Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, 0, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
+        }
         public override void AI()
         {
             if (++Projectile.frameCounter >= 3)
