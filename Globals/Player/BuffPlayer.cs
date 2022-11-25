@@ -85,6 +85,8 @@ namespace Redemption.Globals.Player
         public bool shellNecklace;
         public bool gracesGuidance;
         public bool forestCore;
+        public bool infectionHeart;
+        public int infectionHeartTimer;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -158,6 +160,7 @@ namespace Redemption.Globals.Player
             shellNecklace = false;
             gracesGuidance = false;
             forestCore = false;
+            infectionHeart = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -199,6 +202,8 @@ namespace Redemption.Globals.Player
             shieldGeneratorAlpha = 0;
             sandDust = false;
             badtime = false;
+            infectionHeart = false;
+            infectionHeartTimer = 0;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -289,6 +294,14 @@ namespace Redemption.Globals.Player
                     trappedSoulBoost = 0;
                     Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<TrappedSoulBauble>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<SoulShockwave_Proj>(), 0, 0, Main.myPlayer);
                     trappedSoulTimer = 0;
+                }
+            }
+            if (infectionHeart)
+            {
+                if (infectionHeartTimer++ >= 300)
+                {
+                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<HeartOfInfection>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<InfectionShockwave_Proj>(), 0, 0, Main.myPlayer);
+                    infectionHeartTimer = 0;
                 }
             }
         }

@@ -13,6 +13,7 @@ using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.Items.Usable
 {
@@ -50,7 +51,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OOMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>(), ModContent.ItemType<SunInThePalm>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 4, 8));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RoboBrain>(), 1, 1, 2));

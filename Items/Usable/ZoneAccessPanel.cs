@@ -245,7 +245,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lab Access Panel - Master");
-            Tooltip.SetDefault("Opens up all sectors of the lab");
+            Tooltip.SetDefault("Disables all lasers in the lab");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();

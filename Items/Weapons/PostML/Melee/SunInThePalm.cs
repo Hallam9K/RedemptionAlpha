@@ -1,0 +1,78 @@
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
+
+namespace Redemption.Items.Weapons.PostML.Melee
+{
+    public class SunInThePalm : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sun-In-Palm");
+            Tooltip.SetDefault("Hold out this mechanical hand to grow a ball of energy\n" +
+                "Disintegrates most projectiles after reaching a certain size\n" +
+                "'The power of the sun, in the palm of my hand'");
+            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            SacrificeTotal = 1;
+        }
+
+        public override void SetDefaults()
+        {
+            Item.damage = 300;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 28;
+            Item.height = 30;
+            Item.useAnimation = 20;
+            Item.useTime = 20;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.channel = true;
+            Item.knockBack = 5;
+            Item.value = Item.sellPrice(0, 11, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = CustomSounds.BallFire;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<SunInThePalm_Proj>();
+            Item.shootSpeed = 5f;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<RoboBrain>())
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>(), 2)
+                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 9)
+                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
+                .AddIngredient(ModContent.ItemType<Plating>(), 2)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line2 = new(Mod, "Lore",
+                    "\"Utilizing the same, revolutionary heat-sink technology Obliterator's super heatray uses,\n" +
+                    "but instead of being buried in your chest, it's in your palm! It's just that simple!!\n\n" +
+                    "Caution: Girus is not responsible for irresponsible and/or dangerous use of the Sun-In-Palm product.\n" +
+                    "Please hold the Sun-In-Palm product as far away from yourself while in use.\"")
+                {
+                    OverrideColor = Color.LightGray
+                };
+                tooltips.Add(line2);
+            }
+            else
+            {
+                TooltipLine line2 = new(Mod, "HoldShift", "There's a label attached [Hold Shift to Read]")
+                {
+                    OverrideColor = Color.Gray,
+                };
+                tooltips.Add(line2);
+            }
+        }
+    }
+}

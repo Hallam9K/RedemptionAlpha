@@ -11,6 +11,7 @@ namespace Redemption.Buffs.NPCBuffs
         {
             DisplayName.SetDefault("Necrotic Gouge");
             Description.SetDefault("owie :(");
+            Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
         public override void Update(NPC npc, ref int buffIndex)

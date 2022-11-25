@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -82,8 +83,11 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingFlameDye);
+
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);

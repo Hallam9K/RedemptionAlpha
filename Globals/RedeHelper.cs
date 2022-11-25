@@ -1043,6 +1043,15 @@ namespace Redemption.Globals
 
             return false;
         }
+        public static bool NPCHasAnyDebuff(this Terraria.NPC npc)
+        {
+            for (int i = 0; i < BuffLoader.BuffCount; i++)
+            {
+                if (npc.HasBuff(i) && Main.debuff[i])
+                    return true;
+            }
+            return false;
+        }
 
         /// <summary>
         ///     Makes this NPC horizontally move towards the Player (Take Fighter AI, as an example)

@@ -101,8 +101,8 @@ namespace Redemption.Projectiles.Minions
                             projectile.velocity *= -1;
                             projectile.friendly = true;
                             projectile.hostile = false;
+                            projectile.damage *= 4;
                         }
-                        projectile.damage *= 4;
                         Projectile.localAI[0] += projectile.damage * 0.75f;
                         CombatText.NewText(Projectile.getRect(), Color.IndianRed, (int)(projectile.damage * 0.75f), true, true);
                         SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);

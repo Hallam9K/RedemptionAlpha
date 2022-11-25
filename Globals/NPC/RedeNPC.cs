@@ -470,7 +470,7 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(c) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
-                if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyDebuff() && !RedeHelper.HasFireDebuff(npc))
                 {
                     int c = 6;
                     if (player.RedemptionPlayerBuff().shellNecklace)
@@ -534,7 +534,7 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(c) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
-                if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyDebuff() && !RedeHelper.HasFireDebuff(npc))
                 {
                     int c = 6;
                     if (Main.player[projectile.owner].RedemptionPlayerBuff().shellNecklace)

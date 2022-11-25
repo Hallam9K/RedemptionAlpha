@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Items.Weapons.PostML.Melee;
@@ -45,6 +46,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartOfInfection>()));
         }
         public override void PostUpdate()
         {

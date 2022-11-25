@@ -14,6 +14,7 @@ This beta does however have:
 - Many boss reworks or tweaks
 - Removal of druid class
 - Elemental system where weapons and projectiles can have elements set to them that certain enemies can be resistant or weak to
+- Guard Points, a new value that blocks damage for a certain amount of hits until its broken, enemies with guard points wont take knockback. Hammers and explosives deal triple damage to guard points and Psychic elemental weapons will ignore guard points completely.
 - Removal of bloat content
 - Reworks of various enemy AIs
 
