@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
+using Redemption.Projectiles.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -37,8 +39,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.rare = ItemRarityID.Red;
             Item.UseSound = CustomSounds.BallFire;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<SunInThePalm_Proj>();
+            Item.shoot = ModContent.ProjectileType<SunInThePalm_EnergyBall>();
             Item.shootSpeed = 5f;
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            type = ModContent.ProjectileType<SunInThePalm_Proj>();
         }
         public override void AddRecipes()
         {
