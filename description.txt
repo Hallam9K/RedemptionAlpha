@@ -1,31 +1,31 @@
-Mod of Redemption is a pretty cool mod. Mod of Redemption is a pretty cool mod. Mod of Redemption is a pretty cool mod. 
-Mod of Redemption is a pretty cool mod. Mod of Redemption is a pretty cool mod. Mod of Redemption is a pretty cool mod. 
-Mod of Redemption is a pretty cool mod. Mod of Redemption is a pretty cool mod. Mod of Redemption is a pretty cool mod. 
+THIS IS A BETA, THE FOLLOWING CONTENT IS PLANNED FOR 0.8 BUT NOT IN THIS BETA:
+- Ritualist Class
+- Soulless Caverns along with it's boss
+- Deep Space
+- 4th Omega Prototype
+- Ruined Kingdom
+- Post-ML Biome Expansions
+- Fowl Morning Event (Chicken Invasion Rework)
 
-Credit to Thalzon for some of the enemy/boss designs
+This beta does however have:
+- Erhan, a new pre-hardmode boss
+- Reworking of basically every weapon
+- Overhaul to the Abandoned Lab
+- Many boss reworks or tweaks
+- Removal of druid class
+- Elemental system where weapons and projectiles can have elements set to them that certain enemies can be resistant or weak to
+- Removal of bloat content
+- Reworks of various enemy AIs
+
+Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
+Currently, there are:
+- 852 Items
+- 150 NPCs
+- 11 Bosses
+- 7 Minibosses
+- 366 Tiles
+
+Credit to Thalzon for some of the enemy/boss designs & Pluto for Nebuleus' background
 
 Thank you to the epic Patreons:
-Luna!
-Lantard
-Arche
-Rainbr1nger11
-catsounds
-Nechrom
-Sneaklone
-HikariAnimator
-Noah Felt
-Omega D
-Albino gonkvader
-thunder
-Daawnily
-Cynx303
-Renk
-Megaswave
-Styxl
-Mr. Sarge
-Ardlan
-Ballistic Banana
-Zoey (vocaloid shoegaze album)
-Joshua DiBella (the fridge man)
-uncon_arts
-Josh Mitchell (Imperator_Zero)
+Luna!, Lantard, Arche, Rainbr1nger11, catsounds, Nechrom, Sneaklone, HikariAnimator, Noah Felt, Omega D, Albino gonkvader, thunder, Daawnily, Cynx303, Renk, Megaswave, Styxl, Mr. Sarge, Ardlan, Ballistic Banana, Zoey (vocaloid shoegaze album), Joshua DiBella (the fridge man), uncon_arts, Josh Mitchell (Imperator_Zero), Emperor OwO, Waasephi
