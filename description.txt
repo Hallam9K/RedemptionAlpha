@@ -1,4 +1,5 @@
 THIS IS A BETA, THE FOLLOWING CONTENT IS PLANNED FOR 0.8 BUT NOT IN THIS BETA:
+- Multiplayer Compatibility
 - Ritualist Class
 - Soulless Caverns along with it's boss
 - Deep Space
