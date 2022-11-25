@@ -630,7 +630,6 @@ namespace Redemption.Globals.NPC
                 maxSpawns = 10;
             }
         }
-
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             if (RedeWorld.blobbleSwarm)
@@ -697,6 +696,25 @@ namespace Redemption.Globals.NPC
                 if (spawnInfo.Player.InModBiome<WastelandDesertBiome>())
                 {
                     pool.Add(ModContent.NPCType<BloatedGhoul>(), 1f);
+                }
+            }
+            if (spawnInfo.Player.InModBiome<BlazingBastionBiome>())
+            {
+                pool.Clear();
+                pool.Add(NPCID.Demon, 1f);
+                pool.Add(NPCID.FireImp, 0.3f);
+                pool.Add(NPCID.VoodooDemon, 0.3f);
+                if (Terraria.NPC.downedMechBossAny)
+                    pool.Add(NPCID.RedDevil, 0.2f);
+                pool.Add(NPCID.HellButterfly, 0.1f);
+                pool.Add(NPCID.Lavafly, 0.1f);
+                pool.Add(NPCID.MagmaSnail, 0.1f);
+                if (Terraria.NPC.downedPlantBoss)
+                {
+                    pool.Add(NPCID.HellArmoredBones, 0.2f);
+                    pool.Add(NPCID.HellArmoredBonesMace, 0.2f);
+                    pool.Add(NPCID.HellArmoredBonesSpikeShield, 0.2f);
+                    pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
             }
             if (spawnInfo.Player.RedemptionScreen().cutscene)
