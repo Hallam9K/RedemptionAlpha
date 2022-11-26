@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zweihander");
-            Tooltip.SetDefault("Parries physical projectiles" +
+            Tooltip.SetDefault("Parries weak physical projectiles" +
                 "\nDeals more damage at the tip of the blade\n" +
                 "'Parry this you filthy casual!'");
 

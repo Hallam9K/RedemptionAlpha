@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Mythril's Bane");
             Tooltip.SetDefault("Hitting armed enemies with the blade inflicts Disarmed and Broken Armor\n" +
                 "Disarmed heavily decreases contact damage and their weapon damage\n" +
-                "Blocks physical projectiles");
+                "Blocks weak physical projectiles");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.channel = true;
 
             // Weapon Properties
-            Item.damage = 270;
+            Item.damage = 220;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;

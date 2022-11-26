@@ -158,7 +158,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                         continue;
 
-                    if (target.damage > 130 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
+                    if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                         continue;
 
                     if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || target.Redemption().ParryBlacklist || Main.projPet[target.type])

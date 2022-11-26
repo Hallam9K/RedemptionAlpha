@@ -190,7 +190,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override bool CheckActive()
         {
             Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime;
+            return !player.active || player.dead || (Main.dayTime && AIState is not ActionState.Overheat);
         }
 
         public override void SendExtraAI(BinaryWriter writer)

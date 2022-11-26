@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             DisplayName.SetDefault("Zephos' Sword Slicer");
             Tooltip.SetDefault("Hitting armed enemies inflicts Disarmed\n" +
                 "Disarmed heavily decreases contact damage and their weapon damage\n" +
-                "Blocks physical projectiles");
+                "Blocks weak physical projectiles");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
