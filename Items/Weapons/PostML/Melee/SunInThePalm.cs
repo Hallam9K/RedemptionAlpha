@@ -7,24 +7,41 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
     public class SunInThePalm : ModItem
     {
+        public override void Load()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.HandsOn}", EquipType.HandsOn, Item.ModItem, null, new EquipTexture());
+            }
+        }
+        private void SetupDrawing()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                EquipLoader.GetEquipSlot(Mod, Name, EquipType.HandsOn);
+            }
+        }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sun-In-Palm");
             Tooltip.SetDefault("Hold out this mechanical hand to grow a ball of energy\n" +
                 "Disintegrates most projectiles after reaching a certain size\n" +
+                "Release left-click to shrink it back down, overcharging will cause it to explode and set the player on fire\n" +
                 "'The power of the sun, in the palm of my hand'");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
+            SetupDrawing();
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 300;
+            Item.damage = 200;
             Item.DamageType = DamageClass.Melee;
             Item.width = 28;
             Item.height = 30;
@@ -41,6 +58,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<SunInThePalm_EnergyBall>();
             Item.shootSpeed = 5f;
+        }
+        public override void HoldItem(Player player)
+        {
+            var p = player.GetModPlayer<SunInPalmPlayer>();
+            p.VanityOn = true;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
@@ -78,6 +100,23 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     OverrideColor = Color.Gray,
                 };
                 tooltips.Add(line2);
+            }
+        }
+    }
+    public class SunInPalmPlayer : ModPlayer
+    {
+        public bool VanityOn;
+
+        public override void ResetEffects()
+        {
+            VanityOn = false;
+        }
+        public override void FrameEffects()
+        {
+            if (VanityOn)
+            {
+                var item = ModContent.GetInstance<SunInThePalm>();
+                Player.handon = (sbyte)EquipLoader.GetEquipSlot(Mod, item.Name, EquipType.HandsOn);
             }
         }
     }

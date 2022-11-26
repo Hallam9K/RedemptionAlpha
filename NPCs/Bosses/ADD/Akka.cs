@@ -121,14 +121,11 @@ namespace Redemption.NPCs.Bosses.ADD
                 if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Nature.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 0.75f;
 
-                if (ProjectileLists.Poison.Contains(projectile.type) || ProjectileLists.Water.Contains(projectile.type))
+                if (ProjectileLists.Water.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 0.9f;
 
-                if (ProjectileLists.Fire.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
-
-                if (ProjectileLists.Wind.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.1f;
+                if (ProjectileLists.Fire.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type))
+                    NPC.Redemption().elementDmg *= 1.05f;
             }
 
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])

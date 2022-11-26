@@ -62,7 +62,7 @@ namespace Redemption.Projectiles.Melee
                 case 1:
                     Vector2 Pos = proj.Center + proj.DirectionFrom(player.Center) * 40 * Projectile.scale;
                     Projectile.Center = Pos;
-
+                    Projectile.timeLeft = 10;
                     if (!proj.active || proj.type != ModContent.ProjectileType<SunInThePalm_Proj>())
                         Projectile.Kill();
 
@@ -74,14 +74,20 @@ namespace Redemption.Projectiles.Melee
                             if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                 continue;
 
-                            if (target.damage > 135 / 4 || target.width + target.height > Projectile.width + Projectile.height)
+                            if (target.damage > 160 / 4 || target.width + target.height > Projectile.width + Projectile.height)
                                 continue;
 
                             if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || target.Redemption().ParryBlacklist || Main.projPet[target.type])
                                 continue;
 
-                            DustHelper.DrawCircle(target.Center, DustID.RedTorch, 1, 4, 4, dustSize: 2, nogravity: true);
-                            target.Kill();
+                            target.Redemption().DissolveTimer++;
+                            int d = Dust.NewDust(target.position, target.width, target.height, DustID.RedTorch, Scale: 3);
+                            Main.dust[d].noGravity = true;
+                            if (target.Redemption().DissolveTimer >= target.damage / 2)
+                            {
+                                DustHelper.DrawCircle(target.Center, DustID.RedTorch, 1, 4, 4, dustSize: 3, nogravity: true);
+                                target.Kill();
+                            }
                         }
                     }
                     if (Projectile.scale > 2f)
@@ -94,11 +100,33 @@ namespace Redemption.Projectiles.Melee
                             Projectile.Kill();
                         }
                     }
+                    if (player.channel)
+                    {
+                        if (Projectile.scale <= 2f)
+                        {
+                            Projectile.localAI[1] = 0;
+
+                            if (sound == null)
+                                rumble = SoundEngine.PlaySound(CustomSounds.EnergyCharge2 with { Pitch = -.4f }, Projectile.position);
+
+                            Projectile.scale += 0.01f;
+                            if (Projectile.alpha > 0)
+                                Projectile.alpha -= 10;
+                        }
+                    }
                     else
                     {
-                        Projectile.scale += 0.01f;
-                        if (Projectile.alpha > 0)
-                            Projectile.alpha -= 10;
+                        Projectile.localAI[1] = 0;
+                        if (player.controlUseItem)
+                            player.channel = true;
+                        if (sound != null)
+                        {
+                            sound.Stop();
+                            rumble = SlotId.Invalid;
+                        }
+                        Projectile.scale -= 0.04f;
+                        if (Projectile.scale <= .1f)
+                            Projectile.Kill();
                     }
                     break;
             }

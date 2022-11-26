@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.channel = true;
 
             // Weapon Properties
-            Item.damage = 220;
+            Item.damage = 170;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;

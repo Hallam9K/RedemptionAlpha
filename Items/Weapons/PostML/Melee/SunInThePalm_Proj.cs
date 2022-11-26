@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (player.noItems || !player.channel || player.CCed || player.dead || !player.active)
+            if (player.noItems || (!player.channel && player.ownedProjectileCounts[ModContent.ProjectileType<SunInThePalm_EnergyBall>()] == 0) || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
 
             player.heldProj = Projectile.whoAmI;
@@ -64,7 +64,20 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation());
                 vector = startVector * Length;
-                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                Player.CompositeArmStretchAmount arm = Player.CompositeArmStretchAmount.Full;
+                switch (Projectile.frame)
+                {
+                    case 0:
+                        arm = Player.CompositeArmStretchAmount.None;
+                        break;
+                    case 1:
+                        arm = Player.CompositeArmStretchAmount.Quarter;
+                        break;
+                    case 2:
+                        arm = Player.CompositeArmStretchAmount.ThreeQuarters;
+                        break;
+                }
+                player.SetCompositeArmFront(true, arm, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                 switch (Projectile.ai[0])
                 {
                     case 0:
@@ -83,16 +96,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Player player = Main.player[Projectile.owner];
-            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int height = texture.Height / 4;
-            int y = height * Projectile.frame;
-            Rectangle rect = new(0, y, texture.Width, height);
-            Vector2 origin = new(texture.Width / 2f, height / 2f);
-            Vector2 v = RedeHelper.PolarVector(2, (Projectile.Center - player.Center).ToRotation());
-
-            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }
