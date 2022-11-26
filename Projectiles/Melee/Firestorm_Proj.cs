@@ -11,6 +11,7 @@ using Redemption.Particles;
 using Redemption.Base;
 using rail;
 using System.Collections.Generic;
+using Terraria.Graphics.Shaders;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -128,9 +129,19 @@ namespace Redemption.Projectiles.Melee
             Vector2 drawOrigin = new(width / 2, texture.Height / 2 + 96);
             Vector2 scale = new(Projectile.scale + squish, Projectile.scale - (squish / 5));
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            if (Projectile.alpha <= 0)
+            {
+                int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingFlameDye);
 
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            }
+            else
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center + new Vector2(0, 96) - Main.screenPosition, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE * Projectile.Opacity * 0.3f, Projectile.rotation, drawOrigin, scale, 0);
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center + new Vector2(0, 96) - Main.screenPosition, new Rectangle?(rect2), RedeColor.COLOR_GLOWPULSE * Projectile.Opacity * 0.3f, Projectile.rotation, drawOrigin, scale, 0);
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center + new Vector2(0, 96) - Main.screenPosition, new Rectangle?(rect3), RedeColor.COLOR_GLOWPULSE * Projectile.Opacity * 0.3f, Projectile.rotation, drawOrigin, scale, 0);
