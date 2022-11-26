@@ -319,7 +319,6 @@ namespace Redemption.Globals
 
         readonly int[] bannedArenaItems = new int[]
         {
-            ItemID.RodofDiscord,
             ItemID.IceRod,
             ItemID.PortalGun,
             ItemID.MagicMirror,

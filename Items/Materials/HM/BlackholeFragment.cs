@@ -29,8 +29,8 @@ namespace Redemption.Items.Materials.HM
         {
             Lighting.AddLight(Item.Center, Color.Red.ToVector3() * 0.55f * Main.essScale);
         }
-
-        public override void AddRecipes()
+        // TODO: re-add recipe when rit is done
+        /*public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.FragmentNebula)
@@ -39,6 +39,6 @@ namespace Redemption.Items.Materials.HM
                 .AddIngredient(ItemID.FragmentVortex)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
-        }
+        }*/
     }
 }
