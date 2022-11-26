@@ -3,12 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Redemption.Items.Armor.Vanity.TBot;
-using Redemption.Items.Placeable.Containers;
-using Redemption.Items.Placeable.Furniture.Lab;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Tools.PostML;
-using Redemption.Items.Usable;
 using Redemption.Items.Weapons.HM.Melee;
 using System;
 using Terraria;
@@ -136,11 +130,10 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button2 = "Cycle Dialogue";
             switch (ChatNumber)
             {
                 case 0:
-                    button = "AWOOGA";
+                    button = "Who are you?";
                     break;
             }
         }
@@ -163,7 +156,7 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "Wat.",
+                0 => "Wouldn't you like to know! I'm a bit early to the party - apparently I'm meant to be in the \"full 0.8 update\"... Whatever that means.\nBut I got impatient so here I am! With nothing to do! There isn't even anything unique here!",
                 _ => "...",
             };
         }
