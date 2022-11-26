@@ -300,32 +300,21 @@ namespace Redemption.NPCs.Friendly
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(21 * NPC.spriteDirection, 0) + floatOffset - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
-        private float Opacity { get => FlareTimer; set => FlareTimer = value; }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -12 + NPC.gfxOffY);
-            Vector2 position2 = NPC.Center - screenPos + new Vector2(4 * NPC.spriteDirection, -12 + NPC.gfxOffY);
-            if (AIState is ActionState.Slash)
-            {
-                position = NPC.Center - screenPos + new Vector2(6 * NPC.spriteDirection, -4 + NPC.gfxOffY);
-                position2 = NPC.Center - screenPos + new Vector2(12 * NPC.spriteDirection, -4 + NPC.gfxOffY);
-            }
-            Color colour = Color.Lerp(Color.White, Color.DarkRed, 1f / Opacity * 10f) * (1f / Opacity * 10f);
             if (Flare)
             {
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, 0, origin, 0.8f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, 0, origin, 0.8f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position2, new Rectangle?(rect), colour, 0, origin, 0.8f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position2, new Rectangle?(rect), colour * 0.4f, 0, origin, 0.8f, SpriteEffects.None, 0);
+                Vector2 position = NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -12 + NPC.gfxOffY);
+                Vector2 position2 = NPC.Center - screenPos + new Vector2(4 * NPC.spriteDirection, -12 + NPC.gfxOffY);
+                if (AIState is ActionState.Slash)
+                {
+                    position = NPC.Center - screenPos + new Vector2(6 * NPC.spriteDirection, -4 + NPC.gfxOffY);
+                    position2 = NPC.Center - screenPos + new Vector2(12 * NPC.spriteDirection, -4 + NPC.gfxOffY);
+                }
+                RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.DarkRed, NPC.rotation, .8f);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position2, Color.DarkRed, NPC.rotation, .8f);
+
             }
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         public override bool? CanHitNPC(NPC target) => false;

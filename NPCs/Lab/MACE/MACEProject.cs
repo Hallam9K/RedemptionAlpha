@@ -664,7 +664,7 @@ namespace Redemption.NPCs.Lab.MACE
             }
         }
         private bool GlowActive;
-        private int GlowTimer;
+        private float GlowTimer;
         private bool GlowActive2;
         private int GlowTimer2;
         private bool JawOpen;
@@ -729,21 +729,17 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/MACEEyeFlare").Value;
+            if (GlowActive)
+            {
+                Vector2 position = NPC.Center - screenPos + new Vector2(-22, 4);
+                if (Phase == 2)
+                    position = NPC.Center - screenPos + new Vector2(-22, 22);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref GlowTimer, position, Color.DarkGreen, NPC.rotation, 1, 0, flare);
+            }
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/MACEEyeFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - screenPos + new Vector2(-22, 4);
-            if (Phase == 2)
-                position = NPC.Center - screenPos + new Vector2(-22, 22);
-            Color colour = Color.Lerp(Color.DarkGreen, Color.White, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
-            if (GlowActive)
-            {
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 2f, SpriteEffects.None, 0);
-            }
             Texture2D mouthGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
             Rectangle rect2 = new(0, 0, mouthGlow.Width, mouthGlow.Height);
             Vector2 origin2 = new(mouthGlow.Width / 2, mouthGlow.Height / 2);

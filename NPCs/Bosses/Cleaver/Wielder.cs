@@ -776,24 +776,14 @@ namespace Redemption.NPCs.Bosses.Cleaver
             spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
-        private float Opacity { get => NPC.ai[2]; set => NPC.ai[2] = value; }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/RedEyeFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 5 : -5, -10);
-            Color colour = Color.Lerp(Color.Red, Color.White, 1f / Opacity * 10f) * (1f / Opacity * 10f);
             if (AIState == ActionState.Intro2 && AIHost == 1 && AITimer < 60)
             {
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                Vector2 position = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 5 : -5, -10);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref NPC.ai[2], position, Color.Red, NPC.rotation, 1, 0, flare);
             }
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
     }
 }

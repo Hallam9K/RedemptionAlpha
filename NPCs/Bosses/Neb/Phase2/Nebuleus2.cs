@@ -1736,22 +1736,17 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
+            if (eyeFlare)
+            {
+                Vector2 position = NPC.Center - screenPos + new Vector2(0, -14);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref eyeFlareTimer, position, Color.Pink, NPC.rotation, 1, 0, flare);
+                Vector2 position2 = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 8 : -8, -14);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref eyeFlareTimer, position2, Color.Pink, NPC.rotation, .95f, 0, flare);
+            }
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - screenPos + new Vector2(0, -14);
-            Vector2 position2 = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 8 : -8, -14);
-            Color colour = Color.Lerp(Color.Pink, Color.White, 1f / eyeFlareTimer * 10f) * (1f / eyeFlareTimer * 10f);
-            if (eyeFlare)
-            {
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position2, new Rectangle?(rect), colour, NPC.rotation, origin, 0.95f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position2, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 0.95f, SpriteEffects.None, 0);
-            }
             Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);

@@ -106,5 +106,23 @@ namespace Redemption.Globals
                 }
             }
         }
+        public static void DrawEyeFlare(SpriteBatch spriteBatch, ref float opacity, Vector2 position, Color color, float rot, float scale = 1f, SpriteEffects effects = 0, Texture2D tex = null, Vector2 origin = default)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            tex ??= ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Rectangle rect = new(0, 0, tex.Width, tex.Height);
+            if (origin == default)
+                origin = new(tex.Width / 2, tex.Height / 2);
+            Color colour = Color.Lerp(Color.White, color, 1f / opacity * 10f) * (1f / opacity * 10f);
+            if (opacity < 60)
+            {
+                spriteBatch.Draw(tex, position, new Rectangle?(rect), colour, rot, origin, scale, effects, 0);
+                spriteBatch.Draw(tex, position, new Rectangle?(rect), colour * 0.4f, rot, origin, scale, effects, 0);
+            }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+        }
     }
 }

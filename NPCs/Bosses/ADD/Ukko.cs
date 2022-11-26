@@ -1145,8 +1145,12 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                 }
             }
+            FlareTimer++;
             switch (NPC.ai[3])
             {
+                case 1:
+                    FlareTimer = 10;
+                    break;
                 case 2:
                     frameCounters++;
                     if (frameCounters % 3 == 0)
@@ -1363,7 +1367,12 @@ namespace Redemption.NPCs.Bosses.ADD
             }
             return false;
         }
-
+        private float FlareTimer = 60;
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Vector2 position = NPC.Center - screenPos + new Vector2(4 * NPC.spriteDirection, -53);
+            RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.LightYellow, NPC.rotation);
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
