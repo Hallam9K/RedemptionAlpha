@@ -179,13 +179,14 @@ namespace Redemption.NPCs.Friendly
             {
                 EmoteState = EmotionState.Laugh;
                 chat.Add("What is a SILLY LITTLE METAL BUCKET doing in MY bastion!?");
-                chat.Add("What even are you? Some sort of bucket cosplayer!? WEHEHEHE!");
+                chat.Add("What even are you? Some sort of bucket cosplayer!? Wehehehe!");
             }
             else
             {
                 EmoteState = EmotionState.Laugh;
                 chat.Add("What is a SILLY LITTLE HUMAN doing in MY bastion!?");
-                chat.Add("Look at ITTY BITTY you! WHEHEHEHE! Humans look so STUPID!");
+                chat.Add("Look at ITTY BITTY you! Whehehehe! Humans look so STUPID!");
+                chat.Add("Wow! I forgot how TINY humans were! Whehehehe!");
             }
             return chat;
         }

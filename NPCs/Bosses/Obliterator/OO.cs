@@ -28,6 +28,7 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -161,6 +162,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
+
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ToasterPet>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

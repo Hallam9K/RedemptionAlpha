@@ -71,6 +71,7 @@ Mods: {
             XenomiteElementalPetBuff: "Xenomite Elemental"
             TiedPetBuff: "Tied"
             NebPetBuff: "Chibi Nebby"
+            ToasterPetBuff: "Household Heatray"
 		}
 		
 		BuffDescription: {
@@ -140,6 +141,7 @@ Mods: {
             XenomiteElementalPetBuff: "Cute."
             TiedPetBuff: '''"Spooked"'''
             NebPetBuff: "Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you"
+            ToasterPetBuff: "Its heating filament is inadequate to its needs"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

@@ -4,18 +4,18 @@ using Redemption.Base;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
 {
-    public class NebPet_Proj : ModProjectile
+    public class ToasterPet_Proj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chibi Nebby");
+            DisplayName.SetDefault("Household Heatray");
             Main.projFrames[Projectile.type] = 9;
             Main.projPet[Projectile.type] = true;
         }
@@ -23,8 +23,8 @@ namespace Redemption.Projectiles.Pets
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.BabyDino);
-            Projectile.width = 26;
-            Projectile.height = 44;
+            Projectile.width = 20;
+            Projectile.height = 16;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
@@ -35,74 +35,72 @@ namespace Redemption.Projectiles.Pets
             Player player = Main.player[Projectile.owner];
             player.dino = false;
 
-            if (Projectile.velocity.Y == 0)
-            {
-                Projectile.rotation = 0;
+            CheckActive(player);
 
+            if (Projectile.ai[0] == 1)
+            {
+                if (frameY < 6)
+                    frameY = 6;
+                if (++frameCounter >= 5)
+                {
+                    frameCounter = 0;
+                    if (++frameY >= 8)
+                        frameY = 6;
+                }
+            }
+            else
+            {
                 if (Projectile.velocity.X > -1 && Projectile.velocity.X < 1)
+                {
                     frameY = 0;
+                    if (Main.rand.NextBool(400) && Main.netMode != NetmodeID.Server)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item16, Projectile.position);
+                        Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(2, -12), new Vector2(0, -2),
+                            ModContent.Find<ModGore>("Redemption/ToasterPet_Toast").Type);
+                    }
+                }
                 else
                 {
                     if (frameY < 1)
                         frameY = 1;
 
-                    frameCounter += (int)(Projectile.velocity.X * 0.5f);
-                    if (frameCounter >= 2 || frameCounter <= -2)
+                    if (frameCounter++ >= 4)
                     {
                         frameCounter = 0;
-                        if (++frameY >= 7)
+                        if (++frameY >= 5)
                             frameY = 1;
                     }
                 }
             }
-            else
-            {
-                Projectile.rotation = Projectile.velocity.X * 0.05f;
-                frameY = 8;
-            }
-            return true;
-        }
-        public override void AI()
-        {
-            Player player = Main.player[Projectile.owner];
-            CheckActive(player);
             if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
             {
                 Projectile.position = player.Center;
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
+            return true;
         }
         private int frameY;
         private int frameCounter;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
             int height = texture.Height / 9;
             int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, height / 2);
-            var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(0, 2) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-
-            Main.EntitySpriteDraw(glow, Projectile.Center + new Vector2(0, 2) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.EntitySpriteDraw(texture, Projectile.Center - new Vector2(0, 1) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
         private void CheckActive(Player player)
         {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<NebPetBuff>()))
+            if (!player.dead && player.HasBuff(ModContent.BuffType<ToasterPetBuff>()))
                 Projectile.timeLeft = 2;
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (Projectile.penetrate == 0)

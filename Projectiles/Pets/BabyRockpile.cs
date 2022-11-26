@@ -1,9 +1,12 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using System;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
@@ -19,37 +22,44 @@ namespace Redemption.Projectiles.Pets
 
         public override void SetDefaults()
         {
+            Projectile.CloneDefaults(ProjectileID.BabyDino);
             Projectile.width = 26;
             Projectile.height = 42;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
+            AIType = ProjectileID.BabyDino;
         }
-
-        public override void AI()
+        private float rotation;
+        public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
-            CheckActive(player);
+            player.dino = false;
 
             if (Projectile.velocity.Y == 0)
             {
-                Projectile.rotation.SlowRotation(0, (float)Math.PI / 20);
-                Projectile.frameCounter++;
-                if (Projectile.frameCounter >= 5)
+                rotation.SlowRotation(0, (float)Math.PI / 20);
+                frameCounter++;
+                if (frameCounter >= 5)
                 {
-                    Projectile.frameCounter = 0;
-                    Projectile.frame++;
+                    frameCounter = 0;
+                    frameY++;
 
-                    if (Projectile.frame >= Main.projFrames[Projectile.type])
-                        Projectile.frame = 0;
+                    if (frameY >= Main.projFrames[Projectile.type])
+                        frameY = 0;
                 }
             }
             else
             {
-                Projectile.rotation += Projectile.velocity.X * 0.07f;
-                Projectile.frame = 0;
+                rotation += Projectile.velocity.X * 0.07f;
+                frameY = 0;
             }
-            Projectile.LookByVelocity();
+            return true;
+        }
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            CheckActive(player);
 
             if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
             {
@@ -57,9 +67,21 @@ namespace Redemption.Projectiles.Pets
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-            BaseAI.AIMinionFighter(Projectile, ref Projectile.ai, player, true, 6, 8, 100, 1400, 2000, 0.1f, 5, 10);
         }
+        private int frameY;
+        private int frameCounter;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            int height = texture.Height / 8;
+            int y = height * frameY;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 drawOrigin = new(texture.Width / 2, height / 2);
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(0, 3) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), rotation, drawOrigin, Projectile.scale, effects, 0);
+            return false;
+        }
         private void CheckActive(Player player)
         {
             if (!player.dead && player.HasBuff(ModContent.BuffType<BabyRockpileBuff>()))
