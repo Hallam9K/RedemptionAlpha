@@ -627,6 +627,13 @@ namespace Redemption.Globals.Player
                     ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, 0, 1);
             }
         }
+        public override void HideDrawLayers(PlayerDrawSet drawInfo)
+        {
+            if (hairLoss)
+            {
+                drawInfo.hideHair = true;
+            }
+        }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
             if (shieldGenerator && shieldGeneratorCD <= 0)
