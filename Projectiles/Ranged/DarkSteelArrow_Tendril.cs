@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 700;
             Projectile.penetrate = 8;
             Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.localAI[0] = Main.rand.NextFloat(-0.01f, 0.01f);
             Projectile.localAI[1] = 20;
             decrease = Main.rand.Next(1, 3);

@@ -116,6 +116,8 @@ namespace Redemption
                     PremultiplyTexture(ref AkkaIslandWarningTex);
                     Texture2D SunTex = ModContent.Request<Texture2D>("Redemption/Textures/Sun", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref SunTex);
+                    Texture2D DarkSoulTex = ModContent.Request<Texture2D>("Redemption/Textures/DarkSoulTex", AssetRequestMode.ImmediateLoad).Value;
+                    PremultiplyTexture(ref DarkSoulTex);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
