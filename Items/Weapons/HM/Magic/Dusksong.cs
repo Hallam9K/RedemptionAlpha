@@ -21,13 +21,13 @@ namespace Redemption.Items.Weapons.HM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 76;
+            Item.damage = 66;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 14;
             Item.width = 32;
             Item.height = 34;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
+            Item.useTime = 38;
+            Item.useAnimation = 38;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.noMelee = true;
             Item.autoReuse = true;

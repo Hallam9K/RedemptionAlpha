@@ -52,7 +52,7 @@ namespace Redemption.Projectiles.Magic
             CD--;
             if (Projectile.alpha > 40)
                 Projectile.alpha -= 10;
-            Projectile.rotation += 0.2f;
+            Projectile.rotation += 0.14f;
 
             if (Projectile.scale <= .1f)
                 Projectile.Kill();
@@ -77,7 +77,7 @@ namespace Redemption.Projectiles.Magic
                 ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(117, 10, 47), 2 * Projectile.scale, 0, 2);
                 ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(94, 53, 104), 2 * Projectile.scale, 0, 2);
             }
-            Projectile.localAI[0] -= 0.1f;
+            Projectile.localAI[0] -= 0.2f;
             SoundEngine.PlaySound(SoundID.Item103, Projectile.position);
             if (Projectile.owner == Main.myPlayer)
             {
@@ -91,10 +91,11 @@ namespace Redemption.Projectiles.Magic
         private float flareOpacity;
         public override bool PreDraw(ref Color lightColor)
         {
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.BloodbathDye);
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.ShadowDye);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
@@ -107,7 +108,7 @@ namespace Redemption.Projectiles.Magic
                 Main.EntitySpriteDraw(texture, drawPos, null, color * 0.3f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.6f, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.4f, -Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.4f, -Projectile.rotation, origin, Projectile.scale * 1.4f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
