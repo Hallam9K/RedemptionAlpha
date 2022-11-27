@@ -34,6 +34,7 @@ using Redemption.NPCs.Bosses.Neb;
 using Terraria.Graphics.Shaders;
 using Terraria;
 using Redemption.NPCs.Bosses.ADD;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.CrossMod
 {
@@ -244,6 +245,7 @@ namespace Redemption.CrossMod
                     new List<int>
                     {
                         ModContent.ItemType<GigaporaRelic>(),
+                        ModContent.ItemType<PowerDrill>(),
                         ModContent.ItemType<OmegaTrophy>(),
                         ModContent.ItemType<OmegaBox>()
                     },
@@ -260,6 +262,7 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "3rd Omega Prototype", ModContent.NPCType<OO>(), 18.05f, () => RedeBossDowned.downedOmega3, () => true,
                     new List<int>
                     {
+                        ModContent.ItemType<ToasterPet>(),
                         ModContent.ItemType<OORelic>(),
                         ModContent.ItemType<OmegaTrophy>(),
                         ModContent.ItemType<OmegaBox2>()
@@ -315,7 +318,8 @@ namespace Redemption.CrossMod
                     }, 20.001f, () => RedeBossDowned.downedADD, () => RedeBossDowned.ADDDeath > 0,
                     new List<int>
                     {
-                        //ModContent.ItemType<ErhanRelic>(),
+                        ModContent.ItemType<UkkoRelic>(),
+                        ModContent.ItemType<AkkaRelic>(),
                         //ModContent.ItemType<DevilsAdvocate>(),
                         ModContent.ItemType<UkonKirvesTrophy>(),
                         ModContent.ItemType<AkanKirvesTrophy>(),
@@ -335,6 +339,7 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddBoss", mod, "Nebuleus", ModContent.NPCType<Nebuleus>(), 21f, () => RedeBossDowned.downedNebuleus, () => true,
                     new List<int>
                     {
+                        ModContent.ItemType<NebRelic>(),
                         ModContent.ItemType<NebuleusTrophy>(),
                         ModContent.ItemType<NebuleusMask>(),
                         ModContent.ItemType<NebBox>()
