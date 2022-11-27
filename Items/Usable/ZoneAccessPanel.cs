@@ -256,6 +256,7 @@ namespace Redemption.Items.Usable
                 Main.NewText("Laser security already deactivated", Color.Cyan);
                 return true;
             }
+            RedeWorld.labSafe = true;
             LabArea.labAccess[5] = true;
             string status = "All laser security systems have been deactivated";
             if (Main.netMode == NetmodeID.Server)
