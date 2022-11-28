@@ -156,6 +156,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = 3;
             Projectile.alpha = 20;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.localAI[0] = Main.rand.NextFloat(-0.01f, 0.01f);
             Projectile.usesIDStaticNPCImmunity = true;
