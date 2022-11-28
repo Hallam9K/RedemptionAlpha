@@ -37,6 +37,8 @@ namespace Redemption.Globals.Player
         public bool contactImmuneTrue;
         public bool slayerCursor;
         public Rectangle meleeHitbox;
+        public int crystalGlaiveLevel;
+        public int crystalGlaiveShotCount;
 
         public override void ResetEffects()
         {

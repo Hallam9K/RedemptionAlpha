@@ -28,6 +28,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.height = 36;
             Item.useTime = 18;
             Item.useAnimation = 18;
+            Item.reuseDelay = 18;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.noUseGraphic = true;

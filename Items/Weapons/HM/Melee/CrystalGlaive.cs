@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -12,9 +13,9 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Left-click to do a close ranged combo attack\n" +
+            Tooltip.SetDefault("Left-click to do a close ranged combo attack when hitting enemies\n" +
                 "Right-click to fire a mid range blast of crystal shards\n" +
-                "Completing the Left-click combo empowers the right-click ability for 5 shots");
+                "Completing the left-click combo on an enemy empowers the right-click ability for 5 shots");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
             SacrificeTotal = 1;
@@ -47,8 +48,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shoot = ModContent.ProjectileType<CrystalGlaive_Proj>();
         }
         private int Cooldown;
-        private int Level;
-        private int ShotCount;
         public override void UpdateInventory(Player player)
         {
             if (Cooldown <= 0)
@@ -58,47 +57,46 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override bool AltFunctionUse(Player player) => true;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            bool sp = ShotCount > 0;
+            bool sp = player.Redemption().crystalGlaiveShotCount > 0;
             if (player.altFunctionUse == 2)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.Swoosh1 with { Pitch = .1f }, player.position);
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 3, sp ? 1 : 0);
-                ShotCount--;
+                player.Redemption().crystalGlaiveShotCount--;
             }
             else
             {
                 if (Cooldown > 0)
                 {
-                    switch (Level)
+                    switch (player.Redemption().crystalGlaiveLevel)
                     {
                         case 0:
+                            player.Redemption().crystalGlaiveLevel = 0;
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = .1f }, player.position);
+                            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 0, sp ? 1 : 0);
+                            break;
+                        case 1:
+                            player.Redemption().crystalGlaiveLevel = 0;
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = .1f }, player.position);
                             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 1, sp ? 1 : 0);
-                            Level++;
                             break;
-                        case 1:
+                        case 2:
+                            player.Redemption().crystalGlaiveLevel = 0;
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Swoosh1 with { Pitch = .1f }, player.position);
                             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 2, sp ? 1 : 0);
-                            if (ShotCount <= 0)
-                            {
-                                SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, player.position);
-                                DustHelper.DrawCircle(player.Center, DustID.CrystalPulse, 4, 1, 1, 1, 2, nogravity: true);
-                            }
-                            Cooldown = 0;
-                            Level = 0;
-                            ShotCount = 5;
                             return false;
                     }
                 }
                 else
                 {
+                    player.Redemption().crystalGlaiveLevel = 0;
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Swing1 with { Pitch = .1f }, player.position);
                     Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CrystalGlaive_Proj>(), damage, knockback, player.whoAmI, 0, sp ? 1 : 0);
-                    Level = 0;
                 }
 
                 Cooldown = 40;

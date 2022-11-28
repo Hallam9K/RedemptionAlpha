@@ -10,6 +10,7 @@ using Terraria.Audio;
 using ReLogic.Content;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using log4net.Core;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -163,6 +164,25 @@ namespace Redemption.Items.Weapons.HM.Melee
             dust.noGravity = true;
             dust.shader = GameShaders.Armor.GetSecondaryShader(77, Main.player[Projectile.owner]);
             return false;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Player player = Main.player[Projectile.owner];
+            if (Projectile.ai[0] == 2 && player.Redemption().crystalGlaiveShotCount <= 0)
+            {
+                if (player.Redemption().crystalGlaiveShotCount <= 0)
+                {
+                    SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, player.position);
+                    DustHelper.DrawCircle(player.Center, DustID.CrystalPulse, 4, 1, 1, 1, 2, nogravity: true);
+                }
+                player.Redemption().crystalGlaiveLevel = 0;
+                player.Redemption().crystalGlaiveShotCount = 5;
+            }
+            else if (Projectile.ai[0] < 2)
+            {
+                player.Redemption().crystalGlaiveLevel = (int)Projectile.ai[0] + 1;
+            }
+
         }
         public override bool PreDraw(ref Color lightColor)
         {

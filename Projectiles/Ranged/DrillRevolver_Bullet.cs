@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.NPCBuffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -104,6 +105,7 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.AddBuff(ModContent.BuffType<BrokenArmorDebuff>(), 40);
             Projectile.localNPCImmunity[target.whoAmI] = 8;
             target.immune[Projectile.owner] = 0;
         }

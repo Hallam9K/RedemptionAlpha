@@ -135,19 +135,24 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     if (NPC.ai[2]++ >= 120)
                     {
-                        SoundEngine.PlaySound(SoundID.Item74, NPC.position);
-                        DustHelper.DrawDustImage(NPC.Center, 92, 0.2f, "Redemption/Effects/DustImages/WarpShape", 3, true, 0);
-                        for (int i = 0; i < 30; i++)
-                        {
-                            int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, 0f, 0f, 100, default, 3f);
-                            Main.dust[dustIndex].velocity *= 6f;
-                            Main.dust[dustIndex].noGravity = true;
-                        }
-                        NPC.netUpdate = true;
-                        if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
-                            NPC.SetDefaults(ModContent.NPCType<KS3_Clone>());
+                        if (NPC.AnyNPCs(ModContent.NPCType<KS3>()) || NPC.AnyNPCs(ModContent.NPCType<KS3_Clone>()))
+                            NPC.active = false;
                         else
-                            NPC.SetDefaults(ModContent.NPCType<KS3>());
+                        {
+                            SoundEngine.PlaySound(SoundID.Item74, NPC.position);
+                            DustHelper.DrawDustImage(NPC.Center, 92, 0.2f, "Redemption/Effects/DustImages/WarpShape", 3, true, 0);
+                            for (int i = 0; i < 30; i++)
+                            {
+                                int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, 0f, 0f, 100, default, 3f);
+                                Main.dust[dustIndex].velocity *= 6f;
+                                Main.dust[dustIndex].noGravity = true;
+                            }
+                            NPC.netUpdate = true;
+                            if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+                                NPC.SetDefaults(ModContent.NPCType<KS3_Clone>());
+                            else
+                                NPC.SetDefaults(ModContent.NPCType<KS3>());
+                        }
                     }
                     break;
                 case 5:
