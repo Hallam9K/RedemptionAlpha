@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Lordfunnyman
@@ -12,7 +10,7 @@ namespace Redemption.Items.Donator.Lordfunnyman
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a chibi Lego Man");
+            Tooltip.SetDefault("Summons an ancient construct");
             SacrificeTotal = 1;
         }
 

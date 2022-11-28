@@ -27,6 +27,7 @@ using Redemption.Items;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.ModLoader.Default;
+using Redemption.Items.Donator.Lordfunnyman;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -398,6 +399,9 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<TeslaCannon>());
                 nextSlot++;
             }*/
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MedicOutfit>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MedicLegs>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MedicBackpack>());
             if (player.IsTBotHead())
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AdamHead>());
             if (RedeBossDowned.downedJanitor && !LabArea.labAccess[0])

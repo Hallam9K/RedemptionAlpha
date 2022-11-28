@@ -18,7 +18,7 @@ namespace Redemption.Items.Donator.Lordfunnyman
         {
             Item.width = 26;
             Item.height = 20;
-            Item.value = Item.buyPrice(0, 0, 5, 0);
+            Item.value = Item.buyPrice(0, 2, 50, 0);
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
         }
@@ -35,7 +35,7 @@ namespace Redemption.Items.Donator.Lordfunnyman
         {
             Item.width = 26;
             Item.height = 16;
-            Item.value = Item.buyPrice(0, 0, 5, 0);
+            Item.value = Item.buyPrice(0, 2, 50, 0);
             Item.vanity = true;
             Item.rare = ModContent.RarityType<DonatorRarity>();
         }
@@ -52,7 +52,7 @@ namespace Redemption.Items.Donator.Lordfunnyman
         {
             Item.width = 18;
             Item.height = 20;
-            Item.value = Item.sellPrice(0, 0, 5, 0);
+            Item.value = Item.buyPrice(0, 2, 0, 0);
             Item.rare = ModContent.RarityType<DonatorRarity>();
             Item.accessory = true;
             Item.vanity = true;

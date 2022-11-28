@@ -40,6 +40,7 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.Items.Donator.Lordfunnyman;
 
 namespace Redemption.Globals.NPC
 {
@@ -595,13 +596,18 @@ namespace Redemption.Globals.NPC
             if (npc.type == NPCID.Demon || npc.type == NPCID.VoodooDemon || npc.type == NPCID.FireImp)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type == NPCID.GraniteFlyer || npc.type == NPCID.GraniteGolem)
+            {
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GaucheStaff>(), 30));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 200));
+            }
             if (npc.type == NPCID.Dandelion)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 10));
             if (npc.type == NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
             if (npc.type == NPCID.Golem)
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
+            if (npc.type == NPCID.IceGolem || npc.type == NPCID.RockGolem)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
