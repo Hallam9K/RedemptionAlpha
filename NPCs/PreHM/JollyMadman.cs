@@ -395,7 +395,7 @@ namespace Redemption.NPCs.PreHM
         public int GetNearestNPC(int[] WhitelistNPC = default)
         {
             if (WhitelistNPC == null)
-                WhitelistNPC = new int[] { NPCID.TargetDummy };
+                WhitelistNPC = new int[] { NPCID.Guide };
 
             float nearestNPCDist = -1;
             int nearestNPC = -1;
