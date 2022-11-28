@@ -442,7 +442,7 @@ namespace Redemption.Globals.Player
         {
             if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                 target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
-            if (leatherSheath && target.life >= target.lifeMax)
+            if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
                 crit = true;
 
             damage = (int)(damage * TrueMeleeDamage);
@@ -453,7 +453,7 @@ namespace Redemption.Globals.Player
             {
                 if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                     target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
-                if (leatherSheath && target.life >= target.lifeMax)
+                if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
                     crit = true;
 
                 damage = (int)(damage * TrueMeleeDamage);

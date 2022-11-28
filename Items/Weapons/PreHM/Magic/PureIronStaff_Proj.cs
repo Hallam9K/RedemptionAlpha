@@ -95,7 +95,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
                 Projectile.alpha = 0;
                 SoundEngine.PlaySound(SoundID.Item30, player.position);
                 glow = true;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center + Vector2.Normalize(Projectile.velocity) * 35f, Projectile.velocity, ModContent.ProjectileType<IceBolt>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center + Vector2.Normalize(Projectile.velocity) * 35f, Projectile.velocity, ModContent.ProjectileType<IceBolt>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, Projectile.whoAmI);
             }
         }
         private float Opacity { get => glowTimer; set => glowTimer = value; }

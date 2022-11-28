@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 60;
+            Item.damage = 30;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 15;
             Item.width = 38;
@@ -35,6 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.knockBack = 5;
+            Item.autoReuse = true;
             Item.value = Item.sellPrice(0, 3, 50, 0);
             Item.channel = true;
             Item.rare = ItemRarityID.Orange;

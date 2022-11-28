@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -32,9 +33,12 @@ namespace Redemption.Projectiles.Magic
         }
 
         private float glowRot;
+        private Vector2 offsetPos;
+        private bool fail;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+            Projectile staff = Main.projectile[(int)Projectile.ai[1]];
             glowRot += 0.04f;
 
             if (player.channel && Projectile.ai[0] == 0)
@@ -68,17 +72,24 @@ namespace Redemption.Projectiles.Magic
                     }
                     Projectile.netUpdate = true;
                 }
+                Vector2 Offset = Vector2.Normalize(staff.velocity) * 10f;
 
+                if (!Collision.CanHit(player.Center, 0, 0, Projectile.Center + Offset, 0, 0))
+                    fail = true;
+                else
+                    fail = false;
                 Projectile.position = player.RotatedRelativePoint(player.MountedCenter + RedeHelper.PolarVector(35, Projectile.velocity.ToRotation()), true) - Projectile.Size / 2f;
                 Projectile.rotation = Projectile.velocity.ToRotation() + num;
                 Projectile.spriteDirection = Projectile.direction;
 
                 Projectile.timeLeft = 180;
-                Projectile.scale += 0.015f;
+                Projectile.scale += 0.05f;
                 Projectile.scale = MathHelper.Clamp(Projectile.scale, 1, 2.5f);
             }
             else if (Projectile.ai[0] == 0)
             {
+                if (fail)
+                    Projectile.Kill();
                 SoundEngine.PlaySound(SoundID.Item43, player.position);
                 DustHelper.DrawCircle(Projectile.Center, DustID.IceTorch, 2, 2, 2, 1, 3, nogravity: true);
                 Projectile.tileCollide = true;
@@ -140,7 +151,11 @@ namespace Redemption.Projectiles.Magic
                 target.AddBuff(BuffID.Frostburn, 240);
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage = (int)(damage * Projectile.scale);
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            float newDamage = Projectile.scale - 1;
+            damage = (int)(damage * ((newDamage * 1.5f) + 1));
+        }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => damage = (int)(damage * Projectile.scale);
     }
 }
