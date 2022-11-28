@@ -488,7 +488,7 @@ namespace Redemption.Globals.NPC
             if (holyFire)
             {
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, 0, 1);
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
             }
         }
 

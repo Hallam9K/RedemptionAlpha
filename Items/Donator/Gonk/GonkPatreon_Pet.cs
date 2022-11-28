@@ -22,77 +22,61 @@ namespace Redemption.Items.Donator.Gonk
 
         public override void SetDefaults()
         {
+            Projectile.CloneDefaults(ProjectileID.BabyDino);
             Projectile.width = 26;
             Projectile.height = 32;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
+            AIType = ProjectileID.BabyDino;
         }
-
-        public override void AI()
+        public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
-            CheckActive(player);
-            Projectile.LookByVelocity();
-
-            if (Projectile.ai[0] != 0 && Projectile.ai[0] == 1)
+            player.dino = false;
+            if (Projectile.velocity.Y >= -0.1f && Projectile.velocity.Y <= 0.1f)
             {
-                if (Projectile.ai[0] == 1)
-                    Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                Projectile.rotation = 0;
+                if (Projectile.velocity.X == 0)
+                    frameY = 0;
                 else
-                    Projectile.rotation = Projectile.velocity.X * 0.05f;
-
-                if (Projectile.frame < 8)
-                    Projectile.frame = 8;
-                if (Projectile.frameCounter++ >= 3)
                 {
-                    Projectile.frameCounter = 0;
-                    if (++Projectile.frame > 11)
-                        Projectile.frame = 8;
+                    frameCounter += (int)Math.Abs(Projectile.velocity.X * 0.5f) + 1;
+                    if (frameCounter >= 6)
+                    {
+                        frameCounter = 0;
+                        if (++frameY > 7)
+                            frameY = 1;
+                    }
                 }
             }
             else
             {
-                if (Projectile.velocity.Y >= -0.1f && Projectile.velocity.Y <= 0.1f)
+                Projectile.rotation = Projectile.velocity.X * 0.05f;
+                if (frameY < 8)
+                    frameY = 8;
+                if (frameCounter++ >= 3)
                 {
-                    Projectile.rotation = 0;
-                    if (Projectile.velocity.X == 0)
-                        Projectile.frame = 0;
-                    else
-                    {
-                        Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X * 0.5f) + 1;
-                        if (Projectile.frameCounter >= 6)
-                        {
-                            Projectile.frameCounter = 0;
-                            if (++Projectile.frame > 7)
-                                Projectile.frame = 1;
-                        }
-                    }
-                }
-                else
-                {
-                    Projectile.rotation = Projectile.velocity.X * 0.05f;
-                    if (Projectile.frame < 8)
-                        Projectile.frame = 8;
-                    if (Projectile.frameCounter++ >= 3)
-                    {
-                        Projectile.frameCounter = 0;
-                        if (++Projectile.frame > 11)
-                            Projectile.frame = 8;
-                    }
+                    frameCounter = 0;
+                    if (++frameY > 11)
+                        frameY = 8;
                 }
             }
-
+            return true;
+        }
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            CheckActive(player);
             if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
             {
                 Projectile.position = player.Center;
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-
-            BaseAI.AIMinionFighter(Projectile, ref Projectile.ai, player, true, 6, 8, 60, 1000, 2000, 0.1f, 6, 10);
         }
-
+        private int frameY;
+        private int frameCounter;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -100,11 +84,11 @@ namespace Redemption.Items.Donator.Gonk
             Texture2D lightOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_LightOverlay").Value;
             Texture2D phazonOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_PhazonOverlay").Value;
             int height = texture.Height / 12;
-            int y = height * Projectile.frame;
+            int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             Vector2 center = new(Projectile.Center.X, Projectile.Center.Y);
-            var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.EntitySpriteDraw(texture, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
@@ -112,8 +96,8 @@ namespace Redemption.Items.Donator.Gonk
             if (Main.tile[water.X, water.Y].LiquidType == LiquidID.Water && Main.tile[water.X, water.Y].LiquidAmount > 0)
                 Main.EntitySpriteDraw(gravityOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
-            //if (Main.player[Projectile.owner].InModBiome<WastelandPurityBiome>())) // TODO: Samus overlay for Soulless Dimension
-            //    Main.EntitySpriteDraw(lightOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            if (Main.player[Projectile.owner].InModBiome<SoullessBiome>())
+                Main.EntitySpriteDraw(lightOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             if (Main.player[Projectile.owner].InModBiome<WastelandPurityBiome>())
                 Main.EntitySpriteDraw(phazonOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);

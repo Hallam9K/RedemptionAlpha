@@ -88,7 +88,7 @@ namespace Redemption.Biomes
             DisplayName.SetDefault("Snow Wasteland");
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override bool IsBiomeActive(Player player)
         {
@@ -113,7 +113,7 @@ namespace Redemption.Biomes
             DisplayName.SetDefault("Desert Wasteland");
         }
 
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
+        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override bool IsBiomeActive(Player player)
         {

@@ -1247,10 +1247,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         }
         public void Teleport(bool specialPos, Vector2 teleportPos)
         {
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.75f, 2, 0.7f, 2, 0, ai1: 1);
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.5f, 2, 0.7f, 2, 0, ai1: 1);
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.25f, 2, 0.7f, 2, 0, ai1: 1);
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3f, 2, 0.7f, 2, 0, ai1: 1);
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.75f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.5f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.25f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!specialPos)
@@ -1302,10 +1302,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed, 5, 0.75f, 2, 0.7f, 2, 0, ai1: 1);
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink, 5, 1.5f, 2, 0.7f, 2, 0, ai1: 1);
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple, 5, 2.25f, 2, 0.7f, 2, 0, ai1: 1);
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue, 5, 3f, 2, 0.7f, 2, 0, ai1: 1);
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed, 5, 0.75f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink, 5, 1.5f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple, 5, 2.25f, 2, 0.7f, 2, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             }
         }
         #endregion

@@ -47,6 +47,7 @@ namespace Redemption
         public Rectangle currentScreen;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
+        public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
 
         public static RenderTargetManager Targets;
 

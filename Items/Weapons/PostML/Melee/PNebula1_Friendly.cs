@@ -55,7 +55,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.alpha += 2;
             Projectile.localAI[0]++;
             if (proType != 0)
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.HotPink * (Projectile.Opacity * 2f), 1f * Projectile.Opacity, 0, 2);
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.HotPink * (Projectile.Opacity * 2f), 1f * Projectile.Opacity, .45f, Main.rand.Next(10, 20));
 
             if (originalVelocity == Vector2.Zero)
                 originalVelocity = Projectile.velocity;

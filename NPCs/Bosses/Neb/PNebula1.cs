@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 if (proType != 0)
                 {
-                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Pink, 0.6f, 0, 1);
+                    ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Pink, 0.6f, .45f, Main.rand.Next(50, 60));
                 }
 
                 if (originalVelocity == Vector2.Zero)

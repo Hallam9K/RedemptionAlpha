@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.Pets
                 if (Projectile.velocity.X > -1 && Projectile.velocity.X < 1)
                 {
                     frameY = 0;
-                    if (Main.rand.NextBool(400) && Main.netMode != NetmodeID.Server)
+                    if (Main.rand.NextBool(1000) && Main.netMode != NetmodeID.Server)
                     {
                         SoundEngine.PlaySound(SoundID.Item16, Projectile.position);
                         Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.position + new Vector2(2, -12), new Vector2(0, -2),

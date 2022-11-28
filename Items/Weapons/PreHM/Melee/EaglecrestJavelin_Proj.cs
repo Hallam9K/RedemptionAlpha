@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;
-
+        public override bool? CanCutTiles() => Projectile.ai[0] >= 1 ? null : false;
         private float glow;
         private int thunderCooldown;
         public override void AI()

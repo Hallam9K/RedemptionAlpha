@@ -74,8 +74,8 @@ namespace Redemption.Projectiles.Magic
                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                 vector.X = (float)(Math.Sin(angle) * 61 * Projectile.scale);
                 vector.Y = (float)(Math.Cos(angle) * 61 * Projectile.scale);
-                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(117, 10, 47), 2 * Projectile.scale, 0, 2);
-                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(94, 53, 104), 2 * Projectile.scale, 0, 2);
+                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(117, 10, 47), 2 * Projectile.scale, .45f, Main.rand.Next(10, 20));
+                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(94, 53, 104), 2 * Projectile.scale, .45f, Main.rand.Next(10, 20));
             }
             Projectile.localAI[0] -= 0.2f;
             SoundEngine.PlaySound(SoundID.Item103, Projectile.position);
@@ -128,9 +128,9 @@ namespace Redemption.Projectiles.Magic
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 20; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, 0, 1);
+                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             for (int i = 0; i < 20; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, 0, 1);
+                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
             for (int i = 0; i < 20; i++)
             {
@@ -198,9 +198,9 @@ namespace Redemption.Projectiles.Magic
                 AdjustMagnitude(ref Projectile.velocity);
             }
             if (Main.rand.NextBool(2))
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(94, 53, 104), 1f, 0, 2);
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(94, 53, 104), 1f, .45f, Main.rand.Next(10, 20));
             if (Main.rand.NextBool(2))
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(117, 10, 47), 1f, 0, 2);
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(117, 10, 47), 1f, .45f, Main.rand.Next(10, 20));
 
             flareScale += Main.rand.NextFloat(-.02f, .02f);
             flareScale = MathHelper.Clamp(flareScale, .1f, .3f);

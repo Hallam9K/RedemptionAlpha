@@ -24,6 +24,9 @@ using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Terraria.ModLoader.Default;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -72,9 +75,7 @@ namespace Redemption.NPCs.Friendly
         public override void FindFrame(int frameHeight)
         {
             if (NPC.frame.Y >= 14 * frameHeight && NPC.frame.Y <= 15 * frameHeight)
-            {
                 NPC.frame.Y = 2 * frameHeight;
-            }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -326,7 +327,6 @@ namespace Redemption.NPCs.Friendly
                 13 => "It reads - [c/706c6c:' -- No. I do not need to do that. You're already dying. The others are also dying from the same affliction, but I will deal with the others personally. -- Hand over Adam. You do not need him. -- You will be locked in Sector Zero. Goodbye.']"
                     + "\nHer ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 14 => "This is a robot brain, believe it or not. These look vaguely similar to our microchips, yet it functions the same. It seems cross-compatible with our tech.",
-                15 => "Woah there pal! Don't give me that, I'm worried it might corrupt me, even though that's rather unlikely.",
                 16 => "What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.",
                 21 => "This appears to be a personal note or digital diary from one of the employees. Judging from the writing, it appears to be in the early days of the research project, even then signs of the fate to come were showing themselves.",
                 25 => "This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Father's goal for us was, he didn't deserve his fate.",
@@ -393,11 +393,6 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart3>());
                 nextSlot++;
             }
-            if (NPC.downedPlantBoss)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<CloakerDevice>());
-                nextSlot++;
-            }
             if (RedeWorld.downedVolt)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<TeslaCannon>());
@@ -417,6 +412,17 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel5>());
             if (RedeBossDowned.downedPZ && !LabArea.labAccess[5])
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel6>());
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (!Redemption.AprilFools || (NPC.frame.Y != 0 && NPC.frame.Y < 19 * 58))
+                return true;
+
+            Texture2D texture = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drip").Value;
+            Vector2 offset = new(0, 4);
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(texture, NPC.Center - offset - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            return false;
         }
     }
 }
