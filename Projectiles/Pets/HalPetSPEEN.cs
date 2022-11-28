@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.Pets
         }
         public override bool? CanHitNPC(NPC target)
         {
-            return !target.boss && !target.friendly;
+            return !target.boss ? null : false;
         }
     }
 }

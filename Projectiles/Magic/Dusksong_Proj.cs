@@ -86,7 +86,6 @@ namespace Redemption.Projectiles.Magic
             }
             CD = 5;
         }
-        public override bool? CanHitNPC(NPC target) => true;
         private float flareScale;
         private float flareOpacity;
         public override bool PreDraw(ref Color lightColor)
