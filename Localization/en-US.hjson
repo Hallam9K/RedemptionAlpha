@@ -46,6 +46,7 @@ Mods: {
             StaticStunDebuff: "Static Shock!"
             Stunned2Debuff: "Snared!"
             StunnedDebuff: "Stunned!"
+            BInfectionDebuff: "Bacterial Infection"
             
             # Minions
             AndroidMinionBuff: "Android Minion"
@@ -58,6 +59,7 @@ Mods: {
             XeniumTurretBuff: "Xenium Autoturret"
             MicroshieldCoreBuff: "Microshield Core"
             MicroshieldDroneBuff: "Microshield Drone"
+            HoloMinionBuff: "Hologram"
             
             # Pets
             BabyRockpileBuff: "Baby Rockpile"
@@ -116,6 +118,7 @@ Mods: {
             StaticStunDebuff: "You are stunned by electricity!"
             Stunned2Debuff: "You are stunned!"
             StunnedDebuff: "You are stunned!"
+            BInfectionDebuff: "Yucky!"
             
             # Minions
             AndroidMinionBuff: "A small android will fight for you"
@@ -128,6 +131,7 @@ Mods: {
             XeniumTurretBuff: "Pewpewpewpewpewpew"
             MicroshieldCoreBuff: "A tiny shield core is defending you"
             MicroshieldDroneBuff: "A microshield drone is defending you"
+            HoloMinionBuff: "Wait, how do holograms hit things?"
             
             # Pets
             BabyRockpileBuff: "Never seen a pile of rocks dance before"

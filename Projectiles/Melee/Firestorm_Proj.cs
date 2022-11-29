@@ -9,7 +9,6 @@ using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Base;
-using rail;
 using System.Collections.Generic;
 using Terraria.Graphics.Shaders;
 

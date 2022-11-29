@@ -31,7 +31,6 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.width = 30;
             Item.height = 28;
             Item.useTime = 26;
-            Item.mana = 20;
             Item.useAnimation = 26;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;

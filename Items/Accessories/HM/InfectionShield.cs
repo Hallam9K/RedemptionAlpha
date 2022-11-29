@@ -152,7 +152,7 @@ namespace Redemption.Items.Accessories.HM
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
                             continue;
 
-                        if (npc.CountsAsACritter && Player.dontHurtCritters)
+                        if ((npc.CountsAsACritter || npc.lifeMax <= 5) && Player.dontHurtCritters)
                             continue;
 
                         float damage = 40 * Player.GetDamage(DamageClass.Melee).Multiplicative;

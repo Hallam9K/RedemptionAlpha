@@ -53,6 +53,7 @@ namespace Redemption.Globals.NPC
         public bool badtime;
         public bool holyFire;
         public bool ukonArrow;
+        public bool bInfection;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -78,6 +79,7 @@ namespace Redemption.Globals.NPC
             badtime = false;
             holyFire = false;
             ukonArrow = false;
+            bInfection = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -320,6 +322,14 @@ namespace Redemption.Globals.NPC
                 npc.lifeRegen -= arrowCount * 100;
                 if (damage < arrowCount * 50)
                     damage = arrowCount * 50;
+            }
+            if (bInfection)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+                npc.lifeRegen -= 200;
+                if (damage < 20)
+                    damage = 20;
             }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)

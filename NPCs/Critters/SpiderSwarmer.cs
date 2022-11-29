@@ -65,7 +65,7 @@ namespace Redemption.NPCs.Critters
             NPC.catchItem = (short)ModContent.ItemType<SpiderSwarmerItem>();
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive && !target.dontHurtCritters;
         public override bool? CanHitNPC(NPC target) => false;
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -158,7 +158,8 @@ namespace Redemption.NPCs.Critters
                     break;
 
                 case ActionState.Aggressive:
-                    if (NPC.ThreatenedCheck(ref runCooldown, 180))
+                    Player player = Main.player[NPC.target];
+                    if (NPC.ThreatenedCheck(ref runCooldown, 180) || player.dontHurtCritters)
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;

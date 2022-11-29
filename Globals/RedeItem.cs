@@ -19,6 +19,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Biomes;
 
 namespace Redemption.Globals
 {
@@ -333,6 +334,8 @@ namespace Redemption.Globals
         public override bool CanUseItem(Item item, Terraria.Player player)
         {
             if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
+                return false;
+            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
                 return false;
 
             return base.CanUseItem(item, player);

@@ -1,8 +1,5 @@
-using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Magic;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,8 +23,8 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.mana = 14;
             Item.width = 32;
             Item.height = 34;
-            Item.useTime = 38;
-            Item.useAnimation = 38;
+            Item.useTime = 44;
+            Item.useAnimation = 44;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.noMelee = true;
             Item.autoReuse = true;

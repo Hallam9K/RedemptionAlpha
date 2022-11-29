@@ -27,8 +27,8 @@ namespace Redemption.Projectiles.Magic
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(94, 53, 104), Color.Black), new RoundCap(), new ArrowGlowPosition(), 122f * Projectile.scale, 550f);
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(117, 10, 47), Color.Black), new RoundCap(), new ArrowGlowPosition(), 122f * Projectile.scale, 500f);
+            //tManager.CreateTrail(Projectile, new GradientTrail(new Color(94, 53, 104), Color.Black), new RoundCap(), new ArrowGlowPosition(), 122f * Projectile.scale, 550f);
+            //tManager.CreateTrail(Projectile, new GradientTrail(new Color(117, 10, 47), Color.Black), new RoundCap(), new ArrowGlowPosition(), 122f * Projectile.scale, 500f);
         }
         public override void SetDefaults()
         {
@@ -164,8 +164,8 @@ namespace Redemption.Projectiles.Magic
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(94, 53, 104), Color.Black), new RoundCap(), new DefaultTrailPosition(), 22f, 250f);
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(117, 10, 47), Color.Black), new RoundCap(), new DefaultTrailPosition(), 22f, 200f);
+            //tManager.CreateTrail(Projectile, new GradientTrail(new Color(94, 53, 104), Color.Black), new RoundCap(), new DefaultTrailPosition(), 22f, 250f);
+            //tManager.CreateTrail(Projectile, new GradientTrail(new Color(117, 10, 47), Color.Black), new RoundCap(), new DefaultTrailPosition(), 22f, 200f);
         }
         public override void AI()
         {

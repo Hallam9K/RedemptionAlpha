@@ -6,6 +6,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.GameContent;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -65,10 +66,10 @@ namespace Redemption.NPCs.Bosses.ADD
             var list = Main.projectile.Where(x => x.Hitbox.Intersects(Projectile.Hitbox));
             foreach (var proj in list)
             {
-                if (proj.active && Projectile != proj && proj.friendly && !proj.minion)
-                {
-                    proj.Kill();
-                }
+                if (!proj.active || Projectile == proj || !proj.friendly || proj.minion || proj.Redemption().ParryBlacklist)
+                    continue;
+
+                proj.Kill();
             }
         }
         private float drawTimer;
