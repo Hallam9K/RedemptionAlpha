@@ -9,7 +9,6 @@ namespace Redemption.Waters
 {
 	public class WastelandWaterStyle : ModWaterStyle
 	{
-
 		public override int ChooseWaterfallStyle() => Find<ModWaterfallStyle>("Redemption/WastelandWaterfallStyle").Slot;
 
 		public override int GetSplashDust() => Find<ModDust>("Redemption/WastelandWaterSplash").Type; 

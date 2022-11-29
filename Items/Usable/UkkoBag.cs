@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.Items.Usable
 {
@@ -34,7 +37,8 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Ukonnuoli>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Ukonnuoli>(), ModContent.ItemType<Ukonvasara>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VasaraPendant>()));
         }
         public override void PostUpdate()
         {

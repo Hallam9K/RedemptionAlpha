@@ -87,6 +87,7 @@ namespace Redemption.Globals.Player
         public bool forestCore;
         public bool infectionHeart;
         public int infectionHeartTimer;
+        public bool vasaraPendant;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -161,6 +162,7 @@ namespace Redemption.Globals.Player
             gracesGuidance = false;
             forestCore = false;
             infectionHeart = false;
+            vasaraPendant = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -204,6 +206,7 @@ namespace Redemption.Globals.Player
             badtime = false;
             infectionHeart = false;
             infectionHeartTimer = 0;
+            vasaraPendant = false;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -474,7 +477,7 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && ProjectileLists.Holy.Contains(proj.type) && crit && proj.type != ModContent.ProjectileType<Lightmass>())
+            if ((sacredCross || gracesGuidance) && ProjectileLists.Holy.Contains(proj.type) && crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -493,7 +496,7 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && ItemLists.Holy.Contains(item.type) && crit)
+            if ((sacredCross || gracesGuidance) && ItemLists.Holy.Contains(item.type) && crit && Main.rand.NextBool(2))
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -632,6 +635,15 @@ namespace Redemption.Globals.Player
             if (hairLoss)
             {
                 drawInfo.hideHair = true;
+            }
+        }
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        {
+            if (vasaraPendant && damage >= 150 && !Player.HasBuff<VasaraPendantCooldown>())
+            {
+                Player.AddBuff(ModContent.BuffType<VasaraPendantCooldown>(), 900);
+                Player.AddBuff(ModContent.BuffType<VasaraHealBuff>(), 300);
+                Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<VasaraPendant>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<VasaraPendant_Proj>(), (int)(200 * Player.GetDamage<GenericDamageClass>().Multiplicative), 0, Main.myPlayer);
             }
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)

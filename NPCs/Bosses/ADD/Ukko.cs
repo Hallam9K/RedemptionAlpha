@@ -22,6 +22,8 @@ using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Particles;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -183,7 +185,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Ukonnuoli>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Ukonnuoli>(), ModContent.ItemType<Ukonvasara>()));
 
             npcLoot.Add(notExpertRule);
         }

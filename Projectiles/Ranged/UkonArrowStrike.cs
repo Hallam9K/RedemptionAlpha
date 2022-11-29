@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.scale *= 2;
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
@@ -43,14 +44,17 @@ namespace Redemption.Projectiles.Ranged
             }
             Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
             Projectile.localAI[0]++;
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            NPC npc = Main.npc[0];
+            if (Projectile.ai[1] == 0)
+                npc = Main.npc[(int)Projectile.ai[0]];
             if (Projectile.localAI[0] == 1)
             {
-                npcType = npc.type;
+                if (Projectile.ai[1] == 0)
+                    npcType = npc.type;
                 Projectile.position.Y -= 540;
                 Projectile.alpha = 0;
             }
-            if (npc.active && npc.type == npcType && Projectile.localAI[0] < 36)
+            if (Projectile.ai[1] == 0 && npc.active && npc.type == npcType && Projectile.localAI[0] < 36)
                 Projectile.Center = npc.Center - new Vector2(0, 540);
             if (Projectile.localAI[0] == 36)
             {

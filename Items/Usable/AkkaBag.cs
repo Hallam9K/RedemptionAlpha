@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.Items.Usable
 {
@@ -34,7 +35,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<AkkaMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>(), ModContent.ItemType<Pihlajasauva>()));
         }
         public override void PostUpdate()
         {

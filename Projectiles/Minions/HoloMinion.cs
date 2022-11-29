@@ -106,7 +106,7 @@ namespace Redemption.Projectiles.Minions
                             {
                                 SoundEngine.PlaySound(SoundID.Item75, Projectile.position);
                                 int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(25, diff.ToRotation()), ProjectileID.LaserMachinegunLaser, Projectile.damage, Projectile.knockBack, player.whoAmI);
-                                Main.projectile[p].DamageType = DamageClass.Magic;
+                                Main.projectile[p].DamageType = DamageClass.Summon;
                                 Main.projectile[p].netUpdate2 = true;
                                 attackCooldown = 60;
                             }

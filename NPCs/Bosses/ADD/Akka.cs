@@ -20,6 +20,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -168,7 +169,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AkkaMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>(), ModContent.ItemType<Pihlajasauva>()));
 
             npcLoot.Add(notExpertRule);
         }

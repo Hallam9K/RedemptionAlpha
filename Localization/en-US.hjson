@@ -15,6 +15,7 @@ Mods: {
 			RevolverTossCooldown: "Revolver Cooldown"
 			NoitaBombCooldown: "Bomb Cooldown"
 			XeniumElectrolaserCooldown: "Xenium Electrolaser Cooldown"
+			VasaraPendantCooldown: "Vasara Pendant Cooldown"
             
             # Debuffs
             AntibodiesDebuff: "Xenomite Antibodies"
@@ -87,6 +88,7 @@ Mods: {
 			RevolverTossCooldown: "You can't toss your revolver"
 			NoitaBombCooldown: "You cannot use the Pommisauva"
 			XeniumElectrolaserCooldown: "The electrolaser's battery is recharging"
+			VasaraPendantCooldown: "The Vasara Pendant feels dull"
             
             # Debuffs
             AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."

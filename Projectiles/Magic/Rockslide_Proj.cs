@@ -88,7 +88,6 @@ namespace Redemption.Projectiles.Magic
         }
         public override void Kill(int timeLeft)
         {
-            Player player = Main.player[Main.myPlayer];
             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
 

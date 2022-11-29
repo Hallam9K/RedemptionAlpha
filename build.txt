@@ -1,4 +1,4 @@
-displayName = Mod of Redemption
+displayName = Mod of Redemption [BETA]
 author = Hallam & Tied
 version = 0.8
 buildIgnore = *.csproj, *.user, obj\*, bin\*, lib\*, .vs\*, *.gif, *.piskel, Unused\*

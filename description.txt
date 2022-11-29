@@ -21,11 +21,11 @@ This beta does however have:
 
 Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
 Currently, there are:
-- 852 Items
-- 150 NPCs
+- 875 Items
+- 152 NPCs
 - 11 Bosses
 - 7 Minibosses
-- 366 Tiles
+- 371 Tiles
 
 Credit to Thalzon for some of the enemy/boss designs & Pluto for Nebuleus' background
 
