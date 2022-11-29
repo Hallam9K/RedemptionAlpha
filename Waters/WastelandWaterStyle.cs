@@ -32,7 +32,7 @@ namespace Redemption.Waters
 		}
 		public override Asset<Texture2D> GetRainTexture()
 		{
-			return Request<Texture2D>("Redemption/Water/WastelandRain");
+			return Request<Texture2D>("Redemption/Waters/WastelandRain");
 		}
 	}
 }
