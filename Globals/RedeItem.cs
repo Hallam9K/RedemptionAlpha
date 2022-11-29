@@ -349,7 +349,7 @@ namespace Redemption.Globals
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { OverrideColor = Colors.RarityOrange };
-            if ((item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
+            if ((item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {
                 if (item.axe > 0)
                     tooltips.Add(axeLine);
