@@ -190,12 +190,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
-        public override bool CheckActive()
-        {
-            Player player = Main.player[NPC.target];
-            return !player.active || player.dead || (Main.dayTime && AIState is not ActionState.Overheat);
-        }
-
         public override void SendExtraAI(BinaryWriter writer)
         {
             base.SendExtraAI(writer);
@@ -253,6 +247,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
+
+            if (player.active && !player.dead && (!Main.dayTime || AIState is ActionState.Overheat))
+                NPC.DiscourageDespawn(120);
             DespawnHandler();
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 

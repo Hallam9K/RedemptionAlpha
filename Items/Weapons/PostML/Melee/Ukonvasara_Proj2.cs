@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Ukonvasara");
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 66;
             Projectile.height = 36;

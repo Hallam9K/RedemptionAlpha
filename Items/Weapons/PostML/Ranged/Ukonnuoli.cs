@@ -34,7 +34,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 485;
+            Item.damage = 495;
             Item.knockBack = 4;
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;

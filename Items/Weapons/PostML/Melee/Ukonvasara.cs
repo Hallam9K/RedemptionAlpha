@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 250;
+            Item.damage = 300;
             Item.knockBack = 6;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -94,7 +94,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj>(), damage, knockback, player.whoAmI);
                         break;
                     case 2:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj2>(), damage, knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj2>(), (int)(damage * 1.3f), knockback, player.whoAmI);
                         break;
 
                 }

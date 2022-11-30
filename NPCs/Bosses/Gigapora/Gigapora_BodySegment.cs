@@ -103,10 +103,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (!target.active || target.minion || !target.friendly || target.damage <= 0)
+                if (!target.active || !target.friendly || target.damage <= 0)
                     continue;
 
-                if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist || !NPC.Hitbox.Intersects(target.Hitbox))
+                if (target.velocity.Length() == 0 || target.ProjBlockBlacklist() || !NPC.Hitbox.Intersects(target.Hitbox))
                     continue;
 
                 if (NPC.immortal)

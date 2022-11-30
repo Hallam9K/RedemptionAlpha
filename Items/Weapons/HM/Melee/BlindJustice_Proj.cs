@@ -99,7 +99,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200)
                                 continue;
 
-                            if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Shadow.Contains(target.type) || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist)
+                            if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Shadow.Contains(target.type) || target.ProjBlockBlacklist(true))
                                 continue;
 
                             DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);

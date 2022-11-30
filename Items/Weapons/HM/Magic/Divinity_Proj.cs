@@ -121,6 +121,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
         private float godrayFade;
         public Vector2 mark;
+        private int charged;
         public override void AI()
         {
             Projectile.width = Projectile.height = (int)(40 * Projectile.scale);
@@ -155,7 +156,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             Projectile.Kill();
                             Projectile.netUpdate = true;
                         }
-                        if (Projectile.localAI[0]++ % 9 == 0)
+                        if (Projectile.localAI[0]++ % 9 == 0 && Projectile.scale < 3)
                         {
                             int mana = player.inventory[player.selectedItem].mana;
                             if (BasePlayer.ReduceMana(player, mana / 10))
@@ -166,7 +167,19 @@ namespace Redemption.Items.Weapons.HM.Magic
                         }
                         if (Projectile.scale >= 1.1f && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<Divinity_Crosshair>()))
                         {
+                            if (charged == 0)
+                            {
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
+                                charged = 1;
+                            }
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Divinity_Crosshair>(), 0, 0, player.whoAmI, Projectile.whoAmI);
+                        }
+                        if (Projectile.scale >= 3 && charged < 2)
+                        {
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                            SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
+                            charged = 2;
                         }
                         if (!player.channel)
                         {
@@ -193,7 +206,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         if (Projectile.DistanceSQ(mark) < 10 * 10)
                             Projectile.Kill();
                         else
-                            Projectile.Move(mark, 20, 1);
+                            Projectile.Move(mark, 34, 1);
                         break;
                 }
             }

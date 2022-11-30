@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Bosses.ADD
             var list = Main.projectile.Where(x => x.Hitbox.Intersects(Projectile.Hitbox));
             foreach (var proj in list)
             {
-                if (!proj.active || Projectile == proj || !proj.friendly || proj.minion || proj.Redemption().ParryBlacklist)
+                if (!proj.active || Projectile == proj || !proj.friendly || proj.ProjBlockBlacklist())
                     continue;
 
                 proj.Kill();

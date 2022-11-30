@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public int GuardPointMax;
         public override void SetDefaults()
         {
-            NPC.lifeMax = 145000;
+            NPC.lifeMax = 155000;
             NPC.damage = 120;
             NPC.defense = 35;
             NPC.knockBackResist = 0f;
@@ -526,7 +526,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer >= 90)
                                 {
                                     NPC.ai[3] = 0;
-                                    stoneskinCooldown = 10;
+                                    stoneskinCooldown = 20;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;

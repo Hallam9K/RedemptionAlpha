@@ -237,6 +237,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.extraUpdates = 1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.tileCollide = false;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         private bool boomed;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -295,7 +296,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(13), ModContent.ProjectileType<Ukonvasara_Fragments>(), Projectile.damage, 1, Main.myPlayer);
                 }
             }
-            SoundEngine.PlaySound(CustomSounds.EarthBoom, Projectile.position);
+            SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .4f }, Projectile.position);
             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 20; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,

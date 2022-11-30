@@ -25,7 +25,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 60;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 5;
+            Projectile.idStaticNPCHitCooldown = 6;
             LaserSegmentLength = 14;
             LaserWidth = 20;
             LaserEndSegmentLength = 14;

@@ -76,7 +76,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || target.Redemption().ParryBlacklist || Main.projPet[target.type])
+                                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);

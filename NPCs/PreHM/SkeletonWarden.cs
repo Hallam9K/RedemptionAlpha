@@ -187,7 +187,7 @@ namespace Redemption.NPCs.PreHM
             if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
-                if (!projectile.Redemption().TechnicallyMelee && !projectile.Redemption().ParryBlacklist && projectile.penetrate != -1)
+                if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                     projectile.Kill();
                 blocked = true;
             }
@@ -226,14 +226,14 @@ namespace Redemption.NPCs.PreHM
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile projectile = Main.projectile[i];
-                    if (!projectile.active || !projectile.friendly || projectile.Redemption().TechnicallyMelee || projectile.Redemption().ParryBlacklist)
+                    if (!projectile.active || !projectile.friendly || projectile.ProjBlockBlacklist())
                         continue;
 
                     if (NPC.frame.Y >= 13 * 64)
                     {
                         if (projectile.Colliding(projectile.Hitbox, ShieldRaisedHitbox))
                         {
-                            if (!projectile.Redemption().TechnicallyMelee && !projectile.Redemption().ParryBlacklist && projectile.penetrate != -1)
+                            if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
                                 blocked = true;
                                 NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
@@ -247,7 +247,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         if ((NPC.Center.X > projectile.Center.X && NPC.spriteDirection == -1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == 1)) && projectile.Colliding(projectile.Hitbox, ShieldHitbox))
                         {
-                            if (!projectile.Redemption().TechnicallyMelee && !projectile.Redemption().ParryBlacklist && projectile.penetrate != -1)
+                            if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
                                 blocked = true;
                                 NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);

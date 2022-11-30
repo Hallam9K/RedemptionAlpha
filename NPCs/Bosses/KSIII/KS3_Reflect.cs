@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -41,7 +42,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist)
+                if (Projectile == target || !target.active || target.damage <= 0 || !target.friendly || target.hostile || target.ProjBlockBlacklist())
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))

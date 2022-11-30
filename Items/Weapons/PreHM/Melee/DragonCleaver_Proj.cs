@@ -206,10 +206,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200)
+                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200 / 4)
                     continue;
 
-                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Fire.Contains(target.type) || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist)
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Fire.Contains(target.type) || target.ProjBlockBlacklist(true))
                     continue;
 
                 DustHelper.DrawCircle(target.Center, DustID.Torch, 1, 4, 4, nogravity: true);

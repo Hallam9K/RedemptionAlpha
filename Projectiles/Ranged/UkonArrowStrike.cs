@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -31,6 +32,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.scale *= 2;
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.frame >= 12 && Projectile.frame < 15 ? null : false;
         private int npcType;

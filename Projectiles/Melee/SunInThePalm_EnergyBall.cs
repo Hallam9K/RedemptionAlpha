@@ -77,7 +77,7 @@ namespace Redemption.Projectiles.Melee
                             if (target.damage > 160 / 4 || target.width + target.height > Projectile.width + Projectile.height)
                                 continue;
 
-                            if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || target.Redemption().ParryBlacklist || Main.projPet[target.type])
+                            if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.ProjBlockBlacklist(true))
                                 continue;
 
                             target.Redemption().DissolveTimer++;
@@ -140,6 +140,10 @@ namespace Redemption.Projectiles.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.OnFire3, 900);
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage = (int)(damage * ((Projectile.scale / 8) + 1));
         }
         public override bool PreDraw(ref Color lightColor)
         {

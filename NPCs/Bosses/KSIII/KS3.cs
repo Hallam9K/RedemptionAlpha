@@ -202,10 +202,6 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-        public override bool CheckActive()
-        {
-            return AIState <= ActionState.PhysicalAttacks;
-        }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (item.DamageType == DamageClass.Melee)
@@ -279,6 +275,8 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
+            if (AIState > ActionState.PhysicalAttacks)
+                NPC.DiscourageDespawn(120);
             Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
             Player player = Main.player[NPC.target];
 

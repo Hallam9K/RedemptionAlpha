@@ -124,7 +124,7 @@ namespace Redemption.NPCs.Friendly
                              .Add(new(NPC, "Oh,[10] hey there![10] Didn't notice you.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 219
                              .Add(new(NPC, "You haven't happened upon a boy cloaked in black,[10] have you?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 287
                              .Add(new(NPC, "Guess he didn't jump in.[30] Oh well![10] I'll head back to get him.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 320
-                             .Add(new(NPC, "I'll come back once I find him,[10] so see ya later!", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble)); // 284
+                             .Add(new(NPC, "I'll come back once I find him,[10] so ya better have a place for us to stay!", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble)); // 349
 
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
@@ -140,18 +140,18 @@ namespace Redemption.NPCs.Friendly
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
                         NPC.velocity.Y = -3;
                     }
-                    if (AITimer == 1478)
+                    if (AITimer == 1478 + 65)
                     {
                         NPC.velocity.Y = -8;
                         NPC.velocity.X = -3;
                     }
-                    if (AITimer >= 1538)
+                    if (AITimer >= 1538 + 65)
                     {
                         NPC.noTileCollide = true;
                         NPC.Move(portal.Center, 20, 30);
                         NPC.alpha += 5;
                     }
-                    if (AITimer >= 1478)
+                    if (AITimer >= 1478 + 65)
                     {
                         NPC.rotation -= 0.1f;
                         NPC.velocity.X *= 0.99f;

@@ -77,7 +77,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public int GuardPointMax;
         public override void SetDefaults()
         {
-            NPC.lifeMax = 108000;
+            NPC.lifeMax = 118000;
             NPC.damage = 115;
             NPC.defense = 50;
             NPC.knockBackResist = 0f;
@@ -461,7 +461,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
                         #region Healing Spirit
                         case 6:
-                            if (NPC.life < (int)(NPC.lifeMax * 0.6f) && healingCooldown == 0)
+                            if (NPC.life < (int)(NPC.lifeMax * 0.6f) && ukkoActive && Main.npc[(int)NPC.ai[3]].life < (int)(Main.npc[(int)NPC.ai[3]].lifeMax * 0.75f) && healingCooldown == 0)
                             {
                                 AITimer++;
                                 if (AITimer % 10 == 0 && AITimer > 20 && AITimer < 200)

@@ -199,12 +199,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
-        public override bool CheckActive()
-        {
-            Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime;
-        }
-
         public override void AI()
         {
             if (AIState >= ActionState.Idle && AIState != ActionState.Death)
@@ -215,6 +209,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC host = Main.npc[(int)NPC.ai[3]];
             DespawnHandler();
             Player player = Main.player[NPC.target];
+            if (player.active && !player.dead && !Main.dayTime)
+                NPC.DiscourageDespawn(60);
+
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
