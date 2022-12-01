@@ -180,6 +180,7 @@ namespace Redemption.WorldGeneration
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
                 }
             }
+            WorldGen.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, WIDTH, HEIGHT));
             return true;
         }
     }

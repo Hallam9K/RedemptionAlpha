@@ -139,6 +139,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 };
                 tooltips.Add(line2);
             }
+            if (AttackMode > 0)
+            {
+                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
+                tooltips.Add(axeLine);
+            }
         }
     }
 }

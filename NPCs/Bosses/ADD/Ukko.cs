@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public int GuardPointMax;
         public override void SetDefaults()
         {
-            NPC.lifeMax = 155000;
+            NPC.lifeMax = 145000;
             NPC.damage = 120;
             NPC.defense = 35;
             NPC.knockBackResist = 0f;
@@ -126,6 +126,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (projectile.type == ProjectileID.LastPrismLaser)
+                damage /= 3;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Thunder.Contains(projectile.type))
@@ -160,7 +163,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

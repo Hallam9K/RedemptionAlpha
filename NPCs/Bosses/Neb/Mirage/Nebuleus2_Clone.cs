@@ -51,7 +51,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public override void SetDefaults()
         {
             NPC.lifeMax = 427500;
-            NPC.defense = 170;
+            NPC.defense = 100;
             NPC.damage = 200;
             NPC.width = 90;
             NPC.height = 90;
@@ -72,8 +72,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);  //boss life scale in expertmode
-            NPC.damage = (int)(NPC.damage * 0.6f);  //boss damage increase in expermode
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void HitEffect(int hitDirection, double damage)
         {

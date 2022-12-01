@@ -21,8 +21,8 @@ namespace Redemption.Projectiles.Misc
         {
             Projectile.width = 12;
             Projectile.height = 20;
-            Projectile.friendly = false;
-            Projectile.hostile = true;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
             Projectile.penetrate = 1;
             Projectile.DamageType = DamageClass.Generic;
             Projectile.tileCollide = true;

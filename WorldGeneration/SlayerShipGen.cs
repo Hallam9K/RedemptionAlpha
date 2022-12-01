@@ -90,6 +90,7 @@ namespace Redemption.WorldGeneration
             ShipChest(origin.X + 104, origin.Y + 47);
             ShipChest(origin.X + 102, origin.Y + 47);
             ShipChest(origin.X + 100, origin.Y + 47);
+            WorldGen.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, 133, 58));
             return true;
         }
         public static void ShipChest(int x, int y)

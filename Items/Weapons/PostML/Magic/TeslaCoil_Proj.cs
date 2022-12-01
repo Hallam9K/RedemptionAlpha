@@ -121,7 +121,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                             continue;
 
                                         int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
-                                        BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                                        BaseAI.DamageNPC(npc, Projectile.damage + (npc.defense / 2), Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                                     }
                                 }
                                 glow += Main.rand.Next(-5, 6);

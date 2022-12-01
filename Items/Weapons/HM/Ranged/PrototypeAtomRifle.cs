@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 144;
+            Item.damage = 94;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 64;
             Item.height = 30;
@@ -42,6 +42,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
+        public override bool CanUseItem(Player player)
+        {
+            return player.GetModPlayer<EnergyPlayer>().statEnergy >= 4;
+        }
 
         public override Vector2? HoldoutOffset()
         {
@@ -60,16 +64,13 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<EnergyPlayer>().statEnergy >= 4)
-            {
-                player.GetModPlayer<EnergyPlayer>().statEnergy -= 4;
-                int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PlasmaRound>(), damage, knockback, player.whoAmI);
-                Main.projectile[proj].hostile = false;
-                Main.projectile[proj].friendly = true;
-                Main.projectile[proj].DamageType = DamageClass.Ranged;
-                Main.projectile[proj].tileCollide = true;
-                Main.projectile[proj].netUpdate2 = true;
-            }
+            player.GetModPlayer<EnergyPlayer>().statEnergy -= 4;
+            int proj = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<PlasmaRound>(), damage, knockback, player.whoAmI);
+            Main.projectile[proj].hostile = false;
+            Main.projectile[proj].friendly = true;
+            Main.projectile[proj].DamageType = DamageClass.Ranged;
+            Main.projectile[proj].tileCollide = true;
+            Main.projectile[proj].netUpdate2 = true;
             return false;
         }
 
