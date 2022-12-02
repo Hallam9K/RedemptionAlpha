@@ -52,10 +52,6 @@ namespace Redemption.NPCs.Bosses.ADD
             if (originPos2.Y >= 1024)
                 originPos2.Y = 0;
             Player player = Main.LocalPlayer;
-            float distX = player.Center.X - Projectile.Center.X;
-            distX = Math.Abs(distX);
-            if (distX > 700) distX = 700;
-            visibility = 1f * (700 - distX) / 700;
 
             if (Projectile.ai[1] > 0)
             {
@@ -70,10 +66,10 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.Center = new Vector2(newX, player.Center.Y);
             }
         }
-        float visibility = 0f;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D fog = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Fog").Value;
             int projHeight = texture.Height;
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -85,8 +81,9 @@ namespace Redemption.NPCs.Bosses.ADD
 
             for (int i = 0; i < 20; i++)
             {
-                Main.EntitySpriteDraw(texture, drawPos + originPos2 - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * visibility, 0, origin, Projectile.scale, effects, 0);
-                Main.EntitySpriteDraw(texture, drawPos - originPos2 + new Vector2(50 * Projectile.spriteDirection, 0) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * 0.6f * visibility, 0, origin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(fog, drawPos - originPos2 + new Vector2(Projectile.spriteDirection == -1 ? 50 : -1000, 0) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 0, 1000, projHeight), Projectile.GetAlpha(Color.Gray), 0, origin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(texture, drawPos + originPos2 - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(Color.Gray), 0, origin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(texture, drawPos - originPos2 + new Vector2(50 * Projectile.spriteDirection, 0) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(Color.Gray) * 0.6f, 0, origin, Projectile.scale, effects, 0);
                 drawPos.Y -= projHeight;
             }
             return false;
@@ -131,10 +128,6 @@ namespace Redemption.NPCs.Bosses.ADD
             if (originPos2.X >= 1024)
                 originPos2.X = 0;
             Player player = Main.LocalPlayer;
-            float distY = player.Center.Y - Projectile.Center.Y;
-            distY = Math.Abs(distY);
-            if (distY > 700) distY = 700;
-            visibility = 1f * (700 - distY) / 700;
 
             if (Projectile.ai[1] > 0)
             {
@@ -149,12 +142,12 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.Center = new Vector2(player.Center.X, newY);
             }
         }
-        float visibility = 0f;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D fog = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Fog").Value;
             int projHeight = texture.Height;
-            var effects = Projectile.ai[1] >= 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            var effects = Projectile.ai[1] >= 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Vector2 drawPos = originPos;
             drawPos.X += projHeight * 10;
@@ -164,8 +157,9 @@ namespace Redemption.NPCs.Bosses.ADD
 
             for (int i = 0; i < 20; i++)
             {
-                Main.EntitySpriteDraw(texture, drawPos + originPos2 - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * visibility, MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
-                Main.EntitySpriteDraw(texture, drawPos - originPos2 + new Vector2(0, 50 * Projectile.ai[1] >= 0 ? 1 : -1) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(lightColor) * 0.6f * visibility, MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(fog, drawPos - originPos2 - new Vector2(0, Projectile.ai[1] >= 0 ? 1000 : -100) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 0, 1000, projHeight), Projectile.GetAlpha(Color.Gray), MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(texture, drawPos + originPos2 - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(Color.Gray), MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(texture, drawPos - originPos2 + new Vector2(0, 50 * (Projectile.ai[1] >= 0 ? 1 : -1)) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, Projectile.GetAlpha(Color.Gray) * 0.6f, MathHelper.PiOver2, origin, Projectile.scale, effects, 0);
                 drawPos.X -= projHeight;
             }
             return false;

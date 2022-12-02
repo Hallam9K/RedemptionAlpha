@@ -1,4 +1,7 @@
+using Redemption.Globals;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.DamageClasses
@@ -24,5 +27,16 @@ namespace Redemption.DamageClasses
             player.GetCritChance<RitualistClass>() += 4;
         }
         public override bool UseStandardCritCalcs => true;
+    }
+    public class RitItem : GlobalItem
+    {
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (!item.CountsAsClass<RitualistClass>())
+                return;
+
+            TooltipLine ritLine = new(Mod, "RitLine", "NOTE: This class is not yet complete") { OverrideColor = Colors.RarityAmber };
+            tooltips.Add(ritLine);
+        }
     }
 }

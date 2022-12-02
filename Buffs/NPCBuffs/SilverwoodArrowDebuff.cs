@@ -11,7 +11,8 @@ namespace Redemption.Buffs.NPCBuffs
 		{
 			DisplayName.SetDefault("Silverwood Arrow");
 			Description.SetDefault("yowie!");
-		}
+            Main.debuff[Type] = true;
+        }
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{

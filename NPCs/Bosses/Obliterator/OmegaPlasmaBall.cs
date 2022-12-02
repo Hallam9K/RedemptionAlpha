@@ -55,10 +55,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile proj = Main.projectile[i];
-                    if (!proj.active || proj.type == Type || proj.hostile || proj.minion || !proj.friendly || proj.damage < 5)
+                    if (!proj.active || proj.type == Type || proj.hostile || !proj.friendly || proj.damage < 5)
                         continue;
 
-                    if (proj.Redemption().TechnicallyMelee || !Projectile.Hitbox.Intersects(proj.Hitbox) || proj.Redemption().ParryBlacklist)
+                    if (!Projectile.Hitbox.Intersects(proj.Hitbox) || proj.ProjBlockBlacklist())
                         continue;
 
                     SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);

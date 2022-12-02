@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Terraria.Graphics.Shaders;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -119,8 +120,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.SolarDye);
+
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 

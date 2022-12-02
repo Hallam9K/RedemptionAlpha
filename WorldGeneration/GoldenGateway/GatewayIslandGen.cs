@@ -176,6 +176,7 @@ namespace Redemption.WorldGeneration
                         WorldGen.KillTile(i, j, true);
                 }
             }
+            WorldGen.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, WIDTH, HEIGHT));
             return true;
         }
     }

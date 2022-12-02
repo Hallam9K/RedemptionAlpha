@@ -7,6 +7,8 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using System;
 using Terraria.Audio;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -56,6 +58,13 @@ namespace Redemption.NPCs.Friendly
 
             if (Vector2.Distance(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), NPC.Center) <= Main.screenWidth / 2 + 100)
             {
+                if (NPC.ai[0]++ % 20 == 0)
+                {
+                    Vector2 spawnPos = new Vector2(0f, -50f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+
+                    ParticleManager.NewParticle(NPC.Center + spawnPos, spawnPos.RotatedBy(Main.rand.NextFloat(-10f, 10f)), new GathuramPortal_EnergyGather(), Color.White, 1f, NPC.Center.X, NPC.Center.Y);
+                }
+
                 RotTime += (float)Math.PI / 120;
                 RotTime *= 1.01f;
                 if (RotTime >= Math.PI) RotTime = 0;

@@ -72,7 +72,6 @@ namespace Redemption.NPCs.Critters
         {
             NPC.width = 26;
             NPC.height = 22;
-            NPC.defense = 0;
             NPC.lifeMax = 5;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;

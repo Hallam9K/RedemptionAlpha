@@ -5,9 +5,11 @@ using Redemption.Biomes;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
 using System;
+using System.Security.AccessControl;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Lizzy
@@ -23,18 +25,19 @@ namespace Redemption.Items.Donator.Lizzy
 
         public override void SetDefaults()
         {
+            Projectile.CloneDefaults(ProjectileID.BabyDino);
             Projectile.width = 24;
             Projectile.height = 32;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
+            AIType = ProjectileID.BabyDino;
         }
-
-        public override void AI()
+        private int timer;
+        public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
-            CheckActive(player);
-            Projectile.LookByVelocity();
+            player.dino = false;
 
             int KS3ID = NPC.FindFirstNPC(ModContent.NPCType<KS3Sitting>());
             if (KS3ID >= 0 && player.DistanceSQ(Main.npc[KS3ID].Center) < 300 * 300)
@@ -45,60 +48,77 @@ namespace Redemption.Items.Donator.Lizzy
                 Projectile.Move(sleepPos, 8, 1);
                 if (Projectile.Center == sleepPos)
                 {
-                    if (Projectile.localAI[0]++ % 600 == 0)
+                    if (timer++ % 600 == 0)
                         EmoteBubble.NewBubble(89, new WorldUIAnchor(Projectile), 180);
                     Projectile.spriteDirection = -1;
-                    Projectile.rotation = 0;
+                    rotation = 0;
                     Projectile.velocity *= 0;
-                    Projectile.frame = 8;
+                    frameY = 8;
                 }
                 else
                 {
-                    Projectile.localAI[0] = 0;
-                    Projectile.rotation = Projectile.velocity.X * 0.05f;
-                    if (Projectile.frame < 9)
-                        Projectile.frame = 9;
-                    if (Projectile.frameCounter++ >= 5)
+                    timer = 0;
+                    rotation = Projectile.velocity.X * 0.05f;
+                    if (frameY < 9)
+                        frameY = 9;
+                    if (frameCounter++ >= 5)
                     {
-                        Projectile.frameCounter = 0;
-                        if (++Projectile.frame > 10)
-                            Projectile.frame = 9;
+                        frameCounter = 0;
+                        if (++frameY > 10)
+                            frameY = 9;
                     }
                 }
-                return;
+                return false;
             }
-            if (Projectile.ai[0] != 0 && Projectile.ai[0] == 1)
+            if (Projectile.ai[0] == 1)
             {
                 if (Projectile.ai[0] == 1)
-                    Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                    rotation = Projectile.velocity.X * 0.1f;
                 else
-                    Projectile.rotation = Projectile.velocity.X * 0.05f;
+                    rotation = Projectile.velocity.X * 0.05f;
 
-                if (Projectile.frame < 9)
-                    Projectile.frame = 9;
-                if (Projectile.frameCounter++ >= 5)
+                if (frameY < 9)
+                    frameY = 9;
+                if (frameCounter++ >= 5)
                 {
-                    Projectile.frameCounter = 0;
-                    if (++Projectile.frame > 10)
-                        Projectile.frame = 9;
+                    frameCounter = 0;
+                    if (++frameY > 10)
+                        frameY = 9;
                 }
             }
             else
             {
-                Projectile.rotation = 0;
+                rotation = 0;
 
                 if (Projectile.velocity.X == 0)
-                    Projectile.frame = 0;
+                    frameY = 0;
                 else
                 {
-                    Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X * 0.5f) + 1;
-                    if (Projectile.frameCounter >= 6)
+                    frameCounter += (int)Math.Abs(Projectile.velocity.X * 0.5f) + 1;
+                    if (frameCounter >= 6)
                     {
-                        Projectile.frameCounter = 0;
-                        if (++Projectile.frame >= 7)
-                            Projectile.frame = 1;
+                        frameCounter = 0;
+                        if (++frameY >= 7)
+                            frameY = 1;
                     }
                 }
+            }
+            return true;
+        }
+
+        public override void AI()
+        {
+            Player player = Main.player[Projectile.owner];
+            CheckActive(player);
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (!npc.active || npc.boss || npc.immortal)
+                    continue;
+                if (Projectile.DistanceSQ(npc.Center) > 140 * 140)
+                    continue;
+                npc.AddBuff(BuffID.Lovestruck, 10);
             }
 
             if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
@@ -107,10 +127,10 @@ namespace Redemption.Items.Donator.Lizzy
                 Projectile.velocity *= 0.1f;
                 Projectile.netUpdate = true;
             }
-
-            BaseAI.AIMinionFighter(Projectile, ref Projectile.ai, player, true, 6, 8, 60, 1000, 2000, 0.1f, 6, 10);
         }
-
+        private int frameY;
+        private int frameCounter;
+        private float rotation;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -118,24 +138,24 @@ namespace Redemption.Items.Donator.Lizzy
             Texture2D swordOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_SwordOverlay").Value;
             Texture2D xmasOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_XmasOverlay").Value;
             int height = texture.Height / 11;
-            int y = height * Projectile.frame;
+            int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);
             Rectangle rectSword = new(0, y, swordOverlay.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             Vector2 drawOriginSword = new(swordOverlay.Width / 2, Projectile.height / 2);
             Vector2 center = new(Projectile.Center.X, Projectile.Center.Y - 18);
-            var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (RedeHelper.BossActive())
-                Main.EntitySpriteDraw(swordOverlay, center - Main.screenPosition, new Rectangle?(rectSword), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOriginSword, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(swordOverlay, center - Main.screenPosition, new Rectangle?(rectSword), Projectile.GetAlpha(lightColor), rotation, drawOriginSword, Projectile.scale, effects, 0);
 
-            Main.EntitySpriteDraw(texture, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), rotation, drawOrigin, Projectile.scale, effects, 0);
 
             if (Main.xMas)
-                Main.EntitySpriteDraw(xmasOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(xmasOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), rotation, drawOrigin, Projectile.scale, effects, 0);
 
             if (Main.player[Projectile.owner].InModBiome<WastelandPurityBiome>())
-                Main.EntitySpriteDraw(maskOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(maskOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
 

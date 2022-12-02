@@ -245,7 +245,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lab Access Panel - Master");
-            Tooltip.SetDefault("Opens up all sectors of the lab");
+            Tooltip.SetDefault("Disables all lasers in the lab");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
@@ -256,6 +256,7 @@ namespace Redemption.Items.Usable
                 Main.NewText("Laser security already deactivated", Color.Cyan);
                 return true;
             }
+            RedeWorld.labSafe = true;
             LabArea.labAccess[5] = true;
             string status = "All laser security systems have been deactivated";
             if (Main.netMode == NetmodeID.Server)

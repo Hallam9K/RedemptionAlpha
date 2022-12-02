@@ -669,7 +669,28 @@ namespace Redemption.WorldGeneration
                         Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveClear", AssetRequestMode.ImmediateLoad).Value;
 
                         Point origin = new(placeX - 34, placeY - 11);
+                        int oldX = origin.X;
+                        while (!WorldGen.structures.CanPlace(new Rectangle(origin.X, origin.Y, 60, 82)) && origin.X < Main.maxTilesX - 100)
+                        {
+                            origin.X++;
+                        }
+                        if (oldX != origin.X)
+                        {
+                            placeY = (int)Main.worldSurface - 160;
+                            while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
+                            {
+                                placeY++;
+                            }
+                            if (placeY > Main.worldSurface)
+                                continue;
+                            tile = Framing.GetTileSafely(placeX, placeY);
+                            if (tile.TileType != TileID.Grass)
+                                continue;
+                            if (!CheckFlat(placeX, placeY, 10, 2))
+                                continue;
 
+                            origin = new(placeX - 34, placeY - 11);
+                        }
                         bool whitelist = false;
                         for (int i = 0; i <= 60; i++)
                         {
@@ -1100,6 +1121,7 @@ namespace Redemption.WorldGeneration
                                 WorldGen.PlacePot(i, j - 1);
                         }
                     }
+                    WorldGen.structures.AddProtectedStructure(new Rectangle(HallPoint.X, HallPoint.Y, 84, 43));
                     #endregion
                 }));
                 tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Tied Lair", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -1195,7 +1217,11 @@ namespace Redemption.WorldGeneration
 
                     origin.Y = GetTileFloorIgnoreTree(origin.X, origin.Y, true);
                     origin.X -= 60;
-
+                    while (!WorldGen.structures.CanPlace(new Rectangle(origin.X, origin.Y, 133, 58)) && origin.X < Main.maxTilesX - 150)
+                    {
+                        origin.X++;
+                        origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
+                    }
                     WorldUtils.Gen(origin, new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
                     {
                         new Actions.SetLiquid(0, 0)
@@ -1366,7 +1392,7 @@ namespace Redemption.WorldGeneration
                     LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
 
                 Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
-                if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && 
+                if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus &&
                     Main.LocalPlayer.DistanceSQ(slayerSittingPos) < 2000 * 2000 && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
                     LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
             }

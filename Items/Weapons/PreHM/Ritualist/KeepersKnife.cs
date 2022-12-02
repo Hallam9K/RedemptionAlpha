@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             DisplayName.SetDefault("Keeper's Knife");
             Tooltip.SetDefault("Hitting enemies inflict Necrotic Gouge\n" +
-                "Deals double damage to undead" +
+                "Deals double damage to undead and skeletons" +
                 "\n'O murderer, let my knife pierce true'");
 
             SacrificeTotal = 1;

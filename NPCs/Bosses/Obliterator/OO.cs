@@ -26,6 +26,9 @@ using Redemption.Items.Usable;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -160,13 +163,16 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
 
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ToasterPet>(), 4));
+
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OOMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>(), ModContent.ItemType<SunInThePalm>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 4, 8));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoboBrain>(), 1, 1, 2));
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -182,12 +188,6 @@ namespace Redemption.NPCs.Bosses.Obliterator
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
-        }
-
-        public override bool CheckActive()
-        {
-            Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -247,6 +247,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
+
+            if (player.active && !player.dead && (!Main.dayTime || AIState is ActionState.Overheat))
+                NPC.DiscourageDespawn(120);
             DespawnHandler();
             Lighting.AddLight(NPC.Center, 0.7f, 0.4f, 0.4f);
 

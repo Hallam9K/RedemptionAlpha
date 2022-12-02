@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Usable.Summons
 {
     public class OmegaTransmitter : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Transmitter");
@@ -30,8 +30,8 @@ namespace Redemption.Items.Usable.Summons
         }
 
         public override void SetDefaults()
-		{
-			Item.width = 18;
+        {
+            Item.width = 18;
             Item.height = 40;
             Item.maxStack = 1;
             Item.rare = ItemRarityID.Red;
@@ -53,7 +53,7 @@ namespace Redemption.Items.Usable.Summons
                 Item.UseSound = SoundID.Item44;
 
             return player.altFunctionUse == 2 || (!Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>()) && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()) && !NPC.AnyNPCs(ModContent.NPCType<Porakone>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()));
-		}
+        }
         private int Choice;
         public override bool? UseItem(Player player)
         {
@@ -179,7 +179,11 @@ namespace Redemption.Items.Usable.Summons
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             bool glowing = false;
-            if ((NPC.downedPlantBoss && !RedeBossDowned.downedOmega1) || (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2) || (NPC.downedMoonlord && !RedeBossDowned.downedOmega3))
+            if (NPC.downedPlantBoss && !RedeBossDowned.downedOmega1)
+                glowing = true;
+            if (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2)
+                glowing = true;
+            if (NPC.downedMoonlord && !RedeBossDowned.downedOmega3)
                 glowing = true;
             if (glowing)
             {
@@ -201,7 +205,11 @@ namespace Redemption.Items.Usable.Summons
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             bool glowing = false;
-            if ((NPC.downedPlantBoss && !RedeBossDowned.downedOmega1) || (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2) || (NPC.downedMoonlord && !RedeBossDowned.downedOmega3))
+            if (NPC.downedPlantBoss && !RedeBossDowned.downedOmega1)
+                glowing = true;
+            if (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2)
+                glowing = true;
+            if (NPC.downedMoonlord && !RedeBossDowned.downedOmega3)
                 glowing = true;
             if (glowing)
             {

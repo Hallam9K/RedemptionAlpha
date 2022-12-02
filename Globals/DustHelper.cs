@@ -153,7 +153,7 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static void DrawParticleStar(Vector2 position, Particle particle, Color color, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotationAmount = -1, int ai1 = 0)
+        public static void DrawParticleStar(Vector2 position, Particle particle, Color color, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotationAmount = -1, float ai0 = 0.45f, int ai1 = 0)
         {
             float rot;
             if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -168,7 +168,7 @@ namespace Redemption.Globals
                 float x = (float)Math.Cos(k + rand);
                 float y = (float)Math.Sin(k + rand);
                 float mult = (Math.Abs((k * (pointAmount / 2) % (float)Math.PI) - (float)Math.PI / 2) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
-                ParticleManager.NewParticle(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, particle, color, dustSize, 0, ai1);
+                ParticleManager.NewParticle(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, particle, color, dustSize, ai0, ai1);
             }
         }
     }

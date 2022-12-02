@@ -55,6 +55,8 @@ namespace Redemption.Globals.NPC
         public bool sandDust;
         public bool badtime;
         public bool holyFire;
+        public bool ukonArrow;
+        public bool bInfection;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -82,6 +84,8 @@ namespace Redemption.Globals.NPC
             sandDust = false;
             badtime = false;
             holyFire = false;
+            ukonArrow = false;
+            bInfection = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -330,6 +334,30 @@ namespace Redemption.Globals.NPC
                 if (damage < 10)
                     damage = 10;
             }
+            if (ukonArrow)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                int arrowCount = 0;
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.type == ModContent.ProjectileType<UkonvasaraArrow>() && p.ai[0] == 1f && p.ai[1] == npc.whoAmI)
+                        arrowCount++;
+                }
+                npc.lifeRegen -= arrowCount * 100;
+                if (damage < arrowCount * 50)
+                    damage = arrowCount * 50;
+            }
+            if (bInfection)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+                npc.lifeRegen -= 200;
+                if (damage < 20)
+                    damage = 20;
+            }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
@@ -400,14 +428,14 @@ namespace Redemption.Globals.NPC
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
             if (infected)
-                drawColor = new Color(32, 158, 88);
+                drawColor = Color.Lerp(drawColor, new Color(32, 158, 88), 0.2f);
             if (infested)
-                drawColor = new Color(197, 219, 171);
+                drawColor = Color.Lerp(drawColor, new Color(197, 219, 171), 0.2f);
             if (rallied)
-                drawColor = new Color(200, 150, 150);
+                drawColor = Color.Lerp(drawColor, new Color(200, 150, 150), 0.2f);
             if (pureChill)
             {
-                drawColor = new Color(180, 220, 220);
+                drawColor = Color.Lerp(drawColor, new Color(180, 220, 220), 0.3f);
                 if (Main.rand.NextBool(14))
                 {
                     int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<SnowflakeDust>(), newColor: Color.White);
@@ -436,7 +464,7 @@ namespace Redemption.Globals.NPC
             }
             if (spiderSwarmed)
             {
-                if (Main.rand.NextBool(10)&& npc.alpha < 200)
+                if (Main.rand.NextBool(10) && npc.alpha < 200)
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<SpiderSwarmerDust>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
@@ -444,7 +472,7 @@ namespace Redemption.Globals.NPC
             }
             if (dragonblaze)
             {
-                drawColor = new Color(220, 150, 150);
+                drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
                 if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
                     ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
@@ -462,7 +490,7 @@ namespace Redemption.Globals.NPC
             }
             if (blackHeart)
             {
-                if (Main.rand.NextBool(3)&& npc.alpha < 200)
+                if (Main.rand.NextBool(3) && npc.alpha < 200)
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<VoidFlame>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
@@ -511,7 +539,7 @@ namespace Redemption.Globals.NPC
             if (holyFire)
             {
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, 0, 1);
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
             }
         }
 

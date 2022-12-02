@@ -24,6 +24,9 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -142,12 +145,20 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (!LabArea.labAccess[5])
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
 
+            if (!RedeBossDowned.downedPZ && RedeBossDowned.downedGGBossFirst == 0)
+                RedeBossDowned.downedGGBossFirst = 1;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedPZ, -1);
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
+        }
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (RedeBossDowned.downedGGBossFirst > 1)
+                damage *= .85f;
+            return true;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -162,7 +173,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
         }
         public override void BossLoot(ref string name, ref int potionType)

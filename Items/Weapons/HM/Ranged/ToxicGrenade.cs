@@ -7,15 +7,15 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Weapons.HM.Ranged
 {
     public class ToxicGrenade : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Tooltip.SetDefault("Throw a grenade that leaves behind a radioactive cloud");
             SacrificeTotal = 99;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.width = 18;
             Item.height = 18;
             Item.damage = 60;
@@ -35,6 +35,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shoot = ModContent.ProjectileType<ToxicGrenade_Proj>();
             Item.shootSpeed = 11f;
             Item.ammo = Item.type;
+        }
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+            if (!Main.hardMode)
+                damage.Base -= 12;
         }
         public override void AddRecipes()
         {

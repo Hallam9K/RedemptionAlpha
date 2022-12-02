@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.tileCollide = true;
             Projectile.timeLeft = 120;
         }
-        public override bool? CanHitNPC(NPC target) => Projectile.frame <= 3;
+        public override bool? CanHitNPC(NPC target) => Projectile.frame <= 3 ? null : false;
         public override void AI()
         {
             if (Projectile.timeLeft > 90)

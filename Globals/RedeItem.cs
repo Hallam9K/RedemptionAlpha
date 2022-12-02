@@ -19,6 +19,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Biomes;
 
 namespace Redemption.Globals
 {
@@ -319,7 +320,6 @@ namespace Redemption.Globals
 
         readonly int[] bannedArenaItems = new int[]
         {
-            ItemID.RodofDiscord,
             ItemID.IceRod,
             ItemID.PortalGun,
             ItemID.MagicMirror,
@@ -335,6 +335,8 @@ namespace Redemption.Globals
         {
             if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
                 return false;
+            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
+                return false;
 
             return base.CanUseItem(item, player);
         }
@@ -347,7 +349,7 @@ namespace Redemption.Globals
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { OverrideColor = Colors.RarityOrange };
-            if ((item.CountsAsClass(DamageClass.Melee) && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
+            if ((item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {
                 if (item.axe > 0)
                     tooltips.Add(axeLine);

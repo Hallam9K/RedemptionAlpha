@@ -78,7 +78,7 @@ namespace Redemption.Globals.Player
         public bool lacerated;
         public bool shadevision;
         public bool shieldGenerator;
-        public int shieldGeneratorLife = 400;
+        public int shieldGeneratorLife = 200;
         public int shieldGeneratorCD;
         public float shieldGeneratorAlpha;
         public bool holyFire;
@@ -93,6 +93,9 @@ namespace Redemption.Globals.Player
         public bool shellNecklace;
         public bool gracesGuidance;
         public bool forestCore;
+        public bool infectionHeart;
+        public int infectionHeartTimer;
+        public bool vasaraPendant;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -172,6 +175,8 @@ namespace Redemption.Globals.Player
             shellNecklace = false;
             gracesGuidance = false;
             forestCore = false;
+            infectionHeart = false;
+            vasaraPendant = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {
@@ -214,6 +219,9 @@ namespace Redemption.Globals.Player
             lacerated = false;
             sandDust = false;
             badtime = false;
+            infectionHeart = false;
+            infectionHeartTimer = 0;
+            vasaraPendant = false;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -304,6 +312,14 @@ namespace Redemption.Globals.Player
                     trappedSoulBoost = 0;
                     Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<TrappedSoulBauble>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<SoulShockwave_Proj>(), 0, 0, Main.myPlayer);
                     trappedSoulTimer = 0;
+                }
+            }
+            if (infectionHeart)
+            {
+                if (infectionHeartTimer++ >= 300)
+                {
+                    Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<HeartOfInfection>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<InfectionShockwave_Proj>(), 0, 0, Main.myPlayer);
+                    infectionHeartTimer = 0;
                 }
             }
         }
@@ -444,7 +460,7 @@ namespace Redemption.Globals.Player
         {
             if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                 target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
-            if (leatherSheath && target.life >= target.lifeMax)
+            if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
                 crit = true;
 
             damage = (int)(damage * TrueMeleeDamage);
@@ -455,7 +471,7 @@ namespace Redemption.Globals.Player
             {
                 if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                     target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
-                if (leatherSheath && target.life >= target.lifeMax)
+                if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
                     crit = true;
 
                 damage = (int)(damage * TrueMeleeDamage);
@@ -490,7 +506,7 @@ namespace Redemption.Globals.Player
                         shadowBinderCharge += 1;
                 }
             }
-            if ((sacredCross || gracesGuidance) && ProjectileLists.Holy.Contains(proj.type) && crit && proj.type != ModContent.ProjectileType<Lightmass>())
+            if ((sacredCross || gracesGuidance) && ProjectileLists.Holy.Contains(proj.type) && crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -523,7 +539,7 @@ namespace Redemption.Globals.Player
                         shadowBinderCharge += 1;
                 }
             }
-            if ((sacredCross || gracesGuidance) && ItemLists.Holy.Contains(item.type) && crit)
+            if ((sacredCross || gracesGuidance) && ItemLists.Holy.Contains(item.type) && crit && Main.rand.NextBool(2))
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -661,7 +677,23 @@ namespace Redemption.Globals.Player
             if (holyFire)
             {
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, 0, 1);
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
+            }
+        }
+        public override void HideDrawLayers(PlayerDrawSet drawInfo)
+        {
+            if (hairLoss)
+            {
+                drawInfo.hideHair = true;
+            }
+        }
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        {
+            if (vasaraPendant && damage >= 150 && !Player.HasBuff<VasaraPendantCooldown>())
+            {
+                Player.AddBuff(ModContent.BuffType<VasaraPendantCooldown>(), 900);
+                Player.AddBuff(ModContent.BuffType<VasaraHealBuff>(), 300);
+                Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<VasaraPendant>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<VasaraPendant_Proj>(), (int)(200 * Player.GetDamage<GenericDamageClass>().Multiplicative), 0, Main.myPlayer);
             }
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
@@ -684,9 +716,9 @@ namespace Redemption.Globals.Player
                     shieldGeneratorAlpha = 0;
                     shieldGenerator = false;
                     shieldGeneratorCD = 3600;
-                    damage *= 3;
+                    damage *= 2;
                     damage -= shieldGeneratorLife;
-                    shieldGeneratorLife = 400;
+                    shieldGeneratorLife = 200;
                     for (int k = 0; k < 30; k++)
                     {
                         Vector2 vector;

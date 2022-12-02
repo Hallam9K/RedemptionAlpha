@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,6 +41,17 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ModContent.ProjectileType<OOFingergun_Proj>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<RoboBrain>())
+                .AddIngredient(ModContent.ItemType<OmegaPowerCell>(), 2)
+                .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 8)
+                .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
+                .AddIngredient(ModContent.ItemType<Plating>(), 4)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

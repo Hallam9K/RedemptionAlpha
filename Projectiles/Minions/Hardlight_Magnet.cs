@@ -86,7 +86,7 @@ namespace Redemption.Projectiles.Minions
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile target = Main.projectile[i];
-                    if (!target.active || target.width >= 40 || target.height >= 40 || Projectile.DistanceSQ(target.Center) >= 200 * 200 || !target.hostile || target.damage <= 0 || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist)
+                    if (!target.active || target.width >= 40 || target.height >= 40 || Projectile.DistanceSQ(target.Center) >= 200 * 200 || !target.hostile || target.damage <= 0 || target.ProjBlockBlacklist())
                         continue;
 
                     if (Projectile.owner == Main.myPlayer)

@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Enums;
 using System;
 using ReLogic.Content;
+using Terraria.Localization;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -37,8 +40,8 @@ namespace Redemption.Tiles.Furniture.Misc
 		{
 			Main.tileShine[Type] = 400;
 			Main.tileFrameImportant[Type] = true;
-
-			TileObjectData.newTile.Width = 12;
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileObjectData.newTile.Width = 12;
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
 			TileObjectData.newTile.UsesCustomCanPlace = true;

@@ -35,6 +35,10 @@ namespace Redemption.Globals
         {
             return npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3) || npc.HasBuff(BuffID.ShadowFlame) || npc.HasBuff(BuffID.CursedInferno) || npc.HasBuff(BuffID.Frostburn) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff<HolyFireDebuff>() || npc.HasBuff<DragonblazeDebuff>();
         }
+        public static bool ProjBlockBlacklist(this Projectile proj, bool countHoming = false)
+        {
+            return proj.minion || proj.Redemption().TechnicallyMelee || proj.Redemption().ParryBlacklist || Main.projPet[proj.type] || proj.sentry || (countHoming && ProjectileID.Sets.CultistIsResistantTo[proj.type]);
+        }
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
 
@@ -1041,6 +1045,15 @@ namespace Redemption.Globals
                 }
             }
 
+            return false;
+        }
+        public static bool NPCHasAnyDebuff(this Terraria.NPC npc)
+        {
+            for (int i = 0; i < BuffLoader.BuffCount; i++)
+            {
+                if (npc.HasBuff(i) && (Main.debuff[i] || npc.HasBuff(BuffID.BetsysCurse)|| npc.HasBuff(BuffID.Daybreak)|| npc.HasBuff(BuffID.Frostburn2)|| npc.HasBuff(BuffID.OnFire3)|| npc.HasBuff(BuffID.ShadowFlame)))
+                    return true;
+            }
             return false;
         }
 

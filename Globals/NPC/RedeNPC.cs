@@ -46,6 +46,7 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.Items.Donator.Lordfunnyman;
 
 namespace Redemption.Globals.NPC
 {
@@ -272,7 +273,7 @@ namespace Redemption.Globals.NPC
             }
 
             // Decapitation
-            if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage >= 4 && item.useStyle == ItemUseStyleID.Swing && NPCLists.SkeletonHumanoid.Contains(npc.type))
+            if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && NPCLists.SkeletonHumanoid.Contains(npc.type))
             {
                 if (Main.rand.NextBool(200) && !ItemLists.BluntSwing.Contains(item.type))
                 {
@@ -503,7 +504,7 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(c) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
-                if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                if (ItemLists.Nature.Contains(item.type) && npc.NPCHasAnyDebuff() && !RedeHelper.HasFireDebuff(npc))
                 {
                     int c = 6;
                     if (player.RedemptionPlayerBuff().shellNecklace)
@@ -567,7 +568,7 @@ namespace Redemption.Globals.NPC
                     if (Main.rand.NextBool(c) && npc.life <= 0 && npc.lifeMax > 5)
                         Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<ShadowFuel>(), noGrabDelay: true);
                 }
-                if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyBuff() && !RedeHelper.HasFireDebuff(npc))
+                if (ProjectileLists.Nature.Contains(projectile.type) && npc.NPCHasAnyDebuff() && !RedeHelper.HasFireDebuff(npc))
                 {
                     int c = 6;
                     if (Main.player[projectile.owner].RedemptionPlayerBuff().shellNecklace)
@@ -619,22 +620,27 @@ namespace Redemption.Globals.NPC
                 conditionalRule.OnSuccess(rule);
                 npcLoot.Add(conditionalRule);
             }
-            if (npc.type == NPCID.BoneSerpentHead)
+            if (npc.type is NPCID.BoneSerpentHead)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
-            if (npc.type == NPCID.Ghost || npc.type == NPCID.Wraith)
+            if (npc.type is NPCID.Ghost or NPCID.Wraith)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
-            if (npc.type == NPCID.AngryBones || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.CursedSkull || npc.type == NPCID.DarkCaster)
+            if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
-            if (npc.type == NPCID.Demon || npc.type == NPCID.VoodooDemon || npc.type == NPCID.FireImp)
+            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
-            if (npc.type == NPCID.GraniteFlyer || npc.type == NPCID.GraniteGolem)
+            if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)
+            {
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GaucheStaff>(), 30));
-            if (npc.type == NPCID.Dandelion)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 200));
+            }
+            if (npc.type is NPCID.Dandelion)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 10));
-            if (npc.type == NPCID.MoonLordCore)
+            if (npc.type is NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
-            if (npc.type == NPCID.Golem)
+            if (npc.type is NPCID.Golem)
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
+            if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

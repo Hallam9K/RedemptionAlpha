@@ -1,9 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PostML.Summon;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -43,8 +46,9 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartOfInfection>()));
         }
         public override void PostUpdate()
         {

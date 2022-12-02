@@ -46,8 +46,11 @@ namespace Redemption.Globals.Player
         public int slayerStarRating;
         public int SpaceBreathTimer = 0;
         public bool contactImmune;
+        public bool contactImmuneTrue;
         public bool slayerCursor;
         public Rectangle meleeHitbox;
+        public int crystalGlaiveLevel;
+        public int crystalGlaiveShotCount;
 
         public override void ResetEffects()
         {
@@ -55,8 +58,13 @@ namespace Redemption.Globals.Player
             hitTarget2 = -1;
             stalkerSilence = false;
             contactImmune = false;
+            if (contactImmune)
+                contactImmuneTrue = true;
+            else
+                contactImmuneTrue = false;
             meleeHitbox = Rectangle.Empty;
             slayerCursor = false;
+            contactImmune = false;
         }
         public override void Initialize()
         {
@@ -73,7 +81,7 @@ namespace Redemption.Globals.Player
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
-            if (damageSource.SourceNPCIndex >= 0 && contactImmune)
+            if (damageSource.SourceNPCIndex >= 0 && contactImmuneTrue)
                 return false;
             return true;
         }
@@ -93,15 +101,12 @@ namespace Redemption.Globals.Player
                 hitTarget2 = target.whoAmI;
             }
         }
-        public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
-        {
-            health = StatModifier.Default;
-            health.Base = (medKit ? 50 : 0) + (galaxyHeart ? 50 : 0);
-            // Alternatively:  health = StatModifier.Default with { Base = exampleLifeFruits * ExampleLifeFruit.LifePerFruit };
-            mana = StatModifier.Default;
-        }
         public override void PostUpdateMiscEffects()
         {
+            Player.statLifeMax2 +=
+                (medKit ? 50 : 0) +
+                (galaxyHeart ? 50 : 0);
+
             if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer)
             {
                 Asset<Texture2D> emptyTex = ModContent.Request<Texture2D>("Redemption/Empty");
@@ -122,6 +127,24 @@ namespace Redemption.Globals.Player
                     TextureAssets.Cursors[1] = cursor1;
                     TextureAssets.Cursors[11] = cursor11;
                     TextureAssets.Cursors[12] = cursor12;
+                }
+                Asset<Texture2D> heartMed = ModContent.Request<Texture2D>("Redemption/Textures/HeartMed");
+                Asset<Texture2D> heartGalaxy = ModContent.Request<Texture2D>("Redemption/Textures/HeartGal");
+                Asset<Texture2D> heartOriginal = ModContent.Request<Texture2D>("Redemption/Textures/Heart2");
+                int totalHealthBoost =
+                    (medKit ? 1 : 0) +
+                    (galaxyHeart ? 1 : 0);
+                if (totalHealthBoost == 2)
+                {
+                    TextureAssets.Heart2 = heartGalaxy;
+                }
+                else if (totalHealthBoost == 1)
+                {
+                    TextureAssets.Heart2 = heartMed;
+                }
+                else
+                {
+                    TextureAssets.Heart2 = heartOriginal;
                 }
             }
         }

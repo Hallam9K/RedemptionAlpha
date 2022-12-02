@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.Magic
 
         public override void AI()
         {
-            ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Green, 0.6f, 0, 1);
+            ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), Color.Green, 0.6f, .45f, Main.rand.Next(50, 60));
 
             if (originalVelocity == Vector2.Zero)
                 originalVelocity = Projectile.velocity;
@@ -73,11 +73,11 @@ namespace Redemption.Projectiles.Magic
             int pieCut = 20;
             for (int m = 0; m < pieCut; m++)
             {
-                ParticleManager.NewParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f), new GlowParticle2(), Color.Green, 0.6f, 0, 1);
+                ParticleManager.NewParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f), new GlowParticle2(), Color.Green, 0.6f, .45f, Main.rand.Next(50, 60));
             }
             for (int m = 0; m < pieCut; m++)
             {
-                ParticleManager.NewParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(4f, 0f), m / (float)pieCut * 6.28f), new GlowParticle2(), Color.Green, 0.6f, 0, 1);
+                ParticleManager.NewParticle(Projectile.Center, BaseUtility.RotateVector(default, new Vector2(4f, 0f), m / (float)pieCut * 6.28f), new GlowParticle2(), Color.Green, 0.6f, .45f, Main.rand.Next(50, 60));
             }
             SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
         }

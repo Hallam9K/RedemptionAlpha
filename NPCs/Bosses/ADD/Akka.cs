@@ -19,6 +19,8 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -116,19 +118,19 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (projectile.type == ProjectileID.LastPrismLaser)
+                damage /= 3;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Nature.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 0.75f;
 
-                if (ProjectileLists.Poison.Contains(projectile.type) || ProjectileLists.Water.Contains(projectile.type))
+                if (ProjectileLists.Water.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 0.9f;
 
-                if (ProjectileLists.Fire.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
-
-                if (ProjectileLists.Wind.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.1f;
+                if (ProjectileLists.Fire.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type))
+                    NPC.Redemption().elementDmg *= 1.05f;
             }
 
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
@@ -136,6 +138,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
+                damage *= .85f;
+
             bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
@@ -170,7 +175,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AkkaMask>(), 7));
 
-            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>(), ModContent.ItemType<Pihlajasauva>()));
 
             npcLoot.Add(notExpertRule);
         }
@@ -194,12 +199,14 @@ namespace Redemption.NPCs.Bosses.ADD
 
                 }
             }
+            if (!NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
+                RedeBossDowned.downedGGBossFirst = 3;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedADD, -1);
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);  //boss life scale in expertmode
-            NPC.damage = (int)(NPC.damage * 0.6f);  //boss damage increase in expermode
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
 
@@ -462,7 +469,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
                         #region Healing Spirit
                         case 6:
-                            if (NPC.life < (int)(NPC.lifeMax * 0.6f) && healingCooldown == 0)
+                            if (NPC.life < (int)(NPC.lifeMax * 0.6f) && ukkoActive && Main.npc[(int)NPC.ai[3]].life < (int)(Main.npc[(int)NPC.ai[3]].lifeMax * 0.75f) && healingCooldown == 0)
                             {
                                 AITimer++;
                                 if (AITimer % 10 == 0 && AITimer > 20 && AITimer < 200)
@@ -633,7 +640,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 }
             }
         }
-
+        private float drawTimer;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -659,6 +666,9 @@ namespace Redemption.NPCs.Bosses.ADD
                         spriteBatch.End();
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     }
+                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, NPC.frame, Color.LightGreen * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects);
+
                     spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;
                 case 1:
@@ -678,6 +688,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, magicAni, ref drawTimer, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), Color.LightGreen * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects);
 
                     spriteBatch.Draw(magicAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
                     spriteBatch.Draw(magicGlow, glowCenter - screenPos, new Rectangle?(new Rectangle(0, magicGlowY, magicGlow.Width, magicGlowHeight)), Color.White * NPC.Opacity, NPC.rotation, new Vector2(magicGlow.Width / 2f, magicGlowHeight / 2f), NPC.scale, effects, 0f);

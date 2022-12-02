@@ -249,6 +249,8 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void AI()
         {
+            if (AIState == ActionState.Death || AIState == ActionState.SkullDiggerSummon)
+                NPC.DiscourageDespawn(120);
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
@@ -870,11 +872,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                     move = player.Center.X + 120;
                 }
             }
-        }
-
-        public override bool CheckActive()
-        {
-            return AIState != ActionState.Death && AIState != ActionState.SkullDiggerSummon;
         }
 
         public override bool CheckDead()

@@ -11,6 +11,7 @@ using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Armor.PostML.Vorti;
 using Redemption.Items.Armor.PreHM.DragonLead;
@@ -51,8 +52,10 @@ namespace Redemption
         public Rectangle currentScreen;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
+        public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
 
         public static RenderTargetManager Targets;
+        public static Effect GlowTrailShader;
 
         private List<ILoadable> _loadCache;
 
@@ -92,62 +95,67 @@ namespace Redemption
                 halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
                 halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
 
+                AssetRequestMode immLoad = AssetRequestMode.ImmediateLoad;
                 Main.QueueMainThreadAction(() =>
                 {
-                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", immLoad).Value;
                     PremultiplyTexture(ref bubbleTex);
-                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", immLoad).Value;
                     PremultiplyTexture(ref portalTex);
-                    Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", immLoad).Value;
                     PremultiplyTexture(ref soullessPortal);
-                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", immLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
-                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", immLoad).Value;
                     PremultiplyTexture(ref whiteFlareTex);
-                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb", immLoad).Value;
                     PremultiplyTexture(ref whiteOrbTex);
-                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam", immLoad).Value;
                     PremultiplyTexture(ref whiteLightBeamTex);
-                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D transitionTex = ModContent.Request<Texture2D>("Redemption/Textures/TransitionTex", immLoad).Value;
                     PremultiplyTexture(ref transitionTex);
-                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall", immLoad).Value;
                     PremultiplyTexture(ref staticBallTex);
-                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", immLoad).Value;
                     PremultiplyTexture(ref iceMistTex);
-                    Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", immLoad).Value;
                     PremultiplyTexture(ref glowDustTex);
-                    Texture2D AkkaHealingSpiritTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaHealingSpirit", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D AkkaHealingSpiritTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaHealingSpirit", immLoad).Value;
                     PremultiplyTexture(ref AkkaHealingSpiritTex);
-                    Texture2D AkkaIslandWarningTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaIslandWarning", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D AkkaIslandWarningTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/AkkaIslandWarning", immLoad).Value;
                     PremultiplyTexture(ref AkkaIslandWarningTex);
-                    Texture2D SunTex = ModContent.Request<Texture2D>("Redemption/Textures/Sun", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D SunTex = ModContent.Request<Texture2D>("Redemption/Textures/Sun", immLoad).Value;
                     PremultiplyTexture(ref SunTex);
+                    Texture2D DarkSoulTex = ModContent.Request<Texture2D>("Redemption/Textures/DarkSoulTex", immLoad).Value;
+                    PremultiplyTexture(ref DarkSoulTex);
+                    Texture2D TornadoTex = ModContent.Request<Texture2D>("Redemption/Textures/TornadoTex", immLoad).Value;
+                    PremultiplyTexture(ref TornadoTex);
 
-                    Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", immLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);
-                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D wastelandCrimsonBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCrimsonBG3", immLoad).Value;
                     PremultiplyTexture(ref wastelandCrimsonBG3Tex);
-                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D wastelandCorruptionBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/WastelandCorruptionBG3", immLoad).Value;
                     PremultiplyTexture(ref wastelandCorruptionBG3Tex);
-                    Texture2D ruinedKingdomSurfaceClose_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceClose_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D ruinedKingdomSurfaceClose_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceClose_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceClose_MenuTex);
-                    Texture2D ruinedKingdomSurfaceFar_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceFar_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D ruinedKingdomSurfaceFar_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceFar_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceFar_MenuTex);
-                    Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
-                    Texture2D SpaceBG1Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/SpaceBG1", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D SpaceBG1Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/SpaceBG1", immLoad).Value;
                     PremultiplyTexture(ref SpaceBG1Tex);
-                    Texture2D EpidotraPlanetTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/EpidotraPlanet", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D EpidotraPlanetTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/EpidotraPlanet", immLoad).Value;
                     PremultiplyTexture(ref EpidotraPlanetTex);
-                    Texture2D EpidotraPlanet_BrighterTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/EpidotraPlanet_Brighter", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D EpidotraPlanet_BrighterTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/EpidotraPlanet_Brighter", immLoad).Value;
                     PremultiplyTexture(ref EpidotraPlanet_BrighterTex);
-                    Texture2D UkkoCloudsTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoClouds", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D UkkoCloudsTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoClouds", immLoad).Value;
                     PremultiplyTexture(ref UkkoCloudsTex);
-                    Texture2D UkkoSkyBeamTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBeam", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D UkkoSkyBeamTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBeam", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyBeamTex);
-                    Texture2D UkkoSkyBoltTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBolt", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D UkkoSkyBoltTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBolt", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyBoltTex);
-                    Texture2D UkkoSkyFlashTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D UkkoSkyFlashTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyFlashTex);
                 });
 
@@ -535,7 +543,7 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, StunUI);
             }
-            if (bP.shieldGenerator && bP.shieldGeneratorCD <= 0)
+            if (BasePlayer.HasAccessory(Main.LocalPlayer, ModContent.ItemType<PocketShieldGenerator>(), true, true))
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer ShieldGaugeUI = new("Redemption: Shield Gauge UI",
@@ -679,16 +687,20 @@ namespace Redemption
 
             Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge").Value;
             Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge_Fill").Value;
-            float timerMax = 400;
+            float timerMax = 200;
             int timerProgress = (int)(timerBarInner.Width * (bP.shieldGeneratorLife / timerMax));
+            int timerProgress2 = (int)(timerBarInner.Width * (bP.shieldGeneratorCD / 3600f));
             Vector2 drawPos = player.Center - new Vector2(0, 60) - Main.screenPosition;
             spriteBatch.Draw(timerBar, drawPos, null, Color.White, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            if (bP.shieldGeneratorCD <= 0)
+                spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner.Height)), Color.PaleVioletRed, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
             Texture2D shieldTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
             Vector2 drawOrigin = new(shieldTex.Width / 2, shieldTex.Height / 2);
 
-            spriteBatch.Draw(shieldTex, player.Center - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 400) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, 0.5f, 0, 0);
+            if (bP.shieldGeneratorCD <= 0)
+                spriteBatch.Draw(shieldTex, player.Center - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, 0.5f, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

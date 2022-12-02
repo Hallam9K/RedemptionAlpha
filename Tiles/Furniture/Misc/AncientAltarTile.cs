@@ -12,10 +12,10 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Misc
 {
     public class AncientAltarTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
+        {
+            Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -32,12 +32,22 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = 7;
             MinPick = 500;
             MineResist = 3f;
-			ModTranslation name = CreateMapEntryName();
+            ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ancient Altar");
             AddMapEntry(new Color(120, 190, 40), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
-
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (!Main.rand.NextBool(10))
+                return;
+            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
+            {
+                int d = Dust.NewDust(new Vector2(i * 16 + 10, j * 16 + 6), 12, 12, DustID.TreasureSparkle, Alpha: 20);
+                Main.dust[d].velocity *= 0;
+                Main.dust[d].noGravity = true;
+            }
+        }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;

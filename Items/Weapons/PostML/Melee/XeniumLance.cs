@@ -38,6 +38,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             // Weapon Properties
             Item.damage = 450;
+            Item.crit = 26;
             Item.knockBack = 8;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;

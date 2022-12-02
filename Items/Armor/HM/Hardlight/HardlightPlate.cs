@@ -26,7 +26,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
             Item.height = 26;
             Item.sellPrice(silver: 75);
             Item.rare = ItemRarityID.Cyan;
-            Item.defense = 14;
+            Item.defense = 15;
         }
 
         public override void AddRecipes()

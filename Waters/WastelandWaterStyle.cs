@@ -9,7 +9,6 @@ namespace Redemption.Waters
 {
 	public class WastelandWaterStyle : ModWaterStyle
 	{
-
 		public override int ChooseWaterfallStyle() => Find<ModWaterfallStyle>("Redemption/WastelandWaterfallStyle").Slot;
 
 		public override int GetSplashDust() => Find<ModDust>("Redemption/WastelandWaterSplash").Type; 
@@ -33,7 +32,7 @@ namespace Redemption.Waters
 		}
 		public override Asset<Texture2D> GetRainTexture()
 		{
-			return Request<Texture2D>("Redemption/Water/WastelandRain");
+			return Request<Texture2D>("Redemption/Waters/WastelandRain");
 		}
 	}
 }

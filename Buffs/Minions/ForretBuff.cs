@@ -11,7 +11,6 @@ namespace Redemption.Buffs.Minions
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
-
 		public override void Update(Player player, ref int buffIndex)
 		{
 			if (player.ownedProjectileCounts[ModContent.ProjectileType<Forret>()] > 0)

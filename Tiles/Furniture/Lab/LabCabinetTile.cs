@@ -5,6 +5,7 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -18,6 +19,8 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
@@ -32,6 +35,12 @@ namespace Redemption.Tiles.Furniture.Lab
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Laboratory Cabinet");
             AddMapEntry(new Color(189, 191, 200), name);
+        }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+        {
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 2;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
+            return Main.tile[left, top].TileFrameX == 0;
         }
         public override void MouseOver(int i, int j)
         {

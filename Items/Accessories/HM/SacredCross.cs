@@ -14,7 +14,7 @@ namespace Redemption.Items.Accessories.HM
         {
             Tooltip.SetDefault("12% increased Holy elemental damage and resistance\n" +
                 "6% increased Holy elemental critical strike chance\n" +
-                "Critical strikes with a Holy elemental weapon release homing lightmass\n" +
+                "Critical strikes with a Holy elemental weapon has a chance to release homing lightmass\n" +
                 "Increases length of invincibility after taking damage");
             SacrificeTotal = 1;
         }

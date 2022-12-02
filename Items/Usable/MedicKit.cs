@@ -4,6 +4,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 
 namespace Redemption.Items.Usable
 {
@@ -30,19 +31,23 @@ namespace Redemption.Items.Usable
 
         public override bool CanUseItem(Player player)
         {
-            return player.ConsumedLifeCrystals == Player.LifeCrystalMax && player.ConsumedLifeFruit == Player.LifeFruitMax;
+            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+            if (modPlayer.medKit || player.statLifeMax < 500)
+                return false;
+            return true;
         }
 
         public override bool? UseItem(Player player)
         {
-            player.Redemption().heartStyle = 1;
-            if (player.Redemption().medKit)
-                return null;
+            if (player.itemAnimation > 0 && player.itemTime == 0)
+            {
+                player.itemTime = Item.useTime;
+                if (Main.myPlayer == player.whoAmI)
+                    player.HealEffect(50);
 
-            player.UseHealthMaxIncreasingItem(50);
-
-            player.Redemption().medKit = true;
-            SoundEngine.PlaySound(SoundID.Item43, player.position);
+                RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+                modPlayer.medKit = true;
+            }
             return true;
         }
     }

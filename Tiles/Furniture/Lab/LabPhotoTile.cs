@@ -7,6 +7,8 @@ using Terraria.ObjectData;
 using Redemption.UI;
 using Redemption.Items;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -17,7 +19,8 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
-            Main.tileTable[Type] = false;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
@@ -31,6 +34,7 @@ namespace Redemption.Tiles.Furniture.Lab
             name.SetDefault("Broken Photo");
             AddMapEntry(new Color(200, 200, 200));
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;

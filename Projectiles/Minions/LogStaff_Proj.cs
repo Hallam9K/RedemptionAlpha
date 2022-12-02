@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Log");
             Main.projPet[Projectile.type] = true;
-
+            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

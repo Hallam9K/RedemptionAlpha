@@ -10,8 +10,6 @@ namespace Redemption.Particles
     {
         public override string Texture => "Redemption/Particles/EmberParticle";
         public int timer = Main.rand.Next(50, 100);
-        public float speedX = Main.rand.NextFloat(4f, 9f);
-        public float mult = Main.rand.NextFloat(10f, 31f) / 200f;
         public int timeLeftMax;
         public float size = 0f;
 
@@ -19,7 +17,7 @@ namespace Redemption.Particles
         {
             width = 1;
             height = 1;
-            timeLeft = Main.rand.Next(50, 60);
+            timeLeft = 40;
             tileCollide = false;
             opacity = 0;
             oldPos = new Vector2[3];
@@ -28,22 +26,15 @@ namespace Redemption.Particles
 
         public override void AI()
         {
-            if (ai[0] <= 0)
+            velocity *= 0.96f;
+            // Halfway through, start fading.
+            if (timeLeft <= timeLeftMax / 2f)
+                opacity = MathHelper.Lerp(1f, 0f, (float)(timeLeftMax / 2f - timeLeft) / (timeLeftMax / 2f));
+            else
             {
-                velocity *= 0.96f;
-                // Halfway through, start fading.
-                if (timeLeft <= timeLeftMax / 2f)
-                    opacity = MathHelper.Lerp(1f, 0f, (float)(timeLeftMax / 2f - timeLeft) / (timeLeftMax / 2f));
-                else
-                {
-                    if (ai[1] >= 1)
-                        opacity += 0.5f;
-                    else
-                        opacity += 0.05f;
-                    opacity = MathHelper.Clamp(opacity, 0, 1);
-                }
+                opacity += ai[0] + .05f;
+                opacity = MathHelper.Clamp(opacity, 0, 1);
             }
-            ai[0]--;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor)
         {
@@ -64,8 +55,7 @@ namespace Redemption.Particles
         }
         private void Spawn()
         {
-            if (ai[1] == 2)
-                timeLeft = Main.rand.Next(10, 20);
+            timeLeft = (int)ai[1];
             timeLeftMax = timeLeft;
             size = Main.rand.NextFloat(5f, 11f) / 10f;
         }

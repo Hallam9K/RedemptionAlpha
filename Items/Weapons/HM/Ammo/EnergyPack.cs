@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using Redemption.Globals.Player;
+using Terraria.DataStructures;
 
 namespace Redemption.Items.Weapons.HM.Ammo
 {
@@ -18,6 +19,8 @@ namespace Redemption.Items.Weapons.HM.Ammo
                 "Energy-based weaponry can pierce through Guard Points\n" +
                 "Can be stacked up to 3 times, each giving +100 energy");
             SacrificeTotal = 1;
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
         public override void SetDefaults()
@@ -39,18 +42,25 @@ namespace Redemption.Items.Weapons.HM.Ammo
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
-            spriteBatch.Draw(texture, position, null, drawColor, 0, origin, scale, 0, 0f);
-            spriteBatch.Draw(glow, position, null, RedeColor.EnergyPulse, 0, origin, scale, 0, 0f);
+
+            spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, 0, 0f);
+            spriteBatch.Draw(glow, position, frame, RedeColor.EnergyPulse, 0, origin, scale, 0, 0f);
             return false;
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
-            Rectangle frame = texture.Frame();
+            Rectangle frame;
+            if (Main.itemAnimations[Item.type] != null)
+                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+            else
+                frame = texture.Frame();
+
             Vector2 origin = frame.Size() / 2f;
-            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, rotation, origin, scale, 0, 0f);
-            spriteBatch.Draw(glow, Item.Center - Main.screenPosition, null, RedeColor.EnergyPulse, rotation, origin, scale, 0, 0f);
+
+            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, 0, 0f);
+            spriteBatch.Draw(glow, Item.Center - Main.screenPosition, frame, RedeColor.EnergyPulse, rotation, origin, scale, 0, 0f);
             return false;
         }
         public override void AddRecipes()

@@ -21,6 +21,7 @@ namespace Redemption.Globals
         public bool RitDagger;
         public bool EnergyBased;
         public bool ParryBlacklist;
+        public int DissolveTimer;
         public override void SetDefaults(Projectile projectile)
         {
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))

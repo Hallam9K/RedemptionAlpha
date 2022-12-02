@@ -145,7 +145,7 @@ namespace Redemption
                         else if (tile.TileType == TileID.LivingWood)
                             ConvertTile(x1, y1, (ushort)ModContent.TileType<IrradiatedLivingWoodTile>());
                         else if (tile.TileType == TileID.WoodBlock)
-                            ConvertTile(x1, y1, (ushort)ModContent.TileType<PetrifiedWoodTile>());                
+                            ConvertTile(x1, y1, (ushort)ModContent.TileType<PetrifiedWoodTile>());
 
                         if (WallID.Sets.Conversion.Stone[tile.WallType] && tile.WallType != WallID.EbonstoneUnsafe && tile.WallType != WallID.CrimstoneUnsafe)
                             ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedStoneWallTile>());
@@ -161,7 +161,7 @@ namespace Redemption
                             ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedIceWallTile>());
                         else if (tile.WallType == WallID.SnowWallUnsafe)
                             ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedSnowWallTile>());
-                        else if (tile.WallType == WallID.LivingWood)
+                        else if (tile.WallType == WallID.LivingWood || tile.WallType == WallID.LivingWoodUnsafe)
                             ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedLivingWoodWallTile>());
                         else if (tile.WallType == WallID.DirtUnsafe || tile.WallType == WallID.DirtUnsafe1 || tile.WallType == WallID.GrassUnsafe || tile.WallType == WallID.FlowerUnsafe ||
                             tile.WallType == WallID.CorruptGrassUnsafe || tile.WallType == WallID.CrimsonGrassUnsafe)

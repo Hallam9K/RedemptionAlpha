@@ -11,6 +11,7 @@ namespace Redemption.Buffs.NPCBuffs
         {
             DisplayName.SetDefault("Pure Chill");
             Description.SetDefault("brrr");
+            Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }
         public override void Update(NPC npc, ref int buffIndex)

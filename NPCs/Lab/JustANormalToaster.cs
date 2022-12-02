@@ -43,19 +43,53 @@ namespace Redemption.NPCs.Lab
         {
             Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
         }
+        private int AniFrameY;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Rectangle rect = NPC.frame;
+            Vector2 origin = NPC.frame.Size() / 2;
+            Vector2 offset = Vector2.Zero;
+            if (RedeBossDowned.downedOmega3)
+            {
+                texture = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_OO").Value;
+                int Height = texture.Height / 7;
+                int y = Height * AniFrameY;
+                rect = new(0, y, texture.Width, Height);
+                origin = new(texture.Width / 2f, Height / 2f);
+                offset.Y = 4;
+            }
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - offset - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             return false;
         }
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return RedeBossDowned.downedOmega3 ? "I am the toaster." : "Just a normal toaster.";
+            return RedeBossDowned.downedOmega3 ? "Oh hey, how are you holding up? BECAUSE I AM A TOASTER." : "Just a normal toaster.";
         }
+        public override void FindFrame(int frameHeight)
+        {
+            if (!RedeBossDowned.downedOmega3)
+                return;
+            if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
+            {
+                if (AniFrameY < 1)
+                    AniFrameY = 1;
 
+                if (++NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    AniFrameY++;
+                    if (AniFrameY > 6)
+                        AniFrameY = 1;
+                }
+                return;
+            }
+            NPC.frameCounter = 0;
+            AniFrameY = 0;
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
     }

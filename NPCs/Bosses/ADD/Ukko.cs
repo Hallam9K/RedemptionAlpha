@@ -21,6 +21,9 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Particles;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -123,6 +126,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (projectile.type == ProjectileID.LastPrismLaser)
+                damage /= 3;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Thunder.Contains(projectile.type))
@@ -143,6 +149,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
+                damage *= .85f;
+
             bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
@@ -157,7 +166,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -182,7 +191,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
 
-            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Ukonnuoli>(), ModContent.ItemType<Ukonvasara>()));
 
             npcLoot.Add(notExpertRule);
         }
@@ -206,6 +215,8 @@ namespace Redemption.NPCs.Bosses.ADD
 
                 }
             }
+            if (!NPC.AnyNPCs(ModContent.NPCType<Akka>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
+                RedeBossDowned.downedGGBossFirst = 3;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedADD, -1);
         }
 
@@ -523,7 +534,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer >= 90)
                                 {
                                     NPC.ai[3] = 0;
-                                    stoneskinCooldown = 10;
+                                    stoneskinCooldown = 20;
                                     AIState = ActionState.ResetVars;
                                     AITimer = 0;
                                     NPC.netUpdate = true;
@@ -1144,8 +1155,12 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                 }
             }
+            FlareTimer++;
             switch (NPC.ai[3])
             {
+                case 1:
+                    FlareTimer = 10;
+                    break;
                 case 2:
                     frameCounters++;
                     if (frameCounters % 3 == 0)
@@ -1245,6 +1260,7 @@ namespace Redemption.NPCs.Bosses.ADD
             }
             RunOnce = 1;
         }
+        private float drawTimer;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -1279,6 +1295,9 @@ namespace Redemption.NPCs.Bosses.ADD
                         spriteBatch.End();
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     }
+                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - n - screenPos, NPC.frame, Color.LightYellow * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects);
+
                     spriteBatch.Draw(texture, NPC.Center - n - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     spriteBatch.Draw(glowMask, NPC.Center - n - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;
@@ -1295,6 +1314,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
+                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, wandAni, ref drawTimer, NPC.Center - n + wandDrawCenter - screenPos, null, Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects);
+
                     spriteBatch.Draw(wandAni, NPC.Center - n + wandDrawCenter - screenPos, null, drawColor * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0f);
                     spriteBatch.Draw(wandGlow, NPC.Center - n + wandDrawCenter - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0f);
                     break;
@@ -1304,7 +1326,6 @@ namespace Redemption.NPCs.Bosses.ADD
 
                     int jyrinaHeight = jyrina.Height / 9;
                     int jyrinaY = jyrinaHeight * jyrinaFrame;
-                    Vector2 jyrinaDrawCenter = new(NPC.Center.X, NPC.Center.Y);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
@@ -1316,6 +1337,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, chariotAni, ref drawTimer, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects);
 
                     spriteBatch.Draw(chariotAni, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
                     spriteBatch.Draw(chariotGlow, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
@@ -1342,6 +1366,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
+                    if (NPC.RedemptionGuard().GuardPoints > 0)
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, swipeAni, ref drawTimer, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects);
+
                     spriteBatch.Draw(swipeAni, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
                     spriteBatch.Draw(swipeGlow, swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
 
@@ -1350,7 +1377,12 @@ namespace Redemption.NPCs.Bosses.ADD
             }
             return false;
         }
-
+        private float FlareTimer = 60;
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Vector2 position = NPC.Center - screenPos + new Vector2(4 * NPC.spriteDirection, -53);
+            RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.LightYellow, NPC.rotation);
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)

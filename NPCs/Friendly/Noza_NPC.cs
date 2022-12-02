@@ -130,11 +130,10 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button2 = "Cycle Dialogue";
             switch (ChatNumber)
             {
                 case 0:
-                    button = "AWOOGA";
+                    button = "Who are you?";
                     break;
             }
         }
@@ -157,7 +156,7 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "Wat.",
+                0 => "Wouldn't you like to know! I'm a bit early to the party - apparently I'm meant to be in the \"full 0.8 update\"... Whatever that means.\nBut I got impatient so here I am! With nothing to do! There isn't even anything unique here!",
                 _ => "...",
             };
         }
@@ -180,19 +179,20 @@ namespace Redemption.NPCs.Friendly
             {
                 EmoteState = EmotionState.Laugh;
                 chat.Add("What is a SILLY LITTLE METAL BUCKET doing in MY bastion!?");
-                chat.Add("What even are you? Some sort of bucket cosplayer!? WEHEHEHE!");
+                chat.Add("What even are you? Some sort of bucket cosplayer!? Wehehehe!");
             }
             else
             {
                 EmoteState = EmotionState.Laugh;
                 chat.Add("What is a SILLY LITTLE HUMAN doing in MY bastion!?");
-                chat.Add("Look at ITTY BITTY you! WHEHEHEHE! Humans look so STUPID!");
+                chat.Add("Look at ITTY BITTY you! Whehehehe! Humans look so STUPID!");
+                chat.Add("Wow! I forgot how TINY humans were! Whehehehe!");
             }
             return chat;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D EyesTex = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Noza_NPC_Blink").Value;
+            Texture2D EyesTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Blink").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

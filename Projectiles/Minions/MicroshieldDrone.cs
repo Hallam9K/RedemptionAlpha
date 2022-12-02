@@ -83,7 +83,7 @@ namespace Redemption.Projectiles.Minions
             for (int j = 0; j < Main.maxProjectiles; j++)
             {
                 Projectile projectile = Main.projectile[j];
-                if (!projectile.active || projectile.type == Type || !projectile.hostile || projectile.damage <= 0 || projectile.velocity == Vector2.Zero || projectile.Redemption().TechnicallyMelee || projectile.Redemption().ParryBlacklist)
+                if (!projectile.active || projectile.type == Type || !projectile.hostile || projectile.damage <= 0 || projectile.velocity == Vector2.Zero || projectile.ProjBlockBlacklist())
                     iLoveRedemption = false;
                 else
                 {
@@ -101,8 +101,8 @@ namespace Redemption.Projectiles.Minions
                             projectile.velocity *= -1;
                             projectile.friendly = true;
                             projectile.hostile = false;
+                            projectile.damage *= 4;
                         }
-                        projectile.damage *= 4;
                         Projectile.localAI[0] += projectile.damage * 0.75f;
                         CombatText.NewText(Projectile.getRect(), Color.IndianRed, (int)(projectile.damage * 0.75f), true, true);
                         SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);

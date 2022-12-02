@@ -1,4 +1,5 @@
 ﻿using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.Audio;
@@ -8,16 +9,16 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Usable
 {
     public class GalaxyHeart : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			Tooltip.SetDefault("Permanently increases maximum life by 50"
+    {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Permanently increases maximum life by 50"
                 + "\nCan only be used if the max amount of life fruit has been consumed");
             SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.width = 24;
             Item.height = 22;
             Item.useAnimation = 30;
@@ -29,19 +30,22 @@ namespace Redemption.Items.Usable
         }
         public override bool CanUseItem(Player player)
         {
-            return player.ConsumedLifeCrystals == Player.LifeCrystalMax && player.ConsumedLifeFruit == Player.LifeFruitMax;
+            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+            if (modPlayer.galaxyHeart || player.statLifeMax < 500)
+                return false;
+            return true;
         }
 
         public override bool? UseItem(Player player)
         {
-            player.Redemption().heartStyle = 2;
-            if (player.Redemption().galaxyHeart)
-                return null;
-
-            player.UseHealthMaxIncreasingItem(50);
-
-            player.Redemption().galaxyHeart = true;
-            SoundEngine.PlaySound(SoundID.Item43, player.position);
+            if (player.itemAnimation > 0 && player.itemTime == 0)
+            {
+                player.itemTime = Item.useTime;
+                if (Main.myPlayer == player.whoAmI)
+                    player.HealEffect(50);
+                RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+                modPlayer.galaxyHeart = true;
+            }
             return true;
         }
     }

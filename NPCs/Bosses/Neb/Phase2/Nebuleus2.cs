@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public override void SetDefaults()
         {
             NPC.lifeMax = 427500;
-            NPC.defense = 120;
+            NPC.defense = 100;
             NPC.damage = 200;
             NPC.width = 90;
             NPC.height = 90;
@@ -1545,10 +1545,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public void Teleport(bool specialPos, Vector2 teleportPos)
         {
             Player player = Main.player[NPC.target];
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.8f, 2, 0.7f, 2, 0, ai1: 1);
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.6f, 2, 0.7f, 2, 0, ai1: 1);
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.4f, 2, 0.7f, 2, 0, ai1: 1);
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3.2f, 2, 0.7f, 2, 0, ai1: 1);
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.8f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.6f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.4f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3.2f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             teleGlow = true;
             teleGlowTimer = 0;
             teleVector = NPC.Center;
@@ -1605,10 +1605,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed, 5, 0.8f, 2, 0.7f, 2, 0, ai1: 1);
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink, 5, 1.6f, 2, 0.7f, 2, 0, ai1: 1);
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple, 5, 2.4f, 2, 0.7f, 2, 0, ai1: 1);
-                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue, 5, 3.2f, 2, 0.7f, 2, 0, ai1: 1);
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed, 5, 0.8f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink, 5, 1.6f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple, 5, 2.4f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+                DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue, 5, 3.2f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             }
         }
         #endregion
@@ -1736,22 +1736,17 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
+            if (eyeFlare)
+            {
+                Vector2 position = NPC.Center - screenPos + new Vector2(0, -14);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref eyeFlareTimer, position, Color.Pink, NPC.rotation, 1, 0, flare);
+                Vector2 position2 = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 8 : -8, -14);
+                RedeDraw.DrawEyeFlare(spriteBatch, ref eyeFlareTimer, position2, Color.Pink, NPC.rotation, .95f, 0, flare);
+            }
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 origin = new(flare.Width / 2, flare.Height / 2);
-            Vector2 position = NPC.Center - screenPos + new Vector2(0, -14);
-            Vector2 position2 = NPC.Center - screenPos + new Vector2(NPC.spriteDirection == 1 ? 8 : -8, -14);
-            Color colour = Color.Lerp(Color.Pink, Color.White, 1f / eyeFlareTimer * 10f) * (1f / eyeFlareTimer * 10f);
-            if (eyeFlare)
-            {
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position2, new Rectangle?(rect), colour, NPC.rotation, origin, 0.95f, SpriteEffects.None, 0);
-                spriteBatch.Draw(flare, position2, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 0.95f, SpriteEffects.None, 0);
-            }
             Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);

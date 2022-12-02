@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.HM
 {
@@ -48,7 +49,7 @@ namespace Redemption.NPCs.HM
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile target = Main.projectile[i];
-                if (Projectile == target || !target.active || target.minion || target.damage <= 0 || !target.friendly || target.hostile || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist)
+                if (Projectile == target || !target.active || target.damage <= 0 || !target.friendly || target.hostile || target.ProjBlockBlacklist())
                     continue;
 
                 if (!Projectile.Hitbox.Intersects(target.Hitbox))

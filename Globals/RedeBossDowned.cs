@@ -37,6 +37,7 @@ namespace Redemption.Globals
         public static bool downedPZ;
         public static bool downedNebuleus;
         public static bool downedADD;
+        public static int downedGGBossFirst;
 
         public override void OnWorldLoad()
         {
@@ -69,6 +70,7 @@ namespace Redemption.Globals
             downedPZ = false;
             downedNebuleus = false;
             downedADD = false;
+            downedGGBossFirst = 0;
         }
 
         public override void OnWorldUnload()
@@ -102,6 +104,7 @@ namespace Redemption.Globals
             downedPZ = false;
             downedNebuleus = false;
             downedADD = false;
+            downedGGBossFirst = 0;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -163,6 +166,7 @@ namespace Redemption.Globals
             tag["oblitDeath"] = oblitDeath;
             tag["nebDeath"] = nebDeath;
             tag["ADDDeath"] = ADDDeath;
+            tag["downedGGBossFirst"] = downedGGBossFirst;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -179,8 +183,8 @@ namespace Redemption.Globals
             downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
             foundNewb = downed.Contains("foundNewb");
             downedSlayer = downed.Contains("downedSlayer");
-            downedOmega3 = downed.Contains("downedOmega1");
-            downedOmega3 = downed.Contains("downedOmega2");
+            downedOmega1 = downed.Contains("downedOmega1");
+            downedOmega2 = downed.Contains("downedOmega2");
             downedOmega3 = downed.Contains("downedOmega3");
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
@@ -198,6 +202,7 @@ namespace Redemption.Globals
             downedPZ = downed.Contains("downedPZ");
             downedNebuleus = downed.Contains("downedNebuleus");
             downedADD = downed.Contains("downedADD");
+            downedGGBossFirst = downed.Contains("downedGGBossFirst");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -238,6 +243,7 @@ namespace Redemption.Globals
             writer.Write(oblitDeath);
             writer.Write(nebDeath);
             writer.Write(ADDDeath);
+            writer.Write(downedGGBossFirst);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -275,6 +281,7 @@ namespace Redemption.Globals
             oblitDeath = reader.ReadInt32();
             nebDeath = reader.ReadInt32();
             ADDDeath = reader.ReadInt32();
+            downedGGBossFirst = reader.ReadInt32();
         }
     }
 }

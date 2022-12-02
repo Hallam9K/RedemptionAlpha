@@ -65,10 +65,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile target = Main.projectile[i];
-                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
+                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.ProjBlockBlacklist() || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
@@ -138,10 +138,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile target = Main.projectile[i];
-                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || !target.friendly || target.damage > 100)
+                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || !target.friendly || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.Redemption().TechnicallyMelee || target.Redemption().ParryBlacklist || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || target.ProjBlockBlacklist() || !Projectile.Hitbox.Intersects(target.Hitbox))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);

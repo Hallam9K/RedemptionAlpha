@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Keeper's Claw");
             Tooltip.SetDefault("Hitting enemies inflict Necrotic Gouge\n" +
-                "Deals double damage to undead" +
+                "Deals double damage to undead and skeletons" +
                 "\n'The hand of my beloved, cold and dead...'");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;

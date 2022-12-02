@@ -1,7 +1,9 @@
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -15,8 +17,6 @@ namespace Redemption.Tiles.Furniture.Misc
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileWaterDeath[Type] = true;
-            //TileID.Sets.HasOutlines[Type] = true;
-            //TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Origin = new Point16(1, 1);
             TileObjectData.newTile.WaterDeath = true;
@@ -33,6 +33,17 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             Player player = Main.LocalPlayer;
             player.AddBuff(BuffID.Campfire, 10);
+            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
+            {
+                if (Main.rand.NextBool(2))
+                {
+                    int d = Dust.NewDust(new Vector2(i * 16 + 10, j * 16 - 8), 28, 24, DustID.Smoke, Alpha: 20, Scale: 1f);
+                    Main.dust[d].velocity.Y = -2f;
+                    Main.dust[d].velocity.X *= 0.5f;
+                    Main.dust[d].fadeIn = 300;
+                    Main.dust[d].noGravity = true;
+                }
+            }
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
