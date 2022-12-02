@@ -304,6 +304,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             boomed = true;
         }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage = (int)(damage * 1.15f);
+        }
         public override bool OnTileCollide(Vector2 velocityChange)
         {
             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);

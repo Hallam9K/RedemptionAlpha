@@ -34,7 +34,7 @@ namespace Redemption.Projectiles.Melee
 
         public void DoTrailCreation(TrailManager tManager)
         {
-            //tManager.CreateTrail(Projectile, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
+            tManager.CreateTrail(Projectile, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
         }
 
         private Vector2 move;

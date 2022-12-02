@@ -5249,6 +5249,11 @@ namespace Redemption.Base
          */
         public static void DamagePlayer(Player player, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
         {
+            for (int i = 0; i < player.hurtCooldowns.Length; i++)
+            {
+                if (player.hurtCooldowns[i] > 0)
+                    return;
+            }
             float defIgnore = 0.5f;
             if (Main.expertMode)
                 defIgnore = 0.75f;
@@ -5259,7 +5264,7 @@ namespace Redemption.Base
             if (damager == null)
             {
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false, 0);
+                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false);
             }
             else if (damager is Player subPlayer)
             {
@@ -5268,7 +5273,7 @@ namespace Redemption.Base
                 PlayerLoader.OnHitPvp(subPlayer, subPlayer.HeldItem, player, parsedDamage, false);
                 bool crit = false;
                 PlayerLoader.ModifyHitPvp(subPlayer, subPlayer.HeldItem, player, ref parsedDamage, ref crit);
-                player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
+                player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false);
 
                 subPlayer.attackCD = (int)(subPlayer.itemAnimationMax * 0.33f);
             }
@@ -5281,7 +5286,7 @@ namespace Redemption.Base
                     PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
                     bool crit = false;
                     PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
+                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false);
                 }
                 else if (p.hostile)
                 {
@@ -5289,7 +5294,15 @@ namespace Redemption.Base
                     PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
                     bool crit = false;
                     PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
+                }
+                else
+                {
+                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
+                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
+                    bool crit = false;
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
                 }
             }
             else if (damager is NPC npc)
@@ -5298,7 +5311,7 @@ namespace Redemption.Base
                 PlayerLoader.OnHitByNPC(player, npc, parsedDamage, false);
                 bool crit = false;
                 PlayerLoader.ModifyHitByNPC(player, npc, ref parsedDamage, ref crit);
-                player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false);
             }
         }
 

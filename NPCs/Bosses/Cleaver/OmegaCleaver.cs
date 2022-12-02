@@ -905,6 +905,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void AI()

@@ -8,6 +8,7 @@ using Redemption.Globals;
 using ReLogic.Content;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Buffs.Cooldowns;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -170,8 +171,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     if (Timer >= 10)
                     {
                         player.immune = true;
-                        player.immuneTime = 60;
-                        Projectile.damage += Timer * 100;
+                        player.immuneTime = 40;
                     }
                     Length *= speed;
                     vector = startVector * Length;
@@ -186,7 +186,17 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Projectile.alpha = 0;
             return false;
         }
-
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (Projectile.ai[0] == 3 && Timer >= 10)
+                damage += Timer * 200;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Player player = Main.player[Projectile.owner];
+            if (Projectile.ai[0] == 3)
+                player.ClearBuff(ModContent.BuffType<XeniumLanceCooldown>());
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];

@@ -39,6 +39,8 @@ namespace Redemption.Globals.Player
         public Rectangle meleeHitbox;
         public int crystalGlaiveLevel;
         public int crystalGlaiveShotCount;
+        public bool parryStance;
+        public bool parried;
 
         public override void ResetEffects()
         {
@@ -49,6 +51,7 @@ namespace Redemption.Globals.Player
             meleeHitbox = Rectangle.Empty;
             slayerCursor = false;
             contactImmune = false;
+            parried = false;
         }
         public override void Initialize()
         {
@@ -62,11 +65,21 @@ namespace Redemption.Globals.Player
         {
             Player.fullRotation = 0f;
             slayerStarRating = 0;
+            parryStance = false;
+            parried = false;
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
-            if (damageSource.SourceNPCIndex >= 0 && contactImmuneTrue)
+            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && contactImmuneTrue)
                 return false;
+            if (((damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].velocity.Length() > Player.velocity.Length() / 2) || 
+                (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && parryStance)
+            {
+                parried = true;
+                Player.immune = true;
+                Player.immuneTime = (int)MathHelper.Max(Player.immuneTime, 4);
+                return false;
+            }
             return true;
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)

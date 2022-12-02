@@ -33,7 +33,6 @@ namespace Redemption.Projectiles.Magic
         }
 
         private float glowRot;
-        private Vector2 offsetPos;
         private bool fail;
         public override void AI()
         {

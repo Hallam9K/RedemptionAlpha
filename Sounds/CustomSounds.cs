@@ -128,5 +128,6 @@ namespace Redemption
         public static readonly SoundStyle Violin = new("Redemption/Sounds/Custom/Violin");
         public static readonly SoundStyle sans = new("Redemption/Sounds/Custom/sans") { Volume = .8f, PitchVariance = .1f };
         public static readonly SoundStyle BAZINGA = new("Redemption/Sounds/Custom/BAZINGA");
+        public static readonly SoundStyle WorldTree = new("Redemption/Sounds/Custom/WorldTree");
     }
 }

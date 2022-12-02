@@ -44,7 +44,6 @@ namespace Redemption.Items.Usable.Potions
                 .AddTile(TileID.Bottles)
                 .Register();
         }
-        private float drawTimer;
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;

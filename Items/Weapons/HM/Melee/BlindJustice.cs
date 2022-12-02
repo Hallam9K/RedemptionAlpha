@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -15,7 +14,9 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             DisplayName.SetDefault("Blind Justice, Demon's Terror");
             Tooltip.SetDefault("Hold left-click to charge a Radiance Spin Slash\n" +
-                "Right-click to shoot a spectral scythe, dealing Arcane damage\n" +
+                "Right-click the moment you're about to be hit by a physical attack (contact damage or weapon) to perform a parry, granting immunity frames\n" +
+                "Contact damage parries will not take effect if the enemy is stationary or moving twice as slow as you\n" +
+                "After a successful parry, left-click to counter with an instant Radiance Spin Slash\n" +
                 "Deals double damage against demonic enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
@@ -50,22 +51,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shoot = ModContent.ProjectileType<BlindJustice_Proj>();
         }
         public override bool AltFunctionUse(Player player) => true;
-        public override bool CanUseItem(Player player)
-        {
-            if (player.altFunctionUse == 2)
-            {
-                Item.useStyle = ItemUseStyleID.Swing;
-                Item.noMelee = false;
-                Item.noUseGraphic = false;
-            }
-            else
-            {
-                Item.useStyle = ItemUseStyleID.Shoot;
-                Item.noMelee = true;
-                Item.noUseGraphic = true;
-            }
-            return true;
-        }
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -79,9 +64,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (player.altFunctionUse == 2)
             {
-                SoundEngine.PlaySound(SoundID.Item71, player.position);
-                damage = (int)(damage * 0.75f);
-                type = ModContent.ProjectileType<SpectralScythe_Proj>();
+                SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, player.position);
+                type = ModContent.ProjectileType<BlindJustice_Proj2>();
             }
             else
                 type = ModContent.ProjectileType<BlindJustice_Proj>();

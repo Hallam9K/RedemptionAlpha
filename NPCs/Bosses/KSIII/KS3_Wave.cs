@@ -1,6 +1,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -27,6 +28,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = false;
             Projectile.alpha = 100;
             Projectile.timeLeft = 30;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         public override bool PreDraw(ref Color lightColor)
         {

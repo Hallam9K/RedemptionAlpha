@@ -1624,7 +1624,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                         BaseAI.DamagePlayer(target, 120, 3, hitDirection, NPC);
-                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 30);
                                     }
                                 }
 
@@ -1703,7 +1702,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                             int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                             BaseAI.DamagePlayer(target, 156, 3, hitDirection, NPC);
-                                            target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
                                         }
                                     }
 
@@ -2463,7 +2461,16 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             #endregion
         }
-
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (AIState is ActionState.PhysicalAttacks)
+            {
+                if (AttackChoice == 2)
+                    target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 30);
+                if (AttackChoice == 3)
+                    target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
+            }
+        }
         public override bool CheckDead()
         {
             if (phase >= 5 || AIState is ActionState.Spared)
