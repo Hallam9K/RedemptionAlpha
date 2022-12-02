@@ -70,7 +70,7 @@ namespace Redemption.Globals.Player
         public bool brokenBlade;
         public bool shellCap;
         public bool shieldGenerator;
-        public int shieldGeneratorLife = 400;
+        public int shieldGeneratorLife = 200;
         public int shieldGeneratorCD;
         public float shieldGeneratorAlpha;
         public bool holyFire;
@@ -666,9 +666,9 @@ namespace Redemption.Globals.Player
                     shieldGeneratorAlpha = 0;
                     shieldGenerator = false;
                     shieldGeneratorCD = 3600;
-                    damage *= 3;
+                    damage *= 2;
                     damage -= shieldGeneratorLife;
-                    shieldGeneratorLife = 400;
+                    shieldGeneratorLife = 200;
                     for (int k = 0; k < 30; k++)
                     {
                         Vector2 vector;

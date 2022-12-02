@@ -4,6 +4,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals.Player;
+using Microsoft.Xna.Framework;
+using System.IO;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -13,9 +15,9 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Pocket-Shield Generator");
             Tooltip.SetDefault("Summons a bubble shield that can protect the user from a high amount of damage before breaking\n" +
-                "However, on the impact that breaks the shield, the user will receive 3x the damage it took in said impact\n" +
+                "However, on the impact that breaks the shield, the user will receive 2x the damage it took in said impact\n" +
                 "Once broken, has a 1 minute cooldown\n" +
-                "While an Energy Pack is in your inventory, the shield will restore 3% of its life at the cost of 1% Energy per second");
+                "While an Energy Pack is in your inventory, the shield will restore 4% of its life at the cost of 1% Energy per second");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 9));
         }
 
@@ -29,6 +31,16 @@ namespace Redemption.Items.Accessories.HM
             Item.accessory = true;
         }
         private int timer;
+        public override void UpdateInventory(Player player)
+        {
+            BuffPlayer bP = player.GetModPlayer<BuffPlayer>();
+            bP.shieldGeneratorCD = (int)MathHelper.Max(60, bP.shieldGeneratorCD);
+        }
+        public override void HoldItem(Player player)
+        {
+            BuffPlayer bP = player.GetModPlayer<BuffPlayer>();
+            bP.shieldGeneratorCD = (int)MathHelper.Max(60, bP.shieldGeneratorCD);
+        }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             timer++;
@@ -42,13 +54,13 @@ namespace Redemption.Items.Accessories.HM
                     bP.shieldGeneratorAlpha += 0.04f;
                 bP.shieldGenerator = true;
 
-                if (eP.statEnergy >= (int)(eP.energyMax * 0.01f) && bP.shieldGeneratorLife < 400)
+                if (eP.statEnergy >= (int)(eP.energyMax * 0.01f) && bP.shieldGeneratorLife < 200)
                 {
                     eP.stopEnergyRegen = true;
                     if (timer % 60 == 0)
                     {
                         eP.statEnergy -= (int)(eP.energyMax * 0.01f);
-                        bP.shieldGeneratorLife += 12;
+                        bP.shieldGeneratorLife += 8;
                     }
                 }
             }

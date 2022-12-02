@@ -50,6 +50,7 @@ namespace Redemption.Projectiles.Misc
                     {
                         Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.ManaRegeneration, Scale: 2);
                         dust.velocity = -player.DirectionTo(dust.position) * 20;
+                        dust.noLight = true;
                         dust.noGravity = true;
                     }
                     player.RedemptionPlayerBuff().trappedSoulBoost += 0.015f;

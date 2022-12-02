@@ -75,6 +75,7 @@ Mods: {
             TiedPetBuff: "Tied"
             NebPetBuff: "Chibi Nebby"
             ToasterPetBuff: "Household Heatray"
+            MiniGigaporaPetBuff: "Mini Gigapora"
 		}
 		
 		BuffDescription: {
@@ -148,6 +149,7 @@ Mods: {
             TiedPetBuff: '''"Spooked"'''
             NebPetBuff: "Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you"
             ToasterPetBuff: "Its heating filament is inadequate to its needs"
+            MiniGigaporaPetBuff: "You know the drill"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

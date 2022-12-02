@@ -399,14 +399,14 @@ namespace Redemption.Globals.NPC
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
             if (infected)
-                drawColor = new Color(32, 158, 88);
+                drawColor = Color.Lerp(drawColor, new Color(32, 158, 88), 0.2f);
             if (infested)
-                drawColor = new Color(197, 219, 171);
+                drawColor = Color.Lerp(drawColor, new Color(197, 219, 171), 0.2f);
             if (rallied)
-                drawColor = new Color(200, 150, 150);
+                drawColor = Color.Lerp(drawColor, new Color(200, 150, 150), 0.2f);
             if (pureChill)
             {
-                drawColor = new Color(180, 220, 220);
+                drawColor = Color.Lerp(drawColor, new Color(180, 220, 220), 0.3f);
                 if (Main.rand.NextBool(14))
                 {
                     int sparkle = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, ModContent.DustType<SnowflakeDust>(), newColor: Color.White);
@@ -435,7 +435,7 @@ namespace Redemption.Globals.NPC
             }
             if (spiderSwarmed)
             {
-                if (Main.rand.NextBool(10)&& npc.alpha < 200)
+                if (Main.rand.NextBool(10) && npc.alpha < 200)
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<SpiderSwarmerDust>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;
@@ -443,7 +443,7 @@ namespace Redemption.Globals.NPC
             }
             if (dragonblaze)
             {
-                drawColor = new Color(220, 150, 150);
+                drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
                 if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
                     ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
@@ -461,7 +461,7 @@ namespace Redemption.Globals.NPC
             }
             if (blackHeart)
             {
-                if (Main.rand.NextBool(3)&& npc.alpha < 200)
+                if (Main.rand.NextBool(3) && npc.alpha < 200)
                 {
                     int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<VoidFlame>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
                     Main.dust[dust].noGravity = true;

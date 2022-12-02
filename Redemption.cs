@@ -10,6 +10,7 @@ using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
@@ -50,6 +51,7 @@ namespace Redemption
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
 
         public static RenderTargetManager Targets;
+        public static Effect GlowTrailShader;
 
         private List<ILoadable> _loadCache;
 
@@ -463,7 +465,7 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, StunUI);
             }
-            if (bP.shieldGenerator && bP.shieldGeneratorCD <= 0)
+            if (BasePlayer.HasAccessory(Main.LocalPlayer, ModContent.ItemType<PocketShieldGenerator>(), true, true))
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer ShieldGaugeUI = new("Redemption: Shield Gauge UI",
@@ -606,16 +608,20 @@ namespace Redemption
 
             Texture2D timerBar = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge").Value;
             Texture2D timerBarInner = ModContent.Request<Texture2D>("Redemption/UI/ShieldGauge_Fill").Value;
-            float timerMax = 400;
+            float timerMax = 200;
             int timerProgress = (int)(timerBarInner.Width * (bP.shieldGeneratorLife / timerMax));
+            int timerProgress2 = (int)(timerBarInner.Width * (bP.shieldGeneratorCD / 3600f));
             Vector2 drawPos = player.Center - new Vector2(0, 60) - Main.screenPosition;
             spriteBatch.Draw(timerBar, drawPos, null, Color.White, 0f, timerBar.Size() / 2f, 1f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            if (bP.shieldGeneratorCD <= 0)
+                spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress, timerBarInner.Height)), Color.White, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(timerBarInner, drawPos, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner.Height)), Color.PaleVioletRed, 0f, timerBarInner.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
             Texture2D shieldTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield").Value;
             Vector2 drawOrigin = new(shieldTex.Width / 2, shieldTex.Height / 2);
 
-            spriteBatch.Draw(shieldTex, player.Center - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 400) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, 0.5f, 0, 0);
+            if (bP.shieldGeneratorCD <= 0)
+                spriteBatch.Draw(shieldTex, player.Center - Main.screenPosition, null, Color.White * ((float)bP.shieldGeneratorLife / 200) * (bP.shieldGeneratorAlpha + 0.3f), 0, drawOrigin, 0.5f, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

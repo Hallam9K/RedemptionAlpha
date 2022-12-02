@@ -179,8 +179,8 @@ namespace Redemption.Globals
             downedEaglecrestGolem = downed.Contains("downedEaglecrestGolem");
             foundNewb = downed.Contains("foundNewb");
             downedSlayer = downed.Contains("downedSlayer");
-            downedOmega3 = downed.Contains("downedOmega1");
-            downedOmega3 = downed.Contains("downedOmega2");
+            downedOmega1 = downed.Contains("downedOmega1");
+            downedOmega2 = downed.Contains("downedOmega2");
             downedOmega3 = downed.Contains("downedOmega3");
             downedErhan = downed.Contains("downedErhan");
             erhanDeath = tag.GetInt("erhanDeath");
