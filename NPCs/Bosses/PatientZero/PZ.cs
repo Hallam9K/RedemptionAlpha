@@ -26,6 +26,7 @@ using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.NPCs.Bosses.ADD;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -144,12 +145,20 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (!LabArea.labAccess[5])
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
 
+            if (!RedeBossDowned.downedPZ && RedeBossDowned.downedGGBossFirst == 0)
+                RedeBossDowned.downedGGBossFirst = 1;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedPZ, -1);
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
+        }
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (RedeBossDowned.downedGGBossFirst > 1)
+                damage *= .85f;
+            return true;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

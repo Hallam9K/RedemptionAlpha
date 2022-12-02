@@ -149,6 +149,9 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
+                damage *= .85f;
+
             bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
@@ -212,6 +215,8 @@ namespace Redemption.NPCs.Bosses.ADD
 
                 }
             }
+            if (!NPC.AnyNPCs(ModContent.NPCType<Akka>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
+                RedeBossDowned.downedGGBossFirst = 3;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedADD, -1);
         }
 
