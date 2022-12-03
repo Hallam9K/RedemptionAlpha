@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Projectiles.Ritualist;
+using Redemption.Buffs;
 
 namespace Redemption.Globals.Player
 {
@@ -19,6 +20,8 @@ namespace Redemption.Globals.Player
         public float SpiritGaugeCDCD;
 
         public bool bolineFlower;
+
+        public bool soulSoldierBonus;
 
         public override void ResetEffects()
         {
@@ -52,6 +55,9 @@ namespace Redemption.Globals.Player
         }
         private void IncreaseLevelEffects()
         {
+            if (soulSoldierBonus)
+                Player.AddBuff(ModContent.BuffType<SoulChargedBuff>(), 300);
+
             if (Player.HasItem(ModContent.ItemType<BuddingBoline>()))
                 Player.GetModPlayer<RitualistPlayer>().bolineFlower = true;
 

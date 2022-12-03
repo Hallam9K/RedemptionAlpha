@@ -593,7 +593,12 @@ namespace Redemption
             spriteBatch.Draw(timerBar2, drawPos2, null, Color.White, 0f, timerBar2.Size() / 2f, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(timerBarInner2, drawPos2, new Rectangle?(new Rectangle(0, 0, timerProgress2, timerBarInner2.Height)), Color.White, 0f, timerBarInner2.Size() / 2f, 1f, SpriteEffects.None, 0f);
 
-            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, (rP.SpiritLevel + 1).ToString(), player.Center + new Vector2(-46, 36) - Main.screenPosition, Color.White, 0, Vector2.Zero, Vector2.One);
+            Texture2D textBg = ModContent.Request<Texture2D>("Redemption/UI/SpiritGauge_BackNum").Value;
+            spriteBatch.Draw(textBg, player.Center + new Vector2(-32, 32) - Main.screenPosition, null, Color.White, 0f, textBg.Size() / 2f, 1f, 0, 0f);
+            int offset = 0;
+            if (rP.SpiritLevel > 0)
+                offset = 2;
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, (rP.SpiritLevel + 1).ToString(), player.Center + new Vector2(-35 - offset, 22) - Main.screenPosition, Color.White, 0, Vector2.Zero, Vector2.One);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

@@ -529,7 +529,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WornDagger>(), 20));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WornDagger>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 3, 1, 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 3, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));

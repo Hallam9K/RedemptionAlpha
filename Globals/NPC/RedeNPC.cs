@@ -591,8 +591,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
             if (npc.type is NPCID.Ghost or NPCID.Wraith)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
-            //if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
-            //    npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
+            if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
             if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)
@@ -608,6 +608,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
+            if (npc.type is NPCID.DemonEye or NPCID.DemonEye2 or NPCID.DemonEyeOwl or NPCID.DemonEyeSpaceship or NPCID.CataractEye or NPCID.CataractEye2 or NPCID.DialatedEye or NPCID.DialatedEye2 or NPCID.GreenEye or NPCID.GreenEye2 or NPCID.PurpleEye or NPCID.PurpleEye2 or NPCID.SleepyEye or NPCID.SleepyEye2)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpiritMonocle>(), 50));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

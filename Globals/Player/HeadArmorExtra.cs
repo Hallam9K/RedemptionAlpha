@@ -96,6 +96,8 @@ namespace Redemption.Globals.Player
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "XeniumVisor", EquipType.Head), head);
             head = new(Request<Texture2D>("Redemption/Items/Armor/Vanity/OOMask_Head_Glow", immediate).Value);
             HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "OOMask", EquipType.Head), head);
+            head = new(Request<Texture2D>("Redemption/Items/Armor/PreHM/SoulSoldier/SoulSoldierHelmet_Head_Glow", immediate).Value);
+            HeadDictionary.Add(EquipLoader.GetEquipSlot(mod, "SoulSoldierHelmet", EquipType.Head), head);
         }
     }
 }

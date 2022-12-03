@@ -119,10 +119,10 @@ namespace Redemption.Globals
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            /*if (item.type == ItemID.JungleFishingCrate)
+            if (item.type == ItemID.JungleFishingCrate)
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 6));
             if (item.type == ItemID.JungleFishingCrateHard)
-                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));*/
+                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));
             if (item.type == ItemID.GolemBossBag)
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemStaff>(), 7));
         }

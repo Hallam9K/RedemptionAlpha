@@ -53,6 +53,7 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.Items.Tools.PostML;
 
 namespace Redemption.Globals
 {
@@ -368,7 +369,7 @@ namespace Redemption.Globals
         { ItemID.Excalibur, ItemID.TrueExcalibur, ItemID.PickaxeAxe, ItemID.Pwnhammer, ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<BlindJustice>() };
 
         public static List<int> Shadow = new()
-        { ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker };
+        { ItemID.LightsBane, ItemID.PurpleClubberfish, ItemID.NightsEdge, ItemID.TrueNightsEdge, ItemID.DeathSickle, ItemID.NightmarePickaxe, ItemID.WarAxeoftheNight, ItemID.TheBreaker, ModContent.ItemType<BlackholeHamaxe>(), ModContent.ItemType<BlackholePickaxe>() };
 
         public static List<int> Nature = new()
         { ItemID.CactusSword, ItemID.BladeofGrass, ItemID.Seedler, ItemID.ChlorophyteSaber, ItemID.ChristmasTreeSword, ItemID.ChlorophyteClaymore, ItemID.TerraBlade, ItemID.CactusPickaxe, ItemID.ChlorophytePickaxe, ItemID.ChlorophyteGreataxe, ItemID.Hammush, ItemID.ChlorophyteWarhammer, ModContent.ItemType<CursedGrassBlade>() };
@@ -383,7 +384,7 @@ namespace Redemption.Globals
         { };
 
         public static List<int> Celestial = new()
-        { ItemID.Starfury, ItemID.PiercingStarlight, ItemID.StarWrath, ItemID.Meowmere, ItemID.SolarFlarePickaxe, ItemID.NebulaPickaxe, ItemID.VortexPickaxe, ItemID.StardustPickaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeSolar, ItemID.LunarHamaxeStardust, ItemID.LunarHamaxeVortex };
+        { ItemID.Starfury, ItemID.PiercingStarlight, ItemID.StarWrath, ItemID.Meowmere, ItemID.SolarFlarePickaxe, ItemID.NebulaPickaxe, ItemID.VortexPickaxe, ItemID.StardustPickaxe, ItemID.LunarHamaxeNebula, ItemID.LunarHamaxeSolar, ItemID.LunarHamaxeStardust, ItemID.LunarHamaxeVortex, ModContent.ItemType<BlackholeHamaxe>(), ModContent.ItemType<BlackholePickaxe>() };
 
         public static List<int> NoElement = new()
         { ItemID.BlueSolution, ItemID.DarkBlueSolution, ItemID.GreenSolution, ItemID.PurpleSolution, ItemID.RedSolution, ItemID.RocketI, ItemID.RocketII, ItemID.RocketIII, ItemID.RocketIV, ModContent.ItemType<BleachedSolution>() };
