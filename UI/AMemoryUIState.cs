@@ -46,7 +46,7 @@ namespace Redemption.UI
         }
         public override void MouseOver(UIMouseEvent evt)
         {
-            Main.isMouseLeftConsumedByUI = true;
+            Main.LocalPlayer.mouseInterface = true;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

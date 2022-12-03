@@ -12,13 +12,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Shoots a spread of stingers");
-
             SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
 		{
-            Item.damage = 19;
+            Item.damage = 14;
             Item.DamageType = DamageClass.Melee;
             Item.width = 48;
             Item.height = 48;
@@ -36,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {
-            target.AddBuff(BuffID.Poisoned, 600);
+            target.AddBuff(BuffID.Poisoned, 300);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

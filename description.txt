@@ -13,7 +13,7 @@ This beta does however have:
 - Reworking of basically every weapon
 - Overhaul to the Abandoned Lab
 - Many boss reworks or tweaks
-- Removal of druid class
+- Removal of druid class, as the quality no longer matches the rest of the mod, however be patient for the upcoming Ritualist Class!
 - Elemental system where weapons and projectiles can have elements set to them that certain enemies can be resistant or weak to
 - Guard Points, a new value that blocks damage for a certain amount of hits until its broken, enemies with guard points wont take knockback. Hammers and explosives deal triple damage to guard points and Psychic elemental weapons will ignore guard points completely.
 - Removal of bloat content
@@ -22,7 +22,7 @@ This beta does however have:
 Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
 Currently, there are:
 - 875 Items
-- 152 NPCs
+- 152 NPCs/Enemies
 - 11 Bosses
 - 7 Minibosses
 - 371 Tiles

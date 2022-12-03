@@ -82,7 +82,7 @@ namespace Redemption.WorldGeneration
             BastionVector = new Vector2(-1, -1);
             GoldenGatewayVector = new Vector2(-1, -1);
         }
-        public override void PostWorldGen()
+        /*public override void PostWorldGen()
         {
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
@@ -102,7 +102,7 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
-        }
+        }*/
         public override void PostUpdateWorld()
         {
             if (NPC.downedBoss3 && !dragonLeadSpawn)
