@@ -147,10 +147,11 @@ namespace Redemption.UI
         }
         public override void MouseOver(UIMouseEvent evt)
         {
-            Main.LocalPlayer.mouseInterface = true;
         }
         public override void Update(GameTime gameTime)
         {
+            Main.LocalPlayer.mouseInterface = true;
+
             if (ButtonState != 2 && !Main.LocalPlayer.releaseInventory)
                 Visible = false;
 
