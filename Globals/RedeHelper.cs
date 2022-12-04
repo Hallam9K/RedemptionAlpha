@@ -39,6 +39,15 @@ namespace Redemption.Globals
         {
             return proj.minion || proj.Redemption().TechnicallyMelee || proj.Redemption().ParryBlacklist || Main.projPet[proj.type] || proj.sentry || (countHoming && ProjectileID.Sets.CultistIsResistantTo[proj.type]);
         }
+        public static bool? CanHitSpiritCheck(Terraria.Player player, Item item)
+        {
+            return player.RedemptionAbility().SpiritwalkerActive || ItemLists.Arcane.Contains(item.type) || ItemLists.Celestial.Contains(item.type) || ItemLists.Holy.Contains(item.type) || ItemLists.Psychic.Contains(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+        }
+        public static bool? CanHitSpiritCheck(Projectile proj)
+        {
+            Terraria.Player player = Main.player[proj.owner];
+            return player.RedemptionAbility().SpiritwalkerActive || proj.Redemption().RitDagger || ProjectileLists.Arcane.Contains(proj.type) || ProjectileLists.Celestial.Contains(proj.type) || ProjectileLists.Holy.Contains(proj.type) || ProjectileLists.Psychic.Contains(proj.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+        }
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
 
