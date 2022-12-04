@@ -52,7 +52,7 @@ namespace Redemption.Projectiles.Misc
 
                 if (Projectile.Hitbox.Intersects(player.Hitbox))
                 {
-                    SoundEngine.PlaySound(SoundID.MaxMana, player.position);
+                    SoundEngine.PlaySound(SoundID.MaxMana with { Volume = 0.5f }, player.position);
                     player.statLife += 2;
                     player.statMana++;
                     player.HealEffect(2);

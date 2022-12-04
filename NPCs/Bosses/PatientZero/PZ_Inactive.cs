@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void AI()
         {
             Player player = Main.player[Main.myPlayer];
-            if (player.DistanceSQ(NPC.Center) < 600 * 600 && Collision.CanHit(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height))
+            if (player.DistanceSQ(NPC.Center) < 400 * 400 && Collision.CanHit(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height))
                 NPC.dontTakeDamage = false;
             else
                 NPC.dontTakeDamage = true;

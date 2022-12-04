@@ -7,6 +7,7 @@ using Terraria.ObjectData;
 using Terraria.Enums;
 using Redemption.Items.Usable;
 using Terraria.Audio;
+using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -20,6 +21,8 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileNoAttach[Type] = true;
             TileID.Sets.NotReallySolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            RedeTileHelper.CannotMineTileAbove[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 4;
             TileObjectData.newTile.UsesCustomCanPlace = true;

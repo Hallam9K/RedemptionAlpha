@@ -87,7 +87,7 @@ namespace Redemption.Globals
             {
                 Terraria.NPC npc = Main.npc[i];
                 float distance = (npc.Center - position).Length();
-                if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
+                if (!(distance < maxDistance) || !npc.active || (!npc.chaseable && npc.type != NPCID.CultistBoss) || npc.dontTakeDamage || npc.friendly ||
                     npc.lifeMax <= 5 || npc.Redemption().invisible || npc.immortal ||
                     !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles ||
                     !specialCondition(npc))

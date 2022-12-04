@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Having this in your inventory may attract the Keeper's first creation underground" +
-                "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
+                "\n[i:" + ModContent.ItemType<BadRoute>() + "][c/ff5533: This item may decrease Alignment]");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 11));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;

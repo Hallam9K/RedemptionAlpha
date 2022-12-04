@@ -188,6 +188,12 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("My favourite colour is green, not sure why I'm telling you though...");
                 chat.Add("Cats are obviously superior to dogs.");
                 chat.Add("Have you seen a guy with slicked back, hazel hair? He carries a sword and wears a green tunic last I saw. I lost him before travelling through the portal, hope he's doing alright.");
+                chat.Add("One time me and Zephos were in a cave, and then a skeleton with flowers stuck in its ribcage appeared. Zephos thought it was a powerful druid skeleton. He likes to exaggerate. It didn't have any magic, it was just a normal skeleton.");
+                chat.Add("Cool Bug Fact: Coast Scarabs are small beetles that live on sandy beaches and eat grains of sand as their primary diet. When wet, their cyan shells will shine. Their shell is normally used to make cyan dyes.");
+                chat.Add("Cool Bug Fact: Sandskin Spiders live in deserts, roaming around at night when other tiny insects come out to eat. When the hot day arrives, the spider will borrow a feet under the sand to sleep. Yes, I like bugs.");
+                chat.Add("Living Blooms roam this island? They are native to Anglon's lush forests. Living Blooms are more plant than animal. Seems like many creatures got to this island from the portal.");
+                if (!Main.dayTime)
+                    chat.Add("There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.");
             }
             return chat;
         }
@@ -219,7 +225,7 @@ namespace Redemption.NPCs.Friendly
                         button = "Shop";
                         break;
                     case 1:
-                        button = "Talk";
+                        button = "Advice";
                         break;
                     case 2:
                         button = "Restring Bow (10 silver)";
@@ -325,18 +331,16 @@ namespace Redemption.NPCs.Friendly
         public static string ChitChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            chat.Add("I've lost someone, his name is Zephos and wears a green tunic. I'm sure I'll find him eventually.");
-            chat.Add("One time me and Zephos were in a cave, and then a skeleton with flowers stuck in its ribcage appeared. Zephos thought it was a powerful druid skeleton. He likes to exaggerate. It didn't have any magic, it was just a normal skeleton.");
             chat.Add("If you wanna find Leaf Beetles, or Tree Bugs as they're called here, then chop down some trees. They live on tree tops, their leaf-green shell camouflaging them in the foliage. They eat the bark off of trees, and if their tree is destroyed or rotted, it will climb down and find another suitable tree to live on.");
-            chat.Add("Cool Bug Fact: Coast Scarabs are small beetles that live on sandy beaches and eat grains of sand as their primary diet. When wet, their cyan shells will shine. Their shell is normally used to make cyan dyes.");
-            chat.Add("Cool Bug Fact: Sandskin Spiders live in deserts, roaming around at night when other tiny insects come out to eat. When the hot day arrives, the spider will borrow a feet under the sand to sleep. Yes, I like bugs.");
             chat.Add("When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
             chat.Add("Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!");
             chat.Add("If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.");
             chat.Add("The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.");
-            chat.Add("Living Blooms roam this island? They are native to Anglon's lush forests. Living Blooms are more plant than animal. Seems like many creatures got to this island from the portal.");
-            if (!Main.dayTime)
-                chat.Add("There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.");
+            chat.Add("See foes wearing armor or holding shields? You'll need to break their Guard to deal with them. A hammer or explosives should be most efficient, just make sure your weapon isn't super weak.");
+            if (!RedeBossDowned.foundNewb)
+                chat.Add("I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.");
+            if (RedeBossDowned.erhanDeath == 0)
+                chat.Add("I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic");
             return chat;
         }
 

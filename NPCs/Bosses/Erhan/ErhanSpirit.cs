@@ -110,7 +110,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
