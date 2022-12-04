@@ -170,6 +170,12 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("My favourite colour is orange! Donno why I'm tellin' ya though...");
                 chat.Add("I don't know what the deal with cats are. Dogs are definitely better!");
                 chat.Add("Have you seen a guy in a cloak, he carries a bow around. I lost him before travelling through the portal, hope he's alright.");
+                chat.Add("Wanna know about the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remeber a lot about being a pirate. I was very young at the time.");
+                chat.Add("Did I ever tell you about my victory against a powerful undead druid? It was a close match, it was giant, and its magic was insane! But yeah, I beat it, pretty cool huh? It had flowers growing everywhere on it!");
+                chat.Add("This island's gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens, called Anglonic Forest Hens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast!");
+                chat.Add("I swear I saw a Blobble around here. I didn't expect them to be here, they're native to, uh, Ithon I think. Don't quote me on that though, Daerel's a lot better at remembering useless info than I.");
+                if (!Main.dayTime)
+                    chat.Add("You never told me there'd be undead here! What, they're called zombies? Well where I'm from they're called undead. There's also a few skeletons out here, normally they like to stay underground. This island is pretty weird. How do you live here?");
             }
             return chat;
         }
@@ -201,7 +207,7 @@ namespace Redemption.NPCs.Friendly
                         button = "Shop";
                         break;
                     case 1:
-                        button = "Talk";
+                        button = "Advice";
                         break;
                     case 2:
                         button = "Sharpen (5 silver)";
@@ -307,19 +313,15 @@ namespace Redemption.NPCs.Friendly
         public static string ChitChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            chat.Add("How about I tell you the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remeber a lot about being a pirate. I was very young at the time.");
-            chat.Add("I'm doin' good, although I've lost someone, his name is Daerel and wears a cloak. I'm sure I'll find him eventually.");
-            chat.Add("Did I ever tell you about my victory against a powerful undead druid? It was a close match, it was giant, and its magic was insane! But yeah, I beat it, pretty cool huh? It had flowers growing everywhere on it!");
             chat.Add("When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
-            chat.Add("This island's gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens, called Anglonic Forest Hens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast!");
             chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : "(wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
-            chat.Add("I swear I saw a Blobble around here. I didn't expect them to be here, they're native to, uh, Ithon I think. Don't quote me on that though, Daerel's a lot better at remembering useless info than I.");
             chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");
             chat.Add("Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!");
-            if (!Main.dayTime)
-            {
-                chat.Add("You never told me there'd be undead here! What, they're called zombies? Well where I'm from they're called undead. There's also a few skeletons out here, normally they like to stay underground. This island is pretty weird. How do you live here?");
-            }
+            chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A hammer or explosives will be your best bet, just make sure your weapon isn't super weak.");
+            if (!RedeBossDowned.foundNewb)
+                chat.Add("I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.");
+            if (RedeBossDowned.erhanDeath == 0)
+                chat.Add("I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic");
             return chat;
         }
 

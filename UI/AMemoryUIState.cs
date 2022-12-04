@@ -41,12 +41,12 @@ namespace Redemption.UI
         }
         public override void Update(GameTime gameTime)
         {
+            Main.LocalPlayer.mouseInterface = true;
             if (!Main.LocalPlayer.releaseInventory)
                 Visible = false;
         }
         public override void MouseOver(UIMouseEvent evt)
         {
-            Main.LocalPlayer.mouseInterface = true;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

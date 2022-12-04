@@ -244,7 +244,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Demon
-        public static List<int> Demon = new() { NPCID.Demon, NPCID.VoodooDemon, NPCID.FireImp, NPCID.RedDevil, NPCID.WallofFlesh, NPCID.WallofFleshEye };
+        public static List<int> Demon = new() { NPCID.Demon, NPCID.VoodooDemon, NPCID.FireImp, NPCID.RedDevil, NPCID.WallofFlesh, NPCID.WallofFleshEye, NPCID.Krampus };
         #endregion
 
         #region Cold
@@ -281,6 +281,14 @@ namespace Redemption.Globals
 
         #region Hallowed
         public static List<int> Hallowed = new() { NPCID.ChaosElemental, NPCID.DesertGhoulHallow, NPCID.EnchantedSword, NPCID.BigMimicHallow, NPCID.IlluminantBat, NPCID.IlluminantSlime, NPCID.LightMummy, NPCID.Pixie, NPCID.Paladin, NPCID.Unicorn, NPCID.RainbowSlime, NPCID.SandsharkHallow, NPCID.HallowBoss, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, ModContent.NPCType<Erhan>(), ModContent.NPCType<ErhanSpirit>() };
+        #endregion
+
+        #region Dark
+        public static List<int> Dark = new() { NPCID.DarkCaster, NPCID.DungeonSlime, NPCID.EaterofSouls, NPCID.BigEater, NPCID.LittleEater, NPCID.DevourerBody, NPCID.DevourerHead, NPCID.DevourerTail, NPCID.Clinger, NPCID.BigMimicCorruption, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Corruptor, NPCID.CursedHammer, NPCID.DarkMummy, NPCID.DesertDjinn, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.PossessedArmor, NPCID.DesertGhoulCorruption, NPCID.Slimer, NPCID.Slimer2, NPCID.Wraith, NPCID.SeekerHead, NPCID.SeekerBody, NPCID.SeekerTail, NPCID.CorruptBunny, NPCID.CorruptGoldfish, NPCID.CorruptPenguin, NPCID.SandsharkCorrupt, NPCID.GoblinSummoner, NPCID.ShadowFlameApparition, NPCID.Reaper, NPCID.ThePossessed, NPCID.Vampire, NPCID.Hellhound, NPCID.HeadlessHorseman, NPCID.Splinterling, NPCID.Krampus, NPCID.EaterofWorldsBody, NPCID.EaterofWorldsHead, NPCID.EaterofWorldsTail, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.MourningWood, NPCID.Pumpking };
+        #endregion
+
+        #region Blood
+        public static List<int> Blood = new() { NPCID.BloodCrawler, NPCID.BloodCrawlerWall, NPCID.Crimera, NPCID.BigCrimera, NPCID.LittleCrimera, NPCID.EyeballFlyingFish, NPCID.CataractEye, NPCID.CataractEye2, NPCID.DemonEye, NPCID.DemonEye2, NPCID.DemonEyeOwl, NPCID.DemonEyeSpaceship, NPCID.DialatedEye, NPCID.DialatedEye2, NPCID.GreenEye, NPCID.GreenEye2, NPCID.PurpleEye, NPCID.PurpleEye2, NPCID.WanderingEye, NPCID.FaceMonster, NPCID.BloodMummy, NPCID.BloodJelly, NPCID.BloodFeeder, NPCID.Crimslime, NPCID.BigCrimslime, NPCID.LittleCrimslime, NPCID.CrimsonAxe, NPCID.BigMimicCrimson, NPCID.FloatyGross, NPCID.Herpling, NPCID.IchorSticker, NPCID.DesertGhoulCrimson, NPCID.BloodEelBody, NPCID.BloodEelHead, NPCID.BloodEelTail, NPCID.BloodSquid, NPCID.BloodZombie, NPCID.BloodNautilus, NPCID.Drippler, NPCID.GoblinShark, NPCID.CrimsonBunny, NPCID.CrimsonGoldfish, NPCID.CrimsonPenguin, NPCID.SandsharkCrimson, NPCID.Vampire, NPCID.BrainofCthulhu, NPCID.EyeofCthulhu, NPCID.WallofFlesh, NPCID.WallofFleshEye, NPCID.Creeper, NPCID.LeechBody, NPCID.LeechHead, NPCID.LeechTail, NPCID.TheHungry, NPCID.TheHungryII, NPCID.ServantofCthulhu };
         #endregion
 
         public static List<int> IsSlime = new() { NPCID.GreenSlime, NPCID.BlueSlime, NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.JungleSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.BabySlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.Pinky, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Slimer, NPCID.Slimer2, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>() };

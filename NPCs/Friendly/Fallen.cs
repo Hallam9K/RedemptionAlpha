@@ -323,18 +323,6 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].shopCustomPrice = new int?(NPC.downedGolemBoss ? 6 : 10);
                 shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
-            if (RedeBossDowned.keeperSaved)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<GrimShard>());
-                shop.item[nextSlot].shopCustomPrice = new int?(6);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-                if (Main.expertMode)
-                {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<HeartInsignia>());
-                    shop.item[nextSlot].shopCustomPrice = new int?(30);
-                    shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-                }
-            }
             if (RedeWorld.deadRingerGiven)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRinger>());

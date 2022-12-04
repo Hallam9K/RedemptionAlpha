@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetDefaults()
 		{
-            Item.damage = 14;
+            Item.damage = 15;
             Item.DamageType = DamageClass.Melee;
             Item.width = 48;
             Item.height = 48;
@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(30));
                 float scale = 1f - (Main.rand.NextFloat() * 0.4f);
                 perturbedSpeed *= scale;
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage / 2, 0, player.whoAmI);
             }
             return false;
         }

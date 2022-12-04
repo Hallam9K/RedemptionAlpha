@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Natural
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             if (!WorldGen.gen && Main.netMode != NetmodeID.MultiplayerClient)
-                NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 32, j * 16, ModContent.NPCType<Newb>());
+                NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 32, j * 16, ModContent.NPCType<Newb_Intro>());
 
             RedeBossDowned.foundNewb = true;
 

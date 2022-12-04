@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
             TileID.Sets.NotReallySolid[Type] = true;
             TileID.Sets.DrawsWalls[Type] = true;
             TileObjectData.newTile.Width = 1;

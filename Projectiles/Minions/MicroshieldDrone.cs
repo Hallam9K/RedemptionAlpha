@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Microshield Drone");
             Main.projFrames[Projectile.type] = 4;
+            Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
@@ -31,6 +32,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.minionSlots = 0;
         }
         public override bool? CanCutTiles() => false;
@@ -71,7 +73,8 @@ namespace Redemption.Projectiles.Minions
                 Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.7f, 0f, 0f);
             }
             Player owner = Main.player[Projectile.owner];
-            CheckActive(owner);
+            if (!CheckActive(owner))
+                return;
             if (!iLoveRedemption)
             {
                 Vector2 playerDir = Projectile.Center - owner.Center;
@@ -104,7 +107,7 @@ namespace Redemption.Projectiles.Minions
                             projectile.damage *= 4;
                         }
                         Projectile.localAI[0] += projectile.damage * 0.75f;
-                        CombatText.NewText(Projectile.getRect(), Color.IndianRed, (int)(projectile.damage * 0.75f), true, true);
+                        CombatText.NewText(Projectile.getRect(), Color.MediumVioletRed, (int)(projectile.damage * 0.75f), true, true);
                         SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
                         if (Projectile.localAI[0] >= 500)
                         {
@@ -161,10 +164,16 @@ namespace Redemption.Projectiles.Minions
                 Projectile.netUpdate = true;
             }
         }
-        private void CheckActive(Player player)
+        private bool CheckActive(Player owner)
         {
-            if (!player.dead && player.HasBuff(ModContent.BuffType<MicroshieldDroneBuff>()))
+            if (owner.dead || !owner.active)
+            {
+                owner.ClearBuff(ModContent.BuffType<MicroshieldDroneBuff>());
+                return false;
+            }
+            if (owner.HasBuff(ModContent.BuffType<MicroshieldDroneBuff>()))
                 Projectile.timeLeft = 2;
+            return true;
         }
         public override bool MinionContactDamage() => false;
     }

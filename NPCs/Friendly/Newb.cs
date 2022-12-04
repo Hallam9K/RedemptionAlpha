@@ -202,7 +202,7 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ItemID.Ruby);
                 shop.item[nextSlot++].SetDefaults(ItemID.Diamond);
             }
-            if (Main.LocalPlayer.ZoneRockLayerHeight)
+            if (Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.ZoneDirtLayerHeight)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OreBomb>());
                 if (Main.hardMode)

@@ -8,7 +8,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Let the Keeper's spirit rest" +
-                "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "]");
+                "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "][c/f8f8bc: This item may redeem past actions that decreased Alignment]");
 
             SacrificeTotal = 1;
         }

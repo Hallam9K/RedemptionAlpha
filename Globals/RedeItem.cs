@@ -108,7 +108,7 @@ namespace Redemption.Globals
         }
         public override bool OnPickup(Item item, Terraria.Player player)
         {
-            if (item.type == ItemID.Heart && player.RedemptionPlayerBuff().heartInsignia)
+            if ((item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane) && player.RedemptionPlayerBuff().heartInsignia)
                 player.AddBuff(ModContent.BuffType<HeartInsigniaBuff>(), 180);
 
             return true;
@@ -279,7 +279,7 @@ namespace Redemption.Globals
 
         public override void PostUpdate(Item item)
         {
-            if (item.type == ItemID.Heart && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
+            if ((item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane) && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
             {
                 if (!Main.rand.NextBool(6))
                     return;
