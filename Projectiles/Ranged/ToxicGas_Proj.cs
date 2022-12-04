@@ -19,7 +19,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.width = 150;
             Projectile.height = 150;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 10;
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
@@ -27,7 +27,6 @@ namespace Redemption.Projectiles.Misc
             Projectile.timeLeft = 600;
             Projectile.scale = Main.rand.NextFloat(0.5f, 0.8f);
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
-            Projectile.usesLocalNPCImmunity = true;
         }
         public override void AI()
         {
@@ -73,12 +72,6 @@ namespace Redemption.Projectiles.Misc
         {
             if (Main.rand.NextBool(5))
                 target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);
-
-            if (Projectile.ai[0] == 0)
-            {
-                Projectile.localNPCImmunity[target.whoAmI] = 30;
-                target.immune[Projectile.owner] = 0;
-            }
         }
         public override bool PreDraw(ref Color lightColor)
         {

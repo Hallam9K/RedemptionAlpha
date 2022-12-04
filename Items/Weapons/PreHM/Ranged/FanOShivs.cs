@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 15;
+            Item.damage = 17;
             Item.knockBack = 2;
             Item.DamageType = DamageClass.Ranged;
             Item.noUseGraphic = true;
@@ -80,10 +80,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             if (player.FindItem(ItemID.PoisonedKnife) >= 0)
             {
                 type = ModContent.ProjectileType<FanOShivsPoison_Proj>();
-                damage += 8;
+                damage += 3;
             }
             else if (player.FindItem(ItemID.ThrowingKnife) >= 0)
-                damage += 6;
+                damage += 3;
         }
     }
 }

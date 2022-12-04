@@ -340,7 +340,7 @@ namespace Redemption.NPCs.Friendly
             if (!RedeBossDowned.foundNewb)
                 chat.Add("I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.");
             if (RedeBossDowned.erhanDeath == 0)
-                chat.Add("I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic");
+                chat.Add("I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.");
             return chat;
         }
 

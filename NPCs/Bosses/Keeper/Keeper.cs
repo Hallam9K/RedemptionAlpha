@@ -496,7 +496,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             {
                                 Vector2 pos = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(TimerRand)) * 60;
                                 NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage,
-                                       RedeHelper.PolarVector(Main.expertMode ? 4 : 3, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item20);
+                                       RedeHelper.PolarVector(Main.expertMode ? 0.5f : 0.3f, (player.Center - pos).ToRotation()), true, SoundID.Item20);
 
                                 TimerRand += 45;
                             }

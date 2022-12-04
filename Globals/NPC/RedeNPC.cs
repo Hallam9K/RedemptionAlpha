@@ -222,7 +222,7 @@ namespace Redemption.Globals.NPC
                         elementDmg *= 1.1f;
 
                     if (ItemLists.Poison.Contains(item.type))
-                        elementDmg *= 1.1f;
+                        elementDmg *= 1.05f;
                 }
                 if (NPCLists.Hallowed.Contains(npc.type))
                 {
@@ -258,7 +258,7 @@ namespace Redemption.Globals.NPC
                         elementDmg *= 0.75f;
                 }
                 if (ItemLists.Poison.Contains(item.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
-                    elementDmg *= 1.15f;
+                    elementDmg *= 1.1f;
                 if (ItemLists.Wind.Contains(item.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
 
@@ -415,7 +415,7 @@ namespace Redemption.Globals.NPC
                         elementDmg *= 1.1f;
 
                     if (ProjectileLists.Poison.Contains(projectile.type))
-                        elementDmg *= 1.1f;
+                        elementDmg *= 1.05f;
                 }
                 if (NPCLists.Hallowed.Contains(npc.type))
                 {
@@ -451,7 +451,7 @@ namespace Redemption.Globals.NPC
                         elementDmg *= 0.75f;
                 }
                 if (ProjectileLists.Poison.Contains(projectile.type) && (npc.poisoned || npc.venom || npc.RedemptionNPCBuff().dirtyWound))
-                    elementDmg *= 1.15f;
+                    elementDmg *= 1.1f;
                 if (ProjectileLists.Wind.Contains(projectile.type) && (npc.noGravity || !npc.collideY))
                     knockback = (int)((knockback * 1.1f) + 2);
 

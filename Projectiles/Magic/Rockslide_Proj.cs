@@ -46,6 +46,7 @@ namespace Redemption.Projectiles.Magic
         public Vector2 MoveVector2;
         public Vector2 pos = new(0, -5);
         public ref float Rand => ref Projectile.localAI[0];
+        private bool shoot;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -76,7 +77,7 @@ namespace Redemption.Projectiles.Magic
                     Projectile.timeLeft = 200;
                     Projectile.position = player.Center + MoveVector2;
                     MoveVector2 += pos;
-                    if (!player.channel && Main.rand.NextBool(10) && Projectile.alpha <= 0)
+                    if (shoot && Main.rand.NextBool(10) && Projectile.alpha <= 0)
                     {
                         Projectile.tileCollide = true;
                         SoundEngine.PlaySound(SoundID.Item70, Projectile.position);
@@ -85,6 +86,8 @@ namespace Redemption.Projectiles.Magic
                     }
                 }
             }
+            if (!player.channel)
+                shoot = true;
         }
         public override void Kill(int timeLeft)
         {

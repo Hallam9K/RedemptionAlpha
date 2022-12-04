@@ -13,7 +13,7 @@ namespace Redemption.Items.Quest.KingSlayer
         {
             DisplayName.SetDefault("Ship AFTL Engine");
             Tooltip.SetDefault("'Stands for Almost-Faster-Than-Light'" +
-            "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "][c/f8f8bc: This item may redeem past actions that decreased Alignment]");
+            "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "][c/f8f8bc: This item may redeem terrible actions]");
             SacrificeTotal = 1;
         }
 

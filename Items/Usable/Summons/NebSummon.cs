@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable.Summons
             Tooltip.SetDefault("Summons the Angel of the Cosmos"
                 + "\nOnly usable at night"
                 + "\nNot consumable" +
-                "\n[i:" + ModContent.ItemType<BadNeutralRoute>() + "][c/ff5533: This item may decrease Alignment depending on your past decision]");
+                "\n[i:" + ModContent.ItemType<BadNeutralRoute>() + "][c/ff5533: This item may have a negative impact onto the world depending on past decisions]");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
             SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
