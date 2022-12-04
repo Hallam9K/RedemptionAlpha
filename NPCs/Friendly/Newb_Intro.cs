@@ -56,6 +56,9 @@ namespace Redemption.NPCs.Friendly
                 case 0:
                     if (AITimer++ == 0)
                     {
+                        for (int i = 0; i < 40; i++)
+                            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Dirt);
+
                         NPC.spriteDirection = 1;
                         Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 120, 60, true, bubble: bubble);
 

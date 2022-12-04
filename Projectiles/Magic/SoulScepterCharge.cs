@@ -75,10 +75,11 @@ namespace Redemption.Projectiles.Magic
         }
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 25; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, 0f, 0f, 100, default, 2f);
-                Main.dust[dustIndex].velocity *= 4.4f;
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, Scale: 2f);
+                Main.dust[dustIndex].velocity *= 0.6f;
+                Main.dust[dustIndex].noGravity = true;
             }
         }
         public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);

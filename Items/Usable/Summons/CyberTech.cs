@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
         {
             DisplayName.SetDefault("Cyber Radio");
             Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable" +
-            "\n[i:" + ModContent.ItemType<BadRedemptionRoute>() + "][c/ff5533: This item may decrease Alignment while opening ways to redeem it]");
+            "\n[i:" + ModContent.ItemType<BadRedemptionRoute>() + "][c/ff5533: This item may have a redeemable negative impact onto the world]");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;

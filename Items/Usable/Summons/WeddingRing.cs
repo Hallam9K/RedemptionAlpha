@@ -19,7 +19,7 @@ namespace Redemption.Items.Usable.Summons
 			Tooltip.SetDefault("Attracts the attention of a sorrowful mistress"
 				+ "\nOnly usable at night"
 				+ "\nNot consumable" +
-                "\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This item may increase Alignment]");
+                "\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This item may have a positive impact onto the world]");
 
             SacrificeTotal = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;

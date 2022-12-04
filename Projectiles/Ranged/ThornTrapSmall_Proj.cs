@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
@@ -22,6 +23,11 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
+        }
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Projectile.ai[0] == 1)
+                Projectile.DamageType = DamageClass.Melee;
         }
         public override void AI()
         {

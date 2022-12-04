@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 21;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6.5f;
-            Item.crit = 18;
+            Item.crit = 10;
             Item.value = Item.sellPrice(0, 0, 54, 0);
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = false;
@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 5, knockBack / 2, player.whoAmI);
+                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 7, knockBack / 2, player.whoAmI);
             }
         }
 

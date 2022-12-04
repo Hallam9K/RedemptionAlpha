@@ -17,9 +17,7 @@ namespace Redemption.Items.Usable.Summons
             Tooltip.SetDefault("May draw unwanted attention\n" +
                 "Requires the user to have at least 140 max life"
                 + "\nNot consumable" +
-                "\n[i:" + ModContent.ItemType<BadRoute>() + "][c/ff5533: This item may decrease Alignment]");
-
-
+                "\n[i:" + ModContent.ItemType<BadRoute>() + "][c/ff5533: This item may have a negative impact onto the world]");
             SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }

@@ -2,8 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Melee;
-using Terraria.DataStructures;
+using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -11,12 +10,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Shoots a spread of stingers");
+            Tooltip.SetDefault("Slain enemies burst into seeds that sprout brambles of thorns");
             SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.damage = 15;
             Item.DamageType = DamageClass.Melee;
             Item.width = 48;
@@ -30,24 +29,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;
             Item.useTurn = true;
             Item.rare = ItemRarityID.Green;
-            Item.shootSpeed = 16f;
-            Item.shoot = ModContent.ProjectileType<StingerFriendlyMelee>();
         }
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {
             target.AddBuff(BuffID.Poisoned, 300);
-        }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            int numberProjectiles = 2 + Main.rand.Next(2);
-            for (int i = 0; i < numberProjectiles; i++)
+            if (target.life <= 0 && target.lifeMax > 5)
             {
-                Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(30));
-                float scale = 1f - (Main.rand.NextFloat() * 0.4f);
-                perturbedSpeed *= scale;
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage / 2, 0, player.whoAmI);
+                for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<ThornArrowSeed>(), damage, 3, player.whoAmI, 1);
             }
-            return false;
         }
     }
 }

@@ -41,6 +41,7 @@ using System;
 using System.Threading;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.WorldGeneration
 {
@@ -670,9 +671,10 @@ namespace Redemption.WorldGeneration
 
                         Point origin = new(placeX - 34, placeY - 11);
                         int oldX = origin.X;
-                        while (!WorldGen.structures.CanPlace(new Rectangle(origin.X, origin.Y, 60, 82)) && origin.X < Main.maxTilesX - 100)
+                        int attempts = 0;
+                        while (attempts < 50000 && !WorldGen.structures.CanPlace(new Rectangle(origin.X, origin.Y, 60, 82)))
                         {
-                            origin.X++;
+                            origin.X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
                         }
                         if (oldX != origin.X)
                         {
@@ -728,7 +730,11 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 64, (ushort)ModContent.TileType<NewbMound>());
 
                     BaseWorldGen.SmoothTiles(originPoint.X, originPoint.Y, originPoint.X + 60, originPoint.Y + 82);
-
+                    for (int i = originPoint.X; i < originPoint.X + 60; i++)
+                    {
+                        for (int j = originPoint.Y; j < originPoint.Y + 82; j++)
+                            WorldGen.KillTile(i, j, true);
+                    }
                     for (int i = originPoint.X; i < originPoint.X + 60; i++)
                     {
                         for (int j = originPoint.Y; j < originPoint.Y + 30; j++)
@@ -736,6 +742,10 @@ namespace Redemption.WorldGeneration
                             WorldGen.SpreadGrass(i, j);
                         }
                     }
+                    WorldUtils.Gen(originPoint, new Shapes.Rectangle(60, 82), Actions.Chain(new GenAction[]
+                    {
+                        new Actions.SetLiquid(0, 0)
+                    }));
                     for (int i = originPoint.X + 13; i < originPoint.X + 53; i++)
                     {
                         for (int j = originPoint.Y + 66; j < originPoint.Y + 74; j++)
@@ -763,6 +773,7 @@ namespace Redemption.WorldGeneration
                                 WorldGen.PlacePot(i, j - 1);
                         }
                     }
+                    WorldGen.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, 60, 82));
                     #endregion
                 }));
                 tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -1217,10 +1228,65 @@ namespace Redemption.WorldGeneration
 
                     origin.Y = GetTileFloorIgnoreTree(origin.X, origin.Y, true);
                     origin.X -= 60;
-                    while (!WorldGen.structures.CanPlace(new Rectangle(origin.X, origin.Y, 133, 58)) && origin.X < Main.maxTilesX - 150)
+                    int attempts = 0;
+                    int checkType = 0;
+                    bool inSpawn = false;
+                    bool failed = false;
+                    while ((attempts < 50000 && !WorldGen.structures.CanPlace(new Rectangle(origin.X, origin.Y, 133, 58))) || inSpawn)
                     {
-                        origin.X++;
-                        origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
+                        switch (checkType)
+                        {
+                            case 0:
+                                if (origin.X > Main.maxTilesX - 150)
+                                {
+                                    attempts = 0;
+                                    checkType++;
+                                }
+                                origin.X++;
+                                origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
+                                inSpawn = false;
+                                if (origin.X > Main.spawnTileX - 100 && origin.X < Main.spawnTileX + 100)
+                                    inSpawn = true;
+                                else
+                                    attempts++;
+                                break;
+                            case 1:
+                                if (origin.X < 150)
+                                {
+                                    attempts = 0;
+                                    checkType++;
+                                }
+                                origin.X--;
+                                origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
+                                inSpawn = false;
+                                if (origin.X > Main.spawnTileX - 100 && origin.X < Main.spawnTileX + 100)
+                                    inSpawn = true;
+                                else
+                                    attempts++;
+                                break;
+                            case 2:
+                                origin.X = WorldGen.genRand.Next(150, Main.maxTilesX - 150);
+                                origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
+                                origin.X -= 60;
+                                inSpawn = false;
+                                if (origin.X > Main.spawnTileX - 100 && origin.X < Main.spawnTileX + 100)
+                                    inSpawn = true;
+                                else
+                                    attempts++;
+
+                                if (attempts >= 49999)
+                                    failed = true;
+                                break;
+                        }
+                    }
+                    if (failed)
+                    {
+                        origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
+                        if (Main.dungeonX < Main.maxTilesX / 2)
+                            origin = new Point((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
+
+                        origin.Y = GetTileFloorIgnoreTree(origin.X, origin.Y, true);
+                        origin.X -= 60;
                     }
                     WorldUtils.Gen(origin, new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
                     {

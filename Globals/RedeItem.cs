@@ -343,7 +343,7 @@ namespace Redemption.Globals
         public override void OnCreate(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>())
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I believe any action can be redeemed.", 260, 30, 0, Color.DarkGoldenrod);
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I judge the actions of those who wield me.", 260, 30, 0, Color.DarkGoldenrod);
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Summons
 			Tooltip.SetDefault("Summons an unfortunate curse-bearer" 
 				+ "\nOnly usable at day"
 				+ "\nNot consumable" +
-				"\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This item may increase Alignment]");
+				"\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This item may have a positive impact onto the world]");
 
 			SacrificeTotal = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
