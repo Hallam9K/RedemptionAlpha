@@ -19,7 +19,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.width = 150;
             Projectile.height = 150;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 10;
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
