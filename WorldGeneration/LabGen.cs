@@ -547,8 +547,8 @@ namespace Redemption.WorldGeneration
 
                 chest.item[slot].SetDefaults(ModContent.ItemType<RawXenium>());
                 chest.item[slot++].stack = WorldGen.genRand.Next(68, 92);
-
-                chest.item[slot++].stack = WorldGen.genRand.Next(20, 40);
+                chest.item[slot].SetDefaults(ItemID.LunarOre);
+                chest.item[slot++].stack = WorldGen.genRand.Next(40, 50);
             }
         }
     }
