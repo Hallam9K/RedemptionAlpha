@@ -27,8 +27,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.penetrate = -1;
         }
 
-        public override bool? CanCutTiles() => false;
-
+        public override bool? CanCutTiles() => Projectile.frame is 2;
+        public override bool? CanHitNPC(NPC target) => Projectile.frame is 2 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
         public override void AI()
@@ -78,7 +78,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
-
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 63 : Projectile.Center.X), (int)(Projectile.Center.Y - 55), 63, 104);
+        }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (NPCLists.Undead.Contains(target.type) || NPCLists.Skeleton.Contains(target.type))
@@ -86,12 +89,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 600);
         }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
@@ -116,12 +117,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (Projectile.frame >= 2)
                 Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(-31 * player.direction, -99 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
-        }
-
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 63 : Projectile.Center.X), (int)(Projectile.Center.Y - 55), 63, 104);
-            return Projectile.frame is 2 && projHitbox.Intersects(targetHitbox);
         }
     }
 }

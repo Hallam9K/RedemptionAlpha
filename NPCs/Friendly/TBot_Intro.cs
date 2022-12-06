@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Friendly
                         NPC.LookAtEntity(player);
                     if (playerTBot)
                     {
-                        if (AITimer++ == 18)
+                        if (AITimer++ == 18 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "HUH?", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 112
@@ -115,7 +115,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
-                        if (AITimer++ == 18)
+                        if (AITimer++ == 18 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "AH!", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 109
@@ -137,7 +137,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (AITimer < 750)
                             NPC.LookAtEntity(player);
-                        if (AITimer++ == 5)
+                        if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "*Sigh*[10] I wasn't expecting to see the likes of us here.", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 272
@@ -165,7 +165,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (AITimer < 979)
                             NPC.LookAtEntity(player);
-                        if (AITimer++ == 5)
+                        if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "Anyways,[10] hello.[30] I'm Adam,[10] and I'm an Android originating from a faraway snowy wasteland.", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 414
@@ -176,7 +176,7 @@ namespace Redemption.NPCs.Friendly
                         }
                         if (AITimer == 419)
                             EmoteBubble.NewBubble(98, new WorldUIAnchor(NPC), 204);
-                        if (AITimer == 979)
+                        if (AITimer == 979 && !Main.dedServ)
                         {
                             Dialogue d4 = new(NPC, "...The resemblance between them is uncanny...", Color.LightGreen, Color.DarkGreen, boxFade: true); // 265
 

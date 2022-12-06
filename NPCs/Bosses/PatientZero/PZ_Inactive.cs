@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Terraria.DataStructures;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -70,7 +71,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     KariFrame = 0;
             }
         }
-        public override bool CheckActive() => !LabArea.Active;
+        public override bool CheckActive() => !Main.LocalPlayer.InModBiome<LabBiome>();
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

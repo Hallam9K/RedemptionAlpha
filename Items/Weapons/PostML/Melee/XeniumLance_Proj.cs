@@ -31,6 +31,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
+            Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().TechnicallyMelee = true;
         }
 
@@ -195,7 +196,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             Player player = Main.player[Projectile.owner];
             if (Projectile.ai[0] == 3)
+            {
                 player.ClearBuff(ModContent.BuffType<XeniumLanceCooldown>());
+
+                Projectile.localNPCImmunity[target.whoAmI] = 60;
+                target.immune[Projectile.owner] = 0;
+            }
         }
         public override bool PreDraw(ref Color lightColor)
         {

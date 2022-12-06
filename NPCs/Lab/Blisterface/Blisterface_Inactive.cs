@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Redemption.WorldGeneration;
 using Terraria.Audio;
 using Redemption.Base;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -44,7 +45,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         }
         public override bool CheckActive()
         {
-            return !LabArea.Active;
+            return !Main.LocalPlayer.InModBiome<LabBiome>();
         }
         public override void AI()
         {

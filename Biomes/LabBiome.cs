@@ -20,11 +20,6 @@ namespace Redemption.Biomes
         {
             DisplayName.SetDefault("Abandoned Laboratory");
         }
-
-        public override void OnInBiome(Player player)
-        {
-            LabArea.Active = true;
-        }
         public override void OnEnter(Player player)
         {
             if (!player.Redemption().foundLab)

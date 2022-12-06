@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<XenomiteItem>(15)
+                .AddIngredient<Xenomite>(15)
                 .AddIngredient<ToxicBile>(10)
                 .AddIngredient(ItemID.SoulofFright, 10)
                 .AddTile(TileID.MythrilAnvil)

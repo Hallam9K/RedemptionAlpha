@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Biomes;
 using Redemption.Globals;
 using Redemption.NPCs.Lab.MACE;
 using System;
@@ -30,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override void AI()
         {
-            if (!Parent.HasTile || Parent.TileType != ModContent.TileType<BigMaceTurretTile>() || !LabArea.Active)
+            if (!Parent.HasTile || Parent.TileType != ModContent.TileType<BigMaceTurretTile>() || !Main.LocalPlayer.InModBiome<LabBiome>())
                 Projectile.Kill();
             else
                 Projectile.timeLeft = 2;

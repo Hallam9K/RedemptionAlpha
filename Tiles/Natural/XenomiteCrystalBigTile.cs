@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Natural
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             if (Main.hardMode)
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<XenomiteItem>(), Main.rand.Next(3, 6));
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<Xenomite>(), Main.rand.Next(3, 6));
             else
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 24));
         }

@@ -303,9 +303,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer++ == 0)
                                 {
                                     ArmType = 2;
-                                    Dialogue d1 = new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 130
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    if (!Main.dedServ)
+                                    {
+                                        Dialogue d1 = new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 130
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d1);
+                                    }
                                 }
                                 if (AITimer >= 130)
                                 {
@@ -317,13 +320,16 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer == 130)
                                 {
                                     ArmType = 0;
-                                    DialogueChain chain = new();
-                                    chain.Add(new(NPC, "Doth thine brain be stuck in a well!?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 174
-                                         .Add(new(NPC, "To summon a demon,[10] so close to my land...[30] 'Tis heresy!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 248
-                                         .Add(new(NPC, "Repent![30] Repent for thy sins!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 186
-                                         .Add(new(NPC, "Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 248
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(chain);
+                                    if (!Main.dedServ)
+                                    {
+                                        DialogueChain chain = new();
+                                        chain.Add(new(NPC, "Doth thine brain be stuck in a well!?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 174
+                                             .Add(new(NPC, "To summon a demon,[10] so close to my land...[30] 'Tis heresy!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 248
+                                             .Add(new(NPC, "Repent![30] Repent for thy sins!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 186
+                                             .Add(new(NPC, "Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 248
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(chain);
+                                    }
                                 }
                                 if (AITimer == 552)
                                 {
@@ -969,20 +975,20 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         TextBubbleUI.Visible = true;
                                         TextBubbleUI.Add(chain);
                                     }
-                                    if (AITimer == 652)
-                                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 60);
+                                }
+                                if (AITimer == 652)
+                                    EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 60);
 
-                                    if (AITimer == 788)
-                                        HeadFrameY = 1;
+                                if (AITimer == 788)
+                                    HeadFrameY = 1;
 
-                                    if (AITimer >= 854)
-                                    {
-                                        HeadFrameY = 0;
-                                        ArmType = 0;
-                                        AITimer = 0;
-                                        TimerRand = 2;
-                                        NPC.netUpdate = true;
-                                    }
+                                if (AITimer >= 854)
+                                {
+                                    HeadFrameY = 0;
+                                    ArmType = 0;
+                                    AITimer = 0;
+                                    TimerRand = 2;
+                                    NPC.netUpdate = true;
                                 }
                                 break;
                             case 2:
@@ -1032,29 +1038,35 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
-                                if (AITimer == 60)
+                                if (!Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "It would[10] appear'eth,[20] I hath lost.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 216
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
-                                }
-                                if (AITimer == 300)
-                                {
-                                    Dialogue d2 = new(NPC, "If,[20] mayhaps you shan't[10] spare my life...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 238
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d2);
-                                }
-                                if (AITimer == 600)
-                                {
-                                    Dialogue d3 = new(NPC, "Send master Hallowed Knight[20] my regards.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 228
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d3);
+                                    if (AITimer == 60)
+                                    {
+                                        Dialogue d1 = new(NPC, "It would[10] appear'eth,[20] I hath lost.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 216
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d1);
+                                    }
+                                    if (AITimer == 300)
+                                    {
+                                        Dialogue d2 = new(NPC, "If,[20] mayhaps you shan't[10] spare my life...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 238
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d2);
+                                    }
+                                    if (AITimer == 600)
+                                    {
+                                        Dialogue d3 = new(NPC, "Send master Hallowed Knight[20] my regards.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 228
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d3);
+                                    }
                                 }
                                 if (AITimer == 1200)
                                 {
-                                    Dialogue d4 = new(NPC, "Well...[30] 'Til we meet again!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 184
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d4);
+                                    if (!Main.dedServ)
+                                    {
+                                        Dialogue d4 = new(NPC, "Well...[30] 'Til we meet again!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier); // 184
+                                        TextBubbleUI.Visible = true;
+                                        TextBubbleUI.Add(d4);
+                                    }
 
                                     NPC.dontTakeDamage = true;
                                     if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -1095,8 +1107,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                 }
                 if (!Spared)
                 {
-                    TextBubbleUI.Visible = false;
-                    TextBubbleUI.Clear();
+                    if (!Main.dedServ)
+                    {
+                        TextBubbleUI.Visible = false;
+                        TextBubbleUI.Clear();
+                    }
                 }
                 return true;
             }

@@ -31,11 +31,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override bool? CanCutTiles()
-        {
-            return false;
-        }
-
+        public override bool? CanCutTiles() => Projectile.frame is 8;
+        public override bool? CanHitNPC(NPC target) => Projectile.frame is 8 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
         private bool miss = false;
@@ -156,7 +153,10 @@ namespace Redemption.Items.Weapons.HM.Melee
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
-
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 96 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 96, 94);
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
@@ -180,12 +180,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Projectile.frame >= 2 && Projectile.frame <= 12 && !player.channel)
                 Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition + new Vector2(38 * player.direction, 471 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
-        }
-
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 96 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 96, 94);
-            return Projectile.frame is 8 && projHitbox.Intersects(targetHitbox);
         }
     }
 }

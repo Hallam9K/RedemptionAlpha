@@ -80,7 +80,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XenoXyston>())
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 8)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 8)
                 .AddIngredient(ModContent.ItemType<ToxicBile>(), 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

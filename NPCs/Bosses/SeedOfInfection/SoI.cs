@@ -107,7 +107,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -538,7 +538,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                     NPC.velocity *= 0.8f;
 
                                 if (++AITimer == 70)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SeedLaser>(), (int)(NPC.damage * 1.4f), new Vector2(0, 10), true, SoundID.Item103, ai0: NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SeedLaser>(), (int)(NPC.damage * 1.1f), new Vector2(0, 10), true, SoundID.Item103, ai0: NPC.whoAmI);
 
                                 if (AITimer >= 100)
                                 {

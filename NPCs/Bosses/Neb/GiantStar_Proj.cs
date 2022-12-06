@@ -17,8 +17,8 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override void SetDefaults()
         {
-            Projectile.width = 354;
-            Projectile.height = 339;
+            Projectile.width = 280;
+            Projectile.height = 280;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;

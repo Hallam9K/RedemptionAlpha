@@ -16,10 +16,6 @@ namespace Redemption.Biomes
         {
             DisplayName.SetDefault("Blazing Bastion");
         }
-        public override void OnInBiome(Player player)
-        {
-            BastionArea.Active = true;
-        }
         public override bool IsBiomeActive(Player player)
         {
             return player.ZoneUnderworldHeight && player.Center.X > (Main.maxTilesX - 350) * 16;

@@ -315,6 +315,8 @@ namespace Redemption.UI
 		}
 		public void Update()
 		{
+			if (Main.gamePaused)
+				return;
 			// Measure our progress via a modulo between our char time and
 			// our timer, allowing us to decide how many chars to display
 			if (pauseTime <= 0 && displayingText.Length != text.Length && timer % charTime == 0)
@@ -328,7 +330,7 @@ namespace Redemption.UI
 			if (displayingText.Length == text.Length)
 				textFinished = true;
 
-			if (textFinished && preFadeTime <= 0 && fadeTime <= 0)
+			if ((textFinished && preFadeTime <= 0 && fadeTime <= 0) || !npc.active)
 			{
 				if (chain != null)
 					chain.Dialogue.Remove(this);

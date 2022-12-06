@@ -32,7 +32,7 @@ namespace Redemption.Items.Materials.HM
         public override void AddRecipes()
         {
             CreateRecipe(5)
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 5)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 5)
                 .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
                 .AddTile(ModContent.TileType<GirusCorruptorTile>())
                 .Register();

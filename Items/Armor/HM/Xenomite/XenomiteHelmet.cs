@@ -49,12 +49,12 @@ namespace Redemption.Items.Armor.HM.Xenomite
         {
             CreateRecipe()
                 .AddIngredient(ItemID.TitaniumBar, 5)
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 15)
+                .AddIngredient(ModContent.ItemType<Materials.HM.Xenomite>(), 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
             CreateRecipe()
                 .AddIngredient(ItemID.AdamantiteBar, 5)
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 15)
+                .AddIngredient(ModContent.ItemType<Materials.HM.Xenomite>(), 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

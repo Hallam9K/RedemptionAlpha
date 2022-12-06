@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     break;
                 case 1:
                     AITimer++;
-                    if (AITimer == 30)
+                    if (AITimer == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "...Why did you have to barge in through the ventilation shaft?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 224
@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     break;
                 case 2:
                     AITimer++;
-                    if (AITimer == 30)
+                    if (AITimer == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Oi![10] Don't go there,[10] the floor's wet.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 172

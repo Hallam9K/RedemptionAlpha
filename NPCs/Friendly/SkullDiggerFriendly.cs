@@ -10,6 +10,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.Items.Usable.Summons;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -170,7 +171,10 @@ namespace Redemption.NPCs.Friendly
                         Main.LocalPlayer.inventory[ring] = new Item();
                 }
 
-                Main.npcChatText = "What's this..? A ring..? Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";
+                if (BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TheBrideHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TheBrideDress))
+                    Main.npcChatText = "What's this..? A ring..? And your attire... Is this a proposal? ..Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";
+                else
+                    Main.npcChatText = "What's this..? A ring..? Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";
                 AIState = ActionState.Saved;
             }
         }

@@ -23,6 +23,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Projectile.hostile = false;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 120;
+            Projectile.extraUpdates = 1;
         }
     }
     public class OOFingergun_Fingerflash : OO_Fingerflash

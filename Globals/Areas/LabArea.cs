@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
 using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Behemoth;
@@ -20,15 +21,23 @@ namespace Redemption.Globals
 {
     public class LabArea : ModSystem
     {
-        public static bool Active;
         public static bool[] labAccess = new bool[6];
-        public override void PreUpdateEntities()
-        {
-            Active = false;
-        }
         public override void PreUpdateWorld()
         {
-            if (!Active || RedeGen.LabVector.X == -1 || RedeGen.LabVector.Y == -1)
+            bool active = Main.LocalPlayer.InModBiome<LabBiome>();
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Terraria.Player player = Main.player[i];
+                    if (!player.active)
+                        continue;
+
+                    if (player.InModBiome<LabBiome>())
+                        active = true;
+                }
+            }
+            if (!active || RedeGen.LabVector.X == -1 || RedeGen.LabVector.Y == -1)
                 return;
 
             Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 14, (RedeGen.LabVector.Y + 42) * 16);

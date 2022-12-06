@@ -311,10 +311,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 HeadFrameY = 1;
 
                                 SoundEngine.PlaySound(CustomSounds.ObliteratorYo, NPC.position);
-                                Dialogue d1 = new(NPC, "Yo.", Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1 with { Volume = 0 }, 3, 60, 0, false, modifier: modifier); // 69
+                                if (!Main.dedServ)
+                                {
+                                    Dialogue d1 = new(NPC, "Yo.", Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1 with { Volume = 0 }, 3, 60, 0, false, modifier: modifier); // 69
 
-                                TextBubbleUI.Visible = true;
-                                TextBubbleUI.Add(d1);
+                                    TextBubbleUI.Visible = true;
+                                    TextBubbleUI.Add(d1);
+                                }
                             }
                             if (AITimer >= 120 && AITimer < 188)
                                 ArmRot[0].SlowRotation(MathHelper.PiOver2 + (-1 * NPC.spriteDirection) + RotFlip, MathHelper.Pi / 50);
@@ -354,7 +357,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 ArmFrameY[0] = 2;
                                 BeamAnimation = false;
                             }
-                            if (AITimer == 400)
+                            if (AITimer == 400 && !Main.dedServ)
                             {
                                 Dialogue d1 = new(NPC, "I guess I can't fool you twice,[10] huh.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier); // 182
                                 Dialogue d2 = new(NPC, "So much for a surprise attack...", Colors.RarityRed, Color.DarkRed, voice, 2, 118, 0, false, modifier: modifier); // 182
@@ -365,7 +368,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 else
                                     TextBubbleUI.Add(d2);
                             }
-                            if (AITimer == 582)
+                            if (AITimer == 582 && !Main.dedServ)
                             {
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, "Hang on,[10] I got a call from Girus.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 166
@@ -427,14 +430,17 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         ArmFrameY[0] = 1;
                         HandsFrameY[0] = 1;
 
-                        string s = "Ready for obliteration?";
-                        if (RedeBossDowned.downedOmega3)
-                            s = "PREPARE FOR OBLITERATION.";
+                        if (!Main.dedServ)
+                        {
+                            string s = "Ready for obliteration?";
+                            if (RedeBossDowned.downedOmega3)
+                                s = "PREPARE FOR OBLITERATION.";
 
-                        Dialogue d1 = new(NPC, s, Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 176
+                            Dialogue d1 = new(NPC, s, Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 176
 
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(d1);
+                        }
                     }
                     if (AITimer >= 236)
                     {
@@ -788,7 +794,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
                                 if (AITimer == 305)
                                 {
-                                    if (!RedeBossDowned.downedOmega3)
+                                    if (!RedeBossDowned.downedOmega3 && !Main.dedServ)
                                     {
                                         Dialogue d1 = new(NPC, "Eye beam!", Colors.RarityRed, Color.DarkRed, voice, 2, 70, 30, true, modifier: modifier);
                                         TextBubbleUI.Visible = true;
@@ -970,7 +976,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     player.GetModPlayer<ScreenPlayer>().cutscene = true;
                                     player.GetModPlayer<ScreenPlayer>().lockScreen = true;
                                 }
-                                if (AITimer == 60)
+                                if (AITimer == 60 && !Main.dedServ)
                                 {
                                     if (!RedeBossDowned.downedOmega3)
                                     {
@@ -1137,7 +1143,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             else
                             {
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
-                                if (AITimer == 305 && !RedeBossDowned.downedOmega3)
+                                if (AITimer == 305 && !RedeBossDowned.downedOmega3 && !Main.dedServ)
                                 {
                                     Dialogue d1 = new(NPC, "EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 1, 70, 30, true, modifier: modifier);
                                     TextBubbleUI.Visible = true;
@@ -1363,21 +1369,23 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
-
-                                    if (!RedeBossDowned.downedOmega3)
+                                    if (!Main.dedServ)
                                     {
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 228
-                                             .Add(new(NPC, "Is it getting hot in here[10] or is it just m-", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, modifier: modifier)); // 124
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
-                                    }
-                                    else
-                                    {
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)); // 228
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        if (!RedeBossDowned.downedOmega3)
+                                        {
+                                            DialogueChain chain = new();
+                                            chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 228
+                                                 .Add(new(NPC, "Is it getting hot in here[10] or is it just m-", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, modifier: modifier)); // 124
+                                            TextBubbleUI.Visible = true;
+                                            TextBubbleUI.Add(chain);
+                                        }
+                                        else
+                                        {
+                                            DialogueChain chain = new();
+                                            chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)); // 228
+                                            TextBubbleUI.Visible = true;
+                                            TextBubbleUI.Add(chain);
+                                        }
                                     }
                                 }
                                 if (AITimer > (RedeBossDowned.downedOmega3 ? 678 : 804))
@@ -1486,7 +1494,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 }
                 else if (NPC.ai[0] == -1)
                 {
-                    if (AITimer++ == 100)
+                    if (AITimer++ == 100 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Alright,[10] target eliminated.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 154
@@ -1508,10 +1516,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 {
                     if (NPC.ai[0] != -2)
                     {
-                        Dialogue d1 = new(NPC, "Target eliminated...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 150
+                        if (!Main.dedServ)
+                        {
+                            Dialogue d1 = new(NPC, "Target eliminated...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier); // 150
 
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(d1);
+                        }
                         AITimer = 0;
                         NPC.ai[0] = -2;
                     }

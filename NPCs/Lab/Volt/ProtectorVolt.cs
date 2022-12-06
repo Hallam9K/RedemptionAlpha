@@ -436,7 +436,7 @@ namespace Redemption.NPCs.Lab.Volt
                             AITimer++;
                             if (RedeBossDowned.downedVolt)
                             {
-                                if (AITimer == 10)
+                                if (AITimer == 10 && !Main.dedServ)
                                 {
                                     Dialogue d1 = new(NPC, "Enough.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier); // 144
 
@@ -452,7 +452,7 @@ namespace Redemption.NPCs.Lab.Volt
                             }
                             else
                             {
-                                if (AITimer == 10)
+                                if (AITimer == 10 && !Main.dedServ)
                                 {
                                     DialogueChain chain = new();
                                     chain.Add(new(NPC, "... Are you allowed through?[30] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 214
