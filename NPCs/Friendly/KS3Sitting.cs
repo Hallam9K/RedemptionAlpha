@@ -59,7 +59,10 @@ namespace Redemption.NPCs.Friendly
         public override bool UsesPartyHat() => false;
         public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
         public override bool CanChat() => true;
-
+        public override bool CheckActive()
+        {
+            return false;
+        }
         public override void AI()
         {
             if (RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)

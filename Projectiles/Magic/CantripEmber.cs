@@ -9,17 +9,18 @@ using Terraria.ModLoader;
 using Redemption.Effects.PrimitiveTrails;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.Effects;
+using System.Collections.Generic;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class CantripEmber : ModProjectile, ITrailProjectile
+    public class CantripEmber : ModProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ember");
         }
-
         public override void SetDefaults()
         {
             Projectile.width = 16;
@@ -32,11 +33,37 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 200;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(253, 221, 3), new Color(253, 62, 3)), new RoundCap(), new ArrowGlowPosition(), 50f, 150f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4", AssetRequestMode.ImmediateLoad).Value, 0.01f, 1f, 1f));
-        }
+        private readonly int NUMPOINTS = 20;
+        public Color baseColor = new(253, 221, 3);
+        public Color endColor = new(253, 62, 3);
+        public Color edgeColor = new(253, 221, 3);
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 1.4f;
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_4").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
+            return true;
+        }
         public override void AI()
         {
             if (Projectile.wet && !Projectile.lavaWet)
@@ -50,6 +77,12 @@ namespace Redemption.Projectiles.Magic
             Main.dust[dust2].noGravity = true;
             Color dustColor2 = new(253, 62, 3) { A = 0 };
             Main.dust[dust2].color = dustColor2;
+
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+            }
         }
         public override void Kill(int timeLeft)
         {
