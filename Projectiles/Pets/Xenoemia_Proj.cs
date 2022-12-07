@@ -12,28 +12,39 @@ namespace Redemption.Projectiles.Pets
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenomite Crystal");
+            Main.projFrames[Projectile.type] = 6;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 24;
-            Projectile.height = 24;
+            Projectile.width = 2;
+            Projectile.height = 2;
             Projectile.penetrate = -1;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
             Projectile.scale = 0.01f;
             Projectile.hide = true;
+            Projectile.frame = Main.rand.Next(4);
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
             behindNPCsAndTiles.Add(index);
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            fallThrough = false;
+            return true;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.velocity.Y = 0;
+            return false;
+        }
         public override void AI()
         {
-            Projectile.width = (int)(24 * Projectile.scale);
-            Projectile.height = (int)(24 * Projectile.scale);
+            Projectile.velocity.Y = 1;
             if (Projectile.timeLeft <= 40)
             {
                 Projectile.alpha += 10;
@@ -42,15 +53,19 @@ namespace Redemption.Projectiles.Pets
             }
             else
             {
-                Projectile.scale += 0.01f;
+                Projectile.scale += 0.02f;
             }
             Projectile.scale = MathHelper.Min(1, Projectile.scale);
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2 + 12);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            int height = texture.Height / 6;
+            int y = height * Projectile.frame;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 origin = new(texture.Width / 2f, height / 2f + 12);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(0, 4) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, 0, 0);
             return false;
         }
     }

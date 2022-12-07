@@ -2,6 +2,7 @@
 using System;
 using Terraria;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Dusts
@@ -19,7 +20,7 @@ namespace Redemption.Dusts
             dust.frame = new Rectangle(0, 0, 32, 32);
             dust.scale = 0.01f;
             dust.velocity = new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 0f);
-            dust.shader = GameShaders.Armor.GetSecondaryShader(29, Main.LocalPlayer);
+            dust.shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
         }
         public override bool Update(Dust dust)
         {
@@ -31,7 +32,7 @@ namespace Redemption.Dusts
             }
             data.Time += 0.75f / 60f;
             dust.alpha = (int)MathHelper.Lerp(160f, 255f, Math.Abs(data.Time - 1f));
-            dust.scale += 0.5f / 60f;
+            dust.scale += 0.8f / 60f;
             dust.velocity.Y -= 0.25f / 60f;
             if (dust.alpha >= byte.MaxValue - 1)
             {
