@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -57,6 +60,60 @@ namespace Redemption.Items.Weapons.HM.Melee
                     continue;
 
                 npc.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
+            }
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (target.life < 0 && target.lifeMax > 5)
+            {
+                Rectangle boom = new((int)Projectile.Center.X - 48, (int)Projectile.Center.Y - 48, 96, 96);
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC npc = Main.npc[i];
+                    if (!npc.active || !npc.CanBeChasedBy())
+                        continue;
+
+                    if (npc.immune[Projectile.whoAmI] > 0 || !npc.Hitbox.Intersects(boom))
+                        continue;
+
+                    npc.immune[Projectile.whoAmI] = 20;
+                    int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                    BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                }
+
+                SoundEngine.PlaySound(SoundID.Item14, target.position);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < Main.rand.Next(3, 6); i++)
+                    {
+                        int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-9, -5)), ProjectileID.DD2BetsyFireball, Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                        Main.projectile[proj].hostile = false;
+                        Main.projectile[proj].friendly = true;
+                        Main.projectile[proj].netUpdate2 = true;
+                    }
+                }
+                for (int i = 0; i < 10; i++)
+                {
+                    int dustIndex3 = Dust.NewDust(target.position, target.width, target.height, DustID.Smoke, Scale: 5f);
+                    Main.dust[dustIndex3].velocity *= 2f;
+                }
+                for (int i = 0; i < 20; i++)
+                {
+                    int dustIndex4 = Dust.NewDust(target.position, target.width, target.height, DustID.Torch, Scale: 3f);
+                    Main.dust[dustIndex4].noGravity = true;
+                    Main.dust[dustIndex4].velocity *= 5f;
+                    dustIndex4 = Dust.NewDust(target.position, target.width, target.height, DustID.Torch, Scale: 2f);
+                    Main.dust[dustIndex4].velocity *= 3f;
+                }
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+
+                for (int g = 0; g < 3; g++)
+                {
+                    int goreIndex = Gore.NewGore(Projectile.GetSource_FromThis(), target.Center, default, Main.rand.Next(61, 64));
+                    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+                    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+                }
             }
         }
     }

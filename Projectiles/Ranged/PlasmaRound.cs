@@ -7,11 +7,12 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Effects;
+using System.Collections.Generic;
 
 namespace Redemption.Projectiles.Ranged
 {
-    public class PlasmaRound : ModProjectile, ITrailProjectile
+    public class PlasmaRound : ModProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -25,15 +26,20 @@ namespace Redemption.Projectiles.Ranged
             Projectile.height = 40;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.penetrate = 2;
+            Projectile.penetrate = 3;
             Projectile.timeLeft = 600;
             Projectile.Redemption().EnergyBased = true;
         }
+        private readonly int NUMPOINTS = 16;
+        public Color baseColor = new(255, 182, 49);
+        public Color endColor = new(255, 212, 140);
+        public Color edgeColor = new(158, 56, 248);
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private float thickness = 4f;
 
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 182, 49), new Color(255, 212, 140)), new RoundCap(), new ArrowGlowPosition(), 20f, 350f);
-        }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = height = 16;
@@ -41,17 +47,31 @@ namespace Redemption.Projectiles.Ranged
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            FakeKill();
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width / 2, Projectile.height / 2);
             BlastSpawn(oldVelocity / 2);
-            return true;
+            return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (Projectile.penetrate <= 1)
+                FakeKill();
             BlastSpawn(Projectile.velocity / 3);
+        }
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer++ >= 60)
+                Projectile.Kill();
         }
         private void BlastSpawn(Vector2 vel)
         {
-            Player player = Main.player[Projectile.owner];
             if (Projectile.owner == Main.myPlayer)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + vel, Vector2.Zero, ModContent.ProjectileType<PlasmaRound_Blast>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 
@@ -66,6 +86,33 @@ namespace Redemption.Projectiles.Ranged
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             if (Projectile.localAI[0]++ == 0)
                 Projectile.velocity *= 3;
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+            }
+            if (fakeTimer > 0)
+                FakeKill();
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            return true;
         }
         public override void PostDraw(Color lightColor)
         {
@@ -78,8 +125,8 @@ namespace Redemption.Projectiles.Ranged
             Vector2 position = Projectile.Center - Main.screenPosition;
             Color colour = Color.Lerp(Color.White, new Color(255, 182, 49), 1f / Projectile.localAI[0] * 10f) * (1f / Projectile.localAI[0] * 10f);
 
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour, Projectile.rotation, origin, 1.5f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour * 0.4f, Projectile.rotation, origin, 2f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(colour), Projectile.rotation, origin, 1.5f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Projectile.GetAlpha(colour) * 0.4f, Projectile.rotation, origin, 2f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

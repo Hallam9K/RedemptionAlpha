@@ -26,7 +26,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = 2;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
@@ -77,8 +77,30 @@ namespace Redemption.Projectiles.Melee
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
                 TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
+            if (fakeTimer > 0)
+                FakeKill();
         }
-
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            if (fakeTimer++ == 0)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+                    Main.dust[dust].noGravity = true;
+                }
+            }
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer >= 60)
+                Projectile.Kill();
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => FakeKill();
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 150 ? null : false;
 
         public override bool PreDraw(ref Color lightColor)
@@ -106,7 +128,7 @@ namespace Redemption.Projectiles.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 120), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(new Color(255, 255, 120)), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -114,6 +136,8 @@ namespace Redemption.Projectiles.Melee
         }
         public override void Kill(int timeLeft)
         {
+            if (fakeTimer > 0)
+                return;
             for (int i = 0; i < 8; i++)
             {
                 int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);

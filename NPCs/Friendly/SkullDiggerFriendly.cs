@@ -171,7 +171,7 @@ namespace Redemption.NPCs.Friendly
                         Main.LocalPlayer.inventory[ring] = new Item();
                 }
 
-                if (BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TheBrideHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TheBrideDress))
+                if ((BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TheBrideHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TheBrideDress)) || (BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TopHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TuxedoShirt) && BasePlayer.HasLeggings(Main.LocalPlayer, ItemID.TuxedoPants)))
                     Main.npcChatText = "What's this..? A ring..? And your attire... Is this a proposal? ..Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";
                 else
                     Main.npcChatText = "What's this..? A ring..? Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";

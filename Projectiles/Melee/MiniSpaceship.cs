@@ -7,11 +7,13 @@ using Terraria.Audio;
 using Redemption.Globals.Player;
 using Redemption.Projectiles.Ranged;
 using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
+using Redemption.Effects;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Redemption.Projectiles.Melee
 {
-    public class MiniSpaceship : ModProjectile, ITrailProjectile
+    public class MiniSpaceship : ModProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -32,10 +34,14 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 900;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(Color.Cyan, Color.White), new RoundCap(), new ArrowGlowPosition(), 6f, 200f);
-        }
+        private readonly int NUMPOINTS = 60;
+        public Color baseColor = Color.Cyan;
+        public Color endColor = Color.White;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private float thickness = 1.4f;
 
         private Vector2 move;
         public override void AI()
@@ -109,6 +115,31 @@ namespace Redemption.Projectiles.Melee
                 Projectile.velocity.Y -= 0.4f;
                 Projectile.velocity.X *= 0.9f;
             }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+            }
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            return true;
         }
         public override void Kill(int timeLeft)
         {

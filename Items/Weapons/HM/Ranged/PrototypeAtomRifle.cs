@@ -54,7 +54,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Vector2 Offset = Vector2.Normalize(velocity) * 40f;
+            Vector2 Offset = Vector2.Normalize(velocity) * 10f;
 
             if (Collision.CanHit(position, 0, 0, position + Offset, 0, 0))
             {

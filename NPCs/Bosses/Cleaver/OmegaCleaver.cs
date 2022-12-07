@@ -23,6 +23,8 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Accessories.HM;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -153,6 +155,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<CleaverRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<CleaverHandle>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

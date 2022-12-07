@@ -27,6 +27,8 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.NPCs.Bosses.ADD;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -169,12 +171,14 @@ namespace Redemption.NPCs.Bosses.PatientZero
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PZRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Xenoemia>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
+            npcLoot.Add(notExpertRule);
         }
         public override void BossLoot(ref string name, ref int potionType)
         {

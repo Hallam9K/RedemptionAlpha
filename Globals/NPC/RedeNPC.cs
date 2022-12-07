@@ -676,7 +676,7 @@ namespace Redemption.Globals.NPC
             }
             if (player.InModBiome<WastelandPurityBiome>())
             {
-                spawnRate = 30;
+                spawnRate = 35;
                 maxSpawns = 10;
             }
         }
@@ -731,7 +731,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<HazmatZombie>(), 1f);
                 pool.Add(ModContent.NPCType<BobTheBlob>(), 0.05f);
                 pool.Add(ModContent.NPCType<RadioactiveSlime>(), 0.9f);
-                pool.Add(ModContent.NPCType<NuclearSlime>(), 0.3f);
+                pool.Add(ModContent.NPCType<NuclearSlime>(), 0.07f);
                 pool.Add(ModContent.NPCType<HazmatBunny>(), Main.dayTime ? 0.1f : 0);
                 pool.Add(ModContent.NPCType<SickenedBunny>(), Main.dayTime ? 0.6f : 0);
                 pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
@@ -746,6 +746,7 @@ namespace Redemption.Globals.NPC
                 if (spawnInfo.Player.InModBiome<WastelandDesertBiome>())
                 {
                     pool.Add(ModContent.NPCType<BloatedGhoul>(), 1f);
+                    pool.Add(ModContent.NPCType<BloatedSwarmer>(), 0.3f);
                 }
             }
             if (spawnInfo.Player.InModBiome<BlazingBastionBiome>())

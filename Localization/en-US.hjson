@@ -76,6 +76,8 @@ Mods: {
             NebPetBuff: "Chibi Nebby"
             ToasterPetBuff: "Household Heatray"
             MiniGigaporaPetBuff: "Mini Gigapora"
+            XenoemiaBuff: "Xenoemia"
+            CleaverPetBuff: "Omini Cleaver"
 		}
 		
 		BuffDescription: {
@@ -150,6 +152,8 @@ Mods: {
             NebPetBuff: "Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you"
             ToasterPetBuff: "Its heating filament is inadequate to its needs"
             MiniGigaporaPetBuff: "You know the drill"
+            XenoemiaBuff: "A walking infection"
+            CleaverPetBuff: "*Loud metal clank noise*"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

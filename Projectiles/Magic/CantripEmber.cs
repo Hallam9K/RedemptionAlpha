@@ -6,11 +6,12 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Effects.PrimitiveTrails;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Effects;
 using System.Collections.Generic;
+using Redemption.Projectiles.Melee;
+using Terraria.Audio;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -26,7 +27,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = 2;
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.tileCollide = true;
@@ -67,25 +68,75 @@ namespace Redemption.Projectiles.Magic
         public override void AI()
         {
             if (Projectile.wet && !Projectile.lavaWet)
-                Projectile.Kill();
+                FakeKill();
 
-            int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
-            Main.dust[dust].noGravity = true;
-            Color dustColor = new(253, 221, 3) { A = 0 };
-            Main.dust[dust].color = dustColor;
-            int dust2 = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
-            Main.dust[dust2].noGravity = true;
-            Color dustColor2 = new(253, 62, 3) { A = 0 };
-            Main.dust[dust2].color = dustColor2;
-
+            if (Projectile.alpha < 255)
+            {
+                int dust = Dust.NewDust(Projectile.Center + Projectile.velocity - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
+                Main.dust[dust].noGravity = true;
+                Color dustColor = new(253, 221, 3) { A = 0 };
+                Main.dust[dust].color = dustColor;
+                int dust2 = Dust.NewDust(Projectile.Center + Projectile.velocity - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
+                Main.dust[dust2].noGravity = true;
+                Color dustColor2 = new(253, 62, 3) { A = 0 };
+                Main.dust[dust2].color = dustColor2;
+            }
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
                 TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
+            if (fakeTimer > 0)
+                FakeKill();
+        }
+        public int fakeTimer;
+        private void FakeKill()
+        {
+            if (fakeTimer++ == 0)
+            {
+                if (!Projectile.wet && Projectile.type == ModContent.ProjectileType<Firebreak_Proj>())
+                    SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode with { Volume = .4f }, Projectile.position);
+
+                for (int i = 0; i < 3; i++)
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+
+                for (int i = 0; i < 6; i++)
+                {
+                    int dust = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
+                    Main.dust[dust].noGravity = true;
+                    Color dustColor = new(253, 221, 3) { A = 0 };
+                    Main.dust[dust].color = dustColor;
+                    int dust2 = Dust.NewDust(Projectile.Center + Projectile.velocity, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 0.2f);
+                    Main.dust[dust2].noGravity = true;
+                    Color dustColor2 = new(253, 62, 3) { A = 0 };
+                    Main.dust[dust2].color = dustColor2;
+                }
+                for (int i = 0; i < 12; i++)
+                {
+                    int dust2 = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Torch, 0, 0, Scale: 2);
+                    Main.dust[dust2].velocity *= 5f;
+                    Main.dust[dust2].noGravity = true;
+                }
+            }
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer >= 60)
+                Projectile.Kill();
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => FakeKill();
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            FakeKill();
+            return false;
         }
         public override void Kill(int timeLeft)
         {
+            if (fakeTimer > 0)
+                return;
             for (int i = 0; i < 3; i++)
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
 

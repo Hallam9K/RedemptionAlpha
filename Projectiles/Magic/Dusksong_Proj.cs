@@ -63,7 +63,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.rotation += 0.14f;
 
             if (Projectile.scale <= .1f)
-                Projectile.Kill();
+                FakeKill();
 
             if (Projectile.scale > Projectile.localAI[0])
                 Projectile.scale -= .02f;
@@ -77,6 +77,34 @@ namespace Redemption.Projectiles.Magic
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
                 TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
+            if (fakeTimer > 0)
+                FakeKill();
+        }
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            if (fakeTimer++ == 0)
+            {
+                for (int i = 0; i < 20; i++)
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                for (int i = 0; i < 20; i++)
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
+                for (int i = 0; i < 20; i++)
+                {
+                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
+                    Main.dust[dust].velocity *= 2;
+                    Main.dust[dust].noGravity = true;
+                }
+            }
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer >= 60)
+                Projectile.Kill();
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -157,6 +185,8 @@ namespace Redemption.Projectiles.Magic
         }
         public override void Kill(int timeLeft)
         {
+            if (fakeTimer > 0)
+                return;
             for (int i = 0; i < 20; i++)
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             for (int i = 0; i < 20; i++)
@@ -184,7 +214,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.timeLeft = 120;
-            Projectile.penetrate = 3;
+            Projectile.penetrate = 4;
             Projectile.alpha = 20;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
@@ -251,6 +281,23 @@ namespace Redemption.Projectiles.Magic
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
                 TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
             }
+        }
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer++ >= 60)
+                Projectile.Kill();
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (Projectile.penetrate <= 1)
+                FakeKill();
         }
         private float flareScale;
         private float flareOpacity;

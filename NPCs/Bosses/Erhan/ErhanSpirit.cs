@@ -129,6 +129,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ErhanMagnifyingGlass>(), 2));
 
             npcLoot.Add(notExpertRule);
         }

@@ -11,8 +11,9 @@ using Redemption.Base;
 using Terraria.GameContent;
 using Redemption.Particles;
 using ParticleLibrary;
-using Redemption.Effects.PrimitiveTrails;
 using Redemption.Projectiles.Magic;
+using Redemption.Effects;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -300,7 +301,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             return false;
         }
     }
-    public class Divinity_Ball : ModProjectile, ITrailProjectile
+    public class Divinity_Ball : ModProjectile
     {
         public override string Texture => "Redemption/Textures/WhiteOrb";
         public override void SetDefaults()
@@ -314,10 +315,16 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.4f, 0.6f);
         }
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(252, 243, 201), Color.White), new RoundCap(), new ArrowGlowPosition(), 10f, 90f);
-        }
+
+        private readonly int NUMPOINTS = 20;
+        public Color baseColor = new(252, 243, 201);
+        public Color endColor = Color.White;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private float thickness = 2f;
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.OnFire3, 400);
@@ -336,9 +343,31 @@ namespace Redemption.Items.Weapons.HM.Magic
                 sun.scale += 0.02f;
                 Projectile.Kill();
             }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, baseColor, thickness);
+            }
         }
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
 

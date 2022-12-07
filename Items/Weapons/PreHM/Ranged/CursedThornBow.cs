@@ -21,11 +21,11 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.DamageType = DamageClass.Ranged;
             Item.width = 24;
             Item.height = 54;
-            Item.useTime = 21;
-            Item.useAnimation = 21;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.knockBack = 2;
+            Item.knockBack = 1;
             Item.value = Item.buyPrice(0, 0, 44, 0);
             Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item5;

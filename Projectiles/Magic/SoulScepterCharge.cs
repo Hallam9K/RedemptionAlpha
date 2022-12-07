@@ -4,12 +4,14 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
-using Redemption.Effects.PrimitiveTrails;
 using Redemption.Base;
+using Redemption.Effects;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class SoulScepterCharge : ModProjectile, ITrailProjectile
+    public class SoulScepterCharge : ModProjectile
     {
         public override string Texture => "Redemption/NPCs/Bosses/Keeper/KeeperSoulCharge";
         public override void SetStaticDefaults()
@@ -32,14 +34,18 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 200;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new StandardColorTrail(Color.GhostWhite), new RoundCap(), new ArrowGlowPosition(), 32f, 250f);
-        }
+        private readonly int NUMPOINTS = 70;
+        public Color baseColor = Color.GhostWhite;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 5f;
 
         private Vector2 move;
         public override void AI()
         {
+            baseColor = Color.GhostWhite * .5f;
             Projectile.timeLeft = 10;
             if (++Projectile.frameCounter >= 4)
             {
@@ -70,11 +76,66 @@ namespace Redemption.Projectiles.Magic
                     Projectile.localAI[1]++;
                 }
                 else if (Projectile.localAI[0] == 0)
-                    Projectile.Kill();
+                    FakeKill();
             }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
+            }
+            if (fakeTimer > 0)
+                FakeKill();
+        }
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            if (fakeTimer++ == 0)
+            {
+                for (int i = 0; i < 25; i++)
+                {
+                    int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, Scale: 2f);
+                    Main.dust[dustIndex].velocity *= 0.6f;
+                    Main.dust[dustIndex].noGravity = true;
+                }
+            }
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer >= 120)
+                Projectile.Kill();
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
+            return true;
         }
         public override void Kill(int timeLeft)
         {
+            if (fakeTimer > 0)
+                return;
             for (int i = 0; i < 25; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, Scale: 2f);
@@ -82,7 +143,7 @@ namespace Redemption.Projectiles.Magic
                 Main.dust[dustIndex].noGravity = true;
             }
         }
-        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);
+        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0) * Projectile.Opacity;
     }
     public class SoulScepterChargeS : SoulScepterCharge
     {

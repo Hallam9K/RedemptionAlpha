@@ -1446,12 +1446,12 @@ namespace Redemption.WorldGeneration
         public override void PreUpdateWorld()
         {
             Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
-            if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 && Main.LocalPlayer.DistanceSQ(anglonPortalPos) < 2000 * 2000 &&
+            if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 &&
                 !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
                 LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
 
             Vector2 gathicPortalPos = new(((gathicPortalVector.X + 46) * 16) - 8, ((gathicPortalVector.Y + 23) * 16) - 4);
-            if (gathicPortalVector.X != -1 && gathicPortalVector.Y != -1 && Main.LocalPlayer.DistanceSQ(gathicPortalPos) < 2000 * 2000 &&
+            if (gathicPortalVector.X != -1 && gathicPortalVector.Y != -1 &&
                 !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
 

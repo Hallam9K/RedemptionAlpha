@@ -9,28 +9,33 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Effects.PrimitiveTrails;
-using static Terraria.ModLoader.PlayerDrawLayer;
+using Redemption.Effects;
+using System.Collections.Generic;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class IceBolt : ModProjectile, ITrailProjectile
+    public class IceBolt : ModProjectile
     {
         public override void SetDefaults()
         {
             Projectile.width = 22;
             Projectile.height = 22;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.penetrate = 4;
+            Projectile.penetrate = 5;
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
         }
 
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(Color.LightBlue, new Color(200, 223, 230)), new RoundCap(), new DefaultTrailPosition(), 30f, 100f, new ImageShader(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3", AssetRequestMode.ImmediateLoad).Value, 0.1f, 1f, 1f));
-        }
+        private readonly int NUMPOINTS = 40;
+        public Color baseColor = Color.LightBlue;
+        public Color endColor = new(200, 223, 230);
+        public Color edgeColor = Color.LightBlue;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private float thickness = 3;
 
         private float glowRot;
         private bool fail;
@@ -39,7 +44,7 @@ namespace Redemption.Projectiles.Magic
             Player player = Main.player[Projectile.owner];
             Projectile staff = Main.projectile[(int)Projectile.ai[1]];
             glowRot += 0.04f;
-
+            thickness = 3 * Projectile.scale;
             if (player.channel && Projectile.ai[0] == 0)
             {
                 float num = MathHelper.ToRadians(0f);
@@ -98,19 +103,67 @@ namespace Redemption.Projectiles.Magic
             }
             else
             {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                    TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+                }
                 Projectile.LookByVelocity();
                 Projectile.rotation += Projectile.velocity.Length() / 50 * Projectile.spriteDirection;
             }
+            if (fakeTimer > 0)
+                FakeKill();
         }
-
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            if (fakeTimer++ == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item50, Projectile.position);
+                DustHelper.DrawCircle(Projectile.Center, DustID.IceTorch, 2 * Projectile.scale, 1, 1, 1, 3, nogravity: true);
+            }
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer >= 60)
+                Projectile.Kill();
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            FakeKill();
+            return false;
+        }
         public override void Kill(int timeLeft)
         {
+            if (fakeTimer > 0)
+                return;
+
             SoundEngine.PlaySound(SoundID.Item50, Projectile.position);
             DustHelper.DrawCircle(Projectile.Center, DustID.IceTorch, 2 * Projectile.scale, 1, 1, 1, 3, nogravity: true);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Trail_3").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glowTex = ModContent.Request<Texture2D>("Redemption/Textures/Star").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
@@ -136,6 +189,9 @@ namespace Redemption.Projectiles.Magic
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (Projectile.penetrate <= 1)
+                FakeKill();
+
             Player player = Main.player[Projectile.owner];
 
             if (Main.rand.NextBool(3))
