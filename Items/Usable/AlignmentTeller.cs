@@ -52,8 +52,10 @@ namespace Redemption.Items.Usable
             {
                 if (RedeWorld.alignment == 0)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truly neutral...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -1 && RedeWorld.alignment <= 1)
+                else if (RedeWorld.alignment == -1)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You have done harm, but you are safe for now...", 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.alignment == 1)
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You have done good so far...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are choosing the right path. Please, continue.", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= -3 && RedeWorld.alignment <= -2)

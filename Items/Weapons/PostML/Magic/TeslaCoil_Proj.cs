@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ReLogic.Utilities;
+using System.Data;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -40,7 +41,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public float glow;
         private NPC target2;
         private SlotId loop;
-        private float loopVolume;
+        private ActiveSound sound;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -58,7 +59,8 @@ namespace Redemption.Items.Weapons.PostML.Magic
                         {
                             if (BasePlayer.ReduceMana(player, 3))
                             {
-                                loopVolume = 1;
+                                if (sound == null)
+                                    loop = SoundEngine.PlaySound(CustomSounds.ElectricLoop, Projectile.position);
                                 for (int k = 0; k < Main.rand.Next(2, 4); k++)
                                 {
                                     Vector2 lightningArc = coilPos + RedeHelper.PolarVector(Main.rand.Next(40, 71), -MathHelper.Pi + Main.rand.NextFloat(0, MathHelper.Pi));
@@ -126,17 +128,23 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                 }
                                 glow += Main.rand.Next(-5, 6);
                                 glow = (int)MathHelper.Clamp(glow, 0, 20);
-                                loopVolume = 1;
                             }
                             else
                             {
-                                loopVolume = 0;
+                                if (sound != null)
+                                {
+                                    sound.Stop();
+                                    loop = SlotId.Invalid;
+                                }
                                 glow = 0;
                             }
                         }
                         break;
                 }
             }
+            SoundEngine.TryGetActiveSound(loop, out sound);
+            if (sound != null)
+                sound.Position = Projectile.position;
 
             Projectile.spriteDirection = player.direction;
             Projectile.Center = playerCenter + new Vector2(6 * player.direction, -20);
@@ -144,13 +152,14 @@ namespace Redemption.Items.Weapons.PostML.Magic
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
-
-            CustomSounds.UpdateLoopingSound(ref loop, CustomSounds.ElectricLoop, loopVolume, 0, Projectile.position);
         }
         public override void Kill(int timeLeft)
         {
-            loopVolume = 0;
-            CustomSounds.UpdateLoopingSound(ref loop, CustomSounds.ElectricLoop, loopVolume, 0, Projectile.position);
+            if (sound != null)
+            {
+                sound.Stop();
+                loop = SlotId.Invalid;
+            }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
