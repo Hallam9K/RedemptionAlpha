@@ -110,7 +110,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                             if (whoAmI != -1)
                                             {
                                                 if (Projectile.ai[1] == 1)
-                                                { 
+                                                {
                                                     if (npc.whoAmI != whoAmI || !Main.rand.NextBool(2))
                                                         continue;
                                                 }
@@ -126,6 +126,12 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                 }
                                 glow += Main.rand.Next(-5, 6);
                                 glow = (int)MathHelper.Clamp(glow, 0, 20);
+                                loopVolume = 1;
+                            }
+                            else
+                            {
+                                loopVolume = 0;
+                                glow = 0;
                             }
                         }
                         break;

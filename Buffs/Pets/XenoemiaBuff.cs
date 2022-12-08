@@ -18,14 +18,27 @@ namespace Redemption.Buffs.Pets
 
 		public override void Update(Player player, ref int buffIndex)
         {
-            if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame && player.velocity.Y == 0)
+            if (player.velocity.Y == 0)
             {
-                if (Main.rand.NextBool(3))
+                if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
                 {
-                    int floor = BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16);
-                    Vector2 position = new(player.Center.X, floor * 16 - 12);
+                    if (Main.rand.NextBool(3))
+                    {
+                        int floor = BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16);
+                        Vector2 position = new(player.Center.X, floor * 16 - 12);
 
-                    Projectile.NewProjectile(player.GetSource_Buff(buffIndex), position, Vector2.Zero, ModContent.ProjectileType<Xenoemia_Proj>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectile(player.GetSource_Buff(buffIndex), position, Vector2.Zero, ModContent.ProjectileType<Xenoemia_Proj>(), 0, 0, Main.myPlayer);
+                    }
+                }
+                else
+                {
+                    if (Main.rand.NextBool(40))
+                    {
+                        int floor = BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16);
+                        Vector2 position = new(player.Center.X + Main.rand.Next(-100, 100), floor * 16 - 12);
+
+                        Projectile.NewProjectile(player.GetSource_Buff(buffIndex), position, Vector2.Zero, ModContent.ProjectileType<Xenoemia_Proj>(), 0, 0, Main.myPlayer);
+                    }
                 }
             }
             if (Main.rand.NextBool(7))

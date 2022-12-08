@@ -20,7 +20,7 @@ namespace Redemption.Dusts
             dust.frame = new Rectangle(0, 0, 32, 32);
             dust.scale = 0.01f;
             dust.velocity = new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), 0f);
-            dust.shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
+            dust.shader = GameShaders.Armor.GetShaderFromItemId(ItemID.LimeDye);
         }
         public override bool Update(Dust dust)
         {

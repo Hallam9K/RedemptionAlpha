@@ -85,6 +85,8 @@ namespace Redemption
         {
             lockScreen = false;
             rumbleDuration = 0;
+            NebCutsceneflag = false;
+            NebCutscene = false;
         }
         /// <summary>
         /// Shakes the screen.
@@ -175,6 +177,8 @@ namespace Redemption
             }
             ScreenShakeIntensity = MathHelper.Clamp(ScreenShakeIntensity, 0, 200);
 
+            if (Player.dead || !Player.active)
+                return;
             if (NebCutscene)
             {
                 if (!NebCutsceneflag)

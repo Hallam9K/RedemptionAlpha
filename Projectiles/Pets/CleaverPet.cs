@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -29,7 +30,8 @@ namespace Redemption.Projectiles.Pets
             Player player = Main.player[Projectile.owner];
             CheckActive(player);
 
-            Projectile.rotation = 5f * player.direction;
+            if (Projectile.localAI[0]++ < 60)
+                Projectile.frameCounter = 0;
             Projectile.frameCounter++;
             if (Projectile.frameCounter >= 5)
             {
@@ -37,12 +39,18 @@ namespace Redemption.Projectiles.Pets
                 Projectile.frame++;
 
                 if (Projectile.frame >= Main.projFrames[Projectile.type])
+                {
                     Projectile.frame = 0;
+                    Projectile.localAI[0] = 0;
+                }
             }
             Projectile.spriteDirection = player.direction;
 
-            Projectile.Move(new Vector2(player.Center.X + (40 * -player.direction), player.Center.Y - 12), 30, 3);
-
+            Projectile.Move(new Vector2(player.Center.X + (40 * -player.direction), player.Center.Y - 12), 10, 3);
+            if (Projectile.DistanceSQ(player.Center) <= 80 * 80)
+                Projectile.rotation.SlowRotation(5f * player.direction, (float)Math.PI / 20);
+            else
+                Projectile.rotation += Projectile.velocity.X * 0.05f;
             if (Main.myPlayer == player.whoAmI && Projectile.DistanceSQ(player.Center) > 2000 * 2000)
             {
                 Projectile.position = player.Center;

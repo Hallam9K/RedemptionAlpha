@@ -11,6 +11,7 @@ using Terraria.WorldBuilding;
 using Terraria.IO;
 using ReLogic.Content;
 using Redemption.Base;
+using Redemption.Globals;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -21,6 +22,22 @@ namespace Redemption.WorldGeneration.Soulless
         public override bool NormalUpdates => false;
         public override bool ShouldSave => true;
         public override bool NoPlayerSaving => false;
+        public override void CopyMainWorldData()
+        {
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignment), RedeWorld.alignment);
+        }
+        public override void ReadCopiedMainWorldData()
+        {
+            RedeWorld.alignment = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.alignment));
+        }
+        public override void CopySubworldData()
+        {
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignment), RedeWorld.alignment);
+        }
+        public override void ReadCopiedSubworldData()
+        {
+            RedeWorld.alignment = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.alignment));
+        }
         public override List<GenPass> Tasks => new()
         {
             new SoullessPass1("Loading", 1)

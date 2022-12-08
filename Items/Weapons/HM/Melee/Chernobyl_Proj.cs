@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.NPCs.Lab.MACE;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -86,7 +87,9 @@ namespace Redemption.Items.Weapons.HM.Melee
                 {
                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                     {
-                        int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-9, -5)), ProjectileID.DD2BetsyFireball, Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, Projectile.position);
+                        int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-9, -5)), ModContent.ProjectileType<MACE_Miniblast>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 1);
+                        Main.projectile[proj].timeLeft = 300;
                         Main.projectile[proj].hostile = false;
                         Main.projectile[proj].friendly = true;
                         Main.projectile[proj].netUpdate2 = true;
@@ -94,7 +97,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 }
                 for (int i = 0; i < 10; i++)
                 {
-                    int dustIndex3 = Dust.NewDust(target.position, target.width, target.height, DustID.Smoke, Scale: 5f);
+                    int dustIndex3 = Dust.NewDust(target.position, target.width, target.height, DustID.Smoke, Scale: 2f);
                     Main.dust[dustIndex3].velocity *= 2f;
                 }
                 for (int i = 0; i < 20; i++)

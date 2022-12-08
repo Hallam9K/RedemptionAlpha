@@ -10,6 +10,8 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;
+using Redemption.NPCs.Lab.MACE;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -136,7 +138,11 @@ namespace Redemption.NPCs.Wasteland
                 {
                     for (int i = 0; i < 15; i++)
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ProjectileID.DD2BetsyFireball, 70, 3, Main.myPlayer);
+                        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, NPC.position);
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ModContent.ProjectileType<MACE_Miniblast>(), 70, 3, Main.myPlayer, 1);
+                        Main.projectile[p].timeLeft = 300;
+                        Main.projectile[p].friendly = true;
+                        Main.projectile[p].netUpdate2 = true;
                     }
                 }
                 for (int i = 0; i < 30; i++)

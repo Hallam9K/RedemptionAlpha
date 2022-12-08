@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
+using System.Threading;
 using Terraria.Audio;
 
 namespace Redemption
@@ -56,7 +57,7 @@ namespace Redemption
         public static readonly SoundStyle GigaLaserCoolDown = new("Redemption/Sounds/Custom/GigaLaserCoolDown") { Volume = 1.5f };
         public static readonly SoundStyle GigaLaserFire = new("Redemption/Sounds/Custom/GigaLaserFire") { Volume = 1.5f };
         public static readonly SoundStyle GravityHammerSlam = new("Redemption/Sounds/Custom/GravityHammerSlam") { Volume = 0.6f };
-        public static readonly SoundStyle GrenadeLauncher = new("Redemption/Sounds/Custom/GrenadeLauncher");
+        public static readonly SoundStyle GrenadeLauncher = new("Redemption/Sounds/Custom/GrenadeLauncher") { Volume = .5f };
         public static readonly SoundStyle GuardBreak = new("Redemption/Sounds/Custom/GuardBreak");
         public static readonly SoundStyle Gun1KS = new("Redemption/Sounds/Custom/Gun1KS") { Volume = 1.5f };
         public static readonly SoundStyle Gun2KS = new("Redemption/Sounds/Custom/Gun2KS") { Volume = 1.5f };
@@ -129,5 +130,6 @@ namespace Redemption
         public static readonly SoundStyle sans = new("Redemption/Sounds/Custom/sans") { Volume = .8f, PitchVariance = .1f };
         public static readonly SoundStyle BAZINGA = new("Redemption/Sounds/Custom/BAZINGA");
         public static readonly SoundStyle WorldTree = new("Redemption/Sounds/Custom/WorldTree");
+        public static readonly SoundStyle DANShot = new("Redemption/Sounds/Custom/DANShot") { PitchVariance = .1f };
     }
 }

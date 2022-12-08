@@ -90,6 +90,7 @@ namespace Redemption.Projectiles.Pets
             {
                 Projectile.timeLeft = 2;
             }
+            else Projectile.active = false;
         }
     }
     public class MiniGigapora_Body : ModProjectile
