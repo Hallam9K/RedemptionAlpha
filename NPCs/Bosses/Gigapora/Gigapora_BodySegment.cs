@@ -12,6 +12,7 @@ using Redemption.Globals;
 using Redemption.BaseExtension;
 using Terraria.Audio;
 using Redemption.Dusts;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -83,6 +84,23 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(ShootTimer);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ShootTimer = reader.ReadInt32();
+            }
         }
         public ref float Host => ref NPC.ai[3];
         public ref float FrameState => ref NPC.ai[0];

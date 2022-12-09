@@ -21,6 +21,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -209,7 +210,6 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
-
         private Vector2 MoveVector2;
         private int islandCooldown = 10;
         private int barkskinCooldown;
@@ -236,7 +236,7 @@ namespace Redemption.NPCs.Bosses.ADD
             switch (AIState)
             {
                 case ActionState.Start:
-                    if (ukkoActive)
+                    if (ukkoActive || RedeBossDowned.ADDDeath < 2)
                     {
                         NPC ukko = Main.npc[(int)NPC.ai[3]];
                         switch (AttackID)
@@ -281,7 +281,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (!Main.dedServ)
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.LightGreen, "Ancient Goddess of Nature");
 
-                        AIState = ActionState.ResetVars; ;
+                        AIState = ActionState.ResetVars;
                         AITimer = 0;
                         NPC.netUpdate = true;
                     }
