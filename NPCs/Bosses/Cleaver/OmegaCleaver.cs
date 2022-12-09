@@ -872,7 +872,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-
         public override void BossHeadRotation(ref float rotation)
         {
             rotation = NPC.rotation;
@@ -928,8 +927,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            float collisionPoint = 0f;
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation + -MathHelper.PiOver2).ToRotationVector2() * 140, projHitbox.Width, ref collisionPoint);
+            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation + -MathHelper.PiOver2);
+            float point = 0f;
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 72,
+                Projectile.Center + unit * 72, 58, ref point))
+                return true;
+            return false;
         }
     }
 }

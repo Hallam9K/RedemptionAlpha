@@ -121,7 +121,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override bool CheckActive()
         {
             Player player = Main.player[NPC.target];
-            return !player.active || player.dead || Main.dayTime || (AIState == ActionState.Death2 && NPC.ai[2] >= 260);
+            return !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && (!player.active || player.dead || Main.dayTime || (AIState == ActionState.Death2 && NPC.ai[2] >= 260));
         }
 
         public override void SendExtraAI(BinaryWriter writer)
