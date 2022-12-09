@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.height = 40;
             NPC.friendly = false;
             NPC.damage = 55;
-            NPC.defense = 120;
+            NPC.defense = 20;
             NPC.lifeMax = 10500;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath3;

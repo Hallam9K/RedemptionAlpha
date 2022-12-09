@@ -942,7 +942,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 seg.ai[0] = 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
+                    float lifeScale = (segID - 1f) / 10f;
+                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI, segID);
+                    Main.npc[index].lifeMax = (int)(Main.npc[index].lifeMax * (lifeScale + 1));
+                    Main.npc[index].life = Main.npc[index].lifeMax;
                     Main.npc[index].velocity = NPC.velocity;
                     Main.npc[index].frameCounter = -25;
                     if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
