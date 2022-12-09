@@ -84,10 +84,9 @@ namespace Redemption.NPCs.Lab
         }
         public override void AI()
         {
-            if (LabArea.Active)
-                NPC.DiscourageDespawn(60);
-
             Player player = Main.player[NPC.target];
+            if (player.InModBiome<LabBiome>())
+                NPC.DiscourageDespawn(60);
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
             if (AIState is not ActionState.Puke)

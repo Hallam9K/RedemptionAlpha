@@ -7,6 +7,7 @@ using Redemption.Walls;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Lab
 {
@@ -58,7 +59,7 @@ namespace Redemption.NPCs.Lab
             }
             Player player = Main.player[NPC.target];
             DespawnHandler();
-            if (!player.active || player.dead || !LabArea.Active || RedeWorld.labSafe)
+            if (!player.active || player.dead || !player.InModBiome<LabBiome>() || RedeWorld.labSafe)
                 return;
 
             NPC.Move(new Vector2(movX, movY), 15, 30, true);
@@ -125,7 +126,7 @@ namespace Redemption.NPCs.Lab
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !LabArea.Active || RedeWorld.labSafe)
+            if (!player.active || player.dead || !player.InModBiome<LabBiome>() || RedeWorld.labSafe)
             {
                 NPC.TargetClosest(false);
                 NPC.velocity = new Vector2(0f, -10f);

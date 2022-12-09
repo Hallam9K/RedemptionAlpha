@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Terraria.DataStructures;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -40,7 +41,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void AI()
         {
             Player player = Main.player[Main.myPlayer];
-            if (player.DistanceSQ(NPC.Center) < 600 * 600 && Collision.CanHit(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height))
+            if (player.DistanceSQ(NPC.Center) < 400 * 400 && Collision.CanHit(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height))
                 NPC.dontTakeDamage = false;
             else
                 NPC.dontTakeDamage = true;
@@ -70,7 +71,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     KariFrame = 0;
             }
         }
-        public override bool CheckActive() => !LabArea.Active;
+        public override bool CheckActive() => !Main.LocalPlayer.InModBiome<LabBiome>();
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

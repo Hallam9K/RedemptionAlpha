@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
+using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.NPCs.Friendly;
 using Redemption.WorldGeneration;
 using Terraria;
@@ -10,14 +12,22 @@ namespace Redemption.Globals
 {
     public class BastionArea : ModSystem
     {
-        public static bool Active;
-        public override void PreUpdateEntities()
-        {
-            Active = false;
-        }
         public override void PreUpdateWorld()
         {
-            if (!Active || RedeGen.BastionVector.X == -1 || RedeGen.BastionVector.Y == -1 || Main.netMode == NetmodeID.MultiplayerClient)
+            bool active = Main.LocalPlayer.InModBiome(ModContent.GetInstance<BlazingBastionBiome>());
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Terraria.Player player = Main.player[i];
+                    if (!player.active)
+                        continue;
+
+                    if (player.InModBiome<BlazingBastionBiome>())
+                        active = true;
+                }
+            }
+            if (!active || RedeGen.BastionVector.X == -1 || RedeGen.BastionVector.Y == -1)
                 return;
 
             Vector2 NozaPos = new((RedeGen.BastionVector.X + 210) * 16, (RedeGen.BastionVector.Y + 64) * 16);

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.HM
 {
-    public class XenomiteItem : ModItem
+    public class Xenomite : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

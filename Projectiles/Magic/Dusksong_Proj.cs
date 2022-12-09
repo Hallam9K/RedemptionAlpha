@@ -2,11 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Dusts;
+using Redemption.Effects;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Particles;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -16,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
-    public class Dusksong_Proj : ModProjectile, ITrailProjectile
+    public class Dusksong_Proj : ModProjectile
     {
         public override string Texture => "Redemption/Textures/DarkSoulTex";
         public override void SetStaticDefaults()
@@ -25,11 +27,7 @@ namespace Redemption.Projectiles.Magic
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(94, 53, 104), Color.Black), new RoundCap(), new ArrowGlowPosition(), 122f * Projectile.scale, 550f);
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(117, 10, 47), Color.Black), new RoundCap(), new ArrowGlowPosition(), 122f * Projectile.scale, 500f);
-        }
+
         public override void SetDefaults()
         {
             Projectile.width = 122;
@@ -46,6 +44,16 @@ namespace Redemption.Projectiles.Magic
             Projectile.alpha = 255;
             Projectile.localAI[0] = 1;
         }
+        private readonly int NUMPOINTS = 70;
+        public Color baseColor = new(94, 53, 104);
+        public Color endColor = Color.Black;
+        public Color edgeColor = new(117, 10, 47);
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private float thickness = 20f;
+
         private int CD;
         public override void AI()
         {
@@ -55,7 +63,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.rotation += 0.14f;
 
             if (Projectile.scale <= .1f)
-                Projectile.Kill();
+                FakeKill();
 
             if (Projectile.scale > Projectile.localAI[0])
                 Projectile.scale -= .02f;
@@ -63,6 +71,40 @@ namespace Redemption.Projectiles.Magic
             flareScale = MathHelper.Clamp(flareScale, .9f, 1.1f);
             flareOpacity += Main.rand.NextFloat(-.1f, .1f);
             flareOpacity = MathHelper.Clamp(flareOpacity, 0.6f, 0.8f);
+
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+            }
+            if (fakeTimer > 0)
+                FakeKill();
+        }
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            if (fakeTimer++ == 0)
+            {
+                for (int i = 0; i < 20; i++)
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                for (int i = 0; i < 20; i++)
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
+                for (int i = 0; i < 20; i++)
+                {
+                    int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
+                    Main.dust[dust].velocity *= 2;
+                    Main.dust[dust].noGravity = true;
+                }
+            }
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer >= 60)
+                Projectile.Kill();
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -90,6 +132,23 @@ namespace Redemption.Projectiles.Magic
         private float flareOpacity;
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.ShadowDye);
 
             Main.spriteBatch.End();
@@ -126,6 +185,8 @@ namespace Redemption.Projectiles.Magic
         }
         public override void Kill(int timeLeft)
         {
+            if (fakeTimer > 0)
+                return;
             for (int i = 0; i < 20; i++)
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             for (int i = 0; i < 20; i++)
@@ -139,7 +200,7 @@ namespace Redemption.Projectiles.Magic
             }
         }
     }
-    public class Dusksong_Proj2 : ModProjectile, ITrailProjectile
+    public class Dusksong_Proj2 : ModProjectile
     {
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
@@ -153,7 +214,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.timeLeft = 120;
-            Projectile.penetrate = 3;
+            Projectile.penetrate = 4;
             Projectile.alpha = 20;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
@@ -162,13 +223,22 @@ namespace Redemption.Projectiles.Magic
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
         }
-        public void DoTrailCreation(TrailManager tManager)
-        {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(94, 53, 104), Color.Black), new RoundCap(), new DefaultTrailPosition(), 22f, 250f);
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(117, 10, 47), Color.Black), new RoundCap(), new DefaultTrailPosition(), 22f, 200f);
-        }
+        private readonly int NUMPOINTS = 40;
+        public Color baseColor = new(94, 53, 104);
+        public Color endColor = Color.Black;
+        public Color edgeColor = new(117, 10, 47);
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 4f;
+
         public override void AI()
         {
+            baseColor = new Color(94, 53, 104) * Projectile.Opacity;
+            endColor = Color.Black;
+            edgeColor = new Color(117, 10, 47) * Projectile.Opacity;
+
             if (Projectile.localAI[1]++ == 0)
             {
                 AdjustMagnitude(ref Projectile.velocity);
@@ -206,11 +276,50 @@ namespace Redemption.Projectiles.Magic
             flareScale = MathHelper.Clamp(flareScale, .1f, .3f);
             flareOpacity += Main.rand.NextFloat(-.1f, .1f);
             flareOpacity = MathHelper.Clamp(flareOpacity, 0.6f, 0.8f);
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, endColor, edgeColor, thickness);
+            }
+        }
+        private int fakeTimer;
+        private void FakeKill()
+        {
+            Projectile.alpha = 255;
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.velocity *= 0;
+            Projectile.timeLeft = 2;
+            Projectile.tileCollide = false;
+            if (fakeTimer++ >= 60)
+                Projectile.Kill();
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (Projectile.penetrate <= 1)
+                FakeKill();
         }
         private float flareScale;
         private float flareOpacity;
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 

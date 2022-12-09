@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Lab
         }
         public override void AI()
         {
-            if (LabArea.Active)
+            if (Main.LocalPlayer.InModBiome<LabBiome>())
                 NPC.DiscourageDespawn(60);
 
             NPC.height = (int)(16 * NPC.scale);

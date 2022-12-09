@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<OOFingergun_Laser>();
-            Item.shootSpeed = 20;
+            Item.shootSpeed = 13;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

@@ -56,11 +56,17 @@ namespace Redemption.NPCs.Friendly
                 case 0:
                     if (AITimer++ == 0)
                     {
-                        NPC.spriteDirection = 1;
-                        Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 120, 60, true, bubble: bubble);
+                        for (int i = 0; i < 40; i++)
+                            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Dirt);
 
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                        NPC.spriteDirection = 1;
+                        if (!Main.dedServ)
+                        {
+                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 120, 60, true, bubble: bubble);
+
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(d1);
+                        }
                     }
                     if (AITimer >= 60)
                     {
@@ -69,7 +75,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
                 case 1:
-                    if (AITimer++ == 30)
+                    if (AITimer++ == 30 && !Main.dedServ)
                     {
                         Dialogue d1 = new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, 3, 30, 100, true, bubble: bubble);
                         TextBubbleUI.Visible = true;
@@ -83,7 +89,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
                 case 2:
-                    if (AITimer++ == 60)
+                    if (AITimer++ == 60 && !Main.dedServ)
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                         DialogueChain chain = new();

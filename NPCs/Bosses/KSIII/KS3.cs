@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 8, 12));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 14, 18));
 
             npcLoot.Add(notExpertRule);
         }
@@ -1625,7 +1625,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                         BaseAI.DamagePlayer(target, 120, 3, hitDirection, NPC);
-                                        target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 30);
                                     }
                                 }
 
@@ -1704,7 +1703,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                                             int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
                                             BaseAI.DamagePlayer(target, 156, 3, hitDirection, NPC);
-                                            target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
                                         }
                                     }
 
@@ -1749,7 +1747,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (AITimer < 100)
                             {
                                 NPC.LookAtEntity(player);
-                                if (NPC.DistanceSQ(player.Center + ShootPos) < 50 * 50 || AITimer > 40)
+                                if ((NPC.DistanceSQ(player.Center + ShootPos) < 50 * 50 && gunRot != 0) || AITimer > 40)
                                 {
                                     AITimer = 100;
 
@@ -2464,7 +2462,16 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             #endregion
         }
-
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (AIState is ActionState.PhysicalAttacks)
+            {
+                if (AttackChoice == 2)
+                    target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 30);
+                if (AttackChoice == 3)
+                    target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
+            }
+        }
         public override bool CheckDead()
         {
             if (phase >= 5 || AIState is ActionState.Spared)

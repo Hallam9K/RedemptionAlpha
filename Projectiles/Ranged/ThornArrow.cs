@@ -91,7 +91,7 @@ namespace Redemption.Projectiles.Ranged
         {
             Player player = Main.player[Projectile.owner];
             if (Main.myPlayer == player.whoAmI)
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y - 36), Vector2.Zero, ModContent.ProjectileType<ThornTrapSmall_Proj>(), Projectile.damage / 2, 3, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y - 36), Vector2.Zero, ModContent.ProjectileType<ThornTrapSmall_Proj>(), Projectile.damage / 2, 3, Main.myPlayer, Projectile.ai[0]);
 
             return true;
         }

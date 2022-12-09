@@ -108,7 +108,7 @@ namespace Redemption.Globals
         }
         public override bool OnPickup(Item item, Terraria.Player player)
         {
-            if (item.type == ItemID.Heart && player.RedemptionPlayerBuff().heartInsignia)
+            if ((item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane) && player.RedemptionPlayerBuff().heartInsignia)
                 player.AddBuff(ModContent.BuffType<HeartInsigniaBuff>(), 180);
 
             return true;
@@ -119,10 +119,10 @@ namespace Redemption.Globals
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            if (item.type == ItemID.JungleFishingCrate)
+            /*if (item.type == ItemID.JungleFishingCrate)
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 6));
             if (item.type == ItemID.JungleFishingCrateHard)
-                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));
+                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));*/
             if (item.type == ItemID.GolemBossBag)
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemStaff>(), 7));
         }
@@ -279,7 +279,7 @@ namespace Redemption.Globals
 
         public override void PostUpdate(Item item)
         {
-            if (item.type == ItemID.Heart && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
+            if ((item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane) && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
             {
                 if (!Main.rand.NextBool(6))
                     return;
@@ -343,7 +343,7 @@ namespace Redemption.Globals
         public override void OnCreate(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>())
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I believe any action can be redeemed.", 260, 30, 0, Color.DarkGoldenrod);
+                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I judge the actions of those who wield me.", 260, 30, 0, Color.DarkGoldenrod);
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

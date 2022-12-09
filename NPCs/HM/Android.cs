@@ -194,7 +194,7 @@ namespace Redemption.NPCs.HM
                     if (AITimer == 10)
                         NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -4), ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, CustomSounds.BallFire, NPC.whoAmI);
 
-                    if (AITimer == 180)
+                    if (AITimer == 180 && !Main.dedServ)
                     {
                         if (TimerRand == 1)
                         {

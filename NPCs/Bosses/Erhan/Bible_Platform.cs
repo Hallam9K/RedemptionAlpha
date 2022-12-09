@@ -98,8 +98,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(texture, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, drawOrigin, NPC.scale + scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, drawOrigin, NPC.scale + scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -180,8 +180,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(texture, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, drawOrigin, NPC.scale + scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, drawOrigin, NPC.scale + scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

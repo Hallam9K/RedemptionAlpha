@@ -39,6 +39,15 @@ namespace Redemption.Globals
         {
             return proj.minion || proj.Redemption().TechnicallyMelee || proj.Redemption().ParryBlacklist || Main.projPet[proj.type] || proj.sentry || (countHoming && ProjectileID.Sets.CultistIsResistantTo[proj.type]);
         }
+        public static bool? CanHitSpiritCheck(Terraria.Player player, Item item)
+        {
+            return player.RedemptionAbility().SpiritwalkerActive || ItemLists.Arcane.Contains(item.type) || ItemLists.Celestial.Contains(item.type) || ItemLists.Holy.Contains(item.type) || ItemLists.Psychic.Contains(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+        }
+        public static bool? CanHitSpiritCheck(Projectile proj)
+        {
+            Terraria.Player player = Main.player[proj.owner];
+            return player.RedemptionAbility().SpiritwalkerActive || proj.Redemption().RitDagger || ProjectileLists.Arcane.Contains(proj.type) || ProjectileLists.Celestial.Contains(proj.type) || ProjectileLists.Holy.Contains(proj.type) || ProjectileLists.Psychic.Contains(proj.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+        }
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
 
@@ -87,7 +96,7 @@ namespace Redemption.Globals
             {
                 Terraria.NPC npc = Main.npc[i];
                 float distance = (npc.Center - position).Length();
-                if (!(distance < maxDistance) || !npc.active || !npc.chaseable || npc.dontTakeDamage || npc.friendly ||
+                if (!(distance < maxDistance) || !npc.active || (!npc.chaseable && npc.type != NPCID.CultistBoss) || npc.dontTakeDamage || npc.friendly ||
                     npc.lifeMax <= 5 || npc.Redemption().invisible || npc.immortal ||
                     !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles ||
                     !specialCondition(npc))

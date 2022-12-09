@@ -44,13 +44,13 @@ namespace Redemption.Items.Accessories.HM
         {
             CreateRecipe()
                 .AddIngredient(ItemID.EoCShield)
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
                 .AddIngredient(ItemID.TitaniumBar, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
             CreateRecipe()
                 .AddIngredient(ItemID.EoCShield)
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
                 .AddIngredient(ItemID.AdamantiteBar, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

@@ -125,12 +125,16 @@ namespace Redemption.Globals
         {
             if (Main.tile[i, j - 1].HasTile && RedeTileHelper.CannotMineTileBelow[Main.tile[i, j - 1].TileType])
                 return false;
+            if (Main.tile[i, j + 1].HasTile && RedeTileHelper.CannotMineTileAbove[Main.tile[i, j + 1].TileType])
+                return false;
             return base.CanKillTile(i, j, type, ref blockDamaged);
         }
 
         public override bool CanExplode(int i, int j, int type)
         {
             if (Main.tile[i, j - 1].HasTile && RedeTileHelper.CannotMineTileBelow[Main.tile[i, j - 1].TileType])
+                return false;
+            if (Main.tile[i, j + 1].HasTile && RedeTileHelper.CannotMineTileAbove[Main.tile[i, j + 1].TileType])
                 return false;
             return base.CanExplode(i, j, type);
         }
@@ -139,11 +143,14 @@ namespace Redemption.Globals
         {
             if (Main.tile[i, j - 1].HasTile && RedeTileHelper.CannotMineTileBelow[Main.tile[i, j - 1].TileType])
                 return false;
+            if (Main.tile[i, j + 1].HasTile && RedeTileHelper.CannotMineTileAbove[Main.tile[i, j + 1].TileType])
+                return false;
             return base.Slope(i, j, type);
         }
     }
     public static class RedeTileHelper
     {
         public static bool[] CannotMineTileBelow = TileID.Sets.Factory.CreateBoolSet();
+        public static bool[] CannotMineTileAbove = TileID.Sets.Factory.CreateBoolSet();
     }
 }

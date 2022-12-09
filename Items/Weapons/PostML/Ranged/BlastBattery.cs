@@ -45,6 +45,13 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
+        public override bool CanConsumeAmmo(Item ammo, Player player)
+        {
+            NPC target = null;
+            if (player.altFunctionUse != 2 && !RedeHelper.ClosestNPC(ref target, 300, Main.MouseWorld, true, player.MinionAttackTargetNPC))
+                return false;
+            return true;
+        }
         public override void HoldItem(Player player)
         {
             player.RedemptionPlayerBuff().blastBattery = true;

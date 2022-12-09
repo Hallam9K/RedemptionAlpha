@@ -68,10 +68,13 @@ namespace Redemption.NPCs.Friendly
                             Main.dust[dust].color = dustColor;
                             Main.dust[dust].velocity *= 3f;
                         }
-                        Dialogue d1 = new(NPC, "Woah!", Color.White, Color.Gray, voice, 1, 30, 30, true, bubble: bubble); // 65
+                        if (!Main.dedServ)
+                        {
+                            Dialogue d1 = new(NPC, "Woah!", Color.White, Color.Gray, voice, 1, 30, 30, true, bubble: bubble); // 65
 
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(d1);
+                        }
                     }
                     NPC.rotation += 0.1f;
                     NPC.velocity.X *= 0.99f;
@@ -98,7 +101,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
                 case 2:
-                    if (AITimer++ == 40)
+                    if (AITimer++ == 40 && !Main.dedServ)
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 187);
                         Dialogue d1 = new(NPC, "Ow, my head hurts..", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble); // 187
@@ -116,7 +119,7 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
                 case 3:
-                    if (AITimer++ == 5)
+                    if (AITimer++ == 5 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Hey Zephos,[10] do you know where we are?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 221

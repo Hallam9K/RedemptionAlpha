@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
                 .AddIngredient(ModContent.ItemType<Plating>(), 2)
                 .AddIngredient(ModContent.ItemType<Capacitator>())
                 .AddTile(TileID.MythrilAnvil)

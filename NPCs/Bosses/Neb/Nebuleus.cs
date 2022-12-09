@@ -1323,6 +1323,8 @@ namespace Redemption.NPCs.Bosses.Neb
                         SoundEngine.PlaySound(SoundID.NPCDeath59 with { Pitch = 1.2f }, NPC.position);
                         RazzleDazzle();
                     }
+                    if (Main.windSpeedTarget < 1)
+                        Main.windSpeedTarget = 1;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;

@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Friendly
         {
             Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
         }
-
+        public override bool CheckActive() => false;
         public override bool UsesPartyHat() => false;
         private float RotTime;
         public override void AI()

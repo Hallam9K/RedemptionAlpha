@@ -33,7 +33,6 @@ namespace Redemption.Items.Accessories.PostML
                 ArmorIDs.Head.Sets.DrawHead[equipSlotHead] = false;
                 ArmorIDs.Body.Sets.HidesTopSkin[equipSlotBody] = true;
                 ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
-                ArmorIDs.Legs.Sets.HidesBottomSkin[equipSlotLegs] = true;
             }
         }
         public override void SetStaticDefaults()

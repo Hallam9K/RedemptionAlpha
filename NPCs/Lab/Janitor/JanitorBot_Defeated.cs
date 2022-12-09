@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Lab.Janitor
             switch (State)
             {
                 case 0:
-                    if (AITimer++ == 10)
+                    if (AITimer++ == 10 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Okay,[10] okay!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 132
@@ -137,7 +137,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     }
                     break;
                 case 3:
-                    if (AITimer++ == 40)
+                    if (AITimer++ == 40 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Ey...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 110

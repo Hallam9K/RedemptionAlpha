@@ -202,7 +202,7 @@ namespace Redemption.Globals
             downedPZ = downed.Contains("downedPZ");
             downedNebuleus = downed.Contains("downedNebuleus");
             downedADD = downed.Contains("downedADD");
-            downedGGBossFirst = downed.Contains("downedGGBossFirst");
+            downedGGBossFirst = tag.GetInt("downedGGBossFirst");
         }
 
         public override void NetSend(BinaryWriter writer)

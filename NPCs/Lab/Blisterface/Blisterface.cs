@@ -74,7 +74,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         }
         public override bool CheckActive()
         {
-            return !LabArea.Active;
+            return !Main.LocalPlayer.InModBiome<LabBiome>();
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {

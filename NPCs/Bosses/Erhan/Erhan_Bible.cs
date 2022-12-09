@@ -202,7 +202,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             Projectile.position.X = player.position.X - 600;
                             if (AITimer != 0 && AITimer % 60 == 0 && AITimer <= 400)
                             {
-                                playerOrigin.Y -= 100;
+                                playerOrigin.Y -= 96;
                                 playerOrigin.X += Main.rand.Next(-220, 220);
                                 RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                 if (Main.rand.NextBool(4))
@@ -220,9 +220,29 @@ namespace Redemption.NPCs.Bosses.Erhan
                             }
                             if (AITimer == 420)
                             {
-                                playerOrigin.Y -= 100;
+                                playerOrigin.Y -= 96;
                                 playerOrigin.X += Main.rand.Next(-220, 220);
                                 RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform2>());
+                            }
+                            if (AITimer >= 60)
+                            {
+                                for (int i = 0; i < Main.maxPlayers; i++)
+                                {
+                                    int playerCount = 0;
+                                    int playerCount2 = 0;
+                                    Player player2 = Main.player[i];
+                                    if (!player2.active || player2.dead)
+                                        continue;
+                                    playerCount++;
+                                    if (player2.Center.Y > Projectile.Center.Y)
+                                        playerCount2++;
+                                    if (playerCount2 >= playerCount)
+                                    {
+                                        host.ai[1] = 460;
+                                        host.netUpdate = true;
+                                        Projectile.Kill();
+                                    }
+                                }
                             }
                             if (AITimer >= 540)
                                 Projectile.Kill();

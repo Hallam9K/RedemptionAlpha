@@ -30,7 +30,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 20)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 20)
                 .AddIngredient(ModContent.ItemType<Plating>(), 8)
                 .AddIngredient(ModContent.ItemType<Capacitator>(), 2)
                 .AddIngredient(ModContent.ItemType<EnergyCell>(), 4)

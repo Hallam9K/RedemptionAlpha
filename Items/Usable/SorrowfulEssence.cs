@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -14,7 +15,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Having this in your inventory may attract the Keeper's first creation underground" +
-                "\n[i:" + ModContent.ItemType<BadRoute>() + "]");
+                "\n[i:" + ModContent.ItemType<BadRedemptionRoute>() + "][c/ff5533: This item may have a redeemable negative impact onto the world]");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 11));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
@@ -22,7 +23,6 @@ namespace Redemption.Items.Usable
 
             SacrificeTotal = 1;
         }
-
         public override void SetDefaults()
         {
             Item.width = 44;
@@ -36,18 +36,19 @@ namespace Redemption.Items.Usable
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Rectangle frame;
-            if (Main.itemAnimations[Item.type] != null)
-                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
-            else
-                frame = texture.Frame();
+            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, scale, scale * 0.9f, scale);
+            Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(184, 161, 255), new Color(79, 15, 255), new Color(184, 161, 255));
+            Vector2 origin = new(glow.Width / 2, glow.Height / 2);
 
-            Vector2 origin = frame.Size() / 2f;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(glow, Item.Center - Main.screenPosition, new Rectangle(0, 0, glow.Width, glow.Height), color * 0.8f, rotation, origin, scale * 0.6f, SpriteEffects.None, 0f);
 
-            return false;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            return true;
         }
     }
 }

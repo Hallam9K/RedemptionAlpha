@@ -46,6 +46,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Vector2 Offset = Vector2.Normalize(velocity) * 50f;
             position += Offset;
         }
+        /*
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -53,6 +54,6 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
                 .AddIngredient(ItemID.ShadowScale, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
-        }
+        }*/
     }
 }

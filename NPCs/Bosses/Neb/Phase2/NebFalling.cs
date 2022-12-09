@@ -25,6 +25,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
         public override void AI()
         {
+            RedeSystem.Silence = true;
+
             Player player = Main.player[Projectile.owner];
             if (Main.rand.NextBool(3))
                 Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Enchanted_Pink, 0f, 0f, 100, default, 3f);

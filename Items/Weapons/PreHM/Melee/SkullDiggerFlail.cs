@@ -69,7 +69,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             throwTime = 13;
             throwSpeed = 18f;
             recoverDistance = 22f;
-            recoverDistance2 = 26f;
+            recoverDistance2 = 48f;
             attackCooldown = 15;
         }
 

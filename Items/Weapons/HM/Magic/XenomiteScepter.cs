@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<XenomiteItem>(), 10)
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
                 .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

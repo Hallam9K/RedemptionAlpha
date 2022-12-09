@@ -93,6 +93,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
 
             return false;
         }
+        /*
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -100,6 +101,6 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
                 .AddIngredient(ItemID.TissueSample, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
-        }
+        }*/
     }
 }

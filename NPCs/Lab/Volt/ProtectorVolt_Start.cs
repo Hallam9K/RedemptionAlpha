@@ -12,6 +12,7 @@ using Redemption.Base;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.UI;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -45,7 +46,7 @@ namespace Redemption.NPCs.Lab.Volt
         }
         public override bool CheckActive()
         {
-            return !LabArea.Active;
+            return !Main.LocalPlayer.InModBiome<LabBiome>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
@@ -89,7 +90,7 @@ namespace Redemption.NPCs.Lab.Volt
                         else
                         {
                             AITimer++;
-                            if (AITimer == 40)
+                            if (AITimer == 40 && !Main.dedServ)
                             {
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, "Halt!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 110
@@ -133,7 +134,7 @@ namespace Redemption.NPCs.Lab.Volt
                         break;
                     case 2:
                         AITimer++;
-                        if (AITimer == 40)
+                        if (AITimer == 40 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "Hm? Are you supposed to be let through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 178
@@ -169,6 +170,7 @@ namespace Redemption.NPCs.Lab.Volt
                                 NetMessage.SendData(MessageID.WorldData);
 
                             NPC.Transform(ModContent.NPCType<ProtectorVolt>());
+                            NPC.netUpdate = true;
                         }
                         break;
                 }

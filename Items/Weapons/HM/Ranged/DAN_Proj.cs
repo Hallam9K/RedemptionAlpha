@@ -104,7 +104,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         offset = 30;
                         rotOffset = -0.5f;
                         SoundEngine.PlaySound(SoundID.Item38, Projectile.position);
-                        SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Pitch = -0.1f }, Projectile.position);
+                        SoundEngine.PlaySound(CustomSounds.DANShot, Projectile.position);
                         for (int i = 0; i < shotNum; i++)
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed + Main.rand.Next(-4, 5), (Main.MouseWorld - gunPos).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<DAN_Bullet>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
 
@@ -161,7 +161,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             {
                                 offset = 12;
                                 SoundEngine.PlaySound(SoundID.Item40, Projectile.position);
-                                SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Volume = 0.5f, Pitch = 0.2f }, Projectile.position);
+                                SoundEngine.PlaySound(CustomSounds.DANShot with { Volume = 0.5f, Pitch = 0.2f }, Projectile.position);
 
                                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Bullet>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
                                 for (int i = 0; i < 5; i++)

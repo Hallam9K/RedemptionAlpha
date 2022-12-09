@@ -1,3 +1,5 @@
+This mod requires IQ above room temperature, if you want a mod you can mindlessly go through without much thought this isn't for you.
+
 THIS IS A BETA, THE FOLLOWING CONTENT IS PLANNED FOR 0.8 BUT NOT IN THIS BETA:
 - Multiplayer Compatibility
 - Ritualist Class
@@ -13,7 +15,8 @@ This beta does however have:
 - Reworking of basically every weapon
 - Overhaul to the Abandoned Lab
 - Many boss reworks or tweaks
-- Removal of druid class
+- Alignment, a semi-work-in-progress mechanic where actions can alter alignment, so far it only changes if Dragon-Lead or Gathic Cryo-Crystals will gen and if Nebuleus will let you fight a new phase, but more will be planned.
+- Removal of druid class, as the quality no longer matches the rest of the mod, however be patient for the upcoming Ritualist Class!
 - Elemental system where weapons and projectiles can have elements set to them that certain enemies can be resistant or weak to
 - Guard Points, a new value that blocks damage for a certain amount of hits until its broken, enemies with guard points wont take knockback. Hammers and explosives deal triple damage to guard points and Psychic elemental weapons will ignore guard points completely.
 - Removal of bloat content
@@ -22,7 +25,7 @@ This beta does however have:
 Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
 Currently, there are:
 - 875 Items
-- 152 NPCs
+- 152 NPCs/Enemies
 - 11 Bosses
 - 7 Minibosses
 - 371 Tiles
@@ -30,4 +33,4 @@ Currently, there are:
 Credit to Thalzon for some of the enemy/boss designs & Pluto for Nebuleus' background
 
 Thank you to the epic Patreons:
-Luna!, Lantard, Arche, Rainbr1nger11, catsounds, Nechrom, Sneaklone, HikariAnimator, Noah Felt, Omega D, Albino gonkvader, thunder, Daawnily, Cynx303, Renk, Megaswave, Styxl, Mr. Sarge, Ardlan, Ballistic Banana, Zoey (vocaloid shoegaze album), Joshua DiBella (the fridge man), uncon_arts, Josh Mitchell (Imperator_Zero), Emperor OwO, Waasephi
+Luna!, Lantard, Arche, Rainbr1nger11, catsounds, Nechrom, Sneaklone, HikariAnimator, Noah Felt, Omega D, Albino gonkvader, thunder, Daawnily, Cynx303, Renk, Megaswave, Styxl, Mr. Sarge, Ardlan, Ballistic Banana, Zoey (vocaloid shoegaze album), Joshua DiBella (the fridge man), uncon_arts, Josh Mitchell (Imperator_Zero), Emperor OwO, Waasephi, Smuggy

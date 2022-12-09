@@ -72,6 +72,7 @@ namespace Redemption.NPCs.Wasteland
         public override void PostAI()
         {
             Lighting.AddLight(NPC.Center, NPC.Opacity * 0.1f, NPC.Opacity * 0.2f, NPC.Opacity * 0.1f);
+            NPC.LookByVelocity();
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

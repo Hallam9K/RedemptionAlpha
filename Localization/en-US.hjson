@@ -62,6 +62,9 @@ Mods: {
             MicroshieldDroneBuff: "Microshield Drone"
             HoloMinionBuff: "Hologram"
             
+            # Mounts
+            JyrinaMountBuff: "Ukko's Steed"
+            
             # Pets
             BabyRockpileBuff: "Baby Rockpile"
             BouquetOfThornsBuff: "Bouquet of Thorns"
@@ -76,6 +79,8 @@ Mods: {
             NebPetBuff: "Chibi Nebby"
             ToasterPetBuff: "Household Heatray"
             MiniGigaporaPetBuff: "Mini Gigapora"
+            XenoemiaBuff: "Xenoemia"
+            CleaverPetBuff: "Omini Cleaver"
 		}
 		
 		BuffDescription: {
@@ -136,6 +141,9 @@ Mods: {
             MicroshieldDroneBuff: "A microshield drone is defending you"
             HoloMinionBuff: "Wait, how do holograms hit things?"
             
+            # Mounts
+            JyrinaMountBuff: "Is that the sound of an approaching thunderstorm I hear?"
+            
             # Pets
             BabyRockpileBuff: "Never seen a pile of rocks dance before"
             BouquetOfThornsBuff: "A gift for the newly divorced"
@@ -150,6 +158,8 @@ Mods: {
             NebPetBuff: "Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you"
             ToasterPetBuff: "Its heating filament is inadequate to its needs"
             MiniGigaporaPetBuff: "You know the drill"
+            XenoemiaBuff: "A walking infection"
+            CleaverPetBuff: "*Loud metal clank noise*"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland
@@ -186,6 +196,7 @@ Mods: {
 				LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
 				FarFromHome: Could ya take me back to my home?
 				DislikeCrowded: All these humans are makin' my bones rattle.
+				HateCrowded: All these humans are makin' my bones rattle.
 				LikeBiome: "Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were."
 				LoveBiome: "The caverns are perfect for us Fallen, not many humans come and go here."
 				DislikeBiome: "I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!"
@@ -201,6 +212,7 @@ Mods: {
 				LoveSpace: So little people, yay!
 				FarFromHome: Me lost, can you find home?
 				DislikeCrowded: Too many faces!
+				HateCrowded: Too many faces!
 				LikeBiome: "Me like {BiomeName}."
 				LoveBiome: "Me love {BiomeName}! It give memory of... Uh.."
 				DislikeBiome: "Too boring here, me hate sand!"
@@ -216,6 +228,7 @@ Mods: {
 				LoveSpace: This place is super spacious, good for practicing my swordsmanship!
 				FarFromHome: Yo bro, I can't find my house, you wanna help me out?
 				DislikeCrowded: Is it crowded in here or what!
+				HateCrowded: Is it crowded in here or what!
 				LikeBiome: "I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming."
 				LoveBiome: "Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!"
 				DislikeBiome: "Not a fan of {BiomeName}, I'd rather live on the surface."
@@ -231,6 +244,7 @@ Mods: {
 				LoveSpace: It's rather quiet around here.
 				FarFromHome: ...I believe we're very lost. I'm not familiar with our surroundings.
 				DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+				HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
 				LikeBiome: "This environment is mildly pleasant."
 				LoveBiome: "I like this environment. It's very pleasant."
 				DislikeBiome: "My current environment is rather... undesirable."

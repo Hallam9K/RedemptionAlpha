@@ -10,6 +10,7 @@ using Terraria.Utilities;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Steamworks;
 
 namespace Redemption.Base
 {
@@ -5249,6 +5250,13 @@ namespace Redemption.Base
          */
         public static void DamagePlayer(Player player, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
         {
+            for (int i = 0; i < player.hurtCooldowns.Length; i++)
+            {
+                if (player.hurtCooldowns[i] > 0)
+                    return;
+            }
+            if (player.immune)
+                return;
             float defIgnore = 0.5f;
             if (Main.expertMode)
                 defIgnore = 0.75f;
@@ -5259,7 +5267,7 @@ namespace Redemption.Base
             if (damager == null)
             {
                 int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false, 0);
+                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false);
             }
             else if (damager is Player subPlayer)
             {
@@ -5268,7 +5276,7 @@ namespace Redemption.Base
                 PlayerLoader.OnHitPvp(subPlayer, subPlayer.HeldItem, player, parsedDamage, false);
                 bool crit = false;
                 PlayerLoader.ModifyHitPvp(subPlayer, subPlayer.HeldItem, player, ref parsedDamage, ref crit);
-                player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
+                player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false);
 
                 subPlayer.attackCD = (int)(subPlayer.itemAnimationMax * 0.33f);
             }
@@ -5276,20 +5284,34 @@ namespace Redemption.Base
             {
                 if (p.friendly && !p.hostile)
                 {
+                    bool crit = false;
                     int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     p.playerImmune[player.whoAmI] = 40;
+                    ProjectileLoader.ModifyHitPlayer(p, player, ref parsedDamage, ref crit);
+                    ProjectileLoader.OnHitPlayer(p, player, parsedDamage, false);
                     PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
-                    bool crit = false;
                     PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false, 0);
+                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false);
                 }
                 else if (p.hostile)
                 {
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
                     bool crit = false;
+                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                    ProjectileLoader.ModifyHitPlayer(p, player, ref parsedDamage, ref crit);
+                    ProjectileLoader.OnHitPlayer(p, player, parsedDamage, false);
+                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
                     PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
+                }
+                else
+                {
+                    bool crit = false;
+                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                    ProjectileLoader.ModifyHitPlayer(p, player, ref parsedDamage, ref crit);
+                    ProjectileLoader.OnHitPlayer(p, player, parsedDamage, false);
+                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
                 }
                 else
                 {
@@ -5302,11 +5324,19 @@ namespace Redemption.Base
             }
             else if (damager is NPC npc)
             {
-                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                PlayerLoader.OnHitByNPC(player, npc, parsedDamage, false);
                 bool crit = false;
-                PlayerLoader.ModifyHitByNPC(player, npc, ref parsedDamage, ref crit);
-                player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
+                bool truetrue = true;
+                int cool = -1;
+                PlayerDeathReason death = PlayerDeathReason.ByNPC(npc.whoAmI);
+                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+                if (PlayerLoader.PreHurt(player, false, false, ref parsedDamage, ref hitDirection, ref crit, ref crit, ref truetrue, ref truetrue, ref death, ref cool))
+                {
+                    NPCLoader.ModifyHitPlayer(npc, player, ref parsedDamage, ref crit);
+                    NPCLoader.OnHitPlayer(npc, player, parsedDamage, false);
+                    PlayerLoader.ModifyHitByNPC(player, npc, ref parsedDamage, ref crit);
+                    PlayerLoader.OnHitByNPC(player, npc, parsedDamage, false);
+                    player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false);
+                }
             }
         }
 
@@ -5364,8 +5394,8 @@ namespace Redemption.Base
                     PlayerLoader.OnHitNPCWithProj(p, npc, parsedDamage, knockback, crit);
                     ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
-                    double doubleDmg = (double)parsedDamage;
-                    NPCLoader.StrikeNPC(npc, ref doubleDmg, npc.defense, ref knockback, hitDirection, ref crit);
+                    if (ProjectileLists.Psychic.Contains(p.type))
+                        npc.RedemptionGuard().IgnoreArmour = true;
 
                     if (!npc.immortal && npc.canGhostHeal && p.DamageType == DamageClass.Magic && Main.player[p.owner].setNebula && Main.player[p.owner].nebulaCD == 0 && Main.rand.NextBool(3))
                     {
@@ -5399,8 +5429,6 @@ namespace Redemption.Base
                     NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
                     PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
                     PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
-                    double doubleDmg = (double)parsedDamage;
-                    NPCLoader.StrikeNPC(npc, ref doubleDmg, npc.defense, ref knockback, hitDirection, ref crit);
 
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     if (player.accDreamCatcher)

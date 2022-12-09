@@ -7,11 +7,12 @@ using Redemption.Globals;
 using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.NPCs.Lab.MACE;
 
 namespace Redemption.Projectiles.Magic
 {
     public class PlutoniumNuke_Proj : ModProjectile
-	{
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plutonium Nuke");
@@ -20,7 +21,7 @@ namespace Redemption.Projectiles.Magic
         }
 
         public override void SetDefaults()
-		{
+        {
             Projectile.width = 22;
             Projectile.height = 22;
             Projectile.aiStyle = -1;
@@ -30,7 +31,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 280;
-		}
+        }
 
         public override void AI()
         {
@@ -59,12 +60,16 @@ namespace Redemption.Projectiles.Magic
         {
             SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
             if (Projectile.owner == Main.myPlayer)
-            for (int i = 0; i < 10; i++)
             {
-                int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ProjectileID.DD2BetsyFireball, Projectile.damage / 5, 3, Main.myPlayer);
-                Main.projectile[proj].hostile = false;
-                Main.projectile[proj].friendly = true;
-                Main.projectile[proj].netUpdate2 = true;
+                for (int i = 0; i < 10; i++)
+                {
+                    SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, Projectile.position);
+                    int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ModContent.ProjectileType<MACE_Miniblast>(), Projectile.damage / 5, 3, Main.myPlayer, 1);
+                    Main.projectile[proj].timeLeft = 300;
+                    Main.projectile[proj].hostile = false;
+                    Main.projectile[proj].friendly = true;
+                    Main.projectile[proj].netUpdate2 = true;
+                }
             }
             RedeDraw.SpawnExplosion(Projectile.Center, Color.LightCyan, scale: 2);
             for (int i = 0; i < Main.maxNPCs; i++)
