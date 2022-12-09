@@ -5313,14 +5313,6 @@ namespace Redemption.Base
                     PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
                     player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
                 }
-                else
-                {
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false, 0);
-                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
-                    bool crit = false;
-                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                }
             }
             else if (damager is NPC npc)
             {
