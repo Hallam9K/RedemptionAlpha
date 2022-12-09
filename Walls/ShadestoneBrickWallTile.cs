@@ -12,6 +12,5 @@ namespace Redemption.Walls
 			AddMapEntry(new Color(27, 30, 37));
         }
         public override bool CanExplode(int i, int j) => false;
-        public override void KillWall(int i, int j, ref bool fail) => fail = true;
     }
 }

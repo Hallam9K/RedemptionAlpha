@@ -50,7 +50,7 @@ namespace Redemption.Tiles.Furniture.Shade
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-		public override bool RightClick(int i, int j)
+        public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY == 0)

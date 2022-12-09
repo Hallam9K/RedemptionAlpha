@@ -43,6 +43,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileObjectData.newTile.StyleWrapLimit = 2;
 			TileObjectData.newTile.StyleMultiplier = 2;
 			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);

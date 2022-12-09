@@ -1,4 +1,5 @@
 using Redemption.Dusts;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;
@@ -33,6 +34,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<VoidFlame>();
             HitSound = SoundID.Grass;
+            ItemDrop = ModContent.ItemType<Nooseroot>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -69,6 +71,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<VoidFlame>();
             HitSound = SoundID.Grass;
+            ItemDrop = ModContent.ItemType<Nooseroot>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -105,6 +108,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<VoidFlame>();
             HitSound = SoundID.Grass;
+            ItemDrop = ModContent.ItemType<Nooseroot>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -126,6 +130,7 @@ namespace Redemption.Tiles.Plants
         }
         public override void SetDefaults()
         {
+            base.SetDefaults();
             Item.createTile = ModContent.TileType<Nooseroot_Small>();
         }
     }
@@ -138,6 +143,7 @@ namespace Redemption.Tiles.Plants
         }
         public override void SetDefaults()
         {
+            base.SetDefaults();
             Item.createTile = ModContent.TileType<Nooseroot_Medium>();
         }
     }
@@ -150,6 +156,7 @@ namespace Redemption.Tiles.Plants
         }
         public override void SetDefaults()
         {
+            base.SetDefaults();
             Item.createTile = ModContent.TileType<Nooseroot_Large>();
         }
     }

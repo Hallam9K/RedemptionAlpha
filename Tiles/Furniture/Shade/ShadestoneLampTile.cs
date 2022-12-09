@@ -29,6 +29,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
@@ -91,16 +92,19 @@ namespace Redemption.Tiles.Furniture.Shade
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
+            int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
+            int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneLampTile_Glow").Value;
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
             Color color = new(100, 100, 100, 0);
             for (int k = 0; k < 7; k++)
             {
                 float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
                 float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
-
-                Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneLampTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X + xx, j * 16 - (int)Main.screenPosition.Y + yy) + zero;
+                spriteBatch.Draw(texture, drawPosition, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

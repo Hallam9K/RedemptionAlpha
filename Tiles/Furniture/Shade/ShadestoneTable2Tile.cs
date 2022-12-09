@@ -33,6 +33,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileObjectData.newTile.UsesCustomCanPlace = true;
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
+			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;

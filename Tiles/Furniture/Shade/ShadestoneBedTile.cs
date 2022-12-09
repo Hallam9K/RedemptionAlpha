@@ -53,8 +53,8 @@ namespace Redemption.Tiles.Furniture.Shade
 		{
 			Player player = Main.LocalPlayer;
 
-			Tile tile = Main.tile[i, j];
-			int spawnX = i - (tile.TileFrameX / 18) + (tile.TileFrameX >= 72 ? 5 : 2); 
+			Tile tile = Framing.GetTileSafely(i, j);
+			int spawnX = i - (tile.TileFrameX / 18) + (tile.TileFrameX >= 72 ? 5 : 2);
 			int spawnY = j + 2;
 			if (tile.TileFrameY % 38 != 0)
 			{
