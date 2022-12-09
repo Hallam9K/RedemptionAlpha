@@ -62,6 +62,9 @@ Mods: {
             MicroshieldDroneBuff: "Microshield Drone"
             HoloMinionBuff: "Hologram"
             
+            # Mounts
+            JyrinaMountBuff: "Ukko's Steed"
+            
             # Pets
             BabyRockpileBuff: "Baby Rockpile"
             BouquetOfThornsBuff: "Bouquet of Thorns"
@@ -137,6 +140,9 @@ Mods: {
             MicroshieldCoreBuff: "A tiny shield core is defending you"
             MicroshieldDroneBuff: "A microshield drone is defending you"
             HoloMinionBuff: "Wait, how do holograms hit things?"
+            
+            # Mounts
+            JyrinaMountBuff: "Is that the sound of an approaching thunderstorm I hear?"
             
             # Pets
             BabyRockpileBuff: "Never seen a pile of rocks dance before"
