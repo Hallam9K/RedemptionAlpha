@@ -46,7 +46,7 @@ namespace Redemption.Items.Usable.Summons
                 int type = ModContent.NPCType<KS3_Start>();
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    NPC.SpawnOnPlayer(player.whoAmI, type);
+                    NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y - 500, type);
                 else
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
             }

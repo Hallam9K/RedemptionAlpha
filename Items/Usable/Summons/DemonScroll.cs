@@ -51,7 +51,7 @@ namespace Redemption.Items.Usable.Summons
                 else
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
 
-                if (RedeBossDowned.erhanDeath > 0)
+                if (RedeBossDowned.erhanDeath > 0 || player.statLifeMax2 == 1)
                     return true;
 
                 for (int i = 0; i < 10; i++)
