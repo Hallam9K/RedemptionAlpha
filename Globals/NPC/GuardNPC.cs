@@ -109,8 +109,6 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return vDmg;
                 }
@@ -125,8 +123,6 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return vDmg;
                 }
@@ -138,8 +134,6 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return vDmg;
                 }
@@ -150,8 +144,6 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return vDmg;
                 }
@@ -162,8 +154,6 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4, 0.5f);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return vDmg;
                 }
@@ -174,8 +164,6 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4, 0.2f);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, npc.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                     if (GuardPoints >= 0)
                         return vDmg;
                 }
