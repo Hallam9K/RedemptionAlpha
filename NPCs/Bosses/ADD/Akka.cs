@@ -145,8 +145,6 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.Dig with { Pitch = -.1f });
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                     return vDmg;
             }
