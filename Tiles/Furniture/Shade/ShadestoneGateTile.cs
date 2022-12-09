@@ -52,23 +52,6 @@ namespace Redemption.Tiles.Furniture.Shade
         {
             num = 1;
         }
-        public override bool RightClick(int i, int j)
-        {
-            Player player = Main.LocalPlayer;
-            if (player.HasItem(ModContent.ItemType<WardensKey>()) && !_activated)
-            {
-                SoundEngine.PlaySound(SoundID.Unlock);
-                _activated = true;
-            }
-            return true;
-        }
-        public override void MouseOver(int i, int j)
-        {
-            Player player = Main.LocalPlayer;
-            player.noThrow = 2;
-            player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<WardensKey>();
-        }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
         public override bool CanExplode(int i, int j) => false;
         public override void NearbyEffects(int i, int j, bool closer)
