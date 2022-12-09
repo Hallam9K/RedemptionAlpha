@@ -5386,8 +5386,8 @@ namespace Redemption.Base
                     PlayerLoader.OnHitNPCWithProj(p, npc, parsedDamage, knockback, crit);
                     ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
-                    double doubleDmg = (double)parsedDamage;
-                    NPCLoader.StrikeNPC(npc, ref doubleDmg, npc.defense, ref knockback, hitDirection, ref crit);
+                    if (ProjectileLists.Psychic.Contains(p.type))
+                        npc.RedemptionGuard().IgnoreArmour = true;
 
                     if (!npc.immortal && npc.canGhostHeal && p.DamageType == DamageClass.Magic && Main.player[p.owner].setNebula && Main.player[p.owner].nebulaCD == 0 && Main.rand.NextBool(3))
                     {
@@ -5421,8 +5421,6 @@ namespace Redemption.Base
                     NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
                     PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
                     PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
-                    double doubleDmg = (double)parsedDamage;
-                    NPCLoader.StrikeNPC(npc, ref doubleDmg, npc.defense, ref knockback, hitDirection, ref crit);
 
                     npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
                     if (player.accDreamCatcher)

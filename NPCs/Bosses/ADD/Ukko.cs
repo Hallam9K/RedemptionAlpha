@@ -24,6 +24,7 @@ using Redemption.Particles;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -184,8 +185,7 @@ namespace Redemption.NPCs.Bosses.ADD
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UkonKirvesTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<UkkoRelic>()));
-
-            //npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<BouquetOfThorns>(), 4));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<JyrinaMount>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 

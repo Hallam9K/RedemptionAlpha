@@ -1,7 +1,11 @@
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.NPCs.Friendly;
+using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
@@ -26,6 +30,34 @@ namespace Redemption.Globals
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGreen);
                 else if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(Language.GetTextValue(status), Color.LightGreen);
+            }
+            if (wayfarerVars[0] == 2 && Main.dayTime && RedeWorld.DayNightCount >= 3 && !RedeHelper.WayfarerActive())
+            {
+                if (Main.time == 1)
+                {
+                    string w = "Zephos";
+                    if (WorldGen.crimson)
+                        w = "Daerel";
+                    string status = w + " the Wayfarer has returned!";
+                    if (Main.netMode == NetmodeID.Server)
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(48, 121, 248));
+                    else if (Main.netMode == NetmodeID.SinglePlayer)
+                        Main.NewText(Language.GetTextValue(status), new Color(48, 121, 248));
+
+                    Vector2 anglonPortalPos = new(((RedeGen.newbCaveVector.X + 35) * 16) - 8, ((RedeGen.newbCaveVector.Y + 6) * 16) - 4);
+                    int wayfarer = WorldGen.crimson ? ModContent.NPCType<Daerel>() : ModContent.NPCType<Zephos>();
+                    SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, anglonPortalPos);
+                    for (int i = 0; i < 30; i++)
+                    {
+                        int dust = Dust.NewDust(anglonPortalPos, 24, 48, ModContent.DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
+                        Main.dust[dust].noGravity = true;
+                        Color dustColor = new(Color.DarkOliveGreen.R, Color.DarkOliveGreen.G, Color.DarkOliveGreen.B) { A = 0 };
+                        Main.dust[dust].color = dustColor;
+                        Main.dust[dust].velocity *= 3f;
+                    }
+                    if (RedeGen.newbCaveVector.X != -1 && !RedeHelper.WayfarerActive())
+                        LabArea.SpawnNPCInWorld(anglonPortalPos, wayfarer);
+                }
             }
             #endregion
         }

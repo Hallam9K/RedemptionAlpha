@@ -1746,7 +1746,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (AITimer < 100)
                             {
                                 NPC.LookAtEntity(player);
-                                if (NPC.DistanceSQ(player.Center + ShootPos) < 50 * 50 || AITimer > 40)
+                                if ((NPC.DistanceSQ(player.Center + ShootPos) < 50 * 50 && gunRot != 0) || AITimer > 40)
                                 {
                                     AITimer = 100;
 

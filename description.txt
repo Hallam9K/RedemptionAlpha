@@ -1,3 +1,5 @@
+This mod requires IQ above room temperature, if you want a mod you can mindlessly go through without much thought this isn't for you.
+
 THIS IS A BETA, THE FOLLOWING CONTENT IS PLANNED FOR 0.8 BUT NOT IN THIS BETA:
 - Multiplayer Compatibility
 - Ritualist Class
@@ -13,6 +15,7 @@ This beta does however have:
 - Reworking of basically every weapon
 - Overhaul to the Abandoned Lab
 - Many boss reworks or tweaks
+- Alignment, a semi-work-in-progress mechanic where actions can alter alignment, so far it only changes if Dragon-Lead or Gathic Cryo-Crystals will gen and if Nebuleus will let you fight a new phase, but more will be planned.
 - Removal of druid class, as the quality no longer matches the rest of the mod, however be patient for the upcoming Ritualist Class!
 - Elemental system where weapons and projectiles can have elements set to them that certain enemies can be resistant or weak to
 - Guard Points, a new value that blocks damage for a certain amount of hits until its broken, enemies with guard points wont take knockback. Hammers and explosives deal triple damage to guard points and Psychic elemental weapons will ignore guard points completely.

@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             DisplayName.SetDefault("Petrified Wood Sword");
             Tooltip.SetDefault("'About as useful as a burnt twig'");
-
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
