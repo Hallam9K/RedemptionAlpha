@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 if (++Projectile.frame >= 2 * (faceType + 1))
                     Projectile.frame = 2 * faceType;
             }
-
+            Projectile.LookAtEntity(Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)]);
             if (Projectile.localAI[0]++ < 30)
                 Projectile.alpha -= 4;
 
