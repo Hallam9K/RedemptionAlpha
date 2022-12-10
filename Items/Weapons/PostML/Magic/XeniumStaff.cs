@@ -26,7 +26,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 180;
+            Item.damage = 375;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 14;
             Item.width = 58;
@@ -56,7 +56,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             if (player.altFunctionUse == 2)
             {
                 type = ModContent.ProjectileType<XeniumStaff_Proj>();
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, type, damage / 4, knockback, player.whoAmI);
                 return false;
             }
             int numberProjectiles = 2;

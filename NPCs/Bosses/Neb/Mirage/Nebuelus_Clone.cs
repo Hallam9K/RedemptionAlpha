@@ -50,8 +50,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public override void SetDefaults()
         {
             NPC.lifeMax = 337500;
-            NPC.defense = 100;
-            NPC.damage = 200;
+            NPC.defense = 80;
+            NPC.damage = 180;
             NPC.width = 62;
             NPC.height = 84;
             NPC.aiStyle = -1;
@@ -1331,6 +1331,8 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                 if (ItemLists.Shadow.Contains(item.type))
                     NPC.Redemption().elementDmg *= 1.1f;
             }
+            if (item.DamageType == DamageClass.Melee)
+                damage *= 2;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -1347,6 +1349,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
 
                 if (ProjectileLists.Shadow.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 1.1f;
+            }
+            if (projectile.Redemption().TechnicallyMelee)
+            {
+                damage *= 2;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

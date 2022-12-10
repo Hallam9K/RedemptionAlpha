@@ -6,6 +6,7 @@ using Redemption.Dusts;
 using Terraria.DataStructures;
 using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -84,6 +85,23 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 host.netUpdate = true;
             }
             return false;
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(Exposed);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                Exposed = reader.ReadBoolean();
+            }
         }
         private bool Exposed;
         public override void AI()

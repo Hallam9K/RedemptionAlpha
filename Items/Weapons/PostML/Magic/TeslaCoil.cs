@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         }
         public override void SetDefaults()
         {
-            Item.damage = 80;
+            Item.damage = 90;
             Item.width = 30;
             Item.height = 86;
             Item.useTime = 10;

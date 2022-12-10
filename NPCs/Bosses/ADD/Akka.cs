@@ -21,6 +21,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -145,8 +146,6 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.Dig with { Pitch = -.1f });
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                     return vDmg;
             }
@@ -179,8 +178,9 @@ namespace Redemption.NPCs.Bosses.ADD
 
             npcLoot.Add(notExpertRule);
         }
-        public override void OnKill()
+        public override void BossLoot(ref string name, ref int potionType)
         {
+            potionType = ItemID.SuperHealingPotion;
             if (!RedeBossDowned.downedADD && !NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
             {
                 for (int p = 0; p < Main.maxPlayers; p++)
@@ -209,7 +209,6 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
-
         private Vector2 MoveVector2;
         private int islandCooldown = 10;
         private int barkskinCooldown;
@@ -236,7 +235,7 @@ namespace Redemption.NPCs.Bosses.ADD
             switch (AIState)
             {
                 case ActionState.Start:
-                    if (ukkoActive)
+                    if (ukkoActive || RedeBossDowned.ADDDeath < 2)
                     {
                         NPC ukko = Main.npc[(int)NPC.ai[3]];
                         switch (AttackID)
@@ -281,7 +280,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (!Main.dedServ)
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.LightGreen, "Ancient Goddess of Nature");
 
-                        AIState = ActionState.ResetVars; ;
+                        AIState = ActionState.ResetVars;
                         AITimer = 0;
                         NPC.netUpdate = true;
                     }

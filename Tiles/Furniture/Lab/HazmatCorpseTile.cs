@@ -100,7 +100,6 @@ namespace Redemption.Tiles.Furniture.Lab
             if (Main.tile[left, top].TileFrameX == 0)
             {
                 Player player = Main.LocalPlayer;
-                //player.QuickSpawnItem(ModContent.ItemType<Crowbar>());
                 player.QuickSpawnItem(new EntitySource_TileBreak(i, j), ModContent.ItemType<HazmatSuit2>());
             }
         }
@@ -136,7 +135,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hazmat Corpse");
-            Tooltip.SetDefault("Gives Crowbar and Hazmat Suit" +
+            Tooltip.SetDefault("Gives Hazmat Suit" +
                 "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
 

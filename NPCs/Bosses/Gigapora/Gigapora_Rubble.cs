@@ -39,6 +39,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Projectile.rotation += Projectile.velocity.X / 40 * Projectile.direction;
             Projectile.velocity.Y += 0.35f;
+            Projectile.velocity.Y = MathHelper.Min(Projectile.velocity.Y, 10);
             if (Projectile.velocity.Y > 0)
                 Projectile.tileCollide = true;
         }
@@ -72,7 +73,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Color color = Projectile.GetAlpha(Color.OrangeRed) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.OrangeRed) * 2, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

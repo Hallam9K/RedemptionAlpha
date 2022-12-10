@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 210;
+            Item.damage = 160;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 30;
             Item.height = 38;

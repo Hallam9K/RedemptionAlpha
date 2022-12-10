@@ -25,6 +25,7 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -86,7 +87,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public int GuardPointMax;
         public override void SetDefaults()
         {
-            NPC.lifeMax = 145000;
+            NPC.lifeMax = 128000;
             NPC.damage = 120;
             NPC.defense = 35;
             NPC.knockBackResist = 0f;
@@ -157,8 +158,6 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.DD2_WitherBeastCrystalImpact);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                     return vDmg;
             }
@@ -195,8 +194,9 @@ namespace Redemption.NPCs.Bosses.ADD
 
             npcLoot.Add(notExpertRule);
         }
-        public override void OnKill()
+        public override void BossLoot(ref string name, ref int potionType)
         {
+            potionType = ItemID.SuperHealingPotion;
             if (!RedeBossDowned.downedADD && !NPC.AnyNPCs(ModContent.NPCType<Akka>()))
             {
                 for (int p = 0; p < Main.maxPlayers; p++)
@@ -218,6 +218,23 @@ namespace Redemption.NPCs.Bosses.ADD
             if (!NPC.AnyNPCs(ModContent.NPCType<Akka>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
                 RedeBossDowned.downedGGBossFirst = 3;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedADD, -1);
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(akkaArrive);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                akkaArrive = reader.ReadBoolean();
+            }
         }
 
         public Vector2 MoveVector2;
@@ -1020,6 +1037,16 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     break;
                 case ActionState.AkkaSummon:
+                    if (RedeBossDowned.ADDDeath == 2)
+                    {
+                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaWorld.arenaTopLeft.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
+                        akkaArrive = true;
+                        AITimer = 0;
+                        AttackID = 0;
+                        AIState = ActionState.ResetVars;
+                        NPC.netUpdate = true;
+                        break;
+                    }
                     switch (AttackID)
                     {
                         case 0:
@@ -1129,6 +1156,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                 AttackID = 0;
                                 AIState = ActionState.ResetVars;
                                 NPC.netUpdate = true;
+                                if (RedeBossDowned.ADDDeath < 2)
+                                    RedeBossDowned.ADDDeath = 2;
                             }
                             break;
                     }

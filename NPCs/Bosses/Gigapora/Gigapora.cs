@@ -14,6 +14,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -183,6 +184,36 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(Ejected);
+                writer.Write(BodyState);
+                writer.Write(BodyTimer);
+                writer.Write(facing);
+                writer.Write(spawned);
+                writer.Write(xbombDone);
+                writer.Write(flameDone);
+            }
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                Ejected = reader.ReadInt32();
+                BodyState = reader.ReadInt32();
+                BodyTimer = reader.ReadSingle();
+                facing = reader.ReadSingle();
+                spawned = reader.ReadBoolean();
+                xbombDone = reader.ReadBoolean();
+                flameDone = reader.ReadBoolean();
+            }
+        }
+
         private bool spawned;
         private float shieldAlpha;
         private float facing;
@@ -944,7 +975,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     float lifeScale = (segID - 1f) / 10f;
-                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI, segID);
+                    int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)seg.Center.X, (int)seg.Center.Y, ModContent.NPCType<Gigapora_ShieldCore>(), 0, seg.whoAmI);
                     Main.npc[index].lifeMax = (int)(Main.npc[index].lifeMax * (lifeScale + 1));
                     Main.npc[index].life = Main.npc[index].lifeMax;
                     Main.npc[index].velocity = NPC.velocity;
