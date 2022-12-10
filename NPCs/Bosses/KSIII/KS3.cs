@@ -275,7 +275,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void AI()
         {
-            if (AIState > ActionState.PhysicalAttacks)
+            if (AIState > ActionState.PhysicalAttacks || AIState is ActionState.Dialogue)
                 NPC.DiscourageDespawn(120);
             Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
             Player player = Main.player[NPC.target];
