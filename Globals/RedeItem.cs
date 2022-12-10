@@ -67,6 +67,8 @@ namespace Redemption.Globals
                     crit += 6;
                 if (modPlayer.forestCore && player.dryadWard && (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot)))
                     crit += 10;
+                if (modPlayer.thornCirclet && (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot)))
+                    crit += 6;
             }
         }
         public override void ModifyWeaponDamage(Item item, Terraria.Player player, ref StatModifier damage)
