@@ -178,8 +178,9 @@ namespace Redemption.NPCs.Bosses.ADD
 
             npcLoot.Add(notExpertRule);
         }
-        public override void OnKill()
+        public override void BossLoot(ref string name, ref int potionType)
         {
+            potionType = ItemID.SuperHealingPotion;
             if (!RedeBossDowned.downedADD && !NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
             {
                 for (int p = 0; p < Main.maxPlayers; p++)
