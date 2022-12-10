@@ -62,8 +62,8 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetDefaults()
         {
             NPC.lifeMax = 337500;
-            NPC.defense = 100;
-            NPC.damage = 200;
+            NPC.defense = 80;
+            NPC.damage = 180;
             NPC.width = 62;
             NPC.height = 84;
             NPC.aiStyle = -1;
@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.5f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void HitEffect(int hitDirection, double damage)
@@ -1634,6 +1634,8 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (item.DamageType == DamageClass.Melee)
+                damage *= 2;
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (ItemLists.Celestial.Contains(item.type))
@@ -1664,6 +1666,10 @@ namespace Redemption.NPCs.Bosses.Neb
 
                 if (ProjectileLists.Shadow.Contains(projectile.type))
                     NPC.Redemption().elementDmg *= 1.1f;
+            }
+            if (projectile.Redemption().TechnicallyMelee)
+            {
+                damage *= 2;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

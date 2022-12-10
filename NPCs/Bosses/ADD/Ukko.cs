@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public int GuardPointMax;
         public override void SetDefaults()
         {
-            NPC.lifeMax = 145000;
+            NPC.lifeMax = 128000;
             NPC.damage = 120;
             NPC.defense = 35;
             NPC.knockBackResist = 0f;

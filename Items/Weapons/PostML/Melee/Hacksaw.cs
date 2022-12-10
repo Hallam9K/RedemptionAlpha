@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 130;
+            Item.damage = 160;
             Item.knockBack = 4;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
