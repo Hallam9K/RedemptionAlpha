@@ -86,7 +86,7 @@ namespace Redemption.Globals
                 {
                     if (soullessInts[1] == 0)
                     {
-                        player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 240);
+                        player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 180);
                         soullessInts[1] = 1;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
@@ -127,6 +127,8 @@ namespace Redemption.Globals
                         TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
                         gen.Generate(origin.X, origin.Y, true, true);
                     });
+                    Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<StalkerDebuff>(), 180);
+                    Main.BlackFadeIn = 100;
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity += 12;
                     SoundStyle s = CustomSounds.ElevatorImpact with { Volume = 0.3f, Pitch = -.5f };
                     if (!Main.dedServ)

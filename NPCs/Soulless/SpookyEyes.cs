@@ -103,7 +103,7 @@ namespace Redemption.NPCs.Soulless
         public override bool CheckActive() => false;
         public override void DrawBehind(int index)
         {
-            Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
+            Main.instance.DrawCacheNPCsMoonMoon.Add(index);
         }
         public override void AI()
         {
