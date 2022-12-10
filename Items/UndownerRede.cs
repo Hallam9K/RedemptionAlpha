@@ -59,6 +59,7 @@ namespace Redemption.Items
             SoullessArea.soullessBools[1] = false;
             SoullessArea.soullessBools[2] = false;
             SoullessArea.soullessInts[0] = 0;
+            SoullessArea.soullessInts[1] = 0;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);

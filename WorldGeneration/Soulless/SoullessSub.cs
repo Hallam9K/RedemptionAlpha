@@ -70,6 +70,11 @@ namespace Redemption.WorldGeneration.Soulless
         };
         public override void OnLoad()
         {
+            if (SoullessArea.soullessBools[2])
+            {
+                Main.spawnTileY = 1024;
+                Main.spawnTileX = 509;
+            }
             if (Main.netMode != NetmodeID.MultiplayerClient && SoullessArea.soullessInts[0] < 2)
             {
                 if (SoullessArea.soullessInts[0] < 1)
@@ -260,6 +265,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(220, 0, 0)] = TileID.StoneSlab,
                 [new Color(200, 0, 0)] = TileID.AccentSlab,
                 [new Color(141, 132, 172)] = TileID.Palladium,
+                [new Color(10, 12, 255)] = TileID.BubblegumBlock,
                 [Color.Black] = -1
             };
             GenUtils.InvokeOnMainThread(() =>
@@ -379,6 +385,10 @@ namespace Redemption.WorldGeneration.Soulless
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelGateClose>());
                             break;
+                        case TileID.BubblegumBlock:
+                            Main.tile[x2, y2].ClearTile();
+                            GenUtils.ObjectPlace(x2, y2, ModContent.TileType<ShadesteelPortcullis2Close>());
+                            break;
                         case TileID.SandStoneSlab:
                             Main.tile[x2, y2].ClearTile();
                             GenUtils.ObjectPlace(x2, y2, TileID.Books);
@@ -401,7 +411,11 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(291, 763, ModContent.TileType<ShadestoneMirrorTile>());
             GenUtils.ObjectPlace(327, 786, ModContent.TileType<ShadestoneMirrorTile>());
             GenUtils.ObjectPlace(285, 870, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(235, 979, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(366, 1079, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(339, 1060, ModContent.TileType<ShadestoneMirrorTile>());
             GenUtils.ObjectPlace(540, 843, ModContent.TileType<ShadestoneToiletTile>());
+            GenUtils.ObjectPlace(208, 998, ModContent.TileType<ShadestoneCrateTile>());
 
             GenUtils.ObjectPlace(352, 813, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(289, 870, ModContent.TileType<SoullessRemainsTile>());
@@ -409,6 +423,10 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(550, 835, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(398, 794, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(505, 851, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(331, 1085, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(418, 1117, ModContent.TileType<SoullessRemainsTile2>());
+
+            GenUtils.ObjectPlace(313, 1004, ModContent.TileType<StalkerGateTile>());
             //Chests
             SpookChest(265, 854);
             SpookChest(254, 880);
@@ -419,6 +437,10 @@ namespace Redemption.WorldGeneration.Soulless
             SpookChest(559, 834);
             SpookChest(658, 799);
             SpookChest(462, 841);
+            SpookChest(206, 995);
+            SpookChest(206, 998);
+            SpookChest(274, 1054);
+            SpookChest(321, 1060);
 
             for (int i = 0; i < 1800; i++)
             {

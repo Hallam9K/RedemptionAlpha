@@ -20,6 +20,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Furniture.Shade;
 
 namespace Redemption.Globals
 {

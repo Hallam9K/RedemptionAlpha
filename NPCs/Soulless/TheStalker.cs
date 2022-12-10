@@ -33,6 +33,11 @@ namespace Redemption.NPCs.Soulless
             NPC.knockBackResist = 0;
             NPC.aiStyle = -1;
         }
+        public override void AI()
+        {
+            if (SoullessArea.soullessInts[1] > 1)
+                NPC.active = false;
+        }
         public override bool CheckActive() => false;
     }
 }

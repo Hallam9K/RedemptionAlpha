@@ -12,7 +12,6 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Tiles.Natural
 {
@@ -108,6 +107,38 @@ namespace Redemption.Tiles.Natural
         }
         public override bool CanExplode(int i, int j) => false;
     }
+    public class SoullessRemainsTile2 : SoullessRemainsTile
+    {
+        public override string Texture => "Redemption/Tiles/Natural/SoullessRemainsTile";
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 1;
+            if (Main.tile[left, top].TileFrameX == 0)
+                player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<PrisonGateKey2>());
+
+            for (int x = left; x < left + 3; x++)
+            {
+                for (int y = top; y < top + 1; y++)
+                {
+                    if (Main.tile[x, y].TileFrameX < 54)
+                        Main.tile[x, y].TileFrameX += 54;
+                }
+            }
+            return true;
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 1;
+            if (Main.tile[left, top].TileFrameX == 0)
+            {
+                Player player = Main.LocalPlayer;
+                player.QuickSpawnItem(new EntitySource_TileBreak(i, j), ModContent.ItemType<PrisonGateKey2>());
+            }
+        }
+    }
     public class SoullessRemains : PlaceholderTile
     {
         public override string Texture => "Redemption/Placeholder";
@@ -121,6 +152,21 @@ namespace Redemption.Tiles.Natural
         {
             base.SetDefaults();
             Item.createTile = ModContent.TileType<SoullessRemainsTile>();
+        }
+    }
+    public class SoullessRemains2 : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Soulless Remains (Reinforced Gate Key)");
+            Tooltip.SetDefault("Gives Prison Gate Key");
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<SoullessRemainsTile2>();
         }
     }
 }

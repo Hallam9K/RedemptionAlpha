@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Biomes;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -41,6 +42,76 @@ namespace Redemption.NPCs.Soulless
                 NPC.TargetClosest();
 
             if (NPC.DistanceSQ(player.Center) < 700 * 700)
+                NPC.ai[1] = 2;
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            switch (NPC.ai[1])
+            {
+                case 0:
+                    if (++NPC.frameCounter >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 4 * frameHeight)
+                        {
+                            NPC.frame.Y = 4 * frameHeight;
+                            if (Main.rand.NextBool(60))
+                                NPC.ai[1] = 1;
+                        }
+                    }
+                    break;
+                case 1:
+                    if (++NPC.frameCounter >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 7 * frameHeight)
+                        {
+                            NPC.frame.Y = 4 * frameHeight;
+                            NPC.ai[1] = 0;
+                        }
+                    }
+                    break;
+                case 2:
+                    if (NPC.frame.Y < 7 * frameHeight)
+                        NPC.frame.Y = 7 * frameHeight;
+
+                    if (++NPC.frameCounter >= 5)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 11 * frameHeight)
+                        {
+                            NPC.alpha = 255;
+                            NPC.active = false;
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+    public class SpookyEyes2 : SpookyEyes
+    {
+        public override string Texture => "Redemption/NPCs/Soulless/SpookyEyes";
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            NPC.hide = true;
+            NPC.behindTiles = true;
+        }
+        public override bool CheckActive() => false;
+        public override void DrawBehind(int index)
+        {
+            Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
+        }
+        public override void AI()
+        {
+            Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
+
+            if (SoullessArea.soullessInts[1] > 1)
                 NPC.ai[1] = 2;
         }
         public override void FindFrame(int frameHeight)

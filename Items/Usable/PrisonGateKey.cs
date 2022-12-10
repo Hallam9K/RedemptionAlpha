@@ -33,4 +33,31 @@ namespace Redemption.Items.Usable
             return true;
         }
     }
+    public class PrisonGateKey2 : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Prison Gate Key");
+            Tooltip.SetDefault("Unlocks reinforced gates in the Soulless Prison");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+        public override void SetDefaults()
+        {
+            Item.width = 18;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 30;
+        }
+        public override bool OnPickup(Player player)
+        {
+            if (SoullessArea.soullessInts[1] > 1)
+                return true;
+
+            SoullessArea.soullessInts[1] = 2;
+
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
+            return true;
+        }
+    }
 }

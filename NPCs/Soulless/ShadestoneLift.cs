@@ -305,6 +305,13 @@ namespace Redemption.NPCs.Soulless
                         if (NPC.position.Y >= NPC.ai[2] * 16)
                         {
                             SoullessArea.soullessBools[2] = true;
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                NPC ded = Main.npc[i];
+                                if (!ded.active || !NPCLists.Soulless.Contains(ded.type) || ded.type == ModContent.NPCType<TwinfaceSoulless>())
+                                    continue;
+                                ded.active = false;
+                            }
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
 
