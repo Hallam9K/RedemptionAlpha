@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.WorldGeneration.Soulless;
 using ReLogic.Content;
@@ -42,7 +43,10 @@ namespace Redemption.Biomes
             SoullessArea.Active = true;
             player.RedemptionAbility().SpiritwalkerActive = false;
             Lighting.AddLight(player.Center, 1.5f, 1.5f, 1.5f);
-            player.maxFallSpeed += 4;
+            if (player.HasBuff<StunnedDebuff>())
+                player.maxFallSpeed += 4;
+            else
+                player.maxFallSpeed += 2;
         }
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 

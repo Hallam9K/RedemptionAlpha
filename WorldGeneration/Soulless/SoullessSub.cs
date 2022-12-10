@@ -32,6 +32,7 @@ using Redemption.Items.Usable.Potions;
 using Terraria.GameInput;
 using Terraria.UI.Chat;
 using Terraria.GameContent;
+using Redemption.Items.Weapons.PostML.Ranged;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -477,11 +478,11 @@ namespace Redemption.WorldGeneration.Soulless
                 chest.item[slot].SetDefaults(ModContent.ItemType<Shadesoul>());
                 chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
 
-                //if (WorldGen.genRand.NextBool(2))
-                //{
-                //    chest.item[slot].SetDefaults(ModContent.ItemType<ShadeKnife>());
-                //    chest.item[slot++].stack = WorldGen.genRand.Next(100, 600);
-                //}
+                if (WorldGen.genRand.NextBool(2))
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<VesselDagger>());
+                    chest.item[slot++].stack = WorldGen.genRand.Next(200, 301);
+                }
                 if (RedeHelper.GenChance(.66f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
