@@ -122,7 +122,7 @@ namespace Redemption.Projectiles.Magic
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * (LaserLength - 32), 48 * LaserScale, ref point))
+                Projectile.Center + unit * LaserLength, 48 * LaserScale, ref point))
             {
                 return true;
             }

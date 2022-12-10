@@ -34,7 +34,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().ParryBlacklist = true;
         }
-        public override bool? CanHitNPC(NPC target) => Projectile.frame >= 12 && Projectile.frame < 15 ? null : false;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame >= 12 && Projectile.frame < 15 ? null : false;
         private int npcType;
         public override void AI()
         {
@@ -73,7 +73,7 @@ namespace Redemption.Projectiles.Ranged
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.active || target.dontTakeDamage)
+                    if (!target.active || target.friendly || target.dontTakeDamage)
                         continue;
 
                     if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))

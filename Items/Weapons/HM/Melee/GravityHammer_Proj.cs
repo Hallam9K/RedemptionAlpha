@@ -92,9 +92,10 @@ namespace Redemption.Items.Weapons.HM.Melee
                     }
                     if (Projectile.frame >= 8 && Projectile.frame <= 10 && SlamOrigin == Vector2.Zero)
                     {
+                        tilePosY = BaseWorldGen.GetFirstTileFloor((int)(player.Center.X / 16), (int)(player.Center.Y / 16));
+                        dist = MathHelper.Clamp(dist, 0, 500);
                         player.velocity.Y = 20;
                         player.position.Y += dist / 10;
-                        dist = MathHelper.Clamp(dist, 0, 500);
                         if (player.position.Y >= tilePosY * 16 - 32)
                             player.position.Y = tilePosY * 16 - 32;
                         Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();

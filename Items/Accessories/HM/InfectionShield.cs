@@ -20,7 +20,7 @@ namespace Redemption.Items.Accessories.HM
         {
             DisplayName.SetDefault("Infected Thornshield");
             Tooltip.SetDefault("Double tap a direction to dash"
-                + "\n8% increased melee critical strike chance"
+                + "\n4% increased melee critical strike chance"
                 + "\nInflicts Infection upon dashing into an enemy"
                 + "\nReleases acid-like sparks as you move");
             SacrificeTotal = 1;
@@ -65,7 +65,7 @@ namespace Redemption.Items.Accessories.HM
                 }
             }
             player.GetModPlayer<ThornshieldDashPlayer>().DashAccessoryEquipped = true;
-            player.GetCritChance(DamageClass.Melee) += 8;
+            player.GetCritChance(DamageClass.Melee) += 4;
         }
     }
     public class ThornshieldDashPlayer : ModPlayer
