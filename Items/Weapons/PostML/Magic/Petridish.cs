@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.width = 24;
             Item.height = 20;
             Item.useTime = 23;
-            Item.useAnimation = 25;
+            Item.useAnimation = 23;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 18;
