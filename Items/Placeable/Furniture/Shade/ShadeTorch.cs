@@ -13,7 +13,8 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            ItemID.Sets.Torches[Type] = true;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
@@ -58,6 +59,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 
         public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)
         {
+            dryTorch = true;
             wetTorch = true;
         }
 

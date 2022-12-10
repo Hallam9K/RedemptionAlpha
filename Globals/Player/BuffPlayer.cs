@@ -302,6 +302,16 @@ namespace Redemption.Globals.Player
             }
             if (Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>()))
                 Player.wingTime = Player.wingTimeMax;
+            if (Player.Redemption().stalkerSilence)
+            {
+                if (Player.mount.CanFly())
+                    Player.mount.Dismount(Player);
+                Player.wings = 0;
+                Player.wingsLogic = 0;
+                if (!ItemID.Sets.Torches[Player.HeldItem.type])
+                    Player.noBuilding = true;
+                Player.controlHook = false;
+            }
         }
         public override void PostUpdateEquips()
         {

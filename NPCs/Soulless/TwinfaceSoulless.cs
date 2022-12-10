@@ -475,6 +475,8 @@ namespace Redemption.NPCs.Soulless
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {
+            for (int i = 0; i < 50; i++)
+                Main.BestiaryTracker.Kills.RegisterKill(NPC);
             for (int i = 0; i < 5; i++)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.8f));
 

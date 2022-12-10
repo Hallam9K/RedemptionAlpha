@@ -304,6 +304,9 @@ namespace Redemption.NPCs.Soulless
                         }
                         if (NPC.position.Y >= NPC.ai[2] * 16)
                         {
+                            Main.spawnTileY = 1024;
+                            Main.spawnTileX = 509;
+
                             SoullessArea.soullessBools[2] = true;
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {

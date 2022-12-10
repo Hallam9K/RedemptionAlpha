@@ -12,6 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
+			ItemID.Sets.Torches[Type] = true;
 			SacrificeTotal = 100;
 		}
 

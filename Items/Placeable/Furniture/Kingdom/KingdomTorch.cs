@@ -12,7 +12,8 @@ namespace Redemption.Items.Placeable.Furniture.Kingdom
     {
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            ItemID.Sets.Torches[Type] = true;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
