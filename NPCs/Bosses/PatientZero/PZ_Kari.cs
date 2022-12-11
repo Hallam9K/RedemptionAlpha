@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using System.IO;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -262,6 +263,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
+            if (projectile.type == ModContent.ProjectileType<LightOrbRay_Proj>() || projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
+                damage /= 2;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)

@@ -74,7 +74,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.width = 92;
             NPC.height = 164;
             NPC.damage = 100;
-            NPC.lifeMax = 125000;
+            NPC.lifeMax = 160000;
             NPC.knockBackResist = 0;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.lavaImmune = true;
             NPC.boss = true;
             NPC.netAlways = true;
-            NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
+            NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 3;
             NPC.BossBar = ModContent.GetInstance<MACEHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusicMP");

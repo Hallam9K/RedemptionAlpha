@@ -29,6 +29,7 @@ using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -155,6 +156,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
+            if (projectile.type == ModContent.ProjectileType<LightOrbRay_Proj>() || projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
+                damage /= 2;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
