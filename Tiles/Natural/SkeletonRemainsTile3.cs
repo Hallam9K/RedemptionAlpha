@@ -74,44 +74,53 @@ namespace Redemption.Tiles.Natural
         {
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
-            if (!player.RedemptionAbility().Spiritwalker)
-            {
-                player.cursorItemIconEnabled = true;
-                player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
-            }
-            else
-            {
-                player.cursorItemIconEnabled = false;
-                player.cursorItemIconID = 0;
-            }
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
         }
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>() && !player.RedemptionAbility().Spiritwalker)
+            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritwalkerSoul>()))
+                if (!player.RedemptionAbility().Spiritwalker)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (!NPC.AnyNPCs(ModContent.NPCType<SpiritwalkerSoul>()))
                     {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<SpiritwalkerSoul>());
-                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                    }
-                    else
-                    {
-                        if (Main.netMode == NetmodeID.SinglePlayer)
-                            return false;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<SpiritwalkerSoul>());
+                            SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
+                        }
+                        else
+                        {
+                            if (Main.netMode == NetmodeID.SinglePlayer)
+                                return false;
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritwalkerSoul>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
-                        SoundEngine.PlaySound(SoundID.Item74, player.position);
+                            Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritwalkerSoul>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
+                            SoundEngine.PlaySound(SoundID.Item74, player.position);
+                        }
                     }
-                    for (int n = 0; n < 25; n++)
+                }
+                else
+                {
+                    if (!NPC.AnyNPCs(ModContent.NPCType<SpiritwalkerSoul>()) && !NPC.AnyNPCs(ModContent.NPCType<SpiritWalkerMan>()))
                     {
-                        int dustIndex = Dust.NewDust(new Vector2(i * 16, (j + 1) * 16), 2, 2, DustID.DungeonSpirit, 0f, 0f, 100, default, 2);
-                        Main.dust[dustIndex].velocity *= 2f;
-                        Main.dust[dustIndex].noGravity = true;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<SpiritWalkerMan>());
+                            SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
+                            Main.npc[index1].velocity.Y -= 4;
+                            Main.npc[index1].netUpdate2 = true;
+                        }
+                        else
+                        {
+                            if (Main.netMode == NetmodeID.SinglePlayer)
+                                return false;
+
+                            Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritWalkerMan>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
+                            SoundEngine.PlaySound(SoundID.Item74, player.position);
+                        }
                     }
-                    DustHelper.DrawDustImage(new Vector2(i * 16, (j + 1) * 16), DustID.DungeonSpirit, 0.5f, "Redemption/Effects/DustImages/DeadRingerDust", 2, true, 0);
                 }
             }
             return true;

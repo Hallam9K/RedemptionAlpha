@@ -277,7 +277,29 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Patient Zero
-                bossChecklist.Call("AddBoss", mod, "Patient Zero", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => true,
+                bossChecklist.Call("AddBoss", mod, "???", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => !RedeBossDowned.downedPZ,
+                    new List<int>
+                    {
+                        ModContent.ItemType<PZRelic>(),
+                        ModContent.ItemType<Keycard2>(),
+                        ModContent.ItemType<NanoPickaxe>(),
+                        ModContent.ItemType<Electronade>(),
+                        ModContent.ItemType<PZTrophy>(),
+                        ModContent.ItemType<PZMask>(),
+                        ModContent.ItemType<FloppyDisk6>(),
+                        ModContent.ItemType<FloppyDisk6_1>(),
+                        ModContent.ItemType<FloppyDisk7>(),
+                        ModContent.ItemType<FloppyDisk7_1>(),
+                        ModContent.ItemType<PZMusicBox>()
+                    },
+                    ModContent.ItemType<Keycard>(), "Use a [i:" + ModContent.ItemType<Keycard>() + "] to access further sections of the laboratory. Beware what awaits beyond.", null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
+                bossChecklist.Call("AddBoss", mod, "Patient Zero", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => RedeBossDowned.downedPZ,
                     new List<int>
                     {
                         ModContent.ItemType<PZRelic>(),
@@ -302,7 +324,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Ancient Deity Duo
-                bossChecklist.Call("AddBoss", mod, "Eaglecrest Golem Rematch", ModContent.NPCType<EaglecrestGolem2>(), 20f, () => RedeBossDowned.downedADD, () => RedeBossDowned.ADDDeath == 0, null, ModContent.ItemType<GolemEye>(), "Encase the [i:" + ModContent.ItemType<GolemEye>() + "] within the stones of its origins, and it's true power will present itself.", null,
+                bossChecklist.Call("AddBoss", mod, "Eaglecrest Golem Rematch", ModContent.NPCType<EaglecrestGolem2>(), 20f, () => RedeBossDowned.downedADD, () => RedeBossDowned.downedEaglecrestGolem && RedeBossDowned.ADDDeath == 0, null, ModContent.ItemType<GolemEye>(), "Place down and encase the [i:" + ModContent.ItemType<GolemEye>() + "] within the stones of its origins, and it's true power will present itself.", null,
                 (SpriteBatch sb, Rectangle rect, Color color) =>
                 {
                     Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;

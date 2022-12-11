@@ -31,7 +31,9 @@ namespace Redemption.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 200;
+            Projectile.usesLocalNPCImmunity = true;
         }
+
         public override void Kill(int timeLeft)
         {
             if (fakeTimer > 0)

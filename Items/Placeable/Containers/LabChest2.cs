@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable.Containers
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Special Laboratory Chest");
+            DisplayName.SetDefault("Special Laboratory Crate");
 			SacrificeTotal = 1;
 		}
 
