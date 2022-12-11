@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
-            if (projectile.type == ModContent.ProjectileType<LightOrbRay_Proj>() || projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
+            if (projectile.type == ModContent.ProjectileType<LightOrbRay_Proj>())
                 damage /= 2;
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

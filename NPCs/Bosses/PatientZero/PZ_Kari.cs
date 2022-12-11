@@ -263,7 +263,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
-            if (projectile.type == ModContent.ProjectileType<LightOrbRay_Proj>() || projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
+            if (projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
                 damage /= 2;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
