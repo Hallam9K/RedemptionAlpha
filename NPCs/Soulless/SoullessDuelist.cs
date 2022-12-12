@@ -567,7 +567,7 @@ namespace Redemption.NPCs.Soulless
                 new FlavorTextBestiaryInfoElement(
                     "Depression in a human form. These half-spirits are formed by Willpower so meagre it caused the soul to invert itself, creating a shadesoul. It is said the masks they wear contain their potent sorrow."),
                 new SoullessBestiaryInfoElement(
-                    "Once slain in Epidotra, they are mysteriously sent to the Soulless Caverns, where they acuminate and try to survive in a competition of growth. Hopefully, someone is keeping them in check.")
+                    "Once slain in Epidotra, they are mysteriously sent to the Soulless Caverns, where they accumulate and try to survive in a competition of growth. Hopefully, someone is keeping them in check.")
             });
         }
     }

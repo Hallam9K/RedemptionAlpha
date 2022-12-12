@@ -502,7 +502,7 @@ namespace Redemption.NPCs.Soulless
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    "A fearful soulless infected by the workings of an entity incomprehensible; one of such hunger for misery that lest it be combatted, its influcence may spell the end-times for all where happiness thrives.")
+                    "A fearful soulless infected by the workings of an entity incomprehensible; one of such hunger for misery that lest it be combatted, its influence may spell the end-times for all where happiness thrives.")
             });
         }
     }

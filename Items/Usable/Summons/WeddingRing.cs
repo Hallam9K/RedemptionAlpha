@@ -8,6 +8,7 @@ using Redemption.Globals;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Biomes;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -40,7 +41,7 @@ namespace Redemption.Items.Usable.Summons
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Keeper>()) && !NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) && !NPC.AnyNPCs(ModContent.NPCType<KeeperSpirit>());
+			return (!Main.dayTime || (player.InModBiome<SoullessBiome>() && RedeBossDowned.keeperSaved)) && !NPC.AnyNPCs(ModContent.NPCType<Keeper>()) && !NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) && !NPC.AnyNPCs(ModContent.NPCType<KeeperSpirit>()) && !NPC.AnyNPCs(ModContent.NPCType<Keeper_Soulless>());
 		}
 
 		public override bool? UseItem(Player player)
