@@ -23,7 +23,7 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("Converts all soulless enemies on screen into a normal lost soul"
                 + "\n1 minute cooldown\n" +
                 "'It's blank...'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

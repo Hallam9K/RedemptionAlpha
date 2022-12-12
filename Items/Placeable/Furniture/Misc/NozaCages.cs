@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Small Bastion Cage");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -38,7 +38,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bastion Cage");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{
@@ -64,7 +64,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Large Bastion Cage");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{

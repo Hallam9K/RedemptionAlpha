@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Unlocks gates in the Soulless Prison");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
@@ -39,7 +39,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Prison Gate Key");
             Tooltip.SetDefault("Unlocks reinforced gates in the Soulless Prison");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

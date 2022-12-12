@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Tooltip.SetDefault("Hold left-click to summon Shadesouls that float around the player" +
                 "\nRelease left-click to make them fly towards cursor point at high speeds");
             Item.staff[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

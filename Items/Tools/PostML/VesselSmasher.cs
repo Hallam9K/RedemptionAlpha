@@ -17,7 +17,7 @@ namespace Redemption.Items.Tools.PostML
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Smashing an enemy will make it take 15% more damage for 5 seconds");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

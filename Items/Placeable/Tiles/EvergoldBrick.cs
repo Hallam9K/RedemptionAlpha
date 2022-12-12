@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
         public override void SetDefaults()
         {

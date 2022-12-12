@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Tooltip.SetDefault("Inflicts soulless\n" +
                 "Slashes up and down, hold down left-click to follow up with a rapid flurry of stabs");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

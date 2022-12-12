@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable.Potions
                 "\nElectrifies nearby enemies");
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
 
         public override void SetDefaults()

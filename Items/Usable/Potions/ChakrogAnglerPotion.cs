@@ -16,7 +16,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("You emit bright light while submerged" +
                 "\nClears the Soulless Cavern's waters" +
                 "\nIncreased damage while submerged");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
 
         public override void SetDefaults()

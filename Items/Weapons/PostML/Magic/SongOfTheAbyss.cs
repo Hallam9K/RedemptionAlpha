@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             DisplayName.SetDefault("Song of the Abyss");
             Tooltip.SetDefault("Plays a sorrowful tune\n" +
                 "'Cry a requiem for sunlight'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

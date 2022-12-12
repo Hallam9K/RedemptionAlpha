@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hanging Bastion Cage");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()
 		{

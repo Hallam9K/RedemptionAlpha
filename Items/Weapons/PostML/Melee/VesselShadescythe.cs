@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Tooltip.SetDefault("Inflicts soulless" +
                 "\nMelee swings deal double damage" +
                 "\nRight-clicking is a normal swing"); // TODO: Make similar to Blind Justice
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

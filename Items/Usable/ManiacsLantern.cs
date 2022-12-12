@@ -12,7 +12,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Maniac's Lantern");
             Tooltip.SetDefault("When held, creates an invisible force that repels soulless enemies away from you");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

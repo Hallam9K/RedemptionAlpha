@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Tooltip.SetDefault("Hitting an enemy once per use will cause echos to appear and fight for you" +
                 "\nThe cage deals increased damage to enemies with less knockback resistance");
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

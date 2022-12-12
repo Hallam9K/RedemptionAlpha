@@ -14,7 +14,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Data Log #466110");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

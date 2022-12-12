@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable.Plants
 	{
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            SacrificeTotal = 25;
         }
         public override void SetDefaults()
 		{

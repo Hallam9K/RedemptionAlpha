@@ -19,7 +19,7 @@ namespace Redemption.Items.Usable
             Tooltip.SetDefault("Temporarily creates a large Celestine Dreamsong aura around the location of use"
                 + "\nPlayers in the aura will see better in the Soulless Caverns\n" +
                 "'Have a little faith'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

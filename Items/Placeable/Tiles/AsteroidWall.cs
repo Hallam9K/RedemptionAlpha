@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
+			SacrificeTotal = 400;
 		}
 		public override void SetDefaults()
 		{

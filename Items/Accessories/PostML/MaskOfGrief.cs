@@ -16,7 +16,7 @@ namespace Redemption.Items.Accessories.PostML
             Tooltip.SetDefault("Decreases enemy aggro while in Soulless Caverns"
                 + "\n10% increased damage while in the Soulless Cavern\n" +
                 "Makes Shadow elemental weapons more effective against Soulless targets");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{

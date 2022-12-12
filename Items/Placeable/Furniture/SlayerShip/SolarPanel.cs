@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Solar Panels");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{

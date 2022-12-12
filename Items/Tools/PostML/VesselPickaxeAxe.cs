@@ -20,7 +20,7 @@ namespace Redemption.Items.Tools.PostML
         {
             Tooltip.SetDefault("Hitting an enemy will make them bleed heavily for a long period of time\n" +
                 "Can mine Vessel Fragments");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

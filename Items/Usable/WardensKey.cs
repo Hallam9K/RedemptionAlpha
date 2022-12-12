@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Warden's Key");
             Tooltip.SetDefault("Used to open a gate in the temple");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
         {

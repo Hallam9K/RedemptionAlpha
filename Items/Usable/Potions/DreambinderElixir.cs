@@ -15,7 +15,7 @@ namespace Redemption.Items.Usable.Potions
             Tooltip.SetDefault("Increases length of invincibility after taking damage" +
                 "\nNot consumable\n" +
                 "'Remembering the warmth of a much brighter day'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.Items.Usable.Potions
         {
             DisplayName.SetDefault("Shadevision Potion");
             Tooltip.SetDefault("Clears the haze of the Soulless Caverns");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            SacrificeTotal = 20;
         }
 
         public override void SetDefaults()
