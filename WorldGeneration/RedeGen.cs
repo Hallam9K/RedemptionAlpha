@@ -117,10 +117,10 @@ namespace Redemption.WorldGeneration
                     else if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue(status), Color.LightBlue);
 
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.005f); k++)
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.007f); k++)
                     {
                         int i2 = WorldGen.genRand.Next(200, Main.maxTilesX - 200);
-                        int j2 = WorldGen.genRand.Next((int)WorldGen.rockLayer, (int)(Main.maxTilesY * .7f));
+                        int j2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .25f), (int)(Main.maxTilesY * .7f));
                         int tileUp = Framing.GetTileSafely(i2, j2 - 1).TileType;
                         int tileDown = Framing.GetTileSafely(i2, j2 + 1).TileType;
                         int tileLeft = Framing.GetTileSafely(i2 - 1, j2).TileType;

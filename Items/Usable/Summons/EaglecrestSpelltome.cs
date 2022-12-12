@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Microsoft.Xna.Framework;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -34,7 +36,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem_Sleep>());
+            return !SubworldSystem.IsActive<SoullessSub>() && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem_Sleep>());
         }
         public override bool? UseItem(Player player)
         {
