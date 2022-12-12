@@ -3,6 +3,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Materials.PostML;
+using Redemption.WorldGeneration.Soulless;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -106,6 +107,8 @@ namespace Redemption.NPCs.PostML
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 15);
         }
+        public override bool? CanBeHitByItem(Player player, Item item) => RedeHelper.CanHitSpiritCheck(player, item);
+        public override bool? CanBeHitByProjectile(Projectile projectile) => RedeHelper.CanHitSpiritCheck(projectile);
         public override void OnKill()
         {
             int dropAmount = (int)(Scale / 2 * 10);
