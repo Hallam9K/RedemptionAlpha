@@ -1245,7 +1245,7 @@ namespace Redemption.WorldGeneration
                                 origin.X++;
                                 origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 100 && origin.X < Main.spawnTileX + 100)
+                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
                                     inSpawn = true;
                                 else
                                     attempts++;
@@ -1259,7 +1259,7 @@ namespace Redemption.WorldGeneration
                                 origin.X--;
                                 origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 100 && origin.X < Main.spawnTileX + 100)
+                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
                                     inSpawn = true;
                                 else
                                     attempts++;
@@ -1269,7 +1269,7 @@ namespace Redemption.WorldGeneration
                                 origin.Y = GetTileFloorIgnoreTree(origin.X, (int)Main.worldSurface - 180, true);
                                 origin.X -= 60;
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 100 && origin.X < Main.spawnTileX + 100)
+                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
                                     inSpawn = true;
                                 else
                                     attempts++;
