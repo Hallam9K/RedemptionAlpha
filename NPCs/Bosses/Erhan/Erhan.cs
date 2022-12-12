@@ -23,6 +23,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.UI;
+using Redemption.Projectiles.Misc;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -1035,6 +1036,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     NPC.dontTakeDamage = false;
                                     NPC.chaseable = false;
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
                                     if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
@@ -1131,7 +1133,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
                 }
-
                 NPC.dontTakeDamage = true;
                 NPC.velocity *= 0;
                 NPC.alpha = 0;
