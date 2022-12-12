@@ -19,6 +19,7 @@ namespace Redemption.Tiles.Natural
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
+            Main.tileSpelunker[Type] = true;
 
             // Attaches to the ground
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);

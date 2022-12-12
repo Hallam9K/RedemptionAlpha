@@ -11,6 +11,8 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.Globals;
 using Terraria.Audio;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -43,7 +45,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>());
+            return !SubworldSystem.IsActive<SoullessSub>() && !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>());
         }
         public override bool AltFunctionUse(Player player)
         {

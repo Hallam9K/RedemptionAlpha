@@ -6,6 +6,8 @@ using Redemption.Globals;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -52,7 +54,7 @@ namespace Redemption.Items.Usable.Summons
             else
                 Item.UseSound = SoundID.Item44;
 
-            return player.altFunctionUse == 2 || (!Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>()) && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()) && !NPC.AnyNPCs(ModContent.NPCType<Porakone>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()));
+            return player.altFunctionUse == 2 || (!SubworldSystem.IsActive<SoullessSub>() && !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>()) && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()) && !NPC.AnyNPCs(ModContent.NPCType<Porakone>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()));
         }
         private int Choice;
         public override bool? UseItem(Player player)
