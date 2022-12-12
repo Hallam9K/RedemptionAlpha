@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using ReLogic.Utilities;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Critters
 {
@@ -197,6 +198,14 @@ namespace Redemption.NPCs.Critters
                     break;
             }
             CustomSounds.UpdateLoopingSound(ref loop, CustomSounds.FlyBuzz with { MaxInstances = 3 }, loopVolume, 0, NPC.position);
+            if (NPC.wet)
+            {
+                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.position);
+                loopVolume = 0;
+                CustomSounds.UpdateLoopingSound(ref loop, CustomSounds.FlyBuzz with { MaxInstances = 3 }, loopVolume, 0, NPC.position);
+                NPC.active = false;
+            }
         }
 
         public void CheckNPCHit()

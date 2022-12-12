@@ -46,7 +46,7 @@ namespace Redemption.Items.Materials.PreHM
             TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.White };
             if (NPC.downedMoonlord)
             {
-                text = "Encase the eye within the stones of its origins, and it's true power will present itself";
+                text = "Place down and encase the eye within the stones of its origins, and it's true power will present itself";
                 line = new(Mod, "text", text) { OverrideColor = Color.LightGoldenrodYellow };
             }
             tooltips.Insert(2, line);

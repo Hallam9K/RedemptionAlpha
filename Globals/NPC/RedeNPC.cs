@@ -285,6 +285,9 @@ namespace Redemption.Globals.NPC
 
                 elementDmg = (int)Math.Round(elementDmg * 100);
                 elementDmg /= 100;
+                if (npc.boss)
+                    elementDmg = MathHelper.Clamp(elementDmg, .75f, 1.25f);
+
                 if (elementDmg >= 1.1f)
                     CombatText.NewText(npc.getRect(), Color.CornflowerBlue, elementDmg + "x", true, true);
                 else if (elementDmg <= 0.9f)
@@ -491,6 +494,9 @@ namespace Redemption.Globals.NPC
 
                 elementDmg = (int)Math.Round(elementDmg * 100);
                 elementDmg /= 100;
+                if (npc.boss)
+                    elementDmg = MathHelper.Clamp(elementDmg, .75f, 1.25f);
+
                 if (elementDmg >= 1.1f)
                     CombatText.NewText(npc.getRect(), Color.CornflowerBlue, elementDmg + "x", true, true);
                 else if (elementDmg <= 0.9f)

@@ -30,6 +30,13 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
+            Projectile.usesLocalNPCImmunity = true;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            FakeKill();
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
         }
 
         private readonly int NUMPOINTS = 20;
@@ -100,7 +107,6 @@ namespace Redemption.Projectiles.Melee
             if (fakeTimer >= 60)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => FakeKill();
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.timeLeft <= 150 ? null : false;
 
         public override bool PreDraw(ref Color lightColor)

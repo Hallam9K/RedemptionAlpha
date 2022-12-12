@@ -32,6 +32,13 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 200;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            FakeKill();
+            Projectile.localNPCImmunity[target.whoAmI] = 20;
+            target.immune[Projectile.owner] = 0;
         }
 
         private readonly int NUMPOINTS = 20;
@@ -127,7 +134,6 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer >= 60)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => FakeKill();
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             FakeKill();

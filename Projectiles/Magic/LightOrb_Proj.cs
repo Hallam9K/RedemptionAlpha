@@ -52,7 +52,7 @@ namespace Redemption.Projectiles.Magic
                     Projectile.localAI[1] = 0;
             }
             NPC target = null;
-            if (RedeHelper.ClosestNPC(ref target, 500, Projectile.Center, true))
+            if (RedeHelper.ClosestNPC(ref target, 500, Projectile.Center))
             {
                 if (Projectile.localAI[0]++ >= 20 && Main.myPlayer == Projectile.owner)
                 {
