@@ -47,6 +47,7 @@ using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
+using Terraria.ModLoader.Utilities;
 
 namespace Redemption.Globals.NPC
 {
@@ -278,7 +279,7 @@ namespace Redemption.Globals.NPC
                     if (ItemLists.Psychic.Contains(item.type))
                         elementDmg *= 1.75f;
 
-                    if (ItemLists.Shadow.Contains(item.type))
+                    if (ItemLists.Shadow.Contains(item.type) && !player.RedemptionPlayerBuff().maskOfGrief)
                         elementDmg *= 0.5f;
                 }
 
@@ -478,13 +479,13 @@ namespace Redemption.Globals.NPC
                 {
                     if (ProjectileLists.Blood.Contains(projectile.type))
                         elementDmg *= 0.75f;
-                    if (ProjectileLists.Celestial.Contains(projectile.type) || ItemLists.Holy.Contains(projectile.type))
+                    if (ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Holy.Contains(projectile.type))
                         elementDmg *= 1.25f;
 
                     if (ProjectileLists.Psychic.Contains(projectile.type))
                         elementDmg *= 1.75f;
 
-                    if (ProjectileLists.Shadow.Contains(projectile.type))
+                    if (ProjectileLists.Shadow.Contains(projectile.type) && !Main.player[projectile.owner].RedemptionPlayerBuff().maskOfGrief)
                         elementDmg *= 0.5f;
                 }
 
@@ -720,7 +721,11 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
             }
-
+            if (spawnInfo.Player.ZoneRockLayerHeight && Terraria.NPC.downedMoonlord)
+            {
+                pool.Add(ModContent.NPCType<SoullessWanderer>(), .1f);
+                pool.Add(ModContent.NPCType<SoullessDuelist>(), .1f);
+            }
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();

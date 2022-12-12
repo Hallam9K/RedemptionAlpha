@@ -21,6 +21,10 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;
 using System;
+using Redemption.Items.Usable;
+using Terraria.UI;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -66,6 +70,7 @@ namespace Redemption.NPCs.Soulless
             NPC.knockBackResist = 0.4f;
             NPC.alpha = 255;
             NPC.aiStyle = -1;
+            NPC.lavaImmune = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
             // TODO: Banner for soulless wanderer
             //Banner = NPC.type;
@@ -553,13 +558,16 @@ namespace Redemption.NPCs.Soulless
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<Shadesoul>(), 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new SoullessCondition(), ModContent.ItemType<ShadesoulGateway>(), 10));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    ".")
+                    "Depression in a human form. These half-spirits are formed by Willpower so meagre it caused the soul to invert itself, creating a shadesoul. It is said the masks they wear contain their potent sorrow."),
+                new SoullessBestiaryInfoElement(
+                    "Once slain in Epidotra, they are mysteriously sent to the Soulless Caverns, where they acuminate and try to survive in a competition of growth. Hopefully, someone is keeping them in check.")
             });
         }
     }
@@ -628,6 +636,19 @@ namespace Redemption.NPCs.Soulless
                 force.Y += (float)(Math.Sin(time * 1f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
             }
             return force;
+        }
+    }
+    public class SoullessBestiaryInfoElement : FlavorTextBestiaryInfoElement, IBestiaryInfoElement
+    {
+        public SoullessBestiaryInfoElement(string languageKey) : base(languageKey)
+        {
+        }
+
+        public new UIElement ProvideUIElement(BestiaryUICollectionInfo info)
+        {
+            if (SubworldSystem.IsActive<SoullessSub>())
+                return base.ProvideUIElement(info);
+            return null;
         }
     }
 }

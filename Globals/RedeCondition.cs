@@ -3,6 +3,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria;
+using Redemption.Biomes;
 
 namespace Redemption.Globals
 {
@@ -54,5 +55,17 @@ namespace Redemption.Globals
 		}
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
+	}
+	public class SoullessCondition : IItemDropRuleCondition
+	{
+		public bool CanDrop(DropAttemptInfo info)
+		{
+			if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && !info.player.InModBiome<SoullessBiome>())
+				return true;
+
+			return false;
+		}
+		public bool CanShowItemDropInUI() => true;
+		public string GetConditionDescription() => "Dropped while outside the Soulless Caverns";
 	}
 }

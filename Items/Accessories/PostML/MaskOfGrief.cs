@@ -1,4 +1,5 @@
-﻿using Redemption.Biomes;
+﻿using Redemption.BaseExtension;
+using Redemption.Biomes;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -13,7 +14,8 @@ namespace Redemption.Items.Accessories.PostML
 		{
             DisplayName.SetDefault("Mask of Grief");
             Tooltip.SetDefault("Decreases enemy aggro while in Soulless Caverns"
-                + "\n20% increased damage while in the Soulless Cavern");
+                + "\n10% increased damage while in the Soulless Cavern\n" +
+                "Makes Shadow elemental weapons more effective against Soulless targets");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults()
@@ -30,8 +32,9 @@ namespace Redemption.Items.Accessories.PostML
             if (player.InModBiome<SoullessBiome>())
             {
                 player.aggro -= 30;
-                player.GetDamage(DamageClass.Generic) += 0.2f;
+                player.GetDamage(DamageClass.Generic) += 0.1f;
             }
+            player.RedemptionPlayerBuff().maskOfGrief = true;
         }
     }
 }

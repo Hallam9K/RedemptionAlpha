@@ -96,6 +96,7 @@ namespace Redemption.Globals.Player
         public bool infectionHeart;
         public int infectionHeartTimer;
         public bool vasaraPendant;
+        public bool maskOfGrief;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -177,6 +178,7 @@ namespace Redemption.Globals.Player
             forestCore = false;
             infectionHeart = false;
             vasaraPendant = false;
+            maskOfGrief = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
             {

@@ -72,6 +72,7 @@ namespace Redemption.NPCs.Soulless
             NPC.value = 0f;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
+            NPC.lavaImmune = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
         }
         public Vector2 moveTo;

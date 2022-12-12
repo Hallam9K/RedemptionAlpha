@@ -94,11 +94,11 @@ namespace Redemption.NPCs.Soulless
             }
             if (HasEyes)
             {
-                NPC.lifeMax = (int)(NPC.lifeMax * 1.1f);
-                NPC.life = (int)(NPC.life * 1.1f);
+                NPC.lifeMax = (int)(NPC.lifeMax * 1.5f);
+                NPC.life = (int)(NPC.life * 1.5f);
                 NPC.defense = (int)(NPC.defense * 1.05f);
                 NPC.damage = (int)(NPC.damage * 1.05f);
-                NPC.value = (int)(NPC.value * 1.1f);
+                NPC.value = (int)(NPC.value * 2f);
                 VisionRange = 600 + VisionIncrease;
             }
             else

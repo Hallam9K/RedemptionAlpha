@@ -55,6 +55,7 @@ namespace Redemption.Items
             RedeBossDowned.ADDDeath = 0;
             player.Redemption().slayerStarRating = 0;
             RedeQuest.wayfarerVars[0] = 1;
+            RedeQuest.shadesoulVar = 0;
             SoullessArea.soullessBools[0] = false;
             SoullessArea.soullessBools[1] = false;
             SoullessArea.soullessBools[2] = false;

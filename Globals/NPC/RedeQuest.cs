@@ -19,6 +19,7 @@ namespace Redemption.Globals
     {
         public static int[] wayfarerVars = new int[2];
         public static bool[] voltVars = new bool[4];
+        public static int shadesoulVar;
         public override void PostUpdateWorld()
         {
             #region Wayfarer Event
@@ -61,6 +62,17 @@ namespace Redemption.Globals
                 }
             }
             #endregion
+
+            if (!SubworldSystem.AnyActive<Redemption>() && shadesoulVar == 0 && !Main.dayTime && Terraria.NPC.downedMoonlord)
+            {
+                shadesoulVar = 1;
+
+                string status = "A portal rumbles... (Check Minimap for the location)";
+                if (Main.netMode == NetmodeID.Server)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue(status), Color.LightBlue);
+            }
         }
         public override void OnWorldLoad()
         {
@@ -68,6 +80,7 @@ namespace Redemption.Globals
                 wayfarerVars[k] = 0;
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
+            shadesoulVar = 0;
         }
         public override void OnWorldUnload()
         {
@@ -75,6 +88,7 @@ namespace Redemption.Globals
                 wayfarerVars[k] = 0;
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
+            shadesoulVar = 0;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -88,6 +102,7 @@ namespace Redemption.Globals
             tag["lists"] = lists;
             for (int k = 0; k < wayfarerVars.Length; k++)
                 tag["WV" + k] = wayfarerVars[k];
+            tag["shadesoulVar"] = shadesoulVar;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -98,6 +113,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
+            shadesoulVar = tag.GetInt("shadesoulVar");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -109,6 +125,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
+            writer.Write(shadesoulVar);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -119,6 +136,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();
+            shadesoulVar = reader.ReadInt32();
         }
     }
 }

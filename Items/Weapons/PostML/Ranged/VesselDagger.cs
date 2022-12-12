@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             Item.DamageType = DamageClass.Ranged;
             Item.shootSpeed = 23f;
-            Item.damage = 210;
+            Item.damage = 140;
             Item.knockBack = 5f;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 7;

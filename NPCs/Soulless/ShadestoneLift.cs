@@ -320,7 +320,7 @@ namespace Redemption.NPCs.Soulless
 
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.ElevatorImpact, NPC.position);
-                            Main.BlackFadeIn = 600;
+                            Main.BlackFadeIn = 3000;
                             Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 14 - (Main.player[Main.myPlayer].Distance(NPC.Center) / 64);
                             if (Main.netMode != NetmodeID.Server)
                             {

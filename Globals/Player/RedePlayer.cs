@@ -53,9 +53,16 @@ namespace Redemption.Globals.Player
         public int crystalGlaiveShotCount;
         public bool parryStance;
         public bool parried;
+        public float visionAmt;
 
         public override void ResetEffects()
         {
+            if (stalkerSilence)
+                visionAmt += 0.02f;
+            else
+                visionAmt -= 0.05f;
+            visionAmt = MathHelper.Clamp(visionAmt, 0, 2f);
+
             hitTarget = -1;
             hitTarget2 = -1;
             stalkerSilence = false;

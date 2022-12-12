@@ -21,6 +21,7 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;
 using System;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -60,13 +61,14 @@ namespace Redemption.NPCs.Soulless
             NPC.damage = 100;
             NPC.friendly = false;
             NPC.defense = 22;
-            NPC.lifeMax = 4950;
+            NPC.lifeMax = 8850;
             NPC.HitSound = SoundID.NPCHit48;
             NPC.DeathSound = SoundID.NPCDeath50;
             NPC.value = 9400;
             NPC.knockBackResist = 0.2f;
             NPC.alpha = 255;
             NPC.aiStyle = -1;
+            NPC.lavaImmune = true;
             NPC.dontTakeDamage = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
             // TODO: Banner for soulless wanderer
@@ -113,7 +115,7 @@ namespace Redemption.NPCs.Soulless
         {
             NPC.alpha = 0;
             NPC.spriteDirection = -1;
-            if (SoullessArea.soullessInts[0] > 0)
+            if (SoullessArea.soullessInts[0] > 0 || AIState is ActionState.Idle)
             {
                 AIState = ActionState.Idle;
                 TimerRand = Main.rand.Next(80, 280);
@@ -366,7 +368,7 @@ namespace Redemption.NPCs.Soulless
                             if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 90, false, true))
                             {
                                 NPC.LookAtEntity(globalNPC.attacker);
-                                if (HasEyes && Main.rand.NextBool(2))
+                                if (Main.rand.NextBool(2))
                                     powerUp = true;
                                 else
                                     powerUp = false;
@@ -480,22 +482,27 @@ namespace Redemption.NPCs.Soulless
             for (int i = 0; i < 5; i++)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.8f));
 
-            if (SoullessArea.soullessInts[0] < 2)
-                SoullessArea.soullessInts[0] = 2;
-
+            if (Main.player[NPC.target].InModBiome<SoullessBiome>())
+            {
+                if (SoullessArea.soullessInts[0] < 2)
+                    SoullessArea.soullessInts[0] = 2;
+            }
+            else
+                RedeQuest.shadesoulVar = 2;
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<Shadesoul>(), 1, 5, 5));
+            npcLoot.Add(ItemDropRule.ByCondition(new SoullessCondition(), ModContent.ItemType<ShadesoulGateway>()));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
-                    ".")
+                    "A fearful soulless infected by the workings of an entity incomprehensible; one of such hunger for misery that lest it be combatted, its influcence may spell the end-times for all where happiness thrives.")
             });
         }
     }

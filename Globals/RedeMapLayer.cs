@@ -8,7 +8,7 @@ using Terraria.UI;
 
 namespace Redemption.Globals
 {
-    public class RedeMapLayer : ModMapLayer
+    public class SurfacePortalMapLayer : ModMapLayer
     {
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
@@ -24,6 +24,21 @@ namespace Redemption.Globals
                 // Note that the `position` argument expects tile coordinates expressed as a Vector2. Don't scale tile coordinates to world coordinates by multiplying by 16.
                 // The return of MapOverlayDrawContext.Draw has a field that indicates if the mouse is currently over our icon.
                 Vector2 pos = new(RedeGen.newbCaveVector.X + 35, RedeGen.newbCaveVector.Y + 6);
+                context.Draw(hintTexture, pos, Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
+            }
+        }
+    }
+    public class UGPortalMapLayer : ModMapLayer
+    {
+        public override void Draw(ref MapOverlayDrawContext context, ref string text)
+        {
+            if (RedeQuest.shadesoulVar == 1 && RedeGen.gathicPortalVector.X != -1)
+            {
+                const float scaleIfNotSelected = 1f;
+                const float scaleIfSelected = scaleIfNotSelected * 1.2f;
+                var hintTexture = ModContent.Request<Texture2D>("Redemption/Items/HintIcon").Value;
+
+                Vector2 pos = new(RedeGen.gathicPortalVector.X + 46, RedeGen.gathicPortalVector.Y + 17);
                 context.Draw(hintTexture, pos, Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
             }
         }
