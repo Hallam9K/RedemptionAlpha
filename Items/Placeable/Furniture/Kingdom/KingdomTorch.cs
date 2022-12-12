@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Furniture.Kingdom
             Item.useTime = 10;
             Item.holdStyle = ItemHoldStyleID.HoldFront;
             Item.autoReuse = true;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<KingdomTorchTile>();
             Item.width = 10;

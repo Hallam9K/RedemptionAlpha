@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Tiles
 			Item.DefaultToPlacableWall((ushort)ModContent.WallType<AsteroidWallTile>());
 			Item.width = 24;
 			Item.height = 24;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 		}
 
 		public override void AddRecipes()

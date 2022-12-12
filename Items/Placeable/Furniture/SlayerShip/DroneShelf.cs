@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
             Item.DefaultToPlaceableTile(ModContent.TileType<DroneShelfTile>(), 0);
             Item.width = 30;
             Item.height = 32;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.LightPurple;
 		}
     }

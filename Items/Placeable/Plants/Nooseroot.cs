@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Plants
         }
         public override void SetDefaults()
 		{
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
             Item.width = 18;
             Item.height = 32;
             Item.value = 200;

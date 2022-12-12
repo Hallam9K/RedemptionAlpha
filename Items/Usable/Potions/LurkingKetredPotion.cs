@@ -27,7 +27,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 22;
             Item.height = 30;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.buffType = ModContent.BuffType<ShadevisionPotionBuff>();

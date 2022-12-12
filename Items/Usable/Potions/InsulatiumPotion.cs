@@ -32,7 +32,7 @@ namespace Redemption.Items.Usable.Potions
             Item.noUseGraphic = true;
             Item.width = 20;
             Item.height = 34;
-            Item.maxStack = 30;
+            Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 85, 0);
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.buffType = ModContent.BuffType<InsulatiumPotionBuff>();

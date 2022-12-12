@@ -17,7 +17,7 @@ namespace Redemption.Items.Materials.PostML
             Item.width = 36;
             Item.height = 34;
             Item.value = Item.sellPrice(0, 0, 90, 0);
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
     }

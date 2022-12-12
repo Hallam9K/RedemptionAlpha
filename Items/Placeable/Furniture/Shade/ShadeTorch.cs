@@ -27,7 +27,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.useTime = 10;
             Item.holdStyle = ItemHoldStyleID.HoldFront;
             Item.autoReuse = true;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.consumable = true;
             Item.createTile = ModContent.TileType<ShadeTorchTile>();
             Item.width = 10;

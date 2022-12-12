@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.useTime = 7;
             Item.width = 18;
             Item.height = 46;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.consumable = true;
             Item.noUseGraphic = true;

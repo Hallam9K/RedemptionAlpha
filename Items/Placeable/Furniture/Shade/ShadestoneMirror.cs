@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneMirrorTile>(), 0);
             Item.width = 18;
             Item.height = 28;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.value = 700;
             Item.rare = ItemRarityID.Blue;
         }

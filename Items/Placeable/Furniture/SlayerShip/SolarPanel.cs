@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
             Item.DefaultToPlaceableTile(ModContent.TileType<SolarPanelTile>(), 0);
             Item.width = 32;
             Item.height = 24;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.LightPurple;
 		}
     }
