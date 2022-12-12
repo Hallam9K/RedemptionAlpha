@@ -19,7 +19,7 @@ namespace Redemption.Biomes
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/DusksEdge");
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Upper Atmosphere");
+            DisplayName.SetDefault("Deep Space");
         }
         public override void SpecialVisuals(Player player, bool isActive)
         {
