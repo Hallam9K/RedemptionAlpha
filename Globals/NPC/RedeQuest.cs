@@ -22,8 +22,10 @@ namespace Redemption.Globals
         public static int shadesoulVar;
         public override void PostUpdateWorld()
         {
+            if (SubworldSystem.AnyActive<Redemption>())
+                return;
             #region Wayfarer Event
-            if (!SubworldSystem.AnyActive<Redemption>() && wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
+            if (wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
             {
                 wayfarerVars[0] = 1;
 
@@ -63,7 +65,7 @@ namespace Redemption.Globals
             }
             #endregion
 
-            if (!SubworldSystem.AnyActive<Redemption>() && shadesoulVar == 0 && !Main.dayTime && Terraria.NPC.downedMoonlord)
+            if (shadesoulVar == 0 && !Main.dayTime && Terraria.NPC.downedMoonlord)
             {
                 shadesoulVar = 1;
 

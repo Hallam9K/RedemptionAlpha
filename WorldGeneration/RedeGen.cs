@@ -42,6 +42,7 @@ using System.Threading;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.GameContent.ItemDropRules;
+using SubworldLibrary;
 
 namespace Redemption.WorldGeneration
 {
@@ -1445,6 +1446,8 @@ namespace Redemption.WorldGeneration
 
         public override void PreUpdateWorld()
         {
+            if (SubworldSystem.AnyActive<Redemption>())
+                return;
             Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
             if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 &&
                 !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))

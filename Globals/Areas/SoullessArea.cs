@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Soulless;
 using Redemption.Tiles.Tiles;
@@ -21,18 +22,26 @@ namespace Redemption.Globals
 {
     public class SoullessArea : ModSystem
     {
-        public static bool Active;
         public static bool[] soullessBools = new bool[4];
         public static int[] soullessInts = new int[3];
         public static Rectangle stalkerZone = new(200 * 16, 925 * 16, 377 * 16, 212 * 16);
         public static int keyEventTimer;
-        public override void PreUpdateEntities()
-        {
-            Active = false;
-        }
         public override void PreUpdateWorld()
         {
-            if (!Active || Main.netMode == NetmodeID.MultiplayerClient)
+            bool active = Main.LocalPlayer.InModBiome<SoullessBiome>();
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Terraria.Player player = Main.player[i];
+                    if (!player.active)
+                        continue;
+
+                    if (player.InModBiome<SoullessBiome>())
+                        active = true;
+                }
+            }
+            if (!active || Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
             for (int n = 0; n < 255; n++)

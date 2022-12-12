@@ -42,7 +42,6 @@ namespace Redemption.Biomes
         }
         public override void OnInBiome(Player player)
         {
-            SoullessArea.Active = true;
             player.RedemptionAbility().SpiritwalkerActive = false;
             Lighting.AddLight(player.Center, 1.5f, 1.5f, 1.5f);
             if (player.HasBuff<StunnedDebuff>())

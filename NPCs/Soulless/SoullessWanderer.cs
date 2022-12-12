@@ -21,6 +21,8 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;
 using Redemption.Items.Usable;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -402,7 +404,7 @@ namespace Redemption.NPCs.Soulless
             choice.Add(MaskState.Angry, 1);
 
             MaskType = choice;
-            if (Main.rand.NextBool(10))
+            if (Main.rand.NextBool(10) && SubworldSystem.IsActive<SoullessSub>())
                 HasEyes = true;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

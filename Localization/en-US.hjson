@@ -1,6 +1,10 @@
 Mods: {
 	Redemption: {	
 		
+		SubworldName: {
+			SoullessSub: Soulless Dimension
+		}
+		
 		Currencies: {
 			AntiqueDorulCurrency: antique doruls
 		}

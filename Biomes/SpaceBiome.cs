@@ -26,10 +26,6 @@ namespace Redemption.Biomes
             if (isActive)
                 SkyManager.Instance.Activate("MoR:SpaceSky");
         }
-        public override void OnInBiome(Player player)
-        {
-            SpaceArea.Active = true;
-        }
         public override void OnLeave(Player player)
         {
             SkyManager.Instance.Deactivate("MoR:SpaceSky");

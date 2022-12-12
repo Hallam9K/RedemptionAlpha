@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Biomes;
 using Redemption.NPCs.Space;
 using Terraria;
 using Terraria.DataStructures;
@@ -9,14 +10,22 @@ namespace Redemption.Globals
 {
     public class SpaceArea : ModSystem
     {
-        public static bool Active;
-        public override void PreUpdateEntities()
-        {
-            Active = false;
-        }
         public override void PreUpdateWorld()
         {
-            if (!Active || Main.netMode == NetmodeID.MultiplayerClient)
+            bool active = Main.LocalPlayer.InModBiome<SpaceBiome>();
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Terraria.Player player = Main.player[i];
+                    if (!player.active)
+                        continue;
+
+                    if (player.InModBiome<SpaceBiome>())
+                        active = true;
+                }
+            }
+            if (!active || Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
             Vector2 LiftPos = new(((2400 / 2) + 76) * 16, 583 * 16);

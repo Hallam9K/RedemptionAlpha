@@ -112,6 +112,18 @@ namespace Redemption.Globals
 
         public override void PostUpdateWorld()
         {
+            if (Main.player[Main.myPlayer].InModBiome<SoullessBiome>())
+            {
+                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
+                {
+                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position, Array.Empty<object>());
+                }
+                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader()
+                    .UseIntensity(Main.player[Main.myPlayer].RedemptionPlayerBuff().shadevision ? 0 : 0.3f);
+            }
+
+            if (SubworldSystem.AnyActive<Redemption>())
+                return;
             if (Main.time == 1)
                 DayNightCount++;
 
@@ -287,15 +299,6 @@ namespace Redemption.Globals
                     Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position);
                 }
                 Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.5f);
-            }
-            if (Main.player[Main.myPlayer].InModBiome<SoullessBiome>())
-            {
-                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
-                {
-                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position, Array.Empty<object>());
-                }
-                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader()
-                    .UseIntensity(Main.player[Main.myPlayer].RedemptionPlayerBuff().shadevision ? 0 : 0.3f);
             }
             if (blobbleSwarm)
             {
