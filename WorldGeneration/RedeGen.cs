@@ -107,6 +107,8 @@ namespace Redemption.WorldGeneration
         }*/
         public override void PostUpdateWorld()
         {
+            if (SubworldSystem.AnyActive<Redemption>())
+                return;
             if (NPC.downedBoss3 && !dragonLeadSpawn)
             {
                 dragonLeadSpawn = true;
