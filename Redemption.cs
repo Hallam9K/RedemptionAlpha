@@ -39,6 +39,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
+using Redemption.Items.Placeable.Furniture.SlayerShip;
 
 namespace Redemption
 {
@@ -361,6 +362,8 @@ namespace Redemption
 
         public UserInterface DatalogUILayer;
         public DatalogUIState DatalogUIElement;
+        public UserInterface CyberTeleporterUILayer;
+        public CyberTeleporterUI CyberTeleporterUIElement;
 
         public static TrailManager TrailManager;
         public bool Initialized;
@@ -399,6 +402,9 @@ namespace Redemption
                 DatalogUILayer = new UserInterface();
                 DatalogUIElement = new DatalogUIState();
                 DatalogUILayer.SetState(DatalogUIElement);
+                CyberTeleporterUILayer = new UserInterface();
+                CyberTeleporterUIElement = new CyberTeleporterUI();
+                CyberTeleporterUILayer.SetState(CyberTeleporterUIElement);
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
@@ -621,7 +627,8 @@ namespace Redemption
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
-                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
+                AddInterfaceLayer(layers, CyberTeleporterUILayer, CyberTeleporterUIElement, MouseTextIndex + 5, CyberTeleporterUI.Visible, "Cyber Teleporter UI");
+                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 6, TextBubbleUI.Visible, "Text Bubble");
             }
         }
 
