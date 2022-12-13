@@ -2,6 +2,8 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Furniture.Kingdom;
+using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Weapons.PreHM.Ranged;
@@ -21,6 +23,7 @@ namespace Redemption.Globals
         public static RecipeGroup GathicStoneRecipeGroup;
         public static RecipeGroup HazmatSuitRecipeGroup;
         public static RecipeGroup PlantRecipeGroup;
+        public static RecipeGroup TorchRecipeGroup;
 
         public override void Unload()
         {
@@ -31,6 +34,7 @@ namespace Redemption.Globals
             GathicStoneRecipeGroup = null;
             HazmatSuitRecipeGroup = null;
             PlantRecipeGroup = null;
+            TorchRecipeGroup = null;
         }
 
         public override void AddRecipeGroups()
@@ -55,6 +59,9 @@ namespace Redemption.Globals
 
             PlantRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Daybloom)}", ItemID.Daybloom, ItemID.Waterleaf, ItemID.Blinkroot, ItemID.Deathweed, ItemID.Fireblossom, ItemID.Moonglow, ItemID.Shiverthorn, ModContent.ItemType<Nightshade>());
             RecipeGroup.RegisterGroup("Redemption:Plants", PlantRecipeGroup);
+
+            TorchRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Torch)}", ItemID.Torch, ItemID.BlueTorch, ItemID.BoneTorch, ItemID.CoralTorch, ItemID.CorruptTorch, ItemID.CrimsonTorch, ItemID.CursedTorch, ItemID.DemonTorch, ItemID.DesertTorch, ItemID.GreenTorch, ItemID.HallowedTorch, ItemID.IceTorch, ItemID.IchorTorch, ItemID.JungleTorch, ItemID.OrangeTorch, ItemID.PinkTorch, ItemID.PurpleTorch, ItemID.RainbowTorch, ItemID.RedTorch, ItemID.UltrabrightTorch, ItemID.WhiteTorch, ItemID.YellowTorch, ModContent.ItemType<WastelandTorch>(), ModContent.ItemType<KingdomTorch>());
+            RecipeGroup.RegisterGroup("Redemption:Torches", TorchRecipeGroup);
         }
         public override void PostAddRecipes()
         {

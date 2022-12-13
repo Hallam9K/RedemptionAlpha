@@ -113,8 +113,16 @@ namespace Redemption.Globals
                     }
                     break;
                 }
-                if (soullessInts[1] == 4 && player.Hitbox.Intersects(stalkerZone))
-                    player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 30);
+                if (soullessInts[1] == 4)
+                {
+                    if (player.position.Y < 970 * 16)
+                    {
+                        player.velocity.Y = MathHelper.Max(player.velocity.Y, 0);
+                        player.velocity.Y += 2;
+                    }
+                    if (player.Hitbox.Intersects(stalkerZone))
+                        player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 30);
+                }
             }
             if (soullessInts[1] == 2)
             {

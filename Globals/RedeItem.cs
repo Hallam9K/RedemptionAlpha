@@ -21,6 +21,8 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
 using Redemption.Items.Placeable.Furniture.Shade;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
 
 namespace Redemption.Globals
 {
@@ -338,7 +340,11 @@ namespace Redemption.Globals
         {
             if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
                 return false;
-            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
+            if ((SubworldSystem.IsActive<SoullessSub>() || (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ)) && item.type == ItemID.RodofDiscord)
+                return false;
+            if (SubworldSystem.IsActive<SoullessSub>() && (item.type is ItemID.TeleportationPotion or ItemID.Teleporter))
+                return false;
+            if (player.InModBiome<SoullessBiome>() && ItemID.Sets.Torches[item.type] && item.type != ModContent.ItemType<ShadeTorch>())
                 return false;
 
             return base.CanUseItem(item, player);

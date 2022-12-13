@@ -310,7 +310,7 @@ namespace Redemption.Globals.Player
                     Player.mount.Dismount(Player);
                 Player.wings = 0;
                 Player.wingsLogic = 0;
-                if (!ItemID.Sets.Torches[Player.HeldItem.type])
+                if (!ItemID.Sets.Torches[Player.HeldItem.type] && Player.HeldItem.pick == 0)
                     Player.noBuilding = true;
                 Player.controlHook = false;
             }

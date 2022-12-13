@@ -43,7 +43,7 @@ namespace Redemption.Biomes
         public override void OnInBiome(Player player)
         {
             player.RedemptionAbility().SpiritwalkerActive = false;
-            Lighting.AddLight(player.Center, 1.5f, 1.5f, 1.5f);
+            Lighting.AddLight(player.Center, 1f, 1f, 1f);
             if (player.HasBuff<StunnedDebuff>())
                 player.maxFallSpeed += 4;
             else

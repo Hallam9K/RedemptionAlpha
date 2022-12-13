@@ -6,6 +6,10 @@ using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Shade;
+using Terraria.Localization;
+using Redemption.Biomes;
+using Redemption.Globals;
+using Redemption.Rarities;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
 {
@@ -13,6 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("Can be placed in the Soulless Caverns");
             ItemID.Sets.Torches[Type] = true;
             SacrificeTotal = 100;
         }
@@ -33,6 +38,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.width = 10;
             Item.height = 12;
             Item.value = 50;
+            Item.rare = ModContent.RarityType<SoullessRarity>();
         }
 
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
@@ -68,6 +74,10 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             CreateRecipe(3)
                 .AddIngredient(ItemID.Torch, 3)
                 .AddIngredient(ModContent.ItemType<Shadestone>())
+                .Register();
+            CreateRecipe()
+                .AddRecipeGroup(RedeRecipe.TorchRecipeGroup)
+                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("In the Soulless Caverns"), _ => Main.LocalPlayer.InModBiome<SoullessBiome>()))
                 .Register();
         }
     }
