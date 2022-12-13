@@ -1,7 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.Tiles.Tiles;
 using Redemption.UI;
+using Redemption.WorldGeneration;
+using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Redemption.Effects.RenderTargets.BasicLayer;
@@ -33,9 +39,26 @@ namespace Redemption.Items
             Item.rare = ItemRarityID.Purple;
         }
         public override bool AltFunctionUse(Player player) => true;
+        public int ge;
         public override bool? UseItem(Player player)
         {
-            NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
+            Dictionary<Color, int> colorToTile = new()
+            {
+                [new Color(255, 0, 0)] = ModContent.TileType<AsteroidTile>(),
+                [new Color(150, 150, 150)] = -2, //turn into air
+                [Color.Black] = -1 //don't touch when genning
+            };
+            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Space/AstGen" + (ge + 1), AssetRequestMode.ImmediateLoad).Value;
+            Point16 origin = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+            GenUtils.InvokeOnMainThread(() =>
+            {
+                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, true, true);
+            });
+            ge++;
+            if (ge > 24)
+                ge = 0;
+            /*NPC npc = NPC.NewNPCDirect(Item.GetSource_FromThis(), player.Center, NPCID.GreenSlime);
             npc.position = player.Center;
 
             DialogueChain chain = new();
@@ -66,7 +89,7 @@ namespace Redemption.Items
             Dust.QuickBox(new Vector2(x, y) * 16, new Vector2(x + 1, y + 1) * 16, 2, new Color(218, 70, 70), null);
             Talk($"Drawing sprites at [{x}, {y}]. Right-click to discard.", new Color(218, 70, 70));
             if (!Redemption.Targets.BasicLayer.Sprites.Contains(this))
-                Redemption.Targets.BasicLayer.Sprites.Add(this);
+                Redemption.Targets.BasicLayer.Sprites.Add(this);*/
             return true;
         }
         private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)

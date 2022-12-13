@@ -19,6 +19,7 @@ using System.Linq;
 using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Globals;
 using Redemption.NPCs.Space;
+using System;
 
 namespace Redemption.WorldGeneration.Space
 {
@@ -228,19 +229,8 @@ namespace Redemption.WorldGeneration.Space
         public static void MakeMeteor(int X, int Y)
         {
             Mod mod = Redemption.Instance;
-            Dictionary<Color, int> colorToTile = new()
-            {
-                [new Color(255, 0, 0)] = ModContent.TileType<AsteroidTile>(),
-                [new Color(150, 150, 150)] = -2, //turn into air
-                [Color.Black] = -1 //don't touch when genning
-            };
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Space/AstGen" + (WorldGen.genRand.Next(24) + 1), AssetRequestMode.ImmediateLoad).Value;
             Point16 origin = new(X, Y);
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/Space/Asteriods", origin, mod);
         }
         public SpacePass1(string name, float loadWeight) : base(name, loadWeight)
         {
@@ -253,6 +243,8 @@ namespace Redemption.WorldGeneration.Space
             progress.Message = "Asteroid Bases";
             AstBase1();
             AstBase2();
+            AstBase2(4, WorldGen.genRand.NextBool());
+            AstBase2(5, WorldGen.genRand.NextBool());
         }
         private readonly int WIDTH1 = 119;
         private readonly int HEIGHT1 = 75;
@@ -350,79 +342,39 @@ namespace Redemption.WorldGeneration.Space
                 }
             }
         }
-        private readonly int WIDTH2 = 108;
-        private readonly int HEIGHT2 = 100;
-        public void AstBase2()
+        public static void AstBase2(int ID = 3, bool left = false)
         {
             Mod mod = Redemption.Instance;
-            Dictionary<Color, int> colorToTile = new()
+            Point16 dims = new();
+            StructureHelper.Generator.GetDimensions("WorldGeneration/Space/SlayerBase" + ID, mod, ref dims);
+            bool placed = false;
+            Point16 origin = Point16.Zero;
+            while (!placed)
             {
-                [new Color(255, 0, 0)] = ModContent.TileType<AsteroidTile>(),
-                [new Color(0, 255, 0)] = ModContent.TileType<SlayerShipPanelTile>(),
-                [new Color(255, 255, 0)] = ModContent.TileType<HalogenLampTile>(),
-                [new Color(0, 255, 255)] = ModContent.TileType<ShipGlassTile>(),
-                [new Color(0, 0, 255)] = ModContent.TileType<MetalSupportBeamTile>(),
-                [new Color(0, 255, 150)] = TileID.TinPlating,
-                [new Color(0, 150, 255)] = TileID.CopperPlating,
-                [new Color(255, 0, 150)] = TileID.TeamBlockPink,
-                [new Color(150, 0, 255)] = TileID.TeamBlockGreen,
-                [new Color(255, 0, 255)] = TileID.TeamBlockBlue,
-                [new Color(150, 150, 150)] = -2, //turn into air
-                [Color.Black] = -1 //don't touch when genning
-            };
-            Dictionary<Color, int> colorToWall = new()
-            {
-                [new Color(255, 0, 0)] = ModContent.WallType<SlayerShipPanelWallTile>(),
-                [new Color(0, 0, 255)] = ModContent.WallType<AsteroidWallTile>(),
-                [new Color(0, 255, 255)] = WallID.Glass,
-                [new Color(255, 255, 0)] = WallID.MartianConduit,
-                [Color.Black] = -1
-            };
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Space/SlayerBase3", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Space/SlayerBase3_Walls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Space/SlayerBase3_Slopes", AssetRequestMode.ImmediateLoad).Value;
-
-            Point16 origin = new(WorldGen.genRand.Next((int)(2400 * 0.6f), (int)(2400 * 0.9f)), WorldGen.genRand.Next(100, 537));
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-
-            for (int i = origin.X; i < origin.X + WIDTH2; i++)
-            {
-                for (int j = origin.Y; j < origin.Y + HEIGHT2; j++)
+                if (left)
+                    origin = new(WorldGen.genRand.Next((int)(2400 * 0.1f), (int)(2400 * 0.4f)), WorldGen.genRand.Next(100, 537));
+                else
+                    origin = new(WorldGen.genRand.Next((int)(2400 * 0.6f), (int)(2400 * 0.9f)), WorldGen.genRand.Next(100, 537));
+                bool fail = false;
+                for (int x = 0; x < dims.X; x++)
                 {
-                    switch (Framing.GetTileSafely(i, j).TileType)
+                    for (int y = 0; y < dims.Y; y++)
                     {
-                        case TileID.TeamBlockPink:
-                            Framing.GetTileSafely(i, j).ClearTile();
-                            WorldGen.PlaceTile(i, j, ModContent.TileType<LabPlatformTile>(), true);
-                            WorldGen.SlopeTile(i, j, 1);
+                        int type = Framing.GetTileSafely(origin.X + x, origin.Y + y).TileType;
+                        if (type == ModContent.TileType<ShipGlassTile>() || type == ModContent.TileType<SlayerShipPanelTile>())
+                        {
+                            fail = true;
                             break;
-                        case TileID.TeamBlockGreen:
-                            Framing.GetTileSafely(i, j).ClearTile();
-                            WorldGen.PlaceTile(i, j, ModContent.TileType<LabPlatformTile>(), true);
-                            WorldGen.SlopeTile(i, j, 2);
-                            break;
+                        }
                     }
-                    if (Framing.GetTileSafely(i, j).TileType == TileID.TeamBlockBlue)
-                    {
-                        Framing.GetTileSafely(i, j).ClearTile();
-                        WorldGen.PlaceTile(i, j, ModContent.TileType<LabPlatformTile>(), true);
-                    }
-                    if ((Framing.GetTileSafely(i, j).TileType == TileID.TinPlating || Framing.GetTileSafely(i, j).TileType == TileID.CopperPlating) && WorldGen.InWorld(i, j))
-                        Framing.GetTileSafely(i, j).TileColor = PaintID.BlackPaint;
                 }
+                if (fail)
+                    continue;
+                placed = true;
             }
-            for (int j = origin.Y + 31; j < origin.Y + 79; j++)
-            {
-                if (Framing.GetTileSafely(origin.X + 45, j).WallType == WallID.MartianConduit && WorldGen.InWorld(origin.X + 45, j))
-                    Framing.GetTileSafely(origin.X + 45, j).WallColor = PaintID.BlackPaint;
-
-                if (Framing.GetTileSafely(origin.X + 48, j).WallType == WallID.MartianConduit && WorldGen.InWorld(origin.X + 48, j))
-                    Framing.GetTileSafely(origin.X + 48, j).WallColor = PaintID.BlackPaint;
-            }
+            StructureHelper.Generator.GenerateStructure("WorldGeneration/Space/SlayerBase" + ID, origin, mod);
+            if (ID == 3)
+                SpaceArea.base3Vector = origin.ToVector2();
         }
         public SpacePass2(string name, float loadWeight) : base(name, loadWeight)
         {

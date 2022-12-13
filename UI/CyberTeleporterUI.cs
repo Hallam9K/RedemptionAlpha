@@ -11,6 +11,9 @@ using Redemption.WorldGeneration.Space;
 using Terraria.Utilities;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
+using Redemption.Globals;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.UI
 {
@@ -27,7 +30,8 @@ namespace Redemption.UI
         public Vector2 lastScreenSize;
 
         public static bool Visible = false;
-
+        public int Timer = 0;
+        public bool Teleporting;
         public override void OnInitialize()
         {
             lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
@@ -61,31 +65,73 @@ namespace Redemption.UI
             Main.isMouseLeftConsumedByUI = true;
             SoundEngine.PlaySound(SoundID.MenuTick);
             SoundEngine.PlaySound(SoundID.Item163);
-            Visible = false;
-            if (SubworldSystem.IsActive<SpaceSub>())
-            {
-                SubworldSystem.Exit();
-                return;
-            }
-            else if (!SubworldSystem.AnyActive<Redemption>())
-            {
-                Main.rand = new UnifiedRandom();
-                SubworldSystem.Enter<SpaceSub>();
-            }
+            Teleporting = true;
         }
         private void CloseMenu(UIMouseEvent evt, UIElement listeningElement)
         {
-            Visible = false;
+            if (!Teleporting)
+            {
+                Visible = false;
+                Teleporting = false;
+            }
         }
         public override void Update(GameTime gameTime)
         {
             Main.LocalPlayer.mouseInterface = true;
-            if (!Main.LocalPlayer.releaseInventory)
+            if (!Main.LocalPlayer.releaseInventory && !Teleporting)
+            {
                 Visible = false;
+                Teleporting = false;
+            }
+
+            if (Teleporting)
+            {
+                Player player = Main.LocalPlayer;
+                player.velocity *= 0;
+                player.position = player.oldPosition;
+                ++Timer;
+                if (Timer % 10 == 0)
+                    DustHelper.DrawDustImage(player.Center, DustID.Frost, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
+                if (Timer == 30)
+                {
+                    SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, player.position);
+                    for (int i = 0; i < 15; i++)
+                    {
+                        ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(player), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                        int dust = Dust.NewDust(player.position, player.width, player.height, DustID.Frost, Scale: 3f);
+                        Main.dust[dust].velocity *= 6f;
+                        Main.dust[dust].noGravity = true;
+                    }
+                }
+                if (Timer >= 30)
+                {
+                    Main.BlackFadeIn += 70;
+                    if (Main.BlackFadeIn > 255)
+                        Main.BlackFadeIn = 255;
+                }
+                if (Timer > 160)
+                {
+                    Teleporting = false;
+                    Timer = 0;
+                    Visible = false;
+                    if (SubworldSystem.IsActive<SpaceSub>())
+                    {
+                        SubworldSystem.Exit();
+                        return;
+                    }
+                    else if (!SubworldSystem.AnyActive<Redemption>())
+                    {
+                        Main.rand = new UnifiedRandom();
+                        SubworldSystem.Enter<SpaceSub>();
+                    }
+                }
+            }
+            else
+                Timer = 0;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!Visible)
+            if (!Visible || Teleporting)
                 return;
 
             if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))

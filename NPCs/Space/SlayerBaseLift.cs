@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.NPCs.Soulless;
 using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
@@ -190,5 +191,9 @@ namespace Redemption.NPCs.Space
             Main.EntitySpriteDraw(glow, NPC.Center - new Vector2(0, NPC.velocity.Y * 2) - screenPos, null, NPC.GetAlpha(Color.White) * (standTimer / 60), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
+    }
+    public class SlayerBaseLift2 : SlayerBaseLift
+    {
+        public override string Texture => "Redemption/NPCs/Space/SlayerBaseLift";
     }
 }

@@ -210,7 +210,7 @@ namespace Redemption.Globals.Player
             {
                 Point point = Player.Center.ToTileCoordinates();
                 ushort wallType = Framing.GetTileSafely(point.X, point.Y).WallType;
-                if (wallType != ModContent.WallType<SlayerShipPanelWallTile>() && wallType != WallID.MartianConduit && wallType != WallID.Glass)
+                if (wallType != ModContent.WallType<SlayerShipPanelWallTile>() && wallType != WallID.MartianConduit && wallType != WallID.Glass && wallType != ModContent.WallType<DangerTapeWall2Tile>())
                 {
                     Player.gravity /= 20;
                     Player.breath -= 3;
