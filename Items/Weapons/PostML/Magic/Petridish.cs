@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.DamageType = DamageClass.Magic;
             Item.mana = 18;
             Item.knockBack = 3;
-            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.value = Item.sellPrice(0, 7, 50, 0);
             Item.rare = ItemRarityID.Purple;
             Item.UseSound = SoundID.Item1;
             Item.noMelee = true;
