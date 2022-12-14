@@ -719,6 +719,11 @@ namespace Redemption.Globals.NPC
                 spawnRate = 35;
                 maxSpawns = 10;
             }
+            if (SubworldSystem.IsActive<SpaceSub>() && player.InModBiome<SpaceBiome>())
+            {
+                spawnRate = 40;
+                maxSpawns = 6;
+            }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {

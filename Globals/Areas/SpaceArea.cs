@@ -45,6 +45,13 @@ namespace Redemption.Globals
             Vector2 LiftPos2 = new((base3Vector.X + 42) * 16, (base3Vector.Y + 73) * 16);
             if (base3Vector.X != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SlayerBaseLift2>()))
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos2.X, (int)LiftPos2.Y, ModContent.NPCType<SlayerBaseLift2>(), 0, 0, 0, base3Vector.Y + 71, base3Vector.Y + 26);
+            Vector2 AndroidPos1 = new((base3Vector.X + 79) * 16 + 4, (base3Vector.Y + 42) * 16 + 12);
+            Vector2 AndroidPos2 = new((base3Vector.X + 85) * 16 + 12, (base3Vector.Y + 42) * 16 + 12);
+            if (base3Vector.X != -1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<AndroidSitting>()))
+            {
+                Terraria.NPC.NewNPC(new EntitySource_WorldGen(), (int)AndroidPos1.X, (int)AndroidPos1.Y, ModContent.NPCType<AndroidSitting>(), 0, 1);
+                Terraria.NPC.NewNPC(new EntitySource_WorldGen(), (int)AndroidPos2.X, (int)AndroidPos2.Y, ModContent.NPCType<AndroidSitting>(), 0, -1);
+            }
         }
         public override void SaveWorldData(TagCompound tag)
         {

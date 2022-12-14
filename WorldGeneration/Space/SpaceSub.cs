@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.ModLoader;
 using SubworldLibrary;
 using Redemption.Tiles.Tiles;
-using Redemption.Tiles.Ores;
 using Redemption.Walls;
 using Terraria.WorldBuilding;
 using Terraria.IO;
@@ -18,7 +17,6 @@ using Redemption.Tiles.MusicBoxes;
 using System.Linq;
 using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Globals;
-using Redemption.NPCs.Space;
 using System;
 
 namespace Redemption.WorldGeneration.Space
