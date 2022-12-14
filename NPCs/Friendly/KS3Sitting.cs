@@ -55,7 +55,6 @@ namespace Redemption.NPCs.Friendly
             NPC.npcSlots = 0;
         }
 
-        public override bool CanGoToStatue(bool toKingStatue) => true;
         public override bool UsesPartyHat() => false;
         public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
         public override bool CanChat() => true;
