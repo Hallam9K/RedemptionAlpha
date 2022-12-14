@@ -216,5 +216,143 @@ namespace Redemption.Globals
                 return true;
             return false;
         }
+
+        public override void PostAI() //Lion8cake's pretty scuffed and shitty postai to make some iradiated tiles convert to normal tiles
+		{
+            if ((Projectile.type != 10 && Projectile.type != 145 && Projectile.type != 147 && Projectile.type != 149 && Projectile.type != 146) || Projectile.owner != Main.myPlayer)
+			{
+				return;
+			}
+			int x = (int)(Projectile.Center.X / 16f);
+			int y = (int)(Projectile.Center.Y / 16f);
+
+            Tile tile = Main.tile[x, y];
+            int type = tile.TileType;
+            int wallType = tile.WallType;
+
+            for (int i = x - 1; i <= x + 1; i++)
+			{
+				for (int j = y - 1; j <= y + 1; j++)
+				{
+					if (Projectile.type == 145 || Projectile.type == 10)
+					{
+                        if (!WorldGen.InWorld(x, y, 1))
+                        {
+                            return;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                            {
+                                tile.TileType = 0;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                            {
+                                tile.TileType = 147;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                            {
+                                tile.TileType = 191;
+                            }
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                            {
+                                Main.tile[x, y].WallType = 2;
+                            }
+                        }
+                    }
+					if (Projectile.type == 147)
+					{
+                        if (!WorldGen.InWorld(x, y, 1))
+                        {
+                            return;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                            {
+                                tile.TileType = 0;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                            {
+                                tile.TileType = 147;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                            {
+                                tile.TileType = 191;
+                            }
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                            {
+                                Main.tile[x, y].WallType = 2;
+                            }
+                        }
+                    }
+					if (Projectile.type == 149)
+					{
+                        if (!WorldGen.InWorld(x, y, 1))
+                        {
+                            return;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                            {
+                                tile.TileType = 0;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                            {
+                                tile.TileType = 147;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                            {
+                                tile.TileType = 191;
+                            }
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                            {
+                                Main.tile[x, y].WallType = 2;
+                            }
+                        }
+                    }
+					if (Projectile.type == 146)
+					{
+                        if (!WorldGen.InWorld(x, y, 1))
+                        {
+                            return;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                            {
+                                tile.TileType = 0;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                            {
+                                tile.TileType = 147;
+                            }
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                            {
+                                tile.TileType = 191;
+                            }
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                            {
+                                Main.tile[x, y].WallType = 2;
+                            }
+                        }
+                    }
+					NetMessage.SendTileSquare(-1, i, j, 1, 1);
+				}
+			}
+		}
     }
 }
