@@ -63,9 +63,12 @@ namespace Redemption.UI
         private void ButtonClicked(UIMouseEvent evt, UIElement listeningElement)
         {
             Main.isMouseLeftConsumedByUI = true;
-            SoundEngine.PlaySound(SoundID.MenuTick);
-            SoundEngine.PlaySound(SoundID.Item163);
-            Teleporting = true;
+            if (!Teleporting)
+            {
+                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(SoundID.Item163);
+                Teleporting = true;
+            }
         }
         private void CloseMenu(UIMouseEvent evt, UIElement listeningElement)
         {

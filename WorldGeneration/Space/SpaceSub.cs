@@ -37,6 +37,9 @@ namespace Redemption.WorldGeneration.Space
         };
         public override void OnLoad()
         {
+            RedeWorld.slayerRep = 4;
+            RedeBossDowned.downedOmega3 = true;
+
             SubworldSystem.hideUnderworld = true;
             Main.cloudAlpha = 0;
             Main.cloudBGAlpha = 0;
@@ -177,7 +180,7 @@ namespace Redemption.WorldGeneration.Space
             GenUtils.ObjectPlace(origin.X + 59, origin.Y + 53, ModContent.TileType<LabWorkbenchTile>());
             GenUtils.ObjectPlace(origin.X + 59, origin.Y + 52, ModContent.TileType<SlayerWiringKitTile>());
             GenUtils.ObjectPlace(origin.X + 148, origin.Y + 31, ModContent.TileType<KSBattlestationTile>());
-            GenUtils.ObjectPlace(origin.X + 19, origin.Y + 31, ModContent.TileType<KSBattlestationTile>());
+            GenUtils.ObjectPlace(origin.X + 19, origin.Y + 31, ModContent.TileType<KSBattlestationTile>(), 1);
             GenUtils.ObjectPlace(origin.X + 43, origin.Y + 53, ModContent.TileType<AndroidInactiveTile>());
             GenUtils.ObjectPlace(origin.X + 46, origin.Y + 54, ModContent.TileType<AndroidInactiveTile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 56, origin.Y + 54, ModContent.TileType<AndroidInactiveTile>());
@@ -243,6 +246,7 @@ namespace Redemption.WorldGeneration.Space
             AstBase2();
             AstBase2(4, WorldGen.genRand.NextBool());
             AstBase2(5, WorldGen.genRand.NextBool());
+            AstBase2(6, true);
         }
         private readonly int WIDTH1 = 119;
         private readonly int HEIGHT1 = 75;
@@ -293,7 +297,7 @@ namespace Redemption.WorldGeneration.Space
             GenUtils.ObjectPlace(origin.X + 68, origin.Y + 41, ModContent.TileType<DroneShelfTile>());
             GenUtils.ObjectPlace(origin.X + 71, origin.Y + 41, ModContent.TileType<DroneShelfTile>());
             GenUtils.ObjectPlace(origin.X + 77, origin.Y + 33, TileID.PottedPlants1, 3);
-            GenUtils.ObjectPlace(origin.X + 69, origin.Y + 33, ModContent.TileType<KSBattlestationTile>());
+            GenUtils.ObjectPlace(origin.X + 69, origin.Y + 33, ModContent.TileType<KSBattlestationTile>(), 2);
             GenUtils.ObjectPlace(origin.X + 11, origin.Y + 40, ModContent.TileType<AndroidInactiveTile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 39, origin.Y + 40, ModContent.TileType<AndroidInactiveTile>());
             GenUtils.ObjectPlace(origin.X + 17, origin.Y + 47, ModContent.TileType<AndroidInactiveTile>());
@@ -373,6 +377,8 @@ namespace Redemption.WorldGeneration.Space
             StructureHelper.Generator.GenerateStructure("WorldGeneration/Space/SlayerBase" + ID, origin, mod);
             if (ID == 3)
                 SpaceArea.base3Vector = origin.ToVector2();
+            if (ID == 6)
+                SpaceArea.base6Vector = origin.ToVector2();
         }
         public SpacePass2(string name, float loadWeight) : base(name, loadWeight)
         {

@@ -196,4 +196,8 @@ namespace Redemption.NPCs.Space
     {
         public override string Texture => "Redemption/NPCs/Space/SlayerBaseLift";
     }
+    public class SlayerBaseLift3 : SlayerBaseLift
+    {
+        public override string Texture => "Redemption/NPCs/Space/SlayerBaseLift";
+    }
 }
