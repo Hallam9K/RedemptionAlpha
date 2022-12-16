@@ -247,6 +247,7 @@ namespace Redemption.WorldGeneration.Space
             AstBase2(4, WorldGen.genRand.NextBool());
             AstBase2(5, WorldGen.genRand.NextBool());
             AstBase2(6, true);
+            AstBase2(7, WorldGen.genRand.NextBool());
         }
         private readonly int WIDTH1 = 119;
         private readonly int HEIGHT1 = 75;
