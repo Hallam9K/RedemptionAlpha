@@ -72,6 +72,13 @@ namespace Redemption.UI
                 Visible = true;
             }
         }
+        public Vector2 lastScreenSize;
+        public Vector2 screenPos;
+        public override void OnInitialize()
+        {
+            lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+            screenPos = new(Main.screenWidth / 2, Main.screenHeight / 3);
+        }
         public void HandleTimer()
         {
             if (Visible)
@@ -104,10 +111,12 @@ namespace Redemption.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Visible)
-            {
                 return;
+            if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+            {
+                lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+                screenPos = new(Main.screenWidth / 2, Main.screenHeight / 3);
             }
-
             DynamicSpriteFont font = TextFont switch
             {
                 1 => FontAssets.ItemStack.Value,
@@ -121,7 +130,7 @@ namespace Redemption.UI
             }
             else
             {
-                CenterPosition = new Vector2(Main.screenWidth / 2, Main.screenHeight / 3);
+                CenterPosition = screenPos;
             }
             // * Main.UIScale
             int centerX = (int)CenterPosition.X;

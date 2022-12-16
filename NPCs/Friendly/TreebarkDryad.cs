@@ -257,10 +257,10 @@ namespace Redemption.NPCs.Friendly
             if (RedeBossDowned.downedThorn)
                 chat.Add("The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what lead us here.");
             else
-                chat.Add("You wouldn't happen to see a brambly old man..? Poor thing with gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...");
+                chat.Add("You wouldn't happen to see a brambly young man..? Poor thing was gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...");
 
             if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
-                chat.Add("You remind me of that old warden, did the forest's curse get you too..?");
+                chat.Add("You remind me of that young warden, did the forest's curse get you too..?");
 
             chat.Add("Are you friend, or foe. As long as you don't use your axe on me, I don't care...");
             return "Hmmmm... " + chat;

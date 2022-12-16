@@ -21,10 +21,16 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 5;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16 };
+            TileObjectData.newTile.Origin = new Point16(1, 4);
             TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+            TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
+            TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Electric;
             MinPick = 500;
