@@ -195,7 +195,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Projectile.netUpdate = true;
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
                                 RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 2, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
+                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 12, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
                             }
                             if (AITimer >= 80)
                                 Projectile.velocity.Y = -1.5f;

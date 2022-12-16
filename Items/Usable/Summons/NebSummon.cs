@@ -49,14 +49,14 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool AltFunctionUse(Player player)
         {
-            return RedeBossDowned.nebDeath > 5 || RedeBossDowned.downedNebuleus;
+            return RedeBossDowned.nebDeath > 5;
         }
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
                 int type = ModContent.NPCType<Neb_Start>();
-                if ((RedeBossDowned.nebDeath > 5 || RedeBossDowned.downedNebuleus) && player.altFunctionUse == 2)
+                if (RedeBossDowned.nebDeath > 5 && player.altFunctionUse == 2)
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Teleport2, player.position);
@@ -116,7 +116,7 @@ namespace Redemption.Items.Usable.Summons
             {
                 OverrideColor = Main.DiscoColor
             };
-            if (RedeBossDowned.nebDeath > 5 || RedeBossDowned.downedNebuleus)
+            if (RedeBossDowned.nebDeath > 5)
             {
                 tooltips.Insert(tooltipLocation, line);
             }

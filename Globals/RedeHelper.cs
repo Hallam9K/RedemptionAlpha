@@ -707,6 +707,15 @@ namespace Redemption.Globals
         }
         #region NPC Methods
 
+        public static int HostileProjDamage(int damage)
+        {
+            damage /= 2;
+            if (Main.expertMode)
+                damage /= 2;
+            if (Main.masterMode)
+                damage /= 3;
+            return damage;
+        }
         /// <summary>
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
@@ -716,9 +725,14 @@ namespace Redemption.Globals
             if (playSound)
                 SoundEngine.PlaySound(sound, npc.position);
 
+            damage /= 2;
+            if (Main.expertMode)
+                damage /= 2;
+            if (Main.masterMode)
+                damage /= 3;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage / 4, 0,
+                Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, 0,
                     Main.myPlayer, ai0, ai1);
             }
         }

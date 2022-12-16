@@ -966,7 +966,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>() || seg.ai[2] != segID || seg.ai[0] != 0)
                     continue;
 
-                if (seg.DistanceSQ(player.Center) >= 400 * 400 || Framing.GetTileSafely(ground.X, ground.Y).HasTile)
+                if (seg.DistanceSQ(player.Center) >= 600 * 600 || Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                     continue;
 
                 SoundEngine.PlaySound(SoundID.Item61, NPC.position);

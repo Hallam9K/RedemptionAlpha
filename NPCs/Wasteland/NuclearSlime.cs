@@ -4,6 +4,7 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
+using Redemption.Globals;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Items.Materials.HM;
@@ -139,7 +140,7 @@ namespace Redemption.NPCs.Wasteland
                     for (int i = 0; i < 15; i++)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, NPC.position);
-                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ModContent.ProjectileType<MACE_Miniblast>(), 70, 3, Main.myPlayer, 1);
+                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, -8 + Main.rand.Next(0, 17), -3 + Main.rand.Next(-11, 0), ModContent.ProjectileType<MACE_Miniblast>(), RedeHelper.HostileProjDamage(100), 3, Main.myPlayer, 1);
                         Main.projectile[p].timeLeft = 300;
                         Main.projectile[p].friendly = true;
                         Main.projectile[p].netUpdate2 = true;

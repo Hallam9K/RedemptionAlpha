@@ -533,7 +533,7 @@ namespace Redemption.Globals.NPC
                 }
                 if (ItemLists.Celestial.Contains(item.type))
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4) && npc.CanBeChasedBy())
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(6) && npc.CanBeChasedBy())
                         Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, player.whoAmI, npc.whoAmI);
                 }
                 #endregion
@@ -597,7 +597,7 @@ namespace Redemption.Globals.NPC
                 }
                 if (ProjectileLists.Celestial.Contains(projectile.type))
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4) && npc.CanBeChasedBy())
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(6) && npc.CanBeChasedBy())
                         Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, projectile.owner, npc.whoAmI);
                 }
                 #endregion
