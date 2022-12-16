@@ -804,12 +804,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 AITimer = 0;
                                 TimerRand = 0;
                                 TimerRand2 = 0;
-                                if (AttackNumber > 10 && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<Erhan_HolyShield2>()))
-                                {
-                                    DustHelper.DrawCircle(NPC.Center, DustID.GoldFlame, 5, 5, 5, 1, 2, nogravity: true);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield2>(), 0, Vector2.Zero, true,
-                                        SoundID.Item29, NPC.whoAmI);
-                                }
                                 AIState = ActionState.Idle;
                                 NPC.netUpdate = true;
                             }
