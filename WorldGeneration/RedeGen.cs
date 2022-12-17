@@ -1446,17 +1446,15 @@ namespace Redemption.WorldGeneration
         public override void PreUpdateWorld()
         {
             Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
-            if (newbCaveVector.X != -1 && newbCaveVector.Y != -1 &&
-                !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
+            if (newbCaveVector.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
                 LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
 
             Vector2 gathicPortalPos = new(((gathicPortalVector.X + 46) * 16) - 8, ((gathicPortalVector.Y + 23) * 16) - 4);
-            if (gathicPortalVector.X != -1 && gathicPortalVector.Y != -1 &&
-                !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
+            if (gathicPortalVector.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
 
             Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
-            if (slayerShipVector.X != -1 && slayerShipVector.Y != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
+            if (slayerShipVector.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
                 LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
         }
 

@@ -118,8 +118,18 @@ namespace Redemption.Globals
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
+            Recipe.Create(ItemID.LivingMahoganyWand)
+                .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddIngredient(ItemID.RichMahogany, 6)
+                .AddTile(TileID.WorkBenches)
+                .Register();
             Recipe.Create(ItemID.LeafWand)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+            Recipe.Create(ItemID.LivingMahoganyLeafWand)
+                .AddIngredient(ModContent.ItemType<LivingTwig>(), 12)
+                .AddIngredient(ItemID.RichMahogany, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
             Recipe.Create(ItemID.LivingLeafWall, 4)

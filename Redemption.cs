@@ -658,7 +658,7 @@ namespace Redemption
             int y = height * player.RedemptionPlayerBuff().stunFrame;
             Vector2 drawOrigin = new(starTex.Width / 2, height / 2);
 
-            spriteBatch.Draw(starTex, player.Center - new Vector2(0, 34) - Main.screenPosition, new Rectangle?(new Rectangle(0, y, starTex.Width, height)), Color.White, 0, drawOrigin, 1, 0, 0);
+            spriteBatch.Draw(starTex, player.Center - new Vector2(0, 34) - Main.screenPosition, new Rectangle?(new Rectangle(0, y, starTex.Width, height)), Color.White * ((255 - Main.BlackFadeIn) / 255f), 0, drawOrigin, 1, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
