@@ -232,7 +232,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (player.hurtCooldowns[i] > 0)
                                 Projectile.ai[1] = 100;
                         }
-                        if (Projectile.ai[1]++ < 9)
+                        if (Projectile.ai[1]++ < 11)
                             player.Redemption().parryStance = true;
                         else if (glow > 0)
                             glow -= 0.3f;
@@ -265,7 +265,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         if (Projectile.ai[1] >= 5 && player.controlUseItem)
                         {
                             player.immune = true;
-                            player.immuneTime = (int)MathHelper.Max(player.immuneTime, 52);
+                            player.immuneTime = (int)MathHelper.Max(player.immuneTime, 80);
 
                             Projectile.Kill();
                             int p = Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, player.Center.DirectionTo(Main.MouseWorld) * 20, ModContent.ProjectileType<BlindJustice_Proj>(), Projectile.damage, Projectile.knockBack, player.whoAmI);

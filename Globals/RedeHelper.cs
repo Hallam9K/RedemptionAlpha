@@ -711,9 +711,7 @@ namespace Redemption.Globals
         {
             damage /= 2;
             if (Main.expertMode)
-                damage /= 2;
-            if (Main.masterMode)
-                damage /= 3;
+                damage /= Main.masterMode ? 3 : 2;
             return damage;
         }
         /// <summary>
@@ -727,9 +725,7 @@ namespace Redemption.Globals
 
             damage /= 2;
             if (Main.expertMode)
-                damage /= 2;
-            if (Main.masterMode)
-                damage /= 3;
+                damage /= Main.masterMode ? 3 : 2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, 0,

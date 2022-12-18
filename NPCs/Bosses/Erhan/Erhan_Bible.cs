@@ -69,6 +69,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         AITimer = 0;
                         Projectile.localAI[0] = Main.rand.Next(3, 7);
+                        Projectile.netUpdate = true;
                     }
                     break;
                 case 3: // Seeds of Virtue
@@ -210,13 +211,16 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X + 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                     if (Main.rand.NextBool())
                                         playerOrigin.X += 280;
+                                    Projectile.netUpdate = true;
                                 }
                                 if (Main.rand.NextBool(4))
                                 {
                                     RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X - 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                     if (Main.rand.NextBool())
                                         playerOrigin.X -= 280;
+                                    Projectile.netUpdate = true;
                                 }
+                                Projectile.netUpdate = true;
                             }
                             if (AITimer == 420)
                             {

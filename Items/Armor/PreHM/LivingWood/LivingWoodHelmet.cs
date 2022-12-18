@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using System;
+using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.Items.Armor.PreHM.LivingWood
 {
@@ -49,6 +50,13 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
                 Gore.NewGore(player.GetSource_FromThis(), new Vector2(player.Center.X + Main.rand.Next(-12, 4), player.Center.Y + Main.rand.Next(6)), player.velocity, GoreID.TreeLeaf_Normal);
             }
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LivingTwig>(24)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

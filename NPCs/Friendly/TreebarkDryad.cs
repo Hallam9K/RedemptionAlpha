@@ -262,7 +262,7 @@ namespace Redemption.NPCs.Friendly
             if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
                 chat.Add("You remind me of that young warden, did the forest's curse get you too..?");
 
-            chat.Add("Are you friend, or foe. As long as you don't use your axe on me, I don't care...");
+            chat.Add("Are you friend, or foe? As long as you don't use your axe on me, I don't care...");
             return "Hmmmm... " + chat;
         }
 
