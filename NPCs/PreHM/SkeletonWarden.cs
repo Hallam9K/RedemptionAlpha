@@ -21,6 +21,7 @@ using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -185,8 +186,8 @@ namespace Redemption.NPCs.PreHM
             if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
-                if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
-                    projectile.Kill();
+                if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
+                    projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
                 blocked = true;
             }
         }
