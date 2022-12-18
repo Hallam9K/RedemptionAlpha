@@ -251,11 +251,15 @@ namespace Redemption.NPCs.Friendly
                         {
                             Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. I'm Daerel, by the way. Nice to meet you.";
                             RedeQuest.wayfarerVars[0] = 4;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
                             Main.npcChatText = "Oh yes, sorry, I'm Daerel. I'm decent with a bow and that's about it right now. Soon I hope to be more skilled in my craft, once I do, I'm certain your humble little island will have a fine archer one day. As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't intrude on anything.";
                             RedeQuest.wayfarerVars[0] = 3;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         break;
                     case 3:
@@ -263,6 +267,8 @@ namespace Redemption.NPCs.Friendly
                         {
                             Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. Nice to meet you.";
                             RedeQuest.wayfarerVars[0] = 4;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         break;
                 }

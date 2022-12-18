@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
             // Projectile Properties
             Item.shootSpeed = 20f;
-            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.shoot = ModContent.ProjectileType<DarkSteelArrow>();
             Item.useAmmo = AmmoID.Arrow;
         }
         public override Vector2? HoldoutOffset()

@@ -233,11 +233,15 @@ namespace Redemption.NPCs.Friendly
                         {
                             Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Pleasure to meet ya.";
                             RedeQuest.wayfarerVars[0] = 4;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
                             Main.npcChatText = "Where are my manners! M'name is Zephos, I hold no grand title to my name yet, but once I figure out the blade I'm certain your humble abode shall have a fine swordsman one day! As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't annoy ya.";
                             RedeQuest.wayfarerVars[0] = 3;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         break;
                     case 3:
@@ -245,6 +249,8 @@ namespace Redemption.NPCs.Friendly
                         {
                             Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? Pleasure to meet ya.";
                             RedeQuest.wayfarerVars[0] = 4;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         break;
                 }

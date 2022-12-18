@@ -81,8 +81,8 @@ namespace Redemption.Globals
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, npcType);
-            else if (Main.netMode != NetmodeID.SinglePlayer)
-                Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, npcType, pos).Send(-1);
+            //else if (Main.netMode != NetmodeID.SinglePlayer)
+            //    Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, npcType, pos).Send(-1);
         }
         public override void OnWorldLoad()
         {

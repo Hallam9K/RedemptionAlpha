@@ -69,6 +69,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         AITimer = 0;
                         Projectile.localAI[0] = Main.rand.Next(3, 7);
+                        Projectile.netUpdate = true;
                     }
                     break;
                 case 3: // Seeds of Virtue
@@ -195,7 +196,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 Projectile.netUpdate = true;
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
                                 RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 2, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
+                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 12, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
                             }
                             if (AITimer >= 80)
                                 Projectile.velocity.Y = -1.5f;
@@ -210,13 +211,16 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X + 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                     if (Main.rand.NextBool())
                                         playerOrigin.X += 280;
+                                    Projectile.netUpdate = true;
                                 }
                                 if (Main.rand.NextBool(4))
                                 {
                                     RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)playerOrigin.X - 280, (int)playerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                     if (Main.rand.NextBool())
                                         playerOrigin.X -= 280;
+                                    Projectile.netUpdate = true;
                                 }
+                                Projectile.netUpdate = true;
                             }
                             if (AITimer == 420)
                             {

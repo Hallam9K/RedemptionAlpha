@@ -57,14 +57,19 @@ namespace Redemption.NPCs.Bosses.Thorn
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile target = Main.projectile[i];
-                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.minion || target.damage > 100)
+                    if (!target.active || target.whoAmI == Projectile.whoAmI || target.hostile || target.damage > 100)
                         continue;
 
-                    if (target.velocity.Length() == 0 || target.DamageType != DamageClass.Magic || ProjectileID.Sets.CultistIsResistantTo[target.type] || !Projectile.Hitbox.Intersects(target.Hitbox))
+                    if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.ProjBlockBlacklist(true))
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item29, Projectile.position);
                     DustHelper.DrawCircle(target.Center, DustID.MagicMirror, 1, 4, 4, nogravity: true);
+                    if (target.DamageType != DamageClass.Magic)
+                    {
+                        target.Kill();
+                        return;
+                    }
                     if (!target.hostile && target.friendly)
                     {
                         target.hostile = true;

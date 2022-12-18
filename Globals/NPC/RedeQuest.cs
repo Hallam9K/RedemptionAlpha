@@ -28,6 +28,8 @@ namespace Redemption.Globals
             if (wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
             {
                 wayfarerVars[0] = 1;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
 
                 string status = "A portal rumbles... (Check Minimap for the location)";
                 if (Main.netMode == NetmodeID.Server)
@@ -61,6 +63,9 @@ namespace Redemption.Globals
                     }
                     if (RedeGen.newbCaveVector.X != -1 && !RedeHelper.WayfarerActive())
                         LabArea.SpawnNPCInWorld(anglonPortalPos, wayfarer);
+
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
                 }
             }
             #endregion

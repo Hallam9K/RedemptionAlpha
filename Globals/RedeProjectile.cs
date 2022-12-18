@@ -120,6 +120,98 @@ namespace Redemption.Globals
                     Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, projectile.whoAmI).Send();
             }
         }
+        #region Wasteland Conversion
+        public override void PostAI(Projectile projectile)
+        {
+            if ((projectile.type != 10 && projectile.type != 145 && projectile.type != 147 && projectile.type != 149 && projectile.type != 146) || projectile.owner != Main.myPlayer)
+                return;
+            int x = (int)(projectile.Center.X / 16f);
+            int y = (int)(projectile.Center.Y / 16f);
+
+            Tile tile = Main.tile[x, y];
+            int type = tile.TileType;
+            int wallType = tile.WallType;
+
+            for (int i = x - 1; i <= x + 1; i++)
+            {
+                for (int j = y - 1; j <= y + 1; j++)
+                {
+                    if (!WorldGen.InWorld(x, y, 1))
+                        return;
+
+                    if (projectile.type == 145 || projectile.type == 10)
+                    {
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                                tile.TileType = 0;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                                tile.TileType = 147;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                                tile.TileType = 191;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                                Main.tile[x, y].WallType = 2;
+                        }
+                    }
+                    if (projectile.type == 147)
+                    {
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                                tile.TileType = 0;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                                tile.TileType = 147;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                                tile.TileType = 191;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                                Main.tile[x, y].WallType = 2;
+                        }
+                    }
+                    if (projectile.type == 149)
+                    {
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                                tile.TileType = 0;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                                tile.TileType = 147;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                                tile.TileType = 191;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                                Main.tile[x, y].WallType = 2;
+                        }
+                    }
+                    if (projectile.type == 146)
+                    {
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (type == ModContent.TileType<Tiles.Tiles.IrradiatedDirtTile>())
+                                tile.TileType = 0;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedSnowTile>())
+                                tile.TileType = 147;
+                            else if (type == ModContent.TileType<Tiles.Tiles.IrradiatedLivingWoodTile>())
+                                tile.TileType = 191;
+                        }
+                        if (Main.tile[x, y] != null)
+                        {
+                            if (wallType == ModContent.WallType<Walls.IrradiatedDirtWallTile>())
+                                Main.tile[x, y].WallType = 2;
+                        }
+                    }
+                    NetMessage.SendTileSquare(-1, i, j, 1, 1);
+                }
+            }
+            #endregion
+        }
     }
     public abstract class TrueMeleeProjectile : ModProjectile
     {
@@ -164,7 +256,7 @@ namespace Redemption.Globals
         public int maxLaserFrames = 1;
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = true;
-        
+
         public virtual void SetSafeStaticDefaults() { }
 
         public override void SetStaticDefaults()

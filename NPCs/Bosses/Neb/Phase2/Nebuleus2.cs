@@ -546,7 +546,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -559,7 +559,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.01f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -594,7 +594,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     for (int i = 0; i < 4; i++)
                                     {
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2 * i),
-                                            ModContent.ProjectileType<CurvingStar_Tele2>(), 120 / 3, 0f, Main.myPlayer, 1.005f);
+                                            ModContent.ProjectileType<CurvingStar_Tele2>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0f, Main.myPlayer, 1.005f);
                                     }
                                 }
                             }
@@ -646,13 +646,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 4;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -665,13 +665,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 4;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(9f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(9f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -684,13 +684,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(3f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(3f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -728,7 +728,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     }
                                     int B = Main.rand.Next(-200, 200) - 700;
 
-                                    NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<Starfall_Tele2>(), 120, new Vector2(NPC.spriteDirection != 1 ? -12f : 12f, 14f), true, SoundID.Item9 with { Volume = .5f });
+                                    NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<Starfall_Tele2>(), (int)(NPC.damage * .67f), new Vector2(NPC.spriteDirection != 1 ? -12f : 12f, 14f), true, SoundID.Item9 with { Volume = .5f });
                                 }
                             }
                             if (NPC.ai[2] == 40) { NPC.ai[3] = 4; }
@@ -785,7 +785,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
-                                        ModContent.ProjectileType<CosmicEye3>(), 150 / 3, 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<CosmicEye3>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0f, Main.myPlayer);
                                 }
                             }
                             if (NPC.ai[2] == 40 || NPC.ai[2] == 120)
@@ -795,7 +795,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.001f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -852,7 +852,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                         double angle = k * (Math.PI * 2 / 16);
                                         vector.X = (float)(Math.Sin(angle) * 180);
                                         vector.Y = (float)(Math.Cos(angle) * 180);
-                                        NPC.Shoot(new Vector2((int)NPC.Center.X + (int)vector.X, (int)NPC.Center.Y + (int)vector.Y), ModContent.ProjectileType<CosmicEye>(), 140, Vector2.Zero, true, CustomSounds.NebSound1, NPC.whoAmI);
+                                        NPC.Shoot(new Vector2((int)NPC.Center.X + (int)vector.X, (int)NPC.Center.Y + (int)vector.Y), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, true, CustomSounds.NebSound1, NPC.whoAmI);
                                     }
                                 }
                             }
@@ -864,7 +864,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.02f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.02f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -877,7 +877,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), 120 / 3, 0, Main.myPlayer, 1.02f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.02f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -907,7 +907,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int A = Main.rand.Next(-200, 200) * 6;
                                     int B = Main.rand.Next(-200, 200) - 1000;
 
-                                    NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<Starfall_Tele2>(), 120, new Vector2(NPC.spriteDirection != 1 ? -2f : 2f, 6f), true, SoundID.Item9 with { Volume = .5f });
+                                    NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<Starfall_Tele2>(), (int)(NPC.damage * .67f), new Vector2(NPC.spriteDirection != 1 ? -2f : 2f, 6f), true, SoundID.Item9 with { Volume = .5f });
                                 }
                             }
                             if (NPC.ai[2] == 50) { NPC.ai[3] = 4; }
@@ -929,7 +929,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
                             if (NPC.ai[2] % 3 == 0 && NPC.ai[2] >= 30 && NPC.ai[2] <= 60)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele4>(), 120, new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), false, SoundID.Item9, 1.01f);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele4>(), (int)(NPC.damage * .67f), new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), false, SoundID.Item9, 1.01f);
                             }
                             if (NPC.ai[2] == 60) { NPC.ai[3] = 2; }
                             if (NPC.ai[2] >= 100)
@@ -955,7 +955,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int A = Main.rand.Next(-200, 200) * 6;
                                     int B = Main.rand.Next(-200, 200) - 1000;
 
-                                    NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<CrystalStar_Tele>(), 120, new Vector2(NPC.spriteDirection != 1 ? -2f : 2f, 6f), true, SoundID.Item9 with { Volume = .5f });
+                                    NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<CrystalStar_Tele>(), (int)(NPC.damage * .67f), new Vector2(NPC.spriteDirection != 1 ? -2f : 2f, 6f), true, SoundID.Item9 with { Volume = .5f });
                                 }
                             }
                             if (NPC.ai[2] == 50) { NPC.ai[3] = 4; }
@@ -1145,8 +1145,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             }
                             if (NPC.ai[2] > 65 && NPC.ai[2] < 86 && NPC.ai[2] % 2 == 0)
                             {
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), 120, RedeHelper.PolarVector(3, NPC.rotation + MathHelper.PiOver2), true, SoundID.Item91);
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), 120, RedeHelper.PolarVector(3, NPC.rotation - MathHelper.PiOver2), true, SoundID.Item91);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(3, NPC.rotation + MathHelper.PiOver2), true, SoundID.Item91);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(3, NPC.rotation - MathHelper.PiOver2), true, SoundID.Item91);
                             }
                             if (NPC.ai[2] >= 90)
                             {
@@ -1238,7 +1238,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 95 || NPC.ai[2] == 115 || NPC.ai[2] == 135) { NPC.ai[3] = 5; armFrames[3] = 0; }
                             if (NPC.ai[2] == 105 || NPC.ai[2] == 125 || NPC.ai[2] == 145)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] > 95)
                             {
@@ -1264,7 +1264,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 50 || NPC.ai[2] == 70)
                             {
                                 Teleport(false, Vector2.Zero);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] >= 120)
                             {
@@ -1284,17 +1284,17 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60) { NPC.ai[3] = 5; armFrames[3] = 0; }
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 70)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.78f), false, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.78f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.78f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.78f), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] == 50)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 1.2f), false, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 1.2f), false, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.6f), false, SoundID.Item125, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), 120, RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.6f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 1.2f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 1.2f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.6f), false, SoundID.Item125, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() - 0.6f), false, SoundID.Item125, NPC.whoAmI);
                             }
                             if (NPC.ai[2] >= 120)
                             {
@@ -1324,8 +1324,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 50 || NPC.ai[2] == 90) { NPC.ai[3] = 6; Dash(70, false, Vector2.Zero); NPC.netUpdate = true; }
                             if (NPC.ai[2] % 3 == 0 && NPC.velocity.Length() > 40)
                             {
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), 120, NPC.velocity.RotatedBy(Math.PI / 2) / 20, true, SoundID.Item117);
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), 120, NPC.velocity.RotatedBy(-Math.PI / 2) / 20, true, SoundID.Item117);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), (int)(NPC.damage * .67f), NPC.velocity.RotatedBy(Math.PI / 2) / 20, true, SoundID.Item117);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<StarBolt>(), (int)(NPC.damage * .67f), NPC.velocity.RotatedBy(-Math.PI / 2) / 20, true, SoundID.Item117);
                             }
                             if (NPC.velocity.Length() < 10)
                             {
@@ -1386,7 +1386,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(1f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
-                                        ModContent.ProjectileType<StarBolt>(), 150 / 3, 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<StarBolt>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0f, Main.myPlayer);
                                 }
                             }
                             if (NPC.ai[2] == 300) { NPC.ai[3] = 2; }
@@ -1446,7 +1446,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(2, (vector - NPC.Center).ToRotation()), ModContent.ProjectileType<StarBolt>(), 150 / 3, 0, Main.myPlayer, NPC.whoAmI);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(2, (vector - NPC.Center).ToRotation()), ModContent.ProjectileType<StarBolt>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0, Main.myPlayer, NPC.whoAmI);
                                         Main.projectile[p].timeLeft = 155;
                                     }
                                 }

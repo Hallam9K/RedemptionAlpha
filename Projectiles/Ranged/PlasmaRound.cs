@@ -152,6 +152,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.Redemption().EnergyBased = true;
         }
 
         public override bool? CanHitNPC(NPC target) => Projectile.frame < 5 ? null : false;

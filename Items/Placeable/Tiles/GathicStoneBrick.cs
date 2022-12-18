@@ -28,8 +28,8 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddIngredient(ModContent.ItemType<GathicStone>(), 2)
                 .AddTile(TileID.Furnaces)
                 .Register();
-            CreateRecipe(4)
-                .AddIngredient(ModContent.ItemType<AncientHallPillarWall>())
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<AncientHallPillarWall>(), 4)
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
         }

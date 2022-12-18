@@ -53,4 +53,17 @@ namespace Redemption.Tiles.Furniture.SlayerShip
         }
         public override bool CanExplode(int i, int j) => false;
     }
+    public class PrototypeSilverInactive : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Inactive Prototype Silver");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<AndroidInactiveTile>();
+        }
+    }
 }
