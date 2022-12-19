@@ -41,6 +41,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
             Projectile.scale = 1;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 10;
         }

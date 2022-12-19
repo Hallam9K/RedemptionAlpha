@@ -26,6 +26,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 120;
+            Projectile.DamageType = DamageClass.Melee;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.frame <= 3 ? null : false;
         public override void AI()
@@ -86,9 +87,6 @@ namespace Redemption.Projectiles.Melee
             {
                 vector *= 20f / magnitude;
             }
-        }
-        public override void Kill(int timeLeft)
-        {
         }
         public override bool PreDraw(ref Color lightColor)
         {

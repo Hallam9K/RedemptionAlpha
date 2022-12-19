@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.hostile = false;
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 80;
 		}
 

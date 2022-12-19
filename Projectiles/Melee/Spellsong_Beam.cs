@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 350;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Melee;
         }
         public override void AI()
         {

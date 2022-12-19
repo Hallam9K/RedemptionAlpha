@@ -29,11 +29,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetSafeDefaults()
         {
-            Projectile.width = 48;
-            Projectile.height = 48;
+            Projectile.width = 54;
+            Projectile.height = 54;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Length = 32;
+            Length = 46;
             Rot = MathHelper.ToRadians(2);
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
@@ -274,7 +274,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 1.1f, 1.2f);
-            Vector2 v = RedeHelper.PolarVector(6, (Projectile.Center - player.Center).ToRotation());
+            Vector2 v = RedeHelper.PolarVector(10, (Projectile.Center - player.Center).ToRotation());
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

@@ -32,6 +32,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 6;
             Projectile.scale = 1.5f;

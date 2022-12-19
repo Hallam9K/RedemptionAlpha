@@ -28,6 +28,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = 1;
             Projectile.timeLeft = 180;
             Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.extraUpdates = 2;
         }
         public float vectorOffset = 0f;

@@ -70,7 +70,9 @@ namespace Redemption
         }
         public override bool CanUseItem(Item item)
         {
-            return !cutscene;
+            if (cutscene && item.damage > 0)
+                return false;
+            return base.CanUseItem(item);
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {

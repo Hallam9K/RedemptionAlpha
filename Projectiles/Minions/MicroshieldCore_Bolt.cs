@@ -22,6 +22,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = true;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.penetrate = 3;
             Projectile.timeLeft = 240;
         }

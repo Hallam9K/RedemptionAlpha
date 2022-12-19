@@ -5,15 +5,13 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.Audio;
-using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
 using Redemption.Base;
 using Redemption.Particles;
 using Redemption.Buffs.NPCBuffs;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ReLogic.Utilities;
-using System.Data;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -35,6 +33,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Projectile.DamageType = DamageClass.Magic;
             Projectile.ownerHitCheck = true;
             Projectile.ignoreWater = true;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
         private readonly List<int> targets = new();
 

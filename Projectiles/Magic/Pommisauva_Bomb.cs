@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Magic;
 
             Projectile.timeLeft = 180;
         }

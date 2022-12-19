@@ -125,6 +125,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.hostile = false;
             Projectile.penetrate = 1;
             Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.timeLeft = 180;
         }
         public override void AI()

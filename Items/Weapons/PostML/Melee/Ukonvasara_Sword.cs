@@ -267,7 +267,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             if (boomed)
-                texture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PostML/Melee/Ukonvasara_Proj").Value;
+                texture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PostML/Melee/Ukonvasara_Proj2").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

@@ -52,16 +52,6 @@ namespace Redemption.Items.Weapons.HM.Ranged
             return new Vector2(-4, 0);
         }
 
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
-        {
-            Vector2 Offset = Vector2.Normalize(velocity) * 10f;
-
-            if (Collision.CanHit(position, 0, 0, position + Offset, 0, 0))
-            {
-                position += Offset;
-            }
-        }
-
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             player.GetModPlayer<EnergyPlayer>().statEnergy -= 4;

@@ -23,6 +23,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.alpha = 160;
             Projectile.timeLeft = 200;
         }

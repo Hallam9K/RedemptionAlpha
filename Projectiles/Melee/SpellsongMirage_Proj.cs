@@ -29,6 +29,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 140;
             Projectile.alpha = 255;
             Projectile.scale = 0.1f;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.usesLocalNPCImmunity = true;
         }
         public override bool? CanCutTiles() => false;

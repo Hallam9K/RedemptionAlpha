@@ -28,6 +28,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 600;
             Projectile.alpha = 10;
         }
@@ -113,6 +114,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.hostile = false;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
             Projectile.spriteDirection = Main.rand.NextBool() ? 1 : -1;
         }

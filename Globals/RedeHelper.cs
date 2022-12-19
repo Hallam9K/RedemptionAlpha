@@ -368,7 +368,7 @@ namespace Redemption.Globals
         public static bool HeldItemCrit(this Projectile projectile)
         {
             Terraria.Player player = Main.player[projectile.owner];
-            float critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
+            float critChance = player.HeldItem.crit + player.GetTotalCritChance(projectile.DamageType);
             ItemLoader.ModifyWeaponCrit(player.HeldItem, player, ref critChance);
             PlayerLoader.ModifyWeaponCrit(player, player.HeldItem, ref critChance);
             if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
