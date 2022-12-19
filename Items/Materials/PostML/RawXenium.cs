@@ -16,8 +16,8 @@ namespace Redemption.Items.Materials.PostML
 
         public override void SetDefaults()
         {
-            Item.width = 20;
-            Item.height = 20;
+            Item.width = 26;
+            Item.height = 26;
             Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 0, 15, 0);
             Item.rare = ItemRarityID.Purple;

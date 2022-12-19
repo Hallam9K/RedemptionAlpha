@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             Point tileBelow = player.Bottom.ToTileCoordinates();
             Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
-            if (player.altFunctionUse != 2 && AttackMode == 1 && tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileCut[tile.TileType])
+            if (player.altFunctionUse != 2 && AttackMode == 2 && tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileCut[tile.TileType])
                 return false;
             if (player.altFunctionUse == 2)
                 Item.UseSound = SoundID.Item37;
@@ -79,7 +79,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         CombatText.NewText(player.getRect(), Color.LightCyan, "Hammer Mode", true, false);
                         break;
                     case 2:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Launch Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, "Axe Mode", true, false);
                         break;
                 }
             }
@@ -91,10 +91,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
                         break;
                     case 1:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj>(), damage, knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj2>(), (int)(damage * 1.3f), knockback, player.whoAmI);
                         break;
                     case 2:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj2>(), (int)(damage * 1.3f), knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Axe>(), damage, knockback, player.whoAmI);
                         break;
 
                 }
@@ -110,10 +110,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     shotType = "Sword Mode: Does a three combo slash before being thrown";
                     break;
                 case 1:
-                    shotType = "Hammer Mode: While airborne, the hammer will launch the player onto the ground, striking that location with lighting";
+                    shotType = "Hammer Mode: Launches the player at cursor point, leaves an electric trail behind and strikes enemies hit by the weapon with lighting";
                     break;
                 case 2:
-                    shotType = "Launch Mode: Launches the player at cursor point, leaves an electric trail behind and strikes enemies hit by the weapon with lighting";
+                    shotType = "Axe Mode: While airborne, the axe will launch the player onto the ground, striking that location with lighting";
                     break;
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
