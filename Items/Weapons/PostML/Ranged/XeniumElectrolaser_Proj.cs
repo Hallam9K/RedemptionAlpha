@@ -79,7 +79,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 num = MathHelper.Pi;
             Projectile.rotation = Projectile.velocity.ToRotation() + num;
 
-            Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(37 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-7, Projectile.rotation + MathHelper.PiOver2);
+            Vector2 gunPos = Projectile.Center + RedeHelper.PolarVector(31 * Projectile.spriteDirection, Projectile.rotation);
             offset -= 5;
             rotOffset += 0.1f;
             if (Main.myPlayer == Projectile.owner)
@@ -115,7 +115,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                         glowTimer++;
                         for (int k = 0; k < 1 + (Projectile.localAI[0] / 120); k++)
                         {
-                            Vector2 dustPos = Projectile.Center + RedeHelper.PolarVector(58 * Projectile.spriteDirection, Projectile.rotation) + RedeHelper.PolarVector(-7, Projectile.rotation + MathHelper.PiOver2);
+                            Vector2 dustPos = Projectile.Center + RedeHelper.PolarVector(52 * Projectile.spriteDirection, Projectile.rotation);
                             Vector2 dVector;
                             double angle = Main.rand.NextDouble() * 2d * Math.PI;
                             dVector.X = (float)(Math.Sin(angle) * 20);
@@ -193,12 +193,12 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
-            Vector2 v = RedeHelper.PolarVector(-16 + offset, Projectile.velocity.ToRotation());
+            Vector2 v = RedeHelper.PolarVector(-26 + offset, Projectile.velocity.ToRotation());
             float timerMax = 180;
             int timerProgress = (int)(glow.Width * (glowTimer / timerMax));
 
             Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation + (rotOffset * Projectile.spriteDirection), drawOrigin, Projectile.scale, spriteEffects, 0);
-            Main.EntitySpriteDraw(glow, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(new Rectangle(0, 0, timerProgress, glow.Height)), Projectile.GetAlpha(RedeColor.GreenPulse), Projectile.rotation + (rotOffset * Projectile.spriteDirection), drawOrigin + new Vector2(Projectile.spriteDirection == -1 ? -4 : -54, -8), Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(glow, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(new Rectangle(0, 0, timerProgress, glow.Height)), Projectile.GetAlpha(RedeColor.GreenPulse), Projectile.rotation + (rotOffset * Projectile.spriteDirection), drawOrigin + new Vector2(Projectile.spriteDirection == -1 ? -30 : -50, -12), Projectile.scale, spriteEffects, 0);
             return false;
         }
     }

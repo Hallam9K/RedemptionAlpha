@@ -13,7 +13,7 @@ using Redemption.Buffs;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
-    public class Ukonvasara_Proj : TrueMeleeProjectile
+    public class Ukonvasara_Axe : TrueMeleeProjectile
     {
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
-            Projectile.width = 34;
-            Projectile.height = 36;
+            Projectile.width = 60;
+            Projectile.height = 60;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
@@ -73,7 +73,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     player.direction = directionLock;
 
                     Projectile.ai[0]++;
-                    Projectile.ai[0] *= 1.08f;
+                    Projectile.ai[0] *= 1.15f;
 
                     float timer = Projectile.ai[0] - 1;
                     if (Projectile.ai[0] > 5)
@@ -134,7 +134,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.spriteDirection = player.direction;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-            Projectile.Center = playerCenter + Projectile.velocity * 20f;
+            Projectile.Center = playerCenter + Projectile.velocity * 30f;
 
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;

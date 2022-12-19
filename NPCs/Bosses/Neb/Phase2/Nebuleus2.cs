@@ -1378,7 +1378,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
                             if (NPC.ai[2] > 30 && NPC.ai[2] <= 300)
                             {
-                                attackTimer[0] += (float)Math.PI / 5 / 400 * NPC.ai[2];
+                                attackTimer[0] += (float)Math.PI / 3 / 300 * NPC.ai[2];
                                 if (attackTimer[0] > (float)Math.PI)
                                 {
                                     attackTimer[0] -= (float)Math.PI * 2;

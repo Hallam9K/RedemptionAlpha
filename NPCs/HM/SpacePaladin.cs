@@ -25,6 +25,7 @@ using Terraria.GameContent.UI;
 using System;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
+using Microsoft.CodeAnalysis;
 
 namespace Redemption.NPCs.HM
 {
@@ -526,8 +527,8 @@ namespace Redemption.NPCs.HM
             if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
-                if (projectile.penetrate != -1)
-                    projectile.Kill();
+                if (projectile.penetrate > 1)
+                    projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
                 SoundEngine.PlaySound(SoundID.NPCHit34, NPC.position);
                 damage = 0;
                 knockback = 0;
