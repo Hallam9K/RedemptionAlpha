@@ -23,8 +23,8 @@ namespace Redemption.NPCs.Soulless
         }
         public override void SetDefaults()
         {
-            NPC.width = 107;
-            NPC.height = 128;
+            NPC.width = 60;
+            NPC.height = 74;
             NPC.lifeMax = 1000;
             NPC.damage = 100;
             NPC.immortal = true;
