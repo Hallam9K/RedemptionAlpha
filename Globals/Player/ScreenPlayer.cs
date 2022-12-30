@@ -62,7 +62,20 @@ namespace Redemption
         public override void UpdateEquips()
         {
             if (cutscene)
+            {
+                for (int p = 0; p < Main.maxNPCs; p++)
+                {
+                    NPC target = Main.npc[p];
+                    if (!target.active || target.boss || target.friendly || target.knockBackResist <= 0)
+                        continue;
+
+                    if (Player.DistanceSQ(target.Center) >= 500 * 500)
+                        continue;
+
+                    target.velocity -= RedeHelper.PolarVector(0.3f, (Player.Center - target.Center).ToRotation());
+                }
                 Player.wingTime = Player.wingTimeMax;
+            }
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {

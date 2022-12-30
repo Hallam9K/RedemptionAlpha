@@ -29,11 +29,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetSafeDefaults()
         {
-            Projectile.width = 54;
-            Projectile.height = 54;
+            Projectile.width = 60;
+            Projectile.height = 60;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Length = 46;
+            Length = 52;
             Rot = MathHelper.ToRadians(2);
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;

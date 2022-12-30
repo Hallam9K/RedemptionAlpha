@@ -19,7 +19,7 @@ namespace Redemption.Items.Accessories.HM
         public override void SetDefaults()
         {
             Item.value = Item.buyPrice(0, 20, 50, 0);
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.LightRed;
             Item.width = 34;
             Item.height = 28;
             Item.accessory = true;

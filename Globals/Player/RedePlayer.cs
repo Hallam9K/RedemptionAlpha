@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
+using Redemption.WorldGeneration;
 
 namespace Redemption.Globals.Player
 {
@@ -41,6 +42,8 @@ namespace Redemption.Globals.Player
         public int crystalGlaiveShotCount;
         public bool parryStance;
         public bool parried;
+        public bool yesChoice;
+        public bool noChoice;
 
         public override void ResetEffects()
         {
@@ -97,6 +100,13 @@ namespace Redemption.Globals.Player
                 hitTarget = target.whoAmI;
                 hitTarget2 = target.whoAmI;
             }
+        }
+        public override void OnEnterWorld(Terraria.Player player)
+        {
+            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
+                Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
+            if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
+                Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
         }
         public override void PostUpdateMiscEffects()
         {

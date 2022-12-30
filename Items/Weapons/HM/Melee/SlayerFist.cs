@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.channel = true;
             Item.knockBack = 8;
             Item.value = Item.sellPrice(0, 15, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item74;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<SlayerFist_Proj>();

@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.channel = true;
             Item.knockBack = 4;
             Item.value = Item.sellPrice(0, 8, 0, 0);
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item23;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<OversizedScrewdriver_Proj>();

@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.noUseGraphic = true;
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 10, 0, 0);

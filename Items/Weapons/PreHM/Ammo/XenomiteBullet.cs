@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 			Item.consumable = true;
 			Item.knockBack = 2f;
 			Item.value = 1;
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.Green;
 			Item.shoot = ModContent.ProjectileType<XenomiteBulletProj>();
 			Item.shootSpeed = 4f;
 			Item.ammo = AmmoID.Bullet;

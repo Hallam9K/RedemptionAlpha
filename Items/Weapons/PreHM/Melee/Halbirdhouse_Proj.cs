@@ -75,7 +75,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Projectile.Kill();
             }
 
-            Length = MathHelper.Clamp(Length, 6, 30);
+            Length = MathHelper.Clamp(Length, 16, 40);
 
             if (Timer > 1)
                 Projectile.alpha = 0;
@@ -94,7 +94,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Vector2 v = Projectile.Center - RedeHelper.PolarVector(20, (Projectile.Center - player.Center).ToRotation());
+            Vector2 v = Projectile.Center - RedeHelper.PolarVector(10, (Projectile.Center - player.Center).ToRotation());
 
             Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;

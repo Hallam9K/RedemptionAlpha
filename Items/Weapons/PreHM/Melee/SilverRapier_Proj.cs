@@ -89,6 +89,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.dust[sparkle].noGravity = true;
             return false;
         }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            Player player = Main.player[Projectile.owner];
+            hitDirection = player.Center.X > target.Center.X ? -1 : 1;
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];

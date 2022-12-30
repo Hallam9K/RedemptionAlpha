@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.channel = true;
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 15, 0, 0);
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Yellow;
             Item.UseSound = CustomSounds.ShotgunBlast1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<DAN_Rocket>();

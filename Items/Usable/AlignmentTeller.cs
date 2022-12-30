@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
+using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,10 @@ namespace Redemption.Items.Usable
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.consumable = false;
         }
-
+        public override bool CanUseItem(Player player)
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>());
+        }
         public override void AddRecipes()
         {
             CreateRecipe()

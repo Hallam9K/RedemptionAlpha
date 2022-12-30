@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.noUseGraphic = true;
             Item.knockBack = 5;
             Item.value = Item.sellPrice(0, 6, 0, 0);
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.NPCDeath13;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<BileLauncher_Gloop>();

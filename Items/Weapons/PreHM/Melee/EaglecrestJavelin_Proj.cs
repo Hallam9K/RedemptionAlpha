@@ -143,7 +143,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
             if (Projectile.owner == Main.myPlayer)
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), 38, 8, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), (int)(Projectile.damage * .75f), 8, Projectile.owner);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -159,7 +159,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY;
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition - Vector2.UnitY * Projectile.gfxOffY;
                 Color color = new Color(255, 180, 0) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos + new Vector2(8, 8), null, color * glow, oldrot[k], origin, Projectile.scale * scale, spriteEffects, 0);
             }
@@ -167,7 +167,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }

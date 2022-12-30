@@ -345,6 +345,9 @@ namespace Redemption
         public UserInterface TextBubbleUILayer;
         public TextBubbleUI TextBubbleUIElement;
 
+        public UserInterface YesNoUILayer;
+        public YesNoUI YesNoUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -378,6 +381,10 @@ namespace Redemption
                 TextBubbleUILayer = new UserInterface();
                 TextBubbleUIElement = new TextBubbleUI();
                 TextBubbleUILayer.SetState(TextBubbleUIElement);
+
+                YesNoUILayer = new UserInterface();
+                YesNoUIElement = new YesNoUI();
+                YesNoUILayer.SetState(YesNoUIElement);
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
@@ -543,6 +550,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
+                AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
             }
         }
 

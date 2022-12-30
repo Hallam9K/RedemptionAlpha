@@ -27,8 +27,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
-            Projectile.width = 68;
-            Projectile.height = 68;
+            Projectile.width = 94;
+            Projectile.height = 94;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
@@ -207,7 +207,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * 0.5f, oldrot[k], drawOrigin, Projectile.scale, spriteEffects, 0);
             }
             if (Projectile.ai[0] == 0)
-                Main.EntitySpriteDraw(spinTex, player.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(spinRect), Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, spinOrigin, Projectile.scale + 0.2f, spriteEffects2, 0);
+                Main.EntitySpriteDraw(spinTex, player.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(spinRect), Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, spinOrigin, Projectile.scale + 0.4f, spriteEffects2, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.noMelee = true;
             Item.knockBack = 1;
             Item.value = Item.sellPrice(0, 8, 0, 0);
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item40;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<DrillRevolver_Bullet>();

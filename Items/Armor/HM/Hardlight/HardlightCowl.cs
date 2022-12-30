@@ -25,7 +25,7 @@ namespace Redemption.Items.Armor.HM.Hardlight
             Item.width = 20;
             Item.height = 18;
             Item.sellPrice(silver: 75);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.defense = 16;
         }
 
