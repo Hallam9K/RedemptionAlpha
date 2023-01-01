@@ -61,6 +61,8 @@ Mods: {
             MicroshieldCoreBuff: "Microshield Core"
             MicroshieldDroneBuff: "Microshield Drone"
             HoloMinionBuff: "Hologram"
+            MoonflareGuardianBuff: "Moonflare Guardian"
+            NaturePixieBuff: "Nature Pixie"
             
             # Mounts
             JyrinaMountBuff: "Ukko's Steed"
@@ -140,6 +142,8 @@ Mods: {
             MicroshieldCoreBuff: "A tiny shield core is defending you"
             MicroshieldDroneBuff: "A microshield drone is defending you"
             HoloMinionBuff: "Wait, how do holograms hit things?"
+			MoonflareGuardianBuff: "A Moonflare Guardian will fight for you"
+            NaturePixieBuff: "A Nature Pixie will annoy enemies for you"
             
             # Mounts
             JyrinaMountBuff: "Is that the sound of an approaching thunderstorm I hear?"

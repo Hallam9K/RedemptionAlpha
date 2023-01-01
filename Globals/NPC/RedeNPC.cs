@@ -41,6 +41,8 @@ using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
+using Terraria.GameContent.Bestiary;
+using Terraria.UI;
 
 namespace Redemption.Globals.NPC
 {

@@ -618,6 +618,22 @@ namespace Redemption.NPCs.Bosses.ADD
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemLists.Earth.Contains(item.type))
+                    NPC.Redemption().elementDmg *= 0.75f;
+            }
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileLists.Earth.Contains(projectile.type))
+                    NPC.Redemption().elementDmg *= 0.75f;
+            }
+        }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (Flare)

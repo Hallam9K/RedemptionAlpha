@@ -131,5 +131,8 @@ namespace Redemption
         public static readonly SoundStyle BAZINGA = new("Redemption/Sounds/Custom/BAZINGA");
         public static readonly SoundStyle WorldTree = new("Redemption/Sounds/Custom/WorldTree");
         public static readonly SoundStyle DANShot = new("Redemption/Sounds/Custom/DANShot") { PitchVariance = .1f };
+        public static readonly SoundStyle Pixie1 = new("Redemption/Sounds/Custom/Pixie1") { PitchVariance = .1f };
+        public static readonly SoundStyle Pixie2 = new("Redemption/Sounds/Custom/Pixie2") { PitchVariance = .1f };
+        public static readonly SoundStyle Pixie3 = new("Redemption/Sounds/Custom/Pixie3") { PitchVariance = .1f };
     }
 }

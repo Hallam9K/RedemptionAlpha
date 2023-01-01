@@ -63,13 +63,13 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = -.9f }, NPC.position);
                         player.Redemption().yesChoice = false;
                         player.Redemption().noChoice = false;
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I judge the actions of those who wield me.", 260, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I judge the actions of my possessor.", 260, 30, 0, Color.DarkGoldenrod);
                         NPC.velocity.Y = -5;
                     }
                     NPC.velocity.Y *= 0.97f;
                     if (AITimer >= 320)
                     {
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Do you wish for an explanation on Alignment?", 800, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Do you wish for an explanation of Alignment?", 800, 30, 0, Color.DarkGoldenrod);
                         if (!Main.dedServ)
                             YesNoUI.Visible = true;
                         AITimer = 0;
@@ -111,32 +111,32 @@ namespace Redemption.NPCs.Friendly
                         extraPos[i] = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians((360 / 3 * i) + NPC.localAI[0])) * NPC.localAI[1];
                     }
                     if (AITimer++ == 30 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Certain actions may have an impact on the world.", 180, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer == 220 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Fighting an evil foe or helping a friend will set you on the right path.", 300, 20, 0, Color.Green);
-                    if (AITimer == 560 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Slaying those with a rightous heart or working with evil will lower the world's view of you.", 300, 20, 0, Color.Red);
-                    if (AITimer == 900 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Depending on the route you take, you may gain access to things unique to it.", 300, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer == 1240 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Foes may take you more seriously and different materials may be accessed.", 300, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer >= 1580 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Certain actions will align you with good or evil forces, indicated by these orbs.", 300, 20, 0, Color.DarkGoldenrod);
+                    if (AITimer == 340 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Fighting evil or helping those in need sets you along a righteous path with unique items and quests.", 300, 20, 0, Color.Green);
+                    if (AITimer == 680 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Assisting evil or slaying its opposition sets you along a path of abominable acts and forbidden power.", 300, 20, 0, Color.Red);
+                    if (AITimer == 1020 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Battles and available materials will be altered by your path.", 300, 20, 0, Color.DarkGoldenrod);
+                    if (AITimer == 1360 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Foes may take you more seriously, some less so.", 300, 20, 0, Color.DarkGoldenrod);
+                    if (AITimer >= 1700 + 60)
                     {
                         if (extraAlpha2 < 1)
                             extraAlpha2 += 0.02f;
 
                         extraPos[3] = NPC.Center + new Vector2(0, -170);
                     }
-                    if (AITimer == 1580 + 120)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Some negative actions may be redeemed, which will restore and possibly raise your Alignment to greater heights.", 300, 20, 0, Color.Goldenrod);
-                    if (AITimer == 1920 + 120)
+                    if (AITimer == 1700 + 120)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Some actions can be redeemed, restoring your lost alignment and possibly raising it higher.", 300, 20, 0, Color.Goldenrod);
+                    if (AITimer == 2040 + 120)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("The path you choose is up to you.", 180, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer >= 1920 + 120)
+                    if (AITimer >= 2040 + 120)
                     {
                         extraAlpha -= 0.04f;
                         extraAlpha2 -= 0.04f;
                     }
-                    if (AITimer >= 2140 + 120)
+                    if (AITimer >= 2260 + 120)
                     {
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);

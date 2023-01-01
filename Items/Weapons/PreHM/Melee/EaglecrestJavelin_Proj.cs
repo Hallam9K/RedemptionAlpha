@@ -195,7 +195,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
-            target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+            target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 30);
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

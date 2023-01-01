@@ -337,7 +337,6 @@ namespace Redemption.NPCs.HM
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
-            Player player = Main.player[NPC.target];
             if (Main.netMode != NetmodeID.Server)
             {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
