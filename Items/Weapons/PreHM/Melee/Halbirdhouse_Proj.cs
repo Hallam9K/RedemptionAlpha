@@ -40,12 +40,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             player.itemAnimation = 2;
 
             Projectile.spriteDirection = player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
-            player.SetCompositeArmFront(true, Length >= 20 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+            player.SetCompositeArmFront(true, Length >= 40 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
             if (Timer++ == 0)
             {
                 if (HitCount >= 3 && Projectile.owner == Main.myPlayer)
@@ -58,13 +54,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
                 startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
                 Rot = MathHelper.ToRadians(Main.rand.NextFloat(-10, 10));
-                Length = 10;
+                Length = 30;
             }
 
-            if (Timer < 5)
-                Length *= 1.7f;
+            if (Timer < 7)
+                Length *= 1.2f;
             else
-                Length *= 0.7f;
+                Length *= 0.2f;
+            Length = MathHelper.Clamp(Length, 36, 60);
 
             vector = startVector.RotatedBy(Rot) * Length;
             if (Timer >= 9)
@@ -75,12 +72,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Projectile.Kill();
             }
 
-            Length = MathHelper.Clamp(Length, 16, 40);
-
             if (Timer > 1)
                 Projectile.alpha = 0;
 
             Projectile.Center = player.MountedCenter + vector;
+            if (Projectile.spriteDirection == 1)
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
+            else
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
             return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -94,7 +93,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Vector2 v = Projectile.Center - RedeHelper.PolarVector(10, (Projectile.Center - player.Center).ToRotation());
+            Vector2 v = Projectile.Center - RedeHelper.PolarVector(28, (Projectile.Center - player.Center).ToRotation());
 
             Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;

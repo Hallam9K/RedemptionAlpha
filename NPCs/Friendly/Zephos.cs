@@ -170,7 +170,7 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("My favourite colour is orange! Donno why I'm tellin' ya though...");
                 chat.Add("I don't know what the deal with cats are. Dogs are definitely better!");
                 chat.Add("Have you seen a guy in a cloak, he carries a bow around. I lost him before travelling through the portal, hope he's alright.");
-                chat.Add("Wanna know about the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remeber a lot about being a pirate. I was very young at the time.");
+                chat.Add("Wanna know about the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remember a lot about being a pirate. I was very young at the time.");
                 chat.Add("Did I ever tell you about my victory against a powerful undead druid? It was a close match, it was giant, and its magic was insane! But yeah, I beat it, pretty cool huh? It had flowers growing everywhere on it!");
                 chat.Add("This island's gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens, called Anglonic Forest Hens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast!");
                 chat.Add("I swear I saw a Blobble around here. I didn't expect them to be here, they're native to, uh, Ithon I think. Don't quote me on that though, Daerel's a lot better at remembering useless info than I.");

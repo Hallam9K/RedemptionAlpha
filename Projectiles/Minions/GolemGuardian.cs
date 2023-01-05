@@ -16,11 +16,9 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Golem Guardian");
             Main.projFrames[Projectile.type] = 5;
-            Main.projPet[Projectile.type] = true;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetDefaults()

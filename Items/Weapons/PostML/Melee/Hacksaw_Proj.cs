@@ -202,7 +202,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY) + new Vector2(-5, 19);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY) + new Vector2(0, 29);
                 Color color = Color.LightBlue * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color * 0.5f, oldrot[k], drawOrigin, Projectile.scale, spriteEffects, 0);
             }

@@ -1133,6 +1133,7 @@ namespace Redemption.Globals
                     }
                 }
             }
+            BaseAI.WalkupHalfBricks(npc);
 
             //if there's a solid floor under us...
             if (BaseAI.HitTileOnSide(npc, 3))
@@ -1142,7 +1143,7 @@ namespace Redemption.Globals
                 {
                     //...attempt to jump if needed.
                     Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height,
-                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
+                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms, Main.player[npc.target]);
                     if (!npc.noTileCollide)
                     {
                         Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed,
@@ -1208,6 +1209,38 @@ namespace Redemption.Globals
                 for (int tpY = tpTileY; tpY < playerTileY + distFromPlayer; tpY++)
                 {
                     if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) &&
+                        (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
+                    {
+                        if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
+                            Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
+                            !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
+                        {
+                            return new Vector2(tpTileX, tpY) * 16;
+                        }
+                    }
+                }
+            }
+            return new Vector2(npc.Center.X, npc.Center.Y);
+        }
+
+        public static Vector2 FindGroundVector(this Terraria.NPC npc, Vector2 vector, int distFromVector, Func<int, int, bool> canTeleportTo = null)
+        {
+            int vectorX = (int)vector.X / 16;
+            int vectorY = (int)vector.Y / 16;
+            int tileX = (int)npc.position.X / 16;
+            int tileY = (int)npc.position.Y / 16;
+            int teleportCheckCount = 0;
+
+            while (teleportCheckCount < 1000)
+            {
+                teleportCheckCount++;
+                int tpTileX = Main.rand.Next(vectorX - distFromVector, vectorX + distFromVector);
+                int tpTileY = Main.rand.Next(vectorY - distFromVector, vectorY + distFromVector);
+                for (int tpY = tpTileY; tpY < vectorY + distFromVector; tpY++)
+                {
+                    if ((tpY < vectorY - 4 || tpY > vectorY + 4 || tpTileX < vectorX - 4 || tpTileX > vectorX + 4) &&
                         (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
                         Main.tile[tpTileX, tpY].HasUnactuatedTile)
                     {

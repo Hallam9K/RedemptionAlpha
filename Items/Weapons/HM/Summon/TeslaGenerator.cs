@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.damage = 95;
             Item.DamageType = DamageClass.Summon;
             Item.sentry = true;
-            Item.width = 30;
-            Item.height = 50;
+            Item.width = 38;
+            Item.height = 38;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;

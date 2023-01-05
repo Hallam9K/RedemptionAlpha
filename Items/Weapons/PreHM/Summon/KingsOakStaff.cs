@@ -6,11 +6,8 @@ using Terraria.DataStructures;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
 using Redemption.Items.Materials.PreHM;
-using Terraria.Localization;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 using Redemption.Items.Placeable.Tiles;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
@@ -58,6 +55,29 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			projectile.originalDamage = Item.damage;
 
 			return false;
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A staff made from the King's Oak - a great lone tree housing the souls of Timbervalley's past and present monarchs.\n" +
+                    "The wellbeing of oak and king are connected as one, grounding their emotion and vigour within the roots of the kingdom;\n" +
+                    "a bottomless well of strength for all who walk and grow.\n" +
+                    "Dancing orbs of light are often witnessed coming and going from the tree, said to be the embodiment of ardour between nature and man.'")
+                {
+                    OverrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    OverrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
         public override void AddRecipes()
         {

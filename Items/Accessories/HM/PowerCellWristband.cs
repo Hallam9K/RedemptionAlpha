@@ -22,8 +22,8 @@ namespace Redemption.Items.Accessories.HM
 
         public override void SetDefaults()
 		{
-            Item.width = 24;
-            Item.height = 12;
+            Item.width = 22;
+            Item.height = 22;
             Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;

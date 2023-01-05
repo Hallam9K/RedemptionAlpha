@@ -5,6 +5,7 @@ using Redemption.Buffs.Minions;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.NPCs.PreHM;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -49,6 +50,7 @@ namespace Redemption.Projectiles.Minions
         }
 
         public override bool? CanCutTiles() => false;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && target.type != ModContent.NPCType<ForestNymph>() ? null : false;
         public override bool MinionContactDamage() => Projectile.velocity.Length() > 10;
         NPC target;
         public override void AI()
@@ -66,7 +68,7 @@ namespace Redemption.Projectiles.Minions
                 Projectile.rotation.SlowRotation(Projectile.velocity.ToRotation() + (Projectile.spriteDirection == -1 ? 0 : MathHelper.Pi), (float)Math.PI / 20);
             Lighting.AddLight(Projectile.Center, .1f * Projectile.Opacity, .4f * Projectile.Opacity, .1f * Projectile.Opacity);
 
-            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, true, owner.MinionAttackTargetNPC))
+            if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, true, owner.MinionAttackTargetNPC) && target.type != ModContent.NPCType<ForestNymph>())
             {
                 if (Projectile.ai[1] == 1)
                 {

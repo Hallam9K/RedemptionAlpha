@@ -5001,8 +5001,8 @@ namespace Redemption.Base
                             lastY = y;
                             newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - (tileY - y - 2) * 0.0525f : 1f));
                         }
-                        else
-                        if (lastY - y >= tileHeight) { break; }
+                        //else
+                        //if (lastY - y >= tileHeight) { break; }
                     }
                 }
                 // if the npc isn't jumping already...
