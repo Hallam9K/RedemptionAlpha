@@ -35,7 +35,6 @@ using Terraria.Graphics.Shaders;
 using Terraria;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.PostML;
-using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.Friendly;
 using Redemption.Items.Weapons.PreHM.Summon;
 
